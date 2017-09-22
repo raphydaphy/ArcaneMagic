@@ -6,6 +6,7 @@ import com.raphydaphy.thaumcraft.block.BlockBase;
 import com.raphydaphy.thaumcraft.block.BlockModLeaves;
 import com.raphydaphy.thaumcraft.block.BlockModLog;
 import com.raphydaphy.thaumcraft.block.BlockOre;
+import com.raphydaphy.thaumcraft.block.BlockResearchTable;
 import com.raphydaphy.thaumcraft.block.BlockTable;
 
 import net.minecraftforge.fml.common.Mod;
@@ -43,6 +44,9 @@ public class ModBlocks
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":arcane_worktable")
     public static BlockArcaneWorktable arcane_worktable;
 	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":research_table")
+    public static BlockResearchTable research_table;
+	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
 		log_greatwood.initModel();
@@ -56,5 +60,6 @@ public class ModBlocks
         
         table.initModel();
         arcane_worktable.initModel();
+        research_table.initModel();
     }
 }

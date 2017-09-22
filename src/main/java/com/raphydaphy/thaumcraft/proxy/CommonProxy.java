@@ -5,11 +5,13 @@ import com.raphydaphy.thaumcraft.block.BlockBase;
 import com.raphydaphy.thaumcraft.block.BlockModLeaves;
 import com.raphydaphy.thaumcraft.block.BlockModLog;
 import com.raphydaphy.thaumcraft.block.BlockOre;
+import com.raphydaphy.thaumcraft.block.BlockResearchTable;
 import com.raphydaphy.thaumcraft.block.BlockTable;
 import com.raphydaphy.thaumcraft.handler.ThaumcraftSoundHandler;
 import com.raphydaphy.thaumcraft.init.ModBlocks;
 import com.raphydaphy.thaumcraft.init.ModEntities;
 import com.raphydaphy.thaumcraft.item.ItemBase;
+import com.raphydaphy.thaumcraft.item.ItemScribingTools;
 import com.raphydaphy.thaumcraft.item.ItemThaumonomicon;
 import com.raphydaphy.thaumcraft.item.ItemWand;
 import com.raphydaphy.thaumcraft.world.WorldGenGreatwood;
@@ -70,6 +72,7 @@ public class CommonProxy
         registry.register(new BlockOre("ore_infused", 3.5f));
         registry.register(new BlockTable("table", Material.WOOD, 2f, "axe", 0));
         registry.register(new BlockArcaneWorktable());
+        registry.register(new BlockResearchTable());
     }
 	
 	@SubscribeEvent
@@ -81,6 +84,7 @@ public class CommonProxy
         registry.register(new ItemWand("wand"));
         registry.register(new ItemThaumonomicon("thaumonomicon"));
         registry.register(new ItemBase("shard"));
+        registry.register(new ItemScribingTools("scribing_tools"));
         
         registry.register(new ItemBlock(ModBlocks.log_greatwood).setRegistryName(ModBlocks.log_greatwood.getRegistryName()));
         registry.register(new ItemBlock(ModBlocks.log_silverwood).setRegistryName(ModBlocks.log_silverwood.getRegistryName()));

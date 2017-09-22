@@ -3,6 +3,7 @@ item.thaumcraft.wand_cap_iron.name=Iron Wand Cap
 item.thaumcraft.wand.name=Iron Capped Wooden Wand
 item.thaumcraft.thaumonomicon.name=Thaumonomicon
 item.thaumcraft.shard.name=Infused Shard
+item.thaumcraft.scribing_tools.name=Scribing Tools
 
 # Blocks
 tile.thaumcraft.log_greatwood.name=Greatwood Log
@@ -13,6 +14,7 @@ tile.thaumcraft.planks_greatwood.name=Greatwood Planks
 tile.thaumcraft.planks_silverwood.name=Silverwood Planks
 tile.thaumcraft.table.name=Table
 tile.thaumcraft.arcane_worktable.name=Arcane Worktable
+tile.thaumcraft.research_table.name=Research Tablr
 
 # Sounds
 thaumcraft.subtitle.craft_start=Started Crafting

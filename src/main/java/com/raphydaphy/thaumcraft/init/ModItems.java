@@ -2,6 +2,7 @@ package com.raphydaphy.thaumcraft.init;
 
 import com.raphydaphy.thaumcraft.Thaumcraft;
 import com.raphydaphy.thaumcraft.item.ItemBase;
+import com.raphydaphy.thaumcraft.item.ItemScribingTools;
 import com.raphydaphy.thaumcraft.item.ItemThaumonomicon;
 import com.raphydaphy.thaumcraft.item.ItemWand;
 
@@ -23,11 +24,15 @@ public class ModItems
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":shard")
 	public static ItemBase shard;
 	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":scribing_tools")
+	public static ItemScribingTools scribing_tools;
+	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
         wand_cap_iron.initModel();
         wand.initModel();
         thaumonomicon.initModel();
         shard.initModel();
+        scribing_tools.initModel();
     }
 }

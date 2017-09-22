@@ -1,0 +1,19 @@
+{
+	"result": {
+		"item": "thaumcraft:scribing_tools"
+	},
+	"type": "forge:ore_shapeless",
+	"ingredients": [
+        {
+            "item": "minecraft:glass_bottle"
+        },
+        {
+        	"item": "minecraft:dye",
+        	"meta": 0
+        },
+        {
+        	"type": "forge:ore_dict",
+        	"ore": "feather"
+        }
+    ]
+}

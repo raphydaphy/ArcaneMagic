@@ -1,0 +1,3 @@
+# Thaumcraft 4 Rewrite
+
+This is a complete rewrite of Thaumcraft 4 for modern versions of Minecraft. Only the assets (textures & sounds) are taken from the original Thaumcraft mod by Azanor, currently without permission. This repo will stay private until permission can be obtained, which might be never. However, all the code is original and by me (raphydaphy) and has no connection to the Thaumcraft 4 source code which I have never actually seen anyway.
