@@ -14,7 +14,9 @@ tile.thaumcraft.planks_greatwood.name=Greatwood Planks
 tile.thaumcraft.planks_silverwood.name=Silverwood Planks
 tile.thaumcraft.table.name=Table
 tile.thaumcraft.arcane_worktable.name=Arcane Worktable
-tile.thaumcraft.research_table.name=Research Tablr
+tile.thaumcraft.research_table.name=Research Table
+tile.thaumcraft.slab_greatwood.0.name=Greatwood Slab
+tile.thaumcraft.slab_silverwood.0.name=Silverwood Slab
 
 # Sounds
 thaumcraft.subtitle.craft_start=Started Crafting

@@ -1,0 +1,15 @@
+{
+	"result": {
+		"item": "thaumcraft:slab_greatwood",
+		"count": 6
+	},
+	"pattern": [
+		"ppp"
+	],
+	"type": "minecraft:crafting_shaped",
+	"key": {
+		"p": {
+			"item": "thaumcraft:planks_greatwood"
+		}
+	}
+}
