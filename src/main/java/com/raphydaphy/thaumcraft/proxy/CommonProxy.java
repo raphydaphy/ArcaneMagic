@@ -64,6 +64,28 @@ public class CommonProxy
 		ThaumcraftSoundHandler.register("wand_3", registry);
 		ThaumcraftSoundHandler.register("page_1", registry);
 		ThaumcraftSoundHandler.register("page_2", registry);
+		ThaumcraftSoundHandler.register("creak_1", registry);
+		ThaumcraftSoundHandler.register("creak_2", registry);
+		ThaumcraftSoundHandler.register("tool_1", registry);
+		ThaumcraftSoundHandler.register("tool_2", registry);
+		ThaumcraftSoundHandler.register("fly_1", registry);
+		ThaumcraftSoundHandler.register("fly_2", registry);
+		ThaumcraftSoundHandler.register("gore_1", registry);
+		ThaumcraftSoundHandler.register("gore_2", registry);
+		ThaumcraftSoundHandler.register("wind_1", registry);
+		ThaumcraftSoundHandler.register("wind_2", registry);
+		ThaumcraftSoundHandler.register("write_1", registry);
+		ThaumcraftSoundHandler.register("write_2", registry);
+		ThaumcraftSoundHandler.register("shock_1", registry);
+		ThaumcraftSoundHandler.register("shock_2", registry);
+		ThaumcraftSoundHandler.register("swing_1", registry);
+		ThaumcraftSoundHandler.register("swing_2", registry);
+		ThaumcraftSoundHandler.register("squeek_1", registry);
+		ThaumcraftSoundHandler.register("squeek_2", registry);
+		ThaumcraftSoundHandler.register("zap_1", registry);
+		ThaumcraftSoundHandler.register("zap_2", registry);
+		ThaumcraftSoundHandler.register("hh_on", registry);
+		ThaumcraftSoundHandler.register("hh_off", registry);
 	}
 	
 	@SubscribeEvent

@@ -22,6 +22,17 @@ tile.thaumcraft.slab_silverwood.0.name=Silverwood Slab
 thaumcraft.subtitle.craft_start=Started Crafting
 thaumcraft.subtitle.wand=Used Wand
 thaumcraft.subtitle.page=Turned Page
+thaumcraft.subtitle.creak=Ominous Creak
+thaumcraft.subtitle.tool=Tool Broken
+thaumcraft.subtitle.fly=Fly Buzzes
+thaumcraft.subtitle.gore=Blood Splatters
+thaumcraft.subtitle.wind=Wind Whistles
+thaumcraft.subtitle.write=Wrote Something
+thaumcraft.subtitle.shock=Something Shocked
+thaumcraft.subtitle.swing=Something Swings
+thaumcraft.subtitle.squeak=Something Squeaks
+thaumcraft.subtitle.hh_on=HH Turned On
+thaumcraft.subtitle.hh_off=HH Turned Off
 
 # Guis
 itemGroup.thaumcraft=Thaumcraft
