@@ -1,5 +1,6 @@
 package com.raphydaphy.thaumcraft.proxy;
 
+import com.raphydaphy.thaumcraft.Thaumcraft;
 import com.raphydaphy.thaumcraft.block.BlockArcaneWorktable;
 import com.raphydaphy.thaumcraft.block.BlockBase;
 import com.raphydaphy.thaumcraft.block.BlockModLeaves;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -42,6 +44,8 @@ public class CommonProxy
 	
 	public void init(FMLInitializationEvent event) 
 	{
+		NetworkRegistry.INSTANCE.registerGuiHandler(Thaumcraft.instance, new GuiProxy());
+		
 		GameRegistry.registerWorldGenerator(new WorldGenGreatwood(false, false), 150);
 	}
 	
@@ -58,6 +62,8 @@ public class CommonProxy
 		ThaumcraftSoundHandler.register("wand_1", registry);
 		ThaumcraftSoundHandler.register("wand_2", registry);
 		ThaumcraftSoundHandler.register("wand_3", registry);
+		ThaumcraftSoundHandler.register("page_1", registry);
+		ThaumcraftSoundHandler.register("page_2", registry);
 	}
 	
 	@SubscribeEvent

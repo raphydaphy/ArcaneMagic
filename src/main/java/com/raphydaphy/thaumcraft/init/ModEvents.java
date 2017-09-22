@@ -6,10 +6,14 @@ import com.raphydaphy.thaumcraft.proxy.ClientProxy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -67,5 +71,39 @@ public class ModEvents
 			ClientProxy.particleRenderer.renderParticles(clientPlayer, event.getPartialTicks());
 			GlStateManager.popMatrix();
 		}
+	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public static void onRenderHand(RenderHandEvent event) 
+	{
+        float t = 1.0f;
+        /*
+        EntityPlayer ply = ClientProxy.get().getPlayerClient();
+        ItemStack stack = ply.getActiveItemStack();
+        
+        if(!stack.isEmpty() && (stack.getItem() instanceof GenericGunCharge || stack.getItem() instanceof GenericGrenade)) {
+            EnumHand hand = ply.getActiveHand();
+
+            ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer();
+            try {
+                if(hand==EnumHand.MAIN_HAND) {
+                    if(Field_ItemRenderer_equippedProgressMainhand.getFloat(itemrenderer)<t) {
+                        Field_ItemRenderer_equippedProgressMainhand.setFloat(itemrenderer, t);
+                        Field_ItemRenderer_prevEquippedProgressMainhand.setFloat(itemrenderer, t);
+                    }
+                } else {
+                    if(Field_ItemRenderer_equippedProgressOffhand.getFloat(itemrenderer)<t) {
+                        Field_ItemRenderer_equippedProgressOffhand.setFloat(itemrenderer, t);
+                        Field_ItemRenderer_prevEquippedProgressOffhand.setFloat(itemrenderer, t);
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            
+        }*/
 	}
 }

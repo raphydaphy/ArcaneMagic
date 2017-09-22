@@ -20,9 +20,8 @@ tile.thaumcraft.slab_silverwood.0.name=Silverwood Slab
 
 # Sounds
 thaumcraft.subtitle.craft_start=Started Crafting
-thaumcraft.subtitle.wand_1=Used Wand
-thaumcraft.subtitle.wand_2=Used Wand
-thaumcraft.subtitle.wand_3=Used Wand
+thaumcraft.subtitle.wand=Used Wand
+thaumcraft.subtitle.page=Turned Page
 
 # Guis
 itemGroup.thaumcraft=Thaumcraft

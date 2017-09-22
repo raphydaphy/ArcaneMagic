@@ -25,6 +25,12 @@ public final class ThaumcraftSoundHandler
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":wand_3")
 	public static SoundEvent wand_3;
 	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":page_1")
+	public static SoundEvent page_1;
+	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":page_2")
+	public static SoundEvent page_2;
+	
 	public static SoundEvent register(String name, IForgeRegistry<SoundEvent> registry) {
 		ResourceLocation loc = new ResourceLocation(Thaumcraft.MODID + ":" + name);
 		SoundEvent e = new SoundEvent(loc).setRegistryName(name);
@@ -46,6 +52,11 @@ public final class ThaumcraftSoundHandler
 		}
 		
 		return wand_1;
+	}
+	
+	public static SoundEvent randomPageSound()
+	{
+		return rand.nextInt(2) + 1 == 1 ? page_1 : page_2;
 	}
 	
 }

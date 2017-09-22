@@ -20,6 +20,8 @@ public final class GuiWand
 		
 		GlStateManager.color(r, g, b, 0.7f);
 		Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x + 1, y + 4, 104, 0, 8, essentia);
+		
+		GlStateManager.color(1,  1,  1, 1);
 	}
 	
 	public static void renderWandHUD(Minecraft mc, ScaledResolution res)
