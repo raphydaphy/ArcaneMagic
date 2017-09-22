@@ -1,0 +1,88 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"0": "thaumcraft:blocks/arcane_worktable",
+		"particle": "thaumcraft:blocks/planks_greatwood"
+	},
+	"elements": [
+		{
+			"name": "Top",
+			"from": [0, 8, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 4, 4, 6], "texture": "#0"},
+				"east": {"uv": [4, 4, 8, 6], "texture": "#0"},
+				"south": {"uv": [8, 4, 12, 6], "texture": "#0"},
+				"west": {"uv": [12, 4, 16, 6], "texture": "#0"},
+				"up": {"uv": [4, 0, 8, 4], "texture": "#0"},
+				"down": {"uv": [8, 0, 12, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Leg",
+			"from": [11, 4, 1],
+			"to": [15, 8, 5],
+			"faces": {
+				"north": {"uv": [0, 9, 1, 10], "texture": "#0"},
+				"east": {"uv": [3, 9, 4, 10], "texture": "#0"},
+				"south": {"uv": [1, 9, 2, 10], "texture": "#0"},
+				"west": {"uv": [2, 9, 3, 10], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Leg",
+			"from": [1, 4, 1],
+			"to": [5, 8, 5],
+			"faces": {
+				"north": {"uv": [0, 9, 1, 10], "texture": "#0"},
+				"east": {"uv": [3, 9, 4, 10], "texture": "#0"},
+				"south": {"uv": [1, 9, 2, 10], "texture": "#0"},
+				"west": {"uv": [2, 9, 3, 10], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Leg",
+			"from": [11, 4, 11],
+			"to": [15, 8, 15],
+			"faces": {
+				"north": {"uv": [0, 9, 1, 10], "texture": "#0"},
+				"east": {"uv": [3, 9, 4, 10], "texture": "#0"},
+				"south": {"uv": [1, 9, 2, 10], "texture": "#0"},
+				"west": {"uv": [2, 9, 3, 10], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Leg",
+			"from": [1, 4, 11],
+			"to": [5, 8, 15],
+			"faces": {
+				"north": {"uv": [0, 9, 1, 10], "texture": "#0"},
+				"east": {"uv": [3, 9, 4, 10], "texture": "#0"},
+				"south": {"uv": [1, 9, 2, 10], "texture": "#0"},
+				"west": {"uv": [2, 9, 3, 10], "texture": "#0"},
+				"up": {"uv": [0, 0, 4, 4], "texture": "#0"},
+				"down": {"uv": [0, 0, 4, 4], "texture": "#0"}
+			}
+		},
+		{
+			"name": "Bottom",
+			"from": [0, 0, 0],
+			"to": [16, 4, 16],
+			"faces": {
+				"north": {"uv": [0, 12, 4, 13], "texture": "#0"},
+				"east": {"uv": [4, 12, 8, 13], "texture": "#0"},
+				"south": {"uv": [8, 12, 12, 13], "texture": "#0"},
+				"west": {"uv": [12, 12, 16, 13], "texture": "#0"},
+				"up": {"uv": [4, 8, 8, 12], "texture": "#0"},
+				"down": {"uv": [8, 8, 12, 12], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [0, 2, 4, 3, 1, 5]
+}

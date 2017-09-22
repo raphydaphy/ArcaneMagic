@@ -1,0 +1,9 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "facing=north":   { "model": "thaumcraft:table"},
+    "facing=east":   { "model": "thaumcraft:table", "y": 90 },
+    "facing=south": { "model": "thaumcraft:table" },
+    "facing=west": { "model": "thaumcraft:table", "y": 90 }
+  }
+}

@@ -1,0 +1,17 @@
+[
+{
+  "modid": "thaumcraft",
+  "name": "Thaumcraft",
+  "description": "Adding a touch of magic to Minecraft",
+  "version": "0.1",
+  "mcversion": "${mcversion}",
+  "logoFile": "assets/thaumcraft/textures/logo.png",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["raphydaphy"],
+  "credits": "All textures are from Thaumcraft 4 by Azanor.",
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

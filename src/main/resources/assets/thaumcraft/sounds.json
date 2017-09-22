@@ -1,0 +1,6 @@
+{
+   "craft_start": { "category": "master", "sounds": ["thaumcraft:craft_start"], "subtitle": "thaumcraft.subtitle.craft_start" },
+   "wand_1": { "category": "master", "sounds": ["thaumcraft:wand_1"], "subtitle": "thaumcraft.subtitle.wand_1" },
+   "wand_2": { "category": "master", "sounds": ["thaumcraft:wand_2"], "subtitle": "thaumcraft.subtitle.wand_2" },
+   "wand_3": { "category": "master", "sounds": ["thaumcraft:wand_3"], "subtitle": "thaumcraft.subtitle.wand_3" }
+}

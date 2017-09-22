@@ -1,0 +1,24 @@
+# Items
+item.thaumcraft.wand_cap_iron.name=Iron Wand Cap
+item.thaumcraft.wand.name=Iron Capped Wooden Wand
+item.thaumcraft.thaumonomicon.name=Thaumonomicon
+item.thaumcraft.shard.name=Infused Shard
+
+# Blocks
+tile.thaumcraft.log_greatwood.name=Greatwood Log
+tile.thaumcraft.log_silverwood.name=Silverwood Log
+tile.thaumcraft.leaves_greatwood.name=Greatwood Leaves
+tile.thaumcraft.leaves_silverwood.name=Silverwood Leaves
+tile.thaumcraft.planks_greatwood.name=Greatwood Planks
+tile.thaumcraft.planks_silverwood.name=Silverwood Planks
+tile.thaumcraft.table.name=Table
+tile.thaumcraft.arcane_worktable.name=Arcane Worktable
+
+# Sounds
+thaumcraft.subtitle.craft_start=Started Crafting
+thaumcraft.subtitle.wand_1=Used Wand
+thaumcraft.subtitle.wand_2=Used Wand
+thaumcraft.subtitle.wand_3=Used Wand
+
+# Guis
+itemGroup.thaumcraft=Thaumcraft

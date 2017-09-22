@@ -1,0 +1,16 @@
+{
+	"result": {
+		"item": "thaumcraft:wand_cap_iron"
+	},
+	"pattern": [
+		"nnn",
+		"n n"
+	],
+	"type": "forge:ore_shaped",
+	"key": {
+		"n": {
+			"type": "forge:ore_dict",
+			"ore": "nuggetIron"
+		}
+	}
+}

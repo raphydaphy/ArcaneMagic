@@ -1,0 +1,20 @@
+{
+	"result": {
+		"item": "thaumcraft:wand"
+	},
+	"pattern": [
+		"  c",
+		" s ",
+		"c  "
+	],
+	"type": "forge:ore_shaped",
+	"key": {
+		"c": {
+			"item": "thaumcraft:wand_cap_iron"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	}
+}
