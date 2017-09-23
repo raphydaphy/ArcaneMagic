@@ -3,16 +3,15 @@ package com.raphydaphy.thaumcraft.gui;
 import java.io.IOException;
 
 import com.raphydaphy.thaumcraft.Thaumcraft;
-import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.handler.ThaumcraftSoundHandler;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.SoundCategory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -70,6 +69,9 @@ public class GuiThaumonomicon extends GuiScreen
     private static final ResourceLocation r_thaumaturgy = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_thaumaturgy.png");
     private static final ResourceLocation r_warp = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_warp.png");
     
+    private static final ResourceLocation[] tabs = new ResourceLocation[] { new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png"), r_thaumaturgy, r_crucible, r_artifice, r_golemancy, r_eldritch };
+	private static final int totalTabs = 6;
+	
     public GuiThaumonomicon(EntityPlayer player)
     {
     	this.player = player;
@@ -101,9 +103,10 @@ public class GuiThaumonomicon extends GuiScreen
     	relMouseX = mouseX;
     	relMouseY = mouseY;
     	
+    	float screenX = (res.getScaledWidth() / 2) - (255 / 2);
+    	float screenY = (res.getScaledHeight() / 2) - (229 / 2);
+    	
     	GlStateManager.pushMatrix();
-    	
-    	
     	GlStateManager.translate((res.getScaledWidth() /2) - (255 / 2), (res.getScaledHeight() / 2) - (229 / 2), 0);
     	
     	if (player.getEntityData().getInteger(tagTab) != 5)
@@ -120,8 +123,7 @@ public class GuiThaumonomicon extends GuiScreen
         
     	mc.getTextureManager().bindTexture(frame);
     	
-    	ResourceLocation[] tabs = new ResourceLocation[] { new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png"), r_thaumaturgy, r_crucible, r_artifice, r_golemancy, r_eldritch };
-    	int totalTabs = 6;
+    	
     	for (int tab = 0; tab < totalTabs * 2; tab++)
     	{
     		int thisTab = tab >= totalTabs ? tab - 6 : tab;
@@ -152,6 +154,18 @@ public class GuiThaumonomicon extends GuiScreen
     	mc.getTextureManager().bindTexture(frame);
     	drawTexturedModalRect(0, 0, 0, 0, 255, 229);
        
+    	if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (totalTabs * 23))
+    	{
+    		for (int tab = totalTabs - 1; tab > 0-1; tab--)
+    		{
+    			if (relMouseY >= (tab + 1)*23 && player.getEntityData().getInteger(tagTab) != tab)
+    			{
+    				this.fontRenderer.drawString(I18n.format("thaumcraft.research.category." + tab), relMouseX, relMouseY, 0xFFFFFF);
+    				break;
+    			}
+    		}
+    	}
+    	
         GlStateManager.popMatrix();
     }
     
@@ -177,11 +191,11 @@ public class GuiThaumonomicon extends GuiScreen
     	{
         	ScaledResolution res = new ScaledResolution(mc);
         	
-        	float screenX = (res.getScaledWidth() / 2);
-        	float screenY = (res.getScaledHeight() / 2);
+        	float screenX = (res.getScaledWidth() / 2) - (255 / 2);
+        	float screenY = (res.getScaledHeight() / 2) - (229 / 2);
         	
         	System.out.println(" MX: " + relMouseX + " MY: " + relMouseY + " SX: " + res.getScaledWidth() + " SY: " + res.getScaledHeight() +" F: " + res.getScaleFactor());
-        	if (relMouseX >= screenX - (255 / 2) + 16 && relMouseY >= screenY - (229 / 2) + 17 && relMouseX <= screenX - (255 / 2) + 240 && relMouseY <= screenY - (255 / 2) + 225)
+        	if (relMouseX >= screenX + 16 && relMouseY >= screenY + 17 && relMouseX <= screenX + 240 && relMouseY <= screenY + 210)
         	{
 	        	float thisDragDistX = (lastDragX - (mouseX - (res.getScaledWidth() / 2) - (255 / 2))) * 0.7f;
 	        	float thisDragDistY = (lastDragY - (mouseY - (res.getScaledHeight() / 2) - (229 / 2))) * 0.45f;
@@ -199,7 +213,7 @@ public class GuiThaumonomicon extends GuiScreen
 	        		player.getEntityData().setFloat(tagPageY, totalDragDistY);
 	        	}
         	}
-    		
+        	
     		lastDragX = mouseX - (res.getScaledWidth() / 2) - (255 / 2);
     		lastDragY = mouseY - (res.getScaledHeight() / 2) - (229 / 2);
     	}
@@ -216,6 +230,21 @@ public class GuiThaumonomicon extends GuiScreen
     		
     		lastDragX = mouseX - (res.getScaledWidth() / 2) - (255 / 2);
     		lastDragY = mouseY - (res.getScaledHeight() / 2) - (229 / 2);
+    		
+    		float screenX = (res.getScaledWidth() / 2) - (255 / 2);
+        	float screenY = (res.getScaledHeight() / 2) - (229 / 2);
+        	
+    		if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (totalTabs * 23))
+        	{
+        		for (int tab = totalTabs - 1; tab > 0-1; tab--)
+        		{
+        			if (relMouseY <= (tab + 1)*23 && player.getEntityData().getInteger(tagTab) != tab)
+        			{
+        				player.getEntityWorld().playSound(player.posX, player.posY, player.posZ, ThaumcraftSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f, false);
+        				player.getEntityData().setInteger(tagTab, tab);
+        			}
+        		}
+        	}
     	}
     }
 }

@@ -37,3 +37,11 @@ thaumcraft.subtitle.camera_clack=Something Clacks
 
 # Guis
 itemGroup.thaumcraft=Thaumcraft
+
+# Thaumanomicon
+thaumcraft.research.category.0=Basic Information
+thaumcraft.research.category.1=Thaumaturgy
+thaumcraft.research.category.2=Alchemy
+thaumcraft.research.category.3=Artifice
+thaumcraft.research.category.4=Golemancy
+thaumcraft.research.category.5=Eldritch
