@@ -33,7 +33,7 @@ public class RenderEntityItemFancy extends Render<EntityItemFancy> {
     @Override
     public void doRender(EntityItemFancy entity, double x, double y, double z, float entityYaw, float partialTicks) 
     {
-    	renderFancyBeams(x, y + 0.5, z, new Color(154, 44, 155), entity.world.getSeed(), entity.getAge(),16, 0.7f,10, 5);
+    	renderFancyBeams(x, y + 0.5, z, Color.MAGENTA, entity.world.getSeed(), entity.getAge(),16, 0.7f,10, 5);
         GL11.glPushMatrix();
         ItemStack stack = entity.getItem();
         if (!stack.isEmpty()) {
