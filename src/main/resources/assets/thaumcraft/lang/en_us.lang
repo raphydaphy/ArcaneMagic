@@ -4,6 +4,7 @@ item.thaumcraft.wand.name=Iron Capped Wooden Wand
 item.thaumcraft.thaumonomicon.name=Thaumonomicon
 item.thaumcraft.shard.name=Infused Shard
 item.thaumcraft.scribing_tools.name=Scribing Tools
+item.thaumcraft.knowledge_fragment.name=Knowledge Fragment
 
 # Blocks
 tile.thaumcraft.log_greatwood.name=Greatwood Log
@@ -33,7 +34,7 @@ thaumcraft.subtitle.swing=Something Swings
 thaumcraft.subtitle.squeak=Something Squeaks
 thaumcraft.subtitle.hh_on=HH Turned On
 thaumcraft.subtitle.hh_off=HH Turned Off
-thaumcraft.subtitle.camera_clack=Something Clacks
+thaumcraft.subtitle.camera_clack=Something Clicks
 
 # Guis
 itemGroup.thaumcraft=Thaumcraft

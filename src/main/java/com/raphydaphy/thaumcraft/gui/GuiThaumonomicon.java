@@ -67,7 +67,7 @@ public class GuiThaumonomicon extends GuiScreen
     private static final ResourceLocation r_mask2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_mask2.png");
     private static final ResourceLocation r_nodepreserve = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodepreserve.png");
     private static final ResourceLocation r_nodes1 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodes1.png");
-    private static final ResourceLocation r_nodes2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodes1.png");
+    private static final ResourceLocation r_nodes2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodes2.png");
     private static final ResourceLocation r_nodetap1 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodetap1.png");
     private static final ResourceLocation r_nodetap2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodetap2.png");
     private static final ResourceLocation r_outer = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_outer.png");
@@ -91,8 +91,8 @@ public class GuiThaumonomicon extends GuiScreen
     	{
     		System.out.println("Player opened Thauminomicon for first time, doing initial setup.");
     		//player.getEntityData().setBoolean(tagUsedThauminomicon, true);
-    		player.getEntityData().setInteger(tagPageX, 0);
-    		player.getEntityData().setInteger(tagPageY, 0);
+    		player.getEntityData().setInteger(tagPageX, 75);
+    		player.getEntityData().setInteger(tagPageY, 75);
     		player.getEntityData().setInteger(tagTab, 0);
     	}
     }
@@ -114,6 +114,8 @@ public class GuiThaumonomicon extends GuiScreen
     	relMouseX = mouseX;
     	relMouseY = mouseY;
     	
+    	int pageX = (int)player.getEntityData().getFloat(tagPageX);
+    	int pageY = (int)player.getEntityData().getFloat(tagPageY);
     	float screenX = (res.getScaledWidth() / 2) - (255 / 2);
     	float screenY = (res.getScaledHeight() / 2) - (229 / 2);
     	
@@ -129,7 +131,7 @@ public class GuiThaumonomicon extends GuiScreen
     		mc.getTextureManager().bindTexture(back_eldritch);
     	}
     	GlStateManager.scale(2, 2, 2);
-        drawTexturedModalRect(8, 8.5f, (int)player.getEntityData().getFloat(tagPageX), (int)player.getEntityData().getFloat(tagPageY), 112, 98);
+        drawTexturedModalRect(8, 8.5f, pageX, pageY, 112, 98);
         GlStateManager.scale(0.5f, 0.5f, 0.5f);
         
     	mc.getTextureManager().bindTexture(frame);
@@ -162,11 +164,19 @@ public class GuiThaumonomicon extends GuiScreen
     		}
     	}
     	
-    	drawResearchIcon(r_aspects, "circle", 105, 105);
-    	
-    	drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png"), "circle", 140, 50);
-    	drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/scribing_tools.png"), "circle", 170, 105);
-    	
+    	// Basic Information
+    	if (player.getEntityData().getInteger(tagTab) == 0)
+    	{
+    		drawResearchIcon(r_aspects, "circle",260, 250);
+    		
+    		drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png"), "circle", 290, 200);
+    		drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/scribing_tools.png"), "circle", 320, 250);
+    		drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/knowledge_fragment.png"), "circle", 350, 200);
+    		
+    		drawResearchIcon(r_nodes1, "circle",200, 250);
+    		
+    		drawResearchIcon(r_warp, "circle",260, 300);
+    	}
     	mc.getTextureManager().bindTexture(frame);
     	drawTexturedModalRect(0, 0, 0, 0, 255, 229);
     	
@@ -174,6 +184,21 @@ public class GuiThaumonomicon extends GuiScreen
     	GlStateManager.popMatrix();
     	
     	GlStateManager.pushMatrix();
+    	
+    	// Basic Information
+    	if (player.getEntityData().getInteger(tagTab) == 0)
+    	{
+    		drawResearchInfoOnMouse(260, 250, Lists.newArrayList("Aspects of Magic", "The building blocks of magic"));
+    		
+    		drawResearchInfoOnMouse(290, 200, Lists.newArrayList("Thaumonomicon", "A Repository of Knowledge"));
+    		drawResearchInfoOnMouse(320, 250, Lists.newArrayList("Research", "How you discover things"));
+    		drawResearchInfoOnMouse(350, 200, Lists.newArrayList("Knowledge Fragments", "Fragments of lost lore"));
+    		
+    		drawResearchInfoOnMouse(200, 250, Lists.newArrayList("Auras and Nodes", "Magic is everywhere"));
+    		
+    		drawResearchInfoOnMouse(260, 300, Lists.newArrayList("Warp, Flux and all things bad", "Everything has a price"));
+    	}
+    	
     	if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (totalTabs * 23))
     	{
 			for (int tab = 0; tab < totalTabs; tab++)
@@ -192,11 +217,6 @@ public class GuiThaumonomicon extends GuiScreen
     		}
     	}
     	
-    	if (relMouseX >= screenX + 105 && relMouseY >= screenY + 105 && relMouseX <= screenX + 105 + 22 && relMouseY <= screenY + 105 + 22)
-    	{
-    		drawHoveringText(ItemStack.EMPTY, Lists.newArrayList("Aspects of Magic", "The building blocks of magic", "Long tooltips get wrapped around to fit nicely if you want them to tell a long story."), Lists.newArrayList(0xFFFFFF, 0x9090ff, 0x7F0E83), mouseX, mouseY, mc.displayWidth, mc.displayHeight, 200, fontRenderer);
-    	}
-    	
     	GlStateManager.popMatrix();
     }
     
@@ -204,6 +224,36 @@ public class GuiThaumonomicon extends GuiScreen
     public boolean doesGuiPauseGame()
     {
         return false;
+    }
+    
+    public void drawResearchInfoOnMouse(int iconX, int iconY, List<String> text)
+    {
+    	ScaledResolution res = new ScaledResolution(mc);
+    	
+    	int pageX = (int)player.getEntityData().getFloat(tagPageX);
+    	int pageY = (int)player.getEntityData().getFloat(tagPageY);
+    	
+    	float screenX = (res.getScaledWidth() / 2) - (255 / 2);
+    	float screenY = (res.getScaledHeight() / 2) - (229 / 2);
+    	
+    	List<Integer> colors = Lists.newArrayList(0xFFFFFF, 0x9090ff, 0xaa00aa);
+    	
+    	if (text.size() > 2)
+    	{
+    		colors.set(0, 0xffff80);
+    	}
+    	
+    	iconX = iconX - (int)(pageX * 2);
+    	iconY = iconY - (int)(pageY * 2);
+    	
+		if (relMouseX >= iconX + screenX && relMouseY >= iconY + screenY && relMouseX <= iconX + screenX + 22 && relMouseY <= iconY + screenY+ 22)
+		{
+			if (relMouseX >= screenX + 16 && relMouseY >= screenY + 17 && relMouseX <= screenX + 239 && relMouseY <= screenY + 212)
+			{
+				drawHoveringText(ItemStack.EMPTY, text, colors, relMouseX - 6, relMouseY + 7, mc.displayWidth, mc.displayHeight, 200, fontRenderer);
+			}
+			
+		}
     }
     
     private void drawHoveringText(@Nonnull final ItemStack stack, List<String> textLines, List<Integer> textColors, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font)
@@ -214,6 +264,9 @@ public class GuiThaumonomicon extends GuiScreen
             if (MinecraftForge.EVENT_BUS.post(event)) {
                 return;
             }
+            
+            boolean flag = textLines.size() > 2;
+            
             mouseX = event.getX();
             mouseY = event.getY();
             screenWidth = event.getScreenWidth();
@@ -226,10 +279,15 @@ public class GuiThaumonomicon extends GuiScreen
             GlStateManager.disableLighting();
             GlStateManager.disableDepth();
             int tooltipTextWidth = 0;
-
+            
             for (String textLine : textLines)
             {
-                int textLineWidth = font.getStringWidth(textLine);
+            	int sizeMultiplier = 1;
+            	if (textLines.indexOf(textLine) != 0)
+            	{
+            		sizeMultiplier = 2;
+            	}
+                int textLineWidth = font.getStringWidth(textLine) / sizeMultiplier;
 
                 if (textLineWidth > tooltipTextWidth)
                 {
@@ -272,7 +330,6 @@ public class GuiThaumonomicon extends GuiScreen
                 for (int i = 0; i < textLines.size(); i++)
                 {
                     String textLine = textLines.get(i);
-                    int textColor = textColors.get(i);
                     List<String> wrappedLine = font.listFormattedStringToWidth(textLine, tooltipTextWidth);
                     if (i == 0)
                     {
@@ -323,13 +380,22 @@ public class GuiThaumonomicon extends GuiScreen
             {
                 tooltipY = screenHeight - tooltipHeight - 6;
             }
-
+            
+            if (flag)
+            {
+            	tooltipHeight -= 3;
+            }
+            else
+            {
+            	tooltipHeight -= 1;
+            }
+            
             final int zLevel = 300;
             final int backgroundColor = 0xF0100010;
-            GuiUtils.drawGradientRect(zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
+            GuiUtils.drawGradientRect(zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 1, backgroundColor, backgroundColor);
             final int borderColorStart = 0x505000FF;
             final int borderColorEnd = (borderColorStart & 0xFEFEFE) >> 1 | borderColorStart & 0xFF000000;
-            GuiUtils.drawGradientRect(zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, borderColorEnd, borderColorEnd);
+            GuiUtils.drawGradientRect(zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 1, borderColorEnd, borderColorEnd);
 
             MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostBackground(stack, textLines, tooltipX, tooltipY, font, tooltipTextWidth, tooltipHeight));
             int tooltipTop = tooltipY;
@@ -348,10 +414,16 @@ public class GuiThaumonomicon extends GuiScreen
                 GlStateManager.scale(sizeMultiplier, sizeMultiplier, sizeMultiplier);
                 if (lineNumber + 1 == titleLinesCount)
                 {
-                    tooltipY += 2;
+                    tooltipY += 1;
                 }
-
-                tooltipY += 10;
+                if (lineNumber == 1)
+                {
+                	tooltipY += 8;
+                }
+                else
+                {
+                	tooltipY += 10;
+                }
             }
 
             MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostText(stack, textLines, tooltipX, tooltipTop, font, tooltipTextWidth, tooltipHeight));
@@ -369,17 +441,64 @@ public class GuiThaumonomicon extends GuiScreen
         GlStateManager.enableBlend();
         GlStateManager.enableAlpha();
         mc.getTextureManager().bindTexture(icon);
-        GlStateManager.scale(0.065, 0.065, 1);
-        drawTexturedModalRect((int)((1 / 0.065) * x), (int)((1 / 0.065) * y), 0, 0,256, 256);
-        GlStateManager.scale((1 / 0.625), (1 / 0.625), 1);
+        GlStateManager.scale(0.5, 0.5, 1);
+        drawModalRectWithCustomSizedTexture((int)(x * 2), (int)(y * 2), 0, 0, 32, 32, 32, 32);
+        GlStateManager.scale(2, 2, 1);
         GlStateManager.popMatrix();
     }
     
     public void drawResearchIcon(ResourceLocation icon, String type, int x, int y)
     {
-    	mc.getTextureManager().bindTexture(frame);
-    	drawTexturedModalRect(x, y, 56, 232, 22, 22);
-    	drawIcon(icon, x+2.3f, y+2.3f);
+    	
+    	
+    	int pageX = player.getEntityData().getInteger(tagPageX);
+    	int pageY = player.getEntityData().getInteger(tagPageY);
+    	
+    	x = x - (int)(pageX / 0.5f);
+    	y = y - (int)(pageY / 0.5f);
+    	
+    	if (x > -8 && y > -8 && x < 241 && y < 215)
+    	{
+    		
+    		
+    		float xStart = x;
+    		float yStart = y;
+    		
+    		float u1 = 0;
+    		float u2 = 0;
+    		float v1 = 0;
+    		float v2 = 0;
+    		
+    		int width = 32;
+    		int height = 32;
+    		
+    		if (x > 224)
+    		{
+    			width -= 8;
+    		}
+    		
+    		if (y > 197)
+    		{
+    			height -= 8;
+    		}
+    		
+    		// TODO: make research icons exit properly to the top and left of the screen
+    		
+    		GlStateManager.pushMatrix();
+            GlStateManager.enableBlend();
+            GlStateManager.enableAlpha();
+            
+            mc.getTextureManager().bindTexture(frame);
+            drawModalRectWithCustomSizedTexture((int)xStart, (int)yStart, 56 + u1, 232 + v1, width - 10, height - 10, 256, 256);
+            
+            mc.getTextureManager().bindTexture(icon);
+            GlStateManager.scale(0.5, 0.5, 1);
+            
+            drawModalRectWithCustomSizedTexture((int)(2* xStart) + 5, (int)(2*yStart) + 5, u2, v2, width, height, 32, 32);
+            
+            GlStateManager.scale(2, 2, 1);
+            GlStateManager.popMatrix();
+    	}
     }
     
     @Override

@@ -126,6 +126,7 @@ public class CommonProxy
         registry.register(new ItemThaumonomicon("thaumonomicon"));
         registry.register(new ItemBase("shard"));
         registry.register(new ItemScribingTools("scribing_tools"));
+        registry.register(new ItemScribingTools("knowledge_fragment"));
         
         // Trees
         registry.register(new ItemBlock(ModBlocks.log_greatwood).setRegistryName(ModBlocks.log_greatwood.getRegistryName()));

@@ -27,6 +27,9 @@ public class ModItems
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":scribing_tools")
 	public static ItemScribingTools scribing_tools;
 	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":knowledge_fragment")
+	public static ItemScribingTools knowledge_fragment;
+	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {
         wand_cap_iron.initModel();
@@ -34,5 +37,6 @@ public class ModItems
         thaumonomicon.initModel();
         shard.initModel();
         scribing_tools.initModel();
+        knowledge_fragment.initModel();
     }
 }
