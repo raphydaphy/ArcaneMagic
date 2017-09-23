@@ -86,6 +86,9 @@ public class CommonProxy
 		ThaumcraftSoundHandler.register("zap_2", registry);
 		ThaumcraftSoundHandler.register("hh_on", registry);
 		ThaumcraftSoundHandler.register("hh_off", registry);
+		ThaumcraftSoundHandler.register("camera_clack_1", registry);
+		ThaumcraftSoundHandler.register("camera_clack_2", registry);
+		ThaumcraftSoundHandler.register("camera_clack_3", registry);
 	}
 	
 	@SubscribeEvent

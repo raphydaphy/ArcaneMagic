@@ -97,6 +97,15 @@ public final class ThaumcraftSoundHandler
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":hh_off")
 	public static SoundEvent hh_off;
 	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":camera_clack_1")
+	public static SoundEvent camera_clack_1;
+	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":camera_clack_2")
+	public static SoundEvent camera_clack_2;
+	
+	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":camera_clack_3")
+	public static SoundEvent camera_clack_3;
+	
 	public static SoundEvent register(String name, IForgeRegistry<SoundEvent> registry) {
 		ResourceLocation loc = new ResourceLocation(Thaumcraft.MODID + ":" + name);
 		SoundEvent e = new SoundEvent(loc).setRegistryName(name);
@@ -173,6 +182,22 @@ public final class ThaumcraftSoundHandler
 	public static SoundEvent randomZapSound()
 	{
 		return rand.nextInt(2) + 1 == 1 ? zap_1 : zap_2;
+	}
+	
+	public static SoundEvent randomCameraClackSound()
+	{
+		int sound = rand.nextInt(3) + 1;
+		switch(sound)
+		{
+		case 1:
+			return camera_clack_1;
+		case 2:
+			return camera_clack_2;
+		case 3:
+			return camera_clack_3;
+		}
+		
+		return camera_clack_1;
 	}
 	
 }

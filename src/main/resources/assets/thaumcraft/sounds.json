@@ -26,5 +26,7 @@
    "zap_1": { "category": "master", "sounds": ["thaumcraft:zap_1"], "subtitle": "thaumcraft.subtitle.zap" },
    "zap_2": { "category": "master", "sounds": ["thaumcraft:zap_2"], "subtitle": "thaumcraft.subtitle.zap" },
    "hh_on": { "category": "master", "sounds": ["thaumcraft:hh_on"], "subtitle": "thaumcraft.subtitle.hh_on" },
-   "hh_off": { "category": "master", "sounds": ["thaumcraft:hh_off"], "subtitle": "thaumcraft.subtitle.hh_off" }
+   "camera_clack_1": { "category": "master", "sounds": ["thaumcraft:camera_clack_1"], "subtitle": "thaumcraft.subtitle.camera_clack" },
+   "camera_clack_2": { "category": "master", "sounds": ["thaumcraft:camera_clack_2"], "subtitle": "thaumcraft.subtitle.camera_clack" },
+   "camera_clack_3": { "category": "master", "sounds": ["thaumcraft:camera_clack_3"], "subtitle": "thaumcraft.subtitle.camera_clack" }
 }

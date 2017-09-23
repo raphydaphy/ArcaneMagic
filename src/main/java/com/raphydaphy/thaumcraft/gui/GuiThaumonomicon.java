@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -30,6 +31,9 @@ public class GuiThaumonomicon extends GuiScreen
     
     private int lastDragX = 0;
     private int lastDragY = 0;
+    
+    private int relMouseX = 0;
+    private int relMouseY = 0;
     
     private static final ResourceLocation frame = new ResourceLocation(Thaumcraft.MODID, "textures/gui/thaumonomicon.png");
     private static final ResourceLocation page = new ResourceLocation(Thaumcraft.MODID, "textures/gui/thaumonomicon_page.png");
@@ -92,12 +96,24 @@ public class GuiThaumonomicon extends GuiScreen
     {
     	super.drawScreen(mouseX, mouseY, partialTicks);
     	
+    	ScaledResolution res = new ScaledResolution(mc);
+    	
+    	relMouseX = mouseX;
+    	relMouseY = mouseY;
+    	
     	GlStateManager.pushMatrix();
     	
-    	ScaledResolution res = new ScaledResolution(mc);
+    	
     	GlStateManager.translate((res.getScaledWidth() /2) - (255 / 2), (res.getScaledHeight() / 2) - (229 / 2), 0);
     	
-    	mc.getTextureManager().bindTexture(back);
+    	if (player.getEntityData().getInteger(tagTab) != 5)
+    	{
+    		mc.getTextureManager().bindTexture(back);
+    	}
+    	else
+    	{
+    		mc.getTextureManager().bindTexture(back_eldritch);
+    	}
     	GlStateManager.scale(2, 2, 2);
         drawTexturedModalRect(8, 8.5f, (int)player.getEntityData().getFloat(tagPageX), (int)player.getEntityData().getFloat(tagPageY), 112, 98);
         GlStateManager.scale(0.5f, 0.5f, 0.5f);
@@ -134,7 +150,7 @@ public class GuiThaumonomicon extends GuiScreen
     	}
         
     	mc.getTextureManager().bindTexture(frame);
-        drawTexturedModalRect(0, 0, 0, 0, 255, 229);
+    	drawTexturedModalRect(0, 0, 0, 0, 255, 229);
        
         GlStateManager.popMatrix();
     }
@@ -156,14 +172,16 @@ public class GuiThaumonomicon extends GuiScreen
     {
     	super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
     	
+    	GlStateManager.pushMatrix();
     	if (clickedMouseButton == 0)
     	{
         	ScaledResolution res = new ScaledResolution(mc);
         	
-        	float bgStartX = (res.getScaledWidth() / 2) - ((255 + 30) / 2);
-        	float bgStartY = (res.getScaledHeight() / 2) - ((229 - 28) / 2);
+        	float screenX = (res.getScaledWidth() / 2);
+        	float screenY = (res.getScaledHeight() / 2);
         	
-        	if (mouseX >= bgStartX && mouseY >= bgStartY && mouseX <= bgStartX + 157 && mouseY <= bgStartY + 179)
+        	System.out.println(" MX: " + relMouseX + " MY: " + relMouseY + " SX: " + res.getScaledWidth() + " SY: " + res.getScaledHeight() +" F: " + res.getScaleFactor());
+        	if (relMouseX >= screenX - (255 / 2) + 16 && relMouseY >= screenY - (229 / 2) + 17 && relMouseX <= screenX - (255 / 2) + 240 && relMouseY <= screenY - (255 / 2) + 225)
         	{
 	        	float thisDragDistX = (lastDragX - (mouseX - (res.getScaledWidth() / 2) - (255 / 2))) * 0.7f;
 	        	float thisDragDistY = (lastDragY - (mouseY - (res.getScaledHeight() / 2) - (229 / 2))) * 0.45f;
@@ -185,6 +203,7 @@ public class GuiThaumonomicon extends GuiScreen
     		lastDragX = mouseX - (res.getScaledWidth() / 2) - (255 / 2);
     		lastDragY = mouseY - (res.getScaledHeight() / 2) - (229 / 2);
     	}
+    	GlStateManager.popMatrix();
     }
     
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
