@@ -31,8 +31,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiThaumonomicon extends GuiScreen
 {
-	public static final int WIDTH = 300;
-    public static final int HEIGHT = 265;
     
     public static final String tagUsedThauminomicon = "usedThauminomicon";
     public static final String tagPageX = "thauminomiconPageX";
@@ -70,12 +68,13 @@ public class GuiThaumonomicon extends GuiScreen
     public void initGui()
     {
     	super.initGui();
-    	this.setGuiSize(WIDTH, HEIGHT);
+    	this.setGuiSize(mc.displayWidth, mc.displayHeight);
     }
     
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
+    	this.drawDefaultBackground();
     	super.drawScreen(mouseX, mouseY, partialTicks);
     	
     	ScaledResolution res = new ScaledResolution(mc);
@@ -414,7 +413,7 @@ public class GuiThaumonomicon extends GuiScreen
         GlStateManager.popMatrix();
     }
     
-    public void drawResearchIcon(ResourceLocation icon, String type, int x, int y)
+    public void drawResearchIcon(Object icon, String type, int x, int y)
     {
     	
     	
@@ -458,12 +457,19 @@ public class GuiThaumonomicon extends GuiScreen
             mc.getTextureManager().bindTexture(frame);
             drawModalRectWithCustomSizedTexture((int)xStart, (int)yStart, 56 + u1, 232 + v1, width - 10, height - 10, 256, 256);
             
-            mc.getTextureManager().bindTexture(icon);
-            GlStateManager.scale(0.5, 0.5, 1);
+            if (icon instanceof ResourceLocation)
+            {
+            	mc.getTextureManager().bindTexture((ResourceLocation)icon);
+            	GlStateManager.scale(0.5, 0.5, 1);
             
-            drawModalRectWithCustomSizedTexture((int)(2* xStart) + 5, (int)(2*yStart) + 5, u2, v2, width, height, 32, 32);
+            	drawModalRectWithCustomSizedTexture((int)(2* xStart) + 5, (int)(2*yStart) + 5, u2, v2, width, height, 32, 32);
+            	GlStateManager.scale(2, 2, 1);
+            }
+            else if (icon instanceof ItemStack)
+            {
+            	this.itemRender.renderItemAndEffectIntoGUI((ItemStack)icon, (int)((xStart + 3) / 1), (int)((yStart + 3) / 1));
+            }
             
-            GlStateManager.scale(2, 2, 1);
             GlStateManager.popMatrix();
     	}
     }

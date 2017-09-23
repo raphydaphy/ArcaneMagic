@@ -1,27 +1,7 @@
 {
-	"textures": {
-		"0": "thaumcraft:items/wand/wand_rod_silverwood",
-		"1": "thaumcraft:items/wand/wand_cap_gold"
-	},
+	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"textures": {"1": "items/wand/wand_cap_iron"},
 	"elements": [
-		{
-			"name": "Wand Rod",
-			"from": [7.5, 2, 7.5],
-			"to": [8.5, 14, 8.5],
-			"faces": {
-				"north": {"uv": [1, 5, 2, 14], "texture": "0"},
-				"east": {"uv": [2, 5, 3, 14], "texture": "0"},
-				"south": {"uv": [3, 5, 4, 14], "texture": "0"},
-				"west": {"uv": [0, 5, 1, 14], "texture": "0"},
-				"up": {"uv": [1, 4, 2, 5], "texture": "0"},
-				"down": {"uv": [2, 4, 3, 5], "texture": "0"}
-			},
-			"rotation": {
-				"origin": [8, 6, 8],
-				"axis": "y",
-				"angle": -45
-			}
-		},
 		{
 			"name": "Wand Cap #2",
 			"from": [7.4, 14, 7.4],
@@ -42,8 +22,8 @@
 		},
 		{
 			"name": "Wand Cap #1",
-			"from": [7.4, 0.7999999999999998, 7.4],
-			"to": [8.6, 2, 8.6],
+			"from": [7.4, 0.75, 7.4],
+			"to": [8.6, 1.9500000000000002, 8.6],
 			"faces": {
 				"north": {"uv": [0, 1, 1.2, 2], "texture": "#1"},
 				"east": {"uv": [1, 1, 2.2, 2], "texture": "#1"},
@@ -53,13 +33,13 @@
 				"down": {"uv": [1, 0, 2.2, 1.2], "texture": "#1"}
 			},
 			"rotation": {
-				"origin": [8, 5.8, 8],
+				"origin": [8, 5.75, 8],
 				"axis": "y",
 				"angle": -45
 			}
 		}
 	],
-	"groups": [2, 1, 0],
+	"groups": [1, 0],
 	"display": {
 		"thirdperson_righthand": {
 			"rotation": [-3, 0, 0],

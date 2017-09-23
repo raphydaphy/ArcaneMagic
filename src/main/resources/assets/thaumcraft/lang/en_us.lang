@@ -40,7 +40,6 @@ thaumcraft.subtitle.camera_clack=Something Clicks
 itemGroup.thaumcraft=Thaumcraft
 
 # Thaumanomicon
-thaumcraft.research.category.thaumaturgy=Thaumaturgy
 thaumcraft.research.category.alchemy=Alchemy
 thaumcraft.research.category.artifice=Artifice
 thaumcraft.research.category.golemancy=Golemancy
@@ -60,3 +59,8 @@ thaumcraft.research.category.basic_info.nodes_intro=Auras and Nodes
 thaumcraft.research.category.basic_info.nodes_intro.desc=Magic is everywhere
 thaumcraft.research.category.basic_info.warp=Warp, Flux and all things bad
 thaumcraft.research.category.basic_info.warp.desc=Everything has a price
+
+## Thaumaturgy
+thaumcraft.research.category.thaumaturgy=Thaumaturgy
+thaumcraft.research.category.thaumaturgy.basic_wand=Basic Wand Craft
+thaumcraft.research.category.thaumaturgy.basic_wand.desc=Your first tool

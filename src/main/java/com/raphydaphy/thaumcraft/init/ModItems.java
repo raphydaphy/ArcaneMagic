@@ -28,7 +28,7 @@ public class ModItems
 	public static ItemScribingTools scribing_tools;
 	
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":knowledge_fragment")
-	public static ItemScribingTools knowledge_fragment;
+	public static ItemBase knowledge_fragment;
 	
 	@SideOnly(Side.CLIENT)
     public static void initModels() {

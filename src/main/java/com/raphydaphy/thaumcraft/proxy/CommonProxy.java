@@ -19,6 +19,8 @@ import com.raphydaphy.thaumcraft.item.ItemScribingTools;
 import com.raphydaphy.thaumcraft.item.ItemThaumonomicon;
 import com.raphydaphy.thaumcraft.item.ItemWand;
 import com.raphydaphy.thaumcraft.research.CategoryBasicInformation;
+import com.raphydaphy.thaumcraft.research.CategoryThaumaturgy;
+import com.raphydaphy.thaumcraft.tileentity.TileEntityArcaneWorktable;
 import com.raphydaphy.thaumcraft.world.WorldGenGreatwood;
 
 import net.minecraft.block.Block;
@@ -54,6 +56,7 @@ public class CommonProxy
 	public void postInit(FMLPostInitializationEvent event) 
 	{
 		ThaumcraftAPI.registerThaumonomiconCategory(new CategoryBasicInformation());
+		ThaumcraftAPI.registerThaumonomiconCategory(new CategoryThaumaturgy());
 	}
 	
 	@SubscribeEvent
@@ -115,6 +118,9 @@ public class CommonProxy
         registry.register(new BlockTable("table", Material.WOOD, 2f, "axe", 0));
         registry.register(new BlockArcaneWorktable());
         registry.register(new BlockResearchTable());
+        
+        // TileEntities
+        GameRegistry.registerTileEntity(TileEntityArcaneWorktable.class, Thaumcraft.MODID + "_arcane_worktable");
        
     }
 	
@@ -128,7 +134,7 @@ public class CommonProxy
         registry.register(new ItemThaumonomicon("thaumonomicon"));
         registry.register(new ItemBase("shard"));
         registry.register(new ItemScribingTools("scribing_tools"));
-        registry.register(new ItemScribingTools("knowledge_fragment"));
+        registry.register(new ItemBase("knowledge_fragment"));
         
         // Trees
         registry.register(new ItemBlock(ModBlocks.log_greatwood).setRegistryName(ModBlocks.log_greatwood.getRegistryName()));

@@ -1,20 +1,18 @@
 package com.raphydaphy.thaumcraft.api.util;
 
-import net.minecraft.util.ResourceLocation;
-
 public class IconTypePair 
 {
-	private ResourceLocation icon;
+	private Object icon;
 	private IconType type;
 	
-	public IconTypePair(ResourceLocation icon, IconType type)
+	public IconTypePair(Object icon, IconType type)
 	{
 		this.icon = icon;
 		this.type = type;
 	}
 	
-	public ResourceLocation getTexture()
-	{
+	public Object getTexture()
+	{	
 		return this.icon;
 	}
 	

@@ -2,21 +2,27 @@ package com.raphydaphy.thaumcraft.proxy;
 
 import javax.annotation.Nullable;
 
+import com.raphydaphy.thaumcraft.Thaumcraft;
 import com.raphydaphy.thaumcraft.entity.EntityItemFancy;
 import com.raphydaphy.thaumcraft.init.ModBlocks;
 import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.model.ModelWand;
 import com.raphydaphy.thaumcraft.particle.ParticleRenderer;
 import com.raphydaphy.thaumcraft.render.RenderEntityItemFancy;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
+import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -78,5 +84,19 @@ public class ClientProxy extends CommonProxy
 		
 		ModBlocks.initModels();
 		ModItems.initModels();
+	}
+	
+	@SubscribeEvent
+	public void onTextureStitch(TextureStitchEvent event)
+	{
+		ResourceLocation particleSparkle = new ResourceLocation(Thaumcraft.MODID + ":misc/particle_star");
+		event.getMap().registerSprite(particleSparkle);
+	}
+	
+	@SubscribeEvent
+	public void onModelBake(ModelBakeEvent event) 
+	{
+		ModelResourceLocation key = new ModelResourceLocation("thaumcraft:wand", "inventory");
+		event.getModelRegistry().putObject(key, new ModelWand());
 	}
 }
