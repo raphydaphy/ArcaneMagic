@@ -1,6 +1,7 @@
 package com.raphydaphy.thaumcraft.proxy;
 
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.api.ThaumcraftAPI;
 import com.raphydaphy.thaumcraft.block.BlockArcaneWorktable;
 import com.raphydaphy.thaumcraft.block.BlockBase;
 import com.raphydaphy.thaumcraft.block.BlockModLeaves;
@@ -17,6 +18,7 @@ import com.raphydaphy.thaumcraft.item.ItemBlockModSlab;
 import com.raphydaphy.thaumcraft.item.ItemScribingTools;
 import com.raphydaphy.thaumcraft.item.ItemThaumonomicon;
 import com.raphydaphy.thaumcraft.item.ItemWand;
+import com.raphydaphy.thaumcraft.research.CategoryBasicInformation;
 import com.raphydaphy.thaumcraft.world.WorldGenGreatwood;
 
 import net.minecraft.block.Block;
@@ -51,7 +53,7 @@ public class CommonProxy
 	
 	public void postInit(FMLPostInitializationEvent event) 
 	{
-		
+		ThaumcraftAPI.registerThaumonomiconCategory(new CategoryBasicInformation());
 	}
 	
 	@SubscribeEvent

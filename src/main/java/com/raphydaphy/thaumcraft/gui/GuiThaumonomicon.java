@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 
 import com.google.common.collect.Lists;
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.api.ThaumcraftAPI;
+import com.raphydaphy.thaumcraft.api.research.IThaumonomiconEntry;
 import com.raphydaphy.thaumcraft.handler.ThaumcraftSoundHandler;
 
 import net.minecraft.client.gui.FontRenderer;
@@ -50,39 +52,6 @@ public class GuiThaumonomicon extends GuiScreen
     private static final ResourceLocation back = new ResourceLocation(Thaumcraft.MODID, "textures/gui/thaumonomicon_back.png");
     private static final ResourceLocation back_eldritch = new ResourceLocation(Thaumcraft.MODID, "textures/gui/thaumonomicon_back_eldritch.png");
     
-    private static final ResourceLocation r_alchent = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_alchent.png");
-    private static final ResourceLocation r_alchman = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_alchman.png");
-    private static final ResourceLocation r_alchmult = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_alchmult.png");
-    private static final ResourceLocation r_artifice = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_artifice.png");
-    private static final ResourceLocation r_aspects = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_aspects.png");
-    private static final ResourceLocation r_crucible = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_crucible.png");
-    private static final ResourceLocation r_eldritch = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_eldritch.png");
-    private static final ResourceLocation r_eldritchmajor = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_eldritchmajor.png");
-    private static final ResourceLocation r_eldritchminor = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_eldritchminor.png");
-    private static final ResourceLocation r_enchant = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_enchant.png");
-    private static final ResourceLocation r_golemancy = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_golemancy.png");
-    private static final ResourceLocation r_infernalfurnace = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_infernalfurnace.png");
-    private static final ResourceLocation r_mask0 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_mask0.png");
-    private static final ResourceLocation r_mask1 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_mask1.png");
-    private static final ResourceLocation r_mask2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_mask2.png");
-    private static final ResourceLocation r_nodepreserve = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodepreserve.png");
-    private static final ResourceLocation r_nodes1 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodes1.png");
-    private static final ResourceLocation r_nodes2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodes2.png");
-    private static final ResourceLocation r_nodetap1 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodetap1.png");
-    private static final ResourceLocation r_nodetap2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_nodetap2.png");
-    private static final ResourceLocation r_outer = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_outer.png");
-    private static final ResourceLocation r_outerrev = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_outerenv.png");
-    private static final ResourceLocation r_pech = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_pech.png");
-    private static final ResourceLocation r_resdupe = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_resdupe.png");
-    private static final ResourceLocation r_researcher1 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_researcher1.png");
-    private static final ResourceLocation r_researcher2 = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_researcher2.png");
-    private static final ResourceLocation r_runicupg = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_runicupg.png");
-    private static final ResourceLocation r_thaumaturgy = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_thaumaturgy.png");
-    private static final ResourceLocation r_warp = new ResourceLocation(Thaumcraft.MODID, "textures/misc/research/r_warp.png");
-    
-    private static final ResourceLocation[] tabs = new ResourceLocation[] { new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png"), r_thaumaturgy, r_crucible, r_artifice, r_golemancy, r_eldritch };
-	private static final int totalTabs = 6;
-	
     public GuiThaumonomicon(EntityPlayer player)
     {
     	this.player = player;
@@ -137,46 +106,38 @@ public class GuiThaumonomicon extends GuiScreen
     	mc.getTextureManager().bindTexture(frame);
     	
     	
-    	for (int tab = 0; tab < totalTabs * 2; tab++)
+    	for (int tab = 0; tab < ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES * 2; tab++)
     	{
-    		int thisTab = tab >= totalTabs ? tab - 6 : tab;
+    		int thisTab = tab >= ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES ? tab - ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES : tab;
     		if (thisTab == player.getEntityData().getInteger(tagTab))
     		{
-    			if (tab < totalTabs)
+    			if (tab < ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES)
     			{
     				drawTexturedModalRect(-24, tab*23, 152, 232, 24, 24);
     			}
     			else
     			{
-    				drawIcon(tabs[thisTab], -19, thisTab*23 + 4);
+    				drawIcon(ThaumcraftAPI.THAUMONOMICON_CATEGORIES.get(thisTab).getIcon(), -19, thisTab*23 + 4);
+    				
+    				for (IThaumonomiconEntry entry : ThaumcraftAPI.THAUMONOMICON_CATEGORIES.get(thisTab).getEntries())
+    				{
+    					drawResearchIcon(entry.getIcon().getTexture(), entry.getIcon().getType().getName(),entry.getPos().getX(), entry.getPos().getY());
+    				}
     			}
     		}
     		else
     		{
-    			if (tab < totalTabs)
+    			if (tab < ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES)
     			{
     				drawTexturedModalRect(-16, tab * 23, 184, 232, 16, 22);
     			}
     			else
     			{
-    				drawIcon(tabs[thisTab], -12, thisTab*23 + 3);
+    				drawIcon(ThaumcraftAPI.THAUMONOMICON_CATEGORIES.get(thisTab).getIcon(), -12, thisTab*23 + 3);
     			}
     		}
     	}
     	
-    	// Basic Information
-    	if (player.getEntityData().getInteger(tagTab) == 0)
-    	{
-    		drawResearchIcon(r_aspects, "circle",260, 250);
-    		
-    		drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/thaumonomicon.png"), "circle", 290, 200);
-    		drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/scribing_tools.png"), "circle", 320, 250);
-    		drawResearchIcon(new ResourceLocation(Thaumcraft.MODID, "textures/items/knowledge_fragment.png"), "circle", 350, 200);
-    		
-    		drawResearchIcon(r_nodes1, "circle",200, 250);
-    		
-    		drawResearchIcon(r_warp, "circle",260, 300);
-    	}
     	mc.getTextureManager().bindTexture(frame);
     	drawTexturedModalRect(0, 0, 0, 0, 255, 229);
     	
@@ -185,7 +146,13 @@ public class GuiThaumonomicon extends GuiScreen
     	
     	GlStateManager.pushMatrix();
     	
-    	// Basic Information
+    	
+    	for (IThaumonomiconEntry entry : ThaumcraftAPI.THAUMONOMICON_CATEGORIES.get(player.getEntityData().getInteger(tagTab)).getEntries())
+		{
+			drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(), Lists.newArrayList(I18n.format(entry.getUnlocalizedName()), I18n.format(entry.getUnlocalizedName() + ".desc")));
+		}
+    	
+    	/* Basic Information
     	if (player.getEntityData().getInteger(tagTab) == 0)
     	{
     		drawResearchInfoOnMouse(260, 250, Lists.newArrayList("Aspects of Magic", "The building blocks of magic"));
@@ -198,10 +165,10 @@ public class GuiThaumonomicon extends GuiScreen
     		
     		drawResearchInfoOnMouse(260, 300, Lists.newArrayList("Warp, Flux and all things bad", "Everything has a price"));
     	}
-    	
-    	if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (totalTabs * 23))
+    	*/
+    	if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES * 23))
     	{
-			for (int tab = 0; tab < totalTabs; tab++)
+			for (int tab = 0; tab < ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES; tab++)
 			{
 				int tabWidth = 16;
 				
@@ -211,7 +178,7 @@ public class GuiThaumonomicon extends GuiScreen
 				}
         		if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 23) + 23 && relMouseX >= screenX - tabWidth)
         		{
-    				this.fontRenderer.drawString(I18n.format("thaumcraft.research.category." + tab), mouseX + 1, mouseY - 7, 0xFFFFFF);
+    				this.fontRenderer.drawString(I18n.format(ThaumcraftAPI.THAUMONOMICON_CATEGORIES.get(tab).getUnlocalizedName()), mouseX + 1, mouseY - 7, 0xFFFFFF);
     				break;
     			}
     		}
@@ -553,9 +520,9 @@ public class GuiThaumonomicon extends GuiScreen
     		float screenX = (res.getScaledWidth() / 2) - (255 / 2);
         	float screenY = (res.getScaledHeight() / 2) - (229 / 2);
         	
-    		if (relMouseX >= screenX - 16 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (totalTabs * 23))
+    		if (relMouseX >= screenX - 16 && relMouseY >= screenY && relMouseX <= screenX && relMouseY <= screenY + (ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES * 23))
         	{
-    			for (int tab = 0; tab < totalTabs; tab++)
+    			for (int tab = 0; tab < ThaumcraftAPI.TOTAL_THAUMONOMICON_CATEGORIES; tab++)
     			{
 	        		if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 23) + 23)
 	        		{

@@ -40,9 +40,23 @@ thaumcraft.subtitle.camera_clack=Something Clicks
 itemGroup.thaumcraft=Thaumcraft
 
 # Thaumanomicon
-thaumcraft.research.category.0=Basic Information
-thaumcraft.research.category.1=Thaumaturgy
-thaumcraft.research.category.2=Alchemy
-thaumcraft.research.category.3=Artifice
-thaumcraft.research.category.4=Golemancy
-thaumcraft.research.category.5=Eldritch
+thaumcraft.research.category.thaumaturgy=Thaumaturgy
+thaumcraft.research.category.alchemy=Alchemy
+thaumcraft.research.category.artifice=Artifice
+thaumcraft.research.category.golemancy=Golemancy
+thaumcraft.research.category.eldritch=Eldritch
+
+## Basic Information
+thaumcraft.research.category.basic_info=Basic Information
+thaumcraft.research.category.basic_info.aspects=Aspects of Magic
+thaumcraft.research.category.basic_info.aspects.desc=The building blocks of magic
+thaumcraft.research.category.basic_info.thaumonomicon=Thaumonomicon
+thaumcraft.research.category.basic_info.thaumonomicon.desc=A Repository of Knowledge
+thaumcraft.research.category.basic_info.research=Research
+thaumcraft.research.category.basic_info.research.desc=How you discover things
+thaumcraft.research.category.basic_info.knowledge_fragments=Knowledge Fragments
+thaumcraft.research.category.basic_info.knowledge_fragments.desc=Fragments of lost lore
+thaumcraft.research.category.basic_info.nodes_intro=Auras and Nodes
+thaumcraft.research.category.basic_info.nodes_intro.desc=Magic is everywhere
+thaumcraft.research.category.basic_info.warp=Warp, Flux and all things bad
+thaumcraft.research.category.basic_info.warp.desc=Everything has a price
