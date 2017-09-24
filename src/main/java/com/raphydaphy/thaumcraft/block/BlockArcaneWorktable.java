@@ -16,42 +16,44 @@ import net.minecraft.world.World;
 public class BlockArcaneWorktable extends BlockBase implements ITileEntityProvider
 {
 	public static final int GUI_ID = 2;
+
 	public BlockArcaneWorktable()
 	{
 		super("arcane_worktable", Material.WOOD, 2.5f);
 	}
-	
+
 	@Override
-	public boolean isOpaqueCube(IBlockState state) 
+	public boolean isOpaqueCube(IBlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) 
+	public boolean isFullCube(IBlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) 
+	public TileEntity createNewTileEntity(World worldIn, int meta)
 	{
 		return new TileEntityArcaneWorktable();
 	}
-	
+
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-        if (world.isRemote) 
-        {
-            return true;
-        }
-        TileEntity te = world.getTileEntity(pos);
-        if (!(te instanceof TileEntityArcaneWorktable)) 
-        {
-            return false;
-        }
-        player.openGui(Thaumcraft.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
-        return true;
-    }
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (world.isRemote)
+		{
+			return true;
+		}
+		TileEntity te = world.getTileEntity(pos);
+		if (!(te instanceof TileEntityArcaneWorktable))
+		{
+			return false;
+		}
+		player.openGui(Thaumcraft.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
+		return true;
+	}
 }

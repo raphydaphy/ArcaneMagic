@@ -12,33 +12,33 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = Thaumcraft.MODID, name = Thaumcraft.MODNAME, version = Thaumcraft.VERSION, useMetadata = true)
 public class Thaumcraft
 {
-    public static final String MODID = "thaumcraft";
-    public static final String MODNAME = "Thaumcraft";
-    public static final String VERSION = "0.1";
-    
-    @SidedProxy(clientSide = "com.raphydaphy.thaumcraft.proxy.ClientProxy", serverSide = "com.raphydaphy.thaumcraft.proxy.ServerProxy")
-    public static CommonProxy proxy;
-    
-    @Mod.Instance
-    public static Thaumcraft instance;
-    
-    public static final ThaumcraftCreativeTab creativeTab = new ThaumcraftCreativeTab();
-    
-    @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-        proxy.preInit(event);
-    }
-    
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-    	proxy.init(event);
-    }
-    
-    @Mod.EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-        proxy.postInit(event);
-    }
+	public static final String MODID = "thaumcraft";
+	public static final String MODNAME = "Thaumcraft";
+	public static final String VERSION = "0.1";
+
+	@SidedProxy(clientSide = "com.raphydaphy.thaumcraft.proxy.ClientProxy", serverSide = "com.raphydaphy.thaumcraft.proxy.ServerProxy")
+	public static CommonProxy proxy;
+
+	@Mod.Instance
+	public static Thaumcraft instance;
+
+	public static final ThaumcraftCreativeTab creativeTab = new ThaumcraftCreativeTab();
+
+	@Mod.EventHandler
+	public void preInit(FMLPreInitializationEvent event)
+	{
+		proxy.preInit(event);
+	}
+
+	@Mod.EventHandler
+	public void init(FMLInitializationEvent event)
+	{
+		proxy.init(event);
+	}
+
+	@Mod.EventHandler
+	public void postInit(FMLPostInitializationEvent event)
+	{
+		proxy.postInit(event);
+	}
 }

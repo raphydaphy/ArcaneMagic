@@ -5,6 +5,7 @@ item.thaumcraft.thaumonomicon.name=Thaumonomicon
 item.thaumcraft.shard.name=Infused Shard
 item.thaumcraft.scribing_tools.name=Scribing Tools
 item.thaumcraft.knowledge_fragment.name=Knowledge Fragment
+item.thaumcraft.focus_fire.name=Wand Focus: Fire
 
 # Blocks
 tile.thaumcraft.log_greatwood.name=Greatwood Log
@@ -39,6 +40,14 @@ thaumcraft.subtitle.camera_clack=Something Clicks
 # Guis
 itemGroup.thaumcraft=Thaumcraft
 
+# Vis
+thaumcraft.vis.aer=Aer
+thaumcraft.vis.aqua=Aqua
+thaumcraft.vis.ignis=Ignis
+thaumcraft.vis.ordo=Ordo
+thaumcraft.vis.perditio=Perditio
+thaumcraft.vis.terra=Terra
+
 # Thaumanomicon
 thaumcraft.research.category.alchemy=Alchemy
 thaumcraft.research.category.artifice=Artifice
@@ -64,3 +73,10 @@ thaumcraft.research.category.basic_info.warp.desc=Everything has a price
 thaumcraft.research.category.thaumaturgy=Thaumaturgy
 thaumcraft.research.category.thaumaturgy.basic_wand=Basic Wand Craft
 thaumcraft.research.category.thaumaturgy.basic_wand.desc=Your first tool
+thaumcraft.research.category.thaumaturgy.basic_foci=Wand Foci
+thaumcraft.research.category.thaumaturgy.basic_foci.desc=Form meets Function
+
+## Alchemy
+thaumcraft.research.category.alchemy=Alchemy
+thaumcraft.research.category.alchemy.basic_alchemy=Basic Alchemy
+thaumcraft.research.category.alchemy.basic_alchemy.desc=Bubble and Boil

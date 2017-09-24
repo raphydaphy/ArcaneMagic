@@ -10,9 +10,9 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockBase extends Block 
+public class BlockBase extends Block
 {
-	public BlockBase(String name, Material material, float hardness) 
+	public BlockBase(String name, Material material, float hardness)
 	{
 		super(material);
 		setUnlocalizedName(Thaumcraft.MODID + "." + name);
@@ -20,10 +20,11 @@ public class BlockBase extends Block
 		setCreativeTab(Thaumcraft.creativeTab);
 		setHardness(hardness);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public void initModel() 
+	public void initModel()
 	{
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
+				new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
 }

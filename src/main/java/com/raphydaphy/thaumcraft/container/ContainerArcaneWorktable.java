@@ -1,121 +1,89 @@
 package com.raphydaphy.thaumcraft.container;
 
-import javax.annotation.Nullable;
-
-import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.handler.InvCraftingHandler;
 import com.raphydaphy.thaumcraft.tileentity.TileEntityArcaneWorktable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
+import net.minecraft.inventory.SlotCrafting;
 
-public class ContainerArcaneWorktable extends Container 
+public class ContainerArcaneWorktable extends Container
 {
 
-    private TileEntityArcaneWorktable te;
+	private TileEntityArcaneWorktable te;
+	private final EntityPlayer player;
+	private final InvCraftingHandler craftMatrix;
+	private final InventoryCraftResult craftResult;
+	protected int playerInventoryStart = -1;
 
-    public ContainerArcaneWorktable(IInventory playerInventory, TileEntityArcaneWorktable te) 
-    {
-        this.te = te;
-        
-        addOwnSlots();
-        addPlayerSlots(playerInventory);
-    }
+	public ContainerArcaneWorktable(InventoryPlayer playerInventory, TileEntityArcaneWorktable te)
+	{
+		this.te = te;
+		this.craftResult = new InventoryCraftResult();
+		this.craftMatrix = new InvCraftingHandler(this, te, 3, 3);
+		this.player = playerInventory.player;
 
-    private void addPlayerSlots(IInventory playerInventory) 
-    {
-        // Slots for the main inventory
-        for (int row = 0; row < 3; ++row) 
-        {
-            for (int col = 0; col < 9; ++col) 
-            {
-                int x = 8 + col * 18;
-                int y = row * 18 + 147;
-                this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
-            }
-        }
+		this.addSlotToContainer(
+				new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 80, 20));
 
-        // Slots for the hotbar
-        for (int row = 0; row < 9; ++row) 
-        {
-            int x = 8 + row * 18;
-            int y = 58 + 147;
-            this.addSlotToContainer(new Slot(playerInventory, row, x, y));
-        }
-    }
+		addOwnSlots();
+		addPlayerSlots(playerInventory);
+	}
 
-    private void addOwnSlots()
-    {
-        IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-        int x = 35;
-        int y = 37;
+	private void addPlayerSlots(IInventory playerInventory)
+	{
+		int start = this.inventorySlots.size();
 
-        int slotIndex = 0;
-        for (int row = 0; row < 3; row++) 
-        {
-        	for (int col = 0; col < 3; col++)
-        	{
-	            addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
-	            slotIndex++;
-	            
-	            x += 24;
-        	}
-        	x = 35;
-        	y += 24;
-        }
-        
-        //addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, 100, 62));
-    }
+		// Slots for the main inventory
+		for (int row = 0; row < 3; ++row)
+		{
+			for (int col = 0; col < 9; ++col)
+			{
+				int x = 8 + col * 18;
+				int y = row * 18 + 147;
+				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
+			}
+		}
 
-    @Nullable
-    @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) 
-    {
-        ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+		// Slots for the hotbar
+		for (int row = 0; row < 9; ++row)
+		{
+			int x = 8 + row * 18;
+			int y = 58 + 147;
+			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
+		}
 
-        if (slot != null && slot.getHasStack()) 
-        {
-            ItemStack itemstack1 = slot.getStack();
-            itemstack = itemstack1.copy();
+		playerInventoryStart = start;
+	}
 
-            if (index < TileEntityArcaneWorktable.SIZE) 
-            {
-                if (!this.mergeItemStack(itemstack1, TileEntityArcaneWorktable.SIZE, this.inventorySlots.size(), true)) 
-                {
-                    return ItemStack.EMPTY;
-                }
-            } 
-            else if (itemstack1.getItem().equals(ModItems.wand))
-            {
-            	System.out.println("put it in!");
-            }
-            /*else if (!this.mergeItemStack(itemstack1, 0, TileEntityArcaneWorktable.SIZE, false)) 
-            {
-                return null;
-            }*/
+	private void addOwnSlots()
+	{
+		int x = 35;
+		int y = 37;
 
-            if (itemstack1.isEmpty()) 
-            {
-                slot.putStack(ItemStack.EMPTY);
-            } 
-            else 
-            {
-                //slot.onSlotChanged();
-            }
-        }
+		int slotIndex = 1;
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 3; col++)
+			{
+				addSlotToContainer(new Slot(craftMatrix, slotIndex, x, y));
+				slotIndex++;
 
-        return itemstack;
-    }
+				x += 24;
+			}
+			x = 35;
+			y += 24;
+		}
 
-    @Override
-    public boolean canInteractWith(EntityPlayer playerIn) 
-    {
-        return te.canInteractWith(playerIn);
-    }
+	}
+
+	@Override
+	public boolean canInteractWith(EntityPlayer playerIn)
+	{
+		return te.canInteractWith(playerIn);
+	}
 }

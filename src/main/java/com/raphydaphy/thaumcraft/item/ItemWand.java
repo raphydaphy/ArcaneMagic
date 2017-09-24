@@ -1,10 +1,22 @@
 package com.raphydaphy.thaumcraft.item;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.api.ThaumcraftAPI;
+import com.raphydaphy.thaumcraft.api.vis.IItemVisAcceptor;
+import com.raphydaphy.thaumcraft.api.vis.Vis;
+import com.raphydaphy.thaumcraft.api.wand.IWandCap;
+import com.raphydaphy.thaumcraft.api.wand.IWandRod;
 import com.raphydaphy.thaumcraft.entity.EntityItemFancy;
+import com.raphydaphy.thaumcraft.handler.MeshHandler;
 import com.raphydaphy.thaumcraft.handler.ThaumcraftSoundHandler;
 import com.raphydaphy.thaumcraft.init.ModBlocks;
 import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.init.VanillaThaumcraftParts;
+import com.raphydaphy.thaumcraft.model.ModelWand;
+import com.raphydaphy.thaumcraft.model.ModelWand.ModelWandLoader;
 import com.raphydaphy.thaumcraft.particle.ParticleUtil;
 
 import net.minecraft.block.Block;
@@ -12,80 +24,161 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemWand extends ItemBase {
-
-	public ItemWand(String name) {
+public class ItemWand extends ItemBase implements IItemVisAcceptor
+{
+	public static final String KEY_ROD = "rodType";
+	public static final String KEY_CAP = "capType";
+	
+	public ItemWand(String name)
+	{
 		super(name);
 		maxStackSize = 1;
 	}
-	
-	public static ResourceLocation getCap(ItemStack wand)
+
+	public static IWandCap getCap(ItemStack wand)
 	{
-		return new ResourceLocation(Thaumcraft.MODID, "textures/items/wand/wand_cap_iron.png");
+		if (wand.hasTagCompound())
+		{
+			return ThaumcraftAPI.WAND_CAPS.get(wand.getTagCompound().getString(KEY_CAP));
+		}
+		return VanillaThaumcraftParts.cap_iron;
 	}
-	
-	public static ResourceLocation getRod(ItemStack wand)
+
+	public static IWandRod getRod(ItemStack wand)
 	{
-		return new ResourceLocation(Thaumcraft.MODID, "textures/items/wand/wand_rod_wood.png");
+		if (wand.hasTagCompound())
+		{
+			return ThaumcraftAPI.WAND_RODS.get(wand.getTagCompound().getString(KEY_ROD));
+		}
+		return VanillaThaumcraftParts.rod_wood;
 	}
-	
+
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-    {
-		Block block = world.getBlockState(pos).getBlock(); 
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
+			float hitX, float hitY, float hitZ)
+	{
+		Block block = world.getBlockState(pos).getBlock();
 		if (block.equals(Blocks.BOOKSHELF))
 		{
 			world.setBlockToAir(pos);
-			
+
 			for (int i = 0; i < 1000; i++)
 			{
-				ParticleUtil.spawnParticleStar(world, pos.getX(), pos.getY() + 1, pos.getZ(), 1, 1, 1, 168, 37, 142, 0.01f, 50);
-				
-				//world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() + world.rand.nextFloat(), pos.getY() + world.rand.nextFloat(), pos.getZ() + world.rand.nextFloat(), 0f, 0f, 0f, 234);
+				ParticleUtil.spawnParticleStar(world, pos.getX(), pos.getY() + 1, pos.getZ(), 1, 1, 1, 168, 37, 142,
+						0.01f, 50);
+
+				// world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() +
+				// world.rand.nextFloat(), pos.getY() + world.rand.nextFloat(), pos.getZ() +
+				// world.rand.nextFloat(), 0f, 0f, 0f, 234);
 			}
-			
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ThaumcraftSoundHandler.randomWandSound(), SoundCategory.MASTER, 1f, 1f, false);
+
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ThaumcraftSoundHandler.randomWandSound(),
+					SoundCategory.MASTER, 1f, 1f, false);
 			if (!world.isRemote)
 			{
-				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f, new ItemStack(ModItems.thaumonomicon));
-		        ei.setDefaultPickupDelay();
-		        ei.motionX = 0;
-		        ei.motionY = 0;
-		        ei.motionZ = 0;
+				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
+						new ItemStack(ModItems.thaumonomicon));
+				ei.setDefaultPickupDelay();
+				ei.motionX = 0;
+				ei.motionY = 0;
+				ei.motionZ = 0;
 				ei.setPickupDelay(15);
 				world.spawnEntity(ei);
-			}
-			else
+			} else
 			{
 				// spawn particles client-side
-				
+
 			}
 			return EnumActionResult.SUCCESS;
-		}
-		else if (block.equals(ModBlocks.table))
+		} else if (block.equals(ModBlocks.table))
 		{
 			world.setBlockState(pos, ModBlocks.arcane_worktable.getDefaultState());
+		} else if (block.equals(ModBlocks.ore_infused))
+		{
+			ItemStack stack = player.getHeldItem(hand);
+			if (!stack.hasTagCompound())
+			{
+				stack.setTagCompound(new NBTTagCompound());
+				
+			}
+			
+			stack.getTagCompound().setString("rodType", VanillaThaumcraftParts.rod_wood.getUnlocalizedName());
+			stack.getTagCompound().setString("capType", VanillaThaumcraftParts.cap_gold.getUnlocalizedName());
 		}
-		
-        return EnumActionResult.PASS;
-    }
+
+		return EnumActionResult.PASS;
+	}
 	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public ModelResourceLocation getModelLocation(ItemStack stack)
+    {
+        return new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory");
+    }
+
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void initModel() 
+	public void initModel()
 	{
-		super.initModel();
-		ModelLoader.setCustomMeshDefinition(this, (stack) -> {return new ModelResourceLocation("thaumcraft:wand", "inventory");});
+		ModelLoader.registerItemVariants(ModItems.wand, new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory"));
+        ModelLoader.setCustomMeshDefinition(ModItems.wand, MeshHandler.instance());
+		ModelLoaderRegistry.registerLoader(ModelWand.ModelWandLoader.instance);
+	}
+
+	@Override
+	public Map<Vis, Integer> getVisStored(ItemStack stack)
+	{
+		Map<Vis, Integer> visStored = new HashMap<Vis, Integer>();
+		if (stack.hasTagCompound())
+		{
+			for (Vis vis : Vis.values())
+			{
+				visStored.put(vis, stack.getTagCompound().getInteger(vis.getMultiKey()));
+			}
+			return visStored;
+		}
+		return visStored;
+	}
+
+	@Override
+	public Map<Vis, Integer> getVisCapacity(ItemStack stack)
+	{
+		Map<Vis, Integer> capacities = new HashMap<Vis, Integer>();
+		if (stack.hasTagCompound())
+		{
+			for (Vis vis : Vis.values())
+			{
+				capacities.put(vis, stack.getTagCompound().getInteger(vis.getMultiMaxKey()));
+			}
+			return capacities;
+		}
+		return capacities;
+	}
+
+	@Override
+	public Map<Vis, Float> getVisDiscount(ItemStack stack)
+	{
+		Map<Vis, Float> discounts = new HashMap<Vis, Float>();
+		if (stack.hasTagCompound())
+		{
+			for (Vis vis : Vis.values())
+			{
+				discounts.put(vis, stack.getTagCompound().getFloat(vis.getMultiDiscountKey()));
+			}
+			return discounts;
+		}
+		return discounts;
 	}
 }

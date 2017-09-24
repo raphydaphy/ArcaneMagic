@@ -5,19 +5,19 @@ import net.minecraft.block.state.IBlockState;
 
 public class BlockOre extends BlockBase
 {
-	public BlockOre(String name, float hardness) 
+	public BlockOre(String name, float hardness)
 	{
 		super(name, Material.ROCK, hardness);
 	}
-	
+
 	@Override
-	public boolean isOpaqueCube(IBlockState state) 
+	public boolean isOpaqueCube(IBlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) 
+	public boolean isFullCube(IBlockState state)
 	{
 		return false;
 	}

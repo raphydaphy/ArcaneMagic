@@ -16,75 +16,68 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber
-public class ModBlocks 
+public class ModBlocks
 {
 	// Trees
-	
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":log_greatwood")
-    public static BlockModLog log_greatwood;
-	
+	public static BlockModLog log_greatwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":log_silverwood")
-    public static BlockModLog log_silverwood;
-	
+	public static BlockModLog log_silverwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":leaves_greatwood")
-    public static BlockModLeaves leaves_greatwood;
-	
+	public static BlockModLeaves leaves_greatwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":leaves_silverwood")
-    public static BlockModLeaves leaves_silverwood;
-	
+	public static BlockModLeaves leaves_silverwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":planks_greatwood")
-    public static BlockBase planks_greatwood;
-	
+	public static BlockBase planks_greatwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":planks_silverwood")
-    public static BlockBase planks_silverwood;
-	
+	public static BlockBase planks_silverwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":slab_greatwood")
-    public static BlockModSlab slab_greatwood;
-	
+	public static BlockModSlab slab_greatwood;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":slab_silverwood")
 	public static BlockModSlab slab_silverwood;
-	
-	
-	
+
 	// Ores
-	
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":ore_infused")
-    public static BlockOre ore_infused;
-	
-	
-	
+	public static BlockOre ore_infused;
+
 	// Tables
-	
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":table")
-    public static BlockTable table;
-	
+	public static BlockTable table;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":arcane_worktable")
-    public static BlockArcaneWorktable arcane_worktable;
-	
+	public static BlockArcaneWorktable arcane_worktable;
+
 	@GameRegistry.ObjectHolder(Thaumcraft.MODID + ":research_table")
-    public static BlockResearchTable research_table;
-	
-	
-	
+	public static BlockResearchTable research_table;
+
 	@SideOnly(Side.CLIENT)
-    public static void initModels() 
+	public static void initModels()
 	{
 		// Trees
 		log_greatwood.initModel();
 		log_silverwood.initModel();
 		leaves_greatwood.initModel();
 		leaves_silverwood.initModel();
-        planks_greatwood.initModel();
-        planks_silverwood.initModel();
-        slab_greatwood.initModel();
-        slab_silverwood.initModel();
-        
-        
-        // Ores
-        ore_infused.initModel();
-        
-        // Tables
-        table.initModel();
-        arcane_worktable.initModel();
-    }
+		planks_greatwood.initModel();
+		planks_silverwood.initModel();
+		slab_greatwood.initModel();
+		slab_silverwood.initModel();
+
+		// Ores
+		ore_infused.initModel();
+
+		// Tables
+		table.initModel();
+		arcane_worktable.initModel();
+	}
 }

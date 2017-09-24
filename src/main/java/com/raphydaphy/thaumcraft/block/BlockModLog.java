@@ -23,30 +23,31 @@ public class BlockModLog extends BlockLog
 		setHarvestLevel("axe", 0);
 		setHardness(3f);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public void initModel() 
+	public void initModel()
 	{
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
-	
-	private static EnumAxis getAxis(int meta) 
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
+				new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
+
+	private static EnumAxis getAxis(int meta)
 	{
-		switch (meta & 12) 
+		switch (meta & 12)
 		{
-			case 0:
-				return EnumAxis.Y;
-			case 4:
-				return EnumAxis.X;
-			case 8:
-				return EnumAxis.Z;
-			default:
-				return EnumAxis.NONE;
+		case 0:
+			return EnumAxis.Y;
+		case 4:
+			return EnumAxis.X;
+		case 8:
+			return EnumAxis.Z;
+		default:
+			return EnumAxis.NONE;
 		}
 	}
-	
+
 	@Override
-	public final IBlockState getStateFromMeta(int meta) 
+	public final IBlockState getStateFromMeta(int meta)
 	{
 		EnumAxis axis = getAxis(meta);
 		return getDefaultState().withProperty(LOG_AXIS, axis);
@@ -54,27 +55,27 @@ public class BlockModLog extends BlockLog
 
 	@SuppressWarnings("incomplete-switch")
 	@Override
-	public final int getMetaFromState(IBlockState state) 
+	public final int getMetaFromState(IBlockState state)
 	{
 		int i = damageDropped(state);
 
-		switch (state.getValue(LOG_AXIS)) 
+		switch (state.getValue(LOG_AXIS))
 		{
-			case X:
-				i |= 4;
-				break;
-			case Z:
-				i |= 8;
-				break;
-			case NONE:
-				i |= 12;
+		case X:
+			i |= 4;
+			break;
+		case Z:
+			i |= 8;
+			break;
+		case NONE:
+			i |= 12;
 		}
 
 		return i;
 	}
-	
+
 	@Override
-	protected final BlockStateContainer createBlockState() 
+	protected final BlockStateContainer createBlockState()
 	{
 		return new BlockStateContainer(this, LOG_AXIS);
 	}

@@ -19,11 +19,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber
-public class ModEvents 
+public class ModEvents
 {
 	public static boolean hasRenderedParticles = false;
 	static EntityPlayer clientPlayer = null;
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
@@ -32,67 +32,65 @@ public class ModEvents
 		if (event.getType() == ElementType.ALL)
 		{
 			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
-				
-			if ((!player.getHeldItemMainhand().isEmpty() && player.getHeldItemMainhand().getItem().equals(ModItems.wand)) ||
-					!player.getHeldItemOffhand().isEmpty() && player.getHeldItemOffhand().getItem().equals(ModItems.wand))
+
+			if ((!player.getHeldItemMainhand().isEmpty()
+					&& player.getHeldItemMainhand().getItem().equals(ModItems.wand))
+					|| !player.getHeldItemOffhand().isEmpty()
+							&& player.getHeldItemOffhand().getItem().equals(ModItems.wand))
 			{
 				GuiWand.renderWandHUD(mc, event.getResolution());
 			}
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onTick(TickEvent.ClientTickEvent event){
-		if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START){
+	public void onTick(TickEvent.ClientTickEvent event)
+	{
+		if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START)
+		{
 			ClientProxy.particleRenderer.updateParticles();
 		}
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onRenderAfterWorld(RenderWorldLastEvent event)
 	{
-		if (Thaumcraft.proxy instanceof ClientProxy){
+		if (Thaumcraft.proxy instanceof ClientProxy)
+		{
 			GlStateManager.pushMatrix();
 			ClientProxy.particleRenderer.renderParticles(clientPlayer, event.getPartialTicks());
 			GlStateManager.popMatrix();
 		}
 	}
-	
+
 	// Disabled hand swinging animation - use once up to wand mechanics
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public static void onRenderHand(RenderHandEvent event) 
+	public static void onRenderHand(RenderHandEvent event)
 	{
-		/*
-        float t = 1.0f;
-        
-        EntityPlayer ply = ClientProxy.get().getPlayerClient();
-        ItemStack stack = ply.getActiveItemStack();
-        
-        if(!stack.isEmpty() && (stack.getItem() instanceof GenericGunCharge || stack.getItem() instanceof GenericGrenade)) {
-            EnumHand hand = ply.getActiveHand();
-
-            ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer();
-            try {
-                if(hand==EnumHand.MAIN_HAND) {
-                    if(Field_ItemRenderer_equippedProgressMainhand.getFloat(itemrenderer)<t) {
-                        Field_ItemRenderer_equippedProgressMainhand.setFloat(itemrenderer, t);
-                        Field_ItemRenderer_prevEquippedProgressMainhand.setFloat(itemrenderer, t);
-                    }
-                } else {
-                    if(Field_ItemRenderer_equippedProgressOffhand.getFloat(itemrenderer)<t) {
-                        Field_ItemRenderer_equippedProgressOffhand.setFloat(itemrenderer, t);
-                        Field_ItemRenderer_prevEquippedProgressOffhand.setFloat(itemrenderer, t);
-                    }
-                }
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            
-        }*/
+		/* float t = 1.0f;
+		 * 
+		 * EntityPlayer ply = ClientProxy.get().getPlayerClient(); ItemStack stack =
+		 * ply.getActiveItemStack();
+		 * 
+		 * if(!stack.isEmpty() && (stack.getItem() instanceof GenericGunCharge ||
+		 * stack.getItem() instanceof GenericGrenade)) { EnumHand hand =
+		 * ply.getActiveHand();
+		 * 
+		 * ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer(); try {
+		 * if(hand==EnumHand.MAIN_HAND) {
+		 * if(Field_ItemRenderer_equippedProgressMainhand.getFloat(itemrenderer)<t) {
+		 * Field_ItemRenderer_equippedProgressMainhand.setFloat(itemrenderer, t);
+		 * Field_ItemRenderer_prevEquippedProgressMainhand.setFloat(itemrenderer, t); }
+		 * } else {
+		 * if(Field_ItemRenderer_equippedProgressOffhand.getFloat(itemrenderer)<t) {
+		 * Field_ItemRenderer_equippedProgressOffhand.setFloat(itemrenderer, t);
+		 * Field_ItemRenderer_prevEquippedProgressOffhand.setFloat(itemrenderer, t); } }
+		 * } catch (IllegalArgumentException e) { e.printStackTrace(); } catch
+		 * (IllegalAccessException e) { e.printStackTrace(); }
+		 * 
+		 * } */
 	}
 }

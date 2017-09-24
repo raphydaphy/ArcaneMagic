@@ -23,60 +23,66 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockModSlab extends BlockBase {
+public class BlockModSlab extends BlockBase
+{
 
 	public static final PropertyEnum<SlabVariant> VARIANT = PropertyEnum.<SlabVariant>create("slab_variant",
 			SlabVariant.class);
-	
-	public BlockModSlab(String name, Material material) {
+
+	public BlockModSlab(String name, Material material)
+	{
 		super(name, material, 1.8f);
 		useNeighborBrightness = true;
-		setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, SlabVariant.LOWER));;
+		setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, SlabVariant.LOWER));
+		;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state)
+	{
 		return (state.getValue(VARIANT) == SlabVariant.DOUBLE);
 	}
 
 	@Override
-	public int quantityDropped(IBlockState state, int fortune, Random random) {
+	public int quantityDropped(IBlockState state, int fortune, Random random)
+	{
 		return (state.getValue(VARIANT) == SlabVariant.DOUBLE) ? 2 : 1;
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
 		return state.getValue(VARIANT).getAABB();
 	}
 
 	@Override
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) 
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
 	{
 		return blockState.getBoundingBox(worldIn, pos);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getBlockLayer()
+	{
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) 
+	public boolean isOpaqueCube(IBlockState state)
 	{
 		return true;
 	}
-	
+
 	@Override
-	public IBlockState getStateFromMeta(int meta) 
+	public IBlockState getStateFromMeta(int meta)
 	{
-		
+
 		SlabVariant variant = SlabVariant.LOWER;
 		if (meta == 1)
 		{
 			variant = SlabVariant.UPPER;
-		}
-		else if (meta == 2)
+		} else if (meta == 2)
 		{
 			variant = SlabVariant.DOUBLE;
 		}
@@ -84,19 +90,20 @@ public class BlockModSlab extends BlockBase {
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) 
+	public int getMetaFromState(IBlockState state)
 	{
 		return state.getValue(VARIANT).getMeta();
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState() 
+	protected BlockStateContainer createBlockState()
 	{
 		return new BlockStateContainer(this, new IProperty[] { VARIANT });
 	}
 
 	@Override
-	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face) {
+	public boolean doesSideBlockRendering(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing face)
+	{
 		return false;
 	}
 
@@ -105,24 +112,24 @@ public class BlockModSlab extends BlockBase {
 		return this.getDefaultState().withProperty(VARIANT, SlabVariant.UPPER);
 	}
 
-	public IBlockState getLower() 
+	public IBlockState getLower()
 	{
 		return this.getDefaultState();
 	}
 
-	public IBlockState getDouble() 
+	public IBlockState getDouble()
 	{
 		return this.getDefaultState().withProperty(VARIANT, SlabVariant.DOUBLE);
 	}
 
-	public IBlockState getOpposite(IBlockState state) 
+	public IBlockState getOpposite(IBlockState state)
 	{
 		if (state == getUpper())
 			return getLower();
 		return getUpper();
 	}
 
-	public static enum SlabVariant implements IStringSerializable 
+	public static enum SlabVariant implements IStringSerializable
 	{
 		LOWER("lower", new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), 0), UPPER("upper",
 				new AxisAlignedBB(0.0D, 0.5D, 0.0D, 1.0D, 1.0D, 1.0D), 1), DOUBLE("double", FULL_BLOCK_AABB, 2);
@@ -131,7 +138,7 @@ public class BlockModSlab extends BlockBase {
 		private AxisAlignedBB aabb;
 		private int meta;
 
-		private SlabVariant(String name_, AxisAlignedBB AABB_, int meta_) 
+		private SlabVariant(String name_, AxisAlignedBB AABB_, int meta_)
 		{
 			name = name_;
 			aabb = AABB_;
@@ -139,17 +146,17 @@ public class BlockModSlab extends BlockBase {
 		}
 
 		@Override
-		public String getName() 
+		public String getName()
 		{
 			return name;
 		}
 
-		public AxisAlignedBB getAABB() 
+		public AxisAlignedBB getAABB()
 		{
 			return aabb;
 		}
 
-		public int getMeta() 
+		public int getMeta()
 		{
 			return meta;
 		}

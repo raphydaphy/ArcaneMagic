@@ -28,7 +28,7 @@ public class BlockModLeaves extends BlockLeaves
 {
 	public static final PropertyBool DECAYABLE = PropertyBool.create("decayable");
 	public static final PropertyBool CHECK_DECAY = PropertyBool.create("check_decay");
-	
+
 	public BlockModLeaves(String name)
 	{
 		super();
@@ -38,50 +38,51 @@ public class BlockModLeaves extends BlockLeaves
 		setHardness(0.2f);
 		setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, false).withProperty(DECAYABLE, true));
 	}
-	
+
 	@Override
-	public boolean isOpaqueCube(IBlockState state) 
+	public boolean isOpaqueCube(IBlockState state)
 	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) 
+	public boolean isFullCube(IBlockState state)
 	{
 		return false;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
-	public boolean shouldSideBeRendered(IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos, EnumFacing side) 
+	public boolean shouldSideBeRendered(IBlockState state, @Nonnull IBlockAccess world, @Nonnull BlockPos pos,
+			EnumFacing side)
 	{
 		return true;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Nonnull
 	@Override
-	public BlockRenderLayer getBlockLayer() 
+	public BlockRenderLayer getBlockLayer()
 	{
 		return BlockRenderLayer.TRANSLUCENT;
 	}
-	
+
 	@Override
-	protected final BlockStateContainer createBlockState() 
+	protected final BlockStateContainer createBlockState()
 	{
 		return new BlockStateContainer(this, DECAYABLE, CHECK_DECAY);
 	}
-	
+
 	@Override
-	public int getMetaFromState(IBlockState state) 
+	public int getMetaFromState(IBlockState state)
 	{
 		int i = 0;
-		if (!state.getValue(DECAYABLE)) 
+		if (!state.getValue(DECAYABLE))
 		{
 			i |= 4;
 		}
 
-		if (state.getValue(CHECK_DECAY)) 
+		if (state.getValue(CHECK_DECAY))
 		{
 			i |= 8;
 		}
@@ -90,25 +91,28 @@ public class BlockModLeaves extends BlockLeaves
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY, (meta & 8) > 0);
+	public IBlockState getStateFromMeta(int meta)
+	{
+		return this.getDefaultState().withProperty(DECAYABLE, (meta & 4) == 0).withProperty(CHECK_DECAY,
+				(meta & 8) > 0);
 	}
-	
+
 	@Override
-	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune) 
+	public List<ItemStack> onSheared(ItemStack item, IBlockAccess world, BlockPos pos, int fortune)
 	{
 		return Collections.singletonList(new ItemStack(this));
 	}
-	
+
 	@Override
-	public EnumType getWoodType(int meta) 
+	public EnumType getWoodType(int meta)
 	{
 		return BlockPlanks.EnumType.OAK;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public void initModel() 
+	public void initModel()
 	{
-        ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0, new ModelResourceLocation(getRegistryName(), "inventory"));
-    }
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
+				new ModelResourceLocation(getRegistryName(), "inventory"));
+	}
 }
