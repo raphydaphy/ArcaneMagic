@@ -31,7 +31,7 @@ public class ParticleStar extends Particle
         this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
         this.particleAlpha = 0.5f;
         TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(new ResourceLocation(Thaumcraft.MODID, "misc/particle_star").toString());
-		//sprite.initSprite(0, 0, 12, 12, true);
+		//sprite.initSprite(0, 0, 12, 12, false);
         this.setParticleTexture(sprite);
     }
 	
