@@ -2,12 +2,11 @@
     "forge_marker": 1,
     "variants": {
         "inventory": {
-            "model": "thaumcraft:generated_model_wand",
-            "transform": "forge:default-tool",
-
-            "custom": {
-                "rodType": "thaumcraft.wand.rod.wood", 
-                "capType": "thaumcraft.wand.cap.iron"
+            "model": "thaumcraft:wand_untextured",
+            
+            "textures": {
+                "rod": "thaumcraft:items/wand/wand_rod_wood", 
+                "cap": "thaumcraft:items/wand/wand_cap_iron"
             }
         }
 

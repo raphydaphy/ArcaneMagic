@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
-	"textures": {"0": "items/wand/wand_rod_wood"},
+	"textures": {"0": "thaumcraft:items/wand/wand_rod_wood"},
 	"elements": [
 		{
 			"name": "Wand Rod",

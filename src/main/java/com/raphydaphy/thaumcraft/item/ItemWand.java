@@ -16,10 +16,10 @@ import com.raphydaphy.thaumcraft.init.ModBlocks;
 import com.raphydaphy.thaumcraft.init.ModItems;
 import com.raphydaphy.thaumcraft.init.VanillaThaumcraftParts;
 import com.raphydaphy.thaumcraft.model.ModelWand;
-import com.raphydaphy.thaumcraft.model.ModelWand.ModelWandLoader;
-import com.raphydaphy.thaumcraft.particle.ParticleUtil;
+import com.raphydaphy.thaumcraft.particle.ParticleStar;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -69,15 +69,15 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX()+ 0.5f, pos.getY() + 1.5f, pos.getZ()+ 0.5f, 0, 0, 0, 86, 13, 124));
 		Block block = world.getBlockState(pos).getBlock();
 		if (block.equals(Blocks.BOOKSHELF))
 		{
 			world.setBlockToAir(pos);
 
-			for (int i = 0; i < 1000; i++)
+			for (int i = 0; i < 10; i++)
 			{
-				ParticleUtil.spawnParticleStar(world, pos.getX(), pos.getY() + 1, pos.getZ(), 1, 1, 1, 168, 37, 142,
-						0.01f, 50);
+				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX()+ 0.5f, pos.getY() + 0.5f, pos.getZ()+ 0.5f, 0, 0, 0, 86, 13, 124));
 
 				// world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() +
 				// world.rand.nextFloat(), pos.getY() + world.rand.nextFloat(), pos.getZ() +

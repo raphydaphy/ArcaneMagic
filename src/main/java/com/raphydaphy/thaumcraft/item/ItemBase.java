@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBase extends Item
 {
+	private final int variants;
 	public ItemBase(String name)
 	{
 		this(name, 1);
@@ -22,16 +23,18 @@ public class ItemBase extends Item
 		setUnlocalizedName(Thaumcraft.MODID + "." + name);
 		setCreativeTab(Thaumcraft.creativeTab);
 		
-		if (variants > 1)
-		{
-			setMaxDamage(variants);
-		}
+		this.variants = variants;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void initModel()
 	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 1, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 2, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 3, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 4, new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(this, 5, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 	
 	@SideOnly(Side.CLIENT)
@@ -39,4 +42,14 @@ public class ItemBase extends Item
 	{
 		return null;
 	}
+	
+	@Override
+	 public int getMetadata(int damage)
+    {
+		if (variants > 1)
+		{
+			return damage;
+		}
+        return 0;
+    }
 }

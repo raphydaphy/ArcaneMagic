@@ -43,28 +43,6 @@ public class ModEvents
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onTick(TickEvent.ClientTickEvent event)
-	{
-		if (event.side == Side.CLIENT && event.phase == TickEvent.Phase.START)
-		{
-			ClientProxy.particleRenderer.updateParticles();
-		}
-	}
-
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public void onRenderAfterWorld(RenderWorldLastEvent event)
-	{
-		if (Thaumcraft.proxy instanceof ClientProxy)
-		{
-			GlStateManager.pushMatrix();
-			ClientProxy.particleRenderer.renderParticles(clientPlayer, event.getPartialTicks());
-			GlStateManager.popMatrix();
-		}
-	}
-
 	// Disabled hand swinging animation - use once up to wand mechanics
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)

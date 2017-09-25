@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
-	"textures": {"1": "items/wand/wand_cap_iron"},
+	"textures": {"1": "thaumcraft:items/wand/wand_cap_iron"},
 	"elements": [
 		{
 			"name": "Wand Cap #2",

@@ -1,7 +1,7 @@
 {
 	"textures": {
-		"0": "thaumcraft:items/wand/wand_rod_silverwood",
-		"1": "thaumcraft:items/wand/wand_cap_gold"
+		"0": "#rod",
+		"1": "#cap"
 	},
 	"elements": [
 		{

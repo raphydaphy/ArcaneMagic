@@ -11,96 +11,93 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class ParticleStar extends Particle implements IThaumcraftParticle
+public class ParticleStar extends Particle
 {
-	public float colorR = 0;
-	public float colorG = 0;
-	public float colorB = 0;
-	public float rotScale = rand.nextFloat() * 0.1f + 0.05f;
-	public float initScale = 0;
-	public ResourceLocation texture = new ResourceLocation(Thaumcraft.MODID + ":misc/particle_star");
-
-	public ParticleStar(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r, float g,
-			float b, float scale, int lifetime)
-	{
-		super(worldIn, x, y, z, 0, 0, 0);
-		this.colorR = r;
-		this.colorG = g;
-		this.colorB = b;
-		if (this.colorR > 1.0)
-		{
-			this.colorR = this.colorR / 255.0f;
-		}
-		if (this.colorG > 1.0)
-		{
-			this.colorG = this.colorG / 255.0f;
-		}
-		if (this.colorB > 1.0)
-		{
-			this.colorB = this.colorB / 255.0f;
-		}
-		this.setRBGColorF(colorR, colorG, colorB);
-		this.particleMaxAge = lifetime;
-		this.particleScale = scale;
-		this.initScale = scale;
-		this.motionX = vx;
-		this.motionY = vy;
-		this.motionZ = vz;
-		this.particleAngle = 2.0f * (float) Math.PI;
-		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
-		this.setParticleTexture(sprite);
-	}
-
-	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
-	{
-		float f = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge * 32.0F;
-		f = MathHelper.clamp(f, 0.0F, 1.0F);
-		super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
-	}
-
-	@Override
-	public int getBrightnessForRender(float pTicks)
-	{
-		return 255;
-	}
-
+	private final float flameScale;
+	
+	public ParticleStar(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn, int r, int g, int b)
+    {
+        super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
+        this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
+        this.motionY = this.motionY * 0.009999999776482582D + ySpeedIn;
+        this.motionZ = this.motionZ * 0.009999999776482582D + zSpeedIn;
+        this.posX += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
+        this.posY += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
+        this.posZ += (double)((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
+        this.flameScale = this.particleScale;
+        this.particleRed = (r / 256);
+        this.particleGreen = (g / 256);
+        this.particleBlue = (b / 256);
+        this.particleMaxAge = (int)(8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
+        this.particleAlpha = 0.5f;
+        TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(new ResourceLocation(Thaumcraft.MODID, "misc/particle_star").toString());
+		//sprite.initSprite(0, 0, 12, 12, true);
+        this.setParticleTexture(sprite);
+    }
+	
 	@Override
 	public int getFXLayer()
-	{
-		return 1;
-	}
-
+    {
+        return 1;
+    }
+	
 	@Override
-	public void onUpdate()
-	{
-		super.onUpdate();
-		if (world.rand.nextInt(6) == 0)
-		{
-			this.particleAge++;
-		}
-		float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
-		this.particleScale = initScale - initScale * lifeCoeff;
-		this.particleAlpha = (1.0f - lifeCoeff) * (1.0f - lifeCoeff);
-		this.prevParticleAngle = particleAngle;
-		particleAngle += rotScale;
-	}
+    public void move(double x, double y, double z)
+    {
+        this.setBoundingBox(this.getBoundingBox().offset(x, y, z));
+        this.resetPositionToBB();
+    }
 
+    /**
+     * Renders the particle
+     */
 	@Override
-	public boolean alive()
-	{
-		return this.particleAge < this.particleMaxAge;
-	}
+    public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+    {
+        float f = ((float)this.particleAge + partialTicks) / (float)this.particleMaxAge;
+        this.particleScale = this.flameScale * (1.0F - f * f * 0.5F);
+        super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+    }
 
-	@Override
-	public boolean isAdditive()
-	{
-		return true;
-	}
+    @Override
+    public int getBrightnessForRender(float p_189214_1_)
+    {
+        float f = ((float)this.particleAge + p_189214_1_) / (float)this.particleMaxAge;
+        f = MathHelper.clamp(f, 0.0F, 1.0F);
+        int i = super.getBrightnessForRender(p_189214_1_);
+        int j = i & 255;
+        int k = i >> 16 & 255;
+        j = j + (int)(f * 15.0F * 16.0F);
 
-	@Override
-	public boolean renderThroughBlocks()
-	{
-		return false;
-	}
+        if (j > 240)
+        {
+            j = 240;
+        }
+
+        return j | k << 16;
+    }
+
+    @Override
+    public void onUpdate()
+    {
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+
+        if (this.particleAge++ >= this.particleMaxAge)
+        {
+            this.setExpired();
+        }
+
+        this.move(this.motionX, this.motionY, this.motionZ);
+        this.motionX *= 0.9599999785423279D;
+        this.motionY *= 0.9599999785423279D;
+        this.motionZ *= 0.9599999785423279D;
+
+        if (this.onGround)
+        {
+            this.motionX *= 0.699999988079071D;
+            this.motionZ *= 0.699999988079071D;
+        }
+    }
 }
