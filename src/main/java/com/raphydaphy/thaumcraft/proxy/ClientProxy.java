@@ -1,113 +1,68 @@
 package com.raphydaphy.thaumcraft.proxy;
 
-import javax.annotation.Nullable;
-
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.block.BlockOre;
+import com.raphydaphy.thaumcraft.client.IHasModel;
+import com.raphydaphy.thaumcraft.data.EnumPrimal;
 import com.raphydaphy.thaumcraft.entity.EntityItemFancy;
-import com.raphydaphy.thaumcraft.init.ModBlocks;
-import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 import com.raphydaphy.thaumcraft.render.RenderEntityItemFancy;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.color.IBlockColor;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
 
-@Mod.EventBusSubscriber(Side.CLIENT)
-public class ClientProxy extends CommonProxy
-{
+public class ClientProxy extends CommonProxy {
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		super.preInit(event);
+	public void preInit(FMLPreInitializationEvent event) {
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event)
-	{
-		super.init(event);
-
+	public void init(FMLInitializationEvent event) {
 		registerColors();
 	}
 
-	public static void registerColors()
-	{
-		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler(new IBlockColor()
-		{
-			public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos,
-					int tintIndex)
-			{
-				return worldIn != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(worldIn, pos) : 0x377434;
-			}
-		}, ModBlocks.leaves_greatwood);
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
-		{
-			@Override
-			public int colorMultiplier(ItemStack stack, int tintIndex)
-			{
-				return 0x377434;
-			}
-		}, ModBlocks.leaves_greatwood);
+	public static void registerColors() {
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((state, world, pos, tintIndex) -> {
+			return world != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(world, pos) : 0x377434;
+		}, ModRegistry.GREATWOOD_LEAVES);
+		
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
+			return 0x377434;
+		}, ModRegistry.GREATWOOD_LEAVES);
 
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor()
-		{
-			@Override
-			public int colorMultiplier(ItemStack stack, int tintIndex)
-			{
-				switch(stack.getMetadata())
-				{
-				case 0:
-					// Aer
-					return  0xffff7e;
-				case 1:
-					// Aqua
-					return 0x46b6d3;
-				case 2:
-					// Ignis
-					return 0xff5a01;
-				case 3:
-					// Ordo
-					return 0xff5a01;
-				case 4:
-					// Perdito
-					return 0x404040;
-				case 5:
-					// Terra
-					return 0x56c000;
-				}
-				
-				System.out.println("UNKNOWN SHARD VARIANT WITH META: " + stack.getMetadata() + " FOUND!");
-				return 0xFFFFFF;
-			}
-		}, ModItems.shard);
+		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) -> {
+			return EnumPrimal.values()[stack.getMetadata()].getColorMultiplier();
+		}, ModRegistry.SHARD, Item.getItemFromBlock(ModRegistry.INFUSED_ORE));
+		
+		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((state,  world, pos, tintIndex) -> {
+			if(tintIndex == 0) return -1;
+			return state.getValue(BlockOre.PRIMAL).getColorMultiplier();
+		}, ModRegistry.INFUSED_ORE);
 	}
 
 	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent event)
-	{
+	public void registerModels(ModelRegistryEvent event) {
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
-
-		ModBlocks.initModels();
-		ModItems.initModels();
+		for (Item i : ModRegistry.ITEMS)
+			if (i instanceof IHasModel) ((IHasModel) i).initModels(event);
+		for (Block b : ModRegistry.BLOCKS)
+			if (b instanceof IHasModel) ((IHasModel) b).initModels(event);
 	}
 
 	@SubscribeEvent
-	public static void onTextureStitch(TextureStitchEvent event)
-	{
+	public void onTextureStitch(TextureStitchEvent event) {
 		System.out.println("Stiched textures!");
 		ResourceLocation particleSparkle = new ResourceLocation(Thaumcraft.MODID, "misc/particle_star");
 		event.getMap().registerSprite(particleSparkle);

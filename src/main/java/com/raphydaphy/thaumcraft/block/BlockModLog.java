@@ -1,27 +1,29 @@
 package com.raphydaphy.thaumcraft.block;
 
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockModLog extends BlockLog
+public class BlockModLog extends BlockLog implements IBaseBlock
 {
 	public BlockModLog(String name)
 	{
-		super();
 		setUnlocalizedName(Thaumcraft.MODID + "." + name);
 		setRegistryName(name);
 		setCreativeTab(Thaumcraft.creativeTab);
 		setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, EnumAxis.Y));
 		setHarvestLevel("axe", 0);
 		setHardness(3f);
+		init();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -78,5 +80,16 @@ public class BlockModLog extends BlockLog
 	protected final BlockStateContainer createBlockState()
 	{
 		return new BlockStateContainer(this, LOG_AXIS);
+	}
+	
+	@Override
+	public void init() {
+		ModRegistry.BLOCKS.add(this);
+		ModRegistry.ITEMS.add(createItemBlock());
+	}
+	
+	@Override
+	public ItemBlock createItemBlock() {
+		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
 	}
 }

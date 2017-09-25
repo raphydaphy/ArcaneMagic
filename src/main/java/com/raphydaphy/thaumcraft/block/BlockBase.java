@@ -1,16 +1,13 @@
 package com.raphydaphy.thaumcraft.block;
 
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.item.Item;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.item.ItemBlock;
 
-public class BlockBase extends Block
+public class BlockBase extends Block implements IBaseBlock
 {
 	public BlockBase(String name, Material material, float hardness)
 	{
@@ -19,12 +16,17 @@ public class BlockBase extends Block
 		setRegistryName(name);
 		setCreativeTab(Thaumcraft.creativeTab);
 		setHardness(hardness);
+		init();
 	}
 
-	@SideOnly(Side.CLIENT)
-	public void initModel()
-	{
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), 0,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
+	@Override
+	public void init() {
+		ModRegistry.BLOCKS.add(this);
+		ModRegistry.ITEMS.add(createItemBlock());
+	}
+
+	@Override
+	public ItemBlock createItemBlock() {
+		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
 	}
 }

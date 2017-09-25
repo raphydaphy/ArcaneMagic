@@ -9,11 +9,14 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.raphydaphy.thaumcraft.item.ItemBlockModSlab;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.IStringSerializable;
@@ -35,6 +38,11 @@ public class BlockModSlab extends BlockBase
 		useNeighborBrightness = true;
 		setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, SlabVariant.LOWER));
 		;
+	}
+	
+	@Override
+	public ItemBlock createItemBlock() {
+		return new ItemBlockModSlab(this);
 	}
 
 	@Override

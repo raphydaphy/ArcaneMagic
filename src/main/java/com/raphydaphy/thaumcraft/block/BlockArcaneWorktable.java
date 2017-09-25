@@ -3,7 +3,6 @@ package com.raphydaphy.thaumcraft.block;
 import com.raphydaphy.thaumcraft.Thaumcraft;
 import com.raphydaphy.thaumcraft.tileentity.TileEntityArcaneWorktable;
 
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockArcaneWorktable extends BlockBase implements ITileEntityProvider
+public class BlockArcaneWorktable extends BlockBase
 {
 	public static final int GUI_ID = 2;
 
@@ -35,8 +34,12 @@ public class BlockArcaneWorktable extends BlockBase implements ITileEntityProvid
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta)
-	{
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new TileEntityArcaneWorktable();
 	}
 

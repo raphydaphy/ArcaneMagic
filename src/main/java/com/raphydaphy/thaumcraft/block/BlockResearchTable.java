@@ -1,6 +1,6 @@
 package com.raphydaphy.thaumcraft.block;
 
-import com.raphydaphy.thaumcraft.init.ModBlocks;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
@@ -34,24 +34,24 @@ public class BlockResearchTable extends BlockTable
 			if (worldIn.getBlockState(north).getBlock() == this)
 			{
 				worldIn.setBlockState(north,
-						ModBlocks.table.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.WEST));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.WEST));
 			}
 			if (worldIn.getBlockState(east).getBlock() == this)
 			{
 				worldIn.setBlockState(east,
-						ModBlocks.table.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.SOUTH));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.SOUTH));
 			}
 		} else
 		{
 			if (worldIn.getBlockState(south).getBlock() == this)
 			{
 				worldIn.setBlockState(south,
-						ModBlocks.table.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.EAST));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.EAST));
 			}
 			if (worldIn.getBlockState(west).getBlock() == this)
 			{
 				worldIn.setBlockState(west,
-						ModBlocks.table.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.NORTH));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.NORTH));
 			}
 		}
 	}

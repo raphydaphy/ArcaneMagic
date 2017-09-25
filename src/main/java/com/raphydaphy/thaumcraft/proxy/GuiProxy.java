@@ -4,7 +4,7 @@ import com.raphydaphy.thaumcraft.block.BlockArcaneWorktable;
 import com.raphydaphy.thaumcraft.container.ContainerArcaneWorktable;
 import com.raphydaphy.thaumcraft.gui.GuiArcaneWorktable;
 import com.raphydaphy.thaumcraft.gui.GuiThaumonomicon;
-import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 import com.raphydaphy.thaumcraft.item.ItemThaumonomicon;
 import com.raphydaphy.thaumcraft.tileentity.TileEntityArcaneWorktable;
 
@@ -38,8 +38,8 @@ public class GuiProxy implements IGuiHandler
 		switch (ID)
 		{
 		case ItemThaumonomicon.GUI_ID:
-			if (player.getHeldItemMainhand().getItem() == ModItems.thaumonomicon
-					|| player.getHeldItemOffhand().getItem() == ModItems.thaumonomicon)
+			if (player.getHeldItemMainhand().getItem() == ModRegistry.THAUMONOMICON
+					|| player.getHeldItemOffhand().getItem() == ModRegistry.THAUMONOMICON)
 			{
 				return new GuiThaumonomicon(player);
 			}

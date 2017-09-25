@@ -1,6 +1,6 @@
 package com.raphydaphy.thaumcraft.handler;
 
-import com.raphydaphy.thaumcraft.item.ItemBase;
+import com.raphydaphy.thaumcraft.item.ItemWand;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -26,9 +26,9 @@ public class MeshHandler implements ItemMeshDefinition {
     @Override
     public ModelResourceLocation getModelLocation(ItemStack stack)
     {
-        if (stack.getItem() instanceof ItemBase)
+        if (stack.getItem() instanceof ItemWand)
         {
-            return ((ItemBase)stack.getItem()).getModelLocation(stack);
+            return ((ItemWand)stack.getItem()).getModelLocation(stack);
         }
 
         return null;

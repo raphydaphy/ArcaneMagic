@@ -1,21 +1,21 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "forge:multi-layer",
-    "transform": "forge:default-block"
-  },
-  "variants": {
-    "normal": [{
-        "custom": { "base": "minecraft:stone", "Solid": "thaumcraft:ore_infused#infused", "Translucent": "minecraft:stone" }
-    }],
-    "inventory": [{
-      "custom": { "base": "thaumcraft:ore_infused#infused", "Solid": "thaumcraft:ore_infused#infused", "Translucent": "minecraft:stone" }
-    }],
-
-
-    "infused": [{
-      "model": "minecraft:cube_all",
-      "textures": { "all": "thaumcraft:blocks/ore_infused" }
-    }]
-  }
+	"forge_marker": 1,
+	"defaults": {
+		"model": "thaumcraft:cube_border",
+		"transform": "forge:default-block",
+		"textures": {
+			"inner": "blocks/stone",
+			"overlay": "thaumcraft:blocks/ore_infused"
+		}
+	},
+	"variants": {
+		"primal": {
+			"aer": {},
+			"aqua": {},
+			"ignis": {},
+			"terra": {},
+			"ordo": {},
+			"perditio": {}
+		}
+	}
 }

@@ -15,6 +15,6 @@ public class ThaumcraftCreativeTab extends CreativeTabs
 	@Override
 	public ItemStack getTabIconItem()
 	{
-		return new ItemStack(ModItems.thaumonomicon);
+		return new ItemStack(ModRegistry.THAUMONOMICON);
 	}
 }

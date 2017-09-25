@@ -1,6 +1,7 @@
 package com.raphydaphy.thaumcraft.block;
 
 import com.raphydaphy.thaumcraft.Thaumcraft;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -10,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -19,7 +21,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockTable extends BlockHorizontal
+public class BlockTable extends BlockHorizontal implements IBaseBlock
 {
 	public BlockTable(String name, Material materialIn, float hardness)
 	{
@@ -98,5 +100,16 @@ public class BlockTable extends BlockHorizontal
 	protected BlockStateContainer createBlockState()
 	{
 		return new BlockStateContainer(this, new IProperty[] { FACING });
+	}
+
+	@Override
+	public void init() {
+		ModRegistry.BLOCKS.add(this);
+		ModRegistry.ITEMS.add(createItemBlock());
+	}
+
+	@Override
+	public ItemBlock createItemBlock() {
+		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
 	}
 }

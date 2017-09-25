@@ -12,8 +12,7 @@ import com.raphydaphy.thaumcraft.api.wand.IWandRod;
 import com.raphydaphy.thaumcraft.entity.EntityItemFancy;
 import com.raphydaphy.thaumcraft.handler.MeshHandler;
 import com.raphydaphy.thaumcraft.handler.ThaumcraftSoundHandler;
-import com.raphydaphy.thaumcraft.init.ModBlocks;
-import com.raphydaphy.thaumcraft.init.ModItems;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 import com.raphydaphy.thaumcraft.init.VanillaThaumcraftParts;
 import com.raphydaphy.thaumcraft.model.ModelWand;
 import com.raphydaphy.thaumcraft.particle.ParticleStar;
@@ -31,6 +30,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -89,7 +89,7 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 			if (!world.isRemote)
 			{
 				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
-						new ItemStack(ModItems.thaumonomicon));
+						new ItemStack(ModRegistry.THAUMONOMICON));
 				ei.setDefaultPickupDelay();
 				ei.motionX = 0;
 				ei.motionY = 0;
@@ -102,10 +102,10 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 
 			}
 			return EnumActionResult.SUCCESS;
-		} else if (block.equals(ModBlocks.table))
+		} else if (block.equals(ModRegistry.TABLE))
 		{
-			world.setBlockState(pos, ModBlocks.arcane_worktable.getDefaultState());
-		} else if (block.equals(ModBlocks.ore_infused))
+			world.setBlockState(pos, ModRegistry.WORKTABLE.getDefaultState());
+		} else if (block.equals(ModRegistry.INFUSED_ORE))
 		{
 			ItemStack stack = player.getHeldItem(hand);
 			if (!stack.hasTagCompound())
@@ -121,7 +121,6 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 		return EnumActionResult.PASS;
 	}
 	
-	@Override
 	@SideOnly(Side.CLIENT)
     public ModelResourceLocation getModelLocation(ItemStack stack)
     {
@@ -130,10 +129,10 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void initModel()
+	public void initModels(ModelRegistryEvent e)
 	{
-		ModelLoader.registerItemVariants(ModItems.wand, new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory"));
-        ModelLoader.setCustomMeshDefinition(ModItems.wand, MeshHandler.instance());
+		ModelLoader.registerItemVariants(ModRegistry.WAND, new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory"));
+        ModelLoader.setCustomMeshDefinition(ModRegistry.WAND, MeshHandler.instance());
 		ModelLoaderRegistry.registerLoader(ModelWand.ModelWandLoader.instance);
 	}
 

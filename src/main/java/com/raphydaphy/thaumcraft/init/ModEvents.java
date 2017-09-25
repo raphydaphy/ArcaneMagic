@@ -1,20 +1,13 @@
 package com.raphydaphy.thaumcraft.init;
 
-import com.raphydaphy.thaumcraft.Thaumcraft;
 import com.raphydaphy.thaumcraft.gui.GuiWand;
-import com.raphydaphy.thaumcraft.proxy.ClientProxy;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,9 +27,9 @@ public class ModEvents
 			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 
 			if ((!player.getHeldItemMainhand().isEmpty()
-					&& player.getHeldItemMainhand().getItem().equals(ModItems.wand))
+					&& player.getHeldItemMainhand().getItem().equals(ModRegistry.WAND))
 					|| !player.getHeldItemOffhand().isEmpty()
-							&& player.getHeldItemOffhand().getItem().equals(ModItems.wand))
+							&& player.getHeldItemOffhand().getItem().equals(ModRegistry.WAND))
 			{
 				GuiWand.renderWandHUD(mc, event.getResolution());
 			}

@@ -2,7 +2,7 @@ package com.raphydaphy.thaumcraft.world;
 
 import java.util.Random;
 
-import com.raphydaphy.thaumcraft.init.ModBlocks;
+import com.raphydaphy.thaumcraft.init.ModRegistry;
 
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.IWorldGenerator;
 
 public class WorldGenGreatwood extends WorldGenHugeTrees implements IWorldGenerator
 {
-	private static final IBlockState TRUNK = ModBlocks.log_greatwood.getDefaultState();
-	private static final IBlockState LEAF = ModBlocks.leaves_greatwood.getDefaultState()
+	private static final IBlockState TRUNK = ModRegistry.GREATWOOD_LOG.getDefaultState();
+	private static final IBlockState LEAF = ModRegistry.GREATWOOD_LEAVES.getDefaultState()
 			.withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
 	private final boolean useBaseHeight;
 
