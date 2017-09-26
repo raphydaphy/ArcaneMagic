@@ -23,7 +23,7 @@ public class InvCraftingHandler extends InventoryCrafting
 		super(eventHandler, width, height);
 		int k = width * height;
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+
 		assert (k == itemHandler.getSlots());
 		this.te = te;
 		this.itemHandler = itemHandler;

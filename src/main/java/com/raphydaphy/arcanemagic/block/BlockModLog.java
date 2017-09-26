@@ -81,15 +81,17 @@ public class BlockModLog extends BlockLog implements IBaseBlock
 	{
 		return new BlockStateContainer(this, LOG_AXIS);
 	}
-	
+
 	@Override
-	public void init() {
+	public void init()
+	{
 		ModRegistry.BLOCKS.add(this);
 		ModRegistry.ITEMS.add(createItemBlock());
 	}
-	
+
 	@Override
-	public ItemBlock createItemBlock() {
+	public ItemBlock createItemBlock()
+	{
 		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
 	}
 }

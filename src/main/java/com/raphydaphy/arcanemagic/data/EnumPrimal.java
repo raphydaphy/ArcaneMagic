@@ -1,20 +1,18 @@
 package com.raphydaphy.arcanemagic.data;
 
-public enum EnumPrimal implements IPropertyEnum {
-	AER(0xffff7e),
-	AQUA(0x46b6d3),
-	IGNIS(0xff5a01),
-	TERRA(0x56c000),
-	ORDO(0xff5a01),
-	PERDITIO(0x404040);
-	
+public enum EnumPrimal implements IPropertyEnum
+{
+	AER(0xffff7e), AQUA(0x46b6d3), IGNIS(0xff5a01), TERRA(0x56c000), ORDO(0xff5a01), PERDITIO(0x404040);
+
 	final int color;
-	
-	EnumPrimal(int color){
+
+	EnumPrimal(int color)
+	{
 		this.color = color;
 	}
-	
-	public int getColorMultiplier() {
+
+	public int getColorMultiplier()
+	{
 		return color;
 	}
 }

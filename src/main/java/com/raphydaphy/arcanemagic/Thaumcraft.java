@@ -23,7 +23,8 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 @Mod(modid = Thaumcraft.MODID, name = Thaumcraft.MODNAME, version = Thaumcraft.VERSION, useMetadata = true)
-public class Thaumcraft {
+public class Thaumcraft
+{
 	public static final String MODID = "thaumcraft";
 	public static final String MODNAME = "Thaumcraft";
 	public static final String VERSION = "0.1";
@@ -37,7 +38,8 @@ public class Thaumcraft {
 	public static final ThaumcraftCreativeTab creativeTab = new ThaumcraftCreativeTab();
 
 	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		ModEntities.init();
 		ThaumcraftPacketHandler.registerMessages(Thaumcraft.MODID);
 		proxy.preInit(event);
@@ -46,7 +48,8 @@ public class Thaumcraft {
 	}
 
 	@Mod.EventHandler
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event)
+	{
 		VanillaThaumcraftParts.registerWands();
 		NetworkRegistry.INSTANCE.registerGuiHandler(Thaumcraft.instance, new GuiProxy());
 		GameRegistry.registerWorldGenerator(new WorldGenGreatwood(false, false), 150);
@@ -54,7 +57,8 @@ public class Thaumcraft {
 	}
 
 	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event)
+	{
 		ThaumcraftAPI.registerThaumonomiconCategory(new CategoryBasicInformation());
 		ThaumcraftAPI.registerThaumonomiconCategory(new CategoryThaumaturgy());
 		ThaumcraftAPI.registerThaumonomiconCategory(new CategoryAlchemy());

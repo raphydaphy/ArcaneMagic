@@ -39,9 +39,10 @@ public class BlockModSlab extends BlockBase
 		setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, SlabVariant.LOWER));
 		;
 	}
-	
+
 	@Override
-	public ItemBlock createItemBlock() {
+	public ItemBlock createItemBlock()
+	{
 		return new ItemBlockModSlab(this);
 	}
 

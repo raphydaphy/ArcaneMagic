@@ -45,7 +45,8 @@ public class CategoryAlchemy implements IThaumonomiconCategory
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(Thaumcraft.MODID, "textures/mic/research/r_crucible.png"), IconType.CIRCLE);
+			return new IconTypePair(new ResourceLocation(Thaumcraft.MODID, "textures/mic/research/r_crucible.png"),
+					IconType.CIRCLE);
 		}
 
 		@Override

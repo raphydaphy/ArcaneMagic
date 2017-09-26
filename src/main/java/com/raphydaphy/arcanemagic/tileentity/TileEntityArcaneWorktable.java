@@ -15,23 +15,26 @@ public class TileEntityArcaneWorktable extends TileEntity
 	public TileEntityArcaneWorktable()
 	{
 	}
-	
-	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE) {
-        @Override
-        protected void onContentsChanged(int slot) {
-            // We need to tell the tile entity that something has changed so
-            // that the chest contents is persisted
-            TileEntityArcaneWorktable.this.markDirty();
-        }
-    };
+
+	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
+	{
+		@Override
+		protected void onContentsChanged(int slot)
+		{
+			// We need to tell the tile entity that something has changed so
+			// that the chest contents is persisted
+			TileEntityArcaneWorktable.this.markDirty();
+		}
+	};
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		if (compound.hasKey("items")) {
-            itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
-        }
+		if (compound.hasKey("items"))
+		{
+			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
+		}
 
 	}
 
@@ -64,7 +67,7 @@ public class TileEntityArcaneWorktable extends TileEntity
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
+			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}
 		return super.getCapability(capability, facing);
 	}

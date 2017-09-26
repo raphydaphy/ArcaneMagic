@@ -39,15 +39,43 @@ public class CategoryThaumaturgy implements IThaumonomiconCategory
 
 	public class EntryBasicWand implements IThaumonomiconEntry
 	{
-		@Override public String getUnlocalizedName() { return "thaumcraft.research.category.thaumaturgy.basic_wand"; }
-		@Override public IconTypePair getIcon() { return new IconTypePair(new ItemStack(ModRegistry.WAND), IconType.CIRCLE); }
-		@Override public Pos2 getPos() { return new Pos2(260, 250); }
+		@Override
+		public String getUnlocalizedName()
+		{
+			return "thaumcraft.research.category.thaumaturgy.basic_wand";
+		}
+
+		@Override
+		public IconTypePair getIcon()
+		{
+			return new IconTypePair(new ItemStack(ModRegistry.WAND), IconType.CIRCLE);
+		}
+
+		@Override
+		public Pos2 getPos()
+		{
+			return new Pos2(260, 250);
+		}
 	}
-	
+
 	public class EntryBasicFoci implements IThaumonomiconEntry
 	{
-		@Override public String getUnlocalizedName() { return "thaumcraft.research.category.thaumaturgy.basic_foci"; }
-		@Override public IconTypePair getIcon() { return new IconTypePair(new ItemStack(ModRegistry.SHARD), IconType.CIRCLE); }
-		@Override public Pos2 getPos() { return new Pos2(290, 210); }
+		@Override
+		public String getUnlocalizedName()
+		{
+			return "thaumcraft.research.category.thaumaturgy.basic_foci";
+		}
+
+		@Override
+		public IconTypePair getIcon()
+		{
+			return new IconTypePair(new ItemStack(ModRegistry.SHARD), IconType.CIRCLE);
+		}
+
+		@Override
+		public Pos2 getPos()
+		{
+			return new Pos2(290, 210);
+		}
 	}
 }

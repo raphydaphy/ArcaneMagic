@@ -23,71 +23,90 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockOre extends BlockBase {
+public class BlockOre extends BlockBase
+{
 	public static final PropertyEnum<EnumPrimal> PRIMAL = PropertyEnum.create("primal", EnumPrimal.class);
 
-	public BlockOre(String name, float hardness) {
+	public BlockOre(String name, float hardness)
+	{
 		super(name, Material.ROCK, hardness);
 		setDefaultState(this.blockState.getBaseState().withProperty(PRIMAL, EnumPrimal.AER));
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getBlockLayer()
+	{
 		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) {
+	public int getMetaFromState(IBlockState state)
+	{
 		return state.getValue(PRIMAL).ordinal();
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
+	public IBlockState getStateFromMeta(int meta)
+	{
 		return getDefaultState().withProperty(PRIMAL, EnumPrimal.values()[meta]);
 	}
 
 	@Override
-	public BlockStateContainer createBlockState() {
+	public BlockStateContainer createBlockState()
+	{
 		return new BlockStateContainer(this, PRIMAL);
 	}
 
 	@Override
-	public void initModels(ModelRegistryEvent e) {
-		for (EnumPrimal p : EnumPrimal.values()) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), p.ordinal(), new ModelResourceLocation(getRegistryName(), "primal=" + p.getName()));
+	public void initModels(ModelRegistryEvent e)
+	{
+		for (EnumPrimal p : EnumPrimal.values())
+		{
+			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(this), p.ordinal(),
+					new ModelResourceLocation(getRegistryName(), "primal=" + p.getName()));
 		}
 	}
-	
+
 	@Override
-	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
+	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+			float hitZ, int meta, EntityLivingBase placer, EnumHand hand)
+	{
 		return getDefaultState().withProperty(PRIMAL, EnumPrimal.values()[meta]);
 	}
 
 	@Override
-	public ItemBlock createItemBlock() {
-		return (ItemBlock) new ItemBlock(this) {
-			
+	public ItemBlock createItemBlock()
+	{
+		return (ItemBlock) new ItemBlock(this)
+		{
+
 			@Override
-			public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-				if (isInCreativeTab(tab)) {
-					for (EnumPrimal p : EnumPrimal.values()) {
+			public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+			{
+				if (isInCreativeTab(tab))
+				{
+					for (EnumPrimal p : EnumPrimal.values())
+					{
 						items.add(new ItemStack(this, 1, p.ordinal()));
 					}
 				}
 			}
-			
+
 			@Override
-			public int getMetadata(int damage) {
+			public int getMetadata(int damage)
+			{
 				return damage;
 			}
 

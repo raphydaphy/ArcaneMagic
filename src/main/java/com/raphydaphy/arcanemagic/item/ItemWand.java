@@ -40,7 +40,7 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 {
 	public static final String KEY_ROD = "rodType";
 	public static final String KEY_CAP = "capType";
-	
+
 	public ItemWand(String name)
 	{
 		super(name);
@@ -69,7 +69,8 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
-		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX()+ 0.5f, pos.getY() + 1.5f, pos.getZ()+ 0.5f, 0, 0, 0, 86, 13, 124));
+		Minecraft.getMinecraft().effectRenderer.addEffect(
+				new ParticleStar(world, pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
 		Block block = world.getBlockState(pos).getBlock();
 		if (block.equals(Blocks.BOOKSHELF))
 		{
@@ -77,7 +78,8 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 
 			for (int i = 0; i < 10; i++)
 			{
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX()+ 0.5f, pos.getY() + 0.5f, pos.getZ()+ 0.5f, 0, 0, 0, 86, 13, 124));
+				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX() + 0.5f,
+						pos.getY() + 0.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
 
 				// world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() +
 				// world.rand.nextFloat(), pos.getY() + world.rand.nextFloat(), pos.getZ() +
@@ -111,28 +113,29 @@ public class ItemWand extends ItemBase implements IItemVisAcceptor
 			if (!stack.hasTagCompound())
 			{
 				stack.setTagCompound(new NBTTagCompound());
-				
+
 			}
-			
+
 			stack.getTagCompound().setString("rodType", VanillaThaumcraftParts.rod_wood.getUnlocalizedName());
 			stack.getTagCompound().setString("capType", VanillaThaumcraftParts.cap_gold.getUnlocalizedName());
 		}
 
 		return EnumActionResult.PASS;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
-    public ModelResourceLocation getModelLocation(ItemStack stack)
-    {
-        return new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory");
-    }
+	public ModelResourceLocation getModelLocation(ItemStack stack)
+	{
+		return new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory");
+	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{
-		ModelLoader.registerItemVariants(ModRegistry.WAND, new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory"));
-        ModelLoader.setCustomMeshDefinition(ModRegistry.WAND, MeshHandler.instance());
+		ModelLoader.registerItemVariants(ModRegistry.WAND,
+				new ModelResourceLocation(Thaumcraft.MODID + ":wand", "inventory"));
+		ModelLoader.setCustomMeshDefinition(ModRegistry.WAND, MeshHandler.instance());
 		ModelLoaderRegistry.registerLoader(ModelWand.ModelWandLoader.instance);
 	}
 

@@ -30,7 +30,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class ModRegistry {
+public class ModRegistry
+{
 
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
@@ -57,17 +58,20 @@ public class ModRegistry {
 	public static final ItemFoci FIRE_FOCUS = new ItemFoci("focus_fire");
 
 	@SubscribeEvent
-	public void onBlockRegister(Register<Block> e) {
+	public void onBlockRegister(Register<Block> e)
+	{
 		e.getRegistry().registerAll(BLOCKS.toArray(new Block[BLOCKS.size()]));
 	}
 
 	@SubscribeEvent
-	public void onItemRegister(Register<Item> e) {
+	public void onItemRegister(Register<Item> e)
+	{
 		e.getRegistry().registerAll(ITEMS.toArray(new Item[ITEMS.size()]));
 	}
 
 	@SubscribeEvent
-	public void registerSounds(RegistryEvent.Register<SoundEvent> event) {
+	public void registerSounds(RegistryEvent.Register<SoundEvent> event)
+	{
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
 		ThaumcraftSoundHandler.register("craft_start", registry);
 		ThaumcraftSoundHandler.register("wand_1", registry);
@@ -102,7 +106,8 @@ public class ModRegistry {
 		ThaumcraftSoundHandler.register("camera_clack_3", registry);
 	}
 
-	public static void registerTiles() {
+	public static void registerTiles()
+	{
 		GameRegistry.registerTileEntity(TileEntityArcaneWorktable.class, Thaumcraft.MODID + "_arcane_worktable");
 	}
 }

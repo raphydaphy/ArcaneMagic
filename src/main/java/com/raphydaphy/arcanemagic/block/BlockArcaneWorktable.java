@@ -34,12 +34,14 @@ public class BlockArcaneWorktable extends BlockBase
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity(IBlockState state)
+	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
 		return new TileEntityArcaneWorktable();
 	}
 

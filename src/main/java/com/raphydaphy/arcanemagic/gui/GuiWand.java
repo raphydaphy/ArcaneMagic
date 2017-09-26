@@ -52,7 +52,7 @@ public final class GuiWand
 		Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(8, 8, 7, 7, 50, 50);
 
 		GlStateManager.popMatrix();
-		
+
 		GlStateManager.pushMatrix();
 		// Perdito
 		drawBar(37, 47, 0.25f, 0.25f, 0.25f, 10, 15.9f);
@@ -71,8 +71,8 @@ public final class GuiWand
 
 		// Aer
 		drawBar(-41, 52, 1f, 1f, 0.4921875f, 12, -99.1f);
-		
-		GlStateManager.color(1, 1, 1,1);
+
+		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.popMatrix();
 	}
 }

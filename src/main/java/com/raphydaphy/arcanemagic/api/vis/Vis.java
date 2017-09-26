@@ -54,7 +54,7 @@ public enum Vis implements IStringSerializable
 	{
 		return MAX_KEY + "_" + unlocalizedName;
 	}
-	
+
 	public String getMultiDiscountKey()
 	{
 		return DISCOUNT_KEY + "_" + unlocalizedName;
