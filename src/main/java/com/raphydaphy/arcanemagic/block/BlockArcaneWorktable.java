@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 
 import net.minecraft.block.material.Material;
@@ -58,7 +58,7 @@ public class BlockArcaneWorktable extends BlockBase
 		{
 			return false;
 		}
-		player.openGui(Thaumcraft.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
+		player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 }

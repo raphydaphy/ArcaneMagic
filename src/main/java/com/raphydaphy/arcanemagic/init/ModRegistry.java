@@ -3,21 +3,19 @@ package com.raphydaphy.arcanemagic.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.block.BlockBase;
-import com.raphydaphy.arcanemagic.block.BlockModLeaves;
-import com.raphydaphy.arcanemagic.block.BlockModLog;
 import com.raphydaphy.arcanemagic.block.BlockModSlab;
 import com.raphydaphy.arcanemagic.block.BlockOre;
-import com.raphydaphy.arcanemagic.block.BlockResearchTable;
 import com.raphydaphy.arcanemagic.block.BlockTable;
-import com.raphydaphy.arcanemagic.handler.ThaumcraftSoundHandler;
+import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.item.ItemBase;
 import com.raphydaphy.arcanemagic.item.ItemFoci;
 import com.raphydaphy.arcanemagic.item.ItemScribingTools;
 import com.raphydaphy.arcanemagic.item.ItemThaumonomicon;
-import com.raphydaphy.arcanemagic.item.ItemWand;
+import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 
 import net.minecraft.block.Block;
@@ -35,11 +33,7 @@ public class ModRegistry
 
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
-
-	public static final BlockModLog GREATWOOD_LOG = new BlockModLog("log_greatwood");
-	public static final BlockModLog SILVERWOOD_LOG = new BlockModLog("log_silverwood");
-	public static final BlockModLeaves GREATWOOD_LEAVES = new BlockModLeaves("leaves_greatwood");
-	public static final BlockModLeaves SILVERWOOD_LEAVES = new BlockModLeaves("leaves_silverwood");
+	
 	public static final BlockBase GREATWOOD_PLANKS = new BlockBase("planks_greatwood", Material.WOOD, 1f);
 	public static final BlockBase SILVERWOOD_PLANKS = new BlockBase("planks_silverwood", Material.WOOD, 1f);
 	public static final BlockModSlab GREATWOOD_SLAB = new BlockModSlab("slab_greatwood", Material.WOOD);
@@ -47,10 +41,10 @@ public class ModRegistry
 	public static final BlockOre INFUSED_ORE = new BlockOre("ore_infused", 3.5f);
 	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();
-	public static final BlockResearchTable RESEARCH_TABLE = new BlockResearchTable();
+	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 
 	public static final ItemBase IRON_CAP = new ItemBase("wand_cap_iron");
-	public static final ItemWand WAND = new ItemWand("wand");
+	public static final ItemScepter WAND = new ItemScepter("wand");
 	public static final ItemThaumonomicon THAUMONOMICON = new ItemThaumonomicon("thaumonomicon");
 	public static final ItemBase SHARD = new ItemBase("shard", 6);
 	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools("scribing_tools");
@@ -73,41 +67,41 @@ public class ModRegistry
 	public void registerSounds(RegistryEvent.Register<SoundEvent> event)
 	{
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
-		ThaumcraftSoundHandler.register("craft_start", registry);
-		ThaumcraftSoundHandler.register("wand_1", registry);
-		ThaumcraftSoundHandler.register("wand_2", registry);
-		ThaumcraftSoundHandler.register("wand_3", registry);
-		ThaumcraftSoundHandler.register("page_1", registry);
-		ThaumcraftSoundHandler.register("page_2", registry);
-		ThaumcraftSoundHandler.register("creak_1", registry);
-		ThaumcraftSoundHandler.register("creak_2", registry);
-		ThaumcraftSoundHandler.register("tool_1", registry);
-		ThaumcraftSoundHandler.register("tool_2", registry);
-		ThaumcraftSoundHandler.register("fly_1", registry);
-		ThaumcraftSoundHandler.register("fly_2", registry);
-		ThaumcraftSoundHandler.register("gore_1", registry);
-		ThaumcraftSoundHandler.register("gore_2", registry);
-		ThaumcraftSoundHandler.register("wind_1", registry);
-		ThaumcraftSoundHandler.register("wind_2", registry);
-		ThaumcraftSoundHandler.register("write_1", registry);
-		ThaumcraftSoundHandler.register("write_2", registry);
-		ThaumcraftSoundHandler.register("shock_1", registry);
-		ThaumcraftSoundHandler.register("shock_2", registry);
-		ThaumcraftSoundHandler.register("swing_1", registry);
-		ThaumcraftSoundHandler.register("swing_2", registry);
-		ThaumcraftSoundHandler.register("squeek_1", registry);
-		ThaumcraftSoundHandler.register("squeek_2", registry);
-		ThaumcraftSoundHandler.register("zap_1", registry);
-		ThaumcraftSoundHandler.register("zap_2", registry);
-		ThaumcraftSoundHandler.register("hh_on", registry);
-		ThaumcraftSoundHandler.register("hh_off", registry);
-		ThaumcraftSoundHandler.register("camera_clack_1", registry);
-		ThaumcraftSoundHandler.register("camera_clack_2", registry);
-		ThaumcraftSoundHandler.register("camera_clack_3", registry);
+		ArcaneMagicSoundHandler.register("craft_start", registry);
+		ArcaneMagicSoundHandler.register("wand_1", registry);
+		ArcaneMagicSoundHandler.register("wand_2", registry);
+		ArcaneMagicSoundHandler.register("wand_3", registry);
+		ArcaneMagicSoundHandler.register("page_1", registry);
+		ArcaneMagicSoundHandler.register("page_2", registry);
+		ArcaneMagicSoundHandler.register("creak_1", registry);
+		ArcaneMagicSoundHandler.register("creak_2", registry);
+		ArcaneMagicSoundHandler.register("tool_1", registry);
+		ArcaneMagicSoundHandler.register("tool_2", registry);
+		ArcaneMagicSoundHandler.register("fly_1", registry);
+		ArcaneMagicSoundHandler.register("fly_2", registry);
+		ArcaneMagicSoundHandler.register("gore_1", registry);
+		ArcaneMagicSoundHandler.register("gore_2", registry);
+		ArcaneMagicSoundHandler.register("wind_1", registry);
+		ArcaneMagicSoundHandler.register("wind_2", registry);
+		ArcaneMagicSoundHandler.register("write_1", registry);
+		ArcaneMagicSoundHandler.register("write_2", registry);
+		ArcaneMagicSoundHandler.register("shock_1", registry);
+		ArcaneMagicSoundHandler.register("shock_2", registry);
+		ArcaneMagicSoundHandler.register("swing_1", registry);
+		ArcaneMagicSoundHandler.register("swing_2", registry);
+		ArcaneMagicSoundHandler.register("squeek_1", registry);
+		ArcaneMagicSoundHandler.register("squeek_2", registry);
+		ArcaneMagicSoundHandler.register("zap_1", registry);
+		ArcaneMagicSoundHandler.register("zap_2", registry);
+		ArcaneMagicSoundHandler.register("hh_on", registry);
+		ArcaneMagicSoundHandler.register("hh_off", registry);
+		ArcaneMagicSoundHandler.register("camera_clack_1", registry);
+		ArcaneMagicSoundHandler.register("camera_clack_2", registry);
+		ArcaneMagicSoundHandler.register("camera_clack_3", registry);
 	}
 
 	public static void registerTiles()
 	{
-		GameRegistry.registerTileEntity(TileEntityArcaneWorktable.class, Thaumcraft.MODID + "_arcane_worktable");
+		GameRegistry.registerTileEntity(TileEntityArcaneWorktable.class, ArcaneMagic.MODID + "_arcane_worktable");
 	}
 }

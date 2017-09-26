@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.block.BlockHorizontal;
@@ -31,9 +31,9 @@ public class BlockTable extends BlockHorizontal implements IBaseBlock
 	public BlockTable(String name, Material materialIn, float hardness, String toolType, int toolLevel)
 	{
 		super(materialIn);
-		setUnlocalizedName(Thaumcraft.MODID + "." + name);
+		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
 		setRegistryName(name);
-		setCreativeTab(Thaumcraft.creativeTab);
+		setCreativeTab(ArcaneMagic.creativeTab);
 		setHardness(hardness);
 		setHarvestLevel(toolType, toolLevel);
 	}

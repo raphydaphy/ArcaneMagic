@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.init;
 
-import com.raphydaphy.arcanemagic.gui.GuiWand;
+import com.raphydaphy.arcanemagic.gui.GuiScepter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -32,7 +32,7 @@ public class ModEvents
 					|| !player.getHeldItemOffhand().isEmpty()
 							&& player.getHeldItemOffhand().getItem().equals(ModRegistry.WAND))
 			{
-				GuiWand.renderWandHUD(mc, event.getResolution());
+				GuiScepter.renderWandHUD(mc, event.getResolution());
 			}
 		}
 	}

@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.item;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
@@ -24,8 +24,8 @@ public class ItemBase extends Item implements IHasModel
 	public ItemBase(String name, int variants)
 	{
 		setRegistryName(name);
-		setUnlocalizedName(Thaumcraft.MODID + "." + name);
-		setCreativeTab(Thaumcraft.creativeTab);
+		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
+		setCreativeTab(ArcaneMagic.creativeTab);
 		this.variants = variants;
 		if (variants > 0)
 			setHasSubtypes(true);

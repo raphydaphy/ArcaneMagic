@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.gui;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 
@@ -12,7 +12,7 @@ public class GuiArcaneWorktable extends GuiContainer
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 239;
 
-	private static final ResourceLocation background = new ResourceLocation(Thaumcraft.MODID,
+	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/arcane_work_table.png");
 
 	public GuiArcaneWorktable(TileEntityArcaneWorktable tileEntity, ContainerArcaneWorktable container)

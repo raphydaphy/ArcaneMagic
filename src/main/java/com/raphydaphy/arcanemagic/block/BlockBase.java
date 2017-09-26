@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.block.Block;
@@ -12,9 +12,9 @@ public class BlockBase extends Block implements IBaseBlock
 	public BlockBase(String name, Material material, float hardness)
 	{
 		super(material);
-		setUnlocalizedName(Thaumcraft.MODID + "." + name);
+		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
 		setRegistryName(name);
-		setCreativeTab(Thaumcraft.creativeTab);
+		setCreativeTab(ArcaneMagic.creativeTab);
 		setHardness(hardness);
 		init();
 	}

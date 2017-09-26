@@ -106,7 +106,7 @@ public class InvCraftingHandler extends InventoryCrafting
 		this.te.markDirty();
 		this.eventHandler.onCraftMatrixChanged(this);
 
-		ThaumcraftPacketHandler.INSTANCE.sendToServer(new PacketArcaneCraftingSync());
+		ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketArcaneCraftingSync());
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.init;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +12,7 @@ public class ModEntities
 	{
 		int entityID = 0;
 
-		EntityRegistry.registerModEntity(new ResourceLocation(Thaumcraft.MODID, "entity_item_fancy"),
-				EntityItemFancy.class, "entity_item_fancy", entityID++, Thaumcraft.instance, 64, 20, true);
+		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneMagic.MODID, "entity_item_fancy"),
+				EntityItemFancy.class, "entity_item_fancy", entityID++, ArcaneMagic.instance, 64, 20, true);
 	}
 }

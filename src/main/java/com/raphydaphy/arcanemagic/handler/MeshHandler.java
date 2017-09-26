@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.handler;
 
-import com.raphydaphy.arcanemagic.item.ItemWand;
+import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -27,9 +27,9 @@ public class MeshHandler implements ItemMeshDefinition
 	@Override
 	public ModelResourceLocation getModelLocation(ItemStack stack)
 	{
-		if (stack.getItem() instanceof ItemWand)
+		if (stack.getItem() instanceof ItemScepter)
 		{
-			return ((ItemWand) stack.getItem()).getModelLocation(stack);
+			return ((ItemScepter) stack.getItem()).getModelLocation(stack);
 		}
 
 		return null;

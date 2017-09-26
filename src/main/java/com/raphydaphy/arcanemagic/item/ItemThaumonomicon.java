@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.item;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
-import com.raphydaphy.arcanemagic.handler.ThaumcraftSoundHandler;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -26,10 +26,10 @@ public class ItemThaumonomicon extends ItemBase
 	{
 		if (world.isRemote)
 		{
-			world.playSound(player.posX, player.posY, player.posZ, ThaumcraftSoundHandler.randomPageSound(),
+			world.playSound(player.posX, player.posY, player.posZ, ArcaneMagicSoundHandler.randomPageSound(),
 					SoundCategory.MASTER, 1f, 1f, false);
 		}
-		player.openGui(Thaumcraft.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+		player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 }

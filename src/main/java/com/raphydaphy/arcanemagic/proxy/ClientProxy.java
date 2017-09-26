@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.proxy;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.data.EnumPrimal;
@@ -12,7 +12,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,16 +37,6 @@ public class ClientProxy extends CommonProxy
 
 	public static void registerColors()
 	{
-		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((state, world, pos, tintIndex) ->
-		{
-			return world != null && pos != null ? BiomeColorHelper.getFoliageColorAtPos(world, pos) : 0x377434;
-		}, ModRegistry.GREATWOOD_LEAVES);
-
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
-		{
-			return 0x377434;
-		}, ModRegistry.GREATWOOD_LEAVES);
-
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
 		{
 			return EnumPrimal.values()[stack.getMetadata()].getColorMultiplier();
@@ -77,7 +66,7 @@ public class ClientProxy extends CommonProxy
 	public void onTextureStitch(TextureStitchEvent event)
 	{
 		System.out.println("Stiched textures!");
-		ResourceLocation particleSparkle = new ResourceLocation(Thaumcraft.MODID, "misc/particle_star");
+		ResourceLocation particleSparkle = new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star");
 		event.getMap().registerSprite(particleSparkle);
 	}
 }

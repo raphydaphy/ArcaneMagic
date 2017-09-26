@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.proxy;
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
 import com.raphydaphy.arcanemagic.gui.GuiArcaneWorktable;
-import com.raphydaphy.arcanemagic.gui.GuiThaumonomicon;
+import com.raphydaphy.arcanemagic.gui.GuiNotebook;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ItemThaumonomicon;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
@@ -41,7 +41,7 @@ public class GuiProxy implements IGuiHandler
 			if (player.getHeldItemMainhand().getItem() == ModRegistry.THAUMONOMICON
 					|| player.getHeldItemOffhand().getItem() == ModRegistry.THAUMONOMICON)
 			{
-				return new GuiThaumonomicon(player);
+				return new GuiNotebook(player);
 			}
 			break;
 		case BlockArcaneWorktable.GUI_ID:

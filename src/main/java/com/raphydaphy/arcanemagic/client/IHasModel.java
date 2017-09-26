@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client;
 
-import com.raphydaphy.arcanemagic.Thaumcraft;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -34,7 +34,7 @@ public interface IHasModel
 	public static void sMRL(String statePath, Item k, int meta, String variant)
 	{
 		ModelLoader.setCustomModelResourceLocation(k, meta,
-				new ModelResourceLocation(Thaumcraft.MODID + ":" + statePath, variant));
+				new ModelResourceLocation(ArcaneMagic.MODID + ":" + statePath, variant));
 	}
 
 }
