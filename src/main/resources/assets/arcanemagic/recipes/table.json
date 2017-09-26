@@ -1,0 +1,20 @@
+{
+	"result": {
+		"item": "arcanemagic:table"
+	},
+	"pattern": [
+		"sss",
+		"p p"
+	],
+	"type": "forge:ore_shaped",
+	"key": {
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "slabWood"
+		},
+		"p": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		}
+	}
+}

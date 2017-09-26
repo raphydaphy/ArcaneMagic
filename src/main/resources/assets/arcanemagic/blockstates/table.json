@@ -1,0 +1,9 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "facing=north":   { "model": "arcanemagic:table"},
+    "facing=east":   { "model": "arcanemagic:table", "y": 90 },
+    "facing=south": { "model": "arcanemagic:table" },
+    "facing=west": { "model": "arcanemagic:table", "y": 90 }
+  }
+}

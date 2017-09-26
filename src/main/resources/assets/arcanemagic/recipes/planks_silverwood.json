@@ -1,0 +1,12 @@
+{
+	"result": {
+		"item": "arcanemagic:planks_silverwood",
+		"count": 4
+	},
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [
+        {
+            "item": "arcanemagic:log_silverwood"
+        }
+    ]
+}

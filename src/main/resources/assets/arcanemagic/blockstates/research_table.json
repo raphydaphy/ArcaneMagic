@@ -1,0 +1,12 @@
+{
+	"variants": {
+    	"facing=north,side=0": { "model": "arcanemagic:research_table_1", "y": 270 },
+        "facing=north,side=1": { "model": "arcanemagic:research_table_2", "y": 270 },
+        "facing=east,side=0": { "model": "arcanemagic:research_table_1"},
+        "facing=east,side=1": { "model": "arcanemagic:research_table_2"},
+        "facing=south,side=0": { "model": "arcanemagic:research_table_1", "y": 270 },
+        "facing=south,side=1": { "model": "arcanemagic:research_table_2", "y": 270 },
+        "facing=west,side=0": { "model": "arcanemagic:research_table_1" },
+        "facing=west,side=1": { "model": "arcanemagic:research_table_2" }
+    }
+}

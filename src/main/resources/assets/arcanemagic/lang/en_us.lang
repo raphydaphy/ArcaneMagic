@@ -1,0 +1,82 @@
+# Items
+item.arcanemagic.wand_cap_iron.name=Iron Wand Cap
+item.arcanemagic.wand.name=Iron Capped Wooden Wand
+item.arcanemagic.thaumonomicon.name=Thaumonomicon
+item.arcanemagic.shard.name=Infused Shard
+item.arcanemagic.scribing_tools.name=Scribing Tools
+item.arcanemagic.knowledge_fragment.name=Knowledge Fragment
+item.arcanemagic.focus_fire.name=Wand Focus: Fire
+
+# Blocks
+tile.arcanemagic.log_greatwood.name=Greatwood Log
+tile.arcanemagic.log_silverwood.name=Silverwood Log
+tile.arcanemagic.leaves_greatwood.name=Greatwood Leaves
+tile.arcanemagic.leaves_silverwood.name=Silverwood Leaves
+tile.arcanemagic.planks_greatwood.name=Greatwood Planks
+tile.arcanemagic.planks_silverwood.name=Silverwood Planks
+tile.arcanemagic.table.name=Table
+tile.arcanemagic.arcane_worktable.name=Arcane Worktable
+tile.arcanemagic.research_table.name=Research Table
+tile.arcanemagic.slab_greatwood.0.name=Greatwood Slab
+tile.arcanemagic.slab_silverwood.0.name=Silverwood Slab
+
+# Sounds
+arcanemagic.subtitle.craft_start=Started Crafting
+arcanemagic.subtitle.wand=Used Wand
+arcanemagic.subtitle.page=Turned Page
+arcanemagic.subtitle.creak=Ominous Creak
+arcanemagic.subtitle.tool=Tool Broken
+arcanemagic.subtitle.fly=Fly Buzzes
+arcanemagic.subtitle.gore=Blood Splatters
+arcanemagic.subtitle.wind=Wind Whistles
+arcanemagic.subtitle.write=Wrote Something
+arcanemagic.subtitle.shock=Something Shocked
+arcanemagic.subtitle.swing=Something Swings
+arcanemagic.subtitle.squeak=Something Squeaks
+arcanemagic.subtitle.hh_on=HH Turned On
+arcanemagic.subtitle.hh_off=HH Turned Off
+arcanemagic.subtitle.camera_clack=Something Clicks
+
+# Guis
+itemGroup.arcanemagic=arcanemagic
+
+# Vis
+arcanemagic.vis.aer=Aer
+arcanemagic.vis.aqua=Aqua
+arcanemagic.vis.ignis=Ignis
+arcanemagic.vis.ordo=Ordo
+arcanemagic.vis.perditio=Perditio
+arcanemagic.vis.terra=Terra
+
+# Thaumanomicon
+arcanemagic.research.category.alchemy=Alchemy
+arcanemagic.research.category.artifice=Artifice
+arcanemagic.research.category.golemancy=Golemancy
+arcanemagic.research.category.eldritch=Eldritch
+
+## Basic Information
+arcanemagic.research.category.basic_info=Basic Information
+arcanemagic.research.category.basic_info.aspects=Aspects of Magic
+arcanemagic.research.category.basic_info.aspects.desc=The building blocks of magic
+arcanemagic.research.category.basic_info.thaumonomicon=Thaumonomicon
+arcanemagic.research.category.basic_info.thaumonomicon.desc=A Repository of Knowledge
+arcanemagic.research.category.basic_info.research=Research
+arcanemagic.research.category.basic_info.research.desc=How you discover things
+arcanemagic.research.category.basic_info.knowledge_fragments=Knowledge Fragments
+arcanemagic.research.category.basic_info.knowledge_fragments.desc=Fragments of lost lore
+arcanemagic.research.category.basic_info.nodes_intro=Auras and Nodes
+arcanemagic.research.category.basic_info.nodes_intro.desc=Magic is everywhere
+arcanemagic.research.category.basic_info.warp=Warp, Flux and all things bad
+arcanemagic.research.category.basic_info.warp.desc=Everything has a price
+
+## Thaumaturgy
+arcanemagic.research.category.thaumaturgy=Thaumaturgy
+arcanemagic.research.category.thaumaturgy.basic_wand=Basic Wand Craft
+arcanemagic.research.category.thaumaturgy.basic_wand.desc=Your first tool
+arcanemagic.research.category.thaumaturgy.basic_foci=Wand Foci
+arcanemagic.research.category.thaumaturgy.basic_foci.desc=Form meets Function
+
+## Alchemy
+arcanemagic.research.category.alchemy=Alchemy
+arcanemagic.research.category.alchemy.basic_alchemy=Basic Alchemy
+arcanemagic.research.category.alchemy.basic_alchemy.desc=Bubble and Boil

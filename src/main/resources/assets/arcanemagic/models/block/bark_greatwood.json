@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "arcanemagic:blocks/log_greatwood"
+    }
+}

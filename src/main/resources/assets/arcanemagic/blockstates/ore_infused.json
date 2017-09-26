@@ -1,0 +1,21 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "arcanemagic:cube_border",
+		"transform": "forge:default-block",
+		"textures": {
+			"inner": "blocks/stone",
+			"overlay": "arcanemagic:blocks/ore_infused"
+		}
+	},
+	"variants": {
+		"primal": {
+			"aer": {},
+			"aqua": {},
+			"ignis": {},
+			"terra": {},
+			"ordo": {},
+			"perditio": {}
+		}
+	}
+}

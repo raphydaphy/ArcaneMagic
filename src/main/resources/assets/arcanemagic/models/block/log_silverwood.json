@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "arcanemagic:blocks/log_silverwood_top",
+        "side": "arcanemagic:blocks/log_silverwood"
+    }
+}

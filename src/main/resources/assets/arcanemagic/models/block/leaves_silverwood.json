@@ -1,0 +1,6 @@
+{
+    "parent": "block/leaves",
+    "textures": {
+        "all": "arcanemagic:blocks/leaves_silverwood"
+    }
+}

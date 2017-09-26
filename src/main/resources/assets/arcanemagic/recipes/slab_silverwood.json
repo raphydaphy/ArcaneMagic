@@ -1,0 +1,15 @@
+{
+	"result": {
+		"item": "arcanemagic:slab_silverwood",
+		"count": 6
+	},
+	"pattern": [
+		"ppp"
+	],
+	"type": "minecraft:crafting_shaped",
+	"key": {
+		"p": {
+			"item": "arcanemagic:planks_silverwood"
+		}
+	}
+}

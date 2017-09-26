@@ -11,8 +11,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 
 
 version = "0.1"
-group = "com.raphydaphy.thaumcraft"
-archivesBaseName = "thaumcraft"
+group = "com.raphydaphy.arcanemagic"
+archivesBaseName = "arcanemagic"
 
 sourceCompatibility = targetCompatibility = "1.8"
 compileJava {
@@ -57,6 +57,6 @@ processResources {
 
 	manifest {
 	
-	    attributes 'FMLAT': 'thaumcraft_at.cfg'	
+	    attributes 'FMLAT': 'arcanemagic_at.cfg'	
 	}
 }

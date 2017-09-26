@@ -1,0 +1,20 @@
+{
+	"result": {
+		"item": "arcanemagic:wand"
+	},
+	"pattern": [
+		"  c",
+		" s ",
+		"c  "
+	],
+	"type": "forge:ore_shaped",
+	"key": {
+		"c": {
+			"item": "arcanemagic:wand_cap_iron"
+		},
+		"s": {
+			"type": "forge:ore_dict",
+			"ore": "stickWood"
+		}
+	}
+}

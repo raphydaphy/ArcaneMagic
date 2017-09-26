@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+  	"defaults": {
+        "textures": {
+          "all": "arcanemagic:blocks/planks_silverwood"
+        }
+	},
+  "variants": {
+    "slab_variant": {
+      "lower": {
+		"model": "arcanemagic:slab_lower"
+      },
+      "upper": {
+		"model": "arcanemagic:slab_upper"
+      },
+	"double": {
+		"model": "cube_all"
+      }
+    },
+	"inventory":{
+		"model": "arcanemagic:slab_lower"
+     }
+}
+}

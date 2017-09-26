@@ -1,0 +1,8 @@
+{
+	"variants": {
+    	"check_decay=true,decayable=true": { "model": "arcanemagic:leaves_silverwood" },
+        "check_decay=true,decayable=false": { "model": "arcanemagic:leaves_silverwood" },
+        "check_decay=false,decayable=true": { "model": "arcanemagic:leaves_silverwood" },
+        "check_decay=false,decayable=false": { "model": "arcanemagic:leaves_silverwood" }
+    }
+}

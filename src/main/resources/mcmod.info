@@ -1,15 +1,15 @@
 [
 {
-  "modid": "thaumcraft",
-  "name": "Thaumcraft",
+  "modid": "arcanemagic",
+  "name": "Arcane Magic",
   "description": "Adding a touch of magic to Minecraft",
   "version": "0.1",
   "mcversion": "${mcversion}",
-  "logoFile": "assets/thaumcraft/textures/logo.png",
+  "logoFile": "assets/arcanemagic/textures/logo.png",
   "url": "",
   "updateUrl": "",
-  "authorList": ["raphydaphy"],
-  "credits": "All textures are from Thaumcraft 4 by Azanor.",
+  "authorList": ["raphydaphy", "Shadows_Of_Fire"],
+  "credits": "Currently using Thaumcraft assets because we have no artists.",
   "parent": "",
   "screenshots": [],
   "dependencies": []
