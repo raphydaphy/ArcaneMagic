@@ -17,13 +17,13 @@ public class CategoryBasicInformation implements INotebookCategory
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "thaumcraft.research.category.basic_info";
+		return "arcanemagic.notebook.category.basic_info";
 	}
 
 	@Override
 	public ResourceLocation getIcon()
 	{
-		return new ResourceLocation(ArcaneMagic.MODID, "textures/items/thaumonomicon.png");
+		return new ResourceLocation(ArcaneMagic.MODID, "textures/items/notebook.png");
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		entries.add(new EntryAspects());
 		entries.add(new EntryThaumonomicon());
-		entries.add(new EntryResearch());
+		entries.add(new Entrynotebook());
 		entries.add(new EntryKnowledgeFragments());
 		entries.add(new EntryNodesIntro());
 		entries.add(new EntryWarp());
@@ -44,13 +44,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.basic_info.aspects";
+			return "arcanemagic.notebook.category.basic_info.aspects";
 		}
 
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/research/r_aspects.png"),
+			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/notebook/r_aspects.png"),
 					IconType.CIRCLE);
 		}
 
@@ -66,7 +66,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.basic_info.thaumonomicon";
+			return "arcanemagic.notebook.category.basic_info.thaumonomicon";
 		}
 
 		@Override
@@ -83,12 +83,12 @@ public class CategoryBasicInformation implements INotebookCategory
 		}
 	}
 
-	public class EntryResearch implements INotebookEntry
+	public class Entrynotebook implements INotebookEntry
 	{
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.basic_info.research";
+			return "arcanemagic.notebook.category.basic_info.notebook";
 		}
 
 		@Override
@@ -110,7 +110,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.basic_info.knowledge_fragments";
+			return "arcanemagic.notebook.category.basic_info.knowledge_fragments";
 		}
 
 		@Override
@@ -132,13 +132,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.basic_info.nodes_intro";
+			return "arcanemagic.notebook.category.basic_info.nodes_intro";
 		}
 
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/research/r_nodes1.png"),
+			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/notebook/r_nodes1.png"),
 					IconType.CIRCLE);
 		}
 
@@ -154,13 +154,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.basic_info.warp";
+			return "arcanemagic.notebook.category.basic_info.warp";
 		}
 
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/research/r_warp.png"),
+			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/notebook/r_warp.png"),
 					IconType.CIRCLE);
 		}
 

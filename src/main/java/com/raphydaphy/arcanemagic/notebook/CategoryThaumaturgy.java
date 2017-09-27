@@ -19,13 +19,13 @@ public class CategoryThaumaturgy implements INotebookCategory
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "thaumcraft.research.category.thaumaturgy";
+		return "arcanemagic.notebook.category.thaumaturgy";
 	}
 
 	@Override
 	public ResourceLocation getIcon()
 	{
-		return new ResourceLocation(ArcaneMagic.MODID, "textures/misc/research/r_thaumaturgy.png");
+		return new ResourceLocation(ArcaneMagic.MODID, "textures/misc/notebook/r_thaumaturgy.png");
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class CategoryThaumaturgy implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.thaumaturgy.basic_wand";
+			return "arcanemagic.notebook.category.thaumaturgy.basic_wand";
 		}
 
 		@Override
@@ -63,7 +63,7 @@ public class CategoryThaumaturgy implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.thaumaturgy.basic_foci";
+			return "arcanemagic.notebook.category.thaumaturgy.basic_foci";
 		}
 
 		@Override

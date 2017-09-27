@@ -17,7 +17,7 @@ public class CategoryAlchemy implements INotebookCategory
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "thaumcraft.research.category.alchemy";
+		return "arcanemagic.notebook.category.alchemy";
 	}
 
 	@Override
@@ -39,13 +39,13 @@ public class CategoryAlchemy implements INotebookCategory
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "thaumcraft.research.category.alchemy.basic_alchemy";
+			return "arcanemagic.notebook.category.alchemy.basic_alchemy";
 		}
 
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/mic/research/r_crucible.png"),
+			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/mic/notebook/r_crucible.png"),
 					IconType.CIRCLE);
 		}
 
