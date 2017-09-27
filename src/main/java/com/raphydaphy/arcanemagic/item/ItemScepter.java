@@ -177,9 +177,11 @@ public class ItemScepter extends ItemBase
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, (int) (Math.random() * 50)));
+		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, itemRand.nextInt(50)));
 
 		player.activeItemStack = stack;
+		
+		Essence.buildMapFromNBT(stack.getTagCompound());
 	}
 
 	@Override

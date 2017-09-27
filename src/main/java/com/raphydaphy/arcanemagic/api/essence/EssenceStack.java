@@ -13,6 +13,10 @@ public class EssenceStack
 		essence = e;
 		count = size;
 	}
+	
+	@Override
+	public String toString() {
+	}
 
 	public int getCount()
 	{

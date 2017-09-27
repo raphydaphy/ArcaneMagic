@@ -27,4 +27,8 @@ public abstract class ScepterPart
 	{
 		CAP, CORE,
 	}
+
+	public float getCostMultiplier() {
+		return 1;
+	}
 }

@@ -103,7 +103,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	public String toString()
 	{
-		return this.getClass().getSimpleName() + ":" + getRegistryName();
+		return getRegistryName().toString();
 	}
 
 	private static final String E = "essence_tag";
@@ -114,9 +114,8 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		List<EssenceStack> ret = new ArrayList<>();
 		NBTTagCompound essTag = tag.getCompoundTag(E);
 		for (String s : essTag.getKeySet())
-		{
 			ret.add(new EssenceStack(REGISTRY.getValue(new ResourceLocation(s)), essTag.getInteger(s)));
-		}
+		
 		return ret;
 	}
 	
@@ -125,6 +124,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		Map<Essence, EssenceStack> map = new HashMap<>();
 		for(EssenceStack stack : stacks) 
 			map.put(stack.getEssence(), stack);
+		
 		return map;
 	}
 
@@ -133,9 +133,11 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		NBTTagCompound essTag = tag.getCompoundTag(E);
 		for (EssenceStack e : essences)
 		{
+			if(e.isEmpty()) continue;
 			e.grow(essTag.getInteger(e.getEssence().getRegistryName().toString()));
 			essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
 		}
+		tag.setTag(E, essTag);
 		return tag;
 	}
 
