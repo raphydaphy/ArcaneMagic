@@ -180,10 +180,6 @@ public class ItemScepter extends ItemBase
 		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, (int) (Math.random() * 50)));
 
 		player.activeItemStack = stack;
-
-		System.out.println("Player is using " + player.getActiveItemStack().getItem().getRegistryName() + " with "
-				+ Essence.buildMapFromNBT(stack.getTagCompound()).get(Essence.DEPTH).getCount()
-				+ " depth essence in it");
 	}
 
 	@Override
