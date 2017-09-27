@@ -1,7 +1,9 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -119,6 +121,14 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		}
 		return ret;
 
+	}
+	
+	public static Map<Essence, EssenceStack> buildMapFromNBT(NBTTagCompound tag){
+		List<EssenceStack> stacks = readFromNBT(tag);
+		Map<Essence, EssenceStack> map = new HashMap<>();
+		for(EssenceStack stack : stacks) 
+			map.put(stack.getEssence(), stack);
+		return map;
 	}
 
 	public static NBTTagCompound writeToNBT(NBTTagCompound tag, EssenceStack... essences)
