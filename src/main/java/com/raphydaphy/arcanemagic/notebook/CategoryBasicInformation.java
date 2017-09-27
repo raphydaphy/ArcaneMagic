@@ -116,7 +116,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/items/knowledge_fragment.png"),
+			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/items/ancient_parchment.png"),
 					IconType.CIRCLE);
 		}
 

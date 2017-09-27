@@ -35,10 +35,13 @@ public class ItemBase extends Item implements IHasModel
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{
-		for (int i = 0; i < variants; i++)
+		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++)
+		{
 			ModelLoader.setCustomModelResourceLocation(this, i,
 					new ModelResourceLocation(ArcaneMagic.MODID + ":" + getRegistryName(), "inventory"));
+		}
 	}
+		
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)

@@ -62,9 +62,9 @@ public class ModRegistry
 	{
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
 		ArcaneMagicSoundHandler.register("craft_start", registry);
-		ArcaneMagicSoundHandler.register("wand_1", registry);
-		ArcaneMagicSoundHandler.register("wand_2", registry);
-		ArcaneMagicSoundHandler.register("wand_3", registry);
+		ArcaneMagicSoundHandler.register("scepter_1", registry);
+		ArcaneMagicSoundHandler.register("scepter_2", registry);
+		ArcaneMagicSoundHandler.register("scepter_3", registry);
 		ArcaneMagicSoundHandler.register("page_1", registry);
 		ArcaneMagicSoundHandler.register("page_2", registry);
 		ArcaneMagicSoundHandler.register("creak_1", registry);
