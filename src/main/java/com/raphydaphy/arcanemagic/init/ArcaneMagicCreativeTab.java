@@ -15,6 +15,6 @@ public class ArcaneMagicCreativeTab extends CreativeTabs
 	@Override
 	public ItemStack getTabIconItem()
 	{
-		return new ItemStack(ModRegistry.THAUMONOMICON);
+		return new ItemStack(ModRegistry.NOTEBOOK);
 	}
 }

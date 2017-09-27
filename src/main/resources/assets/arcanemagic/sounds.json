@@ -1,8 +1,8 @@
 {
    "craft_start": { "category": "master", "sounds": ["arcanemagic:craft_start"], "subtitle": "arcanemagic.subtitle.craft_start" },
-   "wand_1": { "category": "master", "sounds": ["arcanemagic:wand_1"], "subtitle": "arcanemagic.subtitle.wand" },
-   "wand_2": { "category": "master", "sounds": ["arcanemagic:wand_2"], "subtitle": "arcanemagic.subtitle.wand" },
-   "wand_3": { "category": "master", "sounds": ["arcanemagic:wand_3"], "subtitle": "arcanemagic.subtitle.wand" },
+   "scepter_1": { "category": "master", "sounds": ["arcanemagic:scepter_1"], "subtitle": "arcanemagic.subtitle.scepter" },
+   "scepter_2": { "category": "master", "sounds": ["arcanemagic:scepter_2"], "subtitle": "arcanemagic.subtitle.scepter" },
+   "scepter_3": { "category": "master", "sounds": ["arcanemagic:scepter_3"], "subtitle": "arcanemagic.subtitle.scepter" },
    "page_1": { "category": "master", "sounds": ["arcanemagic:page_1"], "subtitle": "arcanemagic.subtitle.page" },
    "page_2": { "category": "master", "sounds": ["arcanemagic:page_2"], "subtitle": "arcanemagic.subtitle.page" },
    "creak_1": { "category": "master", "sounds": ["arcanemagic:creak_1"], "subtitle": "arcanemagic.subtitle.creak" },

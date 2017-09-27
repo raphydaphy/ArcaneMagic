@@ -11,11 +11,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
-public class ItemThaumonomicon extends ItemBase
+public class ItemNotebook extends ItemBase
 {
 	public static final int GUI_ID = 1;
 
-	public ItemThaumonomicon(String name)
+	public ItemNotebook(String name)
 	{
 		super(name);
 		maxStackSize = 1;

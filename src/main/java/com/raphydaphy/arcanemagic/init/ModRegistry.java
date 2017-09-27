@@ -14,7 +14,7 @@ import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.item.ItemBase;
 import com.raphydaphy.arcanemagic.item.ItemFoci;
 import com.raphydaphy.arcanemagic.item.ItemScribingTools;
-import com.raphydaphy.arcanemagic.item.ItemThaumonomicon;
+import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 
@@ -45,7 +45,7 @@ public class ModRegistry
 
 	public static final ItemBase IRON_TIP = new ItemBase("wand_cap_iron");
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
-	public static final ItemThaumonomicon THAUMONOMICON = new ItemThaumonomicon("thaumonomicon");
+	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemBase SHARD = new ItemBase("shard", 6);
 	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools("scribing_tools");
 	public static final ItemBase KNOWLEDGE_FRAGMENT = new ItemBase("knowledge_fragment");

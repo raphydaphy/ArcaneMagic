@@ -1,11 +1,11 @@
 # Items
-item.arcanemagic.wand_cap_iron.name=Iron Wand Cap
-item.arcanemagic.wand.name=Iron Capped Wooden Wand
-item.arcanemagic.thaumonomicon.name=Thaumonomicon
+item.arcanemagic.scepter_cap_iron.name=Iron Scepter Cap
+item.arcanemagic.scepter.name=Iron Tipped Wooden Scepter
+item.arcanemagic.notebook.name=Lost Notebook
 item.arcanemagic.shard.name=Infused Shard
 item.arcanemagic.scribing_tools.name=Scribing Tools
-item.arcanemagic.knowledge_fragment.name=Knowledge Fragment
-item.arcanemagic.focus_fire.name=Wand Focus: Fire
+item.arcanemagic.ancient_parchment.name=Ancient Parchment
+item.arcanemagic.focus_fire.name=scepter Focus: Fire
 
 # Blocks
 tile.arcanemagic.log_greatwood.name=Greatwood Log
@@ -22,7 +22,7 @@ tile.arcanemagic.slab_silverwood.0.name=Silverwood Slab
 
 # Sounds
 arcanemagic.subtitle.craft_start=Started Crafting
-arcanemagic.subtitle.wand=Used Wand
+arcanemagic.subtitle.scepter=Used Scepter
 arcanemagic.subtitle.page=Turned Page
 arcanemagic.subtitle.creak=Ominous Creak
 arcanemagic.subtitle.tool=Tool Broken
@@ -71,9 +71,9 @@ arcanemagic.research.category.basic_info.warp.desc=Everything has a price
 
 ## Thaumaturgy
 arcanemagic.research.category.thaumaturgy=Thaumaturgy
-arcanemagic.research.category.thaumaturgy.basic_wand=Basic Wand Craft
-arcanemagic.research.category.thaumaturgy.basic_wand.desc=Your first tool
-arcanemagic.research.category.thaumaturgy.basic_foci=Wand Foci
+arcanemagic.research.category.thaumaturgy.basic_scepter=Basic scepter Craft
+arcanemagic.research.category.thaumaturgy.basic_scepter.desc=Your first tool
+arcanemagic.research.category.thaumaturgy.basic_foci=scepter Foci
 arcanemagic.research.category.thaumaturgy.basic_foci.desc=Form meets Function
 
 ## Alchemy

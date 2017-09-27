@@ -84,12 +84,12 @@ public class ItemScepter extends ItemBase implements IItemEssenceAcceptor
 				// world.rand.nextFloat(), 0f, 0f, 0f, 234);
 			}
 
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomWandSound(),
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
 					SoundCategory.MASTER, 1f, 1f, false);
 			if (!world.isRemote)
 			{
 				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
-						new ItemStack(ModRegistry.THAUMONOMICON));
+						new ItemStack(ModRegistry.NOTEBOOK));
 				ei.setDefaultPickupDelay();
 				ei.motionX = 0;
 				ei.motionY = 0;

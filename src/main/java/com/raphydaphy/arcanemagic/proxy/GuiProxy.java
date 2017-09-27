@@ -5,7 +5,7 @@ import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
 import com.raphydaphy.arcanemagic.gui.GuiArcaneWorktable;
 import com.raphydaphy.arcanemagic.gui.GuiNotebook;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.item.ItemThaumonomicon;
+import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,9 +37,9 @@ public class GuiProxy implements IGuiHandler
 	{
 		switch (ID)
 		{
-		case ItemThaumonomicon.GUI_ID:
-			if (player.getHeldItemMainhand().getItem() == ModRegistry.THAUMONOMICON
-					|| player.getHeldItemOffhand().getItem() == ModRegistry.THAUMONOMICON)
+		case ItemNotebook.GUI_ID:
+			if (player.getHeldItemMainhand().getItem() == ModRegistry.NOTEBOOK
+					|| player.getHeldItemOffhand().getItem() == ModRegistry.NOTEBOOK)
 			{
 				return new GuiNotebook(player);
 			}

@@ -16,14 +16,14 @@ public final class ArcaneMagicSoundHandler
 	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":craft_start")
 	public static SoundEvent craft_start;
 
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":wand_1")
-	public static SoundEvent wand_1;
+	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":scepter_1")
+	public static SoundEvent scepter_1;
 
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":wand_2")
-	public static SoundEvent wand_2;
+	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":scepter_2")
+	public static SoundEvent scepter_2;
 
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":wand_3")
-	public static SoundEvent wand_3;
+	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":scepter_3")
+	public static SoundEvent scepter_3;
 
 	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":page_1")
 	public static SoundEvent page_1;
@@ -114,20 +114,20 @@ public final class ArcaneMagicSoundHandler
 		return e;
 	}
 
-	public static SoundEvent randomWandSound()
+	public static SoundEvent randomScepterSound()
 	{
 		int sound = rand.nextInt(3) + 1;
 		switch (sound)
 		{
 		case 1:
-			return wand_1;
+			return scepter_1;
 		case 2:
-			return wand_2;
+			return scepter_2;
 		case 3:
-			return wand_3;
+			return scepter_3;
 		}
 
-		return wand_1;
+		return scepter_1;
 	}
 
 	public static SoundEvent randomPageSound()
