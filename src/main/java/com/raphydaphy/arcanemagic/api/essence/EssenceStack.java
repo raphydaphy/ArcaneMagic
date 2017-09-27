@@ -1,11 +1,15 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
-public class EssenceStack
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.INBTSerializable;
+
+public class EssenceStack implements INBTSerializable<NBTTagCompound>
 {
 
 	public static final EssenceStack EMPTY = new EssenceStack(null, 0);
 
-	private final Essence essence;
+	private Essence essence;
 	private int count;
 
 	public EssenceStack(Essence e, int size)
@@ -13,6 +17,13 @@ public class EssenceStack
 		essence = e;
 		count = size;
 	}
+
+	public EssenceStack(NBTTagCompound tag){
+		essence = null;//dummy value
+		count = 0;
+		this.deserializeNBT(tag);
+	}
+
 
 	@Override
 	public String toString()
@@ -61,6 +72,22 @@ public class EssenceStack
 	public ImmutableEssenceStack toImmutable()
 	{
 		return new ImmutableEssenceStack(this);
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setString("type", essence.getRegistryName().toString());
+		tag.setInteger("count", count);
+		return tag;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		if (nbt != null && nbt.hasKey("type") && Essence.REGISTRY.containsKey(new ResourceLocation(nbt.getString("type"))) && nbt.hasKey("count")) {
+			this.essence = Essence.REGISTRY.getValue(new ResourceLocation(nbt.getString("type")));
+			this.count = nbt.getInteger("count");
+		}
 	}
 
 	public static class ImmutableEssenceStack extends EssenceStack
