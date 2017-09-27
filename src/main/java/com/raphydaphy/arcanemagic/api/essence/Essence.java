@@ -111,9 +111,10 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	public static void resetEssence(NBTTagCompound tag)
 	{
-		for (EssenceStack curStack : readFromNBT(tag))
+		List<EssenceStack> stacks = readFromNBT(tag);
+		for (EssenceStack curStack : stacks)
 		{
-			
+			curStack.setCount(1);
 		}
 	}
 	

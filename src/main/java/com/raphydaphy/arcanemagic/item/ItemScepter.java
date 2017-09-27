@@ -161,6 +161,7 @@ public class ItemScepter extends ItemBase
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
 	{
 		System.out.println("Stopped using it ! The thing you stopped using was a " + stack.getItem().getRegistryName());
+		Essence.resetEssence(stack.getTagCompound());
 	}
 
 	@Override
