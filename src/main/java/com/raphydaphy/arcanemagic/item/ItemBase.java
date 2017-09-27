@@ -37,7 +37,7 @@ public class ItemBase extends Item implements IHasModel
 	{
 		for (int i = 0; i < variants; i++)
 			ModelLoader.setCustomModelResourceLocation(this, i,
-					new ModelResourceLocation(getRegistryName(), "inventory"));
+					new ModelResourceLocation(ArcaneMagic.MODID + getRegistryName(), "inventory"));
 	}
 
 	@Override
