@@ -24,8 +24,10 @@ public class EssenceStack implements INBTSerializable<NBTTagCompound>
 		this.deserializeNBT(tag);
 	}
 
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format(count + " x " + essence);
 	}
 
