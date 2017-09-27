@@ -16,6 +16,7 @@ public class EssenceStack
 	
 	@Override
 	public String toString() {
+		return String.format("EssenceStack: " + count + "x" + essence);
 	}
 
 	public int getCount()
