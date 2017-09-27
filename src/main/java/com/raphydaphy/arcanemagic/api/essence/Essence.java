@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nullable;
+import javax.annotation.Nonnull;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -108,11 +108,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	private static final String E = "essence_tag";
 
-	@Nullable
+	@Nonnull
 	public static List<EssenceStack> readFromNBT(NBTTagCompound tag)
 	{
-		if (!tag.hasKey(E))
-			return null;
 		List<EssenceStack> ret = new ArrayList<>();
 		NBTTagCompound essTag = tag.getCompoundTag(E);
 		for (String s : essTag.getKeySet())
@@ -120,7 +118,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			ret.add(new EssenceStack(REGISTRY.getValue(new ResourceLocation(s)), essTag.getInteger(s)));
 		}
 		return ret;
-
 	}
 	
 	public static Map<Essence, EssenceStack> buildMapFromNBT(NBTTagCompound tag){
