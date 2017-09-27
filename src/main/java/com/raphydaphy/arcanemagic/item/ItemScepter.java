@@ -94,14 +94,14 @@ public class ItemScepter extends ItemBase
 		wand.getTagCompound().setString(KEY_CORE, ScepterCore.WOOD.getRegistryName().toString());
 		wand.getTagCompound().setString(KEY_TIP, ScepterCap.GOLD.getRegistryName().toString());
 	}
-	
+
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
-    {
+	{
 		ItemStack stack = player.getHeldItem(hand);
 		player.setActiveHand(hand);
-        return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
-    }
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+	}
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
@@ -164,47 +164,33 @@ public class ItemScepter extends ItemBase
 	}
 
 	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected)
+	public void onUpdate(ItemStack stack, World worldIn, Entity entity, int itemSlot, boolean isSelected)
 	{
-
+		// dont kill just temp coz i forgot to override oncraft and now its too late coz i started a debug thing
+		if (!stack.hasTagCompound())
+		{
+			stack.setTagCompound(new NBTTagCompound());
+		}
+		
 	}
 
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, (int)(Math.random() * 50)));
-		int depthStored = 0;
-		for (EssenceStack eStack : Essence.readFromNBT(stack.getTagCompound()))
-		{
-			if (eStack.getEssence().equals(Essence.DEPTH))
-			{
-				depthStored = eStack.getCount();
-			}
-		}
-		
+		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, (int) (Math.random() * 50)));
+
 		player.activeItemStack = stack;
-		
-		
-		System.out.println("Player is using " + player.getActiveItemStack().getItem().getRegistryName() + " with " + depthStored + " depth essence in it");
+
+		System.out.println("Player is using " + player.getActiveItemStack().getItem().getRegistryName() + " with "
+				+ Essence.buildMapFromNBT(stack.getTagCompound()).get(Essence.DEPTH).getCount()
+				+ " depth essence in it");
 	}
 
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
-		if (!stack.hasTagCompound())
-		{
-			stack.setTagCompound(new NBTTagCompound());
-		}
-		
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, 0));
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.INFERNO, 0));
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.OZONE, 0));
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.HORIZON, 0));
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.PEACE, 0));
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.CHAOS, 0));
-		
+
 		return EnumActionResult.PASS;
 	}
 
