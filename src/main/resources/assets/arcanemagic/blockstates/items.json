@@ -7,17 +7,12 @@
 	"variants": {
 		"item": {
 			"scepter": {
-				"variants": {
-			        "inventory": {
-			            "model": "arcanemagic:scepter",
-			            
-			            "textures": {
-			                "core": "arcanemagic:items/scepter/core_wood", 
-			                "tip": "arcanemagic:items/scepter/tip_iron"
-			            }
-			        }
-			
-			    }
+	            "model": "arcanemagic:scepter",
+	            
+	            "textures": {
+	                "core": "arcanemagic:items/scepter/core_wood", 
+	                "tip": "arcanemagic:items/scepter/tip_iron"
+	            }
 			},
 			"notebook": {
 				"textures": {
