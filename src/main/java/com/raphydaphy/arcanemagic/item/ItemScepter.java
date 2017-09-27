@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.item;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -8,9 +9,11 @@ import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
+import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.client.particle.ParticleStar;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
@@ -31,6 +34,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -42,6 +46,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -165,7 +172,8 @@ public class ItemScepter extends ItemBase
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
 	{
 		System.out.println("Stopped using it ! The thing you stopped using was a " + stack.getItem().getRegistryName());
-		Essence.resetEssence(stack.getTagCompound());
+		//TODO do on capsss
+		//Essence.resetEssence(stack.getTagCompound());
 	}
 
 	@Override
@@ -177,7 +185,11 @@ public class ItemScepter extends ItemBase
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, 1));
+		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+		if (handler != null)
+		{
+			handler.store(new EssenceStack(Essence.DEPTH, 1), false);
+		}
 		//player.activeItemStack = stack;
 	}
 	
@@ -207,19 +219,18 @@ public class ItemScepter extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		if (stack.hasTagCompound())
+		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+		if (handler != null)
 		{
-			List<EssenceStack> storedEssence = Essence.readFromNBT(stack.getTagCompound());
+			Collection<EssenceStack> storedEssence = handler.getStored().values();
 			
 			if (storedEssence.size() > 0)
 			{
-				String combinedTooltip = "";
 				for (EssenceStack essence : storedEssence)
 				{
-					combinedTooltip += essence.getCount() + " " + I18n.format(essence.getEssence().getTranslationName()) + " "; 
+					tooltip.add(essence.getCount() + " " + I18n.format(essence.getEssence().getTranslationName()));
 					//combinedTooltip+= essence.toString();
 				}
-				tooltip.add(combinedTooltip);
 			}
 		}
 	}
@@ -266,4 +277,11 @@ public class ItemScepter extends ItemBase
 			}
 		}
 	}
+
+	@Nullable
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
+		return new EssenceStorage();//This is serialisable, so Forge should handle save/load
+	}
+
 }

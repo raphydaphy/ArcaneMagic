@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic;
 
+import com.raphydaphy.arcanemagic.capabilities.Capabilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -53,6 +54,7 @@ public class ArcaneMagic
 		MinecraftForge.EVENT_BUS.register(new ModRegistry());
 		MinecraftForge.EVENT_BUS.register(new EssenceSubscriber());
 		ModRegistry.registerTiles();
+		Capabilities.register();
 	}
 
 	@Mod.EventHandler
