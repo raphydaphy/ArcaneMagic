@@ -34,10 +34,6 @@ public class ModRegistry
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
 	
-	public static final BlockBase GREATWOOD_PLANKS = new BlockBase("planks_greatwood", Material.WOOD, 1f);
-	public static final BlockBase SILVERWOOD_PLANKS = new BlockBase("planks_silverwood", Material.WOOD, 1f);
-	public static final BlockModSlab GREATWOOD_SLAB = new BlockModSlab("slab_greatwood", Material.WOOD);
-	public static final BlockModSlab SILVERWOOD_SLAB = new BlockModSlab("slab_silverwood", Material.WOOD);
 	public static final BlockOre INFUSED_ORE = new BlockOre("ore_infused", 3.5f);
 	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();
