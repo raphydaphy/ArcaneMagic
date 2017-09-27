@@ -107,21 +107,21 @@ public class GuiNotebook extends GuiScreen
 
 		mc.getTextureManager().bindTexture(frame);
 
-		for (int tab = 0; tab < ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES * 2; tab++)
+		for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount() * 2; tab++)
 		{
-			int thisTab = tab >= ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES
-					? tab - ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES
+			int thisTab = tab >= ArcaneMagicAPI.getCategoryCount()
+					? tab - ArcaneMagicAPI.getCategoryCount()
 					: tab;
 			if (thisTab == player.getEntityData().getInteger(tagTab))
 			{
-				if (tab < ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES)
+				if (tab < ArcaneMagicAPI.getCategoryCount())
 				{
 					drawTexturedModalRect(-24, tab * 23, 152, 232, 24, 24);
 				} else
 				{
-					drawIcon(ArcaneMagicAPI.NOTEBOOK_CATEGORIES.get(thisTab).getIcon(), -19, thisTab * 23 + 4);
+					drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19, thisTab * 23 + 4);
 
-					for (INotebookEntry entry : ArcaneMagicAPI.NOTEBOOK_CATEGORIES.get(thisTab).getEntries())
+					for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(thisTab).getEntries())
 					{
 						drawResearchIcon(entry.getIcon().getTexture(), entry.getIcon().getType().getName(),
 								entry.getPos().getX(), entry.getPos().getY());
@@ -129,12 +129,12 @@ public class GuiNotebook extends GuiScreen
 				}
 			} else
 			{
-				if (tab < ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES)
+				if (tab < ArcaneMagicAPI.getCategoryCount())
 				{
 					drawTexturedModalRect(-16, tab * 23, 184, 232, 16, 22);
 				} else
 				{
-					drawIcon(ArcaneMagicAPI.NOTEBOOK_CATEGORIES.get(thisTab).getIcon(), -12, thisTab * 23 + 3);
+					drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -12, thisTab * 23 + 3);
 				}
 			}
 		}
@@ -146,7 +146,7 @@ public class GuiNotebook extends GuiScreen
 
 		GlStateManager.pushMatrix();
 
-		for (INotebookEntry entry : ArcaneMagicAPI.NOTEBOOK_CATEGORIES
+		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories()
 				.get(player.getEntityData().getInteger(tagTab)).getEntries())
 		{
 			drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(), Lists.newArrayList(
@@ -170,9 +170,9 @@ public class GuiNotebook extends GuiScreen
 		 * Lists.newArrayList("Warp, Flux and all things bad",
 		 * "Everything has a price")); } */
 		if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX
-				&& relMouseY <= screenY + (ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES * 23))
+				&& relMouseY <= screenY + (ArcaneMagicAPI.getCategoryCount() * 23))
 		{
-			for (int tab = 0; tab < ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES; tab++)
+			for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount(); tab++)
 			{
 				int tabWidth = 16;
 
@@ -184,7 +184,7 @@ public class GuiNotebook extends GuiScreen
 						&& relMouseX >= screenX - tabWidth)
 				{
 					this.fontRenderer.drawString(
-							I18n.format(ArcaneMagicAPI.NOTEBOOK_CATEGORIES.get(tab).getUnlocalizedName()),
+							I18n.format(ArcaneMagicAPI.getNotebookCategories().get(tab).getUnlocalizedName()),
 							mouseX + 1, mouseY - 7, 0xFFFFFF);
 					break;
 				}
@@ -544,9 +544,9 @@ public class GuiNotebook extends GuiScreen
 			float screenY = (res.getScaledHeight() / 2) - (229 / 2);
 
 			if (relMouseX >= screenX - 16 && relMouseY >= screenY && relMouseX <= screenX
-					&& relMouseY <= screenY + (ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES * 23))
+					&& relMouseY <= screenY + (ArcaneMagicAPI.getCategoryCount() * 23))
 			{
-				for (int tab = 0; tab < ArcaneMagicAPI.TOTAL_NOTEBOOK_CATEGORIES; tab++)
+				for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount(); tab++)
 				{
 					if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 23) + 23)
 					{

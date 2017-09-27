@@ -1,15 +1,20 @@
 package com.raphydaphy.arcanemagic.item;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.scepter.IScepterCap;
-import com.raphydaphy.arcanemagic.api.scepter.IScepterRod;
+import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
+import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
+import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.init.ScepterRegistry;
 import com.raphydaphy.arcanemagic.particle.ParticleStar;
+import com.raphydaphy.arcanemagic.scepter.ScepterCap;
+import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -21,6 +26,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -29,105 +35,91 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemScepter extends ItemBase
-{
+public class ItemScepter extends ItemBase {
 	public static final String KEY_CORE = "coreType";
 	public static final String KEY_TIP = "tipType";
 
-	public ItemScepter(String name)
-	{
+	public ItemScepter(String name) {
 		super(name);
 		maxStackSize = 1;
 	}
 
-	public static IScepterCap getTip(ItemStack wand)
-	{
-		if (wand.hasTagCompound())
-		{
-			return ArcaneMagicAPI.SCEPTER_TIPS.get(wand.getTagCompound().getString(KEY_TIP));
-		}
-		return ScepterRegistry.tip_iron;
+	@Nullable
+	public static ScepterPart getCap(ItemStack wand) {
+		if (!wand.hasTagCompound()) return null;
+		return ScepterRegistry.getPart(new ResourceLocation(wand.getTagCompound().getString(KEY_TIP)));
 	}
 
-	public static IScepterRod getCore(ItemStack wand)
-	{
-		if (wand.hasTagCompound())
-		{
-			return ArcaneMagicAPI.SCEPTER_CORES.get(wand.getTagCompound().getString(KEY_CORE));
-		}
-		return ScepterRegistry.core_wood;
+	@Nullable
+	public static ScepterPart getCore(ItemStack wand) {
+		if (!wand.hasTagCompound()) return null;
+		return ScepterRegistry.getPart(new ResourceLocation(wand.getTagCompound().getString(KEY_CORE)));
+	}
+	
+	@Nonnull
+	public static ScepterPart getCapOrDefault(ItemStack wand) {
+		ScepterPart sp = getCap(wand);
+		return sp == null ? ScepterCap.IRON : sp;
+	}
+	
+	@Nonnull
+	public static ScepterPart getCoreOrDefault(ItemStack wand) {
+		ScepterPart sp = getCore(wand);
+		return sp == null ? ScepterCore.WOOD : sp;
+	}
+
+	public static void applyCapAndCore(ItemStack wand, ScepterPart cap, ScepterPart core) {
+		if (!wand.hasTagCompound()) wand.setTagCompound(new NBTTagCompound());
+		Preconditions.checkArgument(cap.getType() == PartCategory.CAP, "You can only assign a cap to the cap slot!");
+		Preconditions.checkArgument(core.getType() == PartCategory.CORE, "You can only assign a core the core slot!");
+		wand.getTagCompound().setString(KEY_CORE, ScepterCore.WOOD.getRegistryName().toString());
+		wand.getTagCompound().setString(KEY_TIP, ScepterCap.GOLD.getRegistryName().toString());
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
-			float hitX, float hitY, float hitZ)
-	{
-		Minecraft.getMinecraft().effectRenderer.addEffect(
-				new ParticleStar(world, pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
 		Block block = world.getBlockState(pos).getBlock();
-		if (block.equals(Blocks.BOOKSHELF))
-		{
+		if (block.equals(Blocks.BOOKSHELF)) {
 			world.setBlockToAir(pos);
 
-			for (int i = 0; i < 10; i++)
-			{
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX() + 0.5f,
-						pos.getY() + 0.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
+			for (int i = 0; i < 10; i++) {
+				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
 
 				// world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() +
 				// world.rand.nextFloat(), pos.getY() + world.rand.nextFloat(), pos.getZ() +
 				// world.rand.nextFloat(), 0f, 0f, 0f, 234);
 			}
 
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
-					SoundCategory.MASTER, 1f, 1f, false);
-			if (!world.isRemote)
-			{
-				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
-						new ItemStack(ModRegistry.NOTEBOOK));
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.MASTER, 1f, 1f, false);
+			if (!world.isRemote) {
+				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f, new ItemStack(ModRegistry.NOTEBOOK));
 				ei.setDefaultPickupDelay();
 				ei.motionX = 0;
 				ei.motionY = 0;
 				ei.motionZ = 0;
 				ei.setPickupDelay(15);
 				world.spawnEntity(ei);
-			} else
-			{
+			} else {
 				// spawn particles client-side
 
 			}
 			return EnumActionResult.SUCCESS;
-		} else if (block.equals(ModRegistry.TABLE))
-		{
+		} else if (block.equals(ModRegistry.TABLE)) {
 			world.setBlockState(pos, ModRegistry.WORKTABLE.getDefaultState());
-		} else if (block.equals(ModRegistry.INFUSED_ORE))
-		{
-			ItemStack stack = player.getHeldItem(hand);
-			if (!stack.hasTagCompound())
-			{
-				stack.setTagCompound(new NBTTagCompound());
-
-			}
-
-			stack.getTagCompound().setString(KEY_CORE, ScepterRegistry.core_wood.getUnlocalizedName());
-			stack.getTagCompound().setString(KEY_TIP, ScepterRegistry.tip_gold.getUnlocalizedName());
 		}
-
 		return EnumActionResult.PASS;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public ModelResourceLocation getModelLocation(ItemStack stack)
-	{
-		return new ModelResourceLocation(ArcaneMagic.MODID + ":scepter", "inventory");
+	public ModelResourceLocation getModelLocation(ItemStack stack) {
+		return new ModelResourceLocation(getRegistryName(), "inventory");
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void initModels(ModelRegistryEvent e)
-	{
-		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
-				new ModelResourceLocation(ArcaneMagic.MODID + ":scepter", "inventory"));
+	public void initModels(ModelRegistryEvent e) {
+		ModelLoader.registerItemVariants(ModRegistry.SCEPTER, new ModelResourceLocation(getRegistryName(), "inventory"));
 		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
 	}
 }

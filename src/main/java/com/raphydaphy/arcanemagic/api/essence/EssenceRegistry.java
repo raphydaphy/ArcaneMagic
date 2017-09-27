@@ -37,7 +37,7 @@ public class EssenceRegistry implements IForgeRegistry<Essence> {
 		ResourceLocation key = value.getRegistryName();
 		Preconditions.checkNotNull(key, "Can't use a null-name for the registry, object %s.", value);
 
-		Essence oldEntry = essences.get(value.getRegistryName());
+		Essence oldEntry = essences.get(key);
 
 		if (oldEntry == value) {
 			ArcaneMagic.LOGGER.error("Essence Registry: The object {} has been registered twice for the same name {}.", value, key);
@@ -45,9 +45,6 @@ public class EssenceRegistry implements IForgeRegistry<Essence> {
 		} else if (oldEntry != null) {
 			ArcaneMagic.LOGGER.info("Overriding entry {} in the Essence Registry with {}, using name {}", oldEntry, value, key);
 		}
-
-		//TODO: remove debug
-		ArcaneMagic.LOGGER.info("Adding entry {} to the Essence Registry, name {}", value, key);
 		essences.put(key, value);
 	}
 
