@@ -178,10 +178,8 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, itemRand.nextInt(50)));
-
-		player.activeItemStack = stack;
-		
-		Essence.buildMapFromNBT(stack.getTagCompound());
+		stack.getTagCompound().setString("yea yea hobble hobgl", "hobble hobble thirty five");
+		//player.activeItemStack = stack;
 	}
 
 	@Override
@@ -203,7 +201,11 @@ public class ItemScepter extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		tooltip.add("Essence Stored: A fukin large amount");
+		if (stack.hasTagCompound())
+		{
+			List<EssenceStack> storedEssence = Essence.readFromNBT(stack.getTagCompound());
+			tooltip.add(storedEssence.get(0).getEssence().getColor() + storedEssence.get(0).getCount() + " " + storedEssence.get(0).getEssence().getTranslationName());
+		}
 	}
 
 	@Override
