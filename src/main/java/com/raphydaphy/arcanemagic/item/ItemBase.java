@@ -45,7 +45,8 @@ public class ItemBase extends Item implements IHasModel
 	{
 		if (isInCreativeTab(tab))
 		{
-			for (int i = 0; i < variants; i++)
+			if(variants == 0) items.add(new ItemStack(this));
+			else for (int i = 0; i < variants; i++)
 			{
 				items.add(new ItemStack(this, 1, i));
 			}
