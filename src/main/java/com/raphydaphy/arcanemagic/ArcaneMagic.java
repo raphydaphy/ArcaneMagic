@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
@@ -16,7 +17,9 @@ import com.raphydaphy.arcanemagic.notebook.CategoryThaumaturgy;
 import com.raphydaphy.arcanemagic.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.proxy.GuiProxy;
 
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -55,6 +58,7 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
+		MinecraftForge.EVENT_BUS.post(new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
 		ScepterRegistry.registerScepters();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);

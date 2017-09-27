@@ -58,7 +58,6 @@ public class ModRegistry
 	public void onItemRegister(Register<Item> e)
 	{
 		e.getRegistry().registerAll(ITEMS.toArray(new Item[ITEMS.size()]));
-		MinecraftForge.EVENT_BUS.post(new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
 	}
 
 	@SubscribeEvent
