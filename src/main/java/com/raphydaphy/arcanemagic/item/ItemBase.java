@@ -8,7 +8,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 
 public class ItemBase extends Item implements IHasModel
@@ -71,6 +70,10 @@ public class ItemBase extends Item implements IHasModel
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		return getUnlocalizedName() + "." + stack.getMetadata();
+		if (variants > 0)
+		{
+			return super.getUnlocalizedName() + "." + stack.getMetadata();
+		}
+		return super.getUnlocalizedName();
 	}
 }
