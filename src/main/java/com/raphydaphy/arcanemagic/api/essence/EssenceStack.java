@@ -13,9 +13,10 @@ public class EssenceStack
 		essence = e;
 		count = size;
 	}
-	
+
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return String.format(count + " x " + essence);
 	}
 

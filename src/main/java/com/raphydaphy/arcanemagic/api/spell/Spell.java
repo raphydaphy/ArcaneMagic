@@ -19,7 +19,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public abstract class Spell {
+public abstract class Spell
+{
 
 	/**
 	 * The big ol' list of spells.
@@ -36,7 +37,7 @@ public abstract class Spell {
 	 * stored within the bag.
 	 */
 	public static final String ARRAY_KEY = "stored_spells";
-	
+
 	protected final Item icon;
 	protected final int potency;
 	protected final int cooldown;
@@ -44,7 +45,9 @@ public abstract class Spell {
 	protected final ResourceLocation name;
 	protected final boolean needsBlock;
 
-	public Spell(ResourceLocation name, Item icon, int potency, int cooldown, boolean needsBlock, ImmutableEssenceStack... reqEssence) {
+	public Spell(ResourceLocation name, Item icon, int potency, int cooldown, boolean needsBlock,
+			ImmutableEssenceStack... reqEssence)
+	{
 		this.name = name;
 		this.icon = icon;
 		this.potency = potency;
@@ -54,25 +57,31 @@ public abstract class Spell {
 		spellMap.put(name, this);
 	}
 
-	public boolean canBeCast(ItemStack wand) {
+	public boolean canBeCast(ItemStack wand)
+	{
 		return !needsBlock && hasAllEssencesAndCanCast(wand);
 	}
-	
-	public boolean hasAllEssencesAndCanCast(ItemStack wand) {
+
+	public boolean hasAllEssencesAndCanCast(ItemStack wand)
+	{
 		Map<Essence, EssenceStack> map = Essence.buildMapFromNBT(wand.getTagCompound());
-		for(EssenceStack stack : reqEssence) {
-			if(map.get(stack.getEssence()) == null) return false;
-			if(map.get(stack.getEssence()).getCount() < ItemScepter.getCap(wand).getCostMultiplier() * stack.getCount()) return false;
+		for (EssenceStack stack : reqEssence)
+		{
+			if (map.get(stack.getEssence()) == null)
+				return false;
+			if (map.get(stack.getEssence()).getCount() < ItemScepter.getCap(wand).getCostMultiplier()
+					* stack.getCount())
+				return false;
 		}
-		
+
 		return true;
-		
+
 	}
 
 	/**
-	 * This is the pre-cast spell event. This is fired automatically as part of
-	 * the spell handlers. This is ONLY fired when a block is right clicked with
-	 * the wand. Using a wand in the air bypasses this.
+	 * This is the pre-cast spell event. This is fired automatically as part of the
+	 * spell handlers. This is ONLY fired when a block is right clicked with the
+	 * wand. Using a wand in the air bypasses this.
 	 * 
 	 * @param wand
 	 *            The Wand ItemStack
@@ -99,10 +108,10 @@ public abstract class Spell {
 			EnumFacing side, float hitX, float hitY, float hitZ);
 
 	/**
-	 * This is the cast spell event. This is fired after onCastPre returns true
-	 * or onPlayerStoppedUsing is called. onPlayerStoppedUsing is always called
-	 * once the wand is released from beind held after clicking the air,
-	 * provided the necessary essence is there.
+	 * This is the cast spell event. This is fired after onCastPre returns true or
+	 * onPlayerStoppedUsing is called. onPlayerStoppedUsing is always called once
+	 * the wand is released from beind held after clicking the air, provided the
+	 * necessary essence is there.
 	 * 
 	 * @param wand
 	 *            The Wand ItemStack
@@ -131,8 +140,8 @@ public abstract class Spell {
 
 	/**
 	 * This is the post-cast spell event. Do your essence removal here! This is
-	 * always called immediately after onCast returns true, otherwise it is
-	 * never called.
+	 * always called immediately after onCast returns true, otherwise it is never
+	 * called.
 	 * 
 	 * @param wand
 	 *            The Wand ItemStack
@@ -162,28 +171,34 @@ public abstract class Spell {
 
 	public abstract void onCastTickSuccess(ItemStack wand, EntityPlayer player, int count);
 
-	public Item getIcon() {
+	public Item getIcon()
+	{
 		return icon;
 	}
 
-	public ResourceLocation getRegistryName() {
+	public ResourceLocation getRegistryName()
+	{
 		return name;
 	}
 
-	public int getPotency() {
+	public int getPotency()
+	{
 		return potency;
 	}
 
-	public int getCooldown() {
+	public int getCooldown()
+	{
 		return cooldown;
 	}
 
 	@Nullable
-	public EssenceStack[] getReqEssence() {
+	public EssenceStack[] getReqEssence()
+	{
 		return reqEssence;
 	}
 
-	public boolean getNeedsBlock() {
+	public boolean getNeedsBlock()
+	{
 		return needsBlock;
 	}
 

@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -97,9 +98,20 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return getUnlocalizedName() + ".name";
 	}
 
-	public int getColor()
+	public int getColorHex()
 	{
 		return color;
+	}
+
+	// ik its not a blockpos ok im sorry god
+	public Vec3i getColorRGB()
+	{
+		String colorStr = String.valueOf(getColorHex());
+		int r = Integer.valueOf(colorStr.substring(0, 2), 16);
+		int g = Integer.valueOf(colorStr.substring(2, 4), 16);
+		int b = Integer.valueOf(colorStr.substring(4, 6), 16);
+
+		return new Vec3i(r, g, b);
 	}
 
 	public String toString()
@@ -109,15 +121,25 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	private static final String E = "essence_tag";
 
-	public static void resetEssence(NBTTagCompound tag)
+	public static NBTTagCompound resetEssence(NBTTagCompound tag)
 	{
 		List<EssenceStack> stacks = readFromNBT(tag);
 		for (EssenceStack curStack : stacks)
 		{
 			curStack.setCount(1);
 		}
+		return tag;
 	}
-	
+
+	public static NBTTagCompound initDefaultEssence(NBTTagCompound tag)
+	{
+		writeToNBT(tag, new EssenceStack(Essence.INFERNO, 0), new EssenceStack(Essence.DEPTH, 0),
+				new EssenceStack(Essence.OZONE, 0), new EssenceStack(Essence.HORIZON, 0),
+				new EssenceStack(Essence.PEACE, 0), new EssenceStack(Essence.CHAOS, 0));
+
+		return tag;
+	}
+
 	public static void initDefaultEssence(Object tileOrItem)
 	{
 		NBTTagCompound tag = new NBTTagCompound();
@@ -135,9 +157,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			}
 		}
 
-		writeToNBT(tag, new EssenceStack(Essence.INFERNO, 0), new EssenceStack(Essence.DEPTH, 0),
-				new EssenceStack(Essence.OZONE, 0), new EssenceStack(Essence.HORIZON, 0),
-				new EssenceStack(Essence.PEACE, 0), new EssenceStack(Essence.CHAOS, 0));
+		initDefaultEssence(tag);
 
 		if (tileOrItem instanceof TileEntity)
 		{
@@ -148,12 +168,18 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	@Nonnull
 	public static List<EssenceStack> readFromNBT(NBTTagCompound tag)
 	{
-		List<EssenceStack> ret = new ArrayList<>();
-		NBTTagCompound essTag = tag.getCompoundTag(E);
-		for (String s : essTag.getKeySet())
-			ret.add(new EssenceStack(REGISTRY.getValue(new ResourceLocation(s)), essTag.getInteger(s)));
+		if (tag != null)
+		{
+			List<EssenceStack> ret = new ArrayList<>();
+			NBTTagCompound essTag = tag.getCompoundTag(E);
+			for (String s : essTag.getKeySet())
+				ret.add(new EssenceStack(REGISTRY.getValue(new ResourceLocation(s)), essTag.getInteger(s)));
 
-		return ret;
+			return ret;
+		} else
+		{
+			return readFromNBT(initDefaultEssence(new NBTTagCompound()));
+		}
 	}
 
 	public static Map<Essence, EssenceStack> buildMapFromNBT(NBTTagCompound tag)
@@ -171,10 +197,10 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		NBTTagCompound essTag = tag.getCompoundTag(E);
 		for (EssenceStack e : essences)
 		{
-			
+
 			if (e.getCount() < 0)
 				continue;
-				
+
 			e.grow(essTag.getInteger(e.getEssence().getRegistryName().toString()));
 			essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
 		}
