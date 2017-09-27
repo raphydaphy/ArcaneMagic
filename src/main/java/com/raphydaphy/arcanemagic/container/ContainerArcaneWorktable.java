@@ -15,7 +15,6 @@ public class ContainerArcaneWorktable extends Container
 {
 
 	private TileEntityArcaneWorktable te;
-	private final EntityPlayer player;
 	private final InvCraftingHandler craftMatrix;
 	private final InventoryCraftResult craftResult;
 	protected int playerInventoryStart = -1;
@@ -25,7 +24,6 @@ public class ContainerArcaneWorktable extends Container
 		this.te = te;
 		this.craftResult = new InventoryCraftResult();
 		this.craftMatrix = new InvCraftingHandler(this, te, 3, 3);
-		this.player = playerInventory.player;
 
 		this.addSlotToContainer(
 				new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 80, 20));
