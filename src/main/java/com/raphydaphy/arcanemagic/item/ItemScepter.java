@@ -41,6 +41,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -53,6 +56,7 @@ public class ItemScepter extends ItemBase
 	{
 		super(name);
 		maxStackSize = 1;
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Nullable
@@ -244,5 +248,22 @@ public class ItemScepter extends ItemBase
 		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
 				new ModelResourceLocation(getRegistryName(), "inventory"));
 		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
+	}
+
+	/**
+	 * Hack to let sceptres continue use when nbt changes.
+	 */
+	@SubscribeEvent
+	public void playerTick(TickEvent.PlayerTickEvent ev){
+		if (ev.phase == TickEvent.Phase.START){
+			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty()){
+				ItemStack held = ev.player.getHeldItem(ev.player.getActiveHand());
+				if (ev.player.activeItemStack.getItem().getRegistryName().equals(this.getRegistryName()) && held.getItem().getRegistryName().equals(this.getRegistryName())){
+					if (ev.player.activeItemStack != held){//TODO please check proper (anything that won't change)
+						ev.player.activeItemStack = held;
+					}
+				}
+			}
+		}
 	}
 }
