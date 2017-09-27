@@ -23,7 +23,7 @@ public class CategoryAlchemy implements INotebookCategory
 	@Override
 	public ResourceLocation getIcon()
 	{
-		return new ResourceLocation(ArcaneMagic.MODID, "textures/misc/research/r_crucible.png");
+		return new ResourceLocation(ArcaneMagic.MODID, "textures/misc/notebook/r_crucible.png");
 	}
 
 	@Override
