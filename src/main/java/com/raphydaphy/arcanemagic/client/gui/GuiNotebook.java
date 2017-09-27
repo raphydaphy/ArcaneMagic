@@ -121,8 +121,7 @@ public class GuiNotebook extends GuiScreen
 
 					for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(thisTab).getEntries())
 					{
-						drawResearchIcon(entry.getIcon().getTexture(), entry.getIcon().getType().getName(),
-								entry.getPos().getX(), entry.getPos().getY());
+						drawResearchEntry(entry);
 					}
 				}
 			} else
@@ -150,23 +149,6 @@ public class GuiNotebook extends GuiScreen
 			drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(), Lists.newArrayList(
 					I18n.format(entry.getUnlocalizedName()), I18n.format(entry.getUnlocalizedName() + ".desc")));
 		}
-
-		/* Basic Information if (player.getEntityData().getInteger(tagTab) == 0) {
-		 * drawResearchInfoOnMouse(260, 250, Lists.newArrayList("Aspects of Magic",
-		 * "The building blocks of magic"));
-		 * 
-		 * drawResearchInfoOnMouse(290, 200, Lists.newArrayList("Thaumonomicon",
-		 * "A Repository of Knowledge")); drawResearchInfoOnMouse(320, 250,
-		 * Lists.newArrayList("Research", "How you discover things"));
-		 * drawResearchInfoOnMouse(350, 200, Lists.newArrayList("Knowledge Fragments",
-		 * "Fragments of lost lore"));
-		 * 
-		 * drawResearchInfoOnMouse(200, 250, Lists.newArrayList("Auras and Nodes",
-		 * "Magic is everywhere"));
-		 * 
-		 * drawResearchInfoOnMouse(260, 300,
-		 * Lists.newArrayList("Warp, Flux and all things bad",
-		 * "Everything has a price")); } */
 		if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX
 				&& relMouseY <= screenY + (ArcaneMagicAPI.getCategoryCount() * 23))
 		{
@@ -427,14 +409,14 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.popMatrix();
 	}
 
-	public void drawResearchIcon(Object icon, String type, int x, int y)
+	public void drawResearchEntry(INotebookEntry entry)
 	{
 
 		int pageX = player.getEntityData().getInteger(tagPageX);
 		int pageY = player.getEntityData().getInteger(tagPageY);
 
-		x = x - (int) (pageX / 0.5f);
-		y = y - (int) (pageY / 0.5f);
+		int x = entry.getPos().getX() - (int) (pageX / 0.5f);
+		int y = entry.getPos().getY() - (int) (pageY / 0.5f);
 
 		if (x > -8 && y > -8 && x < 241 && y < 215)
 		{
@@ -469,10 +451,11 @@ public class GuiNotebook extends GuiScreen
 			mc.getTextureManager().bindTexture(frame);
 			drawModalRectWithCustomSizedTexture((int) xStart, (int) yStart, 56 + u1, 232 + v1, width - 10, height - 10,
 					256, 256);
-
+			
+			Object icon = entry.getIcon().getTexture();
 			if (icon instanceof ResourceLocation)
 			{
-				mc.getTextureManager().bindTexture((ResourceLocation) icon);
+				mc.getTextureManager().bindTexture((ResourceLocation)icon);
 				GlStateManager.scale(0.5, 0.5, 1);
 
 				drawModalRectWithCustomSizedTexture((int) (2 * xStart) + 5, (int) (2 * yStart) + 5, u2, v2, width,
@@ -504,8 +487,8 @@ public class GuiNotebook extends GuiScreen
 			if (relMouseX >= screenX + 16 && relMouseY >= screenY + 17 && relMouseX <= screenX + 240
 					&& relMouseY <= screenY + 210)
 			{
-				float thisDragDistX = (lastDragX - (mouseX - (res.getScaledWidth() / 2) - (255 / 2))) * 0.7f;
-				float thisDragDistY = (lastDragY - (mouseY - (res.getScaledHeight() / 2) - (229 / 2))) * 0.45f;
+				float thisDragDistX = (lastDragX - (mouseX - (res.getScaledWidth() / 2) - (255 / 2))) * 0.25f;
+				float thisDragDistY = (lastDragY - (mouseY - (res.getScaledHeight() / 2) - (229 / 2))) * 0.25f;
 
 				float totalDragDistX = player.getEntityData().getFloat(tagPageX) + thisDragDistX;
 				float totalDragDistY = player.getEntityData().getFloat(tagPageY) + thisDragDistY;

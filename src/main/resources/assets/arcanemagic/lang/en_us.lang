@@ -41,12 +41,12 @@ arcanemagic.subtitle.camera_clack=Something Clicks
 itemGroup.arcanemagic=Arcane Magic
 
 # Vis
-arcanemagic.essence.demonic=Demonic
-arcanemagic.essence.aquatic=Aquatic
-arcanemagic.essence.atmospheric=Atmospheric
-arcanemagic.essence.earthern=Eathern
-arcanemagic.essence.unstable=Unstable
-arcanemagic.essence.stable=Stable
+essence.arcanemagic.inferno.name=Inferno
+essence.arcanemagic.depth.name=Depth
+essence.arcanemagic.ozone.name=Ozone
+essence.arcanemagic.horizon.name=Horizon
+essence.arcanemagic.peace.name=Peace
+essence.arcanemagic.chaos.name=Chaos
 
 # Thaumanomicon
 arcanemagic.notebook.category.alchemy=Alchemy

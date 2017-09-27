@@ -100,7 +100,7 @@ public class ItemScepter extends ItemBase
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		player.setActiveHand(hand);
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
 	@Override
@@ -166,27 +166,28 @@ public class ItemScepter extends ItemBase
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entity, int itemSlot, boolean isSelected)
 	{
-		// dont kill just temp coz i forgot to override oncraft and now its too late coz i started a debug thing
-		if (!stack.hasTagCompound())
-		{
-			stack.setTagCompound(new NBTTagCompound());
-		}
 		
 	}
 
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
-		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, itemRand.nextInt(50)));
-		stack.getTagCompound().setString("yea yea hobble hobgl", "hobble hobble thirty five");
+		Essence.writeToNBT(stack.getTagCompound(), new EssenceStack(Essence.DEPTH, 1));
 		//player.activeItemStack = stack;
 	}
+	
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged)
+    {
+       // return !oldStack.equals(newStack); //!ItemStack.areItemStacksEqual(oldStack, newStack);
+        return false;
+    }
 
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand)
 	{
-
+		Essence.initDefaultEssence(player.getHeldItem(hand));
 		return EnumActionResult.PASS;
 	}
 
@@ -204,7 +205,17 @@ public class ItemScepter extends ItemBase
 		if (stack.hasTagCompound())
 		{
 			List<EssenceStack> storedEssence = Essence.readFromNBT(stack.getTagCompound());
-			tooltip.add(storedEssence.get(0).getEssence().getColor() + storedEssence.get(0).getCount() + " " + storedEssence.get(0).getEssence().getTranslationName());
+			
+			if (storedEssence.size() > 0)
+			{
+				String combinedTooltip = "";
+				for (EssenceStack essence : storedEssence)
+				{
+					combinedTooltip += essence.getCount() + " " + I18n.format(essence.getEssence().getTranslationName()) + " "; 
+					//combinedTooltip+= essence.toString();
+				}
+				tooltip.add(combinedTooltip);
+			}
 		}
 	}
 

@@ -54,6 +54,7 @@ public class ModEvents
 	@SideOnly(Side.CLIENT)
 	public static void onRenderHand(RenderHandEvent event)
 	{
+		/*
 		float t = 1.0f;
 
 		EntityPlayer ply = Minecraft.getMinecraft().player;
@@ -89,6 +90,6 @@ public class ModEvents
 				e.printStackTrace();
 			}
 
-		}
+		}*/
 	}
 }
