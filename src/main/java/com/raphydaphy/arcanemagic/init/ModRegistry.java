@@ -31,7 +31,7 @@ public class ModRegistry
 
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
-	
+
 	public static final BlockOre INFUSED_ORE = new BlockOre("ore_infused", 3.5f);
 	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();

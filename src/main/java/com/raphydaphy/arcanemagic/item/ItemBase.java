@@ -38,18 +38,19 @@ public class ItemBase extends Item implements IHasModel
 			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
 		}
 	}
-		
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
 	{
 		if (isInCreativeTab(tab))
 		{
-			if(variants == 0) items.add(new ItemStack(this));
-			else for (int i = 0; i < variants; i++)
-			{
-				items.add(new ItemStack(this, 1, i));
-			}
+			if (variants == 0)
+				items.add(new ItemStack(this));
+			else
+				for (int i = 0; i < variants; i++)
+				{
+					items.add(new ItemStack(this, 1, i));
+				}
 		}
 	}
 
@@ -67,9 +68,10 @@ public class ItemBase extends Item implements IHasModel
 	{
 		ModRegistry.ITEMS.add(this);
 	}
-	
+
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getUnlocalizedName(ItemStack stack)
+	{
 		if (variants > 0)
 		{
 			return super.getUnlocalizedName() + "." + stack.getMetadata();

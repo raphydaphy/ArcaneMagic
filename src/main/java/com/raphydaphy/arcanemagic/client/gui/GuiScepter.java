@@ -43,16 +43,16 @@ public final class GuiScepter
 	public static void renderWandHUD(Minecraft mc, ScaledResolution res)
 	{
 		GlStateManager.pushMatrix();
-		
+
 		GlStateManager.enableBlend();
 		GlStateManager.translate(res.getScaledWidth() - 80, res.getScaledHeight() - 80, 0);
 		GlStateManager.scale(0.8, 0.8, 0.8);
-		
+
 		Minecraft.getMinecraft().getTextureManager()
 				.bindTexture(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/wand.png"));
 		Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(8, 8, 7, 7, 50, 50);
-		GlStateManager.scale(1 / 0.8, 1/ 0.8, 1/0.8);
-		
+		GlStateManager.scale(1 / 0.8, 1 / 0.8, 1 / 0.8);
+
 		float rot = 76.1f;
 		// Perdito
 		drawBar(37, 47, 0.25f, 0.25f, 0.25f, 10, 76.1f);

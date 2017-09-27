@@ -10,7 +10,7 @@ public class ScepterCap extends ScepterPart
 	public static final ScepterCap IRON = new ScepterCap("iron");
 	public static final ScepterCap GOLD = new ScepterCap("gold");
 	public static final ScepterCap THAUMIUM = new ScepterCap("thaumium");
-	
+
 	private final String UNLOC_NAME;
 	private final ResourceLocation TEXTURE;
 	private final ResourceLocation REGNAME;
@@ -36,7 +36,8 @@ public class ScepterCap extends ScepterPart
 	}
 
 	@Override
-	public ResourceLocation getRegistryName() {
+	public ResourceLocation getRegistryName()
+	{
 		return REGNAME;
 	}
 

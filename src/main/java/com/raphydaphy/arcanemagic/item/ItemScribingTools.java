@@ -37,21 +37,17 @@ public class ItemScribingTools extends ItemBase
 		{
 			if (world.getBlockState(pos.add(1, 0, 0)).getBlock().equals(ModRegistry.TABLE))
 			{
-				world.setBlockState(pos,
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 0)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.WEST));
-				world.setBlockState(pos.add(1, 0, 0),
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 1)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.WEST));
+				world.setBlockState(pos, ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockWritingDesk.FACING, EnumFacing.WEST));
+				world.setBlockState(pos.add(1, 0, 0), ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockWritingDesk.FACING, EnumFacing.WEST));
 				return EnumActionResult.SUCCESS;
 			} else if (world.getBlockState(pos.add(-1, 0, 0)).getBlock().equals(ModRegistry.TABLE))
 			{
-				world.setBlockState(pos,
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 1)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.EAST));
-				world.setBlockState(pos.add(-1, 0, 0),
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 0)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.EAST));
+				world.setBlockState(pos, ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockWritingDesk.FACING, EnumFacing.EAST));
+				world.setBlockState(pos.add(-1, 0, 0), ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockWritingDesk.FACING, EnumFacing.EAST));
 				return EnumActionResult.SUCCESS;
 			} else if (world.getBlockState(pos.add(0, 0, 1)).getBlock().equals(ModRegistry.TABLE))
 			{

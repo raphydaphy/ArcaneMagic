@@ -5,7 +5,8 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 
 import net.minecraft.util.ResourceLocation;
 
-public class ScepterCore extends ScepterPart {
+public class ScepterCore extends ScepterPart
+{
 
 	public static final ScepterCore WOOD = new ScepterCore("wood");
 	public static final ScepterCore GREATWOOD = new ScepterCore("greatwood");
@@ -15,7 +16,8 @@ public class ScepterCore extends ScepterPart {
 	private final ResourceLocation TEXTURE;
 	private final ResourceLocation REGNAME;
 
-	public ScepterCore(String name) {
+	public ScepterCore(String name)
+	{
 		super(PartCategory.CORE);
 		UNLOC_NAME = ArcaneMagic.MODID + ".core." + name;
 		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "textures/items/scepter/core_" + name);
@@ -23,17 +25,20 @@ public class ScepterCore extends ScepterPart {
 	}
 
 	@Override
-	public String getUnlocalizedName() {
+	public String getUnlocalizedName()
+	{
 		return UNLOC_NAME;
 	}
 
 	@Override
-	public ResourceLocation getTexture() {
+	public ResourceLocation getTexture()
+	{
 		return TEXTURE;
 	}
 
 	@Override
-	public ResourceLocation getRegistryName() {
+	public ResourceLocation getRegistryName()
+	{
 		return REGNAME;
 	}
 

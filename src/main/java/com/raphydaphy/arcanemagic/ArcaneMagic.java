@@ -39,7 +39,7 @@ public class ArcaneMagic
 
 	@Mod.Instance
 	public static ArcaneMagic instance;
-	
+
 	public static Logger LOGGER = LogManager.getLogger(MODID);
 
 	public static final ArcaneMagicCreativeTab creativeTab = new ArcaneMagicCreativeTab();
@@ -58,7 +58,8 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		MinecraftForge.EVENT_BUS.post(new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
+		MinecraftForge.EVENT_BUS.post(
+				new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
 		ScepterRegistry.registerDefaults();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);

@@ -45,10 +45,14 @@ public class GuiNotebook extends GuiScreen
 	private int relMouseX = 0;
 	private int relMouseY = 0;
 
-	private static final ResourceLocation frame = new ResourceLocation(ArcaneMagic.MODID, "textures/gui/thaumonomicon.png");
-	//private static final ResourceLocation page = new ResourceLocation(ArcaneMagic.MODID, "textures/gui/thaumonomicon_page.png");
-	private static final ResourceLocation back = new ResourceLocation(ArcaneMagic.MODID, "textures/gui/thaumonomicon_back.png");
-	private static final ResourceLocation back_eldritch = new ResourceLocation(ArcaneMagic.MODID, "textures/gui/thaumonomicon_back_eldritch.png");
+	private static final ResourceLocation frame = new ResourceLocation(ArcaneMagic.MODID,
+			"textures/gui/thaumonomicon.png");
+	// private static final ResourceLocation page = new
+	// ResourceLocation(ArcaneMagic.MODID, "textures/gui/thaumonomicon_page.png");
+	private static final ResourceLocation back = new ResourceLocation(ArcaneMagic.MODID,
+			"textures/gui/thaumonomicon_back.png");
+	private static final ResourceLocation back_eldritch = new ResourceLocation(ArcaneMagic.MODID,
+			"textures/gui/thaumonomicon_back_eldritch.png");
 
 	public GuiNotebook(EntityPlayer player)
 	{
@@ -105,9 +109,7 @@ public class GuiNotebook extends GuiScreen
 
 		for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount() * 2; tab++)
 		{
-			int thisTab = tab >= ArcaneMagicAPI.getCategoryCount()
-					? tab - ArcaneMagicAPI.getCategoryCount()
-					: tab;
+			int thisTab = tab >= ArcaneMagicAPI.getCategoryCount() ? tab - ArcaneMagicAPI.getCategoryCount() : tab;
 			if (thisTab == player.getEntityData().getInteger(tagTab))
 			{
 				if (tab < ArcaneMagicAPI.getCategoryCount())
