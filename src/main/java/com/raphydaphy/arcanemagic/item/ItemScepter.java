@@ -4,10 +4,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
-import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
+import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.handler.MeshHandler;
