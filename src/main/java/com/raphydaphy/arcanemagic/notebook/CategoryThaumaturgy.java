@@ -32,17 +32,17 @@ public class CategoryThaumaturgy implements INotebookCategory
 	public List<INotebookEntry> getEntries()
 	{
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
-		entries.add(new EntryBasicWand());
+		entries.add(new EntryBasicScepter());
 		entries.add(new EntryBasicFoci());
 		return entries;
 	}
 
-	public class EntryBasicWand implements INotebookEntry
+	public class EntryBasicScepter implements INotebookEntry
 	{
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "arcanemagic.notebook.category.thaumaturgy.basic_wand";
+			return "arcanemagic.notebook.category.thaumaturgy.basic_scepter";
 		}
 
 		@Override
