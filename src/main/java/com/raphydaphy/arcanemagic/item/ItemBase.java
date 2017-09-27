@@ -9,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 
@@ -38,7 +39,7 @@ public class ItemBase extends Item implements IHasModel
 		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++)
 		{
 			ModelLoader.setCustomModelResourceLocation(this, i,
-					new ModelResourceLocation(ArcaneMagic.MODID + ":" + getRegistryName(), "inventory"));
+					new ModelResourceLocation(new ResourceLocation(ArcaneMagic.MODID, "ancient_parchment"), "inventory"));
 		}
 	}
 		
