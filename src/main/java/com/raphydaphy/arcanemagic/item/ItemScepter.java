@@ -47,6 +47,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -105,7 +106,7 @@ public class ItemScepter extends ItemBase
 		getTagCompoundSafe(scepter).setString(KEY_CORE, ScepterCore.WOOD.getRegistryName().toString());
 		getTagCompoundSafe(scepter).setString(KEY_TIP, ScepterCap.GOLD.getRegistryName().toString());
 	}
-	
+
 	public static NBTTagCompound getTagCompoundSafe(ItemStack stack)
 	{
 		if (!stack.hasTagCompound())
@@ -225,24 +226,7 @@ public class ItemScepter extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		if (stack.hasTagCompound())
-		{
-			List<EssenceStack> storedEssence = Essence.readFromNBT(getTagCompoundSafe(stack));
-
-			if (storedEssence.size() > 0)
-			{
-				String combinedTooltip = "";
-				for (EssenceStack essence : storedEssence)
-				{
-					GlStateManager.pushMatrix();
-					GlStateManager.color(40, 80, 50);
-					combinedTooltip += essence.getCount() + " " + I18n.format(essence.getEssence().getTranslationName())
-							+ " ";
-					GlStateManager.popMatrix();
-				}
-				tooltip.add(combinedTooltip);
-			}
-		}
+		tooltip.add("");
 	}
 
 	@Override
@@ -269,6 +253,35 @@ public class ItemScepter extends ItemBase
 		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
 				new ModelResourceLocation(getRegistryName(), "inventory"));
 		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
+	}
+
+	@SubscribeEvent
+	public void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
+	{
+		if (ev.getStack().getItem().getRegistryName().equals(this.getRegistryName()))
+		{
+
+			ItemStack stack = ev.getStack();
+			if (stack.hasTagCompound())
+			{
+				List<EssenceStack> storedEssence = Essence.readFromNBT(getTagCompoundSafe(stack));
+
+				if (storedEssence.size() > 0)
+				{
+					String combinedTooltip = "";
+
+					int x = ev.getX();
+					for (EssenceStack essence : storedEssence)
+					{
+						String thisString = essence.getCount() + " "
+								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
+						ev.getFontRenderer().drawStringWithShadow(thisString, x, ev.getY() + 12, essence.getEssence().getColorHex());
+						x += thisString.length() * 6;
+					}
+
+				}
+			}
+		}
 	}
 
 	/**
