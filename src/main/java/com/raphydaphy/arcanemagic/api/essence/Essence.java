@@ -136,6 +136,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		NBTTagCompound essTag = tag.getCompoundTag(E);
 		for (EssenceStack e : essences)
 		{
+			e.grow(essTag.getInteger(e.getEssence().getRegistryName().toString()));
 			essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
 		}
 		return tag;
