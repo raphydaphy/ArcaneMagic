@@ -6,12 +6,12 @@ import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
+import com.raphydaphy.arcanemagic.client.particle.ParticleStar;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.particle.ParticleStar;
 import com.raphydaphy.arcanemagic.scepter.ScepterCap;
 import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 

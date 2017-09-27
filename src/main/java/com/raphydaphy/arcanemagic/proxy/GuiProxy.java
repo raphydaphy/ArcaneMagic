@@ -1,9 +1,9 @@
 package com.raphydaphy.arcanemagic.proxy;
 
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
+import com.raphydaphy.arcanemagic.client.gui.GuiArcaneWorktable;
+import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
 import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
-import com.raphydaphy.arcanemagic.gui.GuiArcaneWorktable;
-import com.raphydaphy.arcanemagic.gui.GuiNotebook;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;

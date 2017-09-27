@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.gui;
+package com.raphydaphy.arcanemagic.client.gui;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;

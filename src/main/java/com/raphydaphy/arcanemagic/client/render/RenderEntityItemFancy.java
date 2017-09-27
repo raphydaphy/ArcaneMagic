@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.render;
+package com.raphydaphy.arcanemagic.client.render;
 
 import java.awt.Color;
 import java.util.Random;

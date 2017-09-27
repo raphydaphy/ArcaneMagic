@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.particle;
+package com.raphydaphy.arcanemagic.client.particle;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 

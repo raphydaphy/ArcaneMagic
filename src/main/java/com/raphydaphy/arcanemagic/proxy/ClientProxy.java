@@ -3,10 +3,10 @@ package com.raphydaphy.arcanemagic.proxy;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.client.IHasModel;
+import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.data.EnumPrimal;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.render.RenderEntityItemFancy;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;

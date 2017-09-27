@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.init;
 
-import com.raphydaphy.arcanemagic.gui.GuiScepter;
+import com.raphydaphy.arcanemagic.client.gui.GuiScepter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

@@ -15,13 +15,11 @@
 	            }
 			},
 			"notebook": {
-				"model": "builtin/generated",
 				"textures": {
 					"all": "arcanemagic:items/notebook"
 				}
 			},
 			"scribing_tools": {
-			 	"model": "cube/all",
 				"textures": {
 					"all": "arcanemagic:items/scribing_tools"
 				}

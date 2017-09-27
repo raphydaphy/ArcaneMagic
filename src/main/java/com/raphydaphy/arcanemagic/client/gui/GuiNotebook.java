@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.gui;
+package com.raphydaphy.arcanemagic.client.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,10 +32,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiNotebook extends GuiScreen
 {
 
-	public static final String tagUsedThauminomicon = "usedThauminomicon";
-	public static final String tagPageX = "thauminomiconPageX";
-	public static final String tagPageY = "thauminomiconPageY";
-	public static final String tagTab = "thauminomiconTab";
+	public static final String tagUsedThauminomicon = "usedNotebook";
+	public static final String tagPageX = "notebookPageX";
+	public static final String tagPageY = "notebookPageY";
+	public static final String tagTab = "notebookTab";
 
 	private EntityPlayer player;
 
