@@ -1,10 +1,14 @@
 package com.raphydaphy.arcanemagic;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
 import com.raphydaphy.arcanemagic.init.ModEntities;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
 import com.raphydaphy.arcanemagic.init.ScepterRegistry;
 import com.raphydaphy.arcanemagic.notebook.CategoryAlchemy;
 import com.raphydaphy.arcanemagic.notebook.CategoryBasicInformation;
@@ -32,6 +36,8 @@ public class ArcaneMagic
 
 	@Mod.Instance
 	public static ArcaneMagic instance;
+	
+	public static Logger LOGGER = LogManager.getLogger(MODID);
 
 	public static final ArcaneMagicCreativeTab creativeTab = new ArcaneMagicCreativeTab();
 
@@ -42,6 +48,7 @@ public class ArcaneMagic
 		ArcaneMagicPacketHandler.registerMessages(ArcaneMagic.MODID);
 		proxy.preInit(event);
 		MinecraftForge.EVENT_BUS.register(new ModRegistry());
+		MinecraftForge.EVENT_BUS.register(new EssenceSubscriber());
 		ModRegistry.registerTiles();
 	}
 

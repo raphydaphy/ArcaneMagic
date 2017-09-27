@@ -4,13 +4,11 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoader;
 
 public class ItemBase extends Item implements IHasModel
 {
@@ -37,8 +35,7 @@ public class ItemBase extends Item implements IHasModel
 	{
 		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++)
 		{
-			ModelLoader.setCustomModelResourceLocation(this, i,
-					new ModelResourceLocation(ArcaneMagic.MODID + ":" + getRegistryName(), "inventory"));
+			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
 		}
 	}
 		
@@ -69,5 +66,10 @@ public class ItemBase extends Item implements IHasModel
 	public void init()
 	{
 		ModRegistry.ITEMS.add(this);
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack) {
+		return getUnlocalizedName() + "." + stack.getMetadata();
 	}
 }

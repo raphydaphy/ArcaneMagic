@@ -69,7 +69,7 @@ public class CategoryThaumaturgy implements INotebookCategory
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ItemStack(ModRegistry.SHARD), IconType.CIRCLE);
+			return new IconTypePair(new ItemStack(ModRegistry.ESSENCE), IconType.CIRCLE);
 		}
 
 		@Override

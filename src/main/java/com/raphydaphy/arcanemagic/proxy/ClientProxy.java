@@ -40,7 +40,7 @@ public class ClientProxy extends CommonProxy
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
 		{
 			return EnumPrimal.values()[stack.getMetadata()].getColorMultiplier();
-		}, ModRegistry.SHARD, Item.getItemFromBlock(ModRegistry.INFUSED_ORE));
+		}, Item.getItemFromBlock(ModRegistry.INFUSED_ORE));
 
 		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((state, world, pos, tintIndex) ->
 		{

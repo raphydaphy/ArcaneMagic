@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.scepter.IScepterCap;
 import com.raphydaphy.arcanemagic.api.scepter.IScepterRod;
@@ -13,8 +12,6 @@ import com.raphydaphy.arcanemagic.api.scepter.IScepterRod;
 public class ArcaneMagicAPI
 {
 	public static final String VERSION = "0.1";
-
-	public static Map<String, Essence> ESSENCE_TYPES = new HashMap<String, Essence>();
 
 	public static Map<String, IScepterCap> SCEPTER_TIPS = new HashMap<String, IScepterCap>();
 	public static Map<String, IScepterRod> SCEPTER_CORES = new HashMap<String, IScepterRod>();

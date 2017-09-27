@@ -1,17 +1,12 @@
 package com.raphydaphy.arcanemagic.item;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.IItemEssenceAcceptor;
 import com.raphydaphy.arcanemagic.api.scepter.IScepterCap;
 import com.raphydaphy.arcanemagic.api.scepter.IScepterRod;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
-import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.init.ScepterRegistry;
 import com.raphydaphy.arcanemagic.particle.ParticleStar;
@@ -34,7 +29,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemScepter extends ItemBase implements IItemEssenceAcceptor
+public class ItemScepter extends ItemBase
 {
 	public static final String KEY_CORE = "coreType";
 	public static final String KEY_TIP = "tipType";
@@ -134,35 +129,5 @@ public class ItemScepter extends ItemBase implements IItemEssenceAcceptor
 		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
 				new ModelResourceLocation(ArcaneMagic.MODID + ":scepter", "inventory"));
 		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
-	}
-
-	@Override
-	public Map<Essence, Integer> getEssenceStored(ItemStack stack)
-	{
-		Map<Essence, Integer> essenceStored = new HashMap<Essence, Integer>();
-		if (stack.hasTagCompound())
-		{
-			for (Essence essence : Essence.values())
-			{
-				essenceStored.put(essence, stack.getTagCompound().getInteger(essence.getMultiKey()));
-			}
-			return essenceStored;
-		}
-		return essenceStored;
-	}
-
-	@Override
-	public Map<Essence, Integer> getEssenceCapacity(ItemStack stack)
-	{
-		Map<Essence, Integer> capacities = new HashMap<Essence, Integer>();
-		if (stack.hasTagCompound())
-		{
-			for (Essence essence : Essence.values())
-			{
-				capacities.put(essence, stack.getTagCompound().getInteger(essence.getMultiMaxKey()));
-			}
-			return capacities;
-		}
-		return capacities;
 	}
 }

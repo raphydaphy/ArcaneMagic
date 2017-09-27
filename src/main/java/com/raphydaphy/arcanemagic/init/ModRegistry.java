@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
@@ -19,7 +20,9 @@ import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,7 +43,7 @@ public class ModRegistry
 	public static final ItemBase IRON_TIP = new ItemBase("scepter_tip_iron");
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
-	public static final ItemBase SHARD = new ItemBase("shard", 6);
+	public static final ItemBase ESSENCE = new ItemBase("essence", 6);
 	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools("scribing_tools");
 	public static final ItemBase ANCIENT_PARCHMENT = new ItemBase("ancient_parchment");
 	public static final ItemFoci FIRE_FOCUS = new ItemFoci("focus_fire");
@@ -55,6 +58,7 @@ public class ModRegistry
 	public void onItemRegister(Register<Item> e)
 	{
 		e.getRegistry().registerAll(ITEMS.toArray(new Item[ITEMS.size()]));
+		MinecraftForge.EVENT_BUS.post(new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
 	}
 
 	@SubscribeEvent
