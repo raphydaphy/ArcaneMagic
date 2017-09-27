@@ -28,9 +28,9 @@ public class ModEvents
 			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 
 			if ((!player.getHeldItemMainhand().isEmpty()
-					&& player.getHeldItemMainhand().getItem().equals(ModRegistry.WAND))
+					&& player.getHeldItemMainhand().getItem().equals(ModRegistry.SCEPTER))
 					|| !player.getHeldItemOffhand().isEmpty()
-							&& player.getHeldItemOffhand().getItem().equals(ModRegistry.WAND))
+							&& player.getHeldItemOffhand().getItem().equals(ModRegistry.SCEPTER))
 			{
 				GuiScepter.renderWandHUD(mc, event.getResolution());
 			}

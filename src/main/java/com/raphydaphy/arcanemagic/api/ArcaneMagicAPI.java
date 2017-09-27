@@ -7,8 +7,8 @@ import java.util.Map;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
-import com.raphydaphy.arcanemagic.api.wand.IScepterCap;
-import com.raphydaphy.arcanemagic.api.wand.IScepterRod;
+import com.raphydaphy.arcanemagic.api.scepter.IScepterCap;
+import com.raphydaphy.arcanemagic.api.scepter.IScepterRod;
 
 public class ArcaneMagicAPI
 {

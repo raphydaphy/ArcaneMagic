@@ -7,8 +7,8 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.IItemEssenceAcceptor;
-import com.raphydaphy.arcanemagic.api.wand.IScepterCap;
-import com.raphydaphy.arcanemagic.api.wand.IScepterRod;
+import com.raphydaphy.arcanemagic.api.scepter.IScepterCap;
+import com.raphydaphy.arcanemagic.api.scepter.IScepterRod;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
@@ -131,9 +131,9 @@ public class ItemScepter extends ItemBase implements IItemEssenceAcceptor
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{
-		ModelLoader.registerItemVariants(ModRegistry.WAND,
+		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
 				new ModelResourceLocation(ArcaneMagic.MODID + ":scepter", "inventory"));
-		ModelLoader.setCustomMeshDefinition(ModRegistry.WAND, MeshHandler.instance());
+		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
 	}
 
 	@Override

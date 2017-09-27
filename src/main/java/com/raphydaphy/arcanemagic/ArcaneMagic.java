@@ -23,11 +23,11 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 @Mod(modid = ArcaneMagic.MODID, name = ArcaneMagic.MODNAME, version = ArcaneMagic.VERSION, useMetadata = true)
 public class ArcaneMagic
 {
-	public static final String MODID = "thaumcraft";
-	public static final String MODNAME = "Thaumcraft";
+	public static final String MODID = "arcanemagic";
+	public static final String MODNAME = "Arcane Magic";
 	public static final String VERSION = "0.1";
 
-	@SidedProxy(clientSide = "com.raphydaphy.thaumcraft.proxy.ClientProxy", serverSide = "com.raphydaphy.thaumcraft.proxy.ServerProxy")
+	@SidedProxy(clientSide = "com.raphydaphy.arcanemagic.proxy.ClientProxy", serverSide = "com.raphydaphy.arcanemagic.proxy.ServerProxy")
 	public static CommonProxy proxy;
 
 	@Mod.Instance
@@ -48,7 +48,7 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		ScepterRegistry.registerWands();
+		ScepterRegistry.registerScepters();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);
 	}

@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.scepter;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.wand.IScepterCap;
+import com.raphydaphy.arcanemagic.api.scepter.IScepterCap;
 
 import net.minecraft.util.ResourceLocation;
 
