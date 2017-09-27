@@ -4,11 +4,14 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBase extends Item implements IHasModel
 {
@@ -37,6 +40,12 @@ public class ItemBase extends Item implements IHasModel
 		{
 			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
 		}
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public ModelResourceLocation getModelLocation(ItemStack stack)
+	{
+		return new ModelResourceLocation(getRegistryName(), "inventory");
 	}
 
 	@Override

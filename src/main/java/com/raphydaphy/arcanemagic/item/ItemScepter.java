@@ -39,7 +39,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -49,14 +48,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -190,8 +188,8 @@ public class ItemScepter extends ItemBase
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft)
 	{
 		System.out.println("Stopped using it ! The thing you stopped using was a " + stack.getItem().getRegistryName());
-		//TODO do on capsss
-		//Essence.resetEssence(stack.getTagCompound());
+		// TODO do on capsss
+		// Essence.resetEssence(stack.getTagCompound());
 	}
 
 	@Override
@@ -206,12 +204,12 @@ public class ItemScepter extends ItemBase
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{
-      for (Essence essence : Essence.REGISTRY.getValues())
-      {
-        handler.store(new EssenceStack(essence,  itemRand.nextInt(2)), false);
-      }
+			for (Essence essence : Essence.REGISTRY.getValues())
+			{
+				handler.store(new EssenceStack(essence, itemRand.nextInt(2)), false);
+			}
 		}
-		//player.activeItemStack = stack;
+		// player.activeItemStack = stack;
 	}
 
 	@Override
@@ -233,27 +231,14 @@ public class ItemScepter extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack)
 	{
-		return I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
+		return TextFormatting.DARK_GREEN.toString() + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
-		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
-		if (handler != null)
-		{
-			Collection<EssenceStack> storedEssence = handler.getStored().values();
-			
-			if (storedEssence.size() > 0)
-			{
-				for (EssenceStack essence : storedEssence)
-				{
-					tooltip.add(essence.getCount() + " " + I18n.format(essence.getEssence().getTranslationName()));
-					//combinedTooltip+= essence.toString();
-				}
-			}
-		}
+		tooltip.addAll(Arrays.asList("", "", ""));
 	}
 
 	@Override
@@ -270,13 +255,14 @@ public class ItemScepter extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public ModelResourceLocation getModelLocation(ItemStack stack)
 	{
-		return new ModelResourceLocation(getRegistryName(), "inventory");
+		return super.getModelLocation(stack);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{
+		// super.initModels(e);
 		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
 				new ModelResourceLocation(getRegistryName(), "inventory"));
 		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
@@ -289,21 +275,31 @@ public class ItemScepter extends ItemBase
 		{
 
 			ItemStack stack = ev.getStack();
-			if (stack.hasTagCompound())
+			IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+			if (handler != null)
 			{
-				List<EssenceStack> storedEssence = Essence.readFromNBT(getTagCompoundSafe(stack));
+				Collection<EssenceStack> storedEssence = handler.getStored().values();
 
 				if (storedEssence.size() > 0)
 				{
-					String combinedTooltip = "";
-
 					int x = ev.getX();
+					int curYCounter = 0;
+					int y = ev.getY() + 11;
 					for (EssenceStack essence : storedEssence)
 					{
+
 						String thisString = essence.getCount() + " "
 								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
-						ev.getFontRenderer().drawStringWithShadow(thisString, x, ev.getY() + 12, essence.getEssence().getColorHex());
+						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorHex());
+
 						x += thisString.length() * 6;
+						curYCounter++;
+
+						if (curYCounter % 2 == 0)
+						{
+							y += 10;
+							x = ev.getX();
+						}
 					}
 
 				}
@@ -385,34 +381,35 @@ public class ItemScepter extends ItemBase
 
 		float rot = 76.1f;
 
-		List<EssenceStack> essencesStored = Essence.readFromNBT(getTagCompoundSafe(stack));
-
-		for (int curEssence = 0; curEssence < essencesStored.size(); curEssence++)
+		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+		if (handler != null)
 		{
-			EssenceStack essence = essencesStored.get(curEssence);
-			Pos2 essencePos = barPositions.get(curEssence);
-			Vec3i color = essence.getEssence().getColorRGB();
-			Vec3d colorDouble = new Vec3d(color.getX(), color.getY() / 256, color.getZ() / 256);
-			drawBar(essencePos.getX(), essencePos.getY(), (float) colorDouble.x / 256, (float) colorDouble.y / 256,
-					(float) colorDouble.z / 256, essence.getCount() / 28, rot);
-			rot += 23;
+			Collection<EssenceStack> storedEssence = handler.getStored().values();
+			EssenceStack[] storedEssenceArray = new EssenceStack[storedEssence.size()];
+			storedEssence.toArray(storedEssenceArray);
+			if (storedEssence.size() > 0)
+			{
+				for (int curEssence = 0; curEssence < storedEssence.size(); curEssence++)
+				{
+					EssenceStack essence = storedEssenceArray[curEssence];
+					Pos2 essencePos = barPositions.get(curEssence);
+					Vec3i color = essence.getEssence().getColorRGB();
+					//System.out.println(color.toString());
+					drawBar(essencePos.getX(), essencePos.getY(), color.getX() / 256, color.getY() / 256f, color.getZ() / 256f, essence.getCount() / 28, rot);
+					rot += 23;
+				}
+			}
 		}
 
-		/* // Perdito drawBar(37, 1, 0.25f, 0.25f, 0.25f, 10, 76.1f); rot += 23; // Ordo
-		 * drawBar(24, -12, 0.83203125f, 0.828125f, 0.921875f, 18, rot); rot += 23; //
-		 * Aqua drawBar(7, -20, 0.234375f, 0.828125f, 0.984375f, 28, rot); rot += 23; //
-		 * Ignis drawBar(-12, -20, 0.99609375f, 0.3515625f, 0.00390625f, 14, rot); rot
-		 * += 23; // Terra drawBar(-29, -14, 0.3359375f, 0.75f, 0.0f, 22, rot); rot +=
-		 * 23; // Aer drawBar(-42, -1, 1f, 1f, 0.4921875f, 12, rot); */
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.popMatrix();
 	}
-  
+
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) 
-  {
-		return new EssenceStorage();//This is serialisable, so Forge should handle save/load
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt)
+	{
+		return new EssenceStorage();// This is serialisable, so Forge should handle save/load
 	}
 
 }

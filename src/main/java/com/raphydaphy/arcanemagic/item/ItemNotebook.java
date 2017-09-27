@@ -2,14 +2,23 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.handler.MeshHandler;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemNotebook extends ItemBase
 {
@@ -31,5 +40,23 @@ public class ItemNotebook extends ItemBase
 		}
 		player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		return TextFormatting.DARK_PURPLE + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
+	}
+	
+	
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void initModels(ModelRegistryEvent e)
+	{
+		ModelLoader.registerItemVariants(ModRegistry.NOTEBOOK,
+				new ModelResourceLocation(getRegistryName(), "inventory"));
+		ModelLoader.setCustomMeshDefinition(ModRegistry.NOTEBOOK, MeshHandler.instance());
 	}
 }
