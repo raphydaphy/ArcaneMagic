@@ -43,7 +43,7 @@ public class ModRegistry
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();
 	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 
-	public static final ItemBase IRON_TIP = new ItemBase("wand_cap_iron");
+	public static final ItemBase IRON_TIP = new ItemBase("scepter_tip_iron");
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemBase SHARD = new ItemBase("shard", 6);

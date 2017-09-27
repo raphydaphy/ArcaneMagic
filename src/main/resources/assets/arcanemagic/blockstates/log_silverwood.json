@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "axis=y":  { "model": "arcanemagic:log_silverwood" },
-        "axis=z":   { "model": "arcanemagic:log_silverwood", "x": 90 },
-        "axis=x":   { "model": "arcanemagic:log_silverwood", "x": 90, "y": 90 },
-        "axis=none": { "model": "arcanemagic:bark_silverwood" }
-    }
-}

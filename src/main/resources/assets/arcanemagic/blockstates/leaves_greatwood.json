@@ -1,9 +1,0 @@
-{
-	"parent": "block/leaves",
-    "variants": {
-        "check_decay=true,decayable=true": { "model": "arcanemagic:leaves_greatwood" },
-        "check_decay=true,decayable=false": { "model": "arcanemagic:leaves_greatwood" },
-        "check_decay=false,decayable=true": { "model": "arcanemagic:leaves_greatwood" },
-        "check_decay=false,decayable=false": { "model": "arcanemagic:leaves_greatwood" }
-    }
-}

@@ -1,0 +1,54 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "builtin/generated",
+		"transform": "forge:default-item"
+	},
+	"variants": {
+		"item": {
+			"scepter": {
+				"variants": {
+			        "inventory": {
+			            "model": "arcanemagic:scepter",
+			            
+			            "textures": {
+			                "core": "arcanemagic:items/scepter/core_wood", 
+			                "tip": "arcanemagic:items/scepter/tip_iron"
+			            }
+			        }
+			
+			    }
+			},
+			"notebook": {
+				"textures": {
+					"layer0": "arcanemagic:items/notebook"
+				}
+			},
+			"scribing_tools": {
+				"textures": {
+					"layer0": "arcanemagic:items/scribing_tools"
+				}
+			},
+			"shard": {
+				"textures": {
+					"layer0": "arcanemagic:items/shard"
+				}
+			},
+			"ancient_parchment": {
+				"textures": {
+					"layer0": "arcanemagic:items/ancient_parchment"
+				}
+			},
+			"focus_fire": {
+				"textures": {
+					"layer0": "arcanemagic:items/focus_fire"
+				}
+			},
+			"scepter_tip_iron": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter_tip_iron"
+				}
+			}
+		}
+	}
+}

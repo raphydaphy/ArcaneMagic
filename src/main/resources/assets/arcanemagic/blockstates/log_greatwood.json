@@ -1,8 +1,0 @@
-{
-    "variants": {
-        "axis=y":  { "model": "arcanemagic:log_greatwood" },
-        "axis=z":   { "model": "arcanemagic:log_greatwood", "x": 90 },
-        "axis=x":   { "model": "arcanemagic:log_greatwood", "x": 90, "y": 90 },
-        "axis=none": { "model": "arcanemagic:bark_greatwood" }
-    }
-}

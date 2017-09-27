@@ -1,6 +1,6 @@
 {
 	"result": {
-		"item": "arcanemagic:wand"
+		"item": "arcanemagic:scepter"
 	},
 	"pattern": [
 		"  c",
@@ -10,7 +10,7 @@
 	"type": "forge:ore_shaped",
 	"key": {
 		"c": {
-			"item": "arcanemagic:wand_cap_iron"
+			"item": "arcanemagic:scepter_tip_iron"
 		},
 		"s": {
 			"type": "forge:ore_dict",
