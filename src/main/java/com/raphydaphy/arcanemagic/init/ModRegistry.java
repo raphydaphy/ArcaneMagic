@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
+import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
@@ -16,6 +17,7 @@ import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.item.ItemScribingTools;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -36,6 +38,7 @@ public class ModRegistry
 	public static final BlockOre INFUSED_ORE = new BlockOre("ore_infused", 3.5f);
 	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();
+	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
 	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 
 	public static final ItemBase IRON_TIP = new ItemBase("scepter_tip_iron");
@@ -98,5 +101,6 @@ public class ModRegistry
 	public static void registerTiles()
 	{
 		GameRegistry.registerTileEntity(TileEntityArcaneWorktable.class, ArcaneMagic.MODID + "_arcane_worktable");
+		GameRegistry.registerTileEntity(TileEntityCrystallizer.class, ArcaneMagic.MODID + "_crystallizer");
 	}
 }

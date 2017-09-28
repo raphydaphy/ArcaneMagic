@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 
 /**
  * Base class for storing Essence using the capability. Extend me pls.
+ * 
+ * ok
  */
 public abstract class TileEntityEssenceStorage extends TileEntity {
 

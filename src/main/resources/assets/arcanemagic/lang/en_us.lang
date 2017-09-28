@@ -8,17 +8,10 @@ item.arcanemagic.ancient_parchment.name=Ancient Parchment
 item.arcanemagic.focus_fire.name=scepter Focus: Fire
 
 # Blocks
-tile.arcanemagic.log_greatwood.name=Greatwood Log
-tile.arcanemagic.log_silverwood.name=Silverwood Log
-tile.arcanemagic.leaves_greatwood.name=Greatwood Leaves
-tile.arcanemagic.leaves_silverwood.name=Silverwood Leaves
-tile.arcanemagic.planks_greatwood.name=Greatwood Planks
-tile.arcanemagic.planks_silverwood.name=Silverwood Planks
 tile.arcanemagic.table.name=Table
 tile.arcanemagic.arcane_worktable.name=Arcane Worktable
-tile.arcanemagic.notebook_table.name=notebook Table
-tile.arcanemagic.slab_greatwood.0.name=Greatwood Slab
-tile.arcanemagic.slab_silverwood.0.name=Silverwood Slab
+tile.arcanemagic.crystallizer.name=Crystallizer
+tile.arcanemagic.research_table.name=notebook Table
 
 # Sounds
 arcanemagic.subtitle.craft_start=Started Crafting
