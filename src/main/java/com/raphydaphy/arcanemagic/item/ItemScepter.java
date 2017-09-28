@@ -134,8 +134,7 @@ public class ItemScepter extends ItemBase
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
-		Minecraft.getMinecraft().effectRenderer.addEffect(
-				new ParticleStar(world, pos.getX() + 0.5f, pos.getY() + 1.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
+		
 		Block block = world.getBlockState(pos).getBlock();
 		if (block.equals(Blocks.BOOKSHELF))
 		{
@@ -201,6 +200,9 @@ public class ItemScepter extends ItemBase
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
+		Vec3d pos = player.rayTrace(8, 1).hitVec;
+		Minecraft.getMinecraft().effectRenderer.addEffect(
+				new ParticleStar(player.getEntityWorld(), pos.x, pos.y, pos.z, 0, 0, 0, 86, 13, 124));
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{
@@ -276,6 +278,16 @@ public class ItemScepter extends ItemBase
 
 			ItemStack stack = ev.getStack();
 			IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+
+			int y = ev.getY();
+			for (int line = 0; line < ev.getLines().size(); line++)
+			{
+				System.out.println(ev.getLines().get(line));
+				if (ev.getLines().get(line).equals(""))
+				{
+					y += 11 * line;
+				}
+			}
 			if (handler != null)
 			{
 				Collection<EssenceStack> storedEssence = handler.getStored().values();
@@ -284,7 +296,7 @@ public class ItemScepter extends ItemBase
 				{
 					int x = ev.getX();
 					int curYCounter = 0;
-					int y = ev.getY() + 11;
+					
 					for (EssenceStack essence : storedEssence)
 					{
 
@@ -394,8 +406,9 @@ public class ItemScepter extends ItemBase
 					EssenceStack essence = storedEssenceArray[curEssence];
 					Pos2 essencePos = barPositions.get(curEssence);
 					Vec3i color = essence.getEssence().getColorRGB();
-					//System.out.println(color.toString());
-					drawBar(essencePos.getX(), essencePos.getY(), color.getX() / 256, color.getY() / 256f, color.getZ() / 256f, essence.getCount() / 28, rot);
+					// System.out.println(color.toString());
+					drawBar(essencePos.getX(), essencePos.getY(), color.getX() / 256, color.getY() / 256f,
+							color.getZ() / 256f, essence.getCount() / 28, rot);
 					rot += 23;
 				}
 			}

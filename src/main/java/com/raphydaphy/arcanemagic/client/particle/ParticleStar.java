@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.client.particle;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -86,16 +87,17 @@ public class ParticleStar extends Particle
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-
-		if (this.particleAge++ >= this.particleMaxAge)
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		if (player.posX <= this.posX + 0.1 && player.posX >= this.posX - 0.1 && player.posY + 1.5 <= this.posY + 0.1
+				&& player.posY + 1.5 >= this.posY - 0.1 && player.posZ <= this.posZ + 0.1 && player.posZ >= this.posZ - 0.1)
 		{
 			this.setExpired();
 		}
 
 		this.move(this.motionX, this.motionY, this.motionZ);
-		this.motionX *= 0.9599999785423279D;
-		this.motionY *= 0.9599999785423279D;
-		this.motionZ *= 0.9599999785423279D;
+		this.motionX = (player.posX - this.posX) / (7 + rand.nextDouble());
+		this.motionY = (player.posY + 1.5 - this.posY) / (7 + rand.nextDouble());
+		this.motionZ = (player.posZ - this.posZ) / (7 + rand.nextDouble());
 
 		if (this.onGround)
 		{
