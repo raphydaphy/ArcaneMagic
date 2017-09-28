@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.item;
 
-import com.raphydaphy.arcanemagic.client.particle.ParticleStar;
+import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
@@ -27,13 +27,13 @@ public class ItemAncientParchment extends ItemBase
 			{
 				for (int z = (int) entityItem.posZ - 10; z < (int) entityItem.posZ + 10; z++)
 				{
-					if (itemRand.nextInt(50) == 1)
+					if (itemRand.nextInt(300) == 1)
 					{
 						BlockPos here = new BlockPos(x, y, z);
 						if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 						{
-							Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(
-									world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, 86, 13, 124,entityItem.getPositionVector().addVector(0, 0.4, 0)));
+							Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(
+									world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, 0xFFFFFF,entityItem.getPositionVector().addVector(0, 0.4, 0)));
 						}
 					}
 				}

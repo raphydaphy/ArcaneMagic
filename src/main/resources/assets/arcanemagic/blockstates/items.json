@@ -16,7 +16,7 @@
 			},
 			"notebook": {
 				"textures": {
-					"all": "arcanemagic:items/notebook"
+					"all": "arcanemagic:items/ancient_parchment"
 				}
 			},
 			"scribing_tools": {

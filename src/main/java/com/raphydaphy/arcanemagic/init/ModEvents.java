@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.init;
 import java.lang.reflect.Field;
 import java.util.Random;
 
-import com.raphydaphy.arcanemagic.client.particle.ParticleStar;
+import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.Minecraft;
@@ -56,14 +56,14 @@ public class ModEvents
 					{
 						for (int z = (int) ev.player.posZ - 10; z < (int) ev.player.posZ + 10; z++)
 						{
-							if (rand.nextInt(50) == 1)
+							if (rand.nextInt(600) == 1)
 							{
 								BlockPos here = new BlockPos(x, y, z);
 								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 								{
 									Minecraft.getMinecraft().effectRenderer
-											.addEffect(new ParticleStar(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
-													z + 0.5, 0, 0, 0, 86, 13, 124, ev.player.getPositionVector().addVector(0,1,0)));
+											.addEffect(new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
+													z + 0.5, 0, 0, 0, 0xFFFFFF, ev.player.getPositionVector().addVector(0,1,0)));
 								}
 							}
 						}

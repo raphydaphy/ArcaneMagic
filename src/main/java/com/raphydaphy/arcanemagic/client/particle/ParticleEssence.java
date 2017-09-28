@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -14,13 +15,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class ParticleStar extends Particle
+public class ParticleEssence extends Particle
 {
 	private final float flameScale;
 	private final Vec3d travelPos;
 
-	public ParticleStar(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
-			double ySpeedIn, double zSpeedIn, int r, int g, int b, Vec3d travelPos)
+	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
+			double ySpeedIn, double zSpeedIn, int color, Vec3d travelPos)
 	{
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
@@ -30,15 +31,23 @@ public class ParticleStar extends Particle
 		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.flameScale = this.particleScale;
-		this.particleRed = 0.5f;
-		this.particleGreen = 0.3f;
-		this.particleBlue = 0.6f;
+		this.setColor(0xFFFFFF);
+		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
 				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + (rand.nextInt(14) + 1)).toString());
 		this.setParticleTexture(sprite);
 	}
+	
+	public void setColor(int p_187146_1_)
+    {
+        float f = (float)((p_187146_1_ & 16711680) >> 16) / 255.0F;
+        float f1 = (float)((p_187146_1_ & 65280) >> 8) / 255.0F;
+        float f2 = (float)((p_187146_1_ & 255) >> 0) / 255.0F;
+        float f3 = 1.0F;
+        this.setRBGColorF(f * 1.0F, f1 * 1.0F, f2 * 1.0F);
+    }
 
 	@Override
 	public int getFXLayer()
@@ -62,7 +71,7 @@ public class ParticleStar extends Particle
 	{
 		float f = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge;
 		this.particleScale = this.flameScale * (1.0F - f * f * 0.5F);
-		renderParticleSpecial(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+		super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
 	}
 	
 	private void renderParticleSpecial(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
@@ -109,11 +118,7 @@ public class ParticleStar extends Particle
         float g = particleGreen;
         float b = particleBlue;
         
-        r = 0.5f;
-        g = 0.5f;
-        b = 0.5f;
-        
-        GlStateManager.color(r, g, b, 1);
+        //GlStateManager.color(r, g, b, 1);
         buffer.pos((double)f5 + avec3d[0].x, (double)f6 + avec3d[0].y, (double)f7 + avec3d[0].z).tex((double)f1, (double)f3).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
         buffer.pos((double)f5 + avec3d[1].x, (double)f6 + avec3d[1].y, (double)f7 + avec3d[1].z).tex((double)f1, (double)f2).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
         buffer.pos((double)f5 + avec3d[2].x, (double)f6 + avec3d[2].y, (double)f7 + avec3d[2].z).tex((double)f, (double)f2).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();

@@ -17,7 +17,7 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleStar;
+import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.handler.MeshHandler;
@@ -139,11 +139,11 @@ public class ItemScepter extends ItemBase
 		{
 			world.setBlockToAir(pos);
 
-			for (int i = 0; i < 150; i++)
+			for (int i = 0; i < 80; i++)
 			{
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, player.posX, player.posY + 1,
-						player.posZ, 0, 0, 0, 86, 13, 124, new Vec3d(pos.getX() + itemRand.nextDouble(),
-								pos.getY() + itemRand.nextDouble(), pos.getZ() + itemRand.nextDouble())));
+				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, player.posX, player.posY + 1,
+						player.posZ, 0, 0, 0, 0xFFFFFF, new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
+								pos.getY() +  0.3 + (itemRand.nextDouble() * 0.4), pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4))));
 			}
 
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
@@ -151,7 +151,7 @@ public class ItemScepter extends ItemBase
 			if (!world.isRemote)
 			{
 				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
-						new ItemStack(ModRegistry.NOTEBOOK));
+						new ItemStack(ModRegistry.ANCIENT_PARCHMENT));
 				ei.setDefaultPickupDelay();
 				ei.motionX = 0;
 				ei.motionY = 0;
@@ -197,8 +197,8 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		Vec3d pos = player.rayTrace(8, 1).hitVec;
-		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(player.getEntityWorld(), pos.x, pos.y, pos.z,
-				0, 0, 0, 86, 13, 124, player.getPositionVector().addVector(0, 1, 0)));
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(player.getEntityWorld(), pos.x, pos.y, pos.z,
+				0, 0, 0, 0xFFFFFF, player.getPositionVector().addVector(0, 1, 0)));
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{
@@ -301,7 +301,7 @@ public class ItemScepter extends ItemBase
 								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
 						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorHex());
 
-						x += 55;
+						x += 70;
 						curYCounter++;
 
 						if (curYCounter % 2 == 0)
