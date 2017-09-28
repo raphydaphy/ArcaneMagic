@@ -5,7 +5,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.scepter.ScepterCap;
+import com.raphydaphy.arcanemagic.scepter.ScepterTip;
 import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 
 import net.minecraft.util.ResourceLocation;
@@ -19,7 +19,7 @@ public class ScepterRegistry
 	public static void registerDefaults()
 	{
 		if (!isDone)
-			registerAll(ScepterCap.IRON, ScepterCap.GOLD, ScepterCap.THAUMIUM, ScepterCore.WOOD, ScepterCore.GREATWOOD,
+			registerAll(ScepterTip.IRON, ScepterTip.GOLD, ScepterTip.THAUMIUM, ScepterCore.WOOD, ScepterCore.GREATWOOD,
 					ScepterCore.SILVERWOOD);
 		isDone = true;
 	}

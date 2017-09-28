@@ -70,7 +70,7 @@ public abstract class Spell
 		{
 			if (map.get(stack.getEssence()) == null)
 				return false;
-			if (map.get(stack.getEssence()).getCount() < ItemScepter.getCap(wand).getCostMultiplier()
+			if (map.get(stack.getEssence()).getCount() < ItemScepter.getTip(wand).getCostMultiplier()
 					* stack.getCount())
 				return false;
 		}
