@@ -67,6 +67,10 @@ public class ClientProxy extends CommonProxy
 	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star"));
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particles"));
+		for (int essenceParticle = 1; essenceParticle < 15; essenceParticle++)
+		{
+			event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + essenceParticle));
+		}
 		System.out.println("Stiched textures!");
 	}
 }

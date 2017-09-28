@@ -1,17 +1,24 @@
 package com.raphydaphy.arcanemagic.init;
 
 import java.lang.reflect.Field;
+import java.util.Random;
 
+import com.raphydaphy.arcanemagic.client.particle.ParticleStar;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,6 +37,54 @@ public class ModEvents
 			.findField(ItemRenderer.class, "prevEquippedProgressMainHand", "field_187470_g");
 	protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
 			.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
+
+	@SubscribeEvent
+	public static void playerTick(TickEvent.PlayerTickEvent ev)
+	{
+
+		Random rand = ev.player.world.rand;
+		if (ev.phase == TickEvent.Phase.START)
+		{
+			if (ev.player.getHeldItemMainhand().getItem() == ModRegistry.ANCIENT_PARCHMENT
+					|| ev.player.getHeldItemOffhand().getItem() == ModRegistry.ANCIENT_PARCHMENT)
+			{
+				World world = ev.player.world;
+
+				for (int x = (int) ev.player.posX - 10; x < (int) ev.player.posX + 10; x++)
+				{
+					for (int y = (int) ev.player.posY - 5; y < (int) ev.player.posY + 5; y++)
+					{
+						for (int z = (int) ev.player.posZ - 10; z < (int) ev.player.posZ + 10; z++)
+						{
+							if (rand.nextInt(50) == 1)
+							{
+								BlockPos here = new BlockPos(x, y, z);
+								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+								{
+									Minecraft.getMinecraft().effectRenderer
+											.addEffect(new ParticleStar(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
+													z + 0.5, 0, 0, 0, 86, 13, 124, ev.player.getPositionVector().addVector(0,1,0)));
+								}
+							}
+						}
+					}
+				}
+
+			}
+
+			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty())
+			{
+				ItemStack held = ev.player.getHeldItem(ev.player.getActiveHand());
+				if (ev.player.activeItemStack.getItem() == ModRegistry.SCEPTER && held.getItem() == ModRegistry.SCEPTER)
+				{
+					if (ev.player.activeItemStack != held)
+					{// TODO please check proper (anything that won't change)
+						ev.player.activeItemStack = held;
+					}
+				}
+			}
+		}
+	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)

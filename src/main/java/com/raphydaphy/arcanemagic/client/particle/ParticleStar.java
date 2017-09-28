@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
@@ -16,9 +17,10 @@ import net.minecraft.world.World;
 public class ParticleStar extends Particle
 {
 	private final float flameScale;
+	private final Vec3d travelPos;
 
 	public ParticleStar(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
-			double ySpeedIn, double zSpeedIn, int r, int g, int b)
+			double ySpeedIn, double zSpeedIn, int r, int g, int b, Vec3d travelPos)
 	{
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
@@ -28,13 +30,13 @@ public class ParticleStar extends Particle
 		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.flameScale = this.particleScale;
-		this.particleRed = (r / 256);
-		this.particleGreen = (g / 256);
-		this.particleBlue = (b / 256);
+		this.particleRed = 0.5f;
+		this.particleGreen = 0.3f;
+		this.particleBlue = 0.6f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
-		this.particleAlpha = 0.5f;
+		this.travelPos = travelPos;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
-				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star").toString());
+				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + (rand.nextInt(14) + 1)).toString());
 		this.setParticleTexture(sprite);
 	}
 
@@ -78,13 +80,6 @@ public class ParticleStar extends Particle
             f1 = this.particleTexture.getMaxU();
             f2 = this.particleTexture.getMinV();
             f3 = this.particleTexture.getMaxV();
-            
-            // prints out this: 0.5625, 0.5732422, 0.75, , 0.7714844
-            System.out.println(f + ", " + f1 + ", " + f2 + ", " + ", " + f3);
-            //f = 34;
-            //f1 = 12;
-            //f2 = 144;
-            //f3 = 12;
         }
 
         float f5 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)partialTicks - interpPosX);
@@ -110,28 +105,25 @@ public class ParticleStar extends Particle
             }
         }
 
-        buffer.pos((double)f5 + avec3d[0].x, (double)f6 + avec3d[0].y, (double)f7 + avec3d[0].z).tex((double)f1, (double)f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
-        buffer.pos((double)f5 + avec3d[1].x, (double)f6 + avec3d[1].y, (double)f7 + avec3d[1].z).tex((double)f1, (double)f2).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
-        buffer.pos((double)f5 + avec3d[2].x, (double)f6 + avec3d[2].y, (double)f7 + avec3d[2].z).tex((double)f, (double)f2).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
-        buffer.pos((double)f5 + avec3d[3].x, (double)f6 + avec3d[3].y, (double)f7 + avec3d[3].z).tex((double)f, (double)f3).color(this.particleRed, this.particleGreen, this.particleBlue, this.particleAlpha).lightmap(j, k).endVertex();
+        float r = particleRed;
+        float g = particleGreen;
+        float b = particleBlue;
+        
+        r = 0.5f;
+        g = 0.5f;
+        b = 0.5f;
+        
+        GlStateManager.color(r, g, b, 1);
+        buffer.pos((double)f5 + avec3d[0].x, (double)f6 + avec3d[0].y, (double)f7 + avec3d[0].z).tex((double)f1, (double)f3).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
+        buffer.pos((double)f5 + avec3d[1].x, (double)f6 + avec3d[1].y, (double)f7 + avec3d[1].z).tex((double)f1, (double)f2).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
+        buffer.pos((double)f5 + avec3d[2].x, (double)f6 + avec3d[2].y, (double)f7 + avec3d[2].z).tex((double)f, (double)f2).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
+        buffer.pos((double)f5 + avec3d[3].x, (double)f6 + avec3d[3].y, (double)f7 + avec3d[3].z).tex((double)f, (double)f3).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
     }
 
 	@Override
 	public int getBrightnessForRender(float p_189214_1_)
 	{
-		float f = ((float) this.particleAge + p_189214_1_) / (float) this.particleMaxAge;
-		f = MathHelper.clamp(f, 0.0F, 1.0F);
-		int i = super.getBrightnessForRender(p_189214_1_);
-		int j = i & 255;
-		int k = i >> 16 & 255;
-		j = j + (int) (f * 15.0F * 16.0F);
-
-		if (j > 240)
-		{
-			j = 240;
-		}
-
-		return j | k << 16;
+		return 100;
 	}
 
 	@Override
@@ -140,17 +132,16 @@ public class ParticleStar extends Particle
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
-		if (player.posX <= this.posX + 0.1 && player.posX >= this.posX - 0.1 && player.posY + 1.5 <= this.posY + 0.1
-				&& player.posY + 1.5 >= this.posY - 0.1 && player.posZ <= this.posZ + 0.1 && player.posZ >= this.posZ - 0.1)
+		if (travelPos.x <= this.posX + 0.1 && travelPos.x >= this.posX - 0.1 && travelPos.y <= this.posY + 0.1
+				&& travelPos.y >= this.posY - 0.1 && travelPos.z <= this.posZ + 0.1 && travelPos.z >= this.posZ - 0.1)
 		{
 			this.setExpired();
 		}
 
 		this.move(this.motionX, this.motionY, this.motionZ);
-		this.motionX = (player.posX - this.posX) / (7 + rand.nextDouble());
-		this.motionY = (player.posY + 1.5 - this.posY) / (7 + rand.nextDouble());
-		this.motionZ = (player.posZ - this.posZ) / (7 + rand.nextDouble());
+		this.motionX = (travelPos.x - this.posX) / (7 + rand.nextDouble());
+		this.motionY = (travelPos.y - this.posY) / (7 + rand.nextDouble());
+		this.motionZ = (travelPos.z - this.posZ) / (7 + rand.nextDouble());
 
 		if (this.onGround)
 		{

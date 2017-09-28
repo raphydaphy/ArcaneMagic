@@ -56,7 +56,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -134,20 +133,17 @@ public class ItemScepter extends ItemBase
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
-		
+
 		Block block = world.getBlockState(pos).getBlock();
 		if (block.equals(Blocks.BOOKSHELF))
 		{
 			world.setBlockToAir(pos);
 
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 150; i++)
 			{
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, pos.getX() + 0.5f,
-						pos.getY() + 0.5f, pos.getZ() + 0.5f, 0, 0, 0, 86, 13, 124));
-
-				// world.spawnParticle(EnumParticleTypes.FLAME, pos.getX() +
-				// world.rand.nextFloat(), pos.getY() + world.rand.nextFloat(), pos.getZ() +
-				// world.rand.nextFloat(), 0f, 0f, 0f, 234);
+				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(world, player.posX, player.posY + 1,
+						player.posZ, 0, 0, 0, 86, 13, 124, new Vec3d(pos.getX() + itemRand.nextDouble(),
+								pos.getY() + itemRand.nextDouble(), pos.getZ() + itemRand.nextDouble())));
 			}
 
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
@@ -201,8 +197,8 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		Vec3d pos = player.rayTrace(8, 1).hitVec;
-		Minecraft.getMinecraft().effectRenderer.addEffect(
-				new ParticleStar(player.getEntityWorld(), pos.x, pos.y, pos.z, 0, 0, 0, 86, 13, 124));
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleStar(player.getEntityWorld(), pos.x, pos.y, pos.z,
+				0, 0, 0, 86, 13, 124, player.getPositionVector().addVector(0, 1, 0)));
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{
@@ -282,11 +278,12 @@ public class ItemScepter extends ItemBase
 			int y = ev.getY();
 			for (int line = 0; line < ev.getLines().size(); line++)
 			{
-				System.out.println(ev.getLines().get(line));
-				if (ev.getLines().get(line).equals(""))
+				if (ev.getLines().get(line).equals("§7"))
 				{
-					y += 11 * line;
+
+					break;
 				}
+				y += 11;
 			}
 			if (handler != null)
 			{
@@ -296,7 +293,7 @@ public class ItemScepter extends ItemBase
 				{
 					int x = ev.getX();
 					int curYCounter = 0;
-					
+
 					for (EssenceStack essence : storedEssence)
 					{
 
@@ -304,7 +301,7 @@ public class ItemScepter extends ItemBase
 								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
 						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorHex());
 
-						x += thisString.length() * 6;
+						x += 55;
 						curYCounter++;
 
 						if (curYCounter % 2 == 0)
@@ -322,25 +319,6 @@ public class ItemScepter extends ItemBase
 	/**
 	 * Hack to let scepters continue use when nbt changes.
 	 */
-	@SubscribeEvent
-	public void playerTick(TickEvent.PlayerTickEvent ev)
-	{
-		if (ev.phase == TickEvent.Phase.START)
-		{
-			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty())
-			{
-				ItemStack held = ev.player.getHeldItem(ev.player.getActiveHand());
-				if (ev.player.activeItemStack.getItem() == this
-						&& held.getItem() == this)
-				{
-					if (ev.player.activeItemStack != held)
-					{// TODO please check proper (anything that won't change)
-						ev.player.activeItemStack = held;
-					}
-				}
-			}
-		}
-	}
 
 	@SideOnly(Side.CLIENT)
 	private static void drawBar(int x, int y, float r, float g, float b, int essentia, float rotation)

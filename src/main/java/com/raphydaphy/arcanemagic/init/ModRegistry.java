@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.item.ItemAncientParchment;
 import com.raphydaphy.arcanemagic.item.ItemBase;
 import com.raphydaphy.arcanemagic.item.ItemFoci;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
@@ -42,7 +43,7 @@ public class ModRegistry
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemBase ESSENCE = new ItemBase("essence", 6);
 	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools("scribing_tools");
-	public static final ItemBase ANCIENT_PARCHMENT = new ItemBase("ancient_parchment");
+	public static final ItemAncientParchment ANCIENT_PARCHMENT = new ItemAncientParchment("ancient_parchment");
 	public static final ItemFoci FIRE_FOCUS = new ItemFoci("focus_fire");
 
 	@SubscribeEvent
