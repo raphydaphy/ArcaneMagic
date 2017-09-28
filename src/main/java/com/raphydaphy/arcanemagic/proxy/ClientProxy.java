@@ -65,8 +65,8 @@ public class ClientProxy extends CommonProxy
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent event)
 	{
+		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star"));
+		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particles"));
 		System.out.println("Stiched textures!");
-		ResourceLocation particleSparkle = new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star");
-		event.getMap().registerSprite(particleSparkle);
 	}
 }
