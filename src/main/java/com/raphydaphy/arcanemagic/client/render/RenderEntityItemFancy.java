@@ -21,36 +21,29 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class RenderEntityItemFancy extends Render<EntityItemFancy>
+public class RenderEntityItemFancy extends RenderEntityItem
 {
-
-	private final RenderEntityItem renderItem;
 
 	public RenderEntityItemFancy(RenderManager renderManager)
 	{
-		super(renderManager);
-		renderItem = new RenderEntityItem(renderManager, Minecraft.getMinecraft().getRenderItem());
+		super(renderManager, Minecraft.getMinecraft().getRenderItem());
 	}
 
 	@Override
-	public void doRender(EntityItemFancy entity, double x, double y, double z, float entityYaw, float partialTicks)
+	public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
 		renderFancyBeams(x, y + 0.5, z, Color.MAGENTA, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
 		GL11.glPushMatrix();
 		ItemStack stack = entity.getItem();
 		if (!stack.isEmpty())
 		{
-			EntityItem ei = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, stack);
-			ei.age = entity.getAge();
-			ei.hoverStart = entity.hoverStart;
-
-			renderItem.doRender(ei, x, y, z, entityYaw, partialTicks);
+			super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		}
 		GL11.glPopMatrix();
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityItemFancy entity)
+	protected ResourceLocation getEntityTexture(EntityItem entity)
 	{
 		return null;
 	}
