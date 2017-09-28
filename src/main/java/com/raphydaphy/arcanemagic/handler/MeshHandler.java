@@ -29,7 +29,7 @@ public class MeshHandler implements ItemMeshDefinition
 	{
 		if (stack.getItem() instanceof ItemBase)
 		{
-			return ((ItemBase)stack.getItem()).getModelLocation(stack);
+			return ((ItemBase) stack.getItem()).getModelLocation(stack);
 		}
 
 		return null;

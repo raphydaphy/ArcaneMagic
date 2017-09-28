@@ -187,7 +187,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			NBTTagCompound tag = tile.getTileData();
 			writeDefaultEssence(tag);
 			tile.markDirty();
-			
+
 		} else if (tileOrItem instanceof ItemStack)
 		{
 			ItemStack stack = (ItemStack) tileOrItem;
@@ -196,12 +196,13 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			stack.setTagCompound(tag);
 		}
 	}
-	
+
 	public static NBTTagCompound writeDefaultEssence(NBTTagCompound tag)
 	{
-		if(tag == null) tag = new NBTTagCompound();
+		if (tag == null)
+			tag = new NBTTagCompound();
 		Collection<EssenceStack> col = new ArrayList<>();
-		for(Essence e : REGISTRY) 
+		for (Essence e : REGISTRY)
 			col.add(new EssenceStack(e, 0));
 		return writeToNBT(tag, col);
 	}
@@ -248,8 +249,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		tag.setTag(E, essTag);
 		return tag;
 	}
-	
-	public static NBTTagCompound writeToNBT(NBTTagCompound tag, Collection<EssenceStack> essences) {
+
+	public static NBTTagCompound writeToNBT(NBTTagCompound tag, Collection<EssenceStack> essences)
+	{
 		return writeToNBT(tag, essences.toArray(new EssenceStack[essences.size()]));
 	}
 

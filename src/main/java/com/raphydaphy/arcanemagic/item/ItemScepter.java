@@ -137,9 +137,11 @@ public class ItemScepter extends ItemBase
 
 			for (int i = 0; i < 80; i++)
 			{
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, player.posX, player.posY + 1,
-						player.posZ, 0, 0, 0, Essence.getFromBiome(world.getBiome(pos)), new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
-								pos.getY() +  0.3 + (itemRand.nextDouble() * 0.4), pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4))));
+				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, player.posX,
+						player.posY + 1, player.posZ, 0, 0, 0, Essence.getFromBiome(world.getBiome(pos)),
+						new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
+								pos.getY() + 0.3 + (itemRand.nextDouble() * 0.4),
+								pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4))));
 			}
 
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
@@ -193,8 +195,8 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		Vec3d pos = player.rayTrace(8, 1).hitVec;
-		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(player.getEntityWorld(), pos.x, pos.y, pos.z,
-				0, 0, 0, Essence.OZONE, player.getPositionVector().addVector(0, 1, 0)));
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(player.getEntityWorld(), pos.x, pos.y,
+				pos.z, 0, 0, 0, Essence.OZONE, player.getPositionVector().addVector(0, 1, 0)));
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{

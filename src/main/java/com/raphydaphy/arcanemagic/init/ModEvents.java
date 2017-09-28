@@ -43,7 +43,7 @@ public class ModEvents
 			.findField(ItemRenderer.class, "prevEquippedProgressMainHand", "field_187470_g");
 	protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
 			.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
-	
+
 	@SubscribeEvent
 	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
 	{
@@ -93,7 +93,7 @@ public class ModEvents
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
@@ -118,9 +118,10 @@ public class ModEvents
 									BlockPos here = new BlockPos(x, y, z);
 									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 									{
-										Minecraft.getMinecraft().effectRenderer
-												.addEffect(new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
-														z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)), ev.player.getPositionVector().addVector(0,1,0)));
+										Minecraft.getMinecraft().effectRenderer.addEffect(
+												new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
+														z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)),
+														ev.player.getPositionVector().addVector(0, 1, 0)));
 									}
 								}
 							}

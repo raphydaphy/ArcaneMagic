@@ -1,5 +1,7 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
+import java.util.Map;
+
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
@@ -21,17 +23,17 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityCrystallizer extends TileEntityEssenceStorage implements ITickable
 {
 	public static int SIZE = 1;
-	 
+
 	public TileEntityCrystallizer()
 	{
 		super();
-		
+
 		for (Essence essence : Essence.REGISTRY.getValues())
 		{
 			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 0), false);
 		}
 	}
-	
+
 	@Override
 	public void update()
 	{
@@ -47,18 +49,34 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 							&& world.getBlockState(here.add(0, -1, 0)).getBlock().equals(Blocks.IRON_BLOCK)
 							&& world.getBlockState(here.add(0, -2, 0)).getBlock().equals(Blocks.IRON_BLOCK))
 					{
-						if (world.rand.nextInt(3) == 1)
+						TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(here);
+
+						if (te != null)
 						{
-							Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, x + 0.5,
-									y + 0.5, z + 0.5, 0, 0, 0, Essence.OZONE,
-									new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)));
+							Map<Essence, EssenceStack> storedEssenceConcentrator = te
+									.getCapability(EssenceStorage.CAP, null).getStored();
+
+							Essence useType = null;
+							for (EssenceStack stack : storedEssenceConcentrator.values())
+							{
+								if (stack.getCount() > 0)
+								{
+									useType = stack.getEssence();
+								}
+							}
+							if (useType != null && world.rand.nextInt(3) == 1)
+							{
+								Minecraft.getMinecraft().effectRenderer.addEffect(
+										new ParticleEssence(world, x + 0.5, y + 0.6, z + 0.5, 0, 0, 0, useType,
+												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)));
+
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-	
 
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{

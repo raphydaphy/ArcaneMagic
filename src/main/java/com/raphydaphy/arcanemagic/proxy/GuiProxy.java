@@ -32,7 +32,7 @@ public class GuiProxy implements IGuiHandler
 				return new ContainerArcaneWorktable(player.inventory, (TileEntityArcaneWorktable) te);
 			break;
 		case BlockCrystallizer.GUI_ID:
-			
+
 			if (te instanceof TileEntityCrystallizer)
 				return new ContainerCrystallizer(player.inventory, (TileEntityCrystallizer) te);
 			break;
@@ -64,7 +64,7 @@ public class GuiProxy implements IGuiHandler
 			}
 			break;
 		case BlockCrystallizer.GUI_ID:
-			
+
 			if (te instanceof TileEntityCrystallizer)
 			{
 				TileEntityCrystallizer containerTileEntity = (TileEntityCrystallizer) te;

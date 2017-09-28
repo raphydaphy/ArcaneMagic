@@ -32,7 +32,7 @@ public class GuiCrystallizer extends GuiContainer
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	private void drawBar(int x, int y, float r, float g, float b, int essence, float rotation)
 	{
@@ -67,7 +67,7 @@ public class GuiCrystallizer extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-		
+
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		super.renderHoveredToolTip(mouseX, mouseY);
@@ -77,17 +77,18 @@ public class GuiCrystallizer extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		mc.getTextureManager().bindTexture(background);
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0,WIDTH, HEIGHT, 196, 166);
-		drawModalRectWithCustomSizedTexture(guiLeft + 24, guiTop + 39, 176, 113, 18, 18, 196, 166);
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 196, 166);
+		drawModalRectWithCustomSizedTexture(guiLeft + 19, guiTop + 39, 176, 113, 18, 18, 196, 166);
 		Map<Essence, EssenceStack> essenceStored = te.getCapability(EssenceStorage.CAP, null).getStored();
 		int i = 0;
 		for (EssenceStack stack : essenceStored.values())
 		{
 			i++;
 			Essence essence = stack.getEssence();
-			drawBar(guiLeft + 47 + (i * 18), guiTop + 19, essence.getColorRGB().getX() / 256f, essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, stack.getCount(), 0);
+			drawBar(guiLeft + 37 + (i * 18), guiTop + 19, essence.getColorRGB().getX() / 256f,
+					essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, stack.getCount(), 0);
 		}
-		
+
 		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 0x000000);
 	}
 }

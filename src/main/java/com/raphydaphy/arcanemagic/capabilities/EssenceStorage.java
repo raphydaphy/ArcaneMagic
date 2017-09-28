@@ -22,80 +22,99 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
  *
  * NB. MUST call markDirty on change
  */
-public class EssenceStorage implements IEssenceStorage, ICapabilityProvider {
+public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
+{
 
-    private Map<Essence,EssenceStack> storage = new HashMap<>();
-    private Runnable saveFunc;
+	private Map<Essence, EssenceStack> storage = new HashMap<>();
+	private Runnable saveFunc;
 
-    public EssenceStorage(){
-        this(()->{});
-    }
+	public EssenceStorage()
+	{
+		this(() ->
+		{
+		});
+	}
 
-    public EssenceStorage(@Nonnull Runnable s){
-        Preconditions.checkNotNull(s);
-        this.saveFunc = s;
-    }
+	public EssenceStorage(@Nonnull Runnable s)
+	{
+		Preconditions.checkNotNull(s);
+		this.saveFunc = s;
+	}
 
-    @Override
-    public HashMap<Essence, EssenceStack> getStored() {
-        HashMap<Essence, EssenceStack> ret = new HashMap<>();
-        for (Map.Entry<Essence, EssenceStack> e : storage.entrySet()){
-            ret.put(e.getKey(), new EssenceStack.ImmutableEssenceStack(e.getValue()));
-        }
-        return ret;
-    }
+	@Override
+	public HashMap<Essence, EssenceStack> getStored()
+	{
+		HashMap<Essence, EssenceStack> ret = new HashMap<>();
+		for (Map.Entry<Essence, EssenceStack> e : storage.entrySet())
+		{
+			ret.put(e.getKey(), new EssenceStack.ImmutableEssenceStack(e.getValue()));
+		}
+		return ret;
+	}
 
-    @Override
-    public EssenceStack store(EssenceStack in, boolean simulate) {
-        if (simulate)
-            return null;
-        if (storage.containsKey(in.getEssence())){
-            storage.get(in.getEssence()).grow(in.getCount());
-        } else {
-            storage.put(in.getEssence(), in.copy());
-        }
-        markDirty();
-        return null;
-    }
+	@Override
+	public EssenceStack store(EssenceStack in, boolean simulate)
+	{
+		if (simulate)
+			return null;
+		if (storage.containsKey(in.getEssence()))
+		{
+			storage.get(in.getEssence()).grow(in.getCount());
+		} else
+		{
+			storage.put(in.getEssence(), in.copy());
+		}
+		markDirty();
+		return null;
+	}
 
-    private void markDirty(){
-        saveFunc.run();
-    }
+	private void markDirty()
+	{
+		saveFunc.run();
+	}
 
-    @Override
-    public NBTTagCompound serializeNBT() {
-    	NBTTagCompound tag = new NBTTagCompound();
-        Essence.writeToNBT(tag, storage.values());
-        return tag;
-    }
+	@Override
+	public NBTTagCompound serializeNBT()
+	{
+		NBTTagCompound tag = new NBTTagCompound();
+		Essence.writeToNBT(tag, storage.values());
+		return tag;
+	}
 
-    @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
-    	storage = Essence.buildMapFromNBT(nbt);
-    }
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt)
+	{
+		storage = Essence.buildMapFromNBT(nbt);
+	}
 
-    @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == IEssenceStorage.CAP;
-    }
+	@Override
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
+	{
+		return capability == IEssenceStorage.CAP;
+	}
 
-    @Nullable
-    @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == IEssenceStorage.CAP ? IEssenceStorage.CAP.cast(this) : null;
-    }
+	@Nullable
+	@Override
+	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
+	{
+		return capability == IEssenceStorage.CAP ? IEssenceStorage.CAP.cast(this) : null;
+	}
 
-    public static class DefaultStorage implements Capability.IStorage<IEssenceStorage>{
+	public static class DefaultStorage implements Capability.IStorage<IEssenceStorage>
+	{
 
-        @Nullable
-        @Override
-        public NBTBase writeNBT(Capability<IEssenceStorage> capability, IEssenceStorage instance, EnumFacing side) {
-            return instance.serializeNBT();
-        }
+		@Nullable
+		@Override
+		public NBTBase writeNBT(Capability<IEssenceStorage> capability, IEssenceStorage instance, EnumFacing side)
+		{
+			return instance.serializeNBT();
+		}
 
-        @Override
-        public void readNBT(Capability<IEssenceStorage> capability, IEssenceStorage instance, EnumFacing side, NBTBase nbt) {
-            instance.deserializeNBT((NBTTagCompound)nbt);
-        }
-    }
+		@Override
+		public void readNBT(Capability<IEssenceStorage> capability, IEssenceStorage instance, EnumFacing side,
+				NBTBase nbt)
+		{
+			instance.deserializeNBT((NBTTagCompound) nbt);
+		}
+	}
 }

@@ -4,10 +4,12 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.client.IHasModel;
+import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.data.EnumPrimal;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -16,6 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -34,6 +37,9 @@ public class ClientProxy extends CommonProxy
 	public void init(FMLInitializationEvent event)
 	{
 		registerColors();
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceConcentrator.class,
+				new EssenceConcentratorTESR());
 	}
 
 	public static void registerColors()
@@ -74,9 +80,10 @@ public class ClientProxy extends CommonProxy
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball"));
 		for (int essenceParticle = 1; essenceParticle < 15; essenceParticle++)
 		{
-			event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + essenceParticle));
+			event.getMap()
+					.registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + essenceParticle));
 		}
-		ScepterRegistry.getKeys().forEach(loc->event.getMap().registerSprite(loc));
+		ScepterRegistry.getKeys().forEach(loc -> event.getMap().registerSprite(loc));
 		System.out.println("Stiched textures!");
 	}
 }

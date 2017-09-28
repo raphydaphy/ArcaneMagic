@@ -45,14 +45,12 @@ public class ContainerCrystallizer extends Container
 			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
 		}
 	}
-	
-	
 
 	private void addOwnSlots()
 	{
 		IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 26, 40));
+		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 21, 40));
 	}
 
 	@Override

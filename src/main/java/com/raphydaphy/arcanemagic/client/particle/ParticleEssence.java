@@ -14,7 +14,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -25,6 +24,7 @@ public class ParticleEssence extends Particle
 	private final Vec3d startPos;
 	private int speedDivisor = 30;
 	private Essence essence;
+
 	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
 			double ySpeedIn, double zSpeedIn, Essence essence, Vec3d travelPos)
 	{
@@ -37,24 +37,15 @@ public class ParticleEssence extends Particle
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.flameScale = this.particleScale;
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
-		this.setColor(essence.getColorHex());
+		this.setRBGColorF(essence.getColorRGB().getX(), essence.getColorRGB().getY(), essence.getColorRGB().getZ());
 		this.essence = essence;
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
-		
+
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
 				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball").toString());
 		this.setParticleTexture(sprite);
-	}
-
-	public void setColor(int p_187146_1_)
-	{
-		float f = (float) ((p_187146_1_ & 16711680) >> 16) / 255.0F;
-		float f1 = (float) ((p_187146_1_ & 65280) >> 8) / 255.0F;
-		float f2 = (float) ((p_187146_1_ & 255) >> 0) / 255.0F;
-		float f3 = 1.0F;
-		this.setRBGColorF(f * 1.0F, f1 * 1.0F, f2 * 1.0F);
 	}
 
 	@Override
@@ -77,75 +68,10 @@ public class ParticleEssence extends Particle
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
 			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
 	{
-		float f = ((float) this.particleAge + partialTicks) / (float) this.particleMaxAge;
-		this.particleScale = this.flameScale * (1.0F - f * f * 0.5F);
+		// float f = ((float) this.particleAge + partialTicks) / (float)
+		// this.particleMaxAge;
+		// this.particleScale = this.flameScale * (1.0F - f * f * 0.5F);
 		super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
-	}
-
-	private void renderParticleSpecial(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
-	{
-		float f = (float) this.particleTextureIndexX / 16.0F;
-		float f1 = f + 0.0624375F;
-		float f2 = (float) this.particleTextureIndexY / 16.0F;
-		float f3 = f2 + 0.0624375F;
-		float f4 = 0.1F * this.particleScale;
-
-		if (this.particleTexture != null)
-		{
-			// how do i change this to be whhat i want!
-			f = this.particleTexture.getMinU();
-			f1 = this.particleTexture.getMaxU();
-			f2 = this.particleTexture.getMinV();
-			f3 = this.particleTexture.getMaxV();
-		}
-
-		float f5 = (float) (this.prevPosX + (this.posX - this.prevPosX) * (double) partialTicks - interpPosX);
-		float f6 = (float) (this.prevPosY + (this.posY - this.prevPosY) * (double) partialTicks - interpPosY);
-		float f7 = (float) (this.prevPosZ + (this.posZ - this.prevPosZ) * (double) partialTicks - interpPosZ);
-		int i = this.getBrightnessForRender(partialTicks);
-		int j = i >> 16 & 65535;
-		int k = i & 65535;
-		Vec3d[] avec3d = new Vec3d[] {
-				new Vec3d((double) (-rotationX * f4 - rotationXY * f4), (double) (-rotationZ * f4),
-						(double) (-rotationYZ * f4 - rotationXZ * f4)),
-				new Vec3d((double) (-rotationX * f4 + rotationXY * f4), (double) (rotationZ * f4),
-						(double) (-rotationYZ * f4 + rotationXZ * f4)),
-				new Vec3d((double) (rotationX * f4 + rotationXY * f4), (double) (rotationZ * f4),
-						(double) (rotationYZ * f4 + rotationXZ * f4)),
-				new Vec3d((double) (rotationX * f4 - rotationXY * f4), (double) (-rotationZ * f4),
-						(double) (rotationYZ * f4 - rotationXZ * f4)) };
-
-		if (this.particleAngle != 0.0F)
-		{
-			float f8 = this.particleAngle + (this.particleAngle - this.prevParticleAngle) * partialTicks;
-			float f9 = MathHelper.cos(f8 * 0.5F);
-			float f10 = MathHelper.sin(f8 * 0.5F) * (float) cameraViewDir.x;
-			float f11 = MathHelper.sin(f8 * 0.5F) * (float) cameraViewDir.y;
-			float f12 = MathHelper.sin(f8 * 0.5F) * (float) cameraViewDir.z;
-			Vec3d vec3d = new Vec3d((double) f10, (double) f11, (double) f12);
-
-			for (int l = 0; l < 4; ++l)
-			{
-				avec3d[l] = vec3d.scale(2.0D * avec3d[l].dotProduct(vec3d))
-						.add(avec3d[l].scale((double) (f9 * f9) - vec3d.dotProduct(vec3d)))
-						.add(vec3d.crossProduct(avec3d[l]).scale((double) (2.0F * f9)));
-			}
-		}
-
-		float r = particleRed;
-		float g = particleGreen;
-		float b = particleBlue;
-
-		// GlStateManager.color(r, g, b, 1);
-		buffer.pos((double) f5 + avec3d[0].x, (double) f6 + avec3d[0].y, (double) f7 + avec3d[0].z)
-				.tex((double) f1, (double) f3).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
-		buffer.pos((double) f5 + avec3d[1].x, (double) f6 + avec3d[1].y, (double) f7 + avec3d[1].z)
-				.tex((double) f1, (double) f2).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
-		buffer.pos((double) f5 + avec3d[2].x, (double) f6 + avec3d[2].y, (double) f7 + avec3d[2].z)
-				.tex((double) f, (double) f2).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
-		buffer.pos((double) f5 + avec3d[3].x, (double) f6 + avec3d[3].y, (double) f7 + avec3d[3].z)
-				.tex((double) f, (double) f3).color(r, g, b, this.particleAlpha).lightmap(j, k).endVertex();
 	}
 
 	@Override
@@ -160,29 +86,27 @@ public class ParticleEssence extends Particle
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		TileEntity hit = world.getTileEntity(new BlockPos((int)travelPos.x, (int)travelPos.y, (int)travelPos.z));
-		
+		TileEntity hit = world.getTileEntity(new BlockPos((int) Math.floor(travelPos.x), (int) Math.floor(travelPos.y),
+				(int) Math.floor(travelPos.z)));
+
 		if (travelPos.x <= this.posX + 0.1 && travelPos.x >= this.posX - 0.1 && travelPos.y <= this.posY + 0.1
 				&& travelPos.y >= this.posY - 0.1 && travelPos.z <= this.posZ + 0.1 && travelPos.z >= this.posZ - 0.1)
 		{
-			
-			if (rand.nextInt(100) == 1 && hit != null && hit instanceof TileEntityEssenceStorage)
+
+			if (rand.nextInt(80) == 1 && hit != null && hit instanceof TileEntityEssenceStorage)
 			{
-				hit.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(Essence.REGISTRY.getValues().get(rand.nextInt(Essence.REGISTRY.getValues().size())), 1), false);
+				hit.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(this.essence, 1), false);
 			}
 			this.setExpired();
 		}
 		if (hit == null)
 		{
-			if (particleAlpha > 0.1)
-			{
-				this.particleAlpha -= 0.05;
-			}
+			this.particleAlpha -= 0.01;
 			speedDivisor = 10;
 			this.travelPos = this.startPos;
 		}
 		this.move(this.motionX, this.motionY, this.motionZ);
-			
+
 		this.motionX = (travelPos.x - this.posX) / (speedDivisor + rand.nextDouble());
 		this.motionY = (travelPos.y - this.posY) / (speedDivisor + rand.nextDouble());
 		this.motionZ = (travelPos.z - this.posZ) / (speedDivisor + rand.nextDouble());

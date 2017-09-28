@@ -41,16 +41,14 @@ public class ItemNotebook extends ItemBase
 		player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack)
 	{
 		return TextFormatting.DARK_PURPLE + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
 	}
-	
-	
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void initModels(ModelRegistryEvent e)

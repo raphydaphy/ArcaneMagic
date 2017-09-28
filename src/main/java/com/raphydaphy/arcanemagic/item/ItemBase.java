@@ -41,7 +41,7 @@ public class ItemBase extends Item implements IHasModel
 			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public ModelResourceLocation getModelLocation(ItemStack stack)
 	{

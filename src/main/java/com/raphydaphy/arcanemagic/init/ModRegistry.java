@@ -19,6 +19,7 @@ import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.item.ItemScribingTools;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -104,5 +105,7 @@ public class ModRegistry
 	{
 		GameRegistry.registerTileEntity(TileEntityArcaneWorktable.class, ArcaneMagic.MODID + "_arcane_worktable");
 		GameRegistry.registerTileEntity(TileEntityCrystallizer.class, ArcaneMagic.MODID + "_crystallizer");
+		GameRegistry.registerTileEntity(TileEntityEssenceConcentrator.class,
+				ArcaneMagic.MODID + "_essence_concentrator");
 	}
 }

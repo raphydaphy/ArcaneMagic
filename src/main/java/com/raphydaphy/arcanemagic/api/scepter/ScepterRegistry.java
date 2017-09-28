@@ -60,7 +60,8 @@ public class ScepterRegistry
 		return REGISTRY.get(name);
 	}
 
-	public static ImmutableSet<ResourceLocation> getKeys(){
+	public static ImmutableSet<ResourceLocation> getKeys()
+	{
 		return ImmutableSet.copyOf(REGISTRY.keySet());
 	}
 }

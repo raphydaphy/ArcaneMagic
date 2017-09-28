@@ -15,34 +15,41 @@ import net.minecraftforge.common.capabilities.Capability;
  * 
  * ok
  */
-public abstract class TileEntityEssenceStorage extends TileEntity {
+public abstract class TileEntityEssenceStorage extends TileEntity
+{
 
-    protected EssenceStorage essenceStorage = new EssenceStorage(this::markDirty);
-    private static final String ESSENCE_KEY = "essence_storage";
+	protected EssenceStorage essenceStorage = new EssenceStorage(this::markDirty);
+	private static final String ESSENCE_KEY = "essence_storage";
 
-    @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        if (compound.hasKey(ESSENCE_KEY)){
-            essenceStorage.deserializeNBT(compound.getCompoundTag(ESSENCE_KEY));
-        }
-    }
+	@Override
+	public void readFromNBT(NBTTagCompound compound)
+	{
+		super.readFromNBT(compound);
+		if (compound.hasKey(ESSENCE_KEY))
+		{
+			essenceStorage.deserializeNBT(compound.getCompoundTag(ESSENCE_KEY));
+		}
+	}
 
-    @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-        compound.setTag(ESSENCE_KEY, essenceStorage.serializeNBT());
-        return compound;
-    }
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	{
+		super.writeToNBT(compound);
+		compound.setTag(ESSENCE_KEY, essenceStorage.serializeNBT());
+		return compound;
+	}
 
-    @Override
-    public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
-        return capability == IEssenceStorage.CAP || super.hasCapability(capability, facing);
-    }
+	@Override
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
+	{
+		return capability == IEssenceStorage.CAP || super.hasCapability(capability, facing);
+	}
 
-    @Nullable
-    @Override
-    public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        return capability == IEssenceStorage.CAP ? IEssenceStorage.CAP.cast(essenceStorage) : super.getCapability(capability, facing);
-    }
+	@Nullable
+	@Override
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
+	{
+		return capability == IEssenceStorage.CAP ? IEssenceStorage.CAP.cast(essenceStorage)
+				: super.getCapability(capability, facing);
+	}
 }

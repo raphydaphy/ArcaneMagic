@@ -19,9 +19,9 @@ public class ItemAncientParchment extends ItemBase
 	public boolean onEntityItemUpdate(net.minecraft.entity.item.EntityItem entityItem)
 	{
 		super.onEntityItemUpdate(entityItem);
-		
+
 		World world = entityItem.world;
-		
+
 		if (world.isRemote)
 		{
 			for (int x = (int) entityItem.posX - 5; x < (int) entityItem.posX + 5; x++)
@@ -35,8 +35,9 @@ public class ItemAncientParchment extends ItemBase
 							BlockPos here = new BlockPos(x, y, z);
 							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 							{
-								Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(
-										world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)),entityItem.getPositionVector().addVector(0, 0.4, 0)));
+								Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, x + 0.5,
+										y + 0.5, z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)),
+										entityItem.getPositionVector().addVector(0, 0.4, 0)));
 							}
 						}
 					}
