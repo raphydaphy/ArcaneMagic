@@ -2,13 +2,18 @@ package com.raphydaphy.arcanemagic.client.particle;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceStorage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -160,6 +165,11 @@ public class ParticleEssence extends Particle
 		if (travelPos.x <= this.posX + 0.1 && travelPos.x >= this.posX - 0.1 && travelPos.y <= this.posY + 0.1
 				&& travelPos.y >= this.posY - 0.1 && travelPos.z <= this.posZ + 0.1 && travelPos.z >= this.posZ - 0.1)
 		{
+			TileEntity hit = world.getTileEntity(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ));
+			if (rand.nextInt(100) == 1 && hit != null && hit instanceof TileEntityEssenceStorage)
+			{
+				hit.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(Essence.REGISTRY.getValues().get(rand.nextInt(Essence.REGISTRY.getValues().size())), 1), false);
+			}
 			this.setExpired();
 		}
 

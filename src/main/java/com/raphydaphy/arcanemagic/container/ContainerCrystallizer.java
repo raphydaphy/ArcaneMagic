@@ -1,18 +1,12 @@
 package com.raphydaphy.arcanemagic.container;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -24,6 +18,7 @@ public class ContainerCrystallizer extends Container
 
 	public ContainerCrystallizer(InventoryPlayer playerInventory, TileEntityCrystallizer te)
 	{
+		super();
 		this.te = te;
 		addOwnSlots();
 		addPlayerSlots(playerInventory);

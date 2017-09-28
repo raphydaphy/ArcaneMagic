@@ -1,7 +1,10 @@
 package com.raphydaphy.arcanemagic.client.gui;
 
+import java.util.Map;
+
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
@@ -36,7 +39,6 @@ public class GuiCrystallizer extends GuiContainer
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
 		GlStateManager.rotate(rotation, 0, 0, 1);
-		GlStateManager.scale(0.8, 0.8, 0.8);
 		GlStateManager.color(1, 1, 1);
 		GlStateManager.clearColor(1, 1, 1, 1);
 
@@ -65,8 +67,10 @@ public class GuiCrystallizer extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
+		
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
+		super.renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	@Override
@@ -75,11 +79,13 @@ public class GuiCrystallizer extends GuiContainer
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0,WIDTH, HEIGHT, 196, 166);
 		drawModalRectWithCustomSizedTexture(guiLeft + 24, guiTop + 39, 176, 113, 18, 18, 196, 166);
-		int[] fillness = {30, 10, 25, 4, 8, 20, 4};
-		for (int i = 0; i < Essence.REGISTRY.getValues().size(); i++)
+		Map<Essence, EssenceStack> essenceStored = te.getCapability(EssenceStorage.CAP, null).getStored();
+		int i = 0;
+		for (EssenceStack stack : essenceStored.values())
 		{
-			Essence essence = Essence.REGISTRY.getValues().get(i);
-			drawBar(guiLeft + 114 + (i * 22), guiTop + 39, essence.getColorRGB().getX() / 256f, essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, fillness[i], 0);
+			i++;
+			Essence essence = stack.getEssence();
+			drawBar(guiLeft + 47 + (i * 18), guiTop + 19, essence.getColorRGB().getX() / 256f, essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, stack.getCount(), 0);
 		}
 		
 		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 0x000000);

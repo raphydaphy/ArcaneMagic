@@ -1,6 +1,8 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
@@ -20,6 +22,16 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 {
 	public static int SIZE = 1;
 	 
+	public TileEntityCrystallizer()
+	{
+		super();
+		
+		for (Essence essence : Essence.REGISTRY.getValues())
+		{
+			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 0), false);
+		}
+	}
+	
 	@Override
 	public void update()
 	{
