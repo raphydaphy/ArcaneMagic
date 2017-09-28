@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.proxy;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
@@ -51,6 +52,7 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@SubscribeEvent
+	@SuppressWarnings("unused")
 	public void registerModels(ModelRegistryEvent event)
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
@@ -63,6 +65,7 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@SubscribeEvent
+	@SuppressWarnings("unused")
 	public void onTextureStitch(TextureStitchEvent event)
 	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star"));
@@ -73,6 +76,7 @@ public class ClientProxy extends CommonProxy
 		{
 			event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + essenceParticle));
 		}
+		ScepterRegistry.getKeys().forEach(loc->event.getMap().registerSprite(loc));
 		System.out.println("Stiched textures!");
 	}
 }

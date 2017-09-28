@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.api.scepter;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.scepter.ScepterCap;
 import com.raphydaphy.arcanemagic.scepter.ScepterCore;
@@ -57,5 +58,9 @@ public class ScepterRegistry
 	public static ScepterPart getPart(ResourceLocation name)
 	{
 		return REGISTRY.get(name);
+	}
+
+	public static ImmutableSet<ResourceLocation> getKeys(){
+		return ImmutableSet.copyOf(REGISTRY.keySet());
 	}
 }
