@@ -21,8 +21,8 @@ public abstract class TileEntityEssenceStorage extends TileEntity {
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        if (compound.hasKey(ESSENCE_KEY, Constants.NBT.TAG_LIST)){
-            essenceStorage.deserializeNBT(compound);
+        if (compound.hasKey(ESSENCE_KEY)){
+            essenceStorage.deserializeNBT(compound.getCompoundTag(ESSENCE_KEY));
         }
     }
 
