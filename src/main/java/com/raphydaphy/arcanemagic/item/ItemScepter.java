@@ -330,8 +330,8 @@ public class ItemScepter extends ItemBase
 			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty())
 			{
 				ItemStack held = ev.player.getHeldItem(ev.player.getActiveHand());
-				if (ev.player.activeItemStack.getItem().getRegistryName().equals(this.getRegistryName())
-						&& held.getItem().getRegistryName().equals(this.getRegistryName()))
+				if (ev.player.activeItemStack.getItem() == this
+						&& held.getItem() == this)
 				{
 					if (ev.player.activeItemStack != held)
 					{// TODO please check proper (anything that won't change)
