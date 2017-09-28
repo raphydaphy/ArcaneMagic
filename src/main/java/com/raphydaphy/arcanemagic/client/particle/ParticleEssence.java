@@ -21,10 +21,12 @@ import net.minecraft.world.World;
 public class ParticleEssence extends Particle
 {
 	private final float flameScale;
-	private final Vec3d travelPos;
-
+	private Vec3d travelPos;
+	private final Vec3d startPos;
+	private int speedDivisor = 30;
+	private Essence essence;
 	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
-			double ySpeedIn, double zSpeedIn, int color, Vec3d travelPos)
+			double ySpeedIn, double zSpeedIn, Essence essence, Vec3d travelPos)
 	{
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
@@ -34,17 +36,13 @@ public class ParticleEssence extends Particle
 		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.flameScale = this.particleScale;
-		if (color != 0)
-		{
-			this.setColor(color);
-		}
-		else
-		{
-			this.setRBGColorF(1, 1, 1);
-		}
+		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
+		this.setColor(essence.getColorHex());
+		this.essence = essence;
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
+		
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
 				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball").toString());
 		this.setParticleTexture(sprite);
@@ -162,21 +160,32 @@ public class ParticleEssence extends Particle
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
+		TileEntity hit = world.getTileEntity(new BlockPos((int)travelPos.x, (int)travelPos.y, (int)travelPos.z));
+		
 		if (travelPos.x <= this.posX + 0.1 && travelPos.x >= this.posX - 0.1 && travelPos.y <= this.posY + 0.1
 				&& travelPos.y >= this.posY - 0.1 && travelPos.z <= this.posZ + 0.1 && travelPos.z >= this.posZ - 0.1)
 		{
-			TileEntity hit = world.getTileEntity(new BlockPos((int)this.posX, (int)this.posY, (int)this.posZ));
+			
 			if (rand.nextInt(100) == 1 && hit != null && hit instanceof TileEntityEssenceStorage)
 			{
 				hit.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(Essence.REGISTRY.getValues().get(rand.nextInt(Essence.REGISTRY.getValues().size())), 1), false);
 			}
 			this.setExpired();
 		}
-
+		if (hit == null)
+		{
+			if (particleAlpha > 0.1)
+			{
+				this.particleAlpha -= 0.05;
+			}
+			speedDivisor = 10;
+			this.travelPos = this.startPos;
+		}
 		this.move(this.motionX, this.motionY, this.motionZ);
-		this.motionX = (travelPos.x - this.posX) / (30 + rand.nextDouble());
-		this.motionY = (travelPos.y - this.posY) / (30 + rand.nextDouble());
-		this.motionZ = (travelPos.z - this.posZ) / (30 + rand.nextDouble());
+			
+		this.motionX = (travelPos.x - this.posX) / (speedDivisor + rand.nextDouble());
+		this.motionY = (travelPos.y - this.posY) / (speedDivisor + rand.nextDouble());
+		this.motionZ = (travelPos.z - this.posZ) / (speedDivisor + rand.nextDouble());
 
 		if (this.onGround)
 		{

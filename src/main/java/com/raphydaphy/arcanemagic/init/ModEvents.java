@@ -120,7 +120,7 @@ public class ModEvents
 									{
 										Minecraft.getMinecraft().effectRenderer
 												.addEffect(new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
-														z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)).getColorHex(), ev.player.getPositionVector().addVector(0,1,0)));
+														z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)), ev.player.getPositionVector().addVector(0,1,0)));
 									}
 								}
 							}

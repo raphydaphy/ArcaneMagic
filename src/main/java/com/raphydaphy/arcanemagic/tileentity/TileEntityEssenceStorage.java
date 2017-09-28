@@ -1,14 +1,14 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
+import javax.annotation.Nullable;
+
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.Constants;
-
-import javax.annotation.Nullable;
 
 /**
  * Base class for storing Essence using the capability. Extend me pls.

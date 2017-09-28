@@ -36,7 +36,7 @@ public class ItemAncientParchment extends ItemBase
 							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 							{
 								Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(
-										world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)).getColorHex(),entityItem.getPositionVector().addVector(0, 0.4, 0)));
+										world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)),entityItem.getPositionVector().addVector(0, 0.4, 0)));
 							}
 						}
 					}
