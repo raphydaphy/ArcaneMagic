@@ -112,7 +112,7 @@ public class ItemScepter extends ItemBase
 		if (!stack.hasTagCompound())
 		{
 			stack.setTagCompound(new NBTTagCompound());
-			return Essence.initDefaultEssence(stack.getTagCompound());
+			return Essence.writeDefaultEssence(stack.getTagCompound());
 		}
 		return stack.getTagCompound();
 	}
@@ -217,7 +217,7 @@ public class ItemScepter extends ItemBase
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand)
 	{
-		Essence.initDefaultEssence(player.getHeldItem(hand));
+		Essence.writeDefaultEssence(player.getHeldItem(hand));
 		return EnumActionResult.PASS;
 	}
 

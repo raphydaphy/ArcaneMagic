@@ -22,7 +22,7 @@ public abstract class TileEntityEssenceStorage extends TileEntity {
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         if (compound.hasKey(ESSENCE_KEY, Constants.NBT.TAG_LIST)){
-            essenceStorage.deserializeNBT(compound.getTagList(ESSENCE_KEY, Constants.NBT.TAG_COMPOUND));
+            essenceStorage.deserializeNBT(compound);
         }
     }
 

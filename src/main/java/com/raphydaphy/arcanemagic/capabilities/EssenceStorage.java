@@ -1,20 +1,21 @@
 package com.raphydaphy.arcanemagic.capabilities;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.Constants;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Basic implementation that has no limits.
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 public class EssenceStorage implements IEssenceStorage, ICapabilityProvider {
 
-    private HashMap<Essence,EssenceStack> storage = new HashMap<>();
+    private Map<Essence,EssenceStack> storage = new HashMap<>();
     private Runnable saveFunc;
 
     public EssenceStorage(){
@@ -62,29 +63,15 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider {
     }
 
     @Override
-    public NBTTagList serializeNBT() {
-        NBTTagList tag = new NBTTagList();
-        for (EssenceStack e : storage.values()){
-            tag.appendTag(e.serializeNBT());
-        }
+    public NBTTagCompound serializeNBT() {
+    	NBTTagCompound tag = new NBTTagCompound();
+        Essence.writeToNBT(tag, storage.values());
         return tag;
     }
 
     @Override
-    public void deserializeNBT(NBTTagList nbt) {
-        if (nbt.getTagType() == Constants.NBT.TAG_COMPOUND){
-            storage.clear();
-            for (int i=0; i<nbt.tagCount(); i++){
-                EssenceStack e = new EssenceStack(nbt.getCompoundTagAt(i));
-                if (e.getEssence() != null){
-                    if (storage.containsKey(e.getEssence())){
-                        storage.get(e.getEssence()).grow(e.getCount());
-                    } else {
-                        storage.put(e.getEssence(), e);
-                    }
-                }
-            }
-        }
+    public void deserializeNBT(NBTTagCompound nbt) {
+    	storage = Essence.buildMapFromNBT(nbt);
     }
 
     @Override
@@ -108,7 +95,7 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider {
 
         @Override
         public void readNBT(Capability<IEssenceStorage> capability, IEssenceStorage instance, EnumFacing side, NBTBase nbt) {
-            instance.deserializeNBT((NBTTagList)nbt);
+            instance.deserializeNBT((NBTTagCompound)nbt);
         }
     }
 }

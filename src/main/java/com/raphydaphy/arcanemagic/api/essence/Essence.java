@@ -1,12 +1,14 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
@@ -176,38 +178,32 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return tag;
 	}
 
-	public static NBTTagCompound initDefaultEssence(NBTTagCompound tag)
+	public static void writeDefaultEssence(Object tileOrItem)
 	{
-		writeToNBT(tag, new EssenceStack(Essence.INFERNO, 0), new EssenceStack(Essence.DEPTH, 0),
-				new EssenceStack(Essence.OZONE, 0), new EssenceStack(Essence.HORIZON, 0),
-				new EssenceStack(Essence.PEACE, 0), new EssenceStack(Essence.CHAOS, 0));
-
-		return tag;
-	}
-
-	public static void initDefaultEssence(Object tileOrItem)
-	{
-		NBTTagCompound tag = new NBTTagCompound();
+		Preconditions.checkArgument(tileOrItem instanceof TileEntity || tileOrItem instanceof ItemStack);
 		if (tileOrItem instanceof TileEntity)
 		{
-			tag = ((TileEntity) tileOrItem).getTileData();
+			TileEntity tile = (TileEntity) tileOrItem;
+			NBTTagCompound tag = tile.getTileData();
+			writeDefaultEssence(tag);
+			tile.markDirty();
+			
 		} else if (tileOrItem instanceof ItemStack)
 		{
-			if (((ItemStack) tileOrItem).hasTagCompound())
-			{
-				tag = ((ItemStack) tileOrItem).getTagCompound();
-			} else
-			{
-				((ItemStack) tileOrItem).setTagCompound(tag);
-			}
+			ItemStack stack = (ItemStack) tileOrItem;
+			NBTTagCompound tag = stack.getTagCompound();
+			writeDefaultEssence(tag);
+			stack.setTagCompound(tag);
 		}
-
-		initDefaultEssence(tag);
-
-		if (tileOrItem instanceof TileEntity)
-		{
-			((TileEntity) tileOrItem).markDirty();
-		}
+	}
+	
+	public static NBTTagCompound writeDefaultEssence(NBTTagCompound tag)
+	{
+		if(tag == null) tag = new NBTTagCompound();
+		Collection<EssenceStack> col = new ArrayList<>();
+		for(Essence e : REGISTRY) 
+			col.add(new EssenceStack(e, 0));
+		return writeToNBT(tag, col);
 	}
 
 	@Nonnull
@@ -223,7 +219,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			return ret;
 		} else
 		{
-			return readFromNBT(initDefaultEssence(new NBTTagCompound()));
+			return readFromNBT(writeDefaultEssence(new NBTTagCompound()));
 		}
 	}
 
@@ -251,6 +247,10 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		}
 		tag.setTag(E, essTag);
 		return tag;
+	}
+	
+	public static NBTTagCompound writeToNBT(NBTTagCompound tag, Collection<EssenceStack> essences) {
+		return writeToNBT(tag, essences.toArray(new EssenceStack[essences.size()]));
 	}
 
 }

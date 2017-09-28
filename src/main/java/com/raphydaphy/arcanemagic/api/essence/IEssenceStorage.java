@@ -1,16 +1,16 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
-import net.minecraft.nbt.NBTTagList;
+import java.util.Map;
+
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import java.util.Map;
-
 /**
  * TODO more operations
  */
-public interface IEssenceStorage extends INBTSerializable<NBTTagList> {
+public interface IEssenceStorage extends INBTSerializable<NBTTagCompound> {
 
     /* NB: do NOT use this field UNLESS you have a hard dep on this mod */
     @CapabilityInject(IEssenceStorage.class)
