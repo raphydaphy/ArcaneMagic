@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.api.scepter;
 
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 public abstract class ScepterPart
 {
 
@@ -14,7 +16,7 @@ public abstract class ScepterPart
 
 	public abstract String getUnlocalizedName();
 
-	public abstract ResourceLocation getTexture();
+	public abstract @Nonnull ResourceLocation getTexture();
 
 	public abstract ResourceLocation getRegistryName();
 

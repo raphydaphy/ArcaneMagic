@@ -5,6 +5,8 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
+
 public class ScepterCore extends ScepterPart
 {
 
@@ -31,7 +33,7 @@ public class ScepterCore extends ScepterPart
 	}
 
 	@Override
-	public ResourceLocation getTexture()
+	public @Nonnull	ResourceLocation getTexture()
 	{
 		return TEXTURE;
 	}
