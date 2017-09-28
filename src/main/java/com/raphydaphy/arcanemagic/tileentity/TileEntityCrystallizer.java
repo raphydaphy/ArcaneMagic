@@ -62,6 +62,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (stack.getCount() > 0)
 								{
 									useType = stack.getEssence();
+									te.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(useType, -1), false);
 								}
 							}
 							if (useType != null && world.rand.nextInt(3) == 1)

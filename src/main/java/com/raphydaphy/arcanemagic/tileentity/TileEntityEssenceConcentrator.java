@@ -59,7 +59,7 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 				{
 					for (int z = (int) pos.getZ() - 10; z < (int) pos.getZ() + 10; z++)
 					{
-						if (world.rand.nextInt(600) == 1)
+						if (world.rand.nextInt(2000) == 1)
 						{
 							BlockPos here = new BlockPos(x, y, z);
 							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))

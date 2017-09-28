@@ -93,8 +93,9 @@ public class ParticleEssence extends Particle
 				&& travelPos.y >= this.posY - 0.1 && travelPos.z <= this.posZ + 0.1 && travelPos.z >= this.posZ - 0.1)
 		{
 
-			if (rand.nextInt(80) == 1 && hit != null && hit instanceof TileEntityEssenceStorage)
+			if (hit != null && hit instanceof TileEntityEssenceStorage)
 			{
+				System.out.println("giving essence. has a total of " + hit.getCapability(EssenceStorage.CAP,null).getStored());
 				hit.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(this.essence, 1), false);
 			}
 			this.setExpired();
