@@ -138,7 +138,7 @@ public class ItemScepter extends ItemBase
 			for (int i = 0; i < 80; i++)
 			{
 				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, player.posX, player.posY + 1,
-						player.posZ, 0, 0, 0, 0xFFFFFF, new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
+						player.posZ, 0, 0, 0, Essence.getFromBiome(world.getBiome(pos)).getColorHex(), new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
 								pos.getY() +  0.3 + (itemRand.nextDouble() * 0.4), pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4))));
 			}
 

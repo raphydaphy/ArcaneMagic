@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.item;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 
 import net.minecraft.client.Minecraft;
@@ -20,20 +21,23 @@ public class ItemAncientParchment extends ItemBase
 		super.onEntityItemUpdate(entityItem);
 		
 		World world = entityItem.world;
-
-		for (int x = (int) entityItem.posX - 10; x < (int) entityItem.posX + 10; x++)
+		
+		if (world.isRemote)
 		{
-			for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++)
+			for (int x = (int) entityItem.posX - 10; x < (int) entityItem.posX + 10; x++)
 			{
-				for (int z = (int) entityItem.posZ - 10; z < (int) entityItem.posZ + 10; z++)
+				for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++)
 				{
-					if (itemRand.nextInt(300) == 1)
+					for (int z = (int) entityItem.posZ - 10; z < (int) entityItem.posZ + 10; z++)
 					{
-						BlockPos here = new BlockPos(x, y, z);
-						if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+						if (itemRand.nextInt(300) == 1)
 						{
-							Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(
-									world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, 0xFFFFFF,entityItem.getPositionVector().addVector(0, 0.4, 0)));
+							BlockPos here = new BlockPos(x, y, z);
+							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+							{
+								Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(
+										world, x + 0.5, y + 0.5, z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)).getColorHex(),entityItem.getPositionVector().addVector(0, 0.4, 0)));
+							}
 						}
 					}
 				}

@@ -10,11 +10,13 @@ import javax.annotation.Nonnull;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
+import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -120,6 +122,49 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	}
 
 	private static final String E = "essence_tag";
+
+	// kms this is worse function evar
+	public static Essence getFromBiome(Biome biome)
+	{
+		if (biome.equals(Biomes.DEEP_OCEAN) || biome.equals(Biomes.RIVER) || biome.equals(Biomes.FROZEN_OCEAN)
+				|| biome.equals(Biomes.FROZEN_OCEAN) || biome.equals(Biomes.DEEP_OCEAN)
+				|| biome.equals(Biomes.STONE_BEACH) || biome.equals(Biomes.BEACH) || biome.equals(Biomes.COLD_BEACH)
+				|| biome.equals(Biomes.SWAMPLAND) || biome.equals(Biomes.MUTATED_SWAMPLAND))
+		{
+			return Essence.DEPTH;
+		} else if (biome.equals(Biomes.PLAINS) || biome.equals(Biomes.PLAINS) || biome.equals(Biomes.DEFAULT)
+				|| biome.equals(Biomes.FOREST) || biome.equals(Biomes.FOREST_HILLS) || biome.equals(Biomes.JUNGLE)
+				|| biome.equals(Biomes.JUNGLE_EDGE) || biome.equals(Biomes.JUNGLE_HILLS)
+				|| biome.equals(Biomes.MUTATED_BIRCH_FOREST) || biome.equals(Biomes.MUTATED_BIRCH_FOREST_HILLS)
+				|| biome.equals(Biomes.MUTATED_JUNGLE) || biome.equals(Biomes.MUTATED_FOREST)
+				|| biome.equals(Biomes.MUTATED_JUNGLE_EDGE) || biome.equals(Biomes.MUTATED_REDWOOD_TAIGA)
+				|| biome.equals(Biomes.MUTATED_REDWOOD_TAIGA_HILLS) || biome.equals(Biomes.ROOFED_FOREST)
+				|| biome.equals(Biomes.REDWOOD_TAIGA) || biome.equals(Biomes.REDWOOD_TAIGA_HILLS))
+		{
+			return Essence.HORIZON;
+		} else if (biome.equals(Biomes.DESERT) || biome.equals(Biomes.DESERT_HILLS) || biome.equals(Biomes.HELL)
+				|| biome.equals(Biomes.MUTATED_DESERT) || biome.equals(Biomes.MUTATED_SAVANNA)
+				|| biome.equals(Biomes.SAVANNA) || biome.equals(Biomes.SAVANNA_PLATEAU)
+				|| biome.equals(Biomes.MUTATED_SAVANNA_ROCK))
+		{
+			return Essence.INFERNO;
+		} else if (biome.equals(Biomes.EXTREME_HILLS) || biome.equals(Biomes.EXTREME_HILLS_EDGE)
+				|| biome.equals(Biomes.EXTREME_HILLS_WITH_TREES) || biome.equals(Biomes.ICE_MOUNTAINS)
+				|| biome.equals(Biomes.ICE_PLAINS) || biome.equals(Biomes.MUTATED_EXTREME_HILLS)
+				|| biome.equals(Biomes.MUTATED_EXTREME_HILLS_WITH_TREES))
+		{
+			return Essence.OZONE;
+		} else if (biome.equals(Biomes.MESA) || biome.equals(Biomes.MESA_CLEAR_ROCK) || biome.equals(Biomes.MESA_ROCK)
+				|| biome.equals(Biomes.MUTATED_MESA) || biome.equals(Biomes.MUTATED_MESA_CLEAR_ROCK)
+				|| biome.equals(Biomes.MUTATED_MESA_ROCK))
+		{
+			return Essence.CHAOS;
+		} else if (biome.equals(Biomes.MUSHROOM_ISLAND) || biome.equals(Biomes.MUSHROOM_ISLAND_SHORE))
+		{
+			return Essence.PEACE;
+		}
+		return Essence.HORIZON;
+	}
 
 	public static NBTTagCompound resetEssence(NBTTagCompound tag)
 	{

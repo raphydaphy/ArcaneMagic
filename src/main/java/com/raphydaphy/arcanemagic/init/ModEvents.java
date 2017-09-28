@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Random;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
@@ -104,21 +105,23 @@ public class ModEvents
 					|| ev.player.getHeldItemOffhand().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 			{
 				World world = ev.player.world;
-
-				for (int x = (int) ev.player.posX - 10; x < (int) ev.player.posX + 10; x++)
+				if (world.isRemote)
 				{
-					for (int y = (int) ev.player.posY - 5; y < (int) ev.player.posY + 5; y++)
+					for (int x = (int) ev.player.posX - 10; x < (int) ev.player.posX + 10; x++)
 					{
-						for (int z = (int) ev.player.posZ - 10; z < (int) ev.player.posZ + 10; z++)
+						for (int y = (int) ev.player.posY - 5; y < (int) ev.player.posY + 5; y++)
 						{
-							if (rand.nextInt(600) == 1)
+							for (int z = (int) ev.player.posZ - 10; z < (int) ev.player.posZ + 10; z++)
 							{
-								BlockPos here = new BlockPos(x, y, z);
-								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+								if (rand.nextInt(600) == 1)
 								{
-									Minecraft.getMinecraft().effectRenderer
-											.addEffect(new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
-													z + 0.5, 0, 0, 0, 0xFFFFFF, ev.player.getPositionVector().addVector(0,1,0)));
+									BlockPos here = new BlockPos(x, y, z);
+									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+									{
+										Minecraft.getMinecraft().effectRenderer
+												.addEffect(new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
+														z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)).getColorHex(), ev.player.getPositionVector().addVector(0,1,0)));
+									}
 								}
 							}
 						}
