@@ -255,10 +255,7 @@ public class ItemScepter extends ItemBase
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{
-		// super.initModels(e);
-		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
-		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 
 	/**
