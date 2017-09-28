@@ -1,13 +1,17 @@
 package com.raphydaphy.arcanemagic.init;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.Random;
 
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -16,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -37,7 +42,57 @@ public class ModEvents
 			.findField(ItemRenderer.class, "prevEquippedProgressMainHand", "field_187470_g");
 	protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
 			.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
+	
+	@SubscribeEvent
+	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
+	{
+		if (ev.getStack().getItem() == ModRegistry.SCEPTER)
+		{
 
+			ItemStack stack = ev.getStack();
+			IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+
+			int y = ev.getY();
+			for (int line = 0; line < ev.getLines().size(); line++)
+			{
+				if (ev.getLines().get(line).equals("§7"))
+				{
+
+					break;
+				}
+				y += 11;
+			}
+			if (handler != null)
+			{
+				Collection<EssenceStack> storedEssence = handler.getStored().values();
+
+				if (storedEssence.size() > 0)
+				{
+					int x = ev.getX();
+					int curYCounter = 0;
+
+					for (EssenceStack essence : storedEssence)
+					{
+
+						String thisString = essence.getCount() + " "
+								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
+						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorHex());
+
+						x += 70;
+						curYCounter++;
+
+						if (curYCounter % 2 == 0)
+						{
+							y += 10;
+							x = ev.getX();
+						}
+					}
+
+				}
+			}
+		}
+	}
+	
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
