@@ -1,9 +1,17 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
@@ -11,13 +19,35 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityCrystallizer extends TileEntityEssenceStorage implements ITickable
 {
 	public static int SIZE = 1;
+	 
 	@Override
 	public void update()
 	{
-		// TODO Auto-generated method stub
-		
+		for (int x = this.pos.getX() - 8; x < this.pos.getX() + 8; x++)
+		{
+			for (int y = this.pos.getY() - 8; y < this.pos.getY() + 8; y++)
+			{
+				for (int z = this.pos.getZ() - 8; z < this.pos.getZ() + 8; z++)
+				{
+					BlockPos here = new BlockPos(x, y, z);
+
+					if (world.getBlockState(here).getBlock().equals(ModRegistry.ESSENCE_CONCENTRATOR)
+							&& world.getBlockState(here.add(0, -1, 0)).getBlock().equals(Blocks.IRON_BLOCK)
+							&& world.getBlockState(here.add(0, -2, 0)).getBlock().equals(Blocks.IRON_BLOCK))
+					{
+						//if (world.rand.nextInt(3) == 1)
+						{
+							Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, x + 0.5,
+									y + 0.5, z + 0.5, 0, 0, 0, 0,
+									new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)));
+						}
+					}
+				}
+			}
+		}
 	}
 	
+
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{
 		@Override
@@ -28,7 +58,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 			TileEntityCrystallizer.this.markDirty();
 		}
 	};
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{

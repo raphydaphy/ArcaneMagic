@@ -29,7 +29,14 @@ public class ParticleEssence extends Particle
 		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.flameScale = this.particleScale;
-		this.setColor(color);
+		if (color != 0)
+		{
+			this.setColor(color);
+		}
+		else
+		{
+			this.setRBGColorF(1, 1, 1);
+		}
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
@@ -157,9 +164,9 @@ public class ParticleEssence extends Particle
 		}
 
 		this.move(this.motionX, this.motionY, this.motionZ);
-		this.motionX = (travelPos.x - this.posX) / (7 + rand.nextDouble());
-		this.motionY = (travelPos.y - this.posY) / (7 + rand.nextDouble());
-		this.motionZ = (travelPos.z - this.posZ) / (7 + rand.nextDouble());
+		this.motionX = (travelPos.x - this.posX) / (30 + rand.nextDouble());
+		this.motionY = (travelPos.y - this.posY) / (30 + rand.nextDouble());
+		this.motionZ = (travelPos.z - this.posZ) / (30 + rand.nextDouble());
 
 		if (this.onGround)
 		{

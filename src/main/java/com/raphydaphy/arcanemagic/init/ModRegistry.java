@@ -6,6 +6,7 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
+import com.raphydaphy.arcanemagic.block.BlockEssenceConcentrator;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
@@ -39,6 +40,7 @@ public class ModRegistry
 	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
+	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
 	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 
 	public static final ItemBase IRON_TIP = new ItemBase("scepter_tip_iron");

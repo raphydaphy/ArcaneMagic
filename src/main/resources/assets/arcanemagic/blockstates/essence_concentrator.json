@@ -1,0 +1,10 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "arcanemagic:essence_concentrator"
+  },
+  "variants": {
+    "normal": [{}],
+    "inventory": [{}]
+  }
+}

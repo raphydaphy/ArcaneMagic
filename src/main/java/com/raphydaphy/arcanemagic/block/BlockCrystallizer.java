@@ -9,17 +9,27 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockCrystallizer extends BlockBase
 {
-	public static final int GUI_ID = 2;
-
+	public static final int GUI_ID = 3;
+	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+	
 	public BlockCrystallizer()
 	{
 		super("crystallizer", Material.ROCK, 2.5f);
 	}
+	
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+    {
+		return AABB;
+    }
+     
 
 	@Override
 	public boolean isOpaqueCube(IBlockState state)

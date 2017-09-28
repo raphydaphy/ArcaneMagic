@@ -24,11 +24,11 @@ public class ItemAncientParchment extends ItemBase
 		
 		if (world.isRemote)
 		{
-			for (int x = (int) entityItem.posX - 10; x < (int) entityItem.posX + 10; x++)
+			for (int x = (int) entityItem.posX - 5; x < (int) entityItem.posX + 5; x++)
 			{
 				for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++)
 				{
-					for (int z = (int) entityItem.posZ - 10; z < (int) entityItem.posZ + 10; z++)
+					for (int z = (int) entityItem.posZ - 5; z < (int) entityItem.posZ + 5; z++)
 					{
 						if (itemRand.nextInt(300) == 1)
 						{

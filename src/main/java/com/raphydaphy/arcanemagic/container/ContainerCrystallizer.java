@@ -1,12 +1,18 @@
 package com.raphydaphy.arcanemagic.container;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -31,7 +37,7 @@ public class ContainerCrystallizer extends Container
 			for (int col = 0; col < 9; ++col)
 			{
 				int x = 8 + col * 18;
-				int y = row * 18 + 147;
+				int y = row * 18 + 84;
 				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
 			}
 		}
@@ -40,17 +46,18 @@ public class ContainerCrystallizer extends Container
 		for (int row = 0; row < 9; ++row)
 		{
 			int x = 8 + row * 18;
-			int y = 58 + 147;
+			int y = 142;
 			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
 		}
 	}
+	
+	
 
 	private void addOwnSlots()
 	{
 		IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 50, 50));
-
+		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 26, 40));
 	}
 
 	@Override

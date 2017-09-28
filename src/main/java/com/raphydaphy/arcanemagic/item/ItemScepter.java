@@ -267,7 +267,7 @@ public class ItemScepter extends ItemBase
 	 */
 
 	@SideOnly(Side.CLIENT)
-	private static void drawBar(int x, int y, float r, float g, float b, int essentia, float rotation)
+	private static void drawBar(int x, int y, float r, float g, float b, int essence, float rotation)
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
@@ -292,7 +292,7 @@ public class ItemScepter extends ItemBase
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(r, g, b, 0.7f);
-		Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x + 1, y + 4, 104, 0, 8, essentia);
+		Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x + 1, y + 4, 104, 0, 8, essence);
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();
