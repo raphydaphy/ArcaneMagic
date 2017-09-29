@@ -19,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+// this looks very much like vitality spell class..................................
 public abstract class Spell
 {
 
@@ -64,7 +65,7 @@ public abstract class Spell
 
 	public boolean hasAllEssencesAndCanCast(ItemStack wand)
 	{
-		Map<Essence, EssenceStack> map = Essence.buildMapFromNBT(wand.getTagCompound());
+		Map<Essence, EssenceStack> map = EssenceStack.buildMapFromNBT(wand.getTagCompound());
 		for (EssenceStack stack : reqEssence)
 		{
 			if (map.get(stack.getEssence()) == null)

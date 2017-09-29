@@ -1,12 +1,11 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -64,9 +63,9 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 							BlockPos here = new BlockPos(x, y, z);
 							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 							{
-								Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, x + 0.5,
-										y + 0.5, z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)),
-										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5)));
+								ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+										new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
+										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5));
 							}
 						}
 					}

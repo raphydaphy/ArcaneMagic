@@ -5,10 +5,12 @@ import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntityEssenceConcentrator>
 {
 	@Override
@@ -34,7 +36,7 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 			GlStateManager.translate(.5, .6, .5);
 			GlStateManager.scale(.4f, .4f, .4f);
 			GlStateManager.rotate(Minecraft.getMinecraft().world.getWorldInfo().getWorldTime() * 5, 0, 1, 0);
-			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
+			//Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
 		}
 	}

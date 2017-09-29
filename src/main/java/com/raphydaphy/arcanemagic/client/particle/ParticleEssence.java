@@ -4,22 +4,24 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceStorage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class ParticleEssence extends Particle
 {
-	private final float flameScale;
 	private Vec3d travelPos;
 	private final Vec3d startPos;
 	private int speedDivisor = 30;
@@ -35,7 +37,6 @@ public class ParticleEssence extends Particle
 		this.posX += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-		this.flameScale = this.particleScale;
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
 		this.setRBGColorF(essence.getColorRGB().getX(), essence.getColorRGB().getY(), essence.getColorRGB().getZ());
 		this.essence = essence;
@@ -61,19 +62,6 @@ public class ParticleEssence extends Particle
 		this.resetPositionToBB();
 	}
 
-	/**
-	 * Renders the particle
-	 */
-	@Override
-	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
-	{
-		// float f = ((float) this.particleAge + partialTicks) / (float)
-		// this.particleMaxAge;
-		// this.particleScale = this.flameScale * (1.0F - f * f * 0.5F);
-		super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
-	}
-
 	@Override
 	public int getBrightnessForRender(float p_189214_1_)
 	{
@@ -95,8 +83,10 @@ public class ParticleEssence extends Particle
 
 			if (hit != null && hit instanceof TileEntityEssenceStorage)
 			{
-				System.out.println("giving essence. has a total of " + hit.getCapability(EssenceStorage.CAP,null).getStored());
-				hit.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(this.essence, 1), false);
+				
+				EssenceStack willTransfer = new EssenceStack(this.essence, 1);
+				hit.getCapability(EssenceStorage.CAP, null).store(willTransfer, false);
+				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketEssenceTransfer(hit.getPos(), willTransfer));
 			}
 			this.setExpired();
 		}

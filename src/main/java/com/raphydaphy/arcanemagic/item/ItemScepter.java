@@ -17,7 +17,6 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.handler.MeshHandler;
@@ -112,7 +111,7 @@ public class ItemScepter extends ItemBase
 		if (!stack.hasTagCompound())
 		{
 			stack.setTagCompound(new NBTTagCompound());
-			return Essence.writeDefaultEssence(stack.getTagCompound());
+			return EssenceStack.writeDefaultEssence(stack.getTagCompound());
 		}
 		return stack.getTagCompound();
 	}
@@ -137,11 +136,11 @@ public class ItemScepter extends ItemBase
 
 			for (int i = 0; i < 80; i++)
 			{
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, player.posX,
-						player.posY + 1, player.posZ, 0, 0, 0, Essence.getFromBiome(world.getBiome(pos)),
+				ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(player.posX, player.posY, player.posZ),
+						new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(pos)),
 						new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
 								pos.getY() + 0.3 + (itemRand.nextDouble() * 0.4),
-								pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4))));
+								pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4)));
 			}
 
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
@@ -194,9 +193,6 @@ public class ItemScepter extends ItemBase
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
-		Vec3d pos = player.rayTrace(8, 1).hitVec;
-		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(player.getEntityWorld(), pos.x, pos.y,
-				pos.z, 0, 0, 0, Essence.OZONE, player.getPositionVector().addVector(0, 1, 0)));
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{
@@ -219,7 +215,7 @@ public class ItemScepter extends ItemBase
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand)
 	{
-		Essence.writeDefaultEssence(player.getHeldItem(hand));
+		EssenceStack.writeDefaultEssence(player.getHeldItem(hand));
 		return EnumActionResult.PASS;
 	}
 

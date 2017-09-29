@@ -77,14 +77,14 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 	public NBTTagCompound serializeNBT()
 	{
 		NBTTagCompound tag = new NBTTagCompound();
-		Essence.writeToNBT(tag, storage.values());
+		EssenceStack.writeToNBT(tag, storage.values());
 		return tag;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt)
 	{
-		storage = Essence.buildMapFromNBT(nbt);
+		storage = EssenceStack.buildMapFromNBT(nbt);
 	}
 
 	@Override

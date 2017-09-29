@@ -1,31 +1,15 @@
 package com.raphydaphy.arcanemagic.init;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
-import java.util.Random;
-
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -34,7 +18,7 @@ public class ModEvents
 {
 	public static boolean hasRenderedParticles = false;
 	static EntityPlayer clientPlayer = null;
-
+/*
 	protected static Field Field_ItemRenderer_equippedProgressMainhand = ReflectionHelper.findField(ItemRenderer.class,
 			"equippedProgressMainHand", "field_187469_f");
 	protected static Field Field_ItemRenderer_equippedProgressOffhand = ReflectionHelper.findField(ItemRenderer.class,
@@ -44,60 +28,12 @@ public class ModEvents
 	protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
 			.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
 
-	@SubscribeEvent
-	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
-	{
-		if (ev.getStack().getItem() == ModRegistry.SCEPTER)
-		{
-
-			ItemStack stack = ev.getStack();
-			IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
-
-			int y = ev.getY();
-			for (int line = 0; line < ev.getLines().size(); line++)
-			{
-				if (ev.getLines().get(line).equals("§7"))
-				{
-
-					break;
-				}
-				y += 11;
-			}
-			if (handler != null)
-			{
-				Collection<EssenceStack> storedEssence = handler.getStored().values();
-
-				if (storedEssence.size() > 0)
-				{
-					int x = ev.getX();
-					int curYCounter = 0;
-
-					for (EssenceStack essence : storedEssence)
-					{
-
-						String thisString = essence.getCount() + " "
-								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
-						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorHex());
-
-						x += 70;
-						curYCounter++;
-
-						if (curYCounter % 2 == 0)
-						{
-							y += 10;
-							x = ev.getX();
-						}
-					}
-
-				}
-			}
-		}
-	}
+	*/
 
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
-
+		/*
 		Random rand = ev.player.world.rand;
 		if (ev.phase == TickEvent.Phase.START)
 		{
@@ -118,10 +54,12 @@ public class ModEvents
 									BlockPos here = new BlockPos(x, y, z);
 									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 									{
-										Minecraft.getMinecraft().effectRenderer.addEffect(
-												new ParticleEssence(ev.player.getEntityWorld(), x + 0.5, y + 0.5,
-														z + 0.5, 0, 0, 0, Essence.getFromBiome(world.getBiome(here)),
-														ev.player.getPositionVector().addVector(0, 1, 0)));
+										ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.5,
+												z + 0.5),
+												new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
+												ev.player.getPositionVector().addVector(0, 1, 0));
+										
+										
 									}
 								}
 							}
@@ -142,7 +80,7 @@ public class ModEvents
 					}
 				}
 			}
-		}
+		}*/
 	}
 
 	@SubscribeEvent

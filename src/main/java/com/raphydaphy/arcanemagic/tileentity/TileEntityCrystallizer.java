@@ -2,13 +2,12 @@ package com.raphydaphy.arcanemagic.tileentity;
 
 import java.util.Map;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -62,14 +61,15 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (stack.getCount() > 0)
 								{
 									useType = stack.getEssence();
-									te.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(useType, -1), false);
+									te.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(useType, -1),
+											false);
 								}
 							}
 							if (useType != null && world.rand.nextInt(3) == 1)
 							{
-								Minecraft.getMinecraft().effectRenderer.addEffect(
-										new ParticleEssence(world, x + 0.5, y + 0.6, z + 0.5, 0, 0, 0, useType,
-												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5)));
+								ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.6, z + 0.5),
+										new Vec3d(0, 0, 0), useType,
+										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
 
 							}
 						}

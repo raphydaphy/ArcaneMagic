@@ -1,22 +1,10 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-
-import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -117,13 +105,20 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 		return new Vec3i(r, g, b);
 	}
+	
+	public static Essence getEssenceByID(int id)
+    {
+		if (id < Essence.REGISTRY.getValues().size())
+		{
+			return Essence.REGISTRY.getValues().get(id);
+		}
+		return null;
+	}
 
 	public String toString()
 	{
 		return getRegistryName().toString();
 	}
-
-	private static final String E = "essence_tag";
 
 	// kms this is worse function evar
 	public static Essence getFromBiome(Biome biome)
@@ -168,91 +163,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return Essence.HORIZON;
 	}
 
-	public static NBTTagCompound resetEssence(NBTTagCompound tag)
-	{
-		List<EssenceStack> stacks = readFromNBT(tag);
-		for (EssenceStack curStack : stacks)
-		{
-			curStack.setCount(1);
-		}
-		return tag;
-	}
-
-	public static void writeDefaultEssence(Object tileOrItem)
-	{
-		Preconditions.checkArgument(tileOrItem instanceof TileEntity || tileOrItem instanceof ItemStack);
-		if (tileOrItem instanceof TileEntity)
-		{
-			TileEntity tile = (TileEntity) tileOrItem;
-			NBTTagCompound tag = tile.getTileData();
-			writeDefaultEssence(tag);
-			tile.markDirty();
-
-		} else if (tileOrItem instanceof ItemStack)
-		{
-			ItemStack stack = (ItemStack) tileOrItem;
-			NBTTagCompound tag = stack.getTagCompound();
-			writeDefaultEssence(tag);
-			stack.setTagCompound(tag);
-		}
-	}
-
-	public static NBTTagCompound writeDefaultEssence(NBTTagCompound tag)
-	{
-		if (tag == null)
-			tag = new NBTTagCompound();
-		Collection<EssenceStack> col = new ArrayList<>();
-		for (Essence e : REGISTRY)
-			col.add(new EssenceStack(e, 0));
-		return writeToNBT(tag, col);
-	}
-
-	@Nonnull
-	public static List<EssenceStack> readFromNBT(NBTTagCompound tag)
-	{
-		if (tag != null)
-		{
-			List<EssenceStack> ret = new ArrayList<>();
-			NBTTagCompound essTag = tag.getCompoundTag(E);
-			for (String s : essTag.getKeySet())
-				ret.add(new EssenceStack(REGISTRY.getValue(new ResourceLocation(s)), essTag.getInteger(s)));
-
-			return ret;
-		} else
-		{
-			return readFromNBT(writeDefaultEssence(new NBTTagCompound()));
-		}
-	}
-
-	public static Map<Essence, EssenceStack> buildMapFromNBT(NBTTagCompound tag)
-	{
-		List<EssenceStack> stacks = readFromNBT(tag);
-		Map<Essence, EssenceStack> map = new HashMap<>();
-		for (EssenceStack stack : stacks)
-			map.put(stack.getEssence(), stack);
-
-		return map;
-	}
-
-	public static NBTTagCompound writeToNBT(NBTTagCompound tag, EssenceStack... essences)
-	{
-		NBTTagCompound essTag = tag.getCompoundTag(E);
-		for (EssenceStack e : essences)
-		{
-
-			if (e.getCount() < 0)
-				continue;
-
-			e.grow(essTag.getInteger(e.getEssence().getRegistryName().toString()));
-			essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
-		}
-		tag.setTag(E, essTag);
-		return tag;
-	}
-
-	public static NBTTagCompound writeToNBT(NBTTagCompound tag, Collection<EssenceStack> essences)
-	{
-		return writeToNBT(tag, essences.toArray(new EssenceStack[essences.size()]));
-	}
+	
 
 }
