@@ -159,7 +159,7 @@ public class SceptreModel implements IModel {
 
         @Override
         public Pair<? extends IBakedModel, Matrix4f> handlePerspective(ItemCameraTransforms.TransformType cameraTransformType) {
-            return bakedBase.handlePerspective(cameraTransformType);
+            return Pair.of(this, bakedBase.handlePerspective(cameraTransformType).getRight());
         }
     }
 
