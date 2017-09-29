@@ -1,6 +1,11 @@
 # Items
-item.arcanemagic.scepter_cap_iron.name=Iron Scepter Cap
-item.arcanemagic.scepter.name=Iron Tipped Wooden Scepter
+item.arcanemagic.sceptre_tip.0.name=Iron Scepter Cap
+item.arcanemagic.sceptre_tip.1.name=Gold Scepter Cap
+item.arcanemagic.sceptre_tip.2.name=Thaumium Scepter Cap
+item.arcanemagic.sceptre_core.0.name=Wood Scepter Core
+item.arcanemagic.sceptre_core.1.name=Silverwood Scepter Core
+item.arcanemagic.sceptre_core.2.name=Greatwood Scepter Core
+item.arcanemagic.scepter.name=%s Tipped %s Scepter
 item.arcanemagic.notebook.name=Lost Notebook
 item.arcanemagic.shard.name=Infused Shard
 item.arcanemagic.scribing_tools.name=Scribing Tools

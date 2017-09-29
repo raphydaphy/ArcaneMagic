@@ -5,8 +5,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.scepter.ScepterCap;
-import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 
 import net.minecraft.util.ResourceLocation;
 
@@ -14,15 +12,6 @@ public class ScepterRegistry
 {
 
 	private static final BiMap<ResourceLocation, ScepterPart> REGISTRY = HashBiMap.create();
-	private static boolean isDone = false;
-
-	public static void registerDefaults()
-	{
-		if (!isDone)
-			registerAll(ScepterCap.IRON, ScepterCap.GOLD, ScepterCap.THAUMIUM, ScepterCore.WOOD, ScepterCore.GREATWOOD,
-					ScepterCore.SILVERWOOD);
-		isDone = true;
-	}
 
 	public static boolean register(ScepterPart part)
 	{
@@ -63,5 +52,30 @@ public class ScepterRegistry
 	public static ImmutableSet<ResourceLocation> getKeys()
 	{
 		return ImmutableSet.copyOf(REGISTRY.keySet());
+	}
+
+	public static ImmutableSet<ScepterPart> getValues()
+	{
+		return ImmutableSet.copyOf(REGISTRY.values());
+	}
+
+	public static ImmutableSet<ScepterPart> getTips(){
+		ImmutableSet.Builder<ScepterPart> builder = ImmutableSet.builder();
+		for (ScepterPart e : REGISTRY.values()){
+			if (e.getType() == ScepterPart.PartCategory.TIP){
+				builder.add(e);
+			}
+		}
+		return builder.build();
+	}
+
+	public static ImmutableSet<ScepterPart> getCores(){
+		ImmutableSet.Builder<ScepterPart> builder = ImmutableSet.builder();
+		for (ScepterPart e : REGISTRY.values()){
+			if (e.getType() == ScepterPart.PartCategory.CORE){
+				builder.add(e);
+			}
+		}
+		return builder.build();
 	}
 }

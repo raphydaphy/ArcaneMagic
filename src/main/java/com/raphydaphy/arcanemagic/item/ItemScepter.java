@@ -20,10 +20,7 @@ import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.scepter.ScepterCap;
-import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -32,6 +29,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,6 +41,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -67,7 +66,7 @@ public class ItemScepter extends ItemBase
 	}
 
 	@Nullable
-	public static ScepterPart getCap(ItemStack scepter)
+	public static ScepterPart getTip(ItemStack scepter)
 	{
 		if (!scepter.hasTagCompound())
 			return null;
@@ -83,27 +82,40 @@ public class ItemScepter extends ItemBase
 	}
 
 	@Nonnull
-	public static ScepterPart getCapOrDefault(ItemStack scepter)
+	public static ScepterPart getTipOrDefault(ItemStack scepter)
 	{
-		ScepterPart sp = getCap(scepter);
-		return sp == null ? ScepterCap.IRON : sp;
+		ScepterPart sp = getTip(scepter);
+		return sp == null ? ItemTip.Type.IRON : sp;
 	}
 
 	@Nonnull
 	public static ScepterPart getCoreOrDefault(ItemStack scepter)
 	{
 		ScepterPart sp = getCore(scepter);
-		return sp == null ? ScepterCore.WOOD : sp;
+		return sp == null ? ItemCore.Type.WOOD : sp;
 	}
 
-	public static void applyCapAndCore(ItemStack scepter, ScepterPart cap, ScepterPart core)
+	public static void applyTipAndCore(ItemStack scepter, ScepterPart tip, ScepterPart core)
 	{
 		if (!scepter.hasTagCompound())
 			scepter.setTagCompound(new NBTTagCompound());
-		Preconditions.checkArgument(cap.getType() == PartCategory.CAP, "You can only assign a cap to the cap slot!");
+		Preconditions.checkArgument(tip.getType() == PartCategory.TIP, "You can only assign a tip to the tip slot!");
 		Preconditions.checkArgument(core.getType() == PartCategory.CORE, "You can only assign a core the core slot!");
-		getTagCompoundSafe(scepter).setString(KEY_CORE, ScepterCore.WOOD.getRegistryName().toString());
-		getTagCompoundSafe(scepter).setString(KEY_TIP, ScepterCap.GOLD.getRegistryName().toString());
+		getTagCompoundSafe(scepter).setString(KEY_CORE, core.getRegistryName().toString());
+		getTagCompoundSafe(scepter).setString(KEY_TIP, tip.getRegistryName().toString());
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (isInCreativeTab(tab)){
+			ScepterRegistry.getCores().forEach((core)->{
+				ScepterRegistry.getTips().forEach((tip)->{
+					ItemStack stack = new ItemStack(this, 1);
+					applyTipAndCore(stack, tip, core);
+					items.add(stack);
+				});
+			});
+		}
 	}
 
 	public static NBTTagCompound getTagCompoundSafe(ItemStack stack)
@@ -246,19 +258,10 @@ public class ItemScepter extends ItemBase
 	}
 
 	@SideOnly(Side.CLIENT)
-	public ModelResourceLocation getModelLocation(ItemStack stack)
-	{
-		return super.getModelLocation(stack);
-	}
-
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{
-		// super.initModels(e);
-		ModelLoader.registerItemVariants(ModRegistry.SCEPTER,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
-		ModelLoader.setCustomMeshDefinition(ModRegistry.SCEPTER, MeshHandler.instance());
+		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
 
 	/**

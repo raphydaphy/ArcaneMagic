@@ -42,12 +42,6 @@ public class ItemBase extends Item implements IHasModel
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
-	public ModelResourceLocation getModelLocation(ItemStack stack)
-	{
-		return new ModelResourceLocation(getRegistryName(), "inventory");
-	}
-
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
 	{
