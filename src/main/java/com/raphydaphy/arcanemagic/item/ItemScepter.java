@@ -260,12 +260,6 @@ public class ItemScepter extends ItemBase
 	}
 
 	@SideOnly(Side.CLIENT)
-	public ModelResourceLocation getModelLocation(ItemStack stack)
-	{
-		return super.getModelLocation(stack);
-	}
-
-	@SideOnly(Side.CLIENT)
 	@Override
 	public void initModels(ModelRegistryEvent e)
 	{

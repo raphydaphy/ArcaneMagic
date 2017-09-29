@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.handler.MeshHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -47,14 +46,5 @@ public class ItemNotebook extends ItemBase
 	public String getItemStackDisplayName(ItemStack stack)
 	{
 		return TextFormatting.DARK_PURPLE + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void initModels(ModelRegistryEvent e)
-	{
-		ModelLoader.registerItemVariants(ModRegistry.NOTEBOOK,
-				new ModelResourceLocation(getRegistryName(), "inventory"));
-		ModelLoader.setCustomMeshDefinition(ModRegistry.NOTEBOOK, MeshHandler.instance());
 	}
 }
