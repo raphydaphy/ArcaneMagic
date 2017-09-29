@@ -35,6 +35,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	@Override
 	public void update()
 	{
+		//System.out.println(world.isRemote + " <-   ->  "+ essenceStorage.getStored().toString());
 		for (int x = this.pos.getX() - 8; x < this.pos.getX() + 8; x++)
 		{
 			for (int y = this.pos.getY() - 8; y < this.pos.getY() + 8; y++)

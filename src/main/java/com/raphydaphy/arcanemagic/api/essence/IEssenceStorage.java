@@ -40,9 +40,9 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 * 				stack to remove
 	 * @param simulate
 	 * 				actually do the thing?
-	 * @return if it was able to remove the stack from storage
+	 * @return the amount that couldn't be taken, or null if the entire request was taken
 	 */
-	boolean take(EssenceStack out, boolean simulate);
+	EssenceStack take(EssenceStack out, boolean simulate);
 	
 	/**
 	 * @return the amount of essence that can be stored

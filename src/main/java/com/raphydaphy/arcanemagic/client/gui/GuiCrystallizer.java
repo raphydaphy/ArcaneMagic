@@ -38,6 +38,7 @@ public class GuiCrystallizer extends GuiContainer
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
+		GlStateManager.disableLighting();
 		GlStateManager.rotate(rotation, 0, 0, 1);
 		GlStateManager.color(1, 1, 1);
 		GlStateManager.clearColor(1, 1, 1, 1);
@@ -83,10 +84,14 @@ public class GuiCrystallizer extends GuiContainer
 		int i = 0;
 		for (EssenceStack stack : essenceStored.values())
 		{
+			if (i == 0)
+			{
+				System.out.println("first essence is " + stack.getEssence().toString());
+			}
 			i++;
 			Essence essence = stack.getEssence();
 			drawBar(guiLeft + 37 + (i * 18), guiTop + 19, essence.getColorRGB().getX() / 256f,
-					essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, (int)Math.floor(stack.getCount() / 100), 0);
+					essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, (int)Math.floor(stack.getCount() / 20), 0);
 		}
 
 		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 0x000000);

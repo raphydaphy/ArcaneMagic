@@ -25,7 +25,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	public static final IForgeRegistry<Essence> REGISTRY = new EssenceRegistry();
 
-	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xa5500b);
+	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xbf5600);
 	public static final Essence DEPTH = new Essence("depth", ArcaneMagic.MODID + ".depth", 0x187ea3);
 	public static final Essence OZONE = new Essence("ozone", ArcaneMagic.MODID + ".ozone", 0xeaeaea);
 	public static final Essence HORIZON = new Essence("horizon", ArcaneMagic.MODID + ".horizon", 0x066018);
@@ -101,7 +101,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 				TileEntityEssenceStorage fromTE = (TileEntityEssenceStorage) fromTEUnchecked;
 
 				// sender block has enough essence to transfer it
-				if (fromTE.getCapability(EssenceStorage.CAP, null).take(stack, true) == true)
+				if (fromTE.getCapability(EssenceStorage.CAP, null).take(stack, true) == null)
 				{
 					// recieving block has enough capacity to accept it
 					if (toTE.getCapability(EssenceStorage.CAP, null).store(stack, true) == null)

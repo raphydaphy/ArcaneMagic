@@ -160,7 +160,7 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 	}
 
 	@Override
-	public boolean take(EssenceStack out, boolean simulate)
+	public EssenceStack take(EssenceStack out, boolean simulate)
 	{
 		if (storage.containsKey(out.getEssence()))
 		{
@@ -171,10 +171,20 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 					storage.get(out.getEssence()).shrink(out.getCount());
 					markDirty();
 				}
-				return true;
+				return null;
+			}
+			else
+			{
+				int amountTaken = storage.get(out.getEssence()).getCount();
+				if (!simulate)
+				{
+					storage.get(out.getEssence()).setCount(0);
+					markDirty();
+				}
+				return new EssenceStack(out.getEssence(), out.getCount() - amountTaken);
 			}
 		}
 		markDirty();
-		return false;
+		return new EssenceStack(out.getEssence(), out.getCount());
 	}
 }

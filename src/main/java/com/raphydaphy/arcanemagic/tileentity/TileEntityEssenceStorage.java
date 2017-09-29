@@ -6,6 +6,8 @@ import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -25,7 +27,26 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 	{
 		essenceStorage = new EssenceStorage(this::markDirty, capacity);
 	}
-	
+
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
+	{
+		readFromNBT(pkt.getNbtCompound());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag()
+	{
+		return this.writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket()
+	{
+		// shadows told me to put 150 so i did
+		return new SPacketUpdateTileEntity(this.pos, 150, this.getUpdateTag());
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{

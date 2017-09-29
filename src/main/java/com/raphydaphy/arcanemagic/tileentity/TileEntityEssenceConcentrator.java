@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.tileentity;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,31 +50,35 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 	@Override
 	public void update()
 	{
-		for (int x = (int) pos.getX() - 10; x < (int) pos.getX() + 10; x++)
+		if (this.getStack().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 		{
-			for (int y = (int) pos.getY() - 5; y < (int) pos.getY() + 5; y++)
-			{
-				for (int z = (int) pos.getZ() - 10; z < (int) pos.getZ() + 10; z++)
+			if (world.getBlockState(pos.add(0, -1, 0)).getBlock() == Blocks.IRON_BLOCK
+					&& world.getBlockState(pos.add(0, -2, 0)).getBlock() == Blocks.IRON_BLOCK)
+				for (int x = (int) pos.getX() - 10; x < (int) pos.getX() + 10; x++)
 				{
-					if (world.rand.nextInt(2000) == 1)
+					for (int y = (int) pos.getY() - 5; y < (int) pos.getY() + 5; y++)
 					{
-						BlockPos here = new BlockPos(x, y, z);
-						if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+						for (int z = (int) pos.getZ() - 10; z < (int) pos.getZ() + 10; z++)
 						{
-							if (!world.isRemote)
+							if (world.rand.nextInt(2000) == 1)
 							{
-								// Send some essence to the crystallizer
-								Essence.sendEssence(world,
-										new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
-										new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false);
+								BlockPos here = new BlockPos(x, y, z);
+								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+								{
+									if (!world.isRemote)
+									{
+										// Send some essence to the crystallizer
+										Essence.sendEssence(world,
+												new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+												new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false);
+									}
+								}
 							}
 						}
 					}
 				}
-			}
 		}
-
 	}
 
 	@Override
