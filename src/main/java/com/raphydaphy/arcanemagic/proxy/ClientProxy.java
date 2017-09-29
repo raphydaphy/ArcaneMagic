@@ -124,7 +124,6 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@SubscribeEvent
-	@SuppressWarnings("unused")
 	public static void registerModels(ModelRegistryEvent event)
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
@@ -137,7 +136,6 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@SubscribeEvent
-	@SuppressWarnings("unused")
 	public void onTextureStitch(TextureStitchEvent.Pre event)
 	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star"));

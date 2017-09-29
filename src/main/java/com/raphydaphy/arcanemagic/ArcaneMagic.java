@@ -1,20 +1,16 @@
 package com.raphydaphy.arcanemagic;
 
-import com.raphydaphy.arcanemagic.capabilities.Capabilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
+import com.raphydaphy.arcanemagic.capabilities.Capabilities;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
 import com.raphydaphy.arcanemagic.init.ModEntities;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.notebook.Categories;
-import com.raphydaphy.arcanemagic.notebook.CategoryAlchemy;
-import com.raphydaphy.arcanemagic.notebook.CategoryBasicInformation;
-import com.raphydaphy.arcanemagic.notebook.CategoryThaumaturgy;
 import com.raphydaphy.arcanemagic.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.proxy.GuiProxy;
 
