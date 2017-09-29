@@ -3,6 +3,8 @@ package com.raphydaphy.arcanemagic.notebook;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
@@ -54,5 +56,11 @@ public class CategoryAlchemy implements INotebookCategory
 		{
 			return new Pos2(260, 270);
 		}
+	}
+	
+	@Override
+	public Pair<ResourceLocation, Pos2> getBackground()
+	{
+		return Pair.of(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/notebook_back_tc_eldritch.png"), new Pos2(512, 512));
 	}
 }

@@ -31,10 +31,13 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
+@EventBusSubscriber(Side.CLIENT)
 public class ClientProxy extends CommonProxy
 {
 	@SubscribeEvent
@@ -119,7 +122,7 @@ public class ClientProxy extends CommonProxy
 
 	@SubscribeEvent
 	@SuppressWarnings("unused")
-	public void registerModels(ModelRegistryEvent event)
+	public static void registerModels(ModelRegistryEvent event)
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
 		for (Item i : ModRegistry.ITEMS)

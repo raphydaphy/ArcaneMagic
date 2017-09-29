@@ -3,6 +3,8 @@ package com.raphydaphy.arcanemagic.notebook;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
@@ -57,7 +59,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(260, 250);
+			return new Pos2(280, 150);
 		}
 	}
 
@@ -79,7 +81,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(290, 200);
+			return new Pos2(200, 200);
 		}
 	}
 
@@ -169,6 +171,12 @@ public class CategoryBasicInformation implements INotebookCategory
 		{
 			return new Pos2(260, 300);
 		}
+	}
+
+	@Override
+	public Pair<ResourceLocation, Pos2> getBackground()
+	{
+		return Pair.of(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/notebook_back_core.png"), new Pos2(1920, 1200));
 	}
 
 }

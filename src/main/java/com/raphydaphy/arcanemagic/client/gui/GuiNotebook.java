@@ -9,7 +9,9 @@ import javax.annotation.Nonnull;
 import com.google.common.collect.Lists;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.client.gui.FontRenderer;
@@ -31,8 +33,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiNotebook extends GuiScreen
 {
+	public static final int FRAME_WIDTH = 344;
+	public static final int FRAME_HEIGHT = 230;
+	public static final int FRAME_TEX_HEIGHT = 256;
 
-	public static final String tagUsedThauminomicon = "usedNotebook";
+	public static final int INNER_BG_WIDTH = 225;
+	public static final int INNER_BG_HEIGHT = 195;
+
+	public static final String tagUsedNotebook = "usedNotebook";
 	public static final String tagPageX = "notebookPageX";
 	public static final String tagPageY = "notebookPageY";
 	public static final String tagTab = "notebookTab";
@@ -45,25 +53,20 @@ public class GuiNotebook extends GuiScreen
 	private int relMouseX = 0;
 	private int relMouseY = 0;
 
-	private static final ResourceLocation frame = new ResourceLocation(ArcaneMagic.MODID,
-			"textures/gui/thaumonomicon.png");
-	// private static final ResourceLocation page = new
-	// ResourceLocation(ArcaneMagic.MODID, "textures/gui/thaumonomicon_page.png");
-	private static final ResourceLocation back = new ResourceLocation(ArcaneMagic.MODID,
-			"textures/gui/thaumonomicon_back.png");
-	private static final ResourceLocation back_eldritch = new ResourceLocation(ArcaneMagic.MODID,
-			"textures/gui/thaumonomicon_back_eldritch.png");
+	private static final ResourceLocation frame = new ResourceLocation(ArcaneMagic.MODID, "textures/gui/notebook.png");
+	private static final ResourceLocation page = new ResourceLocation(ArcaneMagic.MODID,
+			"textures/gui/thaumonomicon_page.png");
 
 	public GuiNotebook(EntityPlayer player)
 	{
 		this.player = player;
 
-		if (player.getEntityData().getBoolean(tagUsedThauminomicon) == false)
+		if (player.getEntityData().getBoolean(tagUsedNotebook) == false)
 		{
-			System.out.println("Player opened Thauminomicon for first time, doing initial setup.");
-			// player.getEntityData().setBoolean(tagUsedThauminomicon, true);
-			player.getEntityData().setInteger(tagPageX, 75);
-			player.getEntityData().setInteger(tagPageY, 75);
+			System.out.println("Player opened Notebook for first time, doing initial setup.");
+			// player.getEntityData().setBoolean(tagUsedNotebook, true);
+			player.getEntityData().setInteger(tagPageX, 200);
+			player.getEntityData().setInteger(tagPageY, 200);
 			player.getEntityData().setInteger(tagTab, 0);
 		}
 	}
@@ -88,25 +91,21 @@ public class GuiNotebook extends GuiScreen
 
 		int pageX = (int) player.getEntityData().getFloat(tagPageX);
 		int pageY = (int) player.getEntityData().getFloat(tagPageY);
-		float screenX = (res.getScaledWidth() / 2) - (255 / 2);
-		float screenY = (res.getScaledHeight() / 2) - (229 / 2);
+		float screenX = (res.getScaledWidth() / 2) - (FRAME_WIDTH / 2);
+		float screenY = (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2);
 
 		GlStateManager.pushMatrix();
-		GlStateManager.translate((res.getScaledWidth() / 2) - (255 / 2), (res.getScaledHeight() / 2) - (229 / 2), 0);
+		GlStateManager.translate((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2),
+				(res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
 
-		if (player.getEntityData().getInteger(tagTab) != 5)
-		{
-			mc.getTextureManager().bindTexture(back);
-		} else
-		{
-			mc.getTextureManager().bindTexture(back_eldritch);
-		}
-		GlStateManager.scale(2, 2, 2);
-		drawTexturedModalRect(8, 8.5f, pageX, pageY, 112, 98);
-		GlStateManager.scale(0.5f, 0.5f, 0.5f);
+		INotebookCategory curCategory = ArcaneMagicAPI.getNotebookCategories()
+				.get(player.getEntityData().getInteger(tagTab));
+		mc.getTextureManager().bindTexture(curCategory.getBackground().getKey());
+		drawScaledCustomSizeModalRect(104, 17, pageX, pageY, INNER_BG_WIDTH * 2, INNER_BG_HEIGHT * 2, INNER_BG_WIDTH,
+				INNER_BG_HEIGHT, curCategory.getBackground().getValue().getX(),
+				curCategory.getBackground().getValue().getY());
 
 		mc.getTextureManager().bindTexture(frame);
-
 		for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount() * 2; tab++)
 		{
 			int thisTab = tab >= ArcaneMagicAPI.getCategoryCount() ? tab - ArcaneMagicAPI.getCategoryCount() : tab;
@@ -117,7 +116,7 @@ public class GuiNotebook extends GuiScreen
 					drawTexturedModalRect(-24, tab * 23, 152, 232, 24, 24);
 				} else
 				{
-					drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19, thisTab * 23 + 4);
+					//drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19, thisTab * 23 + 4);
 
 					for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(thisTab).getEntries())
 					{
@@ -137,7 +136,9 @@ public class GuiNotebook extends GuiScreen
 		}
 
 		mc.getTextureManager().bindTexture(frame);
-		drawTexturedModalRect(0, 0, 0, 0, 255, 229);
+		GlStateManager.enableBlend();
+		drawScaledCustomSizeModalRect(0, 0, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, FRAME_WIDTH,
+				FRAME_TEX_HEIGHT);
 
 		GlStateManager.popMatrix();
 
@@ -146,30 +147,22 @@ public class GuiNotebook extends GuiScreen
 		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories()
 				.get(player.getEntityData().getInteger(tagTab)).getEntries())
 		{
-			drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(), Lists.newArrayList(
-					I18n.format(entry.getUnlocalizedName()), I18n.format(entry.getUnlocalizedName() + ".desc")));
+			// drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(),
+			// Lists.newArrayList(
+			// I18n.format(entry.getUnlocalizedName()),
+			// I18n.format(entry.getUnlocalizedName() + ".desc")));
 		}
-		if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX
-				&& relMouseY <= screenY + (ArcaneMagicAPI.getCategoryCount() * 23))
-		{
-			for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount(); tab++)
-			{
-				int tabWidth = 16;
 
-				if (tab == player.getEntityData().getInteger(tagTab))
-				{
-					tabWidth = 24;
-				}
-				if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 23) + 23
-						&& relMouseX >= screenX - tabWidth)
-				{
-					this.fontRenderer.drawString(
-							I18n.format(ArcaneMagicAPI.getNotebookCategories().get(tab).getUnlocalizedName()),
-							mouseX + 1, mouseY - 7, 0xFFFFFF);
-					break;
-				}
-			}
-		}
+		/* if (relMouseX >= screenX - 24 && relMouseY >= screenY && relMouseX <= screenX
+		 * && relMouseY <= screenY + (ArcaneMagicAPI.getCategoryCount() * 23)) { for
+		 * (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount(); tab++) { int tabWidth
+		 * = 16;
+		 * 
+		 * if (tab == player.getEntityData().getInteger(tagTab)) { tabWidth = 24; } if
+		 * (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 23) + 23
+		 * && relMouseX >= screenX - tabWidth) { this.fontRenderer.drawString(
+		 * I18n.format(ArcaneMagicAPI.getNotebookCategories().get(tab).
+		 * getUnlocalizedName()), mouseX + 1, mouseY - 7, 0xFFFFFF); break; } } } */
 
 		GlStateManager.popMatrix();
 	}
@@ -411,14 +404,14 @@ public class GuiNotebook extends GuiScreen
 
 	public void drawResearchEntry(INotebookEntry entry)
 	{
-
 		int pageX = player.getEntityData().getInteger(tagPageX);
 		int pageY = player.getEntityData().getInteger(tagPageY);
 
-		int x = entry.getPos().getX() - (int) (pageX / 0.5f);
-		int y = entry.getPos().getY() - (int) (pageY / 0.5f);
-
-		if (x > -8 && y > -8 && x < 241 && y < 215)
+		int x = (entry.getPos().getX() * 4)- (int) (pageX / 0.5f);
+		int y = (entry.getPos().getY() * 4) - (int) (pageY / 0.5f);
+		// if (relMouseX >= screenX + 59 && relMouseY >= screenY + 16 && relMouseX <=
+		// screenX + 282 && relMouseY <= screenY + 210)
+		if (x > 318 && y > -20 && x < 1310 && y < 845)
 		{
 
 			float xStart = x;
@@ -432,12 +425,12 @@ public class GuiNotebook extends GuiScreen
 			int width = 32;
 			int height = 32;
 
-			if (x > 224)
+			if (x > 1260)
 			{
 				width -= 8;
 			}
 
-			if (y > 197)
+			if (y > 800)
 			{
 				height -= 8;
 			}
@@ -449,16 +442,15 @@ public class GuiNotebook extends GuiScreen
 			GlStateManager.enableAlpha();
 
 			mc.getTextureManager().bindTexture(frame);
-			drawModalRectWithCustomSizedTexture((int) xStart, (int) yStart, 56 + u1, 232 + v1, width - 10, height - 10,
-					256, 256);
-
+			//drawScaledCustomSizeModalRect((int)(xStart / 4), (int)(yStart /4), 90 *4, 232 * 4, 22, 22, 22, 22, FRAME_WIDTH, FRAME_HEIGHT);
+			drawScaledCustomSizeModalRect((int)(xStart / 4),(int)(yStart / 4),90,208,width - 10, height - 10, width - 10, height - 10, FRAME_WIDTH, FRAME_HEIGHT);
 			Object icon = entry.getIcon().getTexture();
 			if (icon instanceof ResourceLocation)
 			{
 				mc.getTextureManager().bindTexture((ResourceLocation) icon);
 				GlStateManager.scale(0.5, 0.5, 1);
-
-				drawModalRectWithCustomSizedTexture((int) (2 * xStart) + 5, (int) (2 * yStart) + 5, u2, v2, width,
+				//this.drawScaledCustomSizeModalRect((int)(xStart / 2) + 2, (int)(yStart / 2) + 2, (int)(u2 / 2), (int)(v2 / 2), (int)u2,(int)v2, 32, 32, 32, 32);
+				drawModalRectWithCustomSizedTexture((int) (xStart / 2) + 5, (int) (yStart / 2) + 5, u2, v2, width,
 						height, 32, 32);
 				GlStateManager.scale(2, 2, 1);
 			} else if (icon instanceof ItemStack)
@@ -466,7 +458,11 @@ public class GuiNotebook extends GuiScreen
 				this.itemRender.renderItemAndEffectIntoGUI((ItemStack) icon, (int) ((xStart + 3) / 1),
 						(int) ((yStart + 3) / 1));
 			}
-
+			fontRenderer.drawStringWithShadow(I18n.format(entry.getUnlocalizedName()), (float) xStart / 4 + 25, (float) yStart / 4 + 2,
+					0xFFFFFF);
+			GlStateManager.scale(0.5, 0.5, 0.5);
+			fontRenderer.drawStringWithShadow(I18n.format(entry.getUnlocalizedName() + ".desc"), (float) xStart / 2 + 50, (float) yStart / 2 + 25,
+					0xFFFFFF);
 			GlStateManager.popMatrix();
 		}
 	}
@@ -484,21 +480,22 @@ public class GuiNotebook extends GuiScreen
 			float screenX = (res.getScaledWidth() / 2) - (255 / 2);
 			float screenY = (res.getScaledHeight() / 2) - (229 / 2);
 
-			if (relMouseX >= screenX + 16 && relMouseY >= screenY + 17 && relMouseX <= screenX + 240
+			if (relMouseX >= screenX + 59 && relMouseY >= screenY + 16 && relMouseX <= screenX + 282
 					&& relMouseY <= screenY + 210)
 			{
-				float thisDragDistX = (lastDragX - (mouseX - (res.getScaledWidth() / 2) - (255 / 2))) * 0.25f;
-				float thisDragDistY = (lastDragY - (mouseY - (res.getScaledHeight() / 2) - (229 / 2))) * 0.25f;
+				float thisDragDistX = (lastDragX - (mouseX - (res.getScaledWidth() / 2) - (255 / 2))) * 1f;
+				float thisDragDistY = (lastDragY - (mouseY - (res.getScaledHeight() / 2) - (229 / 2))) * 1f;
 
 				float totalDragDistX = player.getEntityData().getFloat(tagPageX) + thisDragDistX;
 				float totalDragDistY = player.getEntityData().getFloat(tagPageY) + thisDragDistY;
-
-				if (totalDragDistX >= 0 && totalDragDistX <= 146)
+				Pos2 curCategoryBackDimensions = ArcaneMagicAPI.getNotebookCategories()
+						.get(player.getEntityData().getInteger(tagTab)).getBackground().getValue();
+				if (totalDragDistX >= 0 && totalDragDistX <= curCategoryBackDimensions.getX() - (INNER_BG_WIDTH * 2))
 				{
 					player.getEntityData().setFloat(tagPageX, totalDragDistX);
 				}
 
-				if (totalDragDistY >= 0 && totalDragDistY <= 160)
+				if (totalDragDistY >= 0 && totalDragDistY <= curCategoryBackDimensions.getY() - (INNER_BG_HEIGHT * 2))
 				{
 					player.getEntityData().setFloat(tagPageY, totalDragDistY);
 				}
