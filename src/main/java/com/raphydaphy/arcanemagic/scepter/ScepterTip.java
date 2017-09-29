@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class ScepterTip extends ScepterPart
+public class ScepterTip implements ScepterPart
 {
 	public static final ScepterTip IRON = new ScepterTip("iron");
 	public static final ScepterTip GOLD = new ScepterTip("gold");
@@ -19,7 +19,6 @@ public class ScepterTip extends ScepterPart
 
 	public ScepterTip(String name)
 	{
-		super(PartCategory.CAP);
 		UNLOC_NAME = ArcaneMagic.MODID + ".cap." + name;
 		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "textures/items/scepter/tip_" + name);
 		REGNAME = new ResourceLocation(ArcaneMagic.MODID, name);
@@ -43,4 +42,8 @@ public class ScepterTip extends ScepterPart
 		return REGNAME;
 	}
 
+	@Override
+	public PartCategory getType() {
+		return PartCategory.TIP;
+	}
 }

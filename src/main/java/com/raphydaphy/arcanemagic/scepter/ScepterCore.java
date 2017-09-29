@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public class ScepterCore extends ScepterPart
+public class ScepterCore implements ScepterPart
 {
 
 	public static final ScepterCore WOOD = new ScepterCore("wood");
@@ -20,7 +20,6 @@ public class ScepterCore extends ScepterPart
 
 	public ScepterCore(String name)
 	{
-		super(PartCategory.CORE);
 		UNLOC_NAME = ArcaneMagic.MODID + ".core." + name;
 		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "textures/items/scepter/core_" + name);
 		REGNAME = new ResourceLocation(ArcaneMagic.MODID, name);
@@ -44,4 +43,8 @@ public class ScepterCore extends ScepterPart
 		return REGNAME;
 	}
 
+	@Override
+	public PartCategory getType() {
+		return PartCategory.CORE;
+	}
 }

@@ -4,33 +4,23 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 
-public abstract class ScepterPart
+public interface ScepterPart
 {
 
-	protected final PartCategory category;
+	String getUnlocalizedName();
 
-	public ScepterPart(PartCategory category)
+	@Nonnull ResourceLocation getTexture();
+
+	ResourceLocation getRegistryName();
+
+	PartCategory getType();
+
+	enum PartCategory
 	{
-		this.category = category;
+		TIP, CORE,
 	}
 
-	public abstract String getUnlocalizedName();
-
-	public abstract @Nonnull ResourceLocation getTexture();
-
-	public abstract ResourceLocation getRegistryName();
-
-	public PartCategory getType()
-	{
-		return category;
-	}
-
-	public static enum PartCategory
-	{
-		CAP, CORE,
-	}
-
-	public float getCostMultiplier()
+	default float getCostMultiplier()
 	{
 		return 1;
 	}
