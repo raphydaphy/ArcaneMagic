@@ -97,9 +97,11 @@ public class GuiNotebook extends GuiScreen
 		float screenY = (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2);
 
 		GlStateManager.pushMatrix();
-		
-		GlStateManager.translate((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2),
-				 (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
+		GlStateManager.viewport(((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2)) + 80, 75, (((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2) + FRAME_WIDTH) - 100) * 2,
+				 ((res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2) + FRAME_HEIGHT) * 2);
+		GlStateManager.scale(1.985, 1.55, 1.55);
+		//GlStateManager.translate((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2),
+		//		 (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
 		INotebookCategory curCategory = ArcaneMagicAPI.getNotebookCategories()
 				.get(player.getEntityData().getInteger(tagTab));
 		mc.getTextureManager().bindTexture(curCategory.getBackground().getKey());
@@ -118,8 +120,8 @@ public class GuiNotebook extends GuiScreen
 					drawTexturedModalRect(-24, tab * 23, 152, 232, 24, 24);
 				} else
 				{
-					// drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19,
-					// thisTab * 23 + 4);
+					drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19,
+					 thisTab * 23 + 4);
 
 					for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(thisTab).getEntries())
 					{
@@ -413,8 +415,8 @@ public class GuiNotebook extends GuiScreen
 		int y = (entry.getPos().getY() * 4) - (int) (pageY / 0.5f);
 		// if (relMouseX >= screenX + 59 && relMouseY >= screenY + 16 && relMouseX <=
 		// screenX + 282 && relMouseY <= screenY + 210)
-		if (x > 318 && y > -20 && x < 1310 && y < 845)
-		{
+		//if (x > 318 && y > -20 && x < 1310 && y < 845)
+		//{
 
 			float xStart = x;
 			float yStart = y;
@@ -429,12 +431,12 @@ public class GuiNotebook extends GuiScreen
 
 			if (x > 1260)
 			{
-				width -= 8;
+				//width -= 8;
 			}
 
 			if (y > 800)
 			{
-				height -= 8;
+				//height -= 8;
 			}
 
 			// TODO: make research icons exit properly to the top and left of the screen
@@ -489,7 +491,7 @@ public class GuiNotebook extends GuiScreen
 			GlStateManager.popMatrix();
 
 			GlStateManager.popMatrix();
-		}
+		//}
 	}
 
 	@Override

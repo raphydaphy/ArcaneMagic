@@ -67,16 +67,16 @@ public class BlockEssenceConcentrator extends BlockBase
 				if (!player.getHeldItem(hand).isEmpty())
 				{
 					ItemStack heldItemClone = player.getHeldItem(hand).copy();
+					heldItemClone.setCount(1);
 
-					if (heldItemClone.getCount() > 1)
+					if (player.getHeldItem(hand).getCount() > 1)
 					{
-						player.inventory.setInventorySlotContents(player.inventory.currentItem,
-								new ItemStack(heldItemClone.getItem(), heldItemClone.getCount() - 1));
+						player.getHeldItem(hand).shrink(1);
 					} else
 					{
 						player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
 					}
-					te.setStack(new ItemStack(heldItemClone.getItem(), 1));
+					te.setStack(heldItemClone);
 
 					player.openContainer.detectAndSendChanges();
 				}
