@@ -1,6 +1,8 @@
 package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.capabilities.Capabilities;
+import com.raphydaphy.arcanemagic.scepter.ScepterCore;
+import com.raphydaphy.arcanemagic.scepter.ScepterTip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -62,7 +64,8 @@ public class ArcaneMagic
 	{
 		MinecraftForge.EVENT_BUS.post(
 				new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
-		ScepterRegistry.registerDefaults();
+		ScepterCore.registerDefaults();
+		ScepterTip.registerDefaults();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);
 	}

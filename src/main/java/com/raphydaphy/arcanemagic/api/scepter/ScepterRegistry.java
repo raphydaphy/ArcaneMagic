@@ -14,15 +14,6 @@ public class ScepterRegistry
 {
 
 	private static final BiMap<ResourceLocation, ScepterPart> REGISTRY = HashBiMap.create();
-	private static boolean isDone = false;
-
-	public static void registerDefaults()
-	{
-		if (!isDone)
-			registerAll(ScepterTip.IRON, ScepterTip.GOLD, ScepterTip.THAUMIUM, ScepterCore.WOOD, ScepterCore.GREATWOOD,
-					ScepterCore.SILVERWOOD);
-		isDone = true;
-	}
 
 	public static boolean register(ScepterPart part)
 	{
