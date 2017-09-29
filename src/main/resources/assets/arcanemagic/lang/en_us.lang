@@ -51,18 +51,18 @@ arcanemagic.notebook.category.eldritch=Eldritch
 
 ## Basic Information
 arcanemagic.notebook.category.basic_info=Basic Information
-arcanemagic.notebook.category.basic_info.aspects=Aspects of Magic
-arcanemagic.notebook.category.basic_info.aspects.desc=The building blocks of magic
-arcanemagic.notebook.category.basic_info.thaumonomicon=Thaumonomicon
-arcanemagic.notebook.category.basic_info.thaumonomicon.desc=A Repository of Knowledge
-arcanemagic.notebook.category.basic_info.notebook=notebook
-arcanemagic.notebook.category.basic_info.notebook.desc=How you discover things
-arcanemagic.notebook.category.basic_info.knowledge_fragments=Knowledge Fragments
-arcanemagic.notebook.category.basic_info.knowledge_fragments.desc=Fragments of lost lore
-arcanemagic.notebook.category.basic_info.nodes_intro=Auras and Nodes
-arcanemagic.notebook.category.basic_info.nodes_intro.desc=Magic is everywhere
-arcanemagic.notebook.category.basic_info.warp=Warp, Flux and all things bad
-arcanemagic.notebook.category.basic_info.warp.desc=Everything has a price
+arcanemagic.notebook.category.basic_info.basic_linguistics=Basic Linguistics
+arcanemagic.notebook.category.basic_info.basic_linguistics.desc=4th of January, 1720
+arcanemagic.notebook.category.basic_info.elemental_particles=Elemental Particles
+arcanemagic.notebook.category.basic_info.elemental_particles.desc=12th of January, 1720
+arcanemagic.notebook.category.basic_info.notebook=Magnetic Boundaries
+arcanemagic.notebook.category.basic_info.notebook.desc=30th of January, 1720
+arcanemagic.notebook.category.basic_info.knowledge_fragments=Ancient Relics
+arcanemagic.notebook.category.basic_info.knowledge_fragments.desc=20th of Jaunary, 1720
+arcanemagic.notebook.category.basic_info.nodes_intro=Mystical Energy
+arcanemagic.notebook.category.basic_info.nodes_intro.desc=23th of January, 1720
+arcanemagic.notebook.category.basic_info.warp=Essence Collection
+arcanemagic.notebook.category.basic_info.warp.desc=8th of Febuary, 1720
 
 ## Thaumaturgy
 arcanemagic.notebook.category.thaumaturgy=Thaumaturgy

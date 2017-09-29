@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
+import org.lwjgl.opengl.GL11;
+
 import com.google.common.collect.Lists;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -95,9 +97,9 @@ public class GuiNotebook extends GuiScreen
 		float screenY = (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2);
 
 		GlStateManager.pushMatrix();
+		
 		GlStateManager.translate((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2),
-				(res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
-
+				 (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
 		INotebookCategory curCategory = ArcaneMagicAPI.getNotebookCategories()
 				.get(player.getEntityData().getInteger(tagTab));
 		mc.getTextureManager().bindTexture(curCategory.getBackground().getKey());
@@ -116,7 +118,8 @@ public class GuiNotebook extends GuiScreen
 					drawTexturedModalRect(-24, tab * 23, 152, 232, 24, 24);
 				} else
 				{
-					//drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19, thisTab * 23 + 4);
+					// drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19,
+					// thisTab * 23 + 4);
 
 					for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(thisTab).getEntries())
 					{
@@ -139,9 +142,8 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.enableBlend();
 		drawScaledCustomSizeModalRect(0, 0, 0, 0, FRAME_WIDTH, FRAME_HEIGHT, FRAME_WIDTH, FRAME_HEIGHT, FRAME_WIDTH,
 				FRAME_TEX_HEIGHT);
-
+		
 		GlStateManager.popMatrix();
-
 		GlStateManager.pushMatrix();
 
 		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories()
@@ -407,7 +409,7 @@ public class GuiNotebook extends GuiScreen
 		int pageX = player.getEntityData().getInteger(tagPageX);
 		int pageY = player.getEntityData().getInteger(tagPageY);
 
-		int x = (entry.getPos().getX() * 4)- (int) (pageX / 0.5f);
+		int x = (entry.getPos().getX() * 4) - (int) (pageX / 0.5f);
 		int y = (entry.getPos().getY() * 4) - (int) (pageY / 0.5f);
 		// if (relMouseX >= screenX + 59 && relMouseY >= screenY + 16 && relMouseX <=
 		// screenX + 282 && relMouseY <= screenY + 210)
@@ -441,16 +443,35 @@ public class GuiNotebook extends GuiScreen
 			GlStateManager.enableBlend();
 			GlStateManager.enableAlpha();
 
+			String heading = I18n.format(entry.getUnlocalizedName());
+			String desc = I18n.format(entry.getUnlocalizedName() + ".desc");
+
+			int boxWidth = fontRenderer.getStringWidth(heading) + 30;
+			int boxHeight = 22;
+
+			final int backgroundColor = 0xF0100010;
+
+			GuiUtils.drawGradientRect((int) zLevel, (int) xStart / 4 - 2, (int) yStart / 4 - 3,
+					(int) xStart / 4 + boxWidth + 3, (int) yStart / 4 + boxHeight + 1, backgroundColor,
+					backgroundColor);
+			final int borderColorStart = 0x505000FF;
+			final int borderColorEnd = (borderColorStart & 0xFEFEFE) >> 1 | borderColorStart & 0xFF000000;
+
+			GuiUtils.drawGradientRect((int) zLevel, (int) xStart - 2, (int) yStart + boxHeight + 2,
+					(int) xStart + boxHeight + 3, (int) yStart + boxHeight + 1, borderColorEnd, borderColorEnd);
+
 			mc.getTextureManager().bindTexture(frame);
-			//drawScaledCustomSizeModalRect((int)(xStart / 4), (int)(yStart /4), 90 *4, 232 * 4, 22, 22, 22, 22, FRAME_WIDTH, FRAME_HEIGHT);
-			drawScaledCustomSizeModalRect((int)(xStart / 4),(int)(yStart / 4),90,208,width - 10, height - 10, width - 10, height - 10, FRAME_WIDTH, FRAME_HEIGHT);
+			// drawScaledCustomSizeModalRect((int) (xStart / 4), (int) (yStart / 4), 90,
+			// 208, width - 10, height - 10,
+			// width - 10, height - 10, FRAME_WIDTH, FRAME_HEIGHT);
 			Object icon = entry.getIcon().getTexture();
 			if (icon instanceof ResourceLocation)
 			{
 				mc.getTextureManager().bindTexture((ResourceLocation) icon);
 				GlStateManager.scale(0.5, 0.5, 1);
-				//this.drawScaledCustomSizeModalRect((int)(xStart / 2) + 2, (int)(yStart / 2) + 2, (int)(u2 / 2), (int)(v2 / 2), (int)u2,(int)v2, 32, 32, 32, 32);
-				drawModalRectWithCustomSizedTexture((int) (xStart / 2) + 5, (int) (yStart / 2) + 5, u2, v2, width,
+				// this.drawScaledCustomSizeModalRect((int)(xStart / 2) + 2, (int)(yStart / 2) +
+				// 2, (int)(u2 / 2), (int)(v2 / 2), (int)u2,(int)v2, 32, 32, 32, 32);
+				drawModalRectWithCustomSizedTexture((int) (xStart / 2) + 5, (int) (yStart / 2) + 4, u2, v2, width,
 						height, 32, 32);
 				GlStateManager.scale(2, 2, 1);
 			} else if (icon instanceof ItemStack)
@@ -458,11 +479,15 @@ public class GuiNotebook extends GuiScreen
 				this.itemRender.renderItemAndEffectIntoGUI((ItemStack) icon, (int) ((xStart + 3) / 1),
 						(int) ((yStart + 3) / 1));
 			}
-			fontRenderer.drawStringWithShadow(I18n.format(entry.getUnlocalizedName()), (float) xStart / 4 + 25, (float) yStart / 4 + 2,
-					0xFFFFFF);
+
+			GlStateManager.pushMatrix();
+
+			fontRenderer.drawStringWithShadow(heading, (float) xStart / 4 + 25, (float) yStart / 4 + 2, 0xb0b7b5);
 			GlStateManager.scale(0.5, 0.5, 0.5);
-			fontRenderer.drawStringWithShadow(I18n.format(entry.getUnlocalizedName() + ".desc"), (float) xStart / 2 + 50, (float) yStart / 2 + 25,
-					0xFFFFFF);
+			fontRenderer.drawStringWithShadow(desc, (float) xStart / 2 + 50, (float) yStart / 2 + 25, 0xa3cec3);
+			GlStateManager.color(1, 1, 1);
+			GlStateManager.popMatrix();
+
 			GlStateManager.popMatrix();
 		}
 	}

@@ -32,8 +32,8 @@ public class CategoryBasicInformation implements INotebookCategory
 	public List<INotebookEntry> getEntries()
 	{
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
-		entries.add(new EntryAspects());
-		entries.add(new EntryThaumonomicon());
+		entries.add(new EntryBasicLinguistics());
+		entries.add(new EntryElementalParticles());
 		entries.add(new Entrynotebook());
 		entries.add(new EntryKnowledgeFragments());
 		entries.add(new EntryNodesIntro());
@@ -41,34 +41,34 @@ public class CategoryBasicInformation implements INotebookCategory
 		return entries;
 	}
 
-	public class EntryAspects implements INotebookEntry
+	public class EntryBasicLinguistics implements INotebookEntry
 	{
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "arcanemagic.notebook.category.basic_info.aspects";
+			return "arcanemagic.notebook.category.basic_info.basic_linguistics";
 		}
 
 		@Override
 		public IconTypePair getIcon()
 		{
-			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/notebook/r_aspects.png"),
+			return new IconTypePair(new ResourceLocation(ArcaneMagic.MODID, "textures/items/scribing_tools.png"),
 					IconType.CIRCLE);
 		}
 
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(280, 150);
+			return new Pos2(265, 150);
 		}
 	}
 
-	public class EntryThaumonomicon implements INotebookEntry
+	public class EntryElementalParticles implements INotebookEntry
 	{
 		@Override
 		public String getUnlocalizedName()
 		{
-			return "arcanemagic.notebook.category.basic_info.thaumonomicon";
+			return "arcanemagic.notebook.category.basic_info.elemental_particles";
 		}
 
 		@Override
@@ -81,7 +81,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(200, 200);
+			return new Pos2(200, 220);
 		}
 	}
 
@@ -103,7 +103,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(320, 250);
+			return new Pos2(350, 280);
 		}
 	}
 
@@ -125,7 +125,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(350, 200);
+			return new Pos2(350, 220);
 		}
 	}
 
@@ -147,7 +147,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(200, 250);
+			return new Pos2(200, 280);
 		}
 	}
 
@@ -169,7 +169,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		@Override
 		public Pos2 getPos()
 		{
-			return new Pos2(260, 300);
+			return new Pos2(260, 350);
 		}
 	}
 
