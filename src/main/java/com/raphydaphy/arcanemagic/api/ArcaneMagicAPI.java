@@ -1,20 +1,36 @@
 package com.raphydaphy.arcanemagic.api;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.Preconditions;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableSet;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
+
+import net.minecraft.util.ResourceLocation;
 
 public class ArcaneMagicAPI
 {
 	public static final String VERSION = "0.1";
 
-	private static final List<INotebookCategory> NOTEBOOK_CATEGORIES = new ArrayList<INotebookCategory>();
+	private static final BiMap<ResourceLocation, INotebookCategory> CATEGORIES = HashBiMap.create();
 	private static int TOTAL_NOTEBOOK_CATEGORIES = 0;
 
-	public static void registerNotebookCategory(INotebookCategory category)
+	public static void registerCategory(INotebookCategory category)
 	{
+		Preconditions.checkNotNull(category, "Cannot register a null object!");
+		Preconditions.checkNotNull(category.getRegistryName(), "Cannot register without a registry name!");
+		Preconditions.checkArgument(CATEGORIES.get(category.getRegistryName()) == null, "Cannot use an already existing registry name!");
 		TOTAL_NOTEBOOK_CATEGORIES++;
-		NOTEBOOK_CATEGORIES.add(category);
+		CATEGORIES.put(category.getRegistryName(), category);
+	}
+	
+	public static void registerEssence(Essence e) {
+		Essence.REGISTRY.register(e);
 	}
 
 	public static int getCategoryCount()
@@ -22,9 +38,14 @@ public class ArcaneMagicAPI
 		return TOTAL_NOTEBOOK_CATEGORIES;
 	}
 
-	public static List<INotebookCategory> getNotebookCategories()
+	public static Set<INotebookCategory> getNotebookCategories()
 	{
-		return NOTEBOOK_CATEGORIES;
+		return ImmutableSet.copyOf(CATEGORIES.values());
+	}
+	
+	@Nullable
+	public static INotebookCategory getCategory(ResourceLocation name) {
+		return CATEGORIES.get(name);
 	}
 
 }

@@ -34,7 +34,7 @@ public class CategoryBasicInformation implements INotebookCategory
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		entries.add(new EntryBasicLinguistics());
 		entries.add(new EntryElementalParticles());
-		entries.add(new Entrynotebook());
+		entries.add(new EntryNotebook());
 		entries.add(new EntryKnowledgeFragments());
 		entries.add(new EntryNodesIntro());
 		entries.add(new EntryWarp());
@@ -61,6 +61,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		{
 			return new Pos2(265, 150);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "basic_linguistics");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 
 	public class EntryElementalParticles implements INotebookEntry
@@ -83,9 +90,16 @@ public class CategoryBasicInformation implements INotebookCategory
 		{
 			return new Pos2(200, 220);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "particles");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 
-	public class Entrynotebook implements INotebookEntry
+	public class EntryNotebook implements INotebookEntry
 	{
 		@Override
 		public String getUnlocalizedName()
@@ -104,6 +118,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		public Pos2 getPos()
 		{
 			return new Pos2(350, 280);
+		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "notebook");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
 		}
 	}
 
@@ -127,6 +148,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		{
 			return new Pos2(350, 220);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "fragments");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 
 	public class EntryNodesIntro implements INotebookEntry
@@ -148,6 +176,13 @@ public class CategoryBasicInformation implements INotebookCategory
 		public Pos2 getPos()
 		{
 			return new Pos2(200, 280);
+		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "basic_nodes");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
 		}
 	}
 
@@ -171,12 +206,26 @@ public class CategoryBasicInformation implements INotebookCategory
 		{
 			return new Pos2(260, 350);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "basic_warp");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 
 	@Override
 	public Pair<ResourceLocation, Pos2> getBackground()
 	{
 		return Pair.of(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/notebook_back_core.png"), new Pos2(1920, 1200));
+	}
+
+	private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "category_basics");
+	
+	@Override
+	public ResourceLocation getRegistryName() {
+		return LOC;
 	}
 
 }

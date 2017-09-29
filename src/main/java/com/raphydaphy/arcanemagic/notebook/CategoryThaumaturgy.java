@@ -58,6 +58,13 @@ public class CategoryThaumaturgy implements INotebookCategory
 		{
 			return new Pos2(260, 250);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "basic_scepter");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 
 	public class EntryBasicFoci implements INotebookEntry
@@ -79,11 +86,25 @@ public class CategoryThaumaturgy implements INotebookCategory
 		{
 			return new Pos2(290, 210);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "basic_foci");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 	
 	@Override
 	public Pair<ResourceLocation, Pos2> getBackground()
 	{
 		return Pair.of(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/notebook_back_tc.png"), new Pos2(512, 512));
+	}
+
+	private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "category_thaum");
+	
+	@Override
+	public ResourceLocation getRegistryName() {
+		return LOC;
 	}
 }

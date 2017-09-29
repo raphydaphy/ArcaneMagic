@@ -14,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -195,50 +197,26 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	public String toString()
 	{
-		return getRegistryName().toString();
+		return "Essence: " + getRegistryName().toString();
 	}
 
-	// kms this is worse function evar
+	// kms this is worse function evar die pls
 	public static Essence getFromBiome(Biome biome)
 	{
-		if (biome.equals(Biomes.DEEP_OCEAN) || biome.equals(Biomes.RIVER) || biome.equals(Biomes.FROZEN_OCEAN)
-				|| biome.equals(Biomes.FROZEN_OCEAN) || biome.equals(Biomes.DEEP_OCEAN)
-				|| biome.equals(Biomes.STONE_BEACH) || biome.equals(Biomes.BEACH) || biome.equals(Biomes.COLD_BEACH)
-				|| biome.equals(Biomes.SWAMPLAND) || biome.equals(Biomes.MUTATED_SWAMPLAND))
-		{
+		if (BiomeDictionary.hasType(biome, Type.WATER))
 			return Essence.DEPTH;
-		} else if (biome.equals(Biomes.PLAINS) || biome.equals(Biomes.PLAINS) || biome.equals(Biomes.DEFAULT)
-				|| biome.equals(Biomes.FOREST) || biome.equals(Biomes.FOREST_HILLS) || biome.equals(Biomes.JUNGLE)
-				|| biome.equals(Biomes.JUNGLE_EDGE) || biome.equals(Biomes.JUNGLE_HILLS)
-				|| biome.equals(Biomes.MUTATED_BIRCH_FOREST) || biome.equals(Biomes.MUTATED_BIRCH_FOREST_HILLS)
-				|| biome.equals(Biomes.MUTATED_JUNGLE) || biome.equals(Biomes.MUTATED_FOREST)
-				|| biome.equals(Biomes.MUTATED_JUNGLE_EDGE) || biome.equals(Biomes.MUTATED_REDWOOD_TAIGA)
-				|| biome.equals(Biomes.MUTATED_REDWOOD_TAIGA_HILLS) || biome.equals(Biomes.ROOFED_FOREST)
-				|| biome.equals(Biomes.REDWOOD_TAIGA) || biome.equals(Biomes.REDWOOD_TAIGA_HILLS))
-		{
-			return Essence.HORIZON;
-		} else if (biome.equals(Biomes.DESERT) || biome.equals(Biomes.DESERT_HILLS) || biome.equals(Biomes.HELL)
-				|| biome.equals(Biomes.MUTATED_DESERT) || biome.equals(Biomes.MUTATED_SAVANNA)
-				|| biome.equals(Biomes.SAVANNA) || biome.equals(Biomes.SAVANNA_PLATEAU)
-				|| biome.equals(Biomes.MUTATED_SAVANNA_ROCK))
-		{
+		else if (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS))
+			 return Essence.HORIZON;
+		else if (BiomeDictionary.hasType(biome, Type.DRY) || BiomeDictionary.hasType(biome, Type.NETHER))
 			return Essence.INFERNO;
-		} else if (biome.equals(Biomes.EXTREME_HILLS) || biome.equals(Biomes.EXTREME_HILLS_EDGE)
-				|| biome.equals(Biomes.EXTREME_HILLS_WITH_TREES) || biome.equals(Biomes.ICE_MOUNTAINS)
-				|| biome.equals(Biomes.ICE_PLAINS) || biome.equals(Biomes.MUTATED_EXTREME_HILLS)
-				|| biome.equals(Biomes.MUTATED_EXTREME_HILLS_WITH_TREES))
-		{
+		else if (BiomeDictionary.hasType(biome, Type.HILLS))
 			return Essence.OZONE;
-		} else if (biome.equals(Biomes.MESA) || biome.equals(Biomes.MESA_CLEAR_ROCK) || biome.equals(Biomes.MESA_ROCK)
-				|| biome.equals(Biomes.MUTATED_MESA) || biome.equals(Biomes.MUTATED_MESA_CLEAR_ROCK)
-				|| biome.equals(Biomes.MUTATED_MESA_ROCK))
-		{
+		else if (BiomeDictionary.hasType(biome, Type.MESA))
 			return Essence.CHAOS;
-		} else if (biome.equals(Biomes.MUSHROOM_ISLAND) || biome.equals(Biomes.MUSHROOM_ISLAND_SHORE))
-		{
-			return Essence.PEACE;
-		}
-		return Essence.HORIZON;
+		else if (biome.equals(Biomes.MUSHROOM_ISLAND) || biome.equals(Biomes.MUSHROOM_ISLAND_SHORE))
+			 return Essence.PEACE;
+		else 
+			return Essence.HORIZON;
 	}
 
 }

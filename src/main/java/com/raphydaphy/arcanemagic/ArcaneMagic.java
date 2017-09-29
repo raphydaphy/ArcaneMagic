@@ -68,9 +68,9 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		ArcaneMagicAPI.registerNotebookCategory(new CategoryBasicInformation());
-		ArcaneMagicAPI.registerNotebookCategory(new CategoryThaumaturgy());
-		ArcaneMagicAPI.registerNotebookCategory(new CategoryAlchemy());
+		ArcaneMagicAPI.registerCategory(new CategoryBasicInformation());
+		ArcaneMagicAPI.registerCategory(new CategoryThaumaturgy());
+		ArcaneMagicAPI.registerCategory(new CategoryAlchemy());
 		proxy.postInit(event);
 	}
 }

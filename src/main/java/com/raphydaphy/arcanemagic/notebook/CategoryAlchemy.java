@@ -56,11 +56,25 @@ public class CategoryAlchemy implements INotebookCategory
 		{
 			return new Pos2(260, 270);
 		}
+
+		private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "basic_alchemy");
+		
+		@Override
+		public ResourceLocation getRegistryName() {
+			return LOC;
+		}
 	}
 	
 	@Override
 	public Pair<ResourceLocation, Pos2> getBackground()
 	{
 		return Pair.of(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/notebook_back_tc_eldritch.png"), new Pos2(512, 512));
+	}
+
+	private final ResourceLocation LOC = new ResourceLocation(ArcaneMagic.MODID, "category_alchemy");
+	
+	@Override
+	public ResourceLocation getRegistryName() {
+		return LOC;
 	}
 }

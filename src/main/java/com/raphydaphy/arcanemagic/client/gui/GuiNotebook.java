@@ -6,8 +6,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import org.lwjgl.opengl.GL11;
-
 import com.google.common.collect.Lists;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -42,7 +40,7 @@ public class GuiNotebook extends GuiScreen
 	public static final int INNER_BG_WIDTH = 225;
 	public static final int INNER_BG_HEIGHT = 195;
 
-	public static final String tagUsedNotebook = "usedNotebook";
+	public static final String TAG_USED = "usedNotebook";
 	public static final String tagPageX = "notebookPageX";
 	public static final String tagPageY = "notebookPageY";
 	public static final String tagTab = "notebookTab";
@@ -63,7 +61,7 @@ public class GuiNotebook extends GuiScreen
 	{
 		this.player = player;
 
-		if (player.getEntityData().getBoolean(tagUsedNotebook) == false)
+		if (player.getEntityData().getBoolean(TAG_USED) == false)
 		{
 			System.out.println("Player opened Notebook for first time, doing initial setup.");
 			// player.getEntityData().setBoolean(tagUsedNotebook, true);
@@ -102,15 +100,16 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.scale(1.985, 1.55, 1.55);
 		//GlStateManager.translate((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2),
 		//		 (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
-		INotebookCategory curCategory = ArcaneMagicAPI.getNotebookCategories()
-				.get(player.getEntityData().getInteger(tagTab));
+		INotebookCategory curCategory = ArcaneMagicAPI.getCategory(
+				new ResourceLocation((player.getEntityData().getString(tagTab))));
 		mc.getTextureManager().bindTexture(curCategory.getBackground().getKey());
 		drawScaledCustomSizeModalRect(104, 17, pageX, pageY, INNER_BG_WIDTH * 2, INNER_BG_HEIGHT * 2, INNER_BG_WIDTH,
 				INNER_BG_HEIGHT, curCategory.getBackground().getValue().getX(),
 				curCategory.getBackground().getValue().getY());
 
 		mc.getTextureManager().bindTexture(frame);
-		for (int tab = 0; tab < ArcaneMagicAPI.getCategoryCount() * 2; tab++)
+		int tab = 0;
+		for (INotebookCategory category : ArcaneMagicAPI.getNotebookCategories())
 		{
 			int thisTab = tab >= ArcaneMagicAPI.getCategoryCount() ? tab - ArcaneMagicAPI.getCategoryCount() : tab;
 			if (thisTab == player.getEntityData().getInteger(tagTab))
@@ -120,10 +119,10 @@ public class GuiNotebook extends GuiScreen
 					drawTexturedModalRect(-24, tab * 23, 152, 232, 24, 24);
 				} else
 				{
-					drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -19,
+					drawIcon(category.getIcon(), -19,
 					 thisTab * 23 + 4);
 
-					for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(thisTab).getEntries())
+					for (INotebookEntry entry : category.getEntries())
 					{
 						drawResearchEntry(entry);
 					}
@@ -135,9 +134,10 @@ public class GuiNotebook extends GuiScreen
 					drawTexturedModalRect(-16, tab * 23, 184, 232, 16, 22);
 				} else
 				{
-					drawIcon(ArcaneMagicAPI.getNotebookCategories().get(thisTab).getIcon(), -12, thisTab * 23 + 3);
+					drawIcon(category.getIcon(), -12, thisTab * 23 + 3);
 				}
 			}
+			tab++;
 		}
 
 		mc.getTextureManager().bindTexture(frame);
@@ -148,8 +148,7 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.popMatrix();
 		GlStateManager.pushMatrix();
 
-		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories()
-				.get(player.getEntityData().getInteger(tagTab)).getEntries())
+		for (INotebookEntry entry : ArcaneMagicAPI.getCategory(new ResourceLocation((player.getEntityData().getString(tagTab)))).getEntries())
 		{
 			// drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(),
 			// Lists.newArrayList(
@@ -515,8 +514,7 @@ public class GuiNotebook extends GuiScreen
 
 				float totalDragDistX = player.getEntityData().getFloat(tagPageX) + thisDragDistX;
 				float totalDragDistY = player.getEntityData().getFloat(tagPageY) + thisDragDistY;
-				Pos2 curCategoryBackDimensions = ArcaneMagicAPI.getNotebookCategories()
-						.get(player.getEntityData().getInteger(tagTab)).getBackground().getValue();
+				Pos2 curCategoryBackDimensions = ArcaneMagicAPI.getCategory(new ResourceLocation((player.getEntityData().getString(tagTab)))).getBackground().getValue();
 				if (totalDragDistX >= 0 && totalDragDistX <= curCategoryBackDimensions.getX() - (INNER_BG_WIDTH * 2))
 				{
 					player.getEntityData().setFloat(tagPageX, totalDragDistX);

@@ -10,15 +10,32 @@ import net.minecraft.util.ResourceLocation;
 
 public interface INotebookCategory
 {
-	// The name of the category's tab
+	/**
+	 * The name of the category's tab
+	 * @return The unlocalized name
+	 */
 	public String getUnlocalizedName();
 
-	// The icon of the tab in the thaumonomicon
+	/**
+	 * The icon of the tab in the thaumonomicon
+	 * @return
+	 */
 	public ResourceLocation getIcon();
 
-	// A list of all the entries within the category
+	/**
+	 * A list of all the entries within the category
+	 * @return
+	 */
 	public List<INotebookEntry> getEntries();
 	
-	// The background resourcelocation, and the dimensions
+	/** The background resourcelocation, and the dimensions
+	 * @return
+	 */
 	public Pair<ResourceLocation, Pos2> getBackground();
+	
+	/**
+	 * The name of this category
+	 * @return
+	 */
+	public ResourceLocation getRegistryName();
 }
