@@ -49,7 +49,7 @@ public class ClientProxy extends CommonProxy
 			int y = ev.getY();
 			for (int line = 0; line < ev.getLines().size(); line++)
 			{
-				if (ev.getLines().get(line).equals("§7"))
+				if (ev.getLines().get(line).equals("\u00A77"))
 				{
 
 					break;
@@ -70,7 +70,7 @@ public class ClientProxy extends CommonProxy
 
 						String thisString = essence.getCount() + " "
 								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
-						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorHex());
+						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorInt());
 
 						x += 70;
 						curYCounter++;

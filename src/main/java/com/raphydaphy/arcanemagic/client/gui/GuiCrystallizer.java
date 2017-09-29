@@ -90,8 +90,8 @@ public class GuiCrystallizer extends GuiContainer
 			}
 			i++;
 			Essence essence = stack.getEssence();
-			drawBar(guiLeft + 37 + (i * 18), guiTop + 19, essence.getColorRGB().getX() / 256f,
-					essence.getColorRGB().getY() / 256f, essence.getColorRGB().getZ() / 256f, (int)Math.floor(stack.getCount() / 20), 0);
+			drawBar(guiLeft + 37 + (i * 18), guiTop + 19, essence.getColor().getRed() / 256f,
+					essence.getColor().getGreen() / 256f, essence.getColor().getBlue() / 256f, (int)Math.floor(stack.getCount() / 20), 0);
 		}
 
 		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 0x000000);

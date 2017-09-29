@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.item;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -328,10 +329,10 @@ public class ItemScepter extends ItemBase
 				{
 					EssenceStack essence = storedEssenceArray[curEssence];
 					Pos2 essencePos = barPositions.get(curEssence);
-					Vec3i color = essence.getEssence().getColorRGB();
+					Color color = essence.getEssence().getColor();
 					// System.out.println(color.toString());
-					drawBar(essencePos.getX(), essencePos.getY(), color.getX() / 256, color.getY() / 256f,
-							color.getZ() / 256f, essence.getCount() / 28, rot);
+					drawBar(essencePos.getX(), essencePos.getY(), color.getRed() / 256, color.getGreen() / 256f,
+							color.getBlue() / 256f, essence.getCount() / 28, rot);
 					rot += 23;
 				}
 			}

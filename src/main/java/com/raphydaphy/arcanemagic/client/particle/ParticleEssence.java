@@ -35,7 +35,7 @@ public class ParticleEssence extends Particle
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
 		int colorMultiplier = 3;
-		this.setRBGColorF(essence.getColorRGB().getX() * colorMultiplier, essence.getColorRGB().getY() * colorMultiplier, essence.getColorRGB().getZ() * colorMultiplier);
+		this.setRBGColorF(essence.getColor().getRed() * colorMultiplier, essence.getColor().getGreen() * colorMultiplier, essence.getColor().getBlue() * colorMultiplier);
 		this.essence = essence;
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;

@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -20,17 +19,19 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import java.awt.Color;
+
 public class Essence extends IForgeRegistryEntry.Impl<Essence>
 {
 
 	public static final IForgeRegistry<Essence> REGISTRY = new EssenceRegistry();
 
-	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xbf5600);
-	public static final Essence DEPTH = new Essence("depth", ArcaneMagic.MODID + ".depth", 0x187ea3);
-	public static final Essence OZONE = new Essence("ozone", ArcaneMagic.MODID + ".ozone", 0xeaeaea);
-	public static final Essence HORIZON = new Essence("horizon", ArcaneMagic.MODID + ".horizon", 0x066018);
-	public static final Essence PEACE = new Essence("peace", ArcaneMagic.MODID + ".peace", 0x303a1f);
-	public static final Essence CHAOS = new Essence("chaos", ArcaneMagic.MODID + ".chaos", 0x85b72f);
+	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xbf, 0x56, 0);
+	public static final Essence DEPTH = new Essence("depth", ArcaneMagic.MODID + ".depth", 0x18, 0x7e, 0xa3);
+	public static final Essence OZONE = new Essence("ozone", ArcaneMagic.MODID + ".ozone", 0xea, 0xea, 0xea);
+	public static final Essence HORIZON = new Essence("horizon", ArcaneMagic.MODID + ".horizon", 0x06, 0x60, 0x18);
+	public static final Essence PEACE = new Essence("peace", ArcaneMagic.MODID + ".peace", 0x30, 0x3a, 0x1f);
+	public static final Essence CHAOS = new Essence("chaos", ArcaneMagic.MODID + ".chaos", 0x85, 0xb7, 0x2f);
 
 	public static class EssenceSubscriber
 	{
@@ -48,24 +49,28 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		}
 	}
 
-	private final int color;
+	private final Color color;
 	private String unlocName;
 	protected ItemStack itemForm = ItemStack.EMPTY;
 
-	private Essence(String name, String unlocName, int color)
+	private Essence(String name, String unlocName, int r, int g, int b){
+		this(name, unlocName, new Color(r,g,b));
+	}
+
+	private Essence(String name, String unlocName, Color color)
 	{
 		setRegistryName(ArcaneMagic.MODID, name);
 		setUnlocalizedName(unlocName);
 		this.color = color;
 	}
 
-	public Essence(String unlocName, int color)
+	public Essence(String unlocName, Color color)
 	{
 		setUnlocalizedName(unlocName);
 		this.color = color;
 	}
 
-	public Essence(int color)
+	public Essence(Color color)
 	{
 		this.color = color;
 	}
@@ -169,20 +174,14 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return getUnlocalizedName() + ".name";
 	}
 
-	public int getColorHex()
+	public int getColorInt()
 	{
-		return color;
+		return color.getRGB();
 	}
 
-	// ik its not a blockpos ok im sorry god
-	public Vec3i getColorRGB()
+	public Color getColor()
 	{
-		String colorStr = String.valueOf(getColorHex());
-		int r = Integer.valueOf(colorStr.substring(0, 2), 16);
-		int g = Integer.valueOf(colorStr.substring(2, 4), 16);
-		int b = Integer.valueOf(colorStr.substring(4, 6), 16);
-
-		return new Vec3i(r, g, b);
+		return color;
 	}
 
 	public static Essence getEssenceByID(int id)
