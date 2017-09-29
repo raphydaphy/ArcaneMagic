@@ -95,14 +95,14 @@ public class ItemScepter extends ItemBase
 		return sp == null ? ScepterCore.WOOD : sp;
 	}
 
-	public static void applyTipAndCore(ItemStack scepter, ScepterPart cap, ScepterPart core)
+	public static void applyTipAndCore(ItemStack scepter, ScepterPart tip, ScepterPart core)
 	{
 		if (!scepter.hasTagCompound())
 			scepter.setTagCompound(new NBTTagCompound());
-		Preconditions.checkArgument(cap.getType() == PartCategory.TIP, "You can only assign a tip to the tip slot!");
+		Preconditions.checkArgument(tip.getType() == PartCategory.TIP, "You can only assign a tip to the tip slot!");
 		Preconditions.checkArgument(core.getType() == PartCategory.CORE, "You can only assign a core the core slot!");
-		getTagCompoundSafe(scepter).setString(KEY_CORE, ScepterCore.WOOD.getRegistryName().toString());
-		getTagCompoundSafe(scepter).setString(KEY_TIP, ScepterTip.GOLD.getRegistryName().toString());
+		getTagCompoundSafe(scepter).setString(KEY_CORE, core.getRegistryName().toString());
+		getTagCompoundSafe(scepter).setString(KEY_TIP, tip.getRegistryName().toString());
 	}
 
 	public static NBTTagCompound getTagCompoundSafe(ItemStack stack)
