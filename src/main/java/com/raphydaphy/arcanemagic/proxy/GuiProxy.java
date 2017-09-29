@@ -4,7 +4,7 @@ import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.client.gui.GuiArcaneWorktable;
 import com.raphydaphy.arcanemagic.client.gui.GuiCrystallizer;
-import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
+import com.raphydaphy.arcanemagic.client.gui.GuiNotebookNew;
 import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
 import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
