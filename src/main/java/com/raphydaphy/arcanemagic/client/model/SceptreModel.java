@@ -39,7 +39,7 @@ import java.util.function.Function;
 public class SceptreModel implements IModel {
     private static final ResourceLocation SCEPTRE_BASE = new ResourceLocation(ArcaneMagic.MODID, "item/scepter_base");
 
-    private static Class VanillaModelWrapper;
+    private static Class<?> VanillaModelWrapper;
     private static Method bakeImpl;
     static {
         try {
