@@ -5,8 +5,6 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.scepter.ScepterTip;
-import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 
 import net.minecraft.util.ResourceLocation;
 

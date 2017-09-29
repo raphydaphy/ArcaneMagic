@@ -1,15 +1,12 @@
 package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.capabilities.Capabilities;
-import com.raphydaphy.arcanemagic.scepter.ScepterCore;
-import com.raphydaphy.arcanemagic.scepter.ScepterTip;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
-import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
 import com.raphydaphy.arcanemagic.init.ModEntities;
@@ -57,8 +54,6 @@ public class ArcaneMagic
 		MinecraftForge.EVENT_BUS.register(new EssenceSubscriber());
 		ModRegistry.registerTiles();
 		Capabilities.register();
-		ScepterTip.registerDefaults();
-		ScepterCore.registerDefaults();
 	}
 
 	@Mod.EventHandler

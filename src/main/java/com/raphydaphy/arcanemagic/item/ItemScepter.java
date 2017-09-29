@@ -21,8 +21,6 @@ import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.scepter.ScepterTip;
-import com.raphydaphy.arcanemagic.scepter.ScepterCore;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -87,14 +85,14 @@ public class ItemScepter extends ItemBase
 	public static ScepterPart getTipOrDefault(ItemStack scepter)
 	{
 		ScepterPart sp = getTip(scepter);
-		return sp == null ? ScepterTip.IRON : sp;
+		return sp == null ? ItemTip.Type.IRON : sp;
 	}
 
 	@Nonnull
 	public static ScepterPart getCoreOrDefault(ItemStack scepter)
 	{
 		ScepterPart sp = getCore(scepter);
-		return sp == null ? ScepterCore.WOOD : sp;
+		return sp == null ? ItemCore.Type.WOOD : sp;
 	}
 
 	public static void applyTipAndCore(ItemStack scepter, ScepterPart tip, ScepterPart core)

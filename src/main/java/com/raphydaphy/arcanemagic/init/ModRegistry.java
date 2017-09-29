@@ -11,12 +11,7 @@ import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.item.ItemAncientParchment;
-import com.raphydaphy.arcanemagic.item.ItemBase;
-import com.raphydaphy.arcanemagic.item.ItemFoci;
-import com.raphydaphy.arcanemagic.item.ItemNotebook;
-import com.raphydaphy.arcanemagic.item.ItemScepter;
-import com.raphydaphy.arcanemagic.item.ItemScribingTools;
+import com.raphydaphy.arcanemagic.item.*;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
@@ -44,7 +39,8 @@ public class ModRegistry
 	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
 	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 
-	public static final ItemBase IRON_TIP = new ItemBase("scepter_tip_iron");
+	public static final ItemBase TIPS = new ItemTip();
+	public static final ItemBase CORES = new ItemCore();
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemBase ESSENCE = new ItemBase("essence", 6);
