@@ -31,6 +31,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,6 +43,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -103,6 +105,19 @@ public class ItemScepter extends ItemBase
 		Preconditions.checkArgument(core.getType() == PartCategory.CORE, "You can only assign a core the core slot!");
 		getTagCompoundSafe(scepter).setString(KEY_CORE, core.getRegistryName().toString());
 		getTagCompoundSafe(scepter).setString(KEY_TIP, tip.getRegistryName().toString());
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (isInCreativeTab(tab)){
+			ScepterRegistry.getCores().forEach((core)->{
+				ScepterRegistry.getTips().forEach((tip)->{
+					ItemStack stack = new ItemStack(this, 1);
+					applyTipAndCore(stack, tip, core);
+					items.add(stack);
+				});
+			});
+		}
 	}
 
 	public static NBTTagCompound getTagCompoundSafe(ItemStack stack)
