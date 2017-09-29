@@ -57,6 +57,8 @@ public class ArcaneMagic
 		MinecraftForge.EVENT_BUS.register(new EssenceSubscriber());
 		ModRegistry.registerTiles();
 		Capabilities.register();
+		ScepterTip.registerDefaults();
+		ScepterCore.registerDefaults();
 	}
 
 	@Mod.EventHandler
@@ -64,8 +66,6 @@ public class ArcaneMagic
 	{
 		MinecraftForge.EVENT_BUS.post(
 				new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
-		ScepterCore.registerDefaults();
-		ScepterTip.registerDefaults();
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);
 	}

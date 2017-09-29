@@ -138,7 +138,7 @@ public class ClientProxy extends CommonProxy
 
 	@SubscribeEvent
 	@SuppressWarnings("unused")
-	public void onTextureStitch(TextureStitchEvent event)
+	public void onTextureStitch(TextureStitchEvent.Pre event)
 	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particle_star"));
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/particles"));
@@ -149,7 +149,9 @@ public class ClientProxy extends CommonProxy
 			event.getMap()
 					.registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + essenceParticle));
 		}
-		ScepterRegistry.getKeys().forEach(loc -> event.getMap().registerSprite(loc));
+		ScepterRegistry.getValues().forEach(part -> {
+			event.getMap().registerSprite(part.getTexture());
+		});
 		System.out.println("Stiched textures!");
 	}
 

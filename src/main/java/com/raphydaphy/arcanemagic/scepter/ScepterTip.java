@@ -25,7 +25,7 @@ public class ScepterTip implements ScepterPart
 	public ScepterTip(String name)
 	{
 		UNLOC_NAME = ArcaneMagic.MODID + ".cap." + name;
-		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "textures/items/scepter/tip_" + name);
+		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "items/scepter/tip_" + name);
 		REGNAME = new ResourceLocation(ArcaneMagic.MODID, name);
 	}
 

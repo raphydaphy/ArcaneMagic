@@ -27,7 +27,7 @@ public class ScepterCore implements ScepterPart
 	public ScepterCore(String name)
 	{
 		UNLOC_NAME = ArcaneMagic.MODID + ".core." + name;
-		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "textures/items/scepter/core_" + name);
+		TEXTURE = new ResourceLocation(ArcaneMagic.MODID, "items/scepter/core_" + name);
 		REGNAME = new ResourceLocation(ArcaneMagic.MODID, name);
 	}
 

@@ -56,6 +56,11 @@ public class ScepterRegistry
 		return ImmutableSet.copyOf(REGISTRY.keySet());
 	}
 
+	public static ImmutableSet<ScepterPart> getValues()
+	{
+		return ImmutableSet.copyOf(REGISTRY.values());
+	}
+
 	public static ImmutableSet<ScepterPart> getTips(){
 		ImmutableSet.Builder<ScepterPart> builder = ImmutableSet.builder();
 		for (ScepterPart e : REGISTRY.values()){
