@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.vertex.VertexFormat;
@@ -20,10 +21,12 @@ import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.model.IModelState;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import javax.vecmath.Matrix4f;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -31,10 +34,32 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Created by Xander V on 28/09/2017.
+ * Loads the Sceptre base model and handles retexturing it based on the Tip and Core in the ItemStack.
  */
 public class SceptreModel implements IModel {
     private static final ResourceLocation SCEPTRE_BASE = new ResourceLocation(ArcaneMagic.MODID, "item/scepter_base");
+
+    private static Class VanillaModelWrapper;
+    private static Method bakeImpl;
+    static {
+        try {
+            VanillaModelWrapper = Class.forName("net.minecraftforge.client.model.ModelLoader$VanillaModelWrapper");
+            bakeImpl = ReflectionHelper.findMethod(VanillaModelWrapper, "bakeImpl", null, IModelState.class, VertexFormat.class, Function.class);
+        } catch (Exception e){
+            throw new RuntimeException("Could not get Vanilla loader wrappers", e);
+        }
+    }
+
+    /**
+     * Reflected reference to forge's VanillaModelWrapper to get around the cache.
+     */
+    private static IBakedModel bakeImpl(IModel model, IModelState state, VertexFormat format, Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter){
+        try {
+            return (IBakedModel)bakeImpl.invoke(model, state, format,bakedTextureGetter);
+        } catch (Exception e){
+            throw new RuntimeException("Error invoking bakeImpl", e);
+        }
+    }
 
     private IModel sceptreBase;
     private boolean textured = false;
@@ -78,7 +103,8 @@ public class SceptreModel implements IModel {
             this.format = format;
             this.bakedTextureGetter = bakedTextureGetter;
             if (SceptreModel.this.textured){
-                this.bakedBase = SceptreModel.this.sceptreBase.bake(SceptreModel.this.sceptreBase.getDefaultState(), format, bakedTextureGetter);
+                SceptreModel.this.sceptreBase.getTextures();//ensure VanillaModelWrapper loads parents
+                this.bakedBase = bakeImpl(SceptreModel.this.sceptreBase, SceptreModel.this.sceptreBase.getDefaultState(), format, bakedTextureGetter);
             }
         }
 
@@ -104,7 +130,7 @@ public class SceptreModel implements IModel {
 
         @Override
         public TextureAtlasSprite getParticleTexture() {
-            return this.bakedBase != null ? this.bakedBase.getParticleTexture() : null;
+            return this.bakedBase != null ? this.bakedBase.getParticleTexture() : Minecraft.getMinecraft().getTextureMapBlocks().getTextureExtry("missingno");
         }
 
         @Override
@@ -120,8 +146,8 @@ public class SceptreModel implements IModel {
                             return Loader.INSTANCE.cache.get(cacheKey);
                         }
                         ImmutableMap.Builder<String,String> tex = ImmutableMap.builder();
-                        tex.put("#tip", tip != null ? tip.getTexture().toString() : "missingno");
-                        tex.put("#core", core != null ? core.getTexture().toString() : "missingno");
+                        tex.put("tip", tip != null ? tip.getTexture().toString() : "missingno");
+                        tex.put("core", core != null ? core.getTexture().toString() : "missingno");
                         IBakedModel generated = SceptreModel.this.retexture(tex.build()).bake(SceptreModel.this.getDefaultState(), BakedSceptre.this.format, BakedSceptre.this.bakedTextureGetter);
                         Loader.INSTANCE.cache.put(cacheKey, generated);
                         return generated;

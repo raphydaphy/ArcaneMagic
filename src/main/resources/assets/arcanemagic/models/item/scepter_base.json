@@ -1,4 +1,8 @@
 {
+	"textures":{
+		"core": "#core_replace",
+		"tip": "#tip_replace"
+	},
 	"elements": [
 		{
 			"name": "Wand Rod",
