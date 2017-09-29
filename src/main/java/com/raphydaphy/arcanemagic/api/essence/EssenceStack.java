@@ -201,6 +201,9 @@ public class EssenceStack
 		return map;
 	}
 
+	/*
+	 * Saves all these essence stacks to a subcompound in the passed in tag.  Duplicates will use the last passed stack.  This method overrides all existing data, save wisely.
+	 */
 	public static NBTTagCompound writeToNBT(NBTTagCompound tag, EssenceStack... essences)
 	{
 		NBTTagCompound essTag = tag.getCompoundTag(E);
@@ -208,10 +211,8 @@ public class EssenceStack
 		{
 
 			if (e.getCount() < 0)
-				continue;
-
-			e.grow(essTag.getInteger(e.getEssence().getRegistryName().toString()));
-			essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
+				essTag.setInteger(e.getEssence().getRegistryName().toString(), 0);
+			else essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
 		}
 		tag.setTag(E, essTag);
 		return tag;

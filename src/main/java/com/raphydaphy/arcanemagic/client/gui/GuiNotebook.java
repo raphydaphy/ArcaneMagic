@@ -13,6 +13,7 @@ import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.notebook.Categories;
 
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -100,8 +101,8 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.scale(1.985, 1.55, 1.55);
 		//GlStateManager.translate((res.getScaledWidth() / 2) - (FRAME_WIDTH / 2),
 		//		 (res.getScaledHeight() / 2) - (FRAME_HEIGHT / 2), 0);
-		INotebookCategory curCategory = ArcaneMagicAPI.getCategory(
-				new ResourceLocation((player.getEntityData().getString(tagTab))));
+		INotebookCategory curCategory = ArcaneMagicAPI.getCategoryOrDefault(
+				new ResourceLocation((player.getEntityData().getString(tagTab))), Categories.BASIC_INFO);
 		mc.getTextureManager().bindTexture(curCategory.getBackground().getKey());
 		drawScaledCustomSizeModalRect(104, 17, pageX, pageY, INNER_BG_WIDTH * 2, INNER_BG_HEIGHT * 2, INNER_BG_WIDTH,
 				INNER_BG_HEIGHT, curCategory.getBackground().getValue().getX(),
@@ -148,7 +149,7 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.popMatrix();
 		GlStateManager.pushMatrix();
 
-		for (INotebookEntry entry : ArcaneMagicAPI.getCategory(new ResourceLocation((player.getEntityData().getString(tagTab)))).getEntries())
+		for (INotebookEntry entry : ArcaneMagicAPI.getCategoryOrDefault(new ResourceLocation((player.getEntityData().getString(tagTab))), Categories.BASIC_INFO).getEntries())
 		{
 			// drawResearchInfoOnMouse(entry.getPos().getX(), entry.getPos().getY(),
 			// Lists.newArrayList(
@@ -514,7 +515,8 @@ public class GuiNotebook extends GuiScreen
 
 				float totalDragDistX = player.getEntityData().getFloat(tagPageX) + thisDragDistX;
 				float totalDragDistY = player.getEntityData().getFloat(tagPageY) + thisDragDistY;
-				Pos2 curCategoryBackDimensions = ArcaneMagicAPI.getCategory(new ResourceLocation((player.getEntityData().getString(tagTab)))).getBackground().getValue();
+				Pos2 curCategoryBackDimensions = ArcaneMagicAPI.getCategoryOrDefault(
+						new ResourceLocation((player.getEntityData().getString(tagTab))), Categories.BASIC_INFO).getBackground().getValue();
 				if (totalDragDistX >= 0 && totalDragDistX <= curCategoryBackDimensions.getX() - (INNER_BG_WIDTH * 2))
 				{
 					player.getEntityData().setFloat(tagPageX, totalDragDistX);

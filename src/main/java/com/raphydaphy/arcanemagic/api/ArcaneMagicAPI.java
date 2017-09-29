@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.api;
 
 import java.util.Set;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
@@ -46,6 +47,12 @@ public class ArcaneMagicAPI
 	@Nullable
 	public static INotebookCategory getCategory(ResourceLocation name) {
 		return CATEGORIES.get(name);
+	}
+	
+	@Nonnull
+	public static INotebookCategory getCategoryOrDefault(ResourceLocation name, INotebookCategory defCat) {
+		INotebookCategory c = getCategory(name);
+		return c == null ? defCat : c;
 	}
 
 }

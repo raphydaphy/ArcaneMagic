@@ -11,6 +11,7 @@ import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
 import com.raphydaphy.arcanemagic.init.ModEntities;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.notebook.Categories;
 import com.raphydaphy.arcanemagic.notebook.CategoryAlchemy;
 import com.raphydaphy.arcanemagic.notebook.CategoryBasicInformation;
 import com.raphydaphy.arcanemagic.notebook.CategoryThaumaturgy;
@@ -68,9 +69,7 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		ArcaneMagicAPI.registerCategory(new CategoryBasicInformation());
-		ArcaneMagicAPI.registerCategory(new CategoryThaumaturgy());
-		ArcaneMagicAPI.registerCategory(new CategoryAlchemy());
+		Categories.register();
 		proxy.postInit(event);
 	}
 }
