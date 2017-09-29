@@ -2,8 +2,10 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
+import com.raphydaphy.arcanemagic.api.scepter.ScepterPartItem;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.client.IHasModel;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 
@@ -12,7 +14,7 @@ import javax.annotation.Nonnull;
 /**
  * Created by Xander V on 29/09/2017.
  */
-public class ItemTip extends ItemBase {
+public class ItemTip extends ItemBase implements ScepterPartItem {
     public ItemTip() {
         super("sceptre_tip", Type.values().length);
         ScepterRegistry.registerAll(Type.IRON, Type.GOLD, Type.THAUMIUM);
@@ -25,6 +27,14 @@ public class ItemTip extends ItemBase {
         {
             IHasModel.sMRL("tips", this, i, "tip=" + Type.values()[i].getName() );
         }
+    }
+
+    @Override
+    public ScepterPart getPartFromItemStack(ItemStack in) {
+        if (in.getItem() == this && in.getMetadata() < Type.values().length){
+            return ItemCore.Type.values()[in.getMetadata()];
+        }
+        return null;//ummm what?
     }
 
     public enum Type implements ScepterPart
