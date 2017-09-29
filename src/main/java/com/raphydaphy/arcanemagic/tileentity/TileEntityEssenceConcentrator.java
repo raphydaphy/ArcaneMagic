@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
@@ -22,7 +21,7 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 
 	public TileEntityEssenceConcentrator()
 	{
-		super();
+		super(100);
 
 		for (Essence essence : Essence.REGISTRY.getValues())
 		{
@@ -50,22 +49,24 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 	@Override
 	public void update()
 	{
-		if (world.isRemote)
+		for (int x = (int) pos.getX() - 10; x < (int) pos.getX() + 10; x++)
 		{
-			for (int x = (int) pos.getX() - 10; x < (int) pos.getX() + 10; x++)
+			for (int y = (int) pos.getY() - 5; y < (int) pos.getY() + 5; y++)
 			{
-				for (int y = (int) pos.getY() - 5; y < (int) pos.getY() + 5; y++)
+				for (int z = (int) pos.getZ() - 10; z < (int) pos.getZ() + 10; z++)
 				{
-					for (int z = (int) pos.getZ() - 10; z < (int) pos.getZ() + 10; z++)
+					if (world.rand.nextInt(2000) == 1)
 					{
-						if (world.rand.nextInt(2000) == 1)
+						BlockPos here = new BlockPos(x, y, z);
+						if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 						{
-							BlockPos here = new BlockPos(x, y, z);
-							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+							if (!world.isRemote)
 							{
-								ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-										new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
-										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5));
+								// Send some essence to the crystallizer
+								Essence.sendEssence(world,
+										new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+										new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false);
 							}
 						}
 					}

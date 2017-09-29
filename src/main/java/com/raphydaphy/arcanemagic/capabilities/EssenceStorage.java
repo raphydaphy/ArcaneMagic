@@ -27,18 +27,20 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 
 	private Map<Essence, EssenceStack> storage = new HashMap<>();
 	private Runnable saveFunc;
+	private int capacity;
 
 	public EssenceStorage()
 	{
 		this(() ->
 		{
-		});
+		}, 1000);
 	}
 
-	public EssenceStorage(@Nonnull Runnable s)
+	public EssenceStorage(@Nonnull Runnable s, @Nonnull int c)
 	{
 		Preconditions.checkNotNull(s);
 		this.saveFunc = s;
+		this.capacity = c;
 	}
 
 	@Override
@@ -55,14 +57,47 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 	@Override
 	public EssenceStack store(EssenceStack in, boolean simulate)
 	{
-		if (simulate)
-			return null;
+
 		if (storage.containsKey(in.getEssence()))
 		{
-			storage.get(in.getEssence()).grow(in.getCount());
+			int amountToDiscardOnGrow = in.getCount() + storage.get(in.getEssence()).getCount()
+					- getCapacity(in.getEssence());
+			if (amountToDiscardOnGrow <= 0)
+			{
+				if (!simulate)
+				{
+					storage.get(in.getEssence()).grow(in.getCount());
+					markDirty();
+				}
+			} else
+			{
+				if (!simulate)
+				{
+					storage.get(in.getEssence()).grow(in.getCount() - amountToDiscardOnGrow);
+					markDirty();
+				}
+				return new EssenceStack(in.getEssence(), amountToDiscardOnGrow);
+			}
 		} else
 		{
-			storage.put(in.getEssence(), in.copy());
+			int amountToDiscardOnPut = in.getCount() - getCapacity(in.getEssence());
+			if (amountToDiscardOnPut <= 0)
+			{
+				if (!simulate)
+				{
+					storage.put(in.getEssence(), in.copy());
+					markDirty();
+				}
+			} else
+			{
+				if (!simulate)
+				{
+					storage.put(in.getEssence(),
+							new EssenceStack(in.getEssence(), in.getCount() - amountToDiscardOnPut));
+					markDirty();
+				}
+				return new EssenceStack(in.getEssence(), amountToDiscardOnPut);
+			}
 		}
 		markDirty();
 		return null;
@@ -116,5 +151,30 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 		{
 			instance.deserializeNBT((NBTTagCompound) nbt);
 		}
+	}
+
+	@Override
+	public int getCapacity(Essence type)
+	{
+		return capacity;
+	}
+
+	@Override
+	public boolean take(EssenceStack out, boolean simulate)
+	{
+		if (storage.containsKey(out.getEssence()))
+		{
+			if (storage.get(out.getEssence()).getCount() - out.getCount() >= 0)
+			{
+				if (!simulate)
+				{
+					storage.get(out.getEssence()).shrink(out.getCount());
+					markDirty();
+				}
+				return true;
+			}
+		}
+		markDirty();
+		return false;
 	}
 }

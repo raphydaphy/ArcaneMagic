@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.tileentity;
 
 import java.util.Map;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
@@ -25,7 +24,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 	public TileEntityCrystallizer()
 	{
-		super();
+		super(1000);
 
 		for (Essence essence : Essence.REGISTRY.getValues())
 		{
@@ -67,9 +66,14 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 							}
 							if (useType != null && world.rand.nextInt(3) == 1)
 							{
-								ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.6, z + 0.5),
-										new Vec3d(0, 0, 0), useType,
-										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5));
+								if (!world.isRemote)
+								{
+									// actually send essence, not just particles
+									Essence.sendEssence(world,
+											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+											new Vec3d(x + 0.5, y + 0.6, z + 0.5),
+											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), false);
+								}
 
 							}
 						}

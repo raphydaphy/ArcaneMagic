@@ -1,12 +1,11 @@
 package com.raphydaphy.arcanemagic.network;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceStorage;
 
 import io.netty.buffer.ByteBuf;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,16 +13,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketEssenceTransfer implements IMessage
 {
-	private BlockPos pos;
+	private Vec3d from;
+	private Vec3d to;
 	private EssenceStack essence;
 	
 	public PacketEssenceTransfer()
 	{
 	}
 	
-	public PacketEssenceTransfer(BlockPos pos, EssenceStack essence)
+	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to)
 	{
-		this.pos = pos;
+		this.from = from;
+		this.to = to;
 		this.essence = essence;
 	}
 
@@ -38,28 +39,27 @@ public class PacketEssenceTransfer implements IMessage
 
 		private void handle(PacketEssenceTransfer message, MessageContext ctx)
 		{
-			
-			TileEntity te = ctx.getServerHandler().player.world.getTileEntity(message.pos);
-			if (te != null && te instanceof TileEntityEssenceStorage)
-			{
-				((TileEntityEssenceStorage)te).getCapability(EssenceStorage.CAP, null).store(message.essence, false);
-			}
+			Essence.sendEssence(Minecraft.getMinecraft().world, message.essence, message.from, message.to, false);
 		}
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
+		from = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+		to = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		essence = EssenceStack.readFromBuf(buf);
-		pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf)
-	{
-		buf.writeInt(pos.getX());
-		buf.writeInt(pos.getY());
-		buf.writeInt(pos.getZ());
+	{	
+		buf.writeDouble(from.x);
+		buf.writeDouble(from.y);
+		buf.writeDouble(from.z);
+		buf.writeDouble(to.x);
+		buf.writeDouble(to.y);
+		buf.writeDouble(to.z);
 		EssenceStack.writeToBuf(buf, essence);
 	}
 }

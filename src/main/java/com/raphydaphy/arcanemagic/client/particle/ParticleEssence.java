@@ -2,11 +2,6 @@ package com.raphydaphy.arcanemagic.client.particle;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceStorage;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
@@ -25,10 +20,11 @@ public class ParticleEssence extends Particle
 	private Vec3d travelPos;
 	private final Vec3d startPos;
 	private int speedDivisor = 30;
-	private Essence essence;
+	private final Essence essence;
+	private final boolean isCosmetic;
 
 	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
-			double ySpeedIn, double zSpeedIn, Essence essence, Vec3d travelPos)
+			double ySpeedIn, double zSpeedIn, Essence essence, Vec3d travelPos, boolean isCosmetic)
 	{
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
@@ -43,6 +39,7 @@ public class ParticleEssence extends Particle
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
+		this.isCosmetic = isCosmetic;
 
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
 				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball").toString());
@@ -74,28 +71,24 @@ public class ParticleEssence extends Particle
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-		TileEntity hit = world.getTileEntity(new BlockPos((int) Math.floor(travelPos.x), (int) Math.floor(travelPos.y),
-				(int) Math.floor(travelPos.z)));
 
+		if (!isCosmetic)
+		{
+			TileEntity hit = world.getTileEntity(new BlockPos((int) Math.floor(travelPos.x),
+					(int) Math.floor(travelPos.y), (int) Math.floor(travelPos.z)));
+			if (hit == null)
+			{
+				this.particleAlpha -= 0.01;
+				speedDivisor = 10;
+				this.travelPos = this.startPos;
+			}
+		}
 		if (travelPos.x <= this.posX + 0.1 && travelPos.x >= this.posX - 0.1 && travelPos.y <= this.posY + 0.1
 				&& travelPos.y >= this.posY - 0.1 && travelPos.z <= this.posZ + 0.1 && travelPos.z >= this.posZ - 0.1)
 		{
-
-			if (hit != null && hit instanceof TileEntityEssenceStorage)
-			{
-				
-				EssenceStack willTransfer = new EssenceStack(this.essence, 1);
-				hit.getCapability(EssenceStorage.CAP, null).store(willTransfer, false);
-				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketEssenceTransfer(hit.getPos(), willTransfer));
-			}
 			this.setExpired();
 		}
-		if (hit == null)
-		{
-			this.particleAlpha -= 0.01;
-			speedDivisor = 10;
-			this.travelPos = this.startPos;
-		}
+
 		this.move(this.motionX, this.motionY, this.motionZ);
 
 		this.motionX = (travelPos.x - this.posX) / (speedDivisor + rand.nextDouble());

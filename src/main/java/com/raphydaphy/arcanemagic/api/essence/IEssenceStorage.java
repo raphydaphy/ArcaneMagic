@@ -32,4 +32,23 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 * @return the amount that couldn't be stored, or null if everything got stored
 	 */
 	EssenceStack store(EssenceStack in, boolean simulate);
+	
+	/**
+	 * Take the stack out of the storage
+	 * 
+	 * @param out
+	 * 				stack to remove
+	 * @param simulate
+	 * 				actually do the thing?
+	 * @return if it was able to remove the stack from storage
+	 */
+	boolean take(EssenceStack out, boolean simulate);
+	
+	/**
+	 * @return the amount of essence that can be stored
+	 * 
+	 * @param type
+	 * 				the type of essence of which the capacity should be checked
+	 */
+	int getCapacity(Essence type);
 }

@@ -18,9 +18,14 @@ import net.minecraftforge.common.capabilities.Capability;
 public abstract class TileEntityEssenceStorage extends TileEntity
 {
 
-	protected EssenceStorage essenceStorage = new EssenceStorage(this::markDirty);
+	protected EssenceStorage essenceStorage;
 	private static final String ESSENCE_KEY = "essence_storage";
 
+	public TileEntityEssenceStorage(int capacity)
+	{
+		essenceStorage = new EssenceStorage(this::markDirty, capacity);
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{

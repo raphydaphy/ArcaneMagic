@@ -1,9 +1,18 @@
 package com.raphydaphy.arcanemagic.init;
 
+import java.util.Random;
+
+import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
@@ -33,7 +42,7 @@ public class ModEvents
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
-		/*
+		
 		Random rand = ev.player.world.rand;
 		if (ev.phase == TickEvent.Phase.START)
 		{
@@ -54,10 +63,11 @@ public class ModEvents
 									BlockPos here = new BlockPos(x, y, z);
 									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 									{
+										// client side only, these particles are just for looks!
 										ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.5,
 												z + 0.5),
 												new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
-												ev.player.getPositionVector().addVector(0, 1, 0));
+												ev.player.getPositionVector().addVector(0, 1, 0), true);
 										
 										
 									}
@@ -80,7 +90,7 @@ public class ModEvents
 					}
 				}
 			}
-		}*/
+		}
 	}
 
 	@SubscribeEvent

@@ -152,16 +152,15 @@ public class EssenceStack
         }
         else
         {
-        	to.writeShort(Essence.REGISTRY.getValues().indexOf(stack.getEssence()));
         	to.writeByte(stack.getCount());
+        	to.writeShort(Essence.REGISTRY.getValues().indexOf(stack.getEssence()));
         }
 	}
 	
 	public static EssenceStack readFromBuf(ByteBuf from)
 	{
-		int id = from.readByte();
-		int count = from.readShort();
-
+		int count = from.readByte();
+		int id = from.readShort();
         if (count < 0)
         {
             return EssenceStack.EMPTY;

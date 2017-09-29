@@ -22,24 +22,21 @@ public class ItemAncientParchment extends ItemBase
 
 		World world = entityItem.world;
 
-		if (world.isRemote)
+		for (int x = (int) entityItem.posX - 5; x < (int) entityItem.posX + 5; x++)
 		{
-			for (int x = (int) entityItem.posX - 5; x < (int) entityItem.posX + 5; x++)
+			for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++)
 			{
-				for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++)
+				for (int z = (int) entityItem.posZ - 5; z < (int) entityItem.posZ + 5; z++)
 				{
-					for (int z = (int) entityItem.posZ - 5; z < (int) entityItem.posZ + 5; z++)
+					BlockPos here = new BlockPos(x, y, z);
+					if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 					{
-						if (itemRand.nextInt(300) == 1)
+						if (itemRand.nextInt(2000) == 1)
 						{
-							BlockPos here = new BlockPos(x, y, z);
-							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
-							{
-								ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5,
-										y + 0.5, z + 0.5),
-										new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
-										entityItem.getPositionVector().addVector(0, 0.4, 0));
-							}
+							// just for looks..
+							ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+									new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
+									entityItem.getPositionVector().addVector(0, 0.4, 0), true);
 						}
 					}
 				}

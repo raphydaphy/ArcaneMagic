@@ -1,11 +1,19 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceStorage;
 
 import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -75,6 +83,77 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return this;
 	}
 
+	public static boolean sendEssence(World world, EssenceStack stack, Vec3d from, Vec3d to, boolean simulate)
+	{
+		BlockPos fromPos = new BlockPos(Math.floor(from.x), Math.floor(from.y), Math.floor(from.z));
+		BlockPos toPos = new BlockPos(Math.floor(to.x), Math.floor(to.y), Math.floor(to.z));
+
+		TileEntity fromTEUnchecked = world.getTileEntity(fromPos);
+		TileEntity toTEUnchecked = world.getTileEntity(toPos);
+
+		if (toTEUnchecked instanceof TileEntityEssenceStorage)
+		{
+			TileEntityEssenceStorage toTE = (TileEntityEssenceStorage) toTEUnchecked;
+
+			// sending from block to block, such as concentrator -> crystallizer
+			if (fromTEUnchecked instanceof TileEntityEssenceStorage)
+			{
+				TileEntityEssenceStorage fromTE = (TileEntityEssenceStorage) fromTEUnchecked;
+
+				// sender block has enough essence to transfer it
+				if (fromTE.getCapability(EssenceStorage.CAP, null).take(stack, true) == true)
+				{
+					// recieving block has enough capacity to accept it
+					if (toTE.getCapability(EssenceStorage.CAP, null).store(stack, true) == null)
+					{
+						if (!simulate)
+						{
+							// send and recieve essence
+							fromTE.getCapability(EssenceStorage.CAP, null).take(stack, false);
+							toTE.getCapability(EssenceStorage.CAP, null).store(stack, false);
+
+							if (!world.isRemote)
+							{
+								ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketEssenceTransfer(stack, from, to));
+							}
+							else
+							{
+								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0), stack.getEssence(),
+										to, false);
+							}
+						}
+						return true;
+					}
+				}
+			}
+			// sending from bedrock/wand to block
+			else
+			{
+				// if the receiving block can accept 100% of the essence
+				if (toTE.getCapability(EssenceStorage.CAP, null).store(stack, true) == null)
+				{
+					if (!simulate)
+					{
+						// do the thing!
+						toTE.getCapability(EssenceStorage.CAP, null).store(stack, false);
+						
+						if (!world.isRemote)
+						{
+							ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketEssenceTransfer(stack, from, to));
+						}
+						else
+						{
+							ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0), stack.getEssence(),
+									to, false);
+						}
+					}
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public ItemStack getItemForm()
 	{
 		return itemForm.copy();
@@ -105,9 +184,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 		return new Vec3i(r, g, b);
 	}
-	
+
 	public static Essence getEssenceByID(int id)
-    {
+	{
 		if (id < Essence.REGISTRY.getValues().size())
 		{
 			return Essence.REGISTRY.getValues().get(id);
@@ -162,7 +241,5 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		}
 		return Essence.HORIZON;
 	}
-
-	
 
 }

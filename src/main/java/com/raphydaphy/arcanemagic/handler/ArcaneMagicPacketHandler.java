@@ -29,6 +29,6 @@ public class ArcaneMagicPacketHandler
 		INSTANCE.registerMessage(PacketArcaneCraftingSync.Handler.class, PacketArcaneCraftingSync.class, packetId++,
 				Side.SERVER);
 		
-		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++, Side.SERVER);
+		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++, Side.CLIENT);
 	}
 }

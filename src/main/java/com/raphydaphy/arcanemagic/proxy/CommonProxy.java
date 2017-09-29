@@ -22,7 +22,7 @@ public abstract class CommonProxy
 	{
 	}
 	
-	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos)
+	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos, boolean isCosmetic)
 	{
 		
 	}

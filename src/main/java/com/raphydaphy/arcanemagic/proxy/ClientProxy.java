@@ -148,9 +148,9 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos)
+	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos, boolean isCosmetic)
 	{
 		Minecraft.getMinecraft().effectRenderer.addEffect(
-				new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x, speed.y, speed.z, essence, travelPos));
+				new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x, speed.y, speed.z, essence, travelPos, isCosmetic));
 	}
 }
