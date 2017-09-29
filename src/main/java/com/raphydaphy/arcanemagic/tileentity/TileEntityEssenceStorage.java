@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.tileentity;
 
 import javax.annotation.Nullable;
 
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 
@@ -21,7 +22,6 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 {
 
 	protected EssenceStorage essenceStorage;
-	private static final String ESSENCE_KEY = "essence_storage";
 
 	public TileEntityEssenceStorage(int capacity)
 	{
@@ -51,17 +51,14 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		if (compound.hasKey(ESSENCE_KEY))
-		{
-			essenceStorage.deserializeNBT(compound.getCompoundTag(ESSENCE_KEY));
-		}
+		essenceStorage.deserializeNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(ESSENCE_KEY, essenceStorage.serializeNBT());
+		EssenceStack.writeToNBT(compound, essenceStorage.getStored().values());
 		return compound;
 	}
 

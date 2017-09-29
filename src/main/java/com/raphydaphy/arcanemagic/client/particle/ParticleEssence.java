@@ -20,7 +20,6 @@ public class ParticleEssence extends Particle
 	private Vec3d travelPos;
 	private final Vec3d startPos;
 	private int speedDivisor = 30;
-	private final Essence essence;
 	private final boolean isCosmetic;
 
 	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
@@ -36,7 +35,6 @@ public class ParticleEssence extends Particle
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
 		int colorMultiplier = 3;
 		this.setRBGColorF(essence.getColor().getRed() * colorMultiplier, essence.getColor().getGreen() * colorMultiplier, essence.getColor().getBlue() * colorMultiplier);
-		this.essence = essence;
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
