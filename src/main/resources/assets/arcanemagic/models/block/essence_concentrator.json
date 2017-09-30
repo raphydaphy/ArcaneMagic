@@ -1,5 +1,5 @@
 {
-	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
+	"parent": "block/block",
 	"textures": {
 		"0": "blocks/iron_block",
 		"particle": "blocks/iron_block"
