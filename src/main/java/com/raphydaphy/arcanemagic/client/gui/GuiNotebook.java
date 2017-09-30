@@ -172,7 +172,7 @@ public class GuiNotebook extends GuiScreen
 		drawArrow(false, 89, 240, mouseX, mouseY, screenX, screenY);
 
 		// Selected Category indicator
-		int curCategory = 5;
+		int curCategory = player.getEntityData().getInteger(tagCategory);
 		List<String> categories = Lists.newArrayList("Ancient Relics", "Basic Linguistics", "Elemental Particles",
 				"Mystical Energy", "Natural Harmony", "Ancient Crystals", "Essence Collection", "Crystal Transformation", "Dangers of Magic","Hidden Secrets", "");
 
@@ -244,7 +244,17 @@ public class GuiNotebook extends GuiScreen
 
 		if (mouseButton == 0)
 		{
-
+			// Things from drawScreen to calculate positions based on GUI Scale
+			ScaledResolution res = new ScaledResolution(mc);
+			final int SCALED_NOTEBOOK_WIDTH = (int) (NOTEBOOK_WIDTH * scale);
+			final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
+			int screenX = (int) ((res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2));
+			int screenY = (int) ((res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2));
+			
+			if (mouseX >= screenX && mouseY >= screenY)
+			{
+				player.getEntityData().setInteger(tagCategory, player.world.rand.nextInt(4));
+			}
 		}
 	}
 }
