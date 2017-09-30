@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.tileentity;
 
 import javax.annotation.Nullable;
 
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 
@@ -15,13 +14,14 @@ import net.minecraftforge.common.capabilities.Capability;
 
 /**
  * Base class for storing Essence using the capability. Extend me pls.
- * 
+ *
  * ok
  */
 public abstract class TileEntityEssenceStorage extends TileEntity
 {
 
 	protected EssenceStorage essenceStorage;
+	private static final String ESSENCE_KEY = "essence_storage";
 
 	public TileEntityEssenceStorage(int capacity)
 	{
@@ -51,14 +51,14 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		essenceStorage.deserializeNBT(compound);
+		essenceStorage.deserializeNBT(compound.getCompoundTag(ESSENCE_KEY));
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		EssenceStack.writeToNBT(compound, essenceStorage.getStored().values());
+		compound.setTag(ESSENCE_KEY, essenceStorage.serializeNBT());
 		return compound;
 	}
 
