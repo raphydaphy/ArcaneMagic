@@ -68,7 +68,7 @@ public class ItemScepter extends ItemBase
 	{
 		if (!scepter.hasTagCompound())
 			return null;
-		return ScepterRegistry.getPart(new ResourceLocation(getTagCompoundSafe(scepter).getString(KEY_TIP)));
+		return ScepterRegistry.getPart(new ResourceLocation(scepter.getTagCompound().getString(KEY_TIP)));
 	}
 
 	@Nullable
@@ -76,7 +76,7 @@ public class ItemScepter extends ItemBase
 	{
 		if (!scepter.hasTagCompound())
 			return null;
-		return ScepterRegistry.getPart(new ResourceLocation(getTagCompoundSafe(scepter).getString(KEY_CORE)));
+		return ScepterRegistry.getPart(new ResourceLocation(scepter.getTagCompound().getString(KEY_CORE)));
 	}
 
 	@Nonnull
@@ -99,8 +99,8 @@ public class ItemScepter extends ItemBase
 			scepter.setTagCompound(new NBTTagCompound());
 		Preconditions.checkArgument(tip.getType() == PartCategory.TIP, "You can only assign a tip to the tip slot!");
 		Preconditions.checkArgument(core.getType() == PartCategory.CORE, "You can only assign a core the core slot!");
-		getTagCompoundSafe(scepter).setString(KEY_CORE, core.getRegistryName().toString());
-		getTagCompoundSafe(scepter).setString(KEY_TIP, tip.getRegistryName().toString());
+		scepter.getTagCompound().setString(KEY_CORE, core.getRegistryName().toString());
+		scepter.getTagCompound().setString(KEY_TIP, tip.getRegistryName().toString());
 	}
 
 	@Override
@@ -108,15 +108,13 @@ public class ItemScepter extends ItemBase
 	{
 		if (isInCreativeTab(tab))
 		{
-			ScepterRegistry.getCores().forEach((core) ->
-			{
-				ScepterRegistry.getTips().forEach((tip) ->
-				{
-					ItemStack stack = new ItemStack(this, 1);
+			for(ScepterPart core : ScepterRegistry.getCores())
+				for(ScepterPart tip : ScepterRegistry.getTips()) {
+					ItemStack stack = new ItemStack(this);
 					applyTipAndCore(stack, tip, core);
+					EssenceStack.writeDefaultEssence(stack.getTagCompound());
 					items.add(stack);
-				});
-			});
+				}
 		}
 	}
 
@@ -234,6 +232,7 @@ public class ItemScepter extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn)
 	{
+		//TODO make this not do this if there's no essence to display or always display essence
 		tooltip.addAll(Arrays.asList("", "", ""));
 	}
 

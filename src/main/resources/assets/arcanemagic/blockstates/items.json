@@ -16,12 +16,12 @@
 			},
 			"notebook": {
 				"textures": {
-					"all": "arcanemagic:items/ancient_parchment"
+					"layer0": "arcanemagic:items/ancient_parchment"
 				}
 			},
 			"scribing_tools": {
 				"textures": {
-					"all": "arcanemagic:items/scribing_tools"
+					"layer0": "arcanemagic:items/scribing_tools"
 				}
 			},
 			"essence_ozone": {
@@ -71,6 +71,36 @@
 			"scepter_tip_iron": {
 				"textures": {
 					"layer0": "arcanemagic:items/scepter_tip_iron"
+				}
+			},
+			"tip_iron": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter/tip_iron"
+				}
+			},
+			"tip_gold": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter/tip_gold"
+				}
+			},
+			"tip_thaumium": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter/tip_thaumium"
+				}
+			},
+			"core_wood": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter/core_wood"
+				}
+			},
+			"core_silverwood": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter/core_silverwood"
+				}
+			},
+			"core_greatwood": {
+				"textures": {
+					"layer0": "arcanemagic:items/scepter/core_greatwood"
 				}
 			}
 		}

@@ -1,13 +1,13 @@
 # Items
-item.arcanemagic.sceptre_tip.0.name=Iron Scepter Cap
-item.arcanemagic.sceptre_tip.1.name=Gold Scepter Cap
-item.arcanemagic.sceptre_tip.2.name=Thaumium Scepter Cap
-item.arcanemagic.sceptre_core.0.name=Wood Scepter Core
-item.arcanemagic.sceptre_core.1.name=Silverwood Scepter Core
-item.arcanemagic.sceptre_core.2.name=Greatwood Scepter Core
+item.arcanemagic.tip.iron.name=Iron Tip
+item.arcanemagic.tip.gold.name=Gold Tip
+item.arcanemagic.tip.thaumium.name=Thaumium Tip
+item.arcanemagic.core.wood.name=Wooden Core
+item.arcanemagic.core.silverwood.name=Silverwood Core
+item.arcanemagic.core.greatwood.name=Greatwood Core
 item.arcanemagic.scepter.name=%s Tipped %s Scepter
 item.arcanemagic.notebook.name=Lost Notebook
-item.arcanemagic.essence_ozone.name=Formation of the Ozone Layer
+item.arcanemagic.essence_ozone.name=Formation of the Ozone
 item.arcanemagic.essence_depth.name=Formation of the Depths
 item.arcanemagic.essence_inferno.name=Formation of the Inferno
 item.arcanemagic.essence_horizon.name=Formation of the Horizon
@@ -16,7 +16,6 @@ item.arcanemagic.essence_chaos.name=Formation of Chaos
 item.arcanemagic.essence_creation.name=Embodiment of Creation
 item.arcanemagic.scribing_tools.name=Scribing Tools
 item.arcanemagic.ancient_parchment.name=Ancient Parchment
-item.arcanemagic.focus_fire.name=scepter Focus: Fire
 
 # Blocks
 tile.arcanemagic.table.name=Table
@@ -55,7 +54,15 @@ essence.arcanemagic.peace.name=Peace
 essence.arcanemagic.chaos.name=Chaos
 essence.arcanemagic.creation.name=Creation
 
-## Notebook
+# Scepter
+part.arcanemagic.tip.iron.name=Iron
+part.arcanemagic.tip.gold.name=Gold
+part.arcanemagic.tip.thaumium.name=Thaumium
+part.arcanemagic.core.wood.name=Wooden
+part.arcanemagic.core.silverwood.name=Silverwood
+part.arcanemagic.core.greatwood.name=Greatwood
+
+# Notebook
 arcanemagic.notebook.category.ancient_relics=Ancient Relics
 arcanemagic.notebook.category.ancient_relics.0=You have spent many days wondering the meaning of the parchment you found, but yet you are still in great confusion. You believe that a witch was carrying it before her death in order to try and use it to advance her magic.
 arcanemagic.notebook.category.ancient_relics.1=If the paper has such power, it would surely be a good idea to try and use it yourself. Witches are simply transformed and courupted villagers, so perhaps visiting a village would be a good start?

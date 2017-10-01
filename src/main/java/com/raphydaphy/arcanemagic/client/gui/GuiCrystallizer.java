@@ -68,7 +68,6 @@ public class GuiCrystallizer extends GuiContainer
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		super.renderHoveredToolTip(mouseX, mouseY);
@@ -84,10 +83,6 @@ public class GuiCrystallizer extends GuiContainer
 		int i = 0;
 		for (EssenceStack stack : essenceStored.values())
 		{
-			if (i == 0)
-			{
-				System.out.println("first essence is " + stack.getEssence().toString());
-			}
 			i++;
 			Essence essence = stack.getEssence();
 			drawBar(guiLeft + 37 + (i * 18), guiTop + 19, essence.getColor().getRed() / 256f,

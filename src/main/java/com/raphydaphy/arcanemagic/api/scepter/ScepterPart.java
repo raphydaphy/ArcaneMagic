@@ -7,6 +7,10 @@ import net.minecraft.util.ResourceLocation;
 public interface ScepterPart
 {
 
+	/**
+	 * The unlocalized name
+	 * @return The internal unlocalizedName variable of this part, prefixed with .part
+	 */
 	String getUnlocalizedName();
 
 	@Nonnull
