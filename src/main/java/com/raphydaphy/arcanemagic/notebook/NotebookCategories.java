@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.notebook;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryAncientRelics;
@@ -13,14 +14,14 @@ import com.raphydaphy.arcanemagic.notebook.category.CategoryNaturalHarmony;
 
 public class NotebookCategories
 {
-	public static final NotebookCategory ANCIENT_RELICS = new CategoryAncientRelics();
-	public static final NotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics();
-	public static final NotebookCategory ELEMENTAL_PARTICLES = new CategoryElementalParticles();
-	public static final NotebookCategory MYSTICAL_ENERGY = new CategoryMysticalEnergy();
-	public static final NotebookCategory ESSENCE_COLLECTION = new CategoryEssenceCollection();
-	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization();
-	public static final NotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony();
-	public static final NotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic();	
+	public static final NotebookCategory ANCIENT_RELICS = new CategoryAncientRelics().setRegistryName(ArcaneMagic.MODID, "ancient_relics");
+	public static final NotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics().setRegistryName(ArcaneMagic.MODID, "basic_linguistics");
+	public static final NotebookCategory ELEMENTAL_PARTICLES = new CategoryElementalParticles().setRegistryName(ArcaneMagic.MODID, "elemental_particles");
+	public static final NotebookCategory MYSTICAL_ENERGY = new CategoryMysticalEnergy().setRegistryName(ArcaneMagic.MODID, "mystical_energy");
+	public static final NotebookCategory ESSENCE_COLLECTION = new CategoryEssenceCollection().setRegistryName(ArcaneMagic.MODID, "essence_collection");
+	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization().setRegistryName(ArcaneMagic.MODID, "crystallization");
+	public static final NotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony().setRegistryName(ArcaneMagic.MODID, "natural_harmony");
+	public static final NotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic().setRegistryName(ArcaneMagic.MODID, "manipulating_magic");	
 	
 	private static boolean done = false;
 
