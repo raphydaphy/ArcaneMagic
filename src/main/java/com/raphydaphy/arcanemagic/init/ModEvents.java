@@ -27,22 +27,22 @@ public class ModEvents
 {
 	public static boolean hasRenderedParticles = false;
 	static EntityPlayer clientPlayer = null;
-/*
-	protected static Field Field_ItemRenderer_equippedProgressMainhand = ReflectionHelper.findField(ItemRenderer.class,
-			"equippedProgressMainHand", "field_187469_f");
-	protected static Field Field_ItemRenderer_equippedProgressOffhand = ReflectionHelper.findField(ItemRenderer.class,
-			"equippedProgressOffHand", "field_187471_h");
-	protected static Field Field_ItemRenderer_prevEquippedProgressMainhand = ReflectionHelper
-			.findField(ItemRenderer.class, "prevEquippedProgressMainHand", "field_187470_g");
-	protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
-			.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
-
-	*/
+	/*
+		protected static Field Field_ItemRenderer_equippedProgressMainhand = ReflectionHelper.findField(ItemRenderer.class,
+				"equippedProgressMainHand", "field_187469_f");
+		protected static Field Field_ItemRenderer_equippedProgressOffhand = ReflectionHelper.findField(ItemRenderer.class,
+				"equippedProgressOffHand", "field_187471_h");
+		protected static Field Field_ItemRenderer_prevEquippedProgressMainhand = ReflectionHelper
+				.findField(ItemRenderer.class, "prevEquippedProgressMainHand", "field_187470_g");
+		protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
+				.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
+	
+		*/
 
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
-		
+
 		Random rand = ev.player.world.rand;
 		if (ev.phase == TickEvent.Phase.START)
 		{
@@ -64,12 +64,11 @@ public class ModEvents
 									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 									{
 										// client side only, these particles are just for looks!
-										ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(x + 0.5, y + 0.5,
-												z + 0.5),
-												new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(here)),
+										ArcaneMagic.proxy.spawnEssenceParticles(world,
+												new Vec3d(x + 0.5, y + 0.5, z + 0.5), new Vec3d(0, 0, 0),
+												Essence.getFromBiome(world.getBiome(here)),
 												ev.player.getPositionVector().addVector(0, 1, 0), true);
-										
-										
+
 									}
 								}
 							}

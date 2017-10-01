@@ -1,15 +1,16 @@
 package com.raphydaphy.arcanemagic.api.scepter;
 
-import net.minecraft.util.ResourceLocation;
-
 import javax.annotation.Nonnull;
+
+import net.minecraft.util.ResourceLocation;
 
 public interface ScepterPart
 {
 
 	String getUnlocalizedName();
 
-	@Nonnull ResourceLocation getTexture();
+	@Nonnull
+	ResourceLocation getTexture();
 
 	ResourceLocation getRegistryName();
 

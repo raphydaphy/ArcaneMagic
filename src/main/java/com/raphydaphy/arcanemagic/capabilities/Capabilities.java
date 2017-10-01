@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.capabilities;
 
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
 /**

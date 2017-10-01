@@ -106,10 +106,14 @@ public class ItemScepter extends ItemBase
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (isInCreativeTab(tab)){
-			ScepterRegistry.getCores().forEach((core)->{
-				ScepterRegistry.getTips().forEach((tip)->{
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
+	{
+		if (isInCreativeTab(tab))
+		{
+			ScepterRegistry.getCores().forEach((core) ->
+			{
+				ScepterRegistry.getTips().forEach((tip) ->
+				{
 					ItemStack stack = new ItemStack(this, 1);
 					applyTipAndCore(stack, tip, core);
 					items.add(stack);
@@ -153,7 +157,8 @@ public class ItemScepter extends ItemBase
 						new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(pos)),
 						new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
 								pos.getY() + 0.3 + (itemRand.nextDouble() * 0.4),
-								pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4)), true);
+								pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4)),
+						true);
 			}
 
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),

@@ -3,20 +3,21 @@ package com.raphydaphy.arcanemagic.notebook;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 
-public class Categories {
-	
-	public static final INotebookCategory ALCHEMY = new CategoryAlchemy();
-	public static final INotebookCategory BASIC_INFO = new CategoryBasicInformation();
-	public static final INotebookCategory THAUM = new CategoryThaumaturgy();
-	
+public class Categories
+{
+	public static final INotebookCategory ANCIENT_RELICS = new CategoryAncientRelics();
+	public static final INotebookCategory CRYSTALLIZATION = new CategoryCrystallization();
+
 	private static boolean done = false;
-			
-	public static void register() {
-		if(done) return;
+
+	public static void register()
+	{
+		if (done)
+			return;
 		done = true;
-		ArcaneMagicAPI.registerCategory(ALCHEMY);
-		ArcaneMagicAPI.registerCategory(BASIC_INFO);
-		ArcaneMagicAPI.registerCategory(THAUM);
+
+		ArcaneMagicAPI.registerCategory(ANCIENT_RELICS);
+		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);
 	}
 
 }

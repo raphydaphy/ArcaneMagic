@@ -59,20 +59,26 @@ public class ScepterRegistry
 		return ImmutableSet.copyOf(REGISTRY.values());
 	}
 
-	public static ImmutableSet<ScepterPart> getTips(){
+	public static ImmutableSet<ScepterPart> getTips()
+	{
 		ImmutableSet.Builder<ScepterPart> builder = ImmutableSet.builder();
-		for (ScepterPart e : REGISTRY.values()){
-			if (e.getType() == ScepterPart.PartCategory.TIP){
+		for (ScepterPart e : REGISTRY.values())
+		{
+			if (e.getType() == ScepterPart.PartCategory.TIP)
+			{
 				builder.add(e);
 			}
 		}
 		return builder.build();
 	}
 
-	public static ImmutableSet<ScepterPart> getCores(){
+	public static ImmutableSet<ScepterPart> getCores()
+	{
 		ImmutableSet.Builder<ScepterPart> builder = ImmutableSet.builder();
-		for (ScepterPart e : REGISTRY.values()){
-			if (e.getType() == ScepterPart.PartCategory.CORE){
+		for (ScepterPart e : REGISTRY.values())
+		{
+			if (e.getType() == ScepterPart.PartCategory.CORE)
+			{
 				builder.add(e);
 			}
 		}

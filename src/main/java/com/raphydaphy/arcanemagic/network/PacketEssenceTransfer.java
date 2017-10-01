@@ -16,11 +16,11 @@ public class PacketEssenceTransfer implements IMessage
 	private Vec3d from;
 	private Vec3d to;
 	private EssenceStack essence;
-	
+
 	public PacketEssenceTransfer()
 	{
 	}
-	
+
 	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to)
 	{
 		this.from = from;
@@ -53,7 +53,7 @@ public class PacketEssenceTransfer implements IMessage
 
 	@Override
 	public void toBytes(ByteBuf buf)
-	{	
+	{
 		buf.writeDouble(from.x);
 		buf.writeDouble(from.y);
 		buf.writeDouble(from.z);

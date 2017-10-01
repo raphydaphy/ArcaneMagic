@@ -1,5 +1,7 @@
 package com.raphydaphy.arcanemagic.api.essence;
 
+import java.awt.Color;
+
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
@@ -20,8 +22,6 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-
-import java.awt.Color;
 
 public class Essence extends IForgeRegistryEntry.Impl<Essence>
 {
@@ -55,8 +55,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	private String unlocName;
 	protected ItemStack itemForm = ItemStack.EMPTY;
 
-	private Essence(String name, String unlocName, int r, int g, int b){
-		this(name, unlocName, new Color(r,g,b));
+	private Essence(String name, String unlocName, int r, int g, int b)
+	{
+		this(name, unlocName, new Color(r, g, b));
 	}
 
 	private Essence(String name, String unlocName, Color color)
@@ -122,11 +123,10 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 							if (!world.isRemote)
 							{
 								ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketEssenceTransfer(stack, from, to));
-							}
-							else
+							} else
 							{
-								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0), stack.getEssence(),
-										to, false);
+								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
+										stack.getEssence(), to, false);
 							}
 						}
 						return true;
@@ -143,12 +143,11 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 					{
 						// do the thing!
 						toTE.getCapability(EssenceStorage.CAP, null).store(stack, false);
-						
+
 						if (!world.isRemote)
 						{
 							ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketEssenceTransfer(stack, from, to));
-						}
-						else
+						} else
 						{
 							ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0), stack.getEssence(),
 									to, false);
@@ -206,7 +205,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		if (BiomeDictionary.hasType(biome, Type.WATER))
 			return Essence.DEPTH;
 		else if (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS))
-			 return Essence.HORIZON;
+			return Essence.HORIZON;
 		else if (BiomeDictionary.hasType(biome, Type.DRY) || BiomeDictionary.hasType(biome, Type.NETHER))
 			return Essence.INFERNO;
 		else if (BiomeDictionary.hasType(biome, Type.HILLS))
@@ -214,8 +213,8 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		else if (BiomeDictionary.hasType(biome, Type.MESA))
 			return Essence.CHAOS;
 		else if (biome.equals(Biomes.MUSHROOM_ISLAND) || biome.equals(Biomes.MUSHROOM_ISLAND_SHORE))
-			 return Essence.PEACE;
-		else 
+			return Essence.PEACE;
+		else
 			return Essence.HORIZON;
 	}
 

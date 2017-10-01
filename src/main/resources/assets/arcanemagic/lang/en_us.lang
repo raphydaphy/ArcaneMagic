@@ -55,28 +55,12 @@ arcanemagic.notebook.category.golemancy=Golemancy
 arcanemagic.notebook.category.eldritch=Eldritch
 
 ## Basic Information
-arcanemagic.notebook.category.basic_info=Basic Information
-arcanemagic.notebook.category.basic_info.basic_linguistics=Basic Linguistics
-arcanemagic.notebook.category.basic_info.basic_linguistics.desc=4th of January, 1720
-arcanemagic.notebook.category.basic_info.elemental_particles=Elemental Particles
-arcanemagic.notebook.category.basic_info.elemental_particles.desc=12th of January, 1720
-arcanemagic.notebook.category.basic_info.notebook=Magnetic Boundaries
-arcanemagic.notebook.category.basic_info.notebook.desc=30th of January, 1720
-arcanemagic.notebook.category.basic_info.knowledge_fragments=Ancient Relics
-arcanemagic.notebook.category.basic_info.knowledge_fragments.desc=20th of Jaunary, 1720
-arcanemagic.notebook.category.basic_info.nodes_intro=Mystical Energy
-arcanemagic.notebook.category.basic_info.nodes_intro.desc=23th of January, 1720
-arcanemagic.notebook.category.basic_info.warp=Essence Collection
-arcanemagic.notebook.category.basic_info.warp.desc=8th of Febuary, 1720
+arcanemagic.notebook.category.ancient_relics=Ancient Relics
+arcanemagic.notebook.category.ancient_relics.0=You have spent many days wondering the meaning of the parchment you found, but yet you are still in great confusion. You believe that a witch was carrying it before her death in order to try and use it to advance her magic.
+arcanemagic.notebook.category.ancient_relics.1=If the paper has such power, it would surely be a good idea to try and use it yourself. Witches are simply transformed and courupted villagers, so perhaps visiting a village would be a good start?
+arcanemagic.notebook.category.ancient_relics.2=If they villagers can help you, it will be easier to decode the messages that block your pathway and limit your success. It is possible that they would want this parchment, however, so I should try to keep it safe.
 
-## Thaumaturgy
-arcanemagic.notebook.category.thaumaturgy=Thaumaturgy
-arcanemagic.notebook.category.thaumaturgy.basic_scepter=Basic Scepters
-arcanemagic.notebook.category.thaumaturgy.basic_scepter.desc=A gateway to the magical world
-arcanemagic.notebook.category.thaumaturgy.basic_foci=Scepter Foci
-arcanemagic.notebook.category.thaumaturgy.basic_foci.desc=scepters dont have foci stupid book
-
-## Alchemy
-arcanemagic.notebook.category.alchemy=Alchemy
-arcanemagic.notebook.category.alchemy.basic_alchemy=Basic Alchemy
-arcanemagic.notebook.category.alchemy.basic_alchemy.desc=Bubble and Boil
+arcanemagic.notebook.category.crystallization=Crystallization
+arcanemagic.notebook.category.crystallization.0=Through your journeys thus far, you have discovered light particles imbued with what appears to be some form of magic. Now that you have learned more about the behaviour of this energy, perhaps it might be time to try manipulating it to your advantage.
+arcanemagic.notebook.category.crystallization.1=An Essence Crystallizer appears to do exactly what you want. Perhaps placing one near the particles you found might prove useful?
+		

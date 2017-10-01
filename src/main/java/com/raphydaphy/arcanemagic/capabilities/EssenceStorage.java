@@ -172,8 +172,7 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 					markDirty();
 				}
 				return null;
-			}
-			else
+			} else
 			{
 				int amountTaken = storage.get(out.getEssence()).getCount();
 				if (!simulate)

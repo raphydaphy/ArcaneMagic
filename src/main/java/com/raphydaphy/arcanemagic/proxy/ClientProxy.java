@@ -91,7 +91,7 @@ public class ClientProxy extends CommonProxy
 			}
 		}
 	}
-	
+
 	@Override
 	public void preInit(FMLPreInitializationEvent event)
 	{
@@ -147,16 +147,18 @@ public class ClientProxy extends CommonProxy
 			event.getMap()
 					.registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/essence/essence" + essenceParticle));
 		}
-		ScepterRegistry.getValues().forEach(part -> {
+		ScepterRegistry.getValues().forEach(part ->
+		{
 			event.getMap().registerSprite(part.getTexture());
 		});
 		System.out.println("Stiched textures!");
 	}
 
 	@Override
-	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos, boolean isCosmetic)
+	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos,
+			boolean isCosmetic)
 	{
-		Minecraft.getMinecraft().effectRenderer.addEffect(
-				new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x, speed.y, speed.z, essence, travelPos, isCosmetic));
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x,
+				speed.y, speed.z, essence, travelPos, isCosmetic));
 	}
 }

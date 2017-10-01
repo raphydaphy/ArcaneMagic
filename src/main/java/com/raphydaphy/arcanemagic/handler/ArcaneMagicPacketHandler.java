@@ -28,7 +28,8 @@ public class ArcaneMagicPacketHandler
 		// Register messages which are sent from the client to the server here:
 		INSTANCE.registerMessage(PacketArcaneCraftingSync.Handler.class, PacketArcaneCraftingSync.class, packetId++,
 				Side.SERVER);
-		
-		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++,
+				Side.CLIENT);
 	}
 }

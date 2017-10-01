@@ -32,7 +32,7 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 * @return the amount that couldn't be stored, or null if everything got stored
 	 */
 	EssenceStack store(EssenceStack in, boolean simulate);
-	
+
 	/**
 	 * Take the stack out of the storage
 	 * 
@@ -43,7 +43,7 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 * @return the amount that couldn't be taken, or null if the entire request was taken
 	 */
 	EssenceStack take(EssenceStack out, boolean simulate);
-	
+
 	/**
 	 * @return the amount of essence that can be stored
 	 * 

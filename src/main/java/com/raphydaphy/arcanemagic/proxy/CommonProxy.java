@@ -21,9 +21,10 @@ public abstract class CommonProxy
 	public void postInit(FMLPostInitializationEvent event)
 	{
 	}
-	
-	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos, boolean isCosmetic)
+
+	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos,
+			boolean isCosmetic)
 	{
-		
+
 	}
 }

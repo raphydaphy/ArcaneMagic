@@ -103,7 +103,7 @@ public class EssenceStack
 		}
 
 	}
-	
+
 	public static NBTTagCompound resetEssence(NBTTagCompound tag)
 	{
 		List<EssenceStack> stacks = readFromNBT(tag);
@@ -142,38 +142,36 @@ public class EssenceStack
 			col.add(new EssenceStack(e, 0));
 		return writeToNBT(tag, col);
 	}
-	
+
 	public static void writeToBuf(ByteBuf to, EssenceStack stack)
 	{
 		if (stack.isEmpty())
-        {
+		{
 			to.writeByte(-1);
-            to.writeShort(-1);
-        }
-        else
-        {
-        	to.writeByte(stack.getCount());
-        	to.writeShort(Essence.REGISTRY.getValues().indexOf(stack.getEssence()));
-        }
+			to.writeShort(-1);
+		} else
+		{
+			to.writeByte(stack.getCount());
+			to.writeShort(Essence.REGISTRY.getValues().indexOf(stack.getEssence()));
+		}
 	}
-	
+
 	public static EssenceStack readFromBuf(ByteBuf from)
 	{
 		int count = from.readByte();
 		int id = from.readShort();
-        if (count < 0)
-        {
-            return EssenceStack.EMPTY;
-        }
-        else
-        {
-            
-            EssenceStack stack = new EssenceStack(Essence.getEssenceByID(id), count);
-            
-            return stack;
-        }
+		if (count < 0)
+		{
+			return EssenceStack.EMPTY;
+		} else
+		{
+
+			EssenceStack stack = new EssenceStack(Essence.getEssenceByID(id), count);
+
+			return stack;
+		}
 	}
-	
+
 	@Nonnull
 	public static List<EssenceStack> readFromNBT(NBTTagCompound tag)
 	{
@@ -212,7 +210,8 @@ public class EssenceStack
 
 			if (e.getCount() < 0)
 				essTag.setInteger(e.getEssence().getRegistryName().toString(), 0);
-			else essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
+			else
+				essTag.setInteger(e.getEssence().getRegistryName().toString(), e.getCount());
 		}
 		tag.setTag(E, essTag);
 		return tag;
