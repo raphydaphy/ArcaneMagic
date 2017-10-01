@@ -70,10 +70,14 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (!world.isRemote)
 								{
 									// actually send essence, not just particles
-									Essence.sendEssence(world,
+									if (Essence.sendEssence(world,
 											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
 											new Vec3d(x + 0.5, y + 0.6, z + 0.5),
-											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), false);
+											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), false,
+											false))
+									{
+
+									}
 								}
 
 							}

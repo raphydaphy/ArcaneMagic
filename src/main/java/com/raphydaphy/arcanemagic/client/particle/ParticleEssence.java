@@ -5,7 +5,9 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -100,5 +102,13 @@ public class ParticleEssence extends Particle
 			this.motionX *= 0.699999988079071D;
 			this.motionZ *= 0.699999988079071D;
 		}
+	}
+
+	@Override
+	public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+	{
+		super.renderParticle(buffer, entity, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+
 	}
 }

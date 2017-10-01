@@ -71,7 +71,8 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 										Essence.sendEssence(world,
 												new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
 												new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false);
+												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false,
+												true);
 									}
 								}
 							}

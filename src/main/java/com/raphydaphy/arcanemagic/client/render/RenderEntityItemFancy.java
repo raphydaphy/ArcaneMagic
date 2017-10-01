@@ -35,9 +35,11 @@ public class RenderEntityItemFancy extends RenderEntityItem
 	@Override
 	public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
-		renderFancyBeams(x, y + 0.5, z, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x,y,z))).getColor(), entity.world.getSeed(), entity.getAge(), 16, 0.7f, 40, 10);
-		//renderFancyBeams(x, y + 0.5, z, Color.magenta, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
+		renderFancyBeams(x, y + 0.5, z, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(),
+				entity.world.getSeed(), entity.getAge(), 16, 0.7f, 30, 10);
+
 		GlStateManager.pushMatrix();
+
 		ItemStack stack = entity.getItem();
 		if (!stack.isEmpty())
 		{
@@ -96,12 +98,11 @@ public class RenderEntityItemFancy extends RenderEntityItem
 			GlStateManager.rotate(rand.nextFloat() * 360.0F + rotateSpeed * 360.0F, 0.0F, 0.0F, 1.0F);
 
 			vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-
 			// length and width of the individual beams
 			float length = (rand.nextFloat() * 20.0F + 5.0F + beamSize * 10.0F)
 					/ (30.0F / (Math.min(dstJump, 10 * scale) / 10.0F));
 			float width = 0.08f;
-			
+
 			//vb.color(1, 1, 1, 1);
 			vb.pos(0, 0, 0).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(),
 					(int) (255.0F * (1.0F - beamSize)) * 10).endVertex();

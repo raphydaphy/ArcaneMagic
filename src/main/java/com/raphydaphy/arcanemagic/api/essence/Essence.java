@@ -90,7 +90,8 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return this;
 	}
 
-	public static boolean sendEssence(World world, EssenceStack stack, Vec3d from, Vec3d to, boolean simulate)
+	public static boolean sendEssence(World world, EssenceStack stack, Vec3d from, Vec3d to, boolean simulate,
+			boolean spawnParticles)
 	{
 		BlockPos fromPos = new BlockPos(Math.floor(from.x), Math.floor(from.y), Math.floor(from.z));
 		BlockPos toPos = new BlockPos(Math.floor(to.x), Math.floor(to.y), Math.floor(to.z));
@@ -121,8 +122,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 							if (!world.isRemote)
 							{
-								ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketEssenceTransfer(stack, from, to));
-							} else
+								ArcaneMagicPacketHandler.INSTANCE
+										.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
+							} else if (spawnParticles)
 							{
 								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
 										stack.getEssence(), to, false);
@@ -145,7 +147,8 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 						if (!world.isRemote)
 						{
-							ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketEssenceTransfer(stack, from, to));
+							ArcaneMagicPacketHandler.INSTANCE
+									.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
 						} else
 						{
 							ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0), stack.getEssence(),

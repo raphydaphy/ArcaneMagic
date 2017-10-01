@@ -16,12 +16,13 @@ public class PacketEssenceTransfer implements IMessage
 	private Vec3d from;
 	private Vec3d to;
 	private EssenceStack essence;
+	private boolean spawnParticles;
 
 	public PacketEssenceTransfer()
 	{
 	}
 
-	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to)
+	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
 	{
 		this.from = from;
 		this.to = to;
@@ -39,7 +40,8 @@ public class PacketEssenceTransfer implements IMessage
 
 		private void handle(PacketEssenceTransfer message, MessageContext ctx)
 		{
-			Essence.sendEssence(Minecraft.getMinecraft().world, message.essence, message.from, message.to, false);
+			Essence.sendEssence(Minecraft.getMinecraft().world, message.essence, message.from, message.to, false,
+					message.spawnParticles);
 		}
 	}
 
@@ -49,6 +51,7 @@ public class PacketEssenceTransfer implements IMessage
 		from = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		to = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		essence = EssenceStack.readFromBuf(buf);
+		spawnParticles = buf.readBoolean();
 	}
 
 	@Override
@@ -61,5 +64,6 @@ public class PacketEssenceTransfer implements IMessage
 		buf.writeDouble(to.y);
 		buf.writeDouble(to.z);
 		EssenceStack.writeToBuf(buf, essence);
+		buf.writeBoolean(spawnParticles);
 	}
 }

@@ -45,17 +45,17 @@ public class EntityItemFancy extends EntityItem
 			}
 		}
 	}
-	
+
 	@Override
 	public void setDead()
-    {
-        super.setDead();
-        
-        if (world.getBlockState(this.getPosition()).getBlock() == ModRegistry.FANCY_LIGHT)
+	{
+		super.setDead();
+
+		if (world.getBlockState(this.getPosition()).getBlock() == ModRegistry.FANCY_LIGHT)
 		{
 			world.setBlockToAir(getPosition());
 		}
-    }
+	}
 
 	@Override
 	public void move(MoverType type, double x, double y, double z)
