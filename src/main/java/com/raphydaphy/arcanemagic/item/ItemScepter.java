@@ -150,17 +150,6 @@ public class ItemScepter extends ItemBase
 		{
 			world.setBlockToAir(pos);
 
-			for (int i = 0; i < 80; i++)
-			{
-				// just for looks, dont transfer any essence here!
-				ArcaneMagic.proxy.spawnEssenceParticles(world, new Vec3d(player.posX, player.posY, player.posZ),
-						new Vec3d(0, 0, 0), Essence.getFromBiome(world.getBiome(pos)),
-						new Vec3d(pos.getX() + 0.3 + (itemRand.nextDouble() * 0.4),
-								pos.getY() + 0.3 + (itemRand.nextDouble() * 0.4),
-								pos.getZ() + 0.3 + (itemRand.nextDouble() * 0.4)),
-						true);
-			}
-
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
 					SoundCategory.MASTER, 1f, 1f, false);
 			if (!world.isRemote)

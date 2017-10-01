@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 
 import net.minecraft.client.Minecraft;
@@ -18,6 +19,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
@@ -33,16 +35,12 @@ public class RenderEntityItemFancy extends RenderEntityItem
 	@Override
 	public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
-		//renderFancyBeams(x, y + 0.5, z, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x,y,z))).getColor(), entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
-		renderFancyBeams(x, y + 0.5, z, Color.orange, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
+		renderFancyBeams(x, y + 0.5, z, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x,y,z))).getColor(), entity.world.getSeed(), entity.getAge(), 16, 0.7f, 40, 10);
+		//renderFancyBeams(x, y + 0.5, z, Color.magenta, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
 		GlStateManager.pushMatrix();
 		ItemStack stack = entity.getItem();
 		if (!stack.isEmpty())
 		{
-			/*EntityItem ei = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, stack);
-			ei.age = entity.getAge();
-			ei.hoverStart = entity.hoverStart;*/
-
 			super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		}
 		GlStateManager.popMatrix();
@@ -103,8 +101,12 @@ public class RenderEntityItemFancy extends RenderEntityItem
 			float length = (rand.nextFloat() * 20.0F + 5.0F + beamSize * 10.0F)
 					/ (30.0F / (Math.min(dstJump, 10 * scale) / 10.0F));
 			float width = 0.08f;
+			
+			//vb.color(1, 1, 1, 1);
 			vb.pos(0, 0, 0).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(),
-					(int) (255.0F * (1.0F - beamSize))).endVertex();
+					(int) (255.0F * (1.0F - beamSize)) * 10).endVertex();
+			//vb.pos(0, 0, 0).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(),
+			//				Float.MAX_VALUE).endVertex();
 			vb.pos(-0.7D * width, length, -0.5F * width)
 					.color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
 			vb.pos(0.7D * width, length, -0.5F * width)

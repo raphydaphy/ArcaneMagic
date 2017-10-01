@@ -20,7 +20,6 @@ public class BlockFancyLight extends BlockBase
 	public BlockFancyLight()
 	{
 		super("fancy_light", Material.AIR, 0.0f);
-		//setDefaultState(blockState.getBaseState());
 		setTickRandomly(false);
 		setLightLevel(1.0F);
 	}
