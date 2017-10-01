@@ -8,14 +8,14 @@ import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.block.BlockEssenceConcentrator;
 import com.raphydaphy.arcanemagic.block.BlockFancyLight;
-import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
+import com.raphydaphy.arcanemagic.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.item.ItemAncientParchment;
 import com.raphydaphy.arcanemagic.item.ItemBase;
 import com.raphydaphy.arcanemagic.item.ItemCore;
-import com.raphydaphy.arcanemagic.item.ItemFoci;
+import com.raphydaphy.arcanemagic.item.ItemEnum;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.item.ItemScribingTools;
@@ -23,12 +23,13 @@ import com.raphydaphy.arcanemagic.item.ItemTip;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.util.IHasRecipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -39,8 +40,8 @@ public class ModRegistry
 
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
+	public static final List<IRecipe> RECIPES = new ArrayList<>();
 
-	public static final BlockOre INFUSED_ORE = new BlockOre("ore_infused", 3.5f);
 	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockArcaneWorktable WORKTABLE = new BlockArcaneWorktable();
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
@@ -48,14 +49,13 @@ public class ModRegistry
 	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 
-	public static final ItemBase TIPS = new ItemTip();
-	public static final ItemBase CORES = new ItemCore();
+	public static final ItemBase TIP = new ItemTip();
+	public static final ItemBase CORE = new ItemCore();
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
-	public static final ItemBase ESSENCE = new ItemBase("essence", 6);
+	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values());
 	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools("scribing_tools");
 	public static final ItemAncientParchment ANCIENT_PARCHMENT = new ItemAncientParchment("ancient_parchment");
-	public static final ItemFoci FIRE_FOCUS = new ItemFoci("focus_fire");
 
 	@SubscribeEvent
 	public void onBlockRegister(Register<Block> e)
@@ -68,9 +68,24 @@ public class ModRegistry
 	{
 		e.getRegistry().registerAll(ITEMS.toArray(new Item[ITEMS.size()]));
 	}
+	
+	@SubscribeEvent
+	public void onRecipeRegister(Register<IRecipe> e)
+	{
+		for (Item i : ModRegistry.ITEMS)
+			if (i instanceof IHasRecipe)
+				((IHasRecipe) i).initRecipes(e);
+		for (Block b : ModRegistry.BLOCKS)
+			if (b instanceof IHasRecipe)
+				((IHasRecipe) b).initRecipes(e);
+		
+		//The day I work with JSON recipes is the day the world ends.
+		
+		e.getRegistry().registerAll(RECIPES.toArray(new IRecipe[RECIPES.size()]));
+	}
 
 	@SubscribeEvent
-	public void registerSounds(RegistryEvent.Register<SoundEvent> event)
+	public void registerSounds(Register<SoundEvent> event)
 	{
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
 		ArcaneMagicSoundHandler.register("craft_start", registry);

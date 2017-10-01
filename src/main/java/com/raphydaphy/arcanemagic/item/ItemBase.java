@@ -12,7 +12,7 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 
 public class ItemBase extends Item implements IHasModel
 {
-	private final int variants;
+	protected final int variants;
 
 	public ItemBase(String name)
 	{

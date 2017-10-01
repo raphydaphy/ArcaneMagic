@@ -27,7 +27,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
@@ -226,10 +225,9 @@ public class ItemScepter extends ItemBase
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack)
 	{
-		return TextFormatting.DARK_GREEN.toString() + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
+		return TextFormatting.DARK_GREEN.toString() + ArcaneMagic.proxy.translate(getUnlocalizedName(stack) + ".name", ArcaneMagic.proxy.translate(getTipOrDefault(stack).getUnlocalizedName() + ".name"), ArcaneMagic.proxy.translate(getCoreOrDefault(stack).getUnlocalizedName() + ".name"));
 	}
 
 	@Override

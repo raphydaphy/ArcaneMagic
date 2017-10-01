@@ -7,12 +7,12 @@
 	"variants": {
 		"item": {
 			"scepter": {
-	            "model": "arcanemagic:scepter",
-	            
-	            "textures": {
-	                "core": "arcanemagic:items/scepter/core_wood", 
-	                "tip": "arcanemagic:items/scepter/tip_iron"
-	            }
+				"model": "arcanemagic:scepter",
+
+				"textures": {
+					"core": "arcanemagic:items/scepter/core_wood",
+					"tip": "arcanemagic:items/scepter/tip_iron"
+				}
 			},
 			"notebook": {
 				"textures": {
@@ -24,9 +24,38 @@
 					"all": "arcanemagic:items/scribing_tools"
 				}
 			},
-			"shard": {
+			"essence_ozone": {
 				"textures": {
-					"layer0": "arcanemagic:items/shard"
+					"layer0": "arcanemagic:items/essence/ozone"
+				}
+			},
+			"essence_depth": {
+				"textures": {
+					"layer0": "arcanemagic:items/essence/depth"
+				}
+			},
+			"essence_inferno": {
+				"textures": {
+					"layer0": "arcanemagic:items/essence/inferno"
+				}
+			},
+			"essence_horizon": {
+				"textures": {
+					"layer0": "arcanemagic:items/essence/horizon"
+				}
+			},
+			"essence_peace": {
+				"textures": {
+					"layer0": "arcanemagic:items/essence/peace"
+				}
+			},
+			"essence_chaos": {
+				"textures": {
+					"layer0": "arcanemagic:items/essence/chaos"
+				}
+			},"essence_creation": {
+				"textures": {
+					"layer0": "arcanemagic:items/essence/creation"
 				}
 			},
 			"ancient_parchment": {

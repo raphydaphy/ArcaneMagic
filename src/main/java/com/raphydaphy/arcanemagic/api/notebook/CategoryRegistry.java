@@ -123,7 +123,7 @@ public class CategoryRegistry implements IForgeRegistry<NotebookCategory>
 	private static void freeze()
 	{
 		ArcaneMagic.LOGGER
-				.info("Freezing Category Registry - being called from " + Thread.currentThread().getStackTrace()[0]);
+				.info("Freezing Category Registry - being called from " + Thread.currentThread().getStackTrace()[1]);
 		frozen = true;
 	}
 

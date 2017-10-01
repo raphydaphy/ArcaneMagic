@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.essence.EssenceCreation;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
@@ -27,12 +28,13 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	public static final EssenceRegistry REGISTRY = new EssenceRegistry();
 
-	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xbf, 0x56, 0);
-	public static final Essence DEPTH = new Essence("depth", ArcaneMagic.MODID + ".depth", 0x18, 0x7e, 0xa3);
 	public static final Essence OZONE = new Essence("ozone", ArcaneMagic.MODID + ".ozone", 0xea, 0xea, 0xea);
+	public static final Essence DEPTH = new Essence("depth", ArcaneMagic.MODID + ".depth", 0x18, 0x7e, 0xa3);
+	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xbf, 0x56, 0);
 	public static final Essence HORIZON = new Essence("horizon", ArcaneMagic.MODID + ".horizon", 0x06, 0x60, 0x18);
 	public static final Essence PEACE = new Essence("peace", ArcaneMagic.MODID + ".peace", 0x30, 0x3a, 0x1f);
 	public static final Essence CHAOS = new Essence("chaos", ArcaneMagic.MODID + ".chaos", 0x85, 0xb7, 0x2f);
+	public static final Essence CREATION = new EssenceCreation();
 
 	public static class EssenceSubscriber
 	{
@@ -40,13 +42,14 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		@SubscribeEvent
 		public void onEssenceRegister(Register<Essence> event)
 		{
-			event.getRegistry().registerAll(INFERNO, DEPTH, OZONE, HORIZON, PEACE, CHAOS);
-			INFERNO.setItemForm(new ItemStack(ModRegistry.ESSENCE));
+			event.getRegistry().registerAll(OZONE, DEPTH, INFERNO, HORIZON, PEACE, CHAOS);
+			OZONE.setItemForm(new ItemStack(ModRegistry.ESSENCE));
 			DEPTH.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 1));
-			OZONE.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 2));
+			INFERNO.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 2));
 			HORIZON.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 3));
 			PEACE.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 4));
 			CHAOS.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 5));
+			CREATION.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 6));
 		}
 	}
 

@@ -7,7 +7,13 @@ item.arcanemagic.sceptre_core.1.name=Silverwood Scepter Core
 item.arcanemagic.sceptre_core.2.name=Greatwood Scepter Core
 item.arcanemagic.scepter.name=%s Tipped %s Scepter
 item.arcanemagic.notebook.name=Lost Notebook
-item.arcanemagic.shard.name=Infused Shard
+item.arcanemagic.essence_ozone.name=Formation of the Ozone Layer
+item.arcanemagic.essence_depth.name=Formation of the Depths
+item.arcanemagic.essence_inferno.name=Formation of the Inferno
+item.arcanemagic.essence_horizon.name=Formation of the Horizon
+item.arcanemagic.essence_peace.name=Formation of Peace
+item.arcanemagic.essence_chaos.name=Formation of Chaos
+item.arcanemagic.essence_creation.name=Embodiment of Creation
 item.arcanemagic.scribing_tools.name=Scribing Tools
 item.arcanemagic.ancient_parchment.name=Ancient Parchment
 item.arcanemagic.focus_fire.name=scepter Focus: Fire
@@ -41,12 +47,13 @@ itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.crystallizer=Crystallizer
 
 # Essence
-essence.arcanemagic.inferno.name=Inferno
-essence.arcanemagic.depth.name=Depth
 essence.arcanemagic.ozone.name=Ozone
+essence.arcanemagic.depth.name=Depth
+essence.arcanemagic.inferno.name=Inferno
 essence.arcanemagic.horizon.name=Horizon
 essence.arcanemagic.peace.name=Peace
 essence.arcanemagic.chaos.name=Chaos
+essence.arcanemagic.creation.name=Creation
 
 ## Notebook
 arcanemagic.notebook.category.ancient_relics=Ancient Relics

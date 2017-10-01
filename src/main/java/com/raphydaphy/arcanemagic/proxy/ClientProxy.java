@@ -10,13 +10,11 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
-import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.client.model.SceptreModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
-import com.raphydaphy.arcanemagic.data.EnumPrimal;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
@@ -205,17 +203,6 @@ public class ClientProxy extends CommonProxy
 
 	public static void registerColors()
 	{
-		Minecraft.getMinecraft().getItemColors().registerItemColorHandler((stack, tintIndex) ->
-		{
-			return EnumPrimal.values()[stack.getMetadata()].getColorMultiplier();
-		}, Item.getItemFromBlock(ModRegistry.INFUSED_ORE));
-
-		Minecraft.getMinecraft().getBlockColors().registerBlockColorHandler((state, world, pos, tintIndex) ->
-		{
-			if (tintIndex == 0)
-				return -1;
-			return state.getValue(BlockOre.PRIMAL).getColorMultiplier();
-		}, ModRegistry.INFUSED_ORE);
 	}
 
 	@SubscribeEvent
@@ -246,7 +233,7 @@ public class ClientProxy extends CommonProxy
 		{
 			event.getMap().registerSprite(part.getTexture());
 		});
-		System.out.println("Stiched textures!");
+		ArcaneMagic.LOGGER.info("Stiched textures!");
 	}
 
 	@Override
@@ -255,5 +242,10 @@ public class ClientProxy extends CommonProxy
 	{
 		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x,
 				speed.y, speed.z, essence, travelPos, isCosmetic));
+	}
+	
+	@Override
+	public String translate(String key, Object... args) {
+		return I18n.format(key, args);
 	}
 }

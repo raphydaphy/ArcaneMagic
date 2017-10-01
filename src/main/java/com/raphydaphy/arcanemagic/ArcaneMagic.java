@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic;
 
-import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
@@ -39,13 +38,14 @@ public class ArcaneMagic
 	@Mod.Instance
 	public static ArcaneMagic instance;
 
-	public static Logger LOGGER = LogManager.getLogger(MODID);
+	public static Logger LOGGER;
 
 	public static final ArcaneMagicCreativeTab creativeTab = new ArcaneMagicCreativeTab();
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		LOGGER = event.getModLog();
 		ModEntities.init();
 		ArcaneMagicPacketHandler.registerMessages(ArcaneMagic.MODID);
 		proxy.preInit(event);
