@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.notebook;
+package com.raphydaphy.arcanemagic.notebook.category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryCraftingRecipe;
+import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;

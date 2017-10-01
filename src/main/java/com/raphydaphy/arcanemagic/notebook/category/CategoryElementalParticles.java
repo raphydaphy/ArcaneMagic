@@ -1,17 +1,18 @@
-package com.raphydaphy.arcanemagic.notebook;
+package com.raphydaphy.arcanemagic.notebook.category;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
 
-public class CategoryEssenceCollection implements INotebookCategory
+public class CategoryElementalParticles implements INotebookCategory
 {
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.essence_collection";
+		return "arcanemagic.notebook.category.elemental_particles";
 	}
 
 	@Override

@@ -13,7 +13,16 @@ public interface INotebookEntry
 	/*
 	 *  Should draw the entry onto the screen at the specified coordinates
 	 */
-	public void draw(int x, int y, GuiScreen notebook);
+	public void draw(int x, int y, int mouseX, int mouseY, GuiScreen notebook);
+	
+	/*
+	 * Anything that needs to be run after all other rendering is done
+	 * ie. tooltips
+	 */
+	public default void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook)
+	{
+		
+	}
 	
 	/*
 	 * Should return the height in pixels that the entry takes up on the page

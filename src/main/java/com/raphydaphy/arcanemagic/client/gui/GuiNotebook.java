@@ -40,8 +40,8 @@ public class GuiNotebook extends GuiScreen
 	public static final String tagIndexPage = "notebookIndexPage";
 
 	// Because for some reason the mouse information provided in onMouseClick is wrong
-	private int relMouseX = 0;
-	private int relMouseY = 0;
+	public int relMouseX = 0;
+	public int relMouseY = 0;
 
 	// The player, to store entity data
 	private EntityPlayer player;
@@ -131,9 +131,13 @@ public class GuiNotebook extends GuiScreen
 		int curY = 0;
 		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(curCategory).getEntries())
 		{
-			entry.draw(screenX + 145, screenY + 40 + curY, this);
+			entry.draw(screenX + 145, screenY + 40 + curY, mouseX, mouseY, this);
 			curY += entry.getHeight(this) + 5;
 		}
+		
+		// Custom matrix for drawing scaled strings
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
 		
 		// Current Category Name
 		double largeText = 1.4;
@@ -163,7 +167,21 @@ public class GuiNotebook extends GuiScreen
 			fontRenderer.drawString(I18n.format(ArcaneMagicAPI.getNotebookCategories().get(category).getUnlocalizedName()), (int) ((screenX + catX) * (1 / categoryNameSize)),
 					(int) ((screenY + 24 + (category * 20)) * (1 / categoryNameSize)), 0x32363d, doShadow);
 		}
-
+		
+		// Go back to default scaling
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+		
+		// Reset curY for the second round of drawing the entries
+		curY = 0;
+		
+		// Draw all the entries a second time for tooltip rendering etc
+		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(curCategory).getEntries())
+		{
+			entry.drawPost(screenX + 145, screenY + 40 + curY, mouseX, mouseY, this);
+			curY += entry.getHeight(this) + 5;
+		}
+		
 		// Goodbye matrix!
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();

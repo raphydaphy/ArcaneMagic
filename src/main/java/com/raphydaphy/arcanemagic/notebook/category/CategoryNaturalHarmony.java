@@ -1,17 +1,18 @@
-package com.raphydaphy.arcanemagic.notebook;
+package com.raphydaphy.arcanemagic.notebook.category;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
 
-public class CategoryManipulatingMagic implements INotebookCategory
+public class CategoryNaturalHarmony implements INotebookCategory
 {
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.manipulating_magic";
+		return "arcanemagic.notebook.category.natural_harmony";
 	}
 
 	@Override

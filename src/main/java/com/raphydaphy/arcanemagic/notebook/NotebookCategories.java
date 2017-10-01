@@ -2,8 +2,16 @@ package com.raphydaphy.arcanemagic.notebook;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryAncientRelics;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryBasicLinguistics;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryCrystallization;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryElementalParticles;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryEssenceCollection;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryManipulatingMagic;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryMysticalEnergy;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryNaturalHarmony;
 
-public class Categories
+public class NotebookCategories
 {
 	public static final INotebookCategory ANCIENT_RELICS = new CategoryAncientRelics();
 	public static final INotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics();

@@ -10,7 +10,7 @@ import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
 import com.raphydaphy.arcanemagic.init.ModEntities;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.notebook.Categories;
+import com.raphydaphy.arcanemagic.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.proxy.GuiProxy;
 
@@ -65,7 +65,7 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		Categories.register();
+		NotebookCategories.register();
 		proxy.postInit(event);
 	}
 }

@@ -1,10 +1,11 @@
-package com.raphydaphy.arcanemagic.notebook;
+package com.raphydaphy.arcanemagic.notebook.category;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
 
 public class CategoryMysticalEnergy implements INotebookCategory
 {

@@ -1,17 +1,18 @@
-package com.raphydaphy.arcanemagic.notebook;
+package com.raphydaphy.arcanemagic.notebook.category;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
 
-public class CategoryAncientRelics implements INotebookCategory
+public class CategoryManipulatingMagic implements INotebookCategory
 {
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.ancient_relics";
+		return "arcanemagic.notebook.category.manipulating_magic";
 	}
 
 	@Override
@@ -22,6 +23,7 @@ public class CategoryAncientRelics implements INotebookCategory
 		{
 			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
+		
 		return entries;
 	}
 }

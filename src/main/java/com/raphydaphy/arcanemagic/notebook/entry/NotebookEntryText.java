@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.notebook;
+package com.raphydaphy.arcanemagic.notebook.entry;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
@@ -25,7 +25,7 @@ public class NotebookEntryText implements INotebookEntry
 	}
 
 	@Override
-	public void draw(int x, int y, GuiScreen notebook)
+	public void draw(int x, int y, int mouseX, int mouseY, GuiScreen notebook)
 	{
 		notebook.mc.fontRenderer.drawSplitString(I18n.format(unlocalizedText), x, y, 180, color);
 	}
