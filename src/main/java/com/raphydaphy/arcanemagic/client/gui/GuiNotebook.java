@@ -89,7 +89,7 @@ public class GuiNotebook extends GuiScreen
 		// Save the real mouse coordinates for access in onMouseClick
 		relMouseX = mouseX;
 		relMouseY = mouseY;
-		
+
 		// Because having shading is important
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
@@ -134,16 +134,17 @@ public class GuiNotebook extends GuiScreen
 			entry.draw(screenX + 145, screenY + 40 + curY, mouseX, mouseY, this);
 			curY += entry.getHeight(this) + 5;
 		}
-		
+
 		// Custom matrix for drawing scaled strings
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		
+
 		// Current Category Name
 		double largeText = 1.4;
 		GlStateManager.scale(largeText, largeText, largeText);
-		fontRenderer.drawStringWithShadow(I18n.format(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedName()), (int) ((screenX + 145) / largeText),
-				(int) ((screenY + 17) / largeText), 0x666666); // satan is coming
+		fontRenderer.drawStringWithShadow(
+				I18n.format(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedName()),
+				(int) ((screenX + 145) / largeText), (int) ((screenY + 17) / largeText), 0x666666); // satan is coming
 
 		// Category List
 		double categoryNameSize = 0.8;
@@ -153,24 +154,27 @@ public class GuiNotebook extends GuiScreen
 		for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
 		{
 			// Draw the category!
-			fontRenderer.drawString(I18n.format(ArcaneMagicAPI.getNotebookCategories().get(category).getUnlocalizedName()), (int) ((screenX + (category == curCategory ? 26 : 18)) * (1 / categoryNameSize)),
-					(int) ((screenY + 24 + (category * 20)) * (1 / categoryNameSize)), category == curCategory ? 0x515151 :0x32363d);
+			fontRenderer.drawString(
+					I18n.format(ArcaneMagicAPI.getNotebookCategories().get(category).getUnlocalizedName()),
+					(int) ((screenX + (category == curCategory ? 26 : 18)) * (1 / categoryNameSize)),
+					(int) ((screenY + 24 + (category * 20)) * (1 / categoryNameSize)),
+					category == curCategory ? 0x515151 : 0x32363d);
 		}
-		
+
 		// Go back to default scaling
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
-		
+
 		// Reset curY for the second round of drawing the entries
 		curY = 0;
-		
+
 		// Draw all the entries a second time for tooltip rendering etc
 		for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(curCategory).getEntries())
 		{
 			entry.drawPost(screenX + 145, screenY + 40 + curY, mouseX, mouseY, this);
 			curY += entry.getHeight(this) + 5;
 		}
-		
+
 		// Goodbye matrix!
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
@@ -204,7 +208,7 @@ public class GuiNotebook extends GuiScreen
 						player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
 								ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f, false);
 						player.getEntityData().setInteger(tagCategory, tab);
-						
+
 					}
 					break;
 				}

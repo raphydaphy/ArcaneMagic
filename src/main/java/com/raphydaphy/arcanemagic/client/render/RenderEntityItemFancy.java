@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
@@ -34,8 +33,9 @@ public class RenderEntityItemFancy extends RenderEntityItem
 	@Override
 	public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
-		renderFancyBeams(x, y + 0.5, z, Color.MAGENTA, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
-		GL11.glPushMatrix();
+		//renderFancyBeams(x, y + 0.5, z, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x,y,z))).getColor(), entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
+		renderFancyBeams(x, y + 0.5, z, Color.orange, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
+		GlStateManager.pushMatrix();
 		ItemStack stack = entity.getItem();
 		if (!stack.isEmpty())
 		{
@@ -45,7 +45,7 @@ public class RenderEntityItemFancy extends RenderEntityItem
 
 			super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		}
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
 	}
 
 	public static class Factory implements IRenderFactory<EntityItemFancy>
@@ -85,6 +85,7 @@ public class RenderEntityItemFancy extends RenderEntityItem
 		GlStateManager.pushMatrix();
 		for (int i = 0; i < fancy_count; i++)
 		{
+			// rotate the current beam so it isn't 2D
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
@@ -92,21 +93,25 @@ public class RenderEntityItemFancy extends RenderEntityItem
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+
+			// Animate the beams spinning
 			GlStateManager.rotate(rand.nextFloat() * 360.0F + rotateSpeed * 360.0F, 0.0F, 0.0F, 1.0F);
+
 			vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
-			float fa = rand.nextFloat() * 20.0F + 5.0F + beamSize * 10.0F;
-			float f4 = rand.nextFloat() * 2.0F + 1.0F + beamSize * 2.0F;
-			fa /= 30.0F / (Math.min(dstJump, 10 * scale) / 10.0F);
-			f4 /= 30.0F / (Math.min(dstJump, 10 * scale) / 10.0F);
+
+			// length and width of the individual beams
+			float length = (rand.nextFloat() * 20.0F + 5.0F + beamSize * 10.0F)
+					/ (30.0F / (Math.min(dstJump, 10 * scale) / 10.0F));
+			float width = 0.08f;
 			vb.pos(0, 0, 0).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(),
 					(int) (255.0F * (1.0F - beamSize))).endVertex();
-			vb.pos(-0.7D * f4, fa, -0.5F * f4)
+			vb.pos(-0.7D * width, length, -0.5F * width)
 					.color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-			vb.pos(0.7D * f4, fa, -0.5F * f4)
+			vb.pos(0.7D * width, length, -0.5F * width)
 					.color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-			vb.pos(0.0D, fa, 1.0F * f4).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0)
-					.endVertex();
-			vb.pos(-0.7D * f4, fa, -0.5F * f4)
+			vb.pos(0.0D, length, 1.0F * width)
+					.color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
+			vb.pos(-0.7D * width, length, -0.5F * width)
 					.color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
 			tes.draw();
 		}

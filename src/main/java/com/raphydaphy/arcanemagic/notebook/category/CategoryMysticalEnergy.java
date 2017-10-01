@@ -23,7 +23,7 @@ public class CategoryMysticalEnergy extends NotebookCategory
 		{
 			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
-		
+
 		return entries;
 	}
 }

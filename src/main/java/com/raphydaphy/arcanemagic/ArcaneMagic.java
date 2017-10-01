@@ -70,9 +70,10 @@ public class ArcaneMagic
 		NotebookCategories.register();
 		proxy.postInit(event);
 	}
-	
+
 	@Mod.EventHandler
-	public void complete(FMLLoadCompleteEvent e) {
+	public void complete(FMLLoadCompleteEvent e)
+	{
 		CategoryRegistry.sortCategories();
 	}
 }

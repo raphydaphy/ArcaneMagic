@@ -20,6 +20,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,6 +28,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber
 public class ModEvents
 {
+	@SubscribeEvent
+	public static void onItemPickup(ItemPickupEvent ev)
+	{
+		if (ev.pickedUp instanceof EntityItemFancy)
+		{
+			if (ev.pickedUp.world.getBlockState(ev.pickedUp.getPosition()).getBlock() == ModRegistry.FANCY_LIGHT)
+			{
+				ev.pickedUp.world.setBlockToAir(ev.pickedUp.getPosition());
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
@@ -103,7 +115,7 @@ public class ModEvents
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onLivingDrops(LivingDropsEvent event)
 	{
@@ -111,7 +123,8 @@ public class ModEvents
 		{
 			if (event.getEntity().world.rand.nextInt(15) == 1)
 			{
-				event.getDrops().add(new EntityItemFancy(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(ModRegistry.ANCIENT_PARCHMENT)));
+				event.getDrops().add(new EntityItemFancy(event.getEntity().world, event.getEntity().posX,
+						event.getEntity().posY, event.getEntity().posZ, new ItemStack(ModRegistry.ANCIENT_PARCHMENT)));
 			}
 		}
 	}

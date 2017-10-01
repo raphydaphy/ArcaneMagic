@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.block.BlockEssenceConcentrator;
+import com.raphydaphy.arcanemagic.block.BlockFancyLight;
 import com.raphydaphy.arcanemagic.block.BlockOre;
 import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
@@ -45,6 +46,7 @@ public class ModRegistry
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
 	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
 	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
+	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 
 	public static final ItemBase TIPS = new ItemTip();
 	public static final ItemBase CORES = new ItemCore();

@@ -11,13 +11,13 @@ public class NotebookEntryText implements INotebookEntry
 {
 	private String unlocalizedText;
 	private int color;
-	
+
 	public NotebookEntryText(String unlocalizedText, int color)
 	{
 		this.unlocalizedText = unlocalizedText;
 		this.color = color;
 	}
-	
+
 	@Override
 	public ResourceLocation getRegistryName()
 	{

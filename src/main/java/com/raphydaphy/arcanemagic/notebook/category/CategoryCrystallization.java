@@ -35,7 +35,7 @@ public class CategoryCrystallization extends NotebookCategory
 				{ new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.IRON_BLOCK),
 						new ItemStack(Blocks.IRON_BLOCK) } };
 		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.CRYSTALLIZER)));
-		
+
 		return entries;
 	}
 }
