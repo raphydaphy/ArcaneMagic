@@ -40,7 +40,7 @@ subtitle.arcanemagic.camera_clack=Something Clicks
 itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.crystallizer=Crystallizer
 
-# Vis
+# Essence
 essence.arcanemagic.inferno.name=Inferno
 essence.arcanemagic.depth.name=Depth
 essence.arcanemagic.ozone.name=Ozone
@@ -48,19 +48,34 @@ essence.arcanemagic.horizon.name=Horizon
 essence.arcanemagic.peace.name=Peace
 essence.arcanemagic.chaos.name=Chaos
 
-# Thaumanomicon
-arcanemagic.notebook.category.alchemy=Alchemy
-arcanemagic.notebook.category.artifice=Artifice
-arcanemagic.notebook.category.golemancy=Golemancy
-arcanemagic.notebook.category.eldritch=Eldritch
-
-## Basic Information
+## Notebook
 arcanemagic.notebook.category.ancient_relics=Ancient Relics
 arcanemagic.notebook.category.ancient_relics.0=You have spent many days wondering the meaning of the parchment you found, but yet you are still in great confusion. You believe that a witch was carrying it before her death in order to try and use it to advance her magic.
 arcanemagic.notebook.category.ancient_relics.1=If the paper has such power, it would surely be a good idea to try and use it yourself. Witches are simply transformed and courupted villagers, so perhaps visiting a village would be a good start?
 arcanemagic.notebook.category.ancient_relics.2=If they villagers can help you, it will be easier to decode the messages that block your pathway and limit your success. It is possible that they would want this parchment, however, so I should try to keep it safe.
-
+arcanemagic.notebook.category.basic_linguistics=Basic Linguistics
+arcanemagic.notebook.category.basic_linguistics.0=The writing left by ancient magicians seems to have decayed and became illegible. Reading it with the traditional methods appears to be impossible, so you will have to come up with a better solution.
+arcanemagic.notebook.category.basic_linguistics.1=A writing desk might be a good way to start, giving you a better workspace to decode the messages in. All that would be required to make one is some planks, ink and paper so it shouldn't be an issue to create.
+arcanemagic.notebook.category.elemental_particles=Elemental Particles
+arcanemagic.notebook.category.elemental_particles.0=After reading the ancient parchment, you have begun to notice light rays traveling through the world similar to those mentioned in the note. This could only mean that the message was in fact real.
+arcanemagic.notebook.category.elemental_particles.1=You believe that it would be wise to investigate this further, as the rays of light are surely not natural and could lead to some interesting discoveries. They could even contain magical properties - something unheard of before now.
+arcanemagic.notebook.category.elemental_particles.2=
+arcanemagic.notebook.category.mystical_energy=Mystical Energy
+arcanemagic.notebook.category.mystical_energy.0=
+arcanemagic.notebook.category.mystical_energy.1=
+arcanemagic.notebook.category.mystical_energy.2=
+arcanemagic.notebook.category.essence_collection=Essence Collection
+arcanemagic.notebook.category.essence_collection.0=
+arcanemagic.notebook.category.essence_collection.1=
+arcanemagic.notebook.category.essence_collection.2=
 arcanemagic.notebook.category.crystallization=Crystallization
 arcanemagic.notebook.category.crystallization.0=Through your journeys thus far, you have discovered light particles imbued with what appears to be some form of magic. Now that you have learned more about the behaviour of this energy, perhaps it might be time to try manipulating it to your advantage.
 arcanemagic.notebook.category.crystallization.1=An Essence Crystallizer appears to do exactly what you want. Perhaps placing one near the particles you found might prove useful?
-		
+arcanemagic.notebook.category.natural_harmony=Natural Harmony
+arcanemagic.notebook.category.natural_harmony.0=
+arcanemagic.notebook.category.natural_harmony.1=
+arcanemagic.notebook.category.natural_harmony.2=
+arcanemagic.notebook.category.manipulating_magic=Manipulating Magic
+arcanemagic.notebook.category.manipulating_magic.0=
+arcanemagic.notebook.category.manipulating_magic.1=
+arcanemagic.notebook.category.manipulating_magic.2=
