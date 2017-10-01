@@ -4,9 +4,11 @@ import java.util.Random;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -25,19 +27,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber
 public class ModEvents
 {
-	public static boolean hasRenderedParticles = false;
-	static EntityPlayer clientPlayer = null;
-	/*
-		protected static Field Field_ItemRenderer_equippedProgressMainhand = ReflectionHelper.findField(ItemRenderer.class,
-				"equippedProgressMainHand", "field_187469_f");
-		protected static Field Field_ItemRenderer_equippedProgressOffhand = ReflectionHelper.findField(ItemRenderer.class,
-				"equippedProgressOffHand", "field_187471_h");
-		protected static Field Field_ItemRenderer_prevEquippedProgressMainhand = ReflectionHelper
-				.findField(ItemRenderer.class, "prevEquippedProgressMainHand", "field_187470_g");
-		protected static Field Field_ItemRenderer_prevEquippedProgressOffhand = ReflectionHelper
-				.findField(ItemRenderer.class, "prevEquippedProgressOffHand", "field_187472_i");
-	
-		*/
 
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
@@ -114,32 +103,16 @@ public class ModEvents
 			}
 		}
 	}
-
-	// Disabled hand swinging animation - use once up to wand mechanics
+	
 	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public static void onRenderHand(RenderHandEvent event)
+	public static void onLivingDrops(LivingDropsEvent event)
 	{
-		/* float t = 1.0f;
-		 * 
-		 * EntityPlayer ply = Minecraft.getMinecraft().player; ItemStack stack =
-		 * ply.getActiveItemStack();
-		 * 
-		 * if (!stack.isEmpty() && (stack.getItem() instanceof ItemScepter)) { EnumHand
-		 * hand = ply.getActiveHand();
-		 * 
-		 * ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer(); try {
-		 * if (hand == EnumHand.MAIN_HAND) { if
-		 * (Field_ItemRenderer_equippedProgressMainhand.getFloat(itemrenderer) < t) {
-		 * Field_ItemRenderer_equippedProgressMainhand.setFloat(itemrenderer, t);
-		 * Field_ItemRenderer_prevEquippedProgressMainhand.setFloat(itemrenderer, t); }
-		 * } else { if
-		 * (Field_ItemRenderer_equippedProgressOffhand.getFloat(itemrenderer) < t) {
-		 * Field_ItemRenderer_equippedProgressOffhand.setFloat(itemrenderer, t);
-		 * Field_ItemRenderer_prevEquippedProgressOffhand.setFloat(itemrenderer, t); } }
-		 * } catch (IllegalArgumentException e) { e.printStackTrace(); } catch
-		 * (IllegalAccessException e) { e.printStackTrace(); }
-		 * 
-		 * } */
+		if (event.getEntity() != null && event.getEntity() instanceof EntityWitch)
+		{
+			if (event.getEntity().world.rand.nextInt(15) == 1)
+			{
+				event.getDrops().add(new EntityItemFancy(event.getEntity().world, event.getEntity().posX, event.getEntity().posY, event.getEntity().posZ, new ItemStack(ModRegistry.ANCIENT_PARCHMENT)));
+			}
+		}
 	}
 }

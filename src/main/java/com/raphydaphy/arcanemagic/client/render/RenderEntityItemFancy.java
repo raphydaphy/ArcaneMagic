@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.entity.Render;
@@ -21,29 +22,34 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class RenderEntityItemFancy extends RenderEntityItem
+public class RenderEntityItemFancy extends Render<EntityItemFancy>
 {
-
+	private final RenderEntityItem renderItem;
 	public RenderEntityItemFancy(RenderManager renderManager)
 	{
-		super(renderManager, Minecraft.getMinecraft().getRenderItem());
+		super(renderManager);
+		renderItem = new RenderEntityItem(renderManager, Minecraft.getMinecraft().getRenderItem());
 	}
 
 	@Override
-	public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
+	public void doRender(EntityItemFancy entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
 		renderFancyBeams(x, y + 0.5, z, Color.MAGENTA, entity.world.getSeed(), entity.getAge(), 16, 0.7f, 10, 5);
 		GL11.glPushMatrix();
 		ItemStack stack = entity.getItem();
 		if (!stack.isEmpty())
 		{
-			super.doRender(entity, x, y, z, entityYaw, partialTicks);
+			EntityItem ei = new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, stack);
+			ei.age = entity.getAge();
+			ei.hoverStart = entity.hoverStart;
+
+			renderItem.doRender(ei, x, y, z, entityYaw, partialTicks);
 		}
 		GL11.glPopMatrix();
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityItem entity)
+	protected ResourceLocation getEntityTexture(EntityItemFancy entity)
 	{
 		return null;
 	}
@@ -63,8 +69,8 @@ public class RenderEntityItemFancy extends RenderEntityItem
 			int dstJump, float scale, int countFancy, int countNormal)
 	{
 		Random rand = new Random(seed);
-		GL11.glPushMatrix();
-		GL11.glTranslated(x, y, z);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
 
 		int fancy_count = !FMLClientHandler.instance().getClient().gameSettings.fancyGraphics ? countNormal
 				: countFancy;
@@ -76,21 +82,23 @@ public class RenderEntityItemFancy extends RenderEntityItem
 		float rotateSpeed = continuousTick / 1000.0F;
 		float beamSize = 0.4F;
 
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glShadeModel(GL11.GL_SMOOTH);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-		GL11.glDisable(GL11.GL_ALPHA_TEST);
-		GL11.glDepthMask(false);
-		GL11.glPushMatrix();
+		GlStateManager.disableTexture2D();
+		GlStateManager.shadeModel(GL11.GL_SMOOTH);
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+		GlStateManager.disableAlpha();
+		GlStateManager.depthMask(false);
+		GlStateManager.pushMatrix();
 		for (int i = 0; i < fancy_count; i++)
 		{
-			GL11.glRotatef(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-			GL11.glRotatef(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
-			GL11.glRotatef(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
-			GL11.glRotatef(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
-			GL11.glRotatef(rand.nextFloat() * 360.0F + rotateSpeed * 360.0F, 0.0F, 0.0F, 1.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F + rotateSpeed * 360.0F, 0.0F, 0.0F, 1.0F);
 			vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
 			float fa = rand.nextFloat() * 20.0F + 5.0F + beamSize * 10.0F;
 			float f4 = rand.nextFloat() * 2.0F + 1.0F + beamSize * 2.0F;
@@ -108,17 +116,17 @@ public class RenderEntityItemFancy extends RenderEntityItem
 					.color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
 			tes.draw();
 		}
-		GL11.glPopMatrix();
-		GL11.glDepthMask(true);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glDisable(GL11.GL_BLEND);
-		GL11.glShadeModel(GL11.GL_FLAT);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glEnable(GL11.GL_ALPHA_TEST);
+		GlStateManager.popMatrix();
+		GlStateManager.depthMask(true);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.disableBlend();
+		GlStateManager.shadeModel(GL11.GL_FLAT);
+		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableAlpha();
 		RenderHelper.enableStandardItemLighting();
 
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
 	}
 
 }
