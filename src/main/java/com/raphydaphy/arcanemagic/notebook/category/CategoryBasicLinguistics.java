@@ -3,8 +3,8 @@ package com.raphydaphy.arcanemagic.notebook.category;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
@@ -13,7 +13,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryBasicLinguistics implements INotebookCategory
+public class CategoryBasicLinguistics extends NotebookCategory
 {
 	@Override
 	public String getUnlocalizedName()

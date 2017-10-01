@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.notebook;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.notebook.INotebookCategory;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryAncientRelics;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryBasicLinguistics;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryCrystallization;
@@ -13,14 +13,14 @@ import com.raphydaphy.arcanemagic.notebook.category.CategoryNaturalHarmony;
 
 public class NotebookCategories
 {
-	public static final INotebookCategory ANCIENT_RELICS = new CategoryAncientRelics();
-	public static final INotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics();
-	public static final INotebookCategory ELEMENTAL_PARTICLES = new CategoryElementalParticles();
-	public static final INotebookCategory MYSTICAL_ENERGY = new CategoryMysticalEnergy();
-	public static final INotebookCategory ESSENCE_COLLECTION = new CategoryEssenceCollection();
-	public static final INotebookCategory CRYSTALLIZATION = new CategoryCrystallization();
-	public static final INotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony();
-	public static final INotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic();	
+	public static final NotebookCategory ANCIENT_RELICS = new CategoryAncientRelics();
+	public static final NotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics();
+	public static final NotebookCategory ELEMENTAL_PARTICLES = new CategoryElementalParticles();
+	public static final NotebookCategory MYSTICAL_ENERGY = new CategoryMysticalEnergy();
+	public static final NotebookCategory ESSENCE_COLLECTION = new CategoryEssenceCollection();
+	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization();
+	public static final NotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony();
+	public static final NotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic();	
 	
 	private static boolean done = false;
 

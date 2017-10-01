@@ -20,13 +20,12 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class Essence extends IForgeRegistryEntry.Impl<Essence>
 {
 
-	public static final IForgeRegistry<Essence> REGISTRY = new EssenceRegistry();
+	public static final EssenceRegistry REGISTRY = new EssenceRegistry();
 
 	public static final Essence INFERNO = new Essence("inferno", ArcaneMagic.MODID + ".inferno", 0xbf, 0x56, 0);
 	public static final Essence DEPTH = new Essence("depth", ArcaneMagic.MODID + ".depth", 0x18, 0x7e, 0xa3);

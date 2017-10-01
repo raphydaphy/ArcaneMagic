@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
+import com.raphydaphy.arcanemagic.api.notebook.CategoryRegistry;
 import com.raphydaphy.arcanemagic.capabilities.Capabilities;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
@@ -20,6 +21,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -67,5 +69,10 @@ public class ArcaneMagic
 	{
 		NotebookCategories.register();
 		proxy.postInit(event);
+	}
+	
+	@Mod.EventHandler
+	public void complete(FMLLoadCompleteEvent e) {
+		CategoryRegistry.sortCategories();
 	}
 }
