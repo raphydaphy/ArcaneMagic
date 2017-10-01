@@ -152,20 +152,9 @@ public class GuiNotebook extends GuiScreen
 
 		for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
 		{
-			// Basic category positioning
-			int catX = 18;
-			boolean doShadow = false;
-
-			// Selected category is offset and bold
-			if (category == curCategory)
-			{
-				catX = 26;
-				doShadow = true;
-			}
-
 			// Draw the category!
-			fontRenderer.drawString(I18n.format(ArcaneMagicAPI.getNotebookCategories().get(category).getUnlocalizedName()), (int) ((screenX + catX) * (1 / categoryNameSize)),
-					(int) ((screenY + 24 + (category * 20)) * (1 / categoryNameSize)), 0x32363d, doShadow);
+			fontRenderer.drawString(I18n.format(ArcaneMagicAPI.getNotebookCategories().get(category).getUnlocalizedName()), (int) ((screenX + (category == curCategory ? 26 : 18)) * (1 / categoryNameSize)),
+					(int) ((screenY + 24 + (category * 20)) * (1 / categoryNameSize)), category == curCategory ? 0x515151 :0x32363d);
 		}
 		
 		// Go back to default scaling
