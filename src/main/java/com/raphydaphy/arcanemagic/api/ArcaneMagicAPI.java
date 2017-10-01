@@ -44,7 +44,7 @@ public class ArcaneMagicAPI
 	}
 	
 	public static void setCategoryList(ImmutableList<NotebookCategory> list) {
-		if(sorted_categories != null) sorted_categories = list;
+		if(sorted_categories == null) sorted_categories = list;
 		else throw new UnsupportedOperationException("Pls stop");
 		ArcaneMagic.LOGGER.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[0]);
 	}
