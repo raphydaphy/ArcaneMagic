@@ -100,75 +100,25 @@ public class ClientProxy extends CommonProxy
 									{
 										Vec3d from = new Vec3d(first.getX() + 0.5, first.getY() + 2.3, first.getZ() + 0.5);
 										Vec3d to = new Vec3d(second.getX() + 0.5, second.getY() + 2.4, second.getZ() + 0.5);
-										Vec3d aim = new Vec3d(to.x - from.x, to.y - from.y, to.z - from.z);
-										Vec3d aimPerp = new Vec3d(aim.x, aim.y, aim.z);
 										
-										if (aimPerp.z == 0.0D)
-										{
-											double d = aimPerp.y;
-											double d1 = -aimPerp.z;
-											
-											aimPerp = new Vec3d(d, d1, 0.0D);
-										}
-										else
-										{
-											double d = aimPerp.z;
-											double d1 = -aimPerp.y;
-											
-											aimPerp = new Vec3d(0.0D, d, d1);
-										}
+										Color color = Essence.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z))).getColor();
 										
-										double fromSize = 10;
-										double toSize = 10;
+										int r = color.getRed();
+										int g = color.getGreen();
+										int b = color.getBlue();
 										
-										int deg = 0;
+										GL11.glLineWidth(10);
+										Tessellator tes = Tessellator.getInstance();
+										BufferBuilder vb = tes.getBuffer();
+
+										RenderHelper.disableStandardItemLighting();
 										
-										for (int i = 0; i < 3; i++)
-										{
-											// Angle goes up by 120 degrees each iteration
-											double angle = Math.toRadians(deg);
-											
-											// Building a quaternion from Vec3d
-											double sinAngle = Math.sin(angle);
-											Quaternion plzDieAllQuats = new Quaternion((float)(aim.x * sinAngle), (float)(aim.y * sinAngle), (float)(aim.z * sinAngle), (float)(Math.cos(angle)));
-											
-											// Rotating the new quaternion based on aim with the magnitude from aimPerp
-											double d = - plzDieAllQuats.x * aimPerp.x - plzDieAllQuats.y * aimPerp.y - plzDieAllQuats.z * aimPerp.z;
-											double d1 = plzDieAllQuats.w * aimPerp.x - plzDieAllQuats.y * aimPerp.z - plzDieAllQuats.z * aimPerp.y;
-											double d2 = plzDieAllQuats.w * aimPerp.y - plzDieAllQuats.x * aimPerp.z - plzDieAllQuats.z * aimPerp.x;
-											double d3 = plzDieAllQuats.w * aimPerp.z - plzDieAllQuats.x * aimPerp.y - plzDieAllQuats.y * aimPerp.x;
-											Vec3d perp = new Vec3d(d1 * plzDieAllQuats.w - d * plzDieAllQuats.x - d2 * plzDieAllQuats.z + d3 * plzDieAllQuats.y, 
-																   d2 * plzDieAllQuats.w - d * plzDieAllQuats.y + d1 * plzDieAllQuats.z - d3 * plzDieAllQuats.x, 
-																   d3 * plzDieAllQuats.w - d * plzDieAllQuats.z - d1 * plzDieAllQuats.y + d2 * plzDieAllQuats.x);
-											
-											// Normalize the vector perspective
-											double perpLen = Math.sqrt(perp.x * perp.x + perp.y * perp.y + perp.z * perp.z);
-											perp = new Vec3d(perp.x / perpLen, perp.y / perpLen, perp.z / perpLen);
-											
-											// Get a seperate vector for the to and from positions
-											Vec3d perpFrom = new Vec3d(perp.x * fromSize, perp.y * fromSize, perp.z * fromSize);
-											Vec3d perpTo = new Vec3d(perp.x * toSize, perp.y * toSize, perp.z * toSize);
-											
-											Tessellator tes = Tessellator.getInstance();
-											BufferBuilder vb = tes.getBuffer();
-	
-											RenderHelper.disableStandardItemLighting();
-											vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
-											Color effectColor = Essence.getFromBiome(world.getBiome(new BlockPos(x, y, z)))
-													.getColor();
-											
-											Vec3d vec = new Vec3d((from.x + perpFrom.x) * -1, (from.y + perpFrom.y) * -1, (from.z + perpFrom.z) * -1);
-											vb.pos(vec.x, vec.y, vec.z).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-									        vec = new Vec3d(from.x + perpFrom.x, from.y + perpFrom.y, from.z + perpFrom.z);
-									        vb.pos(vec.x, vec.y, vec.z).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-									        vec = new Vec3d(to.x + perpTo.x, to.y + perpTo.y, to.z + perpTo.z);
-									        vb.pos(vec.x, vec.y, vec.z).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-									        vec = new Vec3d((to.x + perpTo.x) * -1, (to.y + perpTo.y) * -1, (to.z + perpTo.z) * -1);
-									        vb.pos(vec.x, vec.y, vec.z).color(effectColor.getRed(), effectColor.getGreen(), effectColor.getBlue(), 0).endVertex();
-											tes.draw();
-											
-											deg+= 120;
-										}
+										vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+										
+										vb.pos(from.x, from.y, from.z).color(r,g,b,1).endVertex();
+										vb.pos(to.x, to.y, to.z).color(r, g, b, 0).endVertex();
+										
+										tes.draw();
 
 									}
 								}
