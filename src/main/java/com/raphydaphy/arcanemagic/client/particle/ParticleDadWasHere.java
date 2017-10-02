@@ -28,6 +28,7 @@ public class ParticleDadWasHere extends Particle {
 	}
 
 	int color = getRandomColor(Minecraft.getMinecraft().world.rand);
+	int color2 = getRandomColor(Minecraft.getMinecraft().world.rand);
 
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
 
@@ -54,11 +55,15 @@ public class ParticleDadWasHere extends Particle {
 		int r = (color >> 16) & 0xFF;
 		int g = (color >> 8) & 0xFF;
 		int b = (color >> 0) & 0xFF;
-
-		//for (int i = 0; i < 15; i++) buffer.pos(this.posX + rand.nextDouble() * (i * 0.1) * (rand.nextBoolean() ? 1 : -1), this.posY + rand.nextDouble() * (i * 0.1) * (rand.nextBoolean() ? 1 : -1), this.posZ + rand.nextDouble() * (i * 0.1) * (rand.nextBoolean() ? 1 : -1)).color(r, g, b, 1).endVertex();
-
+		int r2 = (color2 >> 16) & 0xFF;
+		int g2 = (color2 >> 8) & 0xFF;
+		int b2 = (color2 >> 0) & 0xFF;
 		double d = Math.abs(factor);
-		
+		buffer.begin(GL11.GL_POLYGON, DefaultVertexFormats.POSITION_COLOR);
+		for (float i = 0; i < 1; i+= 0.1)
+			buffer.pos(d * .5 + this.posX * (i * d) * (rand.nextBoolean() ? 1 : -1), d * .5 + this.posY * (i * d) * (rand.nextBoolean() ? 1 : -1), d * .5 + this.posZ * (i * d) * (rand.nextBoolean() ? 1 : -1)).color(r2, g2, b2, 1).endVertex();
+		tes.draw();
+
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 		buffer.pos(posX, posY, posZ).color(r, g, b, 1).endVertex();
 		buffer.pos(posX + d, posY, posZ).color(r, g, b, 0).endVertex();
@@ -144,6 +149,7 @@ public class ParticleDadWasHere extends Particle {
 		if (Math.abs(x) <= .05D) {
 			color = getRandomColor(Minecraft.getMinecraft().world.rand);
 			factor = rand.nextDouble() * 4;
+			color2 = getRandomColor(Minecraft.getMinecraft().world.rand);
 		}
 
 		this.move(x * 0.05, y * 0.08, z * 0.05);
