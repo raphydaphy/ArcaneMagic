@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.client.particle.ParticleMagicCircles;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -11,6 +12,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -33,8 +35,11 @@ public class ItemAncientParchment extends ItemBase
 		{
 			if (world.isRemote)
 			{
+				player.inventory.removeStackFromSlot(player.inventory.getSlotFor(player.getHeldItem(hand)));
+				world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.craft_start,
+						SoundCategory.MASTER, 1f, 1f, false);
 				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagicCircles(world, pos.getX(), pos.getY(), pos.getZ(),player));
-				player.getCooldownTracker().setCooldown(player.getHeldItem(hand).getItem(), 100);
+				//player.getCooldownTracker().setCooldown(player.getHeldItem(hand).getItem(), 100);
 				return EnumActionResult.SUCCESS;
 			}
 		}

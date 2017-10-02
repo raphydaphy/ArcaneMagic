@@ -4,6 +4,8 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
+import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.GLHelper;
 
@@ -14,11 +16,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,8 +30,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ParticleMagicCircles extends Particle
 {
 	private EntityPlayer player;
+	private double constantRot = 0;
+	private double edgeRot = 0;
+	private Vec3d centerItemPos;
 	private Vec3d circlePos;
-	private Vec3d circleRot;
 
 	public ParticleMagicCircles(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, EntityPlayer player)
 	{
@@ -38,10 +42,10 @@ public class ParticleMagicCircles extends Particle
 		this.posX += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
 		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-		this.particleMaxAge = 500;
+		this.particleMaxAge = 800;
 
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
-		circleRot = new Vec3d(0, 0, 0);
+		centerItemPos = circlePos;
 	}
 
 	@Override
@@ -60,12 +64,29 @@ public class ParticleMagicCircles extends Particle
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
-
-		this.circleRot = new Vec3d(circleRot.x, circleRot.y + 1, circleRot.z);
+		
+		if (rand.nextInt(30) == 1)
+		{
+			world.playSound(posX, posY, posZ, ArcaneMagicSoundHandler.randomCreakSound(),
+					SoundCategory.MASTER, 1f, 1f, false);
+		}
+		this.constantRot += 1;
+		
+		if (constantRot >= 360)
+		{
+			if (edgeRot < 90)
+			{
+				this.edgeRot += 0.5;
+				if (edgeRot == 89)
+				{
+					world.spawnEntity(new EntityItemFancy(world, circlePos.x, circlePos.y + 0.9 + (edgeRot == 0 ? 0 : (edgeRot / 90)),circlePos.z, new ItemStack(ModRegistry.NOTEBOOK), 270));
+				}
+			}
+		}
 
 		if (this.particleAge++ >= this.particleMaxAge)
 		{
-			//this.setExpired();
+			this.setExpired();
 		}
 
 		this.move(motionX, motionY, motionZ);
@@ -75,6 +96,7 @@ public class ParticleMagicCircles extends Particle
 	public void renderParticle(BufferBuilder vb, Entity entity, float partialTicks, float rotationX, float rotationZ,
 			float rotationYZ, float rotationXY, float rotationXZ)
 	{
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
@@ -87,7 +109,6 @@ public class ParticleMagicCircles extends Particle
 		GlStateManager.enableBlend();
 		GlStateManager.enableCull();
 		GlStateManager.disableAlpha();
-		// pre-alpha
 		GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
 		boolean lighting = GL11.glGetBoolean(GL11.GL_LIGHTING);
@@ -107,30 +128,124 @@ public class ParticleMagicCircles extends Particle
 		int b = color.getBlue();
 
 		GlStateManager.translate(circlePos.x, circlePos.y + 0, circlePos.z);
-		GlStateManager.rotate((float)circleRot.y, 0, 1, 0);
+		GlStateManager.rotate((float)constantRot, 0, 1, 0);
 
-		GLHelper.drawCircle(1.25, 1.235, 0, 0, 0, color);
+		// Main Circle
+		GLHelper.drawCircle(1.28, 1.24, 0, 2.8, 0, color);
 		
+		// Middle Triangle #1
+		GLHelper.drawTriangle(2.15, 0, 0, -1.23, color);
+		
+		// Rotated middle triangle
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(-1.14, 0, 0);
-		GlStateManager.rotate(90, 0, 1 ,0);
+		GlStateManager.rotate(60, 0, 1, 0);
+		GLHelper.drawTriangle(2.15, 0, 0, -1.23, color);
+		GlStateManager.popMatrix();
+		
+		// Middle semi-circle #1
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-1, 2.8, -0.55);
+		GlStateManager.rotate(62, 0, 1 ,0);
 		GLHelper.drawCircle(0.5, 0.48, 0, 0, 0, color, 180);
 		GlStateManager.popMatrix();
 		
+		// Middle semi-circle #2
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(1.14, 0, 0);
-		GlStateManager.rotate(-90, 0, 1 ,0);
+		GlStateManager.translate(0.97, 2.8, -0.6);
+		GlStateManager.rotate(-58, 0, 1 ,0);
 		GLHelper.drawCircle(0.5, 0.48, 0, 0, 0, color, 180);
 		GlStateManager.popMatrix();
-
+		
+		// Middle semi-circle #3
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0, 2.8, 1.14);
+		GlStateManager.rotate(-180, 0, 1 ,0);
+		GLHelper.drawCircle(0.5, 0.48, 0, 0, 0, color, 180);
+		GlStateManager.popMatrix();
+		
+		// Middle center circle
+		GLHelper.drawCircle(0.64, 0.62, 0, 2.8, 0, color);
+		
+		color = Color.cyan;
+		
+		// Outer circles
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(1.9, 2.8 + (edgeRot == 0 ? 0 : (edgeRot / 90)), 1.1);
+		GlStateManager.rotate(90, 0, 1, 0);
+		GlStateManager.rotate(-30, 0, 1, 0);
+		GlStateManager.rotate(-(float)edgeRot, 1, 0, 0);
+		GLHelper.drawCircle(0.6, 0.58, 0, 0, 0, color);
+		GLHelper.drawCircle(0.64, 0.58, 0, 0, 0, color);
+		GlStateManager.popMatrix();
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(-1.9, 2.8 + (edgeRot == 0 ? 0 : (edgeRot / 90)), 1.1);
+		GlStateManager.rotate(90, 0, 1, 0);
+		GlStateManager.rotate(30 + 180, 0, 1, 0);
+		GlStateManager.rotate(-(float)edgeRot, 1, 0, 0);
+		GLHelper.drawCircle(0.6, 0.58, 0, 0, 0, color);
+		GLHelper.drawCircle(0.64, 0.58, 0, 0, 0, color);
+		GlStateManager.popMatrix();
+		
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0, 2.8 + (edgeRot == 0 ? 0 : (edgeRot / 90)), -2.2);
+		GlStateManager.rotate(90, 0, 1, 0);
+		GlStateManager.rotate(90, 0, 1, 0);
+		GlStateManager.rotate(-(float)edgeRot, 1, 0, 0);
+		GLHelper.drawCircle(0.6, 0.58, 0, 0, 0, color);
+		GLHelper.drawCircle(0.64, 0.58, 0, 0, 0, color);
+		GlStateManager.popMatrix();
+		
 		RenderHelper.enableGUIStandardItemLighting();
 
 		GlStateManager.enableDepth();
 		GlStateManager.enableTexture2D();
+		
+		// Center Item
+		if (edgeRot < 89)
+		{
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(90, 1, 0, 0);
+			GlStateManager.translate(0, 0, -2.8  + (edgeRot == 0 ? 0 : -(edgeRot / 90)));
+			GlStateManager.rotate(-(float)constantRot * 2, 0, 0, 1);
+			
+			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(ModRegistry.ANCIENT_PARCHMENT),
+					ItemCameraTransforms.TransformType.NONE);
+			GlStateManager.popMatrix();
+		}
+		// Outer Item #1
+		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(0, 0, -2.8);
+		GlStateManager.translate(1.9, 1.1, -2.8 + (edgeRot == 0 ? 0 : -(edgeRot / 90)));
+		float angle1 = ((float)Math.atan2(-1.9, 1.1) * (180f / (float)Math.PI)) + 180;
+		
+		GlStateManager.rotate(angle1, 0, 0, 1);
+		GlStateManager.rotate((float)edgeRot, 1, 0, 0);
 		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
 				ItemCameraTransforms.TransformType.NONE);
+		GlStateManager.popMatrix();
+				
+		// Outer Item #2
+		GlStateManager.pushMatrix();
+		GlStateManager.rotate(90, 1, 0, 0);
+		GlStateManager.translate(-1.9, 1.1, -2.8 + (edgeRot == 0 ? 0 : -(edgeRot / 90)));
+		float angle2 = ((float)Math.atan2(1.9, 1.1) * (180f / (float)Math.PI)) + 180;
+		GlStateManager.rotate(angle2, 0, 0, 1);
+		GlStateManager.rotate((float)edgeRot, 1, 0, 0);
+		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
+				ItemCameraTransforms.TransformType.NONE);
+		GlStateManager.popMatrix();
+		
+		// Outer Item #3
+		GlStateManager.pushMatrix();
+		GlStateManager.rotate(90, 1, 0, 0);
+		GlStateManager.translate(0, -2.2, -2.8 + (edgeRot == 0 ? 0 : -(edgeRot / 90)));
+		float angle3 = ((float)Math.atan2(0, 2.2) * (180f / (float)Math.PI));
+		GlStateManager.rotate(angle3, 0, 0, 1);
+		GlStateManager.rotate((float)edgeRot, 1, 0, 0);
+		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
+				ItemCameraTransforms.TransformType.NONE);
+		GlStateManager.popMatrix();
 
 		if (lighting)
 		{
