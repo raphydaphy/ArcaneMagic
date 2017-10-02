@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Collection;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Quaternion;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
@@ -98,9 +97,11 @@ public class ClientProxy extends CommonProxy
 
 									if (world.getBlockState(second).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
 									{
-										Vec3d from = new Vec3d(first.getX() + 0.5, first.getY() + 2.3, first.getZ() + 0.5);
-										Vec3d to = new Vec3d(second.getX() + 0.5, second.getY() + 2.4, second.getZ() + 0.5);
-										
+										Vec3d to = new Vec3d(first.getX() + 0.5, first.getY() + 2.3, first.getZ() + 0.5);
+										Vec3d from = new Vec3d(second.getX() + 0.5, second.getY() + 2.2, second.getZ() + 0.5);
+										Vec3d dist = new Vec3d(Math.pow(to.x - from.x, 2), Math.pow(to.y - from.y, 2), Math.pow(to.z - from.z, 2));
+										Vec3d lineFrom = new Vec3d(from.x, from.y, from.z);
+										// sqrt(pow((endA-startA), 2)+pow((endB-startB), 2));
 										Color color = Essence.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z))).getColor();
 										
 										int r = color.getRed();
@@ -113,13 +114,35 @@ public class ClientProxy extends CommonProxy
 
 										RenderHelper.disableStandardItemLighting();
 										
+										vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+										
+										double radius = 0.5;
+										
+										for (int deg = 0; deg < 360; deg++)
+										{
+											double radians = Math.toRadians(deg);
+											Vec3d vertex = new Vec3d(from.x + Math.cos(radians)*radius, from.y, from.z + Math.sin(radians)*radius);
+											Vec3d newDist = new Vec3d(Math.pow(to.x - vertex.x, 2), Math.pow(to.y - vertex.y, 2), Math.pow(to.z - vertex.z, 2));
+											if (newDist.x <= dist.x && newDist.z <= dist.z)
+											{
+												dist = newDist;
+												lineFrom = vertex;
+											}
+											
+											vb.pos(vertex.x,vertex.y,vertex.z).color(r, g, b, 0).endVertex();;
+										}
+										
+										tes.draw();
+										
+										
 										vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 										
-										vb.pos(from.x, from.y, from.z).color(r,g,b,1).endVertex();
+										vb.pos(lineFrom.x, lineFrom.y, lineFrom.z).color(r,g,b,1).endVertex();
 										vb.pos(to.x, to.y, to.z).color(r, g, b, 0).endVertex();
 										
 										tes.draw();
-
+										
+										
 									}
 								}
 							}
