@@ -15,7 +15,9 @@ import com.raphydaphy.arcanemagic.client.model.SceptreModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
+import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 
@@ -247,6 +249,7 @@ public class ClientProxy extends CommonProxy
 	public static void registerModels(ModelRegistryEvent event)
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMagicCircles.class, new RenderEntityMagicCircles.Factory());
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasModel)
 				((IHasModel) i).initModels(event);

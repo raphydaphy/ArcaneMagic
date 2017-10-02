@@ -2,11 +2,10 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.client.particle.ParticleMagicCircles;
+import com.raphydaphy.arcanemagic.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumActionResult;
@@ -33,15 +32,11 @@ public class ItemAncientParchment extends ItemBase
 		
 		if (player.isSneaking() && block == Blocks.BEDROCK)
 		{
-			if (world.isRemote)
-			{
-				player.inventory.removeStackFromSlot(player.inventory.getSlotFor(player.getHeldItem(hand)));
-				world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.craft_start,
-						SoundCategory.MASTER, 1f, 1f, false);
-				Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleMagicCircles(world, pos.getX(), pos.getY(), pos.getZ(),player));
-				//player.getCooldownTracker().setCooldown(player.getHeldItem(hand).getItem(), 100);
-				return EnumActionResult.SUCCESS;
-			}
+			player.inventory.removeStackFromSlot(player.inventory.getSlotFor(player.getHeldItem(hand)));
+			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.craft_start,
+					SoundCategory.MASTER, 1f, 1f, false);
+			world.spawnEntity(new EntityMagicCircles(world, pos.getX(), pos.getY(), pos.getZ()));
+			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;
 	}
