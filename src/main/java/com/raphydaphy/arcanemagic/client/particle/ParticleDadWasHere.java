@@ -43,7 +43,7 @@ public class ParticleDadWasHere extends Particle {
 		GlStateManager.enableCull();
 		GlStateManager.disableAlpha();
 		// pre-alpha
-		GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.blendFunc(GL11.GL_ONE_MINUS_DST_COLOR, GL11.GL_ONE_MINUS_SRC_COLOR);
 		boolean lighting = GL11.glGetBoolean(GL11.GL_LIGHTING);
 		GlStateManager.depthMask(false);
 
