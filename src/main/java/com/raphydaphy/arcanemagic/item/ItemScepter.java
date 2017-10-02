@@ -18,6 +18,7 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.client.particle.ParticleDadWasHere;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -131,6 +132,7 @@ public class ItemScepter extends ItemBase
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
+		if(world.isRemote)Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleDadWasHere(player.getPosition(), world));
 		ItemStack stack = player.getHeldItem(hand);
 		player.setActiveHand(hand);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
