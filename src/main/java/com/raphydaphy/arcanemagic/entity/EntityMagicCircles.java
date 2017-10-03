@@ -34,23 +34,15 @@ public class EntityMagicCircles extends Entity
 	@Override
 	public void onUpdate()
 	{
-		this.prevPosX = posX;
-		this.prevPosY = posY;
-		this.prevPosZ = posZ;
-		
 		super.onUpdate();
 		
 		motionX = 0;
 		motionY = 0;
 		motionZ = 0;
-
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
 		
 		if (rand.nextInt(30) == 1)
 		{
-			world.playSound(posX, posY, posZ, ArcaneMagicSoundHandler.randomCreakSound(),
+			world.playSound(posX, posY, posZ, ArcaneMagicSoundHandler.infuser,
 					SoundCategory.MASTER, 1f, 1f, false);
 		}
 		this.constantRot += 1;

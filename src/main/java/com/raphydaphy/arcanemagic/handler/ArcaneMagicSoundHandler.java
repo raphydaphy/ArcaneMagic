@@ -96,6 +96,12 @@ public final class ArcaneMagicSoundHandler
 
 	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":hh_off")
 	public static SoundEvent hh_off;
+	
+	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":infuser_start")
+	public static SoundEvent infuser_start;
+	
+	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":infuser")
+	public static SoundEvent infuser;
 
 	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":camera_clack_1")
 	public static SoundEvent camera_clack_1;

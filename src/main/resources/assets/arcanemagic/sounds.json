@@ -27,6 +27,8 @@
    "zap_2": { "category": "master", "sounds": ["arcanemagic:zap_2"], "subtitle": "subtitle.arcanemagic.zap" },
    "hh_on": { "category": "master", "sounds": ["arcanemagic:hh_on"], "subtitle": "subtitle.arcanemagic.hh_on" },
    "hh_off": { "category": "master", "sounds": ["arcanemagic:hh_off"], "subtitle": "subtitle.arcanemagic.hh_off" },
+   "infuser_start": { "category": "master", "sounds": ["arcanemagic:infuser_start"], "subtitle": "subtitle.arcanemagic.infuser_start" },
+   "infuser": { "category": "master", "sounds": ["arcanemagic:infuser"], "subtitle": "subtitle.arcanemagic.infuser" },
    "camera_clack_1": { "category": "master", "sounds": ["arcanemagic:camera_clack_1"], "subtitle": "subtitle.arcanemagic.camera_clack" },
    "camera_clack_2": { "category": "master", "sounds": ["arcanemagic:camera_clack_2"], "subtitle": "subtitle.arcanemagic.camera_clack" },
    "camera_clack_3": { "category": "master", "sounds": ["arcanemagic:camera_clack_3"], "subtitle": "subtitle.arcanemagic.camera_clack" }
