@@ -55,20 +55,16 @@ public class EntityMagicCircles extends Entity
 			if (edgeRot < 90)
 			{
 				this.edgeRot += 0.5;
-				if (edgeRot == 89)
-				{
-					
-					if (!world.isRemote)
-					{
-						world.spawnEntity(new EntityItemFancy(world, circlePos.x, circlePos.y + 0.9 + (edgeRot == 0 ? 0 : (edgeRot / 90)),circlePos.z, new ItemStack(ModRegistry.NOTEBOOK), 270));
-				
-					}
-				}
 			}
 		}
 
 		if (this.ticksExisted >= 800)
 		{
+			if (!world.isRemote)
+			{
+				world.spawnEntity(new EntityItemFancy(world, circlePos.x, circlePos.y + 0.9 + (edgeRot == 0 ? 0 : (edgeRot / 90)),circlePos.z, new ItemStack(ModRegistry.NOTEBOOK)));
+		
+			}
 			this.setDead();
 		}
 	}
