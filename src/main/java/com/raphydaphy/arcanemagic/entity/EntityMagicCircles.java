@@ -4,9 +4,14 @@ import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -15,12 +20,14 @@ public class EntityMagicCircles extends Entity
 	public double constantRot = 0;
 	public double edgeRot = 0;
 	public Vec3d circlePos;
-	
+	public boolean hasBook = false;
+
 	public EntityMagicCircles(World worldIn)
 	{
 		super(worldIn);
-		
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
+		
+		hasBook = true;
 	}
 
 	public EntityMagicCircles(World worldIn, double x, double y, double z)
@@ -29,26 +36,46 @@ public class EntityMagicCircles extends Entity
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;
-		
+		hasBook = true;
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
 	}
+
+	@Override
+	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand)
+	{
+		ItemStack stack = player.getHeldItem(hand);
+
+		System.out.println("interaction");
+		if (stack.getItem().equals(Items.BOOK))
+		{
+			this.hasBook = true;
+			stack.shrink(1);
+
+			return EnumActionResult.SUCCESS;
+		}
+		return EnumActionResult.PASS;
+	}
+	
+	 public SoundCategory getSoundCategory()
+    {
+        return SoundCategory.BLOCKS;
+    }
 
 	@Override
 	public void onUpdate()
 	{
 		super.onUpdate();
-		
+
 		motionX = 0;
 		motionY = 0;
 		motionZ = 0;
-		
+
 		if (rand.nextInt(30) == 1)
 		{
-			world.playSound(posX, posY, posZ, ArcaneMagicSoundHandler.infuser,
-					SoundCategory.MASTER, 1f, 1f, false);
+			this.playSound(ArcaneMagicSoundHandler.infuser, 1f, 1f);
 		}
 		this.constantRot += 1;
-		
+
 		//System.out.println(world.isRemote);
 		if (constantRot >= 360)
 		{
@@ -62,8 +89,10 @@ public class EntityMagicCircles extends Entity
 		{
 			if (!world.isRemote)
 			{
-				world.spawnEntity(new EntityItemFancy(world, circlePos.x, circlePos.y + 0.9 + (edgeRot == 0 ? 0 : (edgeRot / 90)),circlePos.z, new ItemStack(ModRegistry.NOTEBOOK)));
-		
+				world.spawnEntity(
+						new EntityItemFancy(world, circlePos.x, circlePos.y + 0.9 + (edgeRot == 0 ? 0 : (edgeRot / 90)),
+								circlePos.z, new ItemStack(ModRegistry.NOTEBOOK)));
+
 			}
 			this.setDead();
 		}
@@ -77,6 +106,7 @@ public class EntityMagicCircles extends Entity
 		compound.setDouble("circleX", circlePos.x);
 		compound.setDouble("circleY", circlePos.y);
 		compound.setDouble("circleZ", circlePos.z);
+		compound.setBoolean("hasBook", this.hasBook);
 	}
 
 	@Override
@@ -84,12 +114,14 @@ public class EntityMagicCircles extends Entity
 	{
 		constantRot = compound.getDouble("constantRot");
 		edgeRot = compound.getDouble("edgeRot");
-		circlePos = new Vec3d(compound.getDouble("circleX"), compound.getDouble("circleY"), compound.getDouble("circleX"));
+		circlePos = new Vec3d(compound.getDouble("circleX"), compound.getDouble("circleY"),
+				compound.getDouble("circleX"));
+		hasBook = compound.getBoolean("hasBook");
 	}
 
 	@Override
 	protected void entityInit()
 	{
-		
+
 	}
 }

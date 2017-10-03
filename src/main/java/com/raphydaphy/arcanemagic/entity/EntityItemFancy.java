@@ -64,14 +64,15 @@ public class EntityItemFancy extends EntityItem
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
 		compound.setInteger("freezeTime", freezeTime);
+		return compound;
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
+	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
 		this.freezeTime = compound.getInteger("freezeTime");

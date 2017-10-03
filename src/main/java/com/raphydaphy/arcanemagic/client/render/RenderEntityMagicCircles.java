@@ -12,11 +12,9 @@ import com.raphydaphy.arcanemagic.util.GLHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -37,16 +35,12 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		//GlStateManager.translate(-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
-		//		-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
-		//-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
 
 		GlStateManager.translate(x, y + 1.1, z);
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.disableTexture2D();
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
 		GlStateManager.enableBlend();
-		GlStateManager.enableCull();
 		GlStateManager.disableAlpha();
 		GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
@@ -54,8 +48,6 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		GlStateManager.depthMask(false);
 
 		GlStateManager.pushMatrix();
-
-		//Tessellator tes = Tessellator.getInstance();
 
 		RenderHelper.disableStandardItemLighting();
 
@@ -148,55 +140,54 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
 		}
-		GlStateManager.alphaFunc(516, 0.1F);
-		GlStateManager.enableBlend();
-		RenderHelper.enableStandardItemLighting();
-		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
-				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
-				GlStateManager.DestFactor.ZERO);
-
-		IBakedModel ibakedmodel = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(
-				new ItemStack(ModRegistry.ANCIENT_PARCHMENT), entity.world, (EntityLivingBase) null);
-		IBakedModel transformedModel = net.minecraftforge.client.ForgeHooksClient
-				.handleCameraTransforms(ibakedmodel, ItemCameraTransforms.TransformType.GROUND, false);
-		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(ModRegistry.ANCIENT_PARCHMENT),
-				transformedModel);
+		GLHelper.renderItemWithTransform(entity.world, new ItemStack(ModRegistry.ANCIENT_PARCHMENT), ItemCameraTransforms.TransformType.GROUND);
 		
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
-		// Outer Item #1
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
-		float angle1 = ((float) Math.atan2(-1.9, 1.1) * (180f / (float) Math.PI)) + 180;
-
-		GlStateManager.rotate(angle1, 0, 0, 1);
-		GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
-		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
-				ItemCameraTransforms.TransformType.NONE);
-		GlStateManager.popMatrix();
-
-		// Outer Item #2
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(-1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
-		float angle2 = ((float) Math.atan2(1.9, 1.1) * (180f / (float) Math.PI)) + 180;
-		GlStateManager.rotate(angle2, 0, 0, 1);
-		GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
-		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
-				ItemCameraTransforms.TransformType.NONE);
-		GlStateManager.popMatrix();
-
-		// Outer Item #3
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(0, -2.2, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
-		float angle3 = ((float) Math.atan2(0, 2.2) * (180f / (float) Math.PI));
-		GlStateManager.rotate(angle3, 0, 0, 1);
-		GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
-		Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
-				ItemCameraTransforms.TransformType.NONE);
-		GlStateManager.popMatrix();
+		if (entity.hasBook)
+		{
+			// Outer Item #1
+			GlStateManager.pushMatrix();
+			GlStateManager.pushAttrib();
+			GlStateManager.rotate(90, 1, 0, 0);
+			GlStateManager.translate(1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+			float angle1 = ((float) Math.atan2(-1.9, 1.1) * (180f / (float) Math.PI)) + 180;
+			
+			GlStateManager.rotate(angle1, 0, 0, 1);
+			GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
+			GlStateManager.rotate(90, 0, 0, 1);
+			
+			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
+					ItemCameraTransforms.TransformType.NONE);
+			GlStateManager.popAttrib();
+			GlStateManager.popMatrix();
+	
+			// Outer Item #2
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(90, 1, 0, 0);
+			GlStateManager.translate(-1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+			float angle2 = ((float) Math.atan2(1.9, 1.1) * (180f / (float) Math.PI)) + 180;
+			GlStateManager.rotate(angle2, 0, 0, 1);
+			GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
+			GlStateManager.rotate(90, 0, 0, 1);
+			GlStateManager.enableBlend();
+			GlStateManager.enableAlpha();
+			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
+					ItemCameraTransforms.TransformType.NONE);
+			GlStateManager.popMatrix();
+	
+			// Outer Item #3
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(90, 1, 0, 0);
+			GlStateManager.translate(0, -2.2, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+			float angle3 = ((float) Math.atan2(0, 2.2) * (180f / (float) Math.PI));
+			GlStateManager.rotate(angle3, 0, 0, 1);
+			GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
+			GlStateManager.rotate(90, 0, 0, 1);
+			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
+					ItemCameraTransforms.TransformType.NONE);
+			GlStateManager.popMatrix();
+		}
 
 		if (lighting)
 		{

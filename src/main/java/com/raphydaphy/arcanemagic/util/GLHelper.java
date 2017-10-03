@@ -5,11 +5,17 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class GLHelper
@@ -19,21 +25,42 @@ public class GLHelper
 		drawCircle(radius, innerWidth, x, y, z, color, 360);
 	}
 
+	public static void renderItemWithTransform(World world, ItemStack stack,
+			ItemCameraTransforms.TransformType transform)
+	{
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+		GlStateManager.enableCull();
+		GlStateManager.alphaFunc(516, 0.1F);
+		GlStateManager.enableBlend();
+		RenderHelper.enableStandardItemLighting();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+				GlStateManager.DestFactor.ZERO);
+
+		IBakedModel ibakedmodel = Minecraft.getMinecraft().getRenderItem().getItemModelWithOverrides(stack, world,
+				(EntityLivingBase) null);
+		IBakedModel transformedModel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(ibakedmodel,
+				transform, false);
+		Minecraft.getMinecraft().getRenderItem().renderItem(stack, transformedModel);
+
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+	}
+
 	public static void drawCircle(double radius, double innerWidth, double x, double y, double z, Color color,
 			int segments)
 	{
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder vb = tes.getBuffer();
-
+		GlStateManager.disableCull();
 		vb.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
 		for (int deg = 0; deg <= segments; deg++)
 		{
-
 			double radius1 = deg % 2 == 0 ? radius : innerWidth;
 			vb.pos(x + Math.cos(Math.toRadians(deg)) * (radius1), y, z + Math.sin(Math.toRadians(deg)) * radius1)
 					.color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-			vb.pos(x + Math.cos(Math.toRadians(deg + 1)) * (radius), y,
-					z + Math.sin(Math.toRadians(deg + 1)) * radius)
+			vb.pos(x + Math.cos(Math.toRadians(deg + 1)) * (radius), y, z + Math.sin(Math.toRadians(deg + 1)) * radius)
 					.color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
 			vb.pos(x + Math.cos(Math.toRadians(deg + 2)) * (radius1), y,
 					z + Math.sin(Math.toRadians(deg + 2)) * radius1)
@@ -47,7 +74,7 @@ public class GLHelper
 	{
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder vb = tes.getBuffer();
-
+		GlStateManager.disableCull();
 		double p = (3 * width) / 2;
 		double area = Math.sqrt((p * (p - width) * (p - width) * (p - width)));
 		double height = 2 * (area / width);
@@ -55,7 +82,7 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.rotate(-30, 0, 1, 0);
-
+		
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
 		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
@@ -69,7 +96,7 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.rotate(30, 0, 1, 0);
-
+		
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
 		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
@@ -83,7 +110,7 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x - (width / 2), y, z + height);
 		GlStateManager.rotate(90, 0, 1, 0);
-
+		
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
 		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
