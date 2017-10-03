@@ -35,9 +35,9 @@ public class ItemAncientParchment extends ItemBase
 		
 		if (player.isSneaking() && block == Blocks.BEDROCK)
 		{
-			player.inventory.removeStackFromSlot(player.inventory.getSlotFor(player.getHeldItem(hand)));
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.craft_start,
-					SoundCategory.MASTER, 1f, 1f, false);
+			player.getHeldItem(hand).shrink(1);
+			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.craft_start,
+					SoundCategory.MASTER, 1f, 1f);
 			world.spawnEntity(new EntityMagicCircles(world, pos.getX(), pos.getY(), pos.getZ()));
 			return EnumActionResult.SUCCESS;
 		}
