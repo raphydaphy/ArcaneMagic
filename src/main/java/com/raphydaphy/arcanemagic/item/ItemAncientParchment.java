@@ -28,6 +28,9 @@ public class ItemAncientParchment extends ItemBase
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
+		if (world.isRemote){
+			return EnumActionResult.PASS;
+		}
 		Block block = world.getBlockState(pos).getBlock();
 		
 		if (player.isSneaking() && block == Blocks.BEDROCK)
