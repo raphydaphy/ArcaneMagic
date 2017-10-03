@@ -58,10 +58,10 @@ public class GLHelper
 
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-		vb.pos(0, 2.8, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0.02, 2.8, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0.02, 2.8, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0, 2.8, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0.02, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0.02, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
 
 		tes.draw();
 
@@ -72,10 +72,10 @@ public class GLHelper
 
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-		vb.pos(0, 2.8, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0.02, 2.8, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0.02, 2.8, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0, 2.8, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0.02, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0.02, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
 
 		tes.draw();
 
@@ -86,10 +86,10 @@ public class GLHelper
 
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
-		vb.pos(0, 2.8, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0.02, 2.8, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0.02, 2.8, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
-		vb.pos(0, 2.8, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0.02, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0.02, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+		vb.pos(0, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
 
 		tes.draw();
 

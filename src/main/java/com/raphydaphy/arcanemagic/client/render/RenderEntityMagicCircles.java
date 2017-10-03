@@ -31,13 +31,13 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 	@Override
 	public void doRender(EntityMagicCircles entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
-		System.out.println("DOING THE RENDER");
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		GlStateManager.translate(-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
-				-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
-				-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
+		//GlStateManager.translate(-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
+		//		-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
+		//-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
 
+		GlStateManager.translate(x, y + 1.1, z);
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.disableTexture2D();
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -61,7 +61,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		GlStateManager.rotate((float)entity.constantRot, 0, 1, 0);
 
 		// Main Circle
-		GLHelper.drawCircle(1.28, 1.24, 0, 2.8, 0, color);
+		GLHelper.drawCircle(1.28, 1.24, 0, 0, 0, color);
 		
 		// Middle Triangle #1
 		GLHelper.drawTriangle(2.15, 0, 0, -1.23, color);
@@ -74,33 +74,33 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		
 		// Middle semi-circle #1
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(-1, 2.8, -0.55);
+		GlStateManager.translate(-1, 0, -0.55);
 		GlStateManager.rotate(62, 0, 1 ,0);
 		GLHelper.drawCircle(0.5, 0.48, 0, 0, 0, color, 180);
 		GlStateManager.popMatrix();
 		
 		// Middle semi-circle #2
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0.97, 2.8, -0.6);
+		GlStateManager.translate(0.97, 0, -0.6);
 		GlStateManager.rotate(-58, 0, 1 ,0);
 		GLHelper.drawCircle(0.5, 0.48, 0, 0, 0, color, 180);
 		GlStateManager.popMatrix();
 		
 		// Middle semi-circle #3
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0, 2.8, 1.14);
+		GlStateManager.translate(0, 0, 1.14);
 		GlStateManager.rotate(-180, 0, 1 ,0);
 		GLHelper.drawCircle(0.5, 0.48, 0, 0, 0, color, 180);
 		GlStateManager.popMatrix();
 		
 		// Middle center circle
-		GLHelper.drawCircle(0.64, 0.62, 0, 2.8, 0, color);
+		GLHelper.drawCircle(0.64, 0.62, 0, 0, 0, color);
 		
 		color = Color.cyan;
 		
 		// Outer circles
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(1.9, 2.8 + (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), 1.1);
+		GlStateManager.translate(1.9, (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), 1.1);
 		GlStateManager.rotate(90, 0, 1, 0);
 		GlStateManager.rotate(-30, 0, 1, 0);
 		GlStateManager.rotate(-(float)entity.edgeRot, 1, 0, 0);
@@ -109,7 +109,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		GlStateManager.popMatrix();
 		
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(-1.9, 2.8 + (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), 1.1);
+		GlStateManager.translate(-1.9, (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), 1.1);
 		GlStateManager.rotate(90, 0, 1, 0);
 		GlStateManager.rotate(30 + 180, 0, 1, 0);
 		GlStateManager.rotate(-(float)entity.edgeRot, 1, 0, 0);
@@ -118,7 +118,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		GlStateManager.popMatrix();
 		
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(0, 2.8 + (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), -2.2);
+		GlStateManager.translate(0, (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), -2.2);
 		GlStateManager.rotate(90, 0, 1, 0);
 		GlStateManager.rotate(90, 0, 1, 0);
 		GlStateManager.rotate(-(float)entity.edgeRot, 1, 0, 0);
@@ -136,7 +136,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(90, 1, 0, 0);
-			GlStateManager.translate(0, 0, -2.8  + (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+			GlStateManager.translate(0, 0, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
 			GlStateManager.rotate(-(float)entity.constantRot * 2, 0, 0, 1);
 			
 			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(ModRegistry.ANCIENT_PARCHMENT),
@@ -146,7 +146,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		// Outer Item #1
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(1.9, 1.1, -2.8 + (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+		GlStateManager.translate(1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
 		float angle1 = ((float)Math.atan2(-1.9, 1.1) * (180f / (float)Math.PI)) + 180;
 		
 		GlStateManager.rotate(angle1, 0, 0, 1);
@@ -158,7 +158,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		// Outer Item #2
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(-1.9, 1.1, -2.8 + (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+		GlStateManager.translate(-1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
 		float angle2 = ((float)Math.atan2(1.9, 1.1) * (180f / (float)Math.PI)) + 180;
 		GlStateManager.rotate(angle2, 0, 0, 1);
 		GlStateManager.rotate((float)entity.edgeRot, 1, 0, 0);
@@ -169,7 +169,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		// Outer Item #3
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90, 1, 0, 0);
-		GlStateManager.translate(0, -2.2, -2.8 + (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
+		GlStateManager.translate(0, -2.2, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
 		float angle3 = ((float)Math.atan2(0, 2.2) * (180f / (float)Math.PI));
 		GlStateManager.rotate(angle3, 0, 0, 1);
 		GlStateManager.rotate((float)entity.edgeRot, 1, 0, 0);

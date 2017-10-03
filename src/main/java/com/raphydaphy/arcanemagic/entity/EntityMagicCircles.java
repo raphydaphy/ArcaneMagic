@@ -49,7 +49,6 @@ public class EntityMagicCircles extends Entity
 		}
 		this.constantRot += 1;
 		
-		System.out.println("X: " + this.posX + " Y : " + this.posY + " Z: " + this.posZ);
 		//System.out.println(world.isRemote);
 		if (constantRot >= 360)
 		{

@@ -64,15 +64,14 @@ public class EntityItemFancy extends EntityItem
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	public void writeEntityToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
 		compound.setInteger("freezeTime", freezeTime);
-		return compound;
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
+	public void readEntityFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
 		this.freezeTime = compound.getInteger("freezeTime");
@@ -111,6 +110,9 @@ public class EntityItemFancy extends EntityItem
 					world.setBlockState(new BlockPos(newPos), ModRegistry.FANCY_LIGHT.getDefaultState());
 				}
 			}
+		}
+		else
+		{
 		}
 	}
 }
