@@ -31,6 +31,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 	@Override
 	public void doRender(EntityMagicCircles entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
+		System.out.println("DOING THE RENDER");
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.translate(-Minecraft.getMinecraft().player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,

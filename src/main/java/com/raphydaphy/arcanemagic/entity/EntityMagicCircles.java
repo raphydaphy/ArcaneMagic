@@ -48,6 +48,8 @@ public class EntityMagicCircles extends Entity
 					SoundCategory.MASTER, 1f, 1f, false);
 		}
 		this.constantRot += 1;
+		
+		System.out.println("X: " + this.posX + " Y : " + this.posY + " Z: " + this.posZ);
 		//System.out.println(world.isRemote);
 		if (constantRot >= 360)
 		{
@@ -71,38 +73,23 @@ public class EntityMagicCircles extends Entity
 			this.setDead();
 		}
 	}
-	
+
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	public void writeEntityToNBT(NBTTagCompound compound)
 	{
-		super.writeToNBT(compound);
 		compound.setDouble("constantRot", constantRot);
 		compound.setDouble("edgeRot", edgeRot);
 		compound.setDouble("circleX", circlePos.x);
 		compound.setDouble("circleY", circlePos.y);
 		compound.setDouble("circleZ", circlePos.z);
-		return compound;
-	}
-	
-	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
-		super.readFromNBT(compound);
-		constantRot = compound.getDouble("constantRot");
-		edgeRot = compound.getDouble("edgeRot");
-		circlePos = new Vec3d(compound.getDouble("circleX"), compound.getDouble("circleY"), compound.getDouble("circleX"));
-	}
-
-	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
-	{
-		super.writeToNBT(compound);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
 	{
-		super.readFromNBT(compound);
+		constantRot = compound.getDouble("constantRot");
+		edgeRot = compound.getDouble("edgeRot");
+		circlePos = new Vec3d(compound.getDouble("circleX"), compound.getDouble("circleY"), compound.getDouble("circleX"));
 	}
 
 	@Override
