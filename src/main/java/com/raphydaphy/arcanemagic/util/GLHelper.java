@@ -33,7 +33,9 @@ public class GLHelper
 		GlStateManager.enableCull();
 		GlStateManager.alphaFunc(516, 0.1F);
 		GlStateManager.enableBlend();
+		GlStateManager.depthMask(true);
 		RenderHelper.enableStandardItemLighting();
+		GlStateManager.enableAlpha();
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
 				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
 				GlStateManager.DestFactor.ZERO);
@@ -134,6 +136,7 @@ public class GLHelper
 	{
 		Random rand = new Random(seed);
 		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
 		GlStateManager.translate(x, y, z);
 		int fancy_count = !FMLClientHandler.instance().getClient().gameSettings.fancyGraphics ? countNormal
 				: countFancy;
@@ -149,7 +152,6 @@ public class GLHelper
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-		GlStateManager.disableAlpha();
 		GlStateManager.depthMask(false);
 		GlStateManager.pushMatrix();
 		for (int i = 0; i < fancy_count; i++)
@@ -194,7 +196,7 @@ public class GLHelper
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableAlpha();
 		RenderHelper.enableStandardItemLighting();
-
+		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
 }
