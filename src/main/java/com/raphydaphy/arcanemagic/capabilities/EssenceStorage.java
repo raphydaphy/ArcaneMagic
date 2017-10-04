@@ -65,7 +65,6 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 			{
 				if (!simulate)
 				{
-					System.out.println("Stored " + in.getCount() + " essence in TE which now has a total of " + (storage.get(in.getEssence()).getCount() + 1));
 					storage.get(in.getEssence()).grow(in.getCount());
 					markDirty();
 				}
@@ -73,7 +72,6 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 			{
 				if (!simulate)
 				{
-					System.out.println("Tried to store " + in.getCount() + " essence but only managed to store " + (storage.get(in.getEssence()).getCount() + (in.getCount() - amountToDiscardOnGrow)));
 					storage.get(in.getEssence()).grow(in.getCount() - amountToDiscardOnGrow);
 					markDirty();
 				}
@@ -86,7 +84,6 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 			{
 				if (!simulate)
 				{
-					System.out.println("Stored " + in.getCount() + " essence in TE which was previously empty");
 					storage.put(in.getEssence(), in.copy());
 					markDirty();
 				}

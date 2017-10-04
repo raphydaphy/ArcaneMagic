@@ -126,7 +126,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 									if (!world.isRemote)
 									{
 										// send and recieve essence
-										System.out.println("About to take and store " + stack.getCount() + " essence!");
 										storage.store(stack, false);
 										storageFrom.take(stack, false);
 										
@@ -159,7 +158,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 							if (!world.isRemote)
 							{
 								// do the thing!
-								System.out.println("About to store " + stack.getCount() + " essence!");
 								storage.store(stack, false);
 								
 								toTEUnchecked.markDirty();

@@ -120,7 +120,6 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (transferStack.getCount() > 0 && !world.isRemote)
 								{
 									useType = transferStack.getEssence();
-									this.essenceStorage.store(new EssenceStack(useType, -1), false);
 									this.markDirty();
 								}
 							}
