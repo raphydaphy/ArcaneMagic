@@ -61,11 +61,11 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
 							{
 								if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(),
-										true) == ItemStack.EMPTY)
+										true).isEmpty())
 								{
 									if (this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), true) == null)
 									{
-									//	this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), false);
+										this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), false);
 										this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), false);
 										this.curForming = null;
 										this.curFormingTimer = 0;

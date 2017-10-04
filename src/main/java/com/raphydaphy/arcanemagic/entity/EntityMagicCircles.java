@@ -26,40 +26,44 @@ public class EntityMagicCircles extends Entity
 	{
 		super(worldIn);
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
-		
-		hasBook = true;
+		this.setSize(1,1);
 	}
 
 	public EntityMagicCircles(World worldIn, double x, double y, double z)
 	{
 		super(worldIn);
+		this.setSize(1,1);
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;
-		hasBook = true;
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
 	}
 
 	@Override
-	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand)
+	public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
 	{
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack itemstack = player.getHeldItem(hand);
 
-		System.out.println("interaction");
-		if (stack.getItem().equals(Items.BOOK))
+		if (!this.world.isRemote)
 		{
-			this.hasBook = true;
-			stack.shrink(1);
+			ItemStack stack = player.getHeldItem(hand);
 
-			return EnumActionResult.SUCCESS;
+			System.out.println("interaction");
+			if (stack.getItem().equals(Items.BOOK))
+			{
+				this.hasBook = true;
+				stack.shrink(1);
+
+				return true;
+			}
 		}
-		return EnumActionResult.PASS;
+		return false;
 	}
-	
-	 public SoundCategory getSoundCategory()
-    {
-        return SoundCategory.BLOCKS;
-    }
+
+	public SoundCategory getSoundCategory()
+	{
+		return SoundCategory.BLOCKS;
+	}
 
 	@Override
 	public void onUpdate()
