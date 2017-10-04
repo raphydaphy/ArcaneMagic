@@ -104,30 +104,61 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 		if (toTEUnchecked instanceof TileEntityEssenceStorage)
 		{
-			TileEntityEssenceStorage toTE = (TileEntityEssenceStorage) toTEUnchecked;
-
-			// sending from block to block, such as concentrator -> crystallizer
-			if (fromTEUnchecked instanceof TileEntityEssenceStorage)
+			IEssenceStorage storage = toTEUnchecked.getCapability(EssenceStorage.CAP, null);
+			if (storage != null)
 			{
-				TileEntityEssenceStorage fromTE = (TileEntityEssenceStorage) fromTEUnchecked;
-
-				// sender block has enough essence to transfer it
-				if (fromTE.getCapability(EssenceStorage.CAP, null).take(stack, true) == null)
+				if (fromTEUnchecked instanceof TileEntityEssenceStorage)
 				{
-					// recieving block has enough capacity to accept it
-					if (toTE.getCapability(EssenceStorage.CAP, null).store(stack, true) == null)
+
+					IEssenceStorage storageTo = fromTEUnchecked.getCapability(EssenceStorage.CAP, null);
+					// sending from block to block, such as concentrator -> crystallizer
+					if (storageTo != null)
+					{
+
+						// sender block has enough essence to transfer it
+						if (storageTo.take(stack, true) == null)
+						{
+							// recieving block has enough capacity to accept it
+							if (storage.store(stack, true) == null)
+							{
+								if (!simulate)
+								{
+									// send and recieve essence
+									storageTo.take(stack, false);
+									storage.store(stack, false);
+
+									if (!world.isRemote)
+									{
+										ArcaneMagicPacketHandler.INSTANCE
+												.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
+									} else if (spawnParticles)
+									{
+										ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
+												stack.getEssence(), to, false);
+									}
+								}
+								return true;
+							}
+						}
+					}
+				}
+				// sending from bedrock/wand to block
+				else
+				{
+					// if the receiving block can accept 100% of the essence
+					if (storage.store(stack, true) == null)
 					{
 						if (!simulate)
 						{
-							// send and recieve essence
-							fromTE.getCapability(EssenceStorage.CAP, null).take(stack, false);
-							toTE.getCapability(EssenceStorage.CAP, null).store(stack, false);
+							// do the thing!
+							storage.store(stack, false);
 
 							if (!world.isRemote)
 							{
 								ArcaneMagicPacketHandler.INSTANCE
 										.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
-							} else if (spawnParticles)
+							}
+							else
 							{
 								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
 										stack.getEssence(), to, false);
@@ -135,30 +166,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 						}
 						return true;
 					}
-				}
-			}
-			// sending from bedrock/wand to block
-			else
-			{
-				// if the receiving block can accept 100% of the essence
-				if (toTE.getCapability(EssenceStorage.CAP, null).store(stack, true) == null)
-				{
-					if (!simulate)
-					{
-						// do the thing!
-						toTE.getCapability(EssenceStorage.CAP, null).store(stack, false);
-
-						if (!world.isRemote)
-						{
-							ArcaneMagicPacketHandler.INSTANCE
-									.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
-						} else
-						{
-							ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0), stack.getEssence(),
-									to, false);
-						}
-					}
-					return true;
 				}
 			}
 		}

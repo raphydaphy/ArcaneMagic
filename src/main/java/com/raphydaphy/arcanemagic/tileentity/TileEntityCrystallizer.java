@@ -9,7 +9,6 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -63,9 +62,9 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(),
 										true).isEmpty())
 								{
-									if (this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), true) == null)
+									if (essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), true) == null)
 									{
-										this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), false);
+										essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), false);
 										this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), false);
 										this.curForming = null;
 										this.curFormingTimer = 0;
@@ -109,7 +108,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (transferStack.getCount() > 0)
 								{
 									useType = transferStack.getEssence();
-									te.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(useType, -1),
+									this.essenceStorage.store(new EssenceStack(useType, -1),
 											false);
 								}
 							}
