@@ -24,6 +24,7 @@ public class ParticleDadWasHere extends Particle {
 
 	public ParticleDadWasHere(BlockPos pos, World world) {
 		super(world, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+		this.setMaxAge(300);
 		original = pos;
 	}
 
@@ -151,7 +152,11 @@ public class ParticleDadWasHere extends Particle {
 			factor = rand.nextDouble() * 4;
 			color2 = getRandomColor(Minecraft.getMinecraft().world.rand);
 		}
-
+		
+		if (this.particleAge++ >= this.particleMaxAge)
+		{
+			this.setExpired();
+		}
 		this.move(x * 0.05, y * 0.08, z * 0.05);
 
 	}
@@ -165,7 +170,7 @@ public class ParticleDadWasHere extends Particle {
 	}
 
 	public void setExpired() {
-
+		super.setExpired();
 	}
 
 }
