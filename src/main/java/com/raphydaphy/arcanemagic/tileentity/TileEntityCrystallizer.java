@@ -30,7 +30,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		super(1000);
 		for (Essence essence : Essence.REGISTRY.getValues())
 		{
-			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 280), false);
+			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 0), false);
 		}
 	}
 
@@ -41,18 +41,16 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		{
 			return;
 		}
-
 		for (EssenceStack formStack : this.essenceStorage.getStored().values())
 		{
 			if (formStack != null && !formStack.isEmpty() && formStack.getCount() >= 100)
 			{
-				System.out.println("found potential stack");
 				if (this.curForming != null)
 				{
 					// we are already forming this essence
 					if (formStack.getEssence().equals(this.curForming))
 					{
-						if (this.curFormingTimer <= 200)
+						if (this.curFormingTimer <= 100)
 						{
 							curFormingTimer++;
 						} else
@@ -60,25 +58,29 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
 							{
 								boolean doTheThing = false;
+
 								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
 								{
 									this.itemStackHandler.setStackInSlot(curItemStack, curForming.getItemForm());
 									doTheThing = true;
-								}
-								else if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(),
-										true).isEmpty())
+								} else if (this.itemStackHandler
+										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
 								{
-									if (essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), true) == null)
+									if (true || essenceStorage.take(new EssenceStack(formStack.getEssence(), 100),
+											true) == null)
 									{
 										this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), false);
 										doTheThing = true;
 									}
 								}
-								
-								if (doTheThing) {
+
+								if (doTheThing)
+								{
 									essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), false);
+									this.markDirty();
 									this.curForming = null;
 									this.curFormingTimer = 0;
+									break;
 								}
 							}
 						}
@@ -115,16 +117,16 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 							Essence useType = null;
 							for (EssenceStack transferStack : storedEssenceConcentrator.values())
 							{
-								if (transferStack.getCount() > 0)
+								if (transferStack.getCount() > 0 && !world.isRemote)
 								{
 									useType = transferStack.getEssence();
-									this.essenceStorage.store(new EssenceStack(useType, -1),
-											false);
+									this.essenceStorage.store(new EssenceStack(useType, -1), false);
+									this.markDirty();
 								}
 							}
 							if (useType != null && world.rand.nextInt(3) == 1)
 							{
-								if (!world.isRemote && false)
+								if (!world.isRemote)
 								{
 									// actually send essence, not just particles
 									if (Essence.sendEssence(world,

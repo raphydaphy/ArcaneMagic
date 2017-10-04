@@ -199,7 +199,7 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
-		if (handler != null)
+		if (handler != null && !player.world.isRemote)
 		{
 			for (Essence essence : Essence.REGISTRY.getValues())
 			{

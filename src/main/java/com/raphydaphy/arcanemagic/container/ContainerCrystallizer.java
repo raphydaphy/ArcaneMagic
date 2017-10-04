@@ -51,10 +51,11 @@ public class ContainerCrystallizer extends Container
 		IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		int slot = 0;
-		for (int x = 0; x < 2; x++)
+		for (int y = 0; y < 3; y++)
 		{
-			for (int y = 0; y < 3; y++)
+			for (int x = 0; x < 2; x++)
 			{
+
 				addSlotToContainer(new SlotItemHandler(itemHandler, slot, (x * 20) + 15, (y * 20) + 21));
 				slot++;
 			}
