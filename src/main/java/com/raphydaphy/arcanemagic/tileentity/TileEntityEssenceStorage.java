@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -26,7 +27,14 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 
 	public TileEntityEssenceStorage(int capacity)
 	{
-		essenceStorage = new EssenceStorage(this::markDirty, capacity);
+		TileEntityEssenceStorage that = this;
+		essenceStorage = new EssenceStorage(()->{
+			that.markDirty();
+			if (this.world != null && this.pos != null) {
+				IBlockState state = this.world.getBlockState(this.pos);
+				this.world.markAndNotifyBlock(this.pos, this.world.getChunkFromBlockCoords(this.pos), state, state, 1 | 2);
+			}
+		}, capacity);
 	}
 
 	@Override
