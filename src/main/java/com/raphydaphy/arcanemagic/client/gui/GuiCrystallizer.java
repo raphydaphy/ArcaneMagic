@@ -16,6 +16,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.SlotItemHandler;
 
 public class GuiCrystallizer extends GuiContainer
 {
@@ -78,14 +79,21 @@ public class GuiCrystallizer extends GuiContainer
 	{
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 196, 166);
-		drawModalRectWithCustomSizedTexture(guiLeft + 19, guiTop + 39, 176, 113, 18, 18, 196, 166);
+		for (int x = 0; x < 2; x++)
+		{
+			for (int y = 0; y < 3; y++)
+			{
+				drawModalRectWithCustomSizedTexture(guiLeft + 13 + (x * 20), guiTop + 20 + (y * 20), 176, 113, 18, 18, 196, 166);
+			}
+		}
+		
 		Map<Essence, EssenceStack> essenceStored = te.getCapability(EssenceStorage.CAP, null).getStored();
 		int i = 0;
 		for (EssenceStack stack : essenceStored.values())
 		{
 			i++;
 			Essence essence = stack.getEssence();
-			drawBar(guiLeft + 37 + (i * 18), guiTop + 19, essence.getColor().getRed() / 256f,
+			drawBar(guiLeft + 40 + (i * 18), guiTop + 19, essence.getColor().getRed() / 256f,
 					essence.getColor().getGreen() / 256f, essence.getColor().getBlue() / 256f,
 					(int) Math.floor(stack.getCount() / 20), 0);
 		}

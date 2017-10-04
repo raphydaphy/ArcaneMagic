@@ -20,7 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityCrystallizer extends TileEntityEssenceStorage implements ITickable
 {
-	public static int SIZE = 1;
+	public static int SIZE = 6;
 
 	public TileEntityCrystallizer()
 	{
