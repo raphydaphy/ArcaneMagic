@@ -132,7 +132,6 @@ public class ItemScepter extends ItemBase
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
-		for(int i =0; i<6;i++)if(world.isRemote)Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleDadWasHere(player.getPosition(), world));
 		ItemStack stack = player.getHeldItem(hand);
 		player.setActiveHand(hand);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);

@@ -174,6 +174,12 @@ public class ClientProxy extends CommonProxy
 		GlStateManager.popMatrix();
 
 	}
+	
+	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
+	{
+		Essence.sendEssence(Minecraft.getMinecraft().world, essence, from, to, false,
+				spawnParticles);
+	}
 
 	@SubscribeEvent
 	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)

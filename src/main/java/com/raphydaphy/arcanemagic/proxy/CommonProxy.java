@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.proxy;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -26,6 +27,11 @@ public abstract class CommonProxy
 			boolean isCosmetic)
 	{
 
+	}
+	
+	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
+	{
+		
 	}
 	
 	public abstract String translate(String key, Object... args);

@@ -1,8 +1,10 @@
 package com.raphydaphy.arcanemagic.network;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 
+import ca.weblite.objc.Proxy;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.Vec3d;
@@ -40,8 +42,7 @@ public class PacketEssenceTransfer implements IMessage
 
 		private void handle(PacketEssenceTransfer message, MessageContext ctx)
 		{
-			Essence.sendEssence(Minecraft.getMinecraft().world, message.essence, message.from, message.to, false,
-					message.spawnParticles);
+			ArcaneMagic.proxy.sendEssenceSafe(message.essence, message.from, message.to, message.spawnParticles);
 		}
 	}
 
