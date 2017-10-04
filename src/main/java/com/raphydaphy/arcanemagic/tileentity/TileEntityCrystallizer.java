@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -21,6 +22,9 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityCrystallizer extends TileEntityEssenceStorage implements ITickable
 {
 	public static int SIZE = 6;
+
+	private Essence curForming = null;
+	private int curFormingTimer = 0;
 
 	public TileEntityCrystallizer()
 	{
@@ -35,6 +39,51 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	@Override
 	public void update()
 	{
+		if (world.isRemote)
+		{
+			return;
+		}
+
+		for (EssenceStack formStack : this.essenceStorage.getStored().values())
+		{
+			if (formStack != null && !formStack.isEmpty() && formStack.getCount() >= 100)
+			{
+				if (this.curForming != null)
+				{
+					// we are already forming this essence
+					if (formStack.getEssence().equals(this.curForming))
+					{
+						if (this.curFormingTimer <= 200)
+						{
+							curFormingTimer++;
+						} else
+						{
+							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
+							{
+								if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(),
+										true) == ItemStack.EMPTY)
+								{
+									if (this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), true) == null)
+									{
+									//	this.getCapability(EssenceStorage.CAP,null).take(new EssenceStack(formStack.getEssence(), 100), false);
+										this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), false);
+										this.curForming = null;
+										this.curFormingTimer = 0;
+									}
+								}
+							}
+						}
+
+						break;
+					}
+				} else
+				{
+					this.curForming = formStack.getEssence();
+					this.curFormingTimer = 0;
+					break;
+				}
+			}
+		}
 		for (int x = this.pos.getX() - 8; x < this.pos.getX() + 8; x++)
 		{
 			for (int y = this.pos.getY() - 3; y < this.pos.getY() + 3; y++)
@@ -55,11 +104,11 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 									.getCapability(EssenceStorage.CAP, null).getStored();
 
 							Essence useType = null;
-							for (EssenceStack stack : storedEssenceConcentrator.values())
+							for (EssenceStack transferStack : storedEssenceConcentrator.values())
 							{
-								if (stack.getCount() > 0)
+								if (transferStack.getCount() > 0)
 								{
-									useType = stack.getEssence();
+									useType = transferStack.getEssence();
 									te.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(useType, -1),
 											false);
 								}
@@ -106,7 +155,11 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
-
+		if (compound.hasKey("curForming"))
+		{
+			curForming = Essence.getEssenceByID(compound.getInteger("curForming"));
+		}
+		curFormingTimer = compound.getInteger("curFormingTimer");
 	}
 
 	@Override
@@ -114,6 +167,11 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	{
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
+		if (curForming != null)
+		{
+			compound.setInteger("curForming", Essence.REGISTRY.getValues().indexOf(this.curForming));
+		}
+		compound.setInteger("curFormingTimer", this.curFormingTimer);
 		return compound;
 	}
 
