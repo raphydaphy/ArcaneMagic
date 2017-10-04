@@ -110,13 +110,13 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 				if (fromTEUnchecked instanceof TileEntityEssenceStorage)
 				{
 
-					IEssenceStorage storageTo = fromTEUnchecked.getCapability(EssenceStorage.CAP, null);
+					IEssenceStorage storageFrom = fromTEUnchecked.getCapability(EssenceStorage.CAP, null);
 					// sending from block to block, such as concentrator -> crystallizer
-					if (storageTo != null)
+					if (storageFrom != null)
 					{
 
 						// sender block has enough essence to transfer it
-						if (storageTo.take(stack, true) == null)
+						if (storageFrom.take(stack, true) == null)
 						{
 							// recieving block has enough capacity to accept it
 							if (storage.store(stack, true) == null)
@@ -124,8 +124,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 								if (!simulate)
 								{
 									// send and recieve essence
-									storageTo.take(stack, false);
 									storage.store(stack, false);
+									storageFrom.take(stack, false);
+									
 
 									if (!world.isRemote)
 									{
