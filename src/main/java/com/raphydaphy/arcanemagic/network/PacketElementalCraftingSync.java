@@ -7,22 +7,22 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketArcaneCraftingSync implements IMessage
+public class PacketElementalCraftingSync implements IMessage
 {
-	public PacketArcaneCraftingSync()
+	public PacketElementalCraftingSync()
 	{
 	}
 
-	public static class Handler implements IMessageHandler<PacketArcaneCraftingSync, IMessage>
+	public static class Handler implements IMessageHandler<PacketElementalCraftingSync, IMessage>
 	{
 		@Override
-		public IMessage onMessage(PacketArcaneCraftingSync message, MessageContext ctx)
+		public IMessage onMessage(PacketElementalCraftingSync message, MessageContext ctx)
 		{
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 
-		private void handle(PacketArcaneCraftingSync message, MessageContext ctx)
+		private void handle(PacketElementalCraftingSync message, MessageContext ctx)
 		{
 			Container container = ctx.getServerHandler().player.openContainer;
 			if (container != null)
@@ -35,12 +35,10 @@ public class PacketArcaneCraftingSync implements IMessage
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
-		// no data, yay
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
-		// no data, yay
 	}
 }

@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -12,13 +12,13 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockArcaneWorktable extends BlockBase
+public class BlockElementalCraftingTable extends BlockBase
 {
 	public static final int GUI_ID = 2;
 
-	public BlockArcaneWorktable()
+	public BlockElementalCraftingTable()
 	{
-		super("arcane_worktable", Material.WOOD, 2.5f);
+		super("elemental_crafting_table", Material.WOOD, 2.5f);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class BlockArcaneWorktable extends BlockBase
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileEntityArcaneWorktable();
+		return new TileEntityElementalCraftingTable();
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class BlockArcaneWorktable extends BlockBase
 			return true;
 		}
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityArcaneWorktable))
+		if (!(te instanceof TileEntityElementalCraftingTable))
 		{
 			return false;
 		}

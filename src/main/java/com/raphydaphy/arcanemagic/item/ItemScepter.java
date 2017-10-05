@@ -167,7 +167,7 @@ public class ItemScepter extends ItemBase
 			return EnumActionResult.SUCCESS;
 		} else if (block.equals(ModRegistry.TABLE))
 		{
-			world.setBlockState(pos, ModRegistry.WORKTABLE.getDefaultState());
+			world.setBlockState(pos, ModRegistry.ELEMENTAL_CRAFTING_TABLE.getDefaultState());
 		}
 		return EnumActionResult.PASS;
 	}

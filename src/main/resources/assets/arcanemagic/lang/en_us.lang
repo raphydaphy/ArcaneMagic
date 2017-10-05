@@ -19,7 +19,7 @@ item.arcanemagic.ancient_parchment.name=Ancient Parchment
 
 # Blocks
 tile.arcanemagic.table.name=Table
-tile.arcanemagic.arcane_worktable.name=Arcane Worktable
+tile.arcanemagic.elemental_crafting_table.name=Elemental Crafting Table
 tile.arcanemagic.crystallizer.name=Crystallizer
 tile.arcanemagic.essence_concentrator.name=Essence Concentrator
 tile.arcanemagic.research_table.name=notebook Table

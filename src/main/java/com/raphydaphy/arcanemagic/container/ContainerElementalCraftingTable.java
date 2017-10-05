@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.container;
 
 import com.raphydaphy.arcanemagic.handler.InvCraftingHandler;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,15 +11,15 @@ import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotCrafting;
 
-public class ContainerArcaneWorktable extends Container
+public class ContainerElementalCraftingTable extends Container
 {
 
-	private TileEntityArcaneWorktable te;
+	private TileEntityElementalCraftingTable te;
 	private final InvCraftingHandler craftMatrix;
 	private final InventoryCraftResult craftResult;
 	protected int playerInventoryStart = -1;
 
-	public ContainerArcaneWorktable(InventoryPlayer playerInventory, TileEntityArcaneWorktable te)
+	public ContainerElementalCraftingTable(InventoryPlayer playerInventory, TileEntityElementalCraftingTable te)
 	{
 		this.te = te;
 		this.craftResult = new InventoryCraftResult();

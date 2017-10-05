@@ -1,15 +1,15 @@
 package com.raphydaphy.arcanemagic.proxy;
 
-import com.raphydaphy.arcanemagic.block.BlockArcaneWorktable;
+import com.raphydaphy.arcanemagic.block.BlockElementalCraftingTable;
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
-import com.raphydaphy.arcanemagic.client.gui.GuiArcaneWorktable;
+import com.raphydaphy.arcanemagic.client.gui.GuiElementalCraftingTable;
 import com.raphydaphy.arcanemagic.client.gui.GuiCrystallizer;
 import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
-import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
+import com.raphydaphy.arcanemagic.container.ContainerElementalCraftingTable;
 import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,9 +27,9 @@ public class GuiProxy implements IGuiHandler
 		TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 		switch (ID)
 		{
-		case BlockArcaneWorktable.GUI_ID:
-			if (te instanceof TileEntityArcaneWorktable)
-				return new ContainerArcaneWorktable(player.inventory, (TileEntityArcaneWorktable) te);
+		case BlockElementalCraftingTable.GUI_ID:
+			if (te instanceof TileEntityElementalCraftingTable)
+				return new ContainerElementalCraftingTable(player.inventory, (TileEntityElementalCraftingTable) te);
 			break;
 		case BlockCrystallizer.GUI_ID:
 
@@ -55,12 +55,12 @@ public class GuiProxy implements IGuiHandler
 				return new GuiNotebook(player);
 			}
 			break;
-		case BlockArcaneWorktable.GUI_ID:
-			if (te instanceof TileEntityArcaneWorktable)
+		case BlockElementalCraftingTable.GUI_ID:
+			if (te instanceof TileEntityElementalCraftingTable)
 			{
-				TileEntityArcaneWorktable containerTileEntity = (TileEntityArcaneWorktable) te;
-				return new GuiArcaneWorktable(containerTileEntity,
-						new ContainerArcaneWorktable(player.inventory, containerTileEntity));
+				TileEntityElementalCraftingTable containerTileEntity = (TileEntityElementalCraftingTable) te;
+				return new GuiElementalCraftingTable(containerTileEntity,
+						new ContainerElementalCraftingTable(player.inventory, containerTileEntity));
 			}
 			break;
 		case BlockCrystallizer.GUI_ID:

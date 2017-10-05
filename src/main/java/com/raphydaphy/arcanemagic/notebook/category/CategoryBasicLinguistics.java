@@ -33,7 +33,7 @@ public class CategoryBasicLinguistics extends NotebookCategory
 				{ new ItemStack(Items.PAPER), new ItemStack(Items.DYE, 1, 0), new ItemStack(Items.PAPER) },
 				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.PLANKS) },
 				{ new ItemStack(Blocks.PLANKS), ItemStack.EMPTY, new ItemStack(Blocks.PLANKS) } };
-		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.WORKTABLE)));
+		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE)));
 
 		return entries;
 	}

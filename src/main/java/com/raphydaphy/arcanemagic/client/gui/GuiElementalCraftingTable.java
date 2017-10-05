@@ -1,13 +1,13 @@
 package com.raphydaphy.arcanemagic.client.gui;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.container.ContainerArcaneWorktable;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityArcaneWorktable;
+import com.raphydaphy.arcanemagic.container.ContainerElementalCraftingTable;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 
-public class GuiArcaneWorktable extends GuiContainer
+public class GuiElementalCraftingTable extends GuiContainer
 {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 239;
@@ -15,7 +15,7 @@ public class GuiArcaneWorktable extends GuiContainer
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/arcane_work_table.png");
 
-	public GuiArcaneWorktable(TileEntityArcaneWorktable tileEntity, ContainerArcaneWorktable container)
+	public GuiElementalCraftingTable(TileEntityElementalCraftingTable tileEntity, ContainerElementalCraftingTable container)
 	{
 		super(container);
 

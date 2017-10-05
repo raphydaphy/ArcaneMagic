@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.handler;
 
-import com.raphydaphy.arcanemagic.network.PacketArcaneCraftingSync;
+import com.raphydaphy.arcanemagic.network.PacketElementalCraftingSync;
 import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -26,7 +26,7 @@ public class ArcaneMagicPacketHandler
 	public static void registerMessages()
 	{
 		// Register messages which are sent from the client to the server here:
-		INSTANCE.registerMessage(PacketArcaneCraftingSync.Handler.class, PacketArcaneCraftingSync.class, packetId++,
+		INSTANCE.registerMessage(PacketElementalCraftingSync.Handler.class, PacketElementalCraftingSync.class, packetId++,
 				Side.SERVER);
 
 		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++,

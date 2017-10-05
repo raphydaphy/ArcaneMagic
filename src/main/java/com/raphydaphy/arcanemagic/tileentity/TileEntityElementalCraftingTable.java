@@ -8,11 +8,11 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityArcaneWorktable extends TileEntity
+public class TileEntityElementalCraftingTable extends TileEntity
 {
 	public static final int SIZE = 10;
 
-	public TileEntityArcaneWorktable()
+	public TileEntityElementalCraftingTable()
 	{
 	}
 
@@ -23,7 +23,7 @@ public class TileEntityArcaneWorktable extends TileEntity
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
-			TileEntityArcaneWorktable.this.markDirty();
+			TileEntityElementalCraftingTable.this.markDirty();
 		}
 	};
 

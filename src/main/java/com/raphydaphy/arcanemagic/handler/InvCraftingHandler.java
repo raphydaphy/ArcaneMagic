@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.handler;
 
 import javax.annotation.Nonnull;
 
-import com.raphydaphy.arcanemagic.network.PacketArcaneCraftingSync;
+import com.raphydaphy.arcanemagic.network.PacketElementalCraftingSync;
 
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
@@ -106,7 +106,7 @@ public class InvCraftingHandler extends InventoryCrafting
 		this.te.markDirty();
 		this.eventHandler.onCraftMatrixChanged(this);
 
-		ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketArcaneCraftingSync());
+		ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketElementalCraftingSync());
 	}
 
 	@Override
