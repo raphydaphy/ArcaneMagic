@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.container;
 
+import com.raphydaphy.arcanemagic.container.slot.SlotOutput;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,9 +8,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerCrystallizer extends Container
 {
@@ -56,11 +57,55 @@ public class ContainerCrystallizer extends Container
 			for (int x = 0; x < 2; x++)
 			{
 
-				addSlotToContainer(new SlotItemHandler(itemHandler, slot, (x * 20) + 15, (y * 20) + 21));
+				addSlotToContainer(new SlotOutput(itemHandler, slot, (x * 20) + 15, (y * 20) + 21));
 				slot++;
 			}
 		}
 	}
+	
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
+	{
+		ItemStack prev = null;
+		Slot slot = (Slot)this.inventorySlots.get(index);
+		
+		if (slot != null && slot.getHasStack())
+		{
+			ItemStack cur = slot.getStack();
+			prev = cur.copy();
+			
+			// From crystlaizer -> player
+			if (index < TileEntityCrystallizer.SIZE)
+			{
+				// TODO: not hardcode the max inv size to support mods that altar the player inventory
+				if (!this.mergeItemStack(cur, TileEntityCrystallizer.SIZE, 42, true))
+				{
+					return ItemStack.EMPTY;
+				}
+			}
+			// From player to crystallizer - we dont want this!
+			else
+			{
+				return ItemStack.EMPTY;
+			}
+			
+			if (cur.getCount() == 0)
+			{
+				slot.putStack(ItemStack.EMPTY);
+			}
+			else
+			{
+				slot.onSlotChanged();
+			}
+			
+			if (cur.getCount() == prev.getCount())
+			{
+				return ItemStack.EMPTY;
+			}
+			
+		}
+		return prev;
+    }
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn)

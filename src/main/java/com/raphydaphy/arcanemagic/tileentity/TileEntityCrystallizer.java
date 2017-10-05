@@ -32,7 +32,37 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		super(1000);
 
 	}
-
+	
+	private boolean canForm(EssenceStack formStack)
+	{
+		
+		boolean shouldContinue = false;
+		for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
+		{
+			if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
+			{
+				shouldContinue = true;
+				break;
+			} else if (this.itemStackHandler
+					.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
+			{
+				shouldContinue = true;
+				break;
+			}
+		}
+		
+		if (shouldContinue)
+		{
+			EssenceStack couldTakeThis = essenceStorage
+					.take(new EssenceStack(formStack.getEssence(), 10), false);
+			if (couldTakeThis != null && !couldTakeThis.isEmpty())
+			{
+				shouldContinue = false;
+			}
+		}
+		return shouldContinue;
+	}
+	
 	@Override
 	public void update()
 	{
@@ -49,19 +79,19 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 					// we are already forming this essence
 					if (formStack.getEssence().equals(this.curForming))
 					{
+						// keep on going! u can get ther ;-)
 						if (this.curFormingTimer <= 100)
 						{
 							curFormingTimer++;
-							EssenceStack couldTakeThis = essenceStorage
-									.take(new EssenceStack(formStack.getEssence(), 10), false);
-
-							if (couldTakeThis != null && !couldTakeThis.isEmpty())
+							if (!canForm(formStack))
 							{
 								curForming = null;
 								curFormingTimer = 0;
 								this.markDirty();
 							}
-						} else
+						} 
+						// i said u could :D
+						else
 						{
 							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
 							{
