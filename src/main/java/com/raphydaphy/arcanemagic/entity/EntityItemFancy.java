@@ -49,7 +49,7 @@ public class EntityItemFancy extends EntityItem
 		if (freezeTime > 0)
 		{
 			this.freezeTime--;
-			
+
 			this.motionX = 0;
 			this.motionY = 0;
 			this.motionZ = 0;
@@ -105,14 +105,13 @@ public class EntityItemFancy extends EntityItem
 				{
 					world.setBlockToAir(new BlockPos(oldPos));
 				}
-	
+
 				if (world.getBlockState(new BlockPos(newPos)).getBlock() == Blocks.AIR)
 				{
 					world.setBlockState(new BlockPos(newPos), ModRegistry.FANCY_LIGHT.getDefaultState());
 				}
 			}
-		}
-		else
+		} else
 		{
 		}
 	}

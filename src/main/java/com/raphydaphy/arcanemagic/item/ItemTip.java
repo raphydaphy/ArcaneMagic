@@ -30,14 +30,16 @@ public class ItemTip extends ItemEnum<Type> implements ScepterPartItem
 		Preconditions.checkArgument(in.getItem() == this, in.getItem().getRegistryName().toString());
 		return ItemTip.Type.values()[in.getMetadata()];
 	}
-	
+
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getUnlocalizedName(ItemStack stack)
+	{
 		return "item.arcanemagic.tip." + values[stack.getMetadata()].getName();
 	}
-	
+
 	@Override
-	public void initModels(ModelRegistryEvent ev) {
+	public void initModels(ModelRegistryEvent ev)
+	{
 		for (Type t : values)
 			IHasModel.sMRL("items", this, t.ordinal(), "item=tip_" + t.getName());
 	}

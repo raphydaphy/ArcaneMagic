@@ -107,10 +107,10 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			IEssenceStorage storage = toTEUnchecked.getCapability(EssenceStorage.CAP, null);
 			if (storage != null)
 			{
-				
+
 				if (fromTEUnchecked instanceof TileEntityEssenceStorage)
 				{
-					
+
 					IEssenceStorage storageFrom = fromTEUnchecked.getCapability(EssenceStorage.CAP, null);
 					// sending from block to block, such as concentrator -> crystallizer
 					if (storageFrom != null)
@@ -128,10 +128,10 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 										// send and recieve essence
 										storage.store(stack, false);
 										storageFrom.take(stack, false);
-										
+
 										toTEUnchecked.markDirty();
 										fromTEUnchecked.markDirty();
-										
+
 										ArcaneMagicPacketHandler.INSTANCE
 												.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
 									} else if (spawnParticles)
@@ -153,19 +153,17 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 					{
 						if (!simulate)
 						{
-							
 
 							if (!world.isRemote)
 							{
 								// do the thing!
 								storage.store(stack, false);
-								
+
 								toTEUnchecked.markDirty();
-								
+
 								ArcaneMagicPacketHandler.INSTANCE
 										.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
-							}
-							else
+							} else
 							{
 								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
 										stack.getEssence(), to, false);

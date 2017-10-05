@@ -16,13 +16,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ParticleDadWasHere extends Particle {
+public class ParticleDadWasHere extends Particle
+{
 
 	final BlockPos original;
 	double factor = 1;
 	boolean first = true;
 
-	public ParticleDadWasHere(BlockPos pos, World world) {
+	public ParticleDadWasHere(BlockPos pos, World world)
+	{
 		super(world, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
 		this.setMaxAge(300);
 		original = pos;
@@ -31,13 +33,17 @@ public class ParticleDadWasHere extends Particle {
 	int color = getRandomColor(Minecraft.getMinecraft().world.rand);
 	int color2 = getRandomColor(Minecraft.getMinecraft().world.rand);
 
-	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX, float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
+	{
 
 		EntityPlayer player = Minecraft.getMinecraft().player;
 
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x, -player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y, -player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
+		GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
+				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
+				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.disableTexture2D();
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -61,8 +67,10 @@ public class ParticleDadWasHere extends Particle {
 		int b2 = (color2 >> 0) & 0xFF;
 		double d = Math.abs(factor);
 		buffer.begin(GL11.GL_POLYGON, DefaultVertexFormats.POSITION_COLOR);
-		for (float i = 0; i < 1; i+= 0.1)
-			buffer.pos(d * .5 + this.posX * (i * d) * (rand.nextBoolean() ? 1 : -1), d * .5 + this.posY * (i * d) * (rand.nextBoolean() ? 1 : -1), d * .5 + this.posZ * (i * d) * (rand.nextBoolean() ? 1 : -1)).color(r2, g2, b2, 1).endVertex();
+		for (float i = 0; i < 1; i += 0.1)
+			buffer.pos(d * .5 + this.posX * (i * d) * (rand.nextBoolean() ? 1 : -1),
+					d * .5 + this.posY * (i * d) * (rand.nextBoolean() ? 1 : -1),
+					d * .5 + this.posZ * (i * d) * (rand.nextBoolean() ? 1 : -1)).color(r2, g2, b2, 1).endVertex();
 		tes.draw();
 
 		buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
@@ -107,7 +115,8 @@ public class ParticleDadWasHere extends Particle {
 		buffer.pos(posX + d, posY, posZ).color(r, g, b, 0).endVertex();
 		tes.draw();
 
-		if (lighting) GL11.glEnable(GL11.GL_LIGHTING);
+		if (lighting)
+			GL11.glEnable(GL11.GL_LIGHTING);
 
 		GlStateManager.popMatrix();
 		GlStateManager.depthMask(true);
@@ -124,7 +133,8 @@ public class ParticleDadWasHere extends Particle {
 		GlStateManager.popMatrix();
 	}
 
-	public int getFXLayer() {
+	public int getFXLayer()
+	{
 		return 3;
 	}
 
@@ -132,7 +142,8 @@ public class ParticleDadWasHere extends Particle {
 	private double destY = 0;
 	private double destZ = 0;
 
-	public void onUpdate() {
+	public void onUpdate()
+	{
 		Random rand = Minecraft.getMinecraft().world.rand;
 
 		this.prevPosX = this.posX;
@@ -143,16 +154,20 @@ public class ParticleDadWasHere extends Particle {
 		double y = original.getY() - posY + 0.5 + destY;
 		double z = original.getZ() - posZ - 0.5 + destZ;
 
-		if (Math.abs(x) <= .05D) destX = rand.nextInt(10) * (rand.nextBoolean() ? 1 : -1);
-		if (Math.abs(y) <= .05D) destY = rand.nextInt(10) * (rand.nextBoolean() ? 1 : -1);
-		if (Math.abs(z) <= .05D) destZ = rand.nextInt(10) * (rand.nextBoolean() ? 1 : -1);
+		if (Math.abs(x) <= .05D)
+			destX = rand.nextInt(10) * (rand.nextBoolean() ? 1 : -1);
+		if (Math.abs(y) <= .05D)
+			destY = rand.nextInt(10) * (rand.nextBoolean() ? 1 : -1);
+		if (Math.abs(z) <= .05D)
+			destZ = rand.nextInt(10) * (rand.nextBoolean() ? 1 : -1);
 
-		if (Math.abs(x) <= .05D) {
+		if (Math.abs(x) <= .05D)
+		{
 			color = getRandomColor(Minecraft.getMinecraft().world.rand);
 			factor = rand.nextDouble() * 4;
 			color2 = getRandomColor(Minecraft.getMinecraft().world.rand);
 		}
-		
+
 		if (this.particleAge++ >= this.particleMaxAge)
 		{
 			this.setExpired();
@@ -161,7 +176,8 @@ public class ParticleDadWasHere extends Particle {
 
 	}
 
-	private static int getRandomColor(Random rand) {
+	private static int getRandomColor(Random rand)
+	{
 		int r = rand.nextInt(256);
 		int g = rand.nextInt(256);
 		int b = rand.nextInt(256);
@@ -169,7 +185,8 @@ public class ParticleDadWasHere extends Particle {
 		return value;
 	}
 
-	public void setExpired() {
+	public void setExpired()
+	{
 		super.setExpired();
 	}
 

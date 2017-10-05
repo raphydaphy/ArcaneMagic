@@ -68,7 +68,7 @@ public class ModRegistry
 	{
 		e.getRegistry().registerAll(ITEMS.toArray(new Item[ITEMS.size()]));
 	}
-	
+
 	@SubscribeEvent
 	public void onRecipeRegister(Register<IRecipe> e)
 	{
@@ -78,9 +78,9 @@ public class ModRegistry
 		for (Block b : ModRegistry.BLOCKS)
 			if (b instanceof IHasRecipe)
 				((IHasRecipe) b).initRecipes(e);
-		
+
 		//The day I work with JSON recipes is the day the world ends.
-		
+
 		e.getRegistry().registerAll(RECIPES.toArray(new IRecipe[RECIPES.size()]));
 	}
 

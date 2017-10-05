@@ -23,27 +23,27 @@ public class ItemAncientParchment extends ItemBase
 		super(name);
 		setMaxStackSize(1);
 	}
-	
+
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
-		if (world.isRemote){
+		if (world.isRemote)
+		{
 			return EnumActionResult.PASS;
 		}
 		Block block = world.getBlockState(pos).getBlock();
-		
+
 		if (player.isSneaking() && block == Blocks.BEDROCK)
 		{
 			player.getCooldownTracker().setCooldown(player.getHeldItem(hand).getItem(), 150);
-			
-			
+
 			player.getHeldItem(hand).shrink(1);
 			world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.craft_start,
 					SoundCategory.MASTER, 1f, 1f);
-			
+
 			world.spawnEntity(new EntityMagicCircles(world, pos.getX(), pos.getY(), pos.getZ()));
-			
+
 			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;

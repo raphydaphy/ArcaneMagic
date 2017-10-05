@@ -5,6 +5,8 @@ import java.util.Map;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
@@ -43,7 +46,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		}
 		for (EssenceStack formStack : this.essenceStorage.getStored().values())
 		{
-			if (formStack != null && !formStack.isEmpty() && formStack.getCount() >= 100)
+			if (formStack != null && !formStack.isEmpty())
 			{
 				if (this.curForming != null)
 				{
@@ -53,6 +56,14 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 						if (this.curFormingTimer <= 100)
 						{
 							curFormingTimer++;
+							EssenceStack couldTakeThis = essenceStorage.take(new EssenceStack(formStack.getEssence(), 10), false);
+							
+							if (couldTakeThis != null && !couldTakeThis.isEmpty())
+							{
+								curForming = null;
+								curFormingTimer = 0;
+								this.markDirty();
+							}
 						} else
 						{
 							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
@@ -61,13 +72,21 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
 								{
-									this.itemStackHandler.setStackInSlot(curItemStack, curForming.getItemForm());
-									doTheThing = true;
+									EssenceStack couldTake = essenceStorage
+											.take(new EssenceStack(formStack.getEssence(), 100), false);
+									couldTake = null;
+									if (couldTake == null || couldTake.isEmpty())
+									{
+										this.itemStackHandler.setStackInSlot(curItemStack, curForming.getItemForm());
+										doTheThing = true;
+									}
 								} else if (this.itemStackHandler
 										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
 								{
-									if (true || essenceStorage.take(new EssenceStack(formStack.getEssence(), 100),
-											true) == null)
+									EssenceStack couldTake = essenceStorage
+											.take(new EssenceStack(formStack.getEssence(), 100), false);
+									couldTake = null;
+									if (couldTake == null || couldTake.isEmpty())
 									{
 										this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), false);
 										doTheThing = true;
@@ -76,7 +95,9 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 								if (doTheThing)
 								{
-									essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), false);
+									world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
+											SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+									//essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), false);
 									this.markDirty();
 									this.curForming = null;
 									this.curFormingTimer = 0;
@@ -87,7 +108,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 						break;
 					}
-				} else
+				} else if ( formStack.getCount() >= 1000)
 				{
 					this.curForming = formStack.getEssence();
 					this.curFormingTimer = 0;

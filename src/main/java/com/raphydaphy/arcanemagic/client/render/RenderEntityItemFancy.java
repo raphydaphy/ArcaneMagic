@@ -26,8 +26,9 @@ public class RenderEntityItemFancy extends RenderEntityItem
 	@Override
 	public void doRender(EntityItem entity, double x, double y, double z, float entityYaw, float partialTicks)
 	{
-		GLHelper.renderFancyBeams(x, y + 0.5, z, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(),
-				entity.world.getSeed(), entity.getAge(), 16, 0.7f, 30, 10);
+		GLHelper.renderFancyBeams(x, y + 0.5, z,
+				Essence.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(), entity.world.getSeed(),
+				entity.getAge(), 16, 0.7f, 30, 10);
 
 		GlStateManager.pushMatrix();
 
@@ -49,7 +50,5 @@ public class RenderEntityItemFancy extends RenderEntityItem
 		}
 
 	}
-
-	
 
 }

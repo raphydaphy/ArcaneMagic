@@ -12,6 +12,7 @@ import com.raphydaphy.arcanemagic.item.ItemCore.Type;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+
 /**
  * Created by Xander V on 29/09/2017.
  */
@@ -23,14 +24,16 @@ public class ItemCore extends ItemEnum<Type> implements ScepterPartItem
 		super("sceptre_core", Type.values());
 		ScepterRegistry.registerAll(Type.WOOD, Type.GREATWOOD, Type.SILVERWOOD);
 	}
-	
+
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getUnlocalizedName(ItemStack stack)
+	{
 		return "item.arcanemagic.core." + values[stack.getMetadata()].getName();
 	}
-	
+
 	@Override
-	public void initModels(ModelRegistryEvent ev) {
+	public void initModels(ModelRegistryEvent ev)
+	{
 		for (Type t : values)
 			IHasModel.sMRL("items", this, t.ordinal(), "item=core_" + t.getName());
 	}

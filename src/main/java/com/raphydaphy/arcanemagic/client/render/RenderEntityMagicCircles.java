@@ -135,14 +135,16 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.pushAttrib();
-			GLHelper.renderFancyBeams(0,0 + 0.1, 0, Essence.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(), entity.world.getSeed(), 4748342, 16, 0.7f,
-					30, 10);
+			GLHelper.renderFancyBeams(0, 0 + 0.1, 0,
+					Essence.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(),
+					entity.world.getSeed(), 4748342, 16, 0.7f, 30, 10);
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		GLHelper.renderItemWithTransform(entity.world, new ItemStack(ModRegistry.ANCIENT_PARCHMENT), ItemCameraTransforms.TransformType.GROUND);
+		GLHelper.renderItemWithTransform(entity.world, new ItemStack(ModRegistry.ANCIENT_PARCHMENT),
+				ItemCameraTransforms.TransformType.GROUND);
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 		GlStateManager.popAttrib();
@@ -155,16 +157,16 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 			GlStateManager.rotate(90, 1, 0, 0);
 			GlStateManager.translate(1.9, 1.1, (entity.edgeRot == 0 ? 0 : -(entity.edgeRot / 90)));
 			float angle1 = ((float) Math.atan2(-1.9, 1.1) * (180f / (float) Math.PI)) + 180;
-			
+
 			GlStateManager.rotate(angle1, 0, 0, 1);
 			GlStateManager.rotate((float) entity.edgeRot, 1, 0, 0);
 			GlStateManager.rotate(90, 0, 0, 1);
-			
+
 			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
 					ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
-	
+
 			// Outer Item #2
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(90, 1, 0, 0);
@@ -178,7 +180,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 			Minecraft.getMinecraft().getRenderItem().renderItem(new ItemStack(Items.BOOK),
 					ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
-	
+
 			// Outer Item #3
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(90, 1, 0, 0);

@@ -18,19 +18,19 @@ public class EntityMagicCircles extends Entity
 	public double constantRot = 0;
 	public double edgeRot = 0;
 	public Vec3d circlePos;
-	public boolean hasBook = false;
+	public boolean hasBook = true;
 
 	public EntityMagicCircles(World worldIn)
 	{
 		super(worldIn);
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
-		this.setSize(1,1);
+		this.setSize(1, 1);
 	}
 
 	public EntityMagicCircles(World worldIn, double x, double y, double z)
 	{
 		super(worldIn);
-		this.setSize(1,1);
+		this.setSize(1, 1);
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;

@@ -64,7 +64,7 @@ public class ClientProxy extends CommonProxy
 				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		GlStateManager.color(1, 1, 1,1);
+		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.disableTexture2D();
 		GlStateManager.shadeModel(GL11.GL_SMOOTH);
 		GlStateManager.enableBlend();
@@ -72,7 +72,7 @@ public class ClientProxy extends CommonProxy
 		GlStateManager.disableAlpha();
 		// pre-alpha
 		GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		
+
 		boolean lighting = GL11.glGetBoolean(GL11.GL_LIGHTING);
 		GlStateManager.depthMask(false);
 
@@ -99,52 +99,58 @@ public class ClientProxy extends CommonProxy
 
 									if (world.getBlockState(second).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
 									{
-										Vec3d to = new Vec3d(first.getX() + 0.5, first.getY() + 2.3, first.getZ() + 0.5);
-										Vec3d from = new Vec3d(second.getX() + 0.5, second.getY() + 2.2, second.getZ() + 0.5);
-										Vec3d dist = new Vec3d(Math.pow(to.x - from.x, 2), Math.pow(to.y - from.y, 2), Math.pow(to.z - from.z, 2));
+										Vec3d to = new Vec3d(first.getX() + 0.5, first.getY() + 2.3,
+												first.getZ() + 0.5);
+										Vec3d from = new Vec3d(second.getX() + 0.5, second.getY() + 2.2,
+												second.getZ() + 0.5);
+										Vec3d dist = new Vec3d(Math.pow(to.x - from.x, 2), Math.pow(to.y - from.y, 2),
+												Math.pow(to.z - from.z, 2));
 										Vec3d lineFrom = new Vec3d(from.x, from.y, from.z);
 										// sqrt(pow((endA-startA), 2)+pow((endB-startB), 2));
-										Color color = Essence.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z))).getColor();
-										
+										Color color = Essence
+												.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
+												.getColor();
+
 										int r = color.getRed();
 										int g = color.getGreen();
 										int b = color.getBlue();
-										
+
 										GL11.glLineWidth(10);
 										Tessellator tes = Tessellator.getInstance();
 										BufferBuilder vb = tes.getBuffer();
 
 										RenderHelper.disableStandardItemLighting();
-										
+
 										vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
-										
+
 										double radius = 0.5;
-										
+
 										for (int deg = 0; deg < 360; deg++)
 										{
 											double radians = Math.toRadians(deg);
-											Vec3d vertex = new Vec3d(from.x + Math.cos(radians)*radius, from.y, from.z + Math.sin(radians)*radius);
-											Vec3d newDist = new Vec3d(Math.pow(to.x - vertex.x, 2), Math.pow(to.y - vertex.y, 2), Math.pow(to.z - vertex.z, 2));
+											Vec3d vertex = new Vec3d(from.x + Math.cos(radians) * radius, from.y,
+													from.z + Math.sin(radians) * radius);
+											Vec3d newDist = new Vec3d(Math.pow(to.x - vertex.x, 2),
+													Math.pow(to.y - vertex.y, 2), Math.pow(to.z - vertex.z, 2));
 											if (newDist.x <= dist.x && newDist.z <= dist.z)
 											{
 												dist = newDist;
 												lineFrom = vertex;
 											}
-											
-											vb.pos(vertex.x,vertex.y,vertex.z).color(r, g, b, 0).endVertex();;
+
+											vb.pos(vertex.x, vertex.y, vertex.z).color(r, g, b, 0).endVertex();
+											;
 										}
-										
+
 										tes.draw();
-										
-										
+
 										vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
-										
-										vb.pos(lineFrom.x, lineFrom.y, lineFrom.z).color(r,g,b,1).endVertex();
+
+										vb.pos(lineFrom.x, lineFrom.y, lineFrom.z).color(r, g, b, 1).endVertex();
 										vb.pos(to.x, to.y, to.z).color(r, g, b, 0).endVertex();
-										
+
 										tes.draw();
-										
-										
+
 									}
 								}
 							}
@@ -153,12 +159,12 @@ public class ClientProxy extends CommonProxy
 				}
 			}
 		}
-		
 
-        if(lighting) {
-            GL11.glEnable(GL11.GL_LIGHTING);
-        }
-        
+		if (lighting)
+		{
+			GL11.glEnable(GL11.GL_LIGHTING);
+		}
+
 		GlStateManager.popMatrix();
 		GlStateManager.depthMask(true);
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -169,16 +175,15 @@ public class ClientProxy extends CommonProxy
 		GlStateManager.enableAlpha();
 
 		RenderHelper.enableStandardItemLighting();
-		
+
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 
 	}
-	
+
 	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
 	{
-		Essence.sendEssence(Minecraft.getMinecraft().world, essence, from, to, false,
-				spawnParticles);
+		Essence.sendEssence(Minecraft.getMinecraft().world, essence, from, to, false, spawnParticles);
 	}
 
 	@SubscribeEvent
@@ -255,7 +260,8 @@ public class ClientProxy extends CommonProxy
 	public static void registerModels(ModelRegistryEvent event)
 	{
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
-		RenderingRegistry.registerEntityRenderingHandler(EntityMagicCircles.class, new RenderEntityMagicCircles.Factory());
+		RenderingRegistry.registerEntityRenderingHandler(EntityMagicCircles.class,
+				new RenderEntityMagicCircles.Factory());
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasModel)
 				((IHasModel) i).initModels(event);
@@ -290,9 +296,10 @@ public class ClientProxy extends CommonProxy
 		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x,
 				speed.y, speed.z, essence, travelPos, isCosmetic));
 	}
-	
+
 	@Override
-	public String translate(String key, Object... args) {
+	public String translate(String key, Object... args)
+	{
 		return I18n.format(key, args);
 	}
 }

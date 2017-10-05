@@ -18,7 +18,6 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleDadWasHere;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -109,8 +108,9 @@ public class ItemScepter extends ItemBase
 	{
 		if (isInCreativeTab(tab))
 		{
-			for(ScepterPart core : ScepterRegistry.getCores())
-				for(ScepterPart tip : ScepterRegistry.getTips()) {
+			for (ScepterPart core : ScepterRegistry.getCores())
+				for (ScepterPart tip : ScepterRegistry.getTips())
+				{
 					ItemStack stack = new ItemStack(this);
 					applyTipAndCore(stack, tip, core);
 					EssenceStack.writeDefaultEssence(stack.getTagCompound());
@@ -226,7 +226,9 @@ public class ItemScepter extends ItemBase
 	@Override
 	public String getItemStackDisplayName(ItemStack stack)
 	{
-		return TextFormatting.DARK_GREEN.toString() + ArcaneMagic.proxy.translate(getUnlocalizedName(stack) + ".name", ArcaneMagic.proxy.translate(getTipOrDefault(stack).getUnlocalizedName() + ".name"), ArcaneMagic.proxy.translate(getCoreOrDefault(stack).getUnlocalizedName() + ".name"));
+		return TextFormatting.DARK_GREEN.toString() + ArcaneMagic.proxy.translate(getUnlocalizedName(stack) + ".name",
+				ArcaneMagic.proxy.translate(getTipOrDefault(stack).getUnlocalizedName() + ".name"),
+				ArcaneMagic.proxy.translate(getCoreOrDefault(stack).getUnlocalizedName() + ".name"));
 	}
 
 	@Override

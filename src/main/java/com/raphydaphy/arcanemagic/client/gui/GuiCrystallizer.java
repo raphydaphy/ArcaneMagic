@@ -82,10 +82,11 @@ public class GuiCrystallizer extends GuiContainer
 		{
 			for (int y = 0; y < 3; y++)
 			{
-				drawModalRectWithCustomSizedTexture(guiLeft + 13 + (x * 20), guiTop + 20 + (y * 20), 176, 113, 18, 18, 196, 166);
+				drawModalRectWithCustomSizedTexture(guiLeft + 13 + (x * 20), guiTop + 20 + (y * 20), 176, 113, 18, 18,
+						196, 166);
 			}
 		}
-		
+
 		Map<Essence, EssenceStack> essenceStored = te.getCapability(EssenceStorage.CAP, null).getStored();
 		int i = 0;
 		for (EssenceStack stack : essenceStored.values())

@@ -84,7 +84,7 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.rotate(-30, 0, 1, 0);
-		
+
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
 		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
@@ -98,7 +98,7 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.rotate(30, 0, 1, 0);
-		
+
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
 		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
@@ -112,7 +112,7 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x - (width / 2), y, z + height);
 		GlStateManager.rotate(90, 0, 1, 0);
-		
+
 		vb.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_COLOR);
 
 		vb.pos(0, 0, width).color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();

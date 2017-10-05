@@ -28,11 +28,11 @@ public abstract class CommonProxy
 	{
 
 	}
-	
+
 	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
 	{
-		
+
 	}
-	
+
 	public abstract String translate(String key, Object... args);
 }
