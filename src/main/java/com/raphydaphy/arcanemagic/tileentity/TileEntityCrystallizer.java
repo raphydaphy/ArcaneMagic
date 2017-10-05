@@ -245,7 +245,12 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			return true;
+			// only extract with automation
+			if (facing == null || facing == EnumFacing.DOWN)
+			{
+				return true;
+			}
+			return false;
 		}
 		return super.hasCapability(capability, facing);
 	}
