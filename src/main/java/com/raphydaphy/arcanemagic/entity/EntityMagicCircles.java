@@ -40,8 +40,6 @@ public class EntityMagicCircles extends Entity
 	@Override
 	public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
 	{
-		ItemStack itemstack = player.getHeldItem(hand);
-
 		if (!this.world.isRemote)
 		{
 			ItemStack stack = player.getHeldItem(hand);

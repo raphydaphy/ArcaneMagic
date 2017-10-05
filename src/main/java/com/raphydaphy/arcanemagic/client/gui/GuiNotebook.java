@@ -195,9 +195,7 @@ public class GuiNotebook extends GuiScreen
 		{
 			// Things from drawScreen to calculate positions based on GUI Scale
 			ScaledResolution res = new ScaledResolution(mc);
-			final int SCALED_NOTEBOOK_WIDTH = (int) (NOTEBOOK_WIDTH * scale);
 			final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
-			int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
 			int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
 
 			for (int tab = 0; tab < ArcaneMagicAPI.getNotebookCategories().size(); tab++)

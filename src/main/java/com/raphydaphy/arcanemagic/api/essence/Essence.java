@@ -164,8 +164,15 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 										.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
 							} else
 							{
-								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
-										stack.getEssence(), to, false);
+								for (int i = 0; i < 5; i++)
+								{
+									double radius = 2.5;
+									double radians = Math.toRadians( world.rand.nextInt(360));
+									Vec3d fxFrom = new Vec3d(to.x + Math.cos(radians) * radius, to.y - 2.5,
+											to.z + Math.sin(radians) * radius);
+									ArcaneMagic.proxy.spawnEssenceParticles(world, fxFrom, new Vec3d(0, 0, 0),
+											stack.getEssence(), to, false);
+								}
 							}
 						}
 						return true;

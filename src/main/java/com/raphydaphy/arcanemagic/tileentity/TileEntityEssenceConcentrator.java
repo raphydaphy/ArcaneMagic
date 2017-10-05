@@ -44,10 +44,15 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 	@Override
 	public void update()
 	{
+		if (world.isRemote)
+		{
+			return;
+		}
 		if (this.getStack().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 		{
 			if (world.getBlockState(pos.add(0, -1, 0)).getBlock() == Blocks.IRON_BLOCK
 					&& world.getBlockState(pos.add(0, -2, 0)).getBlock() == Blocks.IRON_BLOCK)
+			{
 				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
 				{
 					for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
@@ -73,6 +78,7 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 						}
 					}
 				}
+			}
 		}
 	}
 

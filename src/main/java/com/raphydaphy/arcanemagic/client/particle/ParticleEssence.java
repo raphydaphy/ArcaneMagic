@@ -35,9 +35,8 @@ public class ParticleEssence extends Particle
 		this.posY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		this.posZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
-		int colorMultiplier = 3;
-		this.setRBGColorF(essence.getColor().getRed() * colorMultiplier,
-				essence.getColor().getGreen() * colorMultiplier, essence.getColor().getBlue() * colorMultiplier);
+		this.setRBGColorF(essence.getColor().getRed(),
+				essence.getColor().getGreen(), essence.getColor().getBlue());
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
@@ -64,7 +63,7 @@ public class ParticleEssence extends Particle
 	@Override
 	public int getBrightnessForRender(float p_189214_1_)
 	{
-		return 100;
+		return super.getBrightnessForRender(p_189214_1_);
 	}
 
 	@Override
@@ -74,6 +73,7 @@ public class ParticleEssence extends Particle
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
 
+		
 		if (!isCosmetic)
 		{
 			TileEntity hit = world.getTileEntity(new BlockPos((int) Math.floor(travelPos.x),
@@ -93,15 +93,22 @@ public class ParticleEssence extends Particle
 
 		this.move(this.motionX, this.motionY, this.motionZ);
 
-		this.motionX = (travelPos.x - this.posX) / (speedDivisor + rand.nextDouble());
-		this.motionY = (travelPos.y - this.posY) / (speedDivisor + rand.nextDouble());
-		this.motionZ = (travelPos.z - this.posZ) / (speedDivisor + rand.nextDouble());
-
-		if (this.onGround)
+		double distX = travelPos.x - this.posX;
+		double distY = travelPos.y - this.posY;
+		double distZ = travelPos.z - this.posZ;
+		
+		if (Math.abs(distY) >= Math.abs(distX))
 		{
-			this.motionX *= 0.699999988079071D;
-			this.motionZ *= 0.699999988079071D;
+			distX /= 3;
 		}
+		if (Math.abs(distY) >= Math.abs(distZ))
+		{
+			distZ /= 3;
+		}
+		this.motionX = distX / (speedDivisor + rand.nextDouble());
+		this.motionY = distY / (speedDivisor + rand.nextDouble());
+		this.motionZ = distZ / (speedDivisor + rand.nextDouble());
+
 	}
 
 	@Override
@@ -110,5 +117,6 @@ public class ParticleEssence extends Particle
 	{
 		super.renderParticle(buffer, entity, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
 
+		
 	}
 }
