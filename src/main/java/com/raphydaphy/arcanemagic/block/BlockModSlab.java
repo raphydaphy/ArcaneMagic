@@ -71,6 +71,7 @@ public class BlockModSlab extends BlockBase
 		return blockState.getBoundingBox(worldIn, pos);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer()
 	{

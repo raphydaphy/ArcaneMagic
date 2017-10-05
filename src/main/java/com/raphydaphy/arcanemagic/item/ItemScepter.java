@@ -245,6 +245,7 @@ public class ItemScepter extends ItemBase
 		return EnumAction.BOW;
 	}
 
+	@Override
 	public int getMaxItemUseDuration(ItemStack stack)
 	{
 		return Integer.MAX_VALUE;

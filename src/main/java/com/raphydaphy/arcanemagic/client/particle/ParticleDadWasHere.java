@@ -33,6 +33,7 @@ public class ParticleDadWasHere extends Particle
 	int color = getRandomColor(Minecraft.getMinecraft().world.rand);
 	int color2 = getRandomColor(Minecraft.getMinecraft().world.rand);
 
+	@Override
 	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
 			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
 	{
@@ -133,6 +134,7 @@ public class ParticleDadWasHere extends Particle
 		GlStateManager.popMatrix();
 	}
 
+	@Override
 	public int getFXLayer()
 	{
 		return 3;
@@ -142,6 +144,7 @@ public class ParticleDadWasHere extends Particle
 	private double destY = 0;
 	private double destZ = 0;
 
+	@Override
 	public void onUpdate()
 	{
 		Random rand = Minecraft.getMinecraft().world.rand;
@@ -185,6 +188,7 @@ public class ParticleDadWasHere extends Particle
 		return value;
 	}
 
+	@Override
 	public void setExpired()
 	{
 		super.setExpired();

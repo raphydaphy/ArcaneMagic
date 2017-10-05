@@ -87,16 +87,19 @@ public class EssenceStack
 			super(e.getEssence(), e.getCount());
 		}
 
+		@Override
 		public EssenceStack setCount(int count)
 		{
 			throw new UnsupportedOperationException("This essence stack is immutable!");
 		}
 
+		@Override
 		public EssenceStack grow(int grow)
 		{
 			throw new UnsupportedOperationException("This essence stack is immutable!");
 		}
 
+		@Override
 		public EssenceStack shrink(int shrink)
 		{
 			throw new UnsupportedOperationException("This essence stack is immutable!");

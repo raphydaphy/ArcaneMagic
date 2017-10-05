@@ -5,7 +5,7 @@ import java.util.Map;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
@@ -87,12 +87,13 @@ public class GuiCrystallizer extends GuiContainer
 			}
 		}
 
-		Map<Essence, EssenceStack> essenceStored = te.getCapability(EssenceStorage.CAP, null).getStored();
+		Map<Essence, EssenceStack> essenceStored = te.getCapability(IEssenceStorage.CAP, null).getStored();
 		int i = 0;
-		for (EssenceStack stack : essenceStored.values())
+		for (Essence essence : Essence.REGISTRY.getValues())
 		{
 			i++;
-			Essence essence = stack.getEssence();
+			EssenceStack stack = essenceStored.containsKey(essence) ? essenceStored.get(essence)
+					: new EssenceStack(essence, 0);
 			drawBar(guiLeft + 40 + (i * 18), guiTop + 19, essence.getColor().getRed() / 256f,
 					essence.getColor().getGreen() / 256f, essence.getColor().getBlue() / 256f,
 					(int) Math.floor(stack.getCount() / 20.4f), 0);

@@ -109,8 +109,8 @@ public class GuiNotebook extends GuiScreen
 		final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
 
 		// The start x and y coords of the notebook on the screen
-		int screenX = (int) ((res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2));
-		int screenY = (int) ((res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2));
+		int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
+		int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
 
 		// Main notebook texture
 		mc.getTextureManager().bindTexture(notebook);
@@ -186,6 +186,7 @@ public class GuiNotebook extends GuiScreen
 		return false;
 	}
 
+	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
 	{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
@@ -196,8 +197,8 @@ public class GuiNotebook extends GuiScreen
 			ScaledResolution res = new ScaledResolution(mc);
 			final int SCALED_NOTEBOOK_WIDTH = (int) (NOTEBOOK_WIDTH * scale);
 			final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
-			int screenX = (int) ((res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2));
-			int screenY = (int) ((res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2));
+			int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
+			int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
 
 			for (int tab = 0; tab < ArcaneMagicAPI.getNotebookCategories().size(); tab++)
 			{

@@ -115,8 +115,8 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry
 
 		// Draw the arrow to show the output of the recipe
 		notebook.mc.getTextureManager().bindTexture(GuiNotebook.notebook);
-		Gui.drawScaledCustomSizeModalRect(x + 78, y + 26, 158, 182, 22, 15, (int) (22), (int) (15),
-				GuiNotebook.NOTEBOOK_WIDTH, GuiNotebook.NOTEBOOK_TEX_HEIGHT);
+		Gui.drawScaledCustomSizeModalRect(x + 78, y + 26, 158, 182, 22, 15, (22), (15), GuiNotebook.NOTEBOOK_WIDTH,
+				GuiNotebook.NOTEBOOK_TEX_HEIGHT);
 
 		// Draw the output item in the recipe
 		notebook.mc.getRenderItem().renderItemAndEffectIntoGUI(recipeOut, x + 113, y + 25);

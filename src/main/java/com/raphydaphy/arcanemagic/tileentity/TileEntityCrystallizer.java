@@ -4,8 +4,7 @@ import java.util.Map;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
@@ -31,10 +30,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	public TileEntityCrystallizer()
 	{
 		super(1000);
-		for (Essence essence : Essence.REGISTRY.getValues())
-		{
-			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 1000), false);
-		}
+
 	}
 
 	@Override
@@ -56,8 +52,9 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 						if (this.curFormingTimer <= 100)
 						{
 							curFormingTimer++;
-							EssenceStack couldTakeThis = essenceStorage.take(new EssenceStack(formStack.getEssence(), 10), false);
-							
+							EssenceStack couldTakeThis = essenceStorage
+									.take(new EssenceStack(formStack.getEssence(), 10), false);
+
 							if (couldTakeThis != null && !couldTakeThis.isEmpty())
 							{
 								curForming = null;
@@ -95,8 +92,9 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 								if (doTheThing)
 								{
-									world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
-											SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+									world.playSound(pos.getX(), pos.getY(), pos.getZ(),
+											ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1.0F,
+											1.0F, false);
 									//essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), false);
 									this.markDirty();
 									this.curForming = null;
@@ -108,7 +106,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 						break;
 					}
-				} else if ( formStack.getCount() >= 1000)
+				} else if (formStack.getCount() >= 1000)
 				{
 					this.curForming = formStack.getEssence();
 					this.curFormingTimer = 0;
@@ -133,7 +131,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 						if (te != null)
 						{
 							Map<Essence, EssenceStack> storedEssenceConcentrator = te
-									.getCapability(EssenceStorage.CAP, null).getStored();
+									.getCapability(IEssenceStorage.CAP, null).getStored();
 
 							Essence useType = null;
 							for (EssenceStack transferStack : storedEssenceConcentrator.values())

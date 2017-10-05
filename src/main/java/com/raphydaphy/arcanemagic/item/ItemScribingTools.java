@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -38,34 +39,30 @@ public class ItemScribingTools extends ItemBase
 			if (world.getBlockState(pos.add(1, 0, 0)).getBlock().equals(ModRegistry.TABLE))
 			{
 				world.setBlockState(pos, ModRegistry.RESEARCH_TABLE.getDefaultState()
-						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockWritingDesk.FACING, EnumFacing.WEST));
+						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockHorizontal.FACING, EnumFacing.WEST));
 				world.setBlockState(pos.add(1, 0, 0), ModRegistry.RESEARCH_TABLE.getDefaultState()
-						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockWritingDesk.FACING, EnumFacing.WEST));
+						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockHorizontal.FACING, EnumFacing.WEST));
 				return EnumActionResult.SUCCESS;
 			} else if (world.getBlockState(pos.add(-1, 0, 0)).getBlock().equals(ModRegistry.TABLE))
 			{
 				world.setBlockState(pos, ModRegistry.RESEARCH_TABLE.getDefaultState()
-						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockWritingDesk.FACING, EnumFacing.EAST));
+						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockHorizontal.FACING, EnumFacing.EAST));
 				world.setBlockState(pos.add(-1, 0, 0), ModRegistry.RESEARCH_TABLE.getDefaultState()
-						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockWritingDesk.FACING, EnumFacing.EAST));
+						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockHorizontal.FACING, EnumFacing.EAST));
 				return EnumActionResult.SUCCESS;
 			} else if (world.getBlockState(pos.add(0, 0, 1)).getBlock().equals(ModRegistry.TABLE))
 			{
-				world.setBlockState(pos,
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 1)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.NORTH));
-				world.setBlockState(pos.add(0, 0, 1),
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 0)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.NORTH));
+				world.setBlockState(pos, ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
+				world.setBlockState(pos.add(0, 0, 1), ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
 				return EnumActionResult.SUCCESS;
 			} else if (world.getBlockState(pos.add(0, 0, -1)).getBlock().equals(ModRegistry.TABLE))
 			{
-				world.setBlockState(pos,
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 0)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.SOUTH));
-				world.setBlockState(pos.add(0, 0, -1),
-						ModRegistry.RESEARCH_TABLE.getDefaultState().withProperty(BlockWritingDesk.SIDE, 1)
-								.withProperty(BlockWritingDesk.FACING, EnumFacing.SOUTH));
+				world.setBlockState(pos, ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 0).withProperty(BlockHorizontal.FACING, EnumFacing.SOUTH));
+				world.setBlockState(pos.add(0, 0, -1), ModRegistry.RESEARCH_TABLE.getDefaultState()
+						.withProperty(BlockWritingDesk.SIDE, 1).withProperty(BlockHorizontal.FACING, EnumFacing.SOUTH));
 				return EnumActionResult.SUCCESS;
 			}
 		}

@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.tileentity;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
@@ -23,11 +22,6 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 	public TileEntityEssenceConcentrator()
 	{
 		super(100);
-
-		for (Essence essence : Essence.REGISTRY.getValues())
-		{
-			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 0), false);
-		}
 	}
 
 	public ItemStack getStack()
@@ -54,11 +48,11 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 		{
 			if (world.getBlockState(pos.add(0, -1, 0)).getBlock() == Blocks.IRON_BLOCK
 					&& world.getBlockState(pos.add(0, -2, 0)).getBlock() == Blocks.IRON_BLOCK)
-				for (int x = (int) pos.getX() - 10; x < (int) pos.getX() + 10; x++)
+				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
 				{
-					for (int y = (int) pos.getY() - 5; y < (int) pos.getY() + 5; y++)
+					for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
 					{
-						for (int z = (int) pos.getZ() - 10; z < (int) pos.getZ() + 10; z++)
+						for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
 						{
 							if (world.rand.nextInt(2000) == 1)
 							{

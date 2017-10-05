@@ -58,6 +58,7 @@ public class EntityMagicCircles extends Entity
 		return false;
 	}
 
+	@Override
 	public SoundCategory getSoundCategory()
 	{
 		return SoundCategory.BLOCKS;

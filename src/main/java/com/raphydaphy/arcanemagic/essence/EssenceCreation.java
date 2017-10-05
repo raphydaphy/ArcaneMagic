@@ -26,11 +26,13 @@ public final class EssenceCreation extends Essence
 		return value;
 	}
 
+	@Override
 	public int getColorInt()
 	{
 		return getRandomColor(RAND);
 	}
 
+	@Override
 	public Color getColor()
 	{
 		return new Color(getRandomColor(RAND));

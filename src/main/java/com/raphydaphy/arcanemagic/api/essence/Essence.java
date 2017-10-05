@@ -3,7 +3,6 @@ package com.raphydaphy.arcanemagic.api.essence;
 import java.awt.Color;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.essence.EssenceCreation;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -104,14 +103,14 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 		if (toTEUnchecked instanceof TileEntityEssenceStorage)
 		{
-			IEssenceStorage storage = toTEUnchecked.getCapability(EssenceStorage.CAP, null);
+			IEssenceStorage storage = toTEUnchecked.getCapability(IEssenceStorage.CAP, null);
 			if (storage != null)
 			{
 
 				if (fromTEUnchecked instanceof TileEntityEssenceStorage)
 				{
 
-					IEssenceStorage storageFrom = fromTEUnchecked.getCapability(EssenceStorage.CAP, null);
+					IEssenceStorage storageFrom = fromTEUnchecked.getCapability(IEssenceStorage.CAP, null);
 					// sending from block to block, such as concentrator -> crystallizer
 					if (storageFrom != null)
 					{
@@ -211,6 +210,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return null;
 	}
 
+	@Override
 	public String toString()
 	{
 		return "Essence: " + getRegistryName().toString();

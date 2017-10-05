@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -34,24 +35,24 @@ public class BlockWritingDesk extends BlockTable
 			if (worldIn.getBlockState(north).getBlock() == this)
 			{
 				worldIn.setBlockState(north,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.WEST));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.WEST));
 			}
 			if (worldIn.getBlockState(east).getBlock() == this)
 			{
 				worldIn.setBlockState(east,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.SOUTH));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.SOUTH));
 			}
 		} else
 		{
 			if (worldIn.getBlockState(south).getBlock() == this)
 			{
 				worldIn.setBlockState(south,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.EAST));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST));
 			}
 			if (worldIn.getBlockState(west).getBlock() == this)
 			{
 				worldIn.setBlockState(west,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockTable.FACING, EnumFacing.NORTH));
+						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
 			}
 		}
 	}
@@ -75,10 +76,10 @@ public class BlockWritingDesk extends BlockTable
 	{
 		if (state.getValue(SIDE) == 0)
 		{
-			return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex() * 2;
+			return state.getValue(FACING).getHorizontalIndex() * 2;
 		} else
 		{
-			return (((EnumFacing) state.getValue(FACING)).getHorizontalIndex() * 2) + 1;
+			return (state.getValue(FACING).getHorizontalIndex() * 2) + 1;
 		}
 	}
 

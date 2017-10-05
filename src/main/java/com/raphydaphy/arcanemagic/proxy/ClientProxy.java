@@ -181,6 +181,7 @@ public class ClientProxy extends CommonProxy
 
 	}
 
+	@Override
 	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
 	{
 		Essence.sendEssence(Minecraft.getMinecraft().world, essence, from, to, false, spawnParticles);

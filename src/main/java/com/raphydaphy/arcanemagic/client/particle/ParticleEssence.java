@@ -31,9 +31,9 @@ public class ParticleEssence extends Particle
 		this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
 		this.motionY = this.motionY * 0.009999999776482582D + ySpeedIn;
 		this.motionZ = this.motionZ * 0.009999999776482582D + zSpeedIn;
-		this.posX += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-		this.posY += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
-		this.posZ += (double) ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F);
+		this.posX += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
+		this.posY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
+		this.posZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
 		int colorMultiplier = 3;
 		this.setRBGColorF(essence.getColor().getRed() * colorMultiplier,
