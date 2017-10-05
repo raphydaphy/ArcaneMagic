@@ -33,7 +33,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		super(1000);
 		for (Essence essence : Essence.REGISTRY.getValues())
 		{
-			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 0), false);
+			this.getCapability(EssenceStorage.CAP, null).store(new EssenceStack(essence, 1000), false);
 		}
 	}
 
