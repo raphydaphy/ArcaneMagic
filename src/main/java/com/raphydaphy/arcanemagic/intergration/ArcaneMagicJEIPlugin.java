@@ -30,11 +30,13 @@ import net.minecraft.util.ResourceLocation;
 public class ArcaneMagicJEIPlugin implements IModPlugin
 {
 	public static final String ELEMENTAL_CRAFTING_UID = "arcanemagic.elementalcrafting";
+
 	public void register(IModRegistry registry)
 	{
 		registry.addRecipes(ArcaneMagicAPI.elemental_crafting_recipes, ELEMENTAL_CRAFTING_UID);
-		
-		registry.handleRecipes(ElementalCraftingRecipe.class, recipe -> new ElementalCraftingRecipeWrapper(recipe),  ELEMENTAL_CRAFTING_UID);
+
+		registry.handleRecipes(ElementalCraftingRecipe.class, recipe -> new ElementalCraftingRecipeWrapper(recipe),
+				ELEMENTAL_CRAFTING_UID);
 	}
 
 	@Override
@@ -102,25 +104,12 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 				}
 			}
 
-			if (recipeWrapper instanceof ICustomCraftingRecipeWrapper)
-			{
-				ICustomCraftingRecipeWrapper customWrapper = (ICustomCraftingRecipeWrapper) recipeWrapper;
-				customWrapper.setRecipe(recipeLayout, ingredients);
-				return;
-			}
-
 			List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
 			List<List<ItemStack>> outputs = ingredients.getOutputs(ItemStack.class);
 
-			if (recipeWrapper instanceof IShapedCraftingRecipeWrapper)
-			{
-				IShapedCraftingRecipeWrapper wrapper = (IShapedCraftingRecipeWrapper) recipeWrapper;
-				craftingGridHelper.setInputs(guiItemStacks, inputs, wrapper.getWidth(), wrapper.getHeight());
-			} else
-			{
-				craftingGridHelper.setInputs(guiItemStacks, inputs);
-				recipeLayout.setShapeless();
-			}
+			ElementalCraftingRecipeWrapper wrapper = (ElementalCraftingRecipeWrapper) recipeWrapper;
+			craftingGridHelper.setInputs(guiItemStacks, inputs, wrapper.getWidth(), wrapper.getHeight());
+
 			guiItemStacks.set(craftOutputSlot, outputs.get(0));
 		}
 
@@ -151,6 +140,8 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 					thisRow.add(recipe.getInput()[1][y]);
 					thisRow.add(recipe.getInput()[2][y]);
 				}
+				
+				System.out.println(inputLists.toString());
 				ingredients.setInputLists(ItemStack.class, inputLists);
 				ingredients.setOutput(ItemStack.class, recipeOutput);
 			} catch (RuntimeException e)
