@@ -1,15 +1,11 @@
 package com.raphydaphy.arcanemagic.proxy;
 
-import com.raphydaphy.arcanemagic.block.BlockElementalCraftingTable;
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
-import com.raphydaphy.arcanemagic.client.gui.GuiElementalCraftingTable;
 import com.raphydaphy.arcanemagic.client.gui.GuiCrystallizer;
 import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
-import com.raphydaphy.arcanemagic.container.ContainerElementalCraftingTable;
 import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,10 +23,6 @@ public class GuiProxy implements IGuiHandler
 		TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 		switch (ID)
 		{
-		case BlockElementalCraftingTable.GUI_ID:
-			if (te instanceof TileEntityElementalCraftingTable)
-				return new ContainerElementalCraftingTable(player.inventory, (TileEntityElementalCraftingTable) te);
-			break;
 		case BlockCrystallizer.GUI_ID:
 
 			if (te instanceof TileEntityCrystallizer)
@@ -53,14 +45,6 @@ public class GuiProxy implements IGuiHandler
 					|| player.getHeldItemOffhand().getItem() == ModRegistry.NOTEBOOK)
 			{
 				return new GuiNotebook(player);
-			}
-			break;
-		case BlockElementalCraftingTable.GUI_ID:
-			if (te instanceof TileEntityElementalCraftingTable)
-			{
-				TileEntityElementalCraftingTable containerTileEntity = (TileEntityElementalCraftingTable) te;
-				return new GuiElementalCraftingTable(containerTileEntity,
-						new ContainerElementalCraftingTable(player.inventory, containerTileEntity));
 			}
 			break;
 		case BlockCrystallizer.GUI_ID:

@@ -21,14 +21,15 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
+		
 		renderItem(te);
+		
 		GlStateManager.popMatrix();
 	}
 
 	private void renderItem(TileEntityEssenceConcentrator te)
 	{
 		ItemStack stack = te.getStack();
-
 		if (!stack.isEmpty())
 		{
 			RenderHelper.enableStandardItemLighting();

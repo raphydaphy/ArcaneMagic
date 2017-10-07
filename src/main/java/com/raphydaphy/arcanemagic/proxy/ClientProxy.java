@@ -13,12 +13,14 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.client.model.SceptreModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
+import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 
 import net.minecraft.block.Block;
@@ -251,6 +253,9 @@ public class ClientProxy extends CommonProxy
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceConcentrator.class,
 				new EssenceConcentratorTESR());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElementalCraftingTable.class,
+				new ElementalCraftingTableTESR());
 	}
 
 	public static void registerColors()
