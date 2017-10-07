@@ -28,6 +28,8 @@ public class BlockElementalCraftingTable extends BlockBase
 	public BlockElementalCraftingTable()
 	{
 		super("elemental_crafting_table", Material.WOOD, 2.5f);
+		
+		this.setLightLevel(1f);
 	}
 
 	@Override
@@ -89,8 +91,7 @@ public class BlockElementalCraftingTable extends BlockBase
 			return false;
 		}
 		ItemStack stack = player.getHeldItem(hand);
-
-		if (stack.getItem().equals(ModRegistry.SCEPTER))
+		if (stack.isItemEqualIgnoreDurability(new ItemStack(ModRegistry.SCEPTER)))
 		{
 			return false;
 		}
@@ -123,6 +124,7 @@ public class BlockElementalCraftingTable extends BlockBase
 			{
 				if (cap.insertItem(slot, stack, true).isEmpty())
 				{
+					System.out.println("planning on inserting an item. Client? " + world.isRemote);
 					if (!world.isRemote)
 					{
 						player.setHeldItem(hand, ItemStack.EMPTY);

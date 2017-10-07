@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -17,6 +18,18 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	public TileEntityElementalCraftingTable()
 	{
 	}
+	
+	@Override
+	public void markDirty()
+	{
+		super.markDirty();
+		if (TileEntityElementalCraftingTable.this.world != null && TileEntityElementalCraftingTable.this.pos != null)
+		{
+			IBlockState state = TileEntityElementalCraftingTable.this.world.getBlockState(TileEntityElementalCraftingTable.this.pos);
+			TileEntityElementalCraftingTable.this.world.markAndNotifyBlock(TileEntityElementalCraftingTable.this.pos, TileEntityElementalCraftingTable.this.world.getChunkFromBlockCoords(TileEntityElementalCraftingTable.this.pos), state, state,
+					1 | 2);
+		}
+	}
 
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{
@@ -26,6 +39,13 @@ public class TileEntityElementalCraftingTable extends TileEntity
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
 			TileEntityElementalCraftingTable.this.markDirty();
+			
+			if (TileEntityElementalCraftingTable.this.world != null && TileEntityElementalCraftingTable.this.pos != null)
+			{
+				IBlockState state = TileEntityElementalCraftingTable.this.world.getBlockState(TileEntityElementalCraftingTable.this.pos);
+				TileEntityElementalCraftingTable.this.world.markAndNotifyBlock(TileEntityElementalCraftingTable.this.pos, TileEntityElementalCraftingTable.this.world.getChunkFromBlockCoords(TileEntityElementalCraftingTable.this.pos), state, state,
+						1 | 2);
+			}
 		}
 	};
 
@@ -33,6 +53,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
+		System.out.println("read from nbt");
 		if (compound.hasKey("items"))
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
@@ -44,6 +65,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
+		System.out.println("wrote to nbt");
 		compound.setTag("items", itemStackHandler.serializeNBT());
 		return compound;
 	}
@@ -90,6 +112,6 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	public SPacketUpdateTileEntity getUpdatePacket()
 	{
 		// shadows told me to put 150 so i did
-		return new SPacketUpdateTileEntity(this.pos, 150, this.getUpdateTag());
+		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
 	}
 }

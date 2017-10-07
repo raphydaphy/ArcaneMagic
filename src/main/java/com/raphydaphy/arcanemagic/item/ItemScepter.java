@@ -35,7 +35,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -178,69 +177,48 @@ public class ItemScepter extends ItemBase
 
 				if (!world.isRemote)
 				{
-					int x = 2;
-					int y = 2;
-					for (int curSlot = 8; curSlot <= 0; curSlot--)
+					int x = 0;
+					int y = 0;
+					for (int curSlot = 0; curSlot < cap.getSlots(); curSlot++)
 					{
-
-						cap.getStackInSlot(curSlot).setCount(
-								cap.getStackInSlot(curSlot).getCount() - foundRecipe.getInput()[x][y].getCount());
-						te.markDirty();
-
-						x--;
-						if (x < 0)
+						if (!cap.getStackInSlot(curSlot).isEmpty() && !foundRecipe.getInput()[x][y].isEmpty())
 						{
-							x = 2;
-							;
-							y--;
+							cap.getStackInSlot(curSlot).setCount(
+									cap.getStackInSlot(curSlot).getCount() - foundRecipe.getInput()[x][y].getCount());
+							te.markDirty();
+						}
+
+						x++;
+						if (x > 2)
+						{
+							x = 0;
+							y++;
 						}
 					}
-					world.spawnEntity(new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ(),
-							foundRecipe.getOutput()));
+					EntityItemFancy craftResult = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 9d * (1d / 16d), pos.getZ() + 0.5,
+							foundRecipe.getOutput());
+					craftResult.motionX = 0;
+					craftResult.motionY = 0;
+					craftResult.motionZ = 0;
+					world.spawnEntity(craftResult);
 
 					return EnumActionResult.SUCCESS;
 				} else
 				{
-					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + 0.8,
+					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
 							pos.getZ() + 0.5, 0f, 0.1f, 0f);
 					world.playSound(player, pos, ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1,
 							1);
 					return EnumActionResult.PASS;
 				}
 			}
-		} else if (block.equals(Blocks.BOOKSHELF))
-		{
 
-			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
-					SoundCategory.MASTER, 1f, 1f, false);
 			if (!world.isRemote)
 			{
-				world.setBlockToAir(pos);
-
-				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
-						new ItemStack(ModRegistry.ANCIENT_PARCHMENT));
-				ei.setDefaultPickupDelay();
-				ei.motionX = 0;
-				ei.motionY = 0;
-				ei.motionZ = 0;
-				ei.setPickupDelay(15);
-				world.spawnEntity(ei);
-			} else
-			{
-				return EnumActionResult.PASS;
+				return EnumActionResult.SUCCESS;
 			}
-			return EnumActionResult.SUCCESS;
-		} else if (block.equals(ModRegistry.TABLE))
-		{
-			if (world.isRemote)
-			{
-				return EnumActionResult.PASS;
-
-			}
-			world.setBlockState(pos, ModRegistry.ELEMENTAL_CRAFTING_TABLE.getDefaultState());
-
-			return EnumActionResult.SUCCESS;
 		}
+
 		return EnumActionResult.PASS;
 	}
 
