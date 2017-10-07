@@ -1,7 +1,5 @@
 package com.raphydaphy.arcanemagic.block;
 
-import javax.annotation.Nonnull;
-
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 
 import net.minecraft.block.material.Material;
@@ -17,8 +15,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class BlockEssenceConcentrator extends BlockBase
 {
@@ -35,21 +31,17 @@ public class BlockEssenceConcentrator extends BlockBase
 	{
 		return AABB;
 	}
-	
+
 	@Override
-	public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(pos);
-		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
-		for (int i = 0; i < cap.getSlots(); ++i)
-		{
-			ItemStack itemstack = cap.getStackInSlot(i);
 
-			if (!itemstack.isEmpty())
-			{
-				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
-			}
+		ItemStack itemstack = te.getStack();
+
+		if (!itemstack.isEmpty())
+		{
+			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 		}
 
 		super.breakBlock(world, pos, state);

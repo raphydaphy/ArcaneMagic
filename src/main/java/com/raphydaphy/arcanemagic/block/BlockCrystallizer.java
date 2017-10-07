@@ -1,7 +1,5 @@
 package com.raphydaphy.arcanemagic.block;
 
-import javax.annotation.Nonnull;
-
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 
@@ -31,7 +29,7 @@ public class BlockCrystallizer extends BlockBase
 	}
 	
 	@Override
-	public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntityCrystallizer te = (TileEntityCrystallizer) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);

@@ -10,9 +10,11 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.recipe.ElementalCraftingRecipe;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
@@ -21,6 +23,7 @@ import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -40,6 +43,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -51,6 +55,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public class ItemScepter extends ItemBase
 {
@@ -133,8 +139,8 @@ public class ItemScepter extends ItemBase
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		//player.setActiveHand(hand);
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
 	@Override
@@ -143,14 +149,74 @@ public class ItemScepter extends ItemBase
 	{
 
 		Block block = world.getBlockState(pos).getBlock();
-		if (block.equals(Blocks.BOOKSHELF))
+		if (block.equals(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
 		{
-			world.setBlockToAir(pos);
+
+			TileEntityElementalCraftingTable te = (TileEntityElementalCraftingTable) world.getTileEntity(pos);
+			if (te == null)
+			{
+				return EnumActionResult.FAIL;
+			}
+
+			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			ItemStack[][] recipeIn = new ItemStack[3][3];
+
+			int slot = 0;
+			for (int slotX = 0; slotX < 3; slotX++)
+			{
+				for (int slotY = 0; slotY < 3; slotY++)
+				{
+					recipeIn[slotX][slotY] = cap.getStackInSlot(slot);
+					slot++;
+				}
+			}
+
+			ElementalCraftingRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(recipeIn);
+
+			if (foundRecipe != null)
+			{
+
+				if (!world.isRemote)
+				{
+					int x = 2;
+					int y = 2;
+					for (int curSlot = 8; curSlot <= 0; curSlot--)
+					{
+
+						cap.getStackInSlot(curSlot).setCount(
+								cap.getStackInSlot(curSlot).getCount() - foundRecipe.getInput()[x][y].getCount());
+						te.markDirty();
+
+						x--;
+						if (x < 0)
+						{
+							x = 2;
+							;
+							y--;
+						}
+					}
+					world.spawnEntity(new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ(),
+							foundRecipe.getOutput()));
+
+					return EnumActionResult.SUCCESS;
+				} else
+				{
+					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + 0.8,
+							pos.getZ() + 0.5, 0f, 0.1f, 0f);
+					world.playSound(player, pos, ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1,
+							1);
+					return EnumActionResult.PASS;
+				}
+			}
+		} else if (block.equals(Blocks.BOOKSHELF))
+		{
 
 			world.playSound(pos.getX(), pos.getY(), pos.getZ(), ArcaneMagicSoundHandler.randomScepterSound(),
 					SoundCategory.MASTER, 1f, 1f, false);
 			if (!world.isRemote)
 			{
+				world.setBlockToAir(pos);
+
 				EntityItemFancy ei = new EntityItemFancy(world, pos.getX() + 0.5f, pos.getY(), pos.getZ() + 0.5f,
 						new ItemStack(ModRegistry.ANCIENT_PARCHMENT));
 				ei.setDefaultPickupDelay();
@@ -161,13 +227,19 @@ public class ItemScepter extends ItemBase
 				world.spawnEntity(ei);
 			} else
 			{
-				// spawn particles client-side
-
+				return EnumActionResult.PASS;
 			}
 			return EnumActionResult.SUCCESS;
 		} else if (block.equals(ModRegistry.TABLE))
 		{
+			if (world.isRemote)
+			{
+				return EnumActionResult.PASS;
+
+			}
 			world.setBlockState(pos, ModRegistry.ELEMENTAL_CRAFTING_TABLE.getDefaultState());
+
+			return EnumActionResult.SUCCESS;
 		}
 		return EnumActionResult.PASS;
 	}

@@ -18,7 +18,7 @@ public class EntityItemFancy extends EntityItem
 	public EntityItemFancy(World worldIn)
 	{
 		super(worldIn);
-
+		this.setPickupDelay(15);
 		if (world.getBlockState(this.getPosition()).getBlock() == Blocks.AIR)
 		{
 			world.setBlockState(this.getPosition(), ModRegistry.FANCY_LIGHT.getDefaultState());
@@ -28,7 +28,7 @@ public class EntityItemFancy extends EntityItem
 	public EntityItemFancy(World worldIn, double x, double y, double z, ItemStack stack)
 	{
 		super(worldIn, x, y, z, stack);
-
+		this.setPickupDelay(15);
 		if (world.getBlockState(this.getPosition()).getBlock() == Blocks.AIR)
 		{
 			world.setBlockState(this.getPosition(), ModRegistry.FANCY_LIGHT.getDefaultState());
@@ -39,6 +39,7 @@ public class EntityItemFancy extends EntityItem
 	{
 		this(worldIn, x, y, z, stack);
 		this.freezeTime = freezeTime;
+		this.setPickupDelay(freezeTime);
 
 	}
 

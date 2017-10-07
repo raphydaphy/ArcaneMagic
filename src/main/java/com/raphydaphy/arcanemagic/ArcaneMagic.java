@@ -2,9 +2,11 @@ package com.raphydaphy.arcanemagic;
 
 import org.apache.logging.log4j.Logger;
 
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
 import com.raphydaphy.arcanemagic.api.notebook.CategoryRegistry;
+import com.raphydaphy.arcanemagic.api.recipe.ElementalCraftingRecipe;
 import com.raphydaphy.arcanemagic.capabilities.Capabilities;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
@@ -14,6 +16,9 @@ import com.raphydaphy.arcanemagic.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.proxy.GuiProxy;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -68,6 +73,22 @@ public class ArcaneMagic
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		NotebookCategories.register();
+
+		// TODO: make this a less rubbish registeration system
+		// TODO: add actual recipes
+		
+		ItemStack[][] quillRecipe = {
+				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) },
+				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) },
+				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) } };
+		ArcaneMagicAPI.registerElementalCraftingRecipe(new ElementalCraftingRecipe(quillRecipe.clone(), new ItemStack(ModRegistry.SCRIBING_TOOLS)));
+		
+		ItemStack[][] quartzRecipe = {
+				{ new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE) },
+				{ ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY },
+				{ new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE) } };
+		ArcaneMagicAPI.registerElementalCraftingRecipe(new ElementalCraftingRecipe(quartzRecipe.clone(), new ItemStack(Items.QUARTZ)));
+		
 		proxy.postInit(event);
 	}
 

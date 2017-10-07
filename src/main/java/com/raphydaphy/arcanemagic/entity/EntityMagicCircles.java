@@ -24,13 +24,11 @@ public class EntityMagicCircles extends Entity
 	{
 		super(worldIn);
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
-		this.setSize(1, 1);
 	}
 
 	public EntityMagicCircles(World worldIn, double x, double y, double z)
 	{
 		super(worldIn);
-		this.setSize(1, 1);
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;

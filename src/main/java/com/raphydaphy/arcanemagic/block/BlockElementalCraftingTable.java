@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
-import javax.annotation.Nonnull;
-
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.block.material.Material;
@@ -50,11 +49,11 @@ public class BlockElementalCraftingTable extends BlockBase
 	}
 
 	@Override
-	public void breakBlock(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state)
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntityElementalCraftingTable te = (TileEntityElementalCraftingTable) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+
 		for (int i = 0; i < cap.getSlots(); ++i)
 		{
 			ItemStack itemstack = cap.getStackInSlot(i);
@@ -84,10 +83,6 @@ public class BlockElementalCraftingTable extends BlockBase
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (world.isRemote)
-		{
-			//return true;
-		}
 		TileEntity te = world.getTileEntity(pos);
 		if (!(te instanceof TileEntityElementalCraftingTable))
 		{
@@ -95,7 +90,10 @@ public class BlockElementalCraftingTable extends BlockBase
 		}
 		ItemStack stack = player.getHeldItem(hand);
 
-		
+		if (stack.getItem().equals(ModRegistry.SCEPTER))
+		{
+			return false;
+		}
 		if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
 		{
 			float divX = (hitX - 0.203f);
@@ -121,27 +119,34 @@ public class BlockElementalCraftingTable extends BlockBase
 
 			int slot = slotX + (slotZ * 3);
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			if (stack != null && !stack.isEmpty())
+			if (stack != null && !stack.isEmpty() && !player.isSneaking())
 			{
 				if (cap.insertItem(slot, stack, true).isEmpty())
 				{
-					player.setHeldItem(hand, ItemStack.EMPTY);
-					cap.insertItem(slot, stack, false);
-					
-					if (world.isRemote)
+					if (!world.isRemote)
 					{
-						world.playSound(player, pos,SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
+						player.setHeldItem(hand, ItemStack.EMPTY);
+						cap.insertItem(slot, stack, false);
+						te.markDirty();
+					} else
+					{
+						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 					}
 				}
-			}
-			else
+			} else
 			{
-				
+
 				ItemStack toExtract = cap.getStackInSlot(slot);
 				if (toExtract != null && !toExtract.isEmpty())
 				{
-					player.setHeldItem(hand, toExtract.copy());
-					cap.getStackInSlot(slot).setCount(0);
+					if (!world.isRemote)
+					{
+						if (player.addItemStackToInventory(toExtract.copy()))
+						{
+							cap.getStackInSlot(slot).setCount(0);
+							te.markDirty();
+						}
+					}
 				}
 			}
 		}

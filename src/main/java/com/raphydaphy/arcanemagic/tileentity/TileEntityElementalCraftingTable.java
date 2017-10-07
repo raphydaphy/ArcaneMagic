@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.tileentity;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -70,5 +72,24 @@ public class TileEntityElementalCraftingTable extends TileEntity
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}
 		return super.getCapability(capability, facing);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
+	{
+		readFromNBT(pkt.getNbtCompound());
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag()
+	{
+		return this.writeToNBT(new NBTTagCompound());
+	}
+
+	@Override
+	public SPacketUpdateTileEntity getUpdatePacket()
+	{
+		// shadows told me to put 150 so i did
+		return new SPacketUpdateTileEntity(this.pos, 150, this.getUpdateTag());
 	}
 }
