@@ -17,7 +17,7 @@ public class ElementalCraftingRecipe
 	{
 		return recipeOut.copy();
 	}
-	
+
 	public ItemStack[][] getInput()
 	{
 		return recipeIn.clone();
@@ -35,17 +35,20 @@ public class ElementalCraftingRecipe
 				{
 					if (!realIn.getItem().equals(tableIn.getItem()))
 					{
-						System.out.println("Item no matchy!");
 						return false;
 					}
 					if (realIn.getItemDamage() != tableIn.getItemDamage())
 					{
-						System.out.println("Damage no matchy!");
 						return false;
 					}
 					if (realIn.getCount() > tableIn.getCount())
 					{
-						System.out.println("Count too low!");
+						return false;
+					}
+				} else
+				{
+					if (tableIn == null || tableIn.isEmpty())
+					{
 						return false;
 					}
 				}
@@ -53,4 +56,5 @@ public class ElementalCraftingRecipe
 		}
 		return true;
 	}
+
 }

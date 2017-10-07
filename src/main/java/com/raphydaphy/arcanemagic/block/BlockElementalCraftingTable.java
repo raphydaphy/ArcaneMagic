@@ -28,7 +28,7 @@ public class BlockElementalCraftingTable extends BlockBase
 	public BlockElementalCraftingTable()
 	{
 		super("elemental_crafting_table", Material.WOOD, 2.5f);
-		
+
 		this.setLightLevel(1f);
 	}
 
@@ -93,6 +93,7 @@ public class BlockElementalCraftingTable extends BlockBase
 		ItemStack stack = player.getHeldItem(hand);
 		if (stack.isItemEqualIgnoreDurability(new ItemStack(ModRegistry.SCEPTER)))
 		{
+			System.out.println("gobi");
 			return false;
 		}
 		if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
@@ -120,23 +121,26 @@ public class BlockElementalCraftingTable extends BlockBase
 
 			int slot = slotX + (slotZ * 3);
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+
 			if (stack != null && !stack.isEmpty() && !player.isSneaking())
 			{
-				if (cap.insertItem(slot, stack, true).isEmpty())
+				ItemStack insertStack = stack.copy();
+				insertStack.setCount(1);
+				if (cap.insertItem(slot, insertStack, true).isEmpty())
 				{
 					if (!world.isRemote)
 					{
-						player.setHeldItem(hand, ItemStack.EMPTY);
-						cap.insertItem(slot, stack, false);
+						player.getHeldItem(hand).shrink(1);
+						cap.insertItem(slot, insertStack, false);
 						te.markDirty();
 					} else
 					{
 						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 					}
 				}
-			} else
+			}
+			else
 			{
-
 				ItemStack toExtract = cap.getStackInSlot(slot);
 				if (toExtract != null && !toExtract.isEmpty())
 				{
