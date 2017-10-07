@@ -179,14 +179,12 @@ public class ItemScepter extends ItemBase
 				{
 					int x = 0;
 					int y = 0;
-					for (int curSlot = 0; curSlot < cap.getSlots(); curSlot++)
+					for (int curSlot = 0; curSlot < 9; curSlot++)
 					{
-						if (!cap.getStackInSlot(curSlot).isEmpty() && !foundRecipe.getInput()[x][y].isEmpty())
-						{
-							cap.getStackInSlot(curSlot).setCount(
-									cap.getStackInSlot(curSlot).getCount() - foundRecipe.getInput()[x][y].getCount());
-							te.markDirty();
-						}
+						System.out.println(curSlot + ": " + x + ", " + y);
+						cap.getStackInSlot(curSlot).setCount(
+								cap.getStackInSlot(curSlot).getCount() - foundRecipe.getInput()[y][x].getCount());
+						te.markDirty();
 
 						x++;
 						if (x > 2)
@@ -195,8 +193,8 @@ public class ItemScepter extends ItemBase
 							y++;
 						}
 					}
-					EntityItemFancy craftResult = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 9d * (1d / 16d), pos.getZ() + 0.5,
-							foundRecipe.getOutput());
+					EntityItemFancy craftResult = new EntityItemFancy(world, pos.getX() + 0.5,
+							pos.getY() + 9d * (1d / 16d), pos.getZ() + 0.5, foundRecipe.getOutput());
 					craftResult.motionX = 0;
 					craftResult.motionY = 0;
 					craftResult.motionZ = 0;

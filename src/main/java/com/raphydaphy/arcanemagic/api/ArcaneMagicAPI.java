@@ -71,9 +71,29 @@ public class ArcaneMagicAPI
 	{
 		for (ElementalCraftingRecipe curRecipe : elemental_crafting_recipes)
 		{
-			if (curRecipe.inputMatches(recipeIn))
+			ItemStack[][] rotatedRecipeBase = recipeIn.clone();
+			ItemStack[][] recipeInputBase = curRecipe.getInput().clone();
+			
+			for (int rotation = 0; rotation < 9; rotation++)
 			{
-				return curRecipe;
+				ItemStack[][] rotatedRecipeIn = new ItemStack[3][3];
+				ItemStack[][] rotatedRecipeReal = new ItemStack[3][3];
+				for (int i = 0; i < 3; i++)
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						rotatedRecipeIn[i][j] = rotatedRecipeBase[3 - j - 1][i].copy();
+						rotatedRecipeReal[i][j] = recipeInputBase[3 - j - 1][i].copy();
+					}
+				}
+				
+				if (curRecipe.inputMatches(rotatedRecipeIn))
+				{
+					return new ElementalCraftingRecipe(rotatedRecipeReal, curRecipe.getOutput().copy());
+				}
+				
+				rotatedRecipeBase = rotatedRecipeIn.clone();
+				recipeInputBase = rotatedRecipeReal.clone();
 			}
 		}
 		return null;

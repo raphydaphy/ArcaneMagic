@@ -124,7 +124,6 @@ public class BlockElementalCraftingTable extends BlockBase
 			{
 				if (cap.insertItem(slot, stack, true).isEmpty())
 				{
-					System.out.println("planning on inserting an item. Client? " + world.isRemote);
 					if (!world.isRemote)
 					{
 						player.setHeldItem(hand, ItemStack.EMPTY);

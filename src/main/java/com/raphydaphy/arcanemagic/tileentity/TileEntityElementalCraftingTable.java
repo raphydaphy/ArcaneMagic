@@ -53,7 +53,6 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		System.out.println("read from nbt");
 		if (compound.hasKey("items"))
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
@@ -65,7 +64,6 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		System.out.println("wrote to nbt");
 		compound.setTag("items", itemStackHandler.serializeNBT());
 		return compound;
 	}
