@@ -1,10 +1,12 @@
 package com.raphydaphy.arcanemagic.intergration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.recipe.ElementalCraftingRecipe;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModPlugin;
@@ -18,7 +20,6 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import mezz.jei.api.recipe.wrapper.ICustomCraftingRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.IShapedCraftingRecipeWrapper;
 import mezz.jei.config.Constants;
 import mezz.jei.recipes.BrokenCraftingRecipeException;
@@ -34,9 +35,11 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 	public void register(IModRegistry registry)
 	{
 		registry.addRecipes(ArcaneMagicAPI.elemental_crafting_recipes, ELEMENTAL_CRAFTING_UID);
-
 		registry.handleRecipes(ElementalCraftingRecipe.class, recipe -> new ElementalCraftingRecipeWrapper(recipe),
 				ELEMENTAL_CRAFTING_UID);
+		
+		registry.addIngredientInfo(new ItemStack(ModRegistry.ANCIENT_PARCHMENT), ItemStack.class,
+				"desc.arcanemagic.ancient_parchment");
 	}
 
 	@Override
@@ -132,15 +135,25 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 			try
 			{
 				List<List<ItemStack>> inputLists = new ArrayList<List<ItemStack>>();
-
-				for (int y = 0; y < 3; y++)
-				{
-					List<ItemStack> thisRow = new ArrayList<ItemStack>();
-					thisRow.add(recipe.getInput()[0][y]);
-					thisRow.add(recipe.getInput()[1][y]);
-					thisRow.add(recipe.getInput()[2][y]);
-				}
+				List<ItemStack> thisRow = new ArrayList<ItemStack>();
+				thisRow.clear();
+				thisRow.add(recipe.getInput()[0][0]);
+				thisRow.add(recipe.getInput()[1][0]);
+				thisRow.add(recipe.getInput()[2][0]);
 				
+				inputLists.add(Collections.unmodifiableList(thisRow));
+				
+				thisRow.add(recipe.getInput()[0][1]);
+				thisRow.add(recipe.getInput()[1][1]);
+				thisRow.add(recipe.getInput()[2][1]);
+				
+				inputLists.add(Collections.unmodifiableList(thisRow));
+				
+				thisRow.add(recipe.getInput()[0][2]);
+				thisRow.add(recipe.getInput()[1][2]);
+				thisRow.add(recipe.getInput()[2][2]);
+				
+				inputLists.add(Collections.unmodifiableList(thisRow));
 				System.out.println(inputLists.toString());
 				ingredients.setInputLists(ItemStack.class, inputLists);
 				ingredients.setOutput(ItemStack.class, recipeOutput);
@@ -153,13 +166,13 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 		@Override
 		public int getWidth()
 		{
-			return 116;
+			return 3;
 		}
 
 		@Override
 		public int getHeight()
 		{
-			return 54;
+			return 3;
 		}
 
 	}

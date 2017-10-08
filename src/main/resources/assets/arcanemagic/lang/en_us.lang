@@ -46,6 +46,9 @@ itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.elemental_crafting=Elemental Crafting
 gui.arcanemagic.crystallizer=Crystallizer
 
+# JEI Description cards
+desc.arcanemagic.ancient_parchment=Rare drop from witches. Shift+right-click bedrock while holding to use.
+
 # Essence
 essence.arcanemagic.ozone.name=Ozone
 essence.arcanemagic.depth.name=Depth
