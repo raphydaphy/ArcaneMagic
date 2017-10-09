@@ -51,6 +51,7 @@ public class GuiNotebook extends GuiScreen
 		if (cap != null && !cap.getUsed())
 		{
 			cap.setUsed(true);
+			ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
 		}
 	}
 
@@ -139,6 +140,8 @@ public class GuiNotebook extends GuiScreen
 			{
 				cap.setCategory(0);
 				curCategory = 0;
+				
+				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
 			}
 			mc.getTextureManager().bindTexture(notebook);
 			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),

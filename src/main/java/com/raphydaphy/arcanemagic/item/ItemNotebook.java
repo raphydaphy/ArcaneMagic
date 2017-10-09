@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.client.resources.I18n;
@@ -28,6 +29,11 @@ public class ItemNotebook extends ItemBase
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
+		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		if (cap != null)
+		{
+			System.out.println("OPEN THE BOOK! Used: " + cap.getUsed() + " cat: " + cap.getCategory());
+		}
 		if (world.isRemote)
 		{
 			world.playSound(player.posX, player.posY, player.posZ, ArcaneMagicSoundHandler.randomPageSound(),

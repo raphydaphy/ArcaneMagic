@@ -131,7 +131,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	@Override
 	public NBTTagCompound serializeNBT()
 	{
-		System.out.println("serialised with used: " + usedNotebook);
+		System.out.println("serialised with used: " + usedNotebook + ", category: " + curCategory);
 		NBTTagCompound tag = new NBTTagCompound();
 		for (String cat : unlockedCategories.keySet())
 		{
@@ -149,7 +149,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt)
 	{
-		System.out.println("deserialized with used: " + usedNotebook);
+		
 		for (String key : nbt.getKeySet())
 		{
 			if (key.length() > 14 && key.substring(0, 14).equals("notebook_info_"))
@@ -164,6 +164,8 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		curCategory = nbt.getInteger(tagCategory);
 		curPage = nbt.getInteger(tagPage);
 		curIndexPage = nbt.getInteger(tagIndexPage);
+		
+		System.out.println("deserialized with used: " + usedNotebook + ", category: " + curCategory);
 
 	}
 
