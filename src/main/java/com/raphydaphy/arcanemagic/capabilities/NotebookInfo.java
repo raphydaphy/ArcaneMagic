@@ -14,16 +14,29 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
-/**
- * Apparently u MUST call markDirty on change
- */
-public class NotebookInfo implements  INBTSerializable<NBTTagCompound>, ICapabilityProvider
+public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabilityProvider
 {
+	// Current category selected
+	public static final String tagCategory = "notebookCategory";
+
+	// Page within the selected category
+	public static final String tagPage = "notebookPage";
+
+	// Page on the list of pages
+	public static final String tagIndexPage = "notebookIndexPage";
+
+	// If the player has ever used a notebook
+	public static final String tagUsedNotebook = "usedNotebook";
+
 	@CapabilityInject(NotebookInfo.class)
 	public static Capability<NotebookInfo> CAP = null;
-	
+
 	private Map<String, Boolean> unlockedCategories = new HashMap<>();
-	
+	private int curCategory = 0;
+	private int curPage = 0;
+	private int curIndexPage = 0;
+	private boolean usedNotebook = false;
+
 	public static class DefaultInfo implements Capability.IStorage<NotebookInfo>
 	{
 
@@ -35,11 +48,72 @@ public class NotebookInfo implements  INBTSerializable<NBTTagCompound>, ICapabil
 		}
 
 		@Override
-		public void readNBT(Capability<NotebookInfo> capability, NotebookInfo instance, EnumFacing side,
-				NBTBase nbt)
+		public void readNBT(Capability<NotebookInfo> capability, NotebookInfo instance, EnumFacing side, NBTBase nbt)
 		{
 			instance.deserializeNBT((NBTTagCompound) nbt);
 		}
+	}
+
+	public void setUsed(boolean used)
+	{
+		this.usedNotebook = true;
+	}
+
+	public void setPage(int page)
+	{
+		this.curPage = page;
+	}
+
+	public void setIndexPage(int indexPage)
+	{
+		this.curIndexPage = indexPage;
+	}
+
+	public void setCategory(int category)
+	{
+		this.curCategory = category;
+	}
+
+	public boolean getUsed()
+	{
+		return this.usedNotebook;
+	}
+
+	public int getPage()
+	{
+		return this.curPage;
+	}
+
+	public int getIndexPage()
+	{
+		return this.curIndexPage;
+	}
+
+	public int getCategory()
+	{
+		return this.curCategory;
+	}
+
+	public void setUnlocked(String tag)
+	{
+		if (unlockedCategories.containsKey(tag))
+		{
+			if (!unlockedCategories.get(tag))
+			{
+				unlockedCategories.remove(tag);
+			}
+		}
+
+		unlockedCategories.put(tag, true);
+	}
+
+	public boolean isUnlocked(String tag)
+	{
+		if (unlockedCategories.containsKey(tag))
+		{
+			return unlockedCategories.get(tag);
+		}
+		return false;
 	}
 
 	@Override
@@ -50,6 +124,12 @@ public class NotebookInfo implements  INBTSerializable<NBTTagCompound>, ICapabil
 		{
 			tag.setBoolean("notebook_info_" + cat, unlockedCategories.get(cat));
 		}
+
+		tag.setBoolean(tagUsedNotebook, usedNotebook);
+		tag.setInteger(tagCategory, curCategory);
+		tag.setInteger(tagPage, curPage);
+		tag.setInteger(tagIndexPage, curIndexPage);
+
 		return tag;
 	}
 
@@ -60,10 +140,17 @@ public class NotebookInfo implements  INBTSerializable<NBTTagCompound>, ICapabil
 		{
 			if (key.substring(0, 14).equals("notebook_info_"))
 			{
-				System.out.println("Deserialized key: " + key + " as " + key.substring(14) + " with value " + nbt.getBoolean(key));
+				System.out.println(
+						"Deserialized key: " + key + " as " + key.substring(14) + " with value " + nbt.getBoolean(key));
 				unlockedCategories.put(key.substring(14), nbt.getBoolean(key));
 			}
 		}
+
+		usedNotebook = nbt.getBoolean(tagUsedNotebook);
+		curCategory = nbt.getInteger(tagCategory);
+		curPage = nbt.getInteger(tagPage);
+		curIndexPage = nbt.getInteger(tagIndexPage);
+
 	}
 
 	@Override

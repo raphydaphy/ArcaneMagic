@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.client.gui.GuiScreen;
@@ -29,16 +30,7 @@ public class GuiNotebook extends GuiScreen
 	// Scale up the notebook so it isn't so tiny
 	final double scale = 1.5;
 
-	public static final String tagUsedNotebook = "usedNotebook";
-
-	// Current category selected
-	public static final String tagCategory = "notebookCategory";
-
-	// Page within the selected category
-	public static final String tagPage = "notebookPage";
-
-	// Page on the list of pages
-	public static final String tagIndexPage = "notebookIndexPage";
+	
 
 	// Because for some reason the mouse information provided in onMouseClick is wrong
 	public int relMouseX = 0;
@@ -54,9 +46,11 @@ public class GuiNotebook extends GuiScreen
 	{
 		this.player = player;
 
-		if (player.getEntityData().getBoolean(tagUsedNotebook) == false)
+		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		if (cap == null || cap.get)
 		{
 			System.out.println("Player opened Notebook for first time, doing initial setup.");
+			
 			player.getEntityData().setBoolean(tagUsedNotebook, true);
 			player.getEntityData().setInteger(tagCategory, 0);
 			player.getEntityData().setInteger(tagPage, 0);
