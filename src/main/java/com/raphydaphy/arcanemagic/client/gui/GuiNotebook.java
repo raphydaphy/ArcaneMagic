@@ -7,7 +7,9 @@ import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.network.PacketNotebookInfo;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -30,18 +32,6 @@ public class GuiNotebook extends GuiScreen
 	// Scale up the notebook so it isn't so tiny
 	final double scale = 1.5;
 
-	// Current category selected
-	public static final String tagCategory = "notebookCategory";
-
-	// Page within the selected category
-	public static final String tagPage = "notebookPage";
-
-	// Page on the list of pages
-	public static final String tagIndexPage = "notebookIndexPage";
-
-	// If the player has ever used a notebook
-	public static final String tagUsedNotebook = "usedNotebook";
-
 	// Because for some reason the mouse information provided in onMouseClick is wrong
 	public int relMouseX = 0;
 	public int relMouseY = 0;
@@ -56,14 +46,11 @@ public class GuiNotebook extends GuiScreen
 	{
 		this.player = player;
 		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		
+		// player opened it for the first time!
 		if (cap != null && !cap.getUsed())
 		{
-			System.out.println("Player opened Notebook for first time, doing initial setup.");
-
 			cap.setUsed(true);
-			cap.setCategory(0);
-			cap.setPage(0);
-			cap.setIndexPage(0);
 		}
 	}
 
@@ -253,7 +240,7 @@ public class GuiNotebook extends GuiScreen
 										ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
 										false);
 								cap.setCategory(unRealTab);
-
+								ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
 							}
 							break;
 						}
