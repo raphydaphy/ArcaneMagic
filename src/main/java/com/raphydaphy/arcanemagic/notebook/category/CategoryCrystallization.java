@@ -38,4 +38,12 @@ public class CategoryCrystallization extends NotebookCategory
 
 		return entries;
 	}
+	
+	public static final String REQUIRED_TAG = "unlockedCrystallization";
+
+	@Override
+	public String getRequiredTag()
+	{
+		return REQUIRED_TAG;
+	}
 }

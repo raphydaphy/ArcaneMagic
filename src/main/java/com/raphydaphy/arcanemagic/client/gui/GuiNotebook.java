@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.client.gui.GuiScreen;
@@ -56,7 +57,7 @@ public class GuiNotebook extends GuiScreen
 		if (player.getEntityData().getBoolean(tagUsedNotebook) == false)
 		{
 			System.out.println("Player opened Notebook for first time, doing initial setup.");
-			// player.getEntityData().setBoolean(tagUsedNotebook, true);
+			player.getEntityData().setBoolean(tagUsedNotebook, true);
 			player.getEntityData().setInteger(tagCategory, 0);
 			player.getEntityData().setInteger(tagPage, 0);
 			player.getEntityData().setInteger(tagIndexPage, 0);
@@ -123,9 +124,32 @@ public class GuiNotebook extends GuiScreen
 
 		// Selected Category indicator
 		int curCategory = player.getEntityData().getInteger(tagCategory);
+		int renderCurCategory = 0;
+		
+		for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
+		{
+			if (player.getEntityData().getBoolean(ArcaneMagicAPI.getNotebookCategories().get(category).getRequiredTag()))
+			{
+				if (category < curCategory)
+				{
+					renderCurCategory++;
+				}
+				else
+				{
+					break;
+				}
+			}
+		}
+		// if they haven't unlocked the current category, or it dosen't exist
+		if (curCategory > ArcaneMagicAPI.getNotebookCategories().size() || !player.getEntityData()
+				.getBoolean(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getRequiredTag()))
+		{
+			player.getEntityData().setInteger(tagCategory, 0);
+			curCategory = 0;
+		}
 		mc.getTextureManager().bindTexture(notebook);
 		drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
-				(int) ((screenY + 14 + (curCategory * 20)) + (1 * scale)), 86, 182, 70, 16, (int) (70 * scale),
+				(int) ((screenY + 14 + (renderCurCategory * 20)) + (1 * scale)), 86, 182, 70, 16, (int) (70 * scale),
 				(int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
 
 		int curY = 0;
@@ -151,14 +175,20 @@ public class GuiNotebook extends GuiScreen
 		GlStateManager.scale((1 / largeText) * categoryNameSize, (1 / largeText) * categoryNameSize,
 				(1 / largeText) * categoryNameSize);
 
-		for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
+		int cat = 0;
+		for (NotebookCategory category : ArcaneMagicAPI.getNotebookCategories())
 		{
-			// Draw the category!
-			fontRenderer.drawString(
-					I18n.format(ArcaneMagicAPI.getNotebookCategories().get(category).getUnlocalizedName()),
-					(int) ((screenX + (category == curCategory ? 26 : 18)) * (1 / categoryNameSize)),
-					(int) ((screenY + 24 + (category * 20)) * (1 / categoryNameSize)),
-					category == curCategory ? 0x515151 : 0x32363d);
+			// if the category is unlocked
+			if (player.getEntityData().getBoolean(category.getRequiredTag()))
+			{
+				// Draw the category!
+				fontRenderer.drawString(I18n.format(category.getUnlocalizedName()),
+						(int) ((screenX + (cat == renderCurCategory ? 26 : 18)) * (1 / categoryNameSize)),
+						(int) ((screenY + 24 + (cat * 20)) * (1 / categoryNameSize)),
+						cat == renderCurCategory ? 0x515151 : 0x32363d);
+
+				cat++;
+			}
 		}
 
 		// Go back to default scaling
@@ -198,19 +228,27 @@ public class GuiNotebook extends GuiScreen
 			final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
 			int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
 
-			for (int tab = 0; tab < ArcaneMagicAPI.getNotebookCategories().size(); tab++)
+			int tab = 0;
+			for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++)
 			{
-				if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 32)
+				// if they have unlocked this category
+				if (player.getEntityData().getBoolean(ArcaneMagicAPI.getNotebookCategories().get(unRealTab).getRequiredTag()))
 				{
-					if (player.getEntityData().getInteger(tagCategory) != tab)
+					if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 32)
 					{
-						player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
-								ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f, false);
-						player.getEntityData().setInteger(tagCategory, tab);
+						if (player.getEntityData().getInteger(tagCategory) != unRealTab)
+						{
+							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
+									ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f, false);
+							player.getEntityData().setInteger(tagCategory, unRealTab);
 
+						}
+						break;
 					}
-					break;
+					
+					tab++;
 				}
+				
 			}
 		}
 	}

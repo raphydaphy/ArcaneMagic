@@ -25,16 +25,13 @@ public class CategoryBasicLinguistics extends NotebookCategory
 	public List<INotebookEntry> getEntries()
 	{
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 2; i++)
-		{
-			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
-		}
+		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 0, 0x000000));
 		ItemStack[][] itemsIn = {
 				{ new ItemStack(Items.PAPER), new ItemStack(Items.DYE, 1, 0), new ItemStack(Items.PAPER) },
 				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.PLANKS) },
 				{ new ItemStack(Blocks.PLANKS), ItemStack.EMPTY, new ItemStack(Blocks.PLANKS) } };
 		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE)));
-
+		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 1, 0x000000));
 		return entries;
 	}
 }

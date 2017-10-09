@@ -26,4 +26,12 @@ public class CategoryEssenceCollection extends NotebookCategory
 
 		return entries;
 	}
+	
+	public static final String REQUIRED_TAG = "unlockedEssenceCollection";
+
+	@Override
+	public String getRequiredTag()
+	{
+		return REQUIRED_TAG;
+	}
 }

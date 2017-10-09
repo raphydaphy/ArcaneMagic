@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
 
 public class CategoryElementalParticles extends NotebookCategory
 {
+
 	@Override
 	public String getUnlocalizedName()
 	{
@@ -25,5 +26,13 @@ public class CategoryElementalParticles extends NotebookCategory
 		}
 
 		return entries;
+	}
+
+	public static final String REQUIRED_TAG = "unlockedElementalParticles";
+
+	@Override
+	public String getRequiredTag()
+	{
+		return REQUIRED_TAG;
 	}
 }

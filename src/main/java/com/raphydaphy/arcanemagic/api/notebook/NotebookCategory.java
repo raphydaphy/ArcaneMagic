@@ -12,5 +12,10 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	public abstract String getUnlocalizedName();
 
 	public abstract List<INotebookEntry> getEntries();
+	
+	public String getRequiredTag()
+	{
+		return "usedNotebook";
+	}
 
 }
