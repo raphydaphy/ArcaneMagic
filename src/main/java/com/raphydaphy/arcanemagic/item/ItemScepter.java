@@ -171,10 +171,10 @@ public class ItemScepter extends ItemBase
 			}
 
 			ElementalCraftingRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(recipeIn);
-			System.out.println("lookin for recipe");
+			
 			if (foundRecipe != null)
 			{
-				System.out.println("found recipe");
+				
 				if (!world.isRemote)
 				{
 					int x = 0;

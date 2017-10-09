@@ -35,7 +35,6 @@ public class ElementalCraftingRecipe
 				{
 					if (!realIn.getItem().equals(tableIn.getItem()))
 					{
-						System.out.println("item no matchy");
 						return false;
 					}
 					if (realIn.getItemDamage() != tableIn.getItemDamage())
@@ -50,7 +49,6 @@ public class ElementalCraftingRecipe
 				{
 					if (realIn.isEmpty() && !tableIn.isEmpty())
 					{
-						System.out.println("u broke the hole world");
 						return false;
 					}
 				}

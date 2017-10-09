@@ -93,7 +93,6 @@ public class BlockElementalCraftingTable extends BlockBase
 		ItemStack stack = player.getHeldItem(hand);
 		if (stack.isItemEqualIgnoreDurability(new ItemStack(ModRegistry.SCEPTER)))
 		{
-			System.out.println("gobi");
 			return false;
 		}
 		if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)

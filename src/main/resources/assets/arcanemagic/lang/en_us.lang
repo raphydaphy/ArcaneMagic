@@ -68,9 +68,9 @@ part.arcanemagic.core.greatwood.name=Greatwood
 
 # Notebook
 arcanemagic.notebook.category.ancient_relics=Ancient Relics
-arcanemagic.notebook.category.ancient_relics.0=You have spent many days wondering the meaning of the parchment you found, but yet you are still in great confusion. You believe that a witch was carrying it before her death in order to try and use it to advance her magic.
-arcanemagic.notebook.category.ancient_relics.1=If the paper has such power, it would surely be a good idea to try and use it yourself. Witches are simply transformed and courupted villagers, so perhaps visiting a village would be a good start?
-arcanemagic.notebook.category.ancient_relics.2=If they villagers can help you, it will be easier to decode the messages that block your pathway and limit your success. It is possible that they would want this parchment, however, so I should try to keep it safe.
+arcanemagic.notebook.category.ancient_relics.0=It seems almost supernatural how you managed to conjure this book from just a parchment and some bedrock. The witch who was previously carrying the paper clearly had no idea of the power it contained.
+arcanemagic.notebook.category.ancient_relics.1=The particles collected when holding a similar parchment while deep underground are very intriguing. They may contain similar properties to those that allowed this book to be formed.
+arcanemagic.notebook.category.ancient_relics.2=By studying the notes left here by arcane magicians who passed away long ago, you hope it will be possible to understand this form of magic better, and perhaps even use it to your advantage.
 arcanemagic.notebook.category.basic_linguistics=Basic Linguistics
 arcanemagic.notebook.category.basic_linguistics.0=The writing left by ancient magicians seems to have decayed and became illegible. Reading it with the traditional methods appears to be impossible, so you will have to come up with a better solution.
 arcanemagic.notebook.category.basic_linguistics.1=A writing desk might be a good way to start, giving you a better workspace to decode the messages in. All that would be required to make one is some planks, ink and paper so it shouldn't be an issue to create.
