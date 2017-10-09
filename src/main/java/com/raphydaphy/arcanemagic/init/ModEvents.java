@@ -37,10 +37,10 @@ public class ModEvents
 	{
 		if (ev.getObject() instanceof EntityPlayer)
 		{
-			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"),new NotebookInfo());
+			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"), new NotebookInfo());
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onItemPickup(ItemPickupEvent ev)
 	{
