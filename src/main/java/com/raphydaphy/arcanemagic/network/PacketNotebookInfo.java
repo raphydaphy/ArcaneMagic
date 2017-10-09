@@ -47,10 +47,14 @@ public class PacketNotebookInfo implements IMessage
 			// Server-side only
 			NotebookInfo cap = ctx.getServerHandler().player.getCapability(NotebookInfo.CAP, null);
 			
-			cap.setCategory(message.category);
-			cap.setPage(message.page);
-			cap.setIndexPage(message.indexPage);
-			cap.setUsed(message.usedNotebook);
+			System.out.println("Setting cap: CAT: " + message.category + " USED: " + message.usedNotebook);
+			if (cap != null)
+			{
+				cap.setCategory(message.category);
+				cap.setPage(message.page); 
+				cap.setIndexPage(message.indexPage);
+				cap.setUsed(message.usedNotebook);
+			}
 		}
 	}
 

@@ -32,11 +32,19 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	public static Capability<NotebookInfo> CAP = null;
 
 	private Map<String, Boolean> unlockedCategories = new HashMap<>();
-	private int curCategory = 0;
-	private int curPage = 0;
-	private int curIndexPage = 0;
-	private boolean usedNotebook = false;
+	private int curCategory;
+	private int curPage;
+	private int curIndexPage;
+	private boolean usedNotebook;
 
+	public NotebookInfo()
+	{
+		System.out.println("new notebookinfo made!");
+		curCategory = 0;
+		curPage = 0; 
+		curIndexPage = 0;
+		usedNotebook = false;
+	}
 	public static class DefaultInfo implements Capability.IStorage<NotebookInfo>
 	{
 
@@ -123,6 +131,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	@Override
 	public NBTTagCompound serializeNBT()
 	{
+		System.out.println("serialised with used: " + usedNotebook);
 		NBTTagCompound tag = new NBTTagCompound();
 		for (String cat : unlockedCategories.keySet())
 		{
@@ -140,9 +149,10 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt)
 	{
+		System.out.println("deserialized with used: " + usedNotebook);
 		for (String key : nbt.getKeySet())
 		{
-			if (key.substring(0, 14).equals("notebook_info_"))
+			if (key.length() > 14 && key.substring(0, 14).equals("notebook_info_"))
 			{
 				System.out.println(
 						"Deserialized key: " + key + " as " + key.substring(14) + " with value " + nbt.getBoolean(key));
