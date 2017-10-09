@@ -32,12 +32,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @Mod.EventBusSubscriber
 public class ModEvents
 {
+	@SubscribeEvent
 	public static void onAttachCapability(AttachCapabilitiesEvent<Entity> ev)
 	{
 		if (ev.getObject() instanceof EntityPlayer)
 		{
 			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"),new NotebookInfo());
-			System.out.println(ev.getObject().getName() + " got notebookified");
 		}
 	}
 	

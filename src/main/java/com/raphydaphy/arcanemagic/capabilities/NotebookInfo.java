@@ -109,6 +109,10 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 
 	public boolean isUnlocked(String tag)
 	{
+		if (tag.equals(tagUsedNotebook))
+		{
+			return true;
+		} 
 		if (unlockedCategories.containsKey(tag))
 		{
 			return unlockedCategories.get(tag);
