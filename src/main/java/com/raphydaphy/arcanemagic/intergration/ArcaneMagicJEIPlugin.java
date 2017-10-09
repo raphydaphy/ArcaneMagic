@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.intergration;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -37,7 +36,9 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 		registry.addRecipes(ArcaneMagicAPI.elemental_crafting_recipes, ELEMENTAL_CRAFTING_UID);
 		registry.handleRecipes(ElementalCraftingRecipe.class, recipe -> new ElementalCraftingRecipeWrapper(recipe),
 				ELEMENTAL_CRAFTING_UID);
-		
+
+		registry.addRecipeCatalyst(new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE), ELEMENTAL_CRAFTING_UID);
+
 		registry.addIngredientInfo(new ItemStack(ModRegistry.ANCIENT_PARCHMENT), ItemStack.class,
 				"desc.arcanemagic.ancient_parchment");
 	}
@@ -133,29 +134,17 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 			ItemStack recipeOutput = recipe.getOutput();
 
 			try
-			{
-				List<List<ItemStack>> inputLists = new ArrayList<List<ItemStack>>();
-				List<ItemStack> thisRow = new ArrayList<ItemStack>();
-				thisRow.clear();
-				thisRow.add(recipe.getInput()[0][0]);
-				thisRow.add(recipe.getInput()[1][0]);
-				thisRow.add(recipe.getInput()[2][0]);
-				
-				inputLists.add(Collections.unmodifiableList(thisRow));
-				
-				thisRow.add(recipe.getInput()[0][1]);
-				thisRow.add(recipe.getInput()[1][1]);
-				thisRow.add(recipe.getInput()[2][1]);
-				
-				inputLists.add(Collections.unmodifiableList(thisRow));
-				
-				thisRow.add(recipe.getInput()[0][2]);
-				thisRow.add(recipe.getInput()[1][2]);
-				thisRow.add(recipe.getInput()[2][2]);
-				
-				inputLists.add(Collections.unmodifiableList(thisRow));
-				System.out.println(inputLists.toString());
-				ingredients.setInputLists(ItemStack.class, inputLists);
+			{	
+				List<ItemStack> inputs = new ArrayList<ItemStack>();
+				for (int x = 0; x < 3; x++)
+				{
+					for (int y = 0; y < 3; y++)
+					{
+						inputs.add(recipe.getInput()[x][y]);
+					}
+				}
+
+				ingredients.setInputs(ItemStack.class, inputs);
 				ingredients.setOutput(ItemStack.class, recipeOutput);
 			} catch (RuntimeException e)
 			{
