@@ -1,91 +1,87 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityWritingDesk;
 
-import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
-public class BlockWritingDesk extends BlockTable
+public class BlockWritingDesk extends BlockBase
 {
-	public static final PropertyInteger SIDE = PropertyInteger.create("side", 0, 1);
+	public static final int GUI_ID = 3;
 
 	public BlockWritingDesk()
 	{
-		super("research_table", Material.WOOD, 2.5f, "axe", 0);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(SIDE, 0));
+		super("writing_desk", Material.ROCK, 2.5f);
 	}
-
+	
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player)
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		BlockPos north = pos.north(); // 0, 0, -1
-		BlockPos east = pos.east(); // 1, 0, 0
-		BlockPos south = pos.south(); // 0, 0, 1
-		BlockPos west = pos.west(); // -1, 0, 0
+		TileEntityWritingDesk te = (TileEntityWritingDesk) world.getTileEntity(pos);
+		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		
+		for (int i = 0; i < cap.getSlots(); ++i)
+		{
+			ItemStack itemstack = cap.getStackInSlot(i);
 
-		if (state.getValue(SIDE) == 0)
-		{
-			if (worldIn.getBlockState(north).getBlock() == this)
+			if (!itemstack.isEmpty())
 			{
-				worldIn.setBlockState(north,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.WEST));
-			}
-			if (worldIn.getBlockState(east).getBlock() == this)
-			{
-				worldIn.setBlockState(east,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.SOUTH));
-			}
-		} else
-		{
-			if (worldIn.getBlockState(south).getBlock() == this)
-			{
-				worldIn.setBlockState(south,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.EAST));
-			}
-			if (worldIn.getBlockState(west).getBlock() == this)
-			{
-				worldIn.setBlockState(west,
-						ModRegistry.TABLE.getDefaultState().withProperty(BlockHorizontal.FACING, EnumFacing.NORTH));
+				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 			}
 		}
+
+		super.breakBlock(world, pos, state);
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta)
+	public boolean isOpaqueCube(IBlockState state)
 	{
-		if (meta % 2 == 0)
+		return false;
+	}
+
+	@Override
+	public boolean isFullCube(IBlockState state)
+	{
+		return false;
+	}
+
+	@Override
+	public boolean hasTileEntity(IBlockState state)
+	{
+		return true;
+	}
+
+	@Override
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
+		return new TileEntityWritingDesk();
+	}
+
+	@Override
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (world.isRemote)
 		{
-			return this.getDefaultState().withProperty(SIDE, 0).withProperty(FACING,
-					EnumFacing.getHorizontal((int) (Math.ceil(((meta + 1) / 2) - 1))));
-		} else
-		{
-			return this.getDefaultState().withProperty(SIDE, 1).withProperty(FACING,
-					EnumFacing.getHorizontal((int) (Math.ceil(((meta + 1) / 2) - 1))));
+			return true;
 		}
-	}
-
-	@Override
-	public int getMetaFromState(IBlockState state)
-	{
-		if (state.getValue(SIDE) == 0)
+		TileEntity te = world.getTileEntity(pos);
+		if (!(te instanceof TileEntityWritingDesk))
 		{
-			return state.getValue(FACING).getHorizontalIndex() * 2;
-		} else
-		{
-			return (state.getValue(FACING).getHorizontalIndex() * 2) + 1;
+			return false;
 		}
-	}
-
-	@Override
-	protected BlockStateContainer createBlockState()
-	{
-		return new BlockStateContainer(this, SIDE, FACING);
+		player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
+		return true;
 	}
 }

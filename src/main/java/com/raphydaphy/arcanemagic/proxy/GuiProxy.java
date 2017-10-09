@@ -1,12 +1,16 @@
 package com.raphydaphy.arcanemagic.proxy;
 
 import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
+import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.client.gui.GuiCrystallizer;
 import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
+import com.raphydaphy.arcanemagic.client.gui.GuiWritingDesk;
 import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
+import com.raphydaphy.arcanemagic.container.ContainerWritingDesk;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -28,7 +32,10 @@ public class GuiProxy implements IGuiHandler
 			if (te instanceof TileEntityCrystallizer)
 				return new ContainerCrystallizer(player.inventory, (TileEntityCrystallizer) te);
 			break;
-
+		case BlockWritingDesk.GUI_ID:
+			if (te instanceof TileEntityWritingDesk)
+				return new ContainerWritingDesk(player.inventory, (TileEntityWritingDesk) te);
+			break;
 		}
 		return null;
 	}
@@ -48,13 +55,20 @@ public class GuiProxy implements IGuiHandler
 			}
 			break;
 		case BlockCrystallizer.GUI_ID:
-
 			if (te instanceof TileEntityCrystallizer)
 			{
 				TileEntityCrystallizer containerTileEntity = (TileEntityCrystallizer) te;
 				return new GuiCrystallizer(containerTileEntity,
 						new ContainerCrystallizer(player.inventory, containerTileEntity));
 			}
+			break;
+		case BlockWritingDesk.GUI_ID:
+			if (te instanceof TileEntityWritingDesk)
+			{
+				TileEntityWritingDesk containerTE = (TileEntityWritingDesk)te;
+				return new GuiWritingDesk(containerTE, new ContainerWritingDesk(player.inventory, containerTE));
+			}
+			break;
 		}
 		return null;
 	}

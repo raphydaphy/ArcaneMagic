@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -11,28 +10,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityElementalCraftingTable extends TileEntity
+public class TileEntityWritingDesk extends TileEntity
 {
-	public static final int SIZE = 10;
+	public static int SIZE = 2;
 
-	public TileEntityElementalCraftingTable()
+	public TileEntityWritingDesk()
 	{
-	}
-
-	@Override
-	public void markDirty()
-	{
-		super.markDirty();
-		if (TileEntityElementalCraftingTable.this.world != null && TileEntityElementalCraftingTable.this.pos != null)
-		{
-			IBlockState state = TileEntityElementalCraftingTable.this.world
-					.getBlockState(TileEntityElementalCraftingTable.this.pos);
-			TileEntityElementalCraftingTable.this.world
-					.markAndNotifyBlock(
-							TileEntityElementalCraftingTable.this.pos, TileEntityElementalCraftingTable.this.world
-									.getChunkFromBlockCoords(TileEntityElementalCraftingTable.this.pos),
-							state, state, 1 | 2);
-		}
+		
 	}
 
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
@@ -42,18 +26,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
-			TileEntityElementalCraftingTable.this.markDirty();
-
-			if (TileEntityElementalCraftingTable.this.world != null
-					&& TileEntityElementalCraftingTable.this.pos != null)
-			{
-				IBlockState state = TileEntityElementalCraftingTable.this.world
-						.getBlockState(TileEntityElementalCraftingTable.this.pos);
-				TileEntityElementalCraftingTable.this.world.markAndNotifyBlock(
-						TileEntityElementalCraftingTable.this.pos, TileEntityElementalCraftingTable.this.world
-								.getChunkFromBlockCoords(TileEntityElementalCraftingTable.this.pos),
-						state, state, 1 | 2);
-			}
+			TileEntityWritingDesk.this.markDirty();
 		}
 	};
 
@@ -65,7 +38,6 @@ public class TileEntityElementalCraftingTable extends TileEntity
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
-
 	}
 
 	@Override
@@ -87,7 +59,12 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			return true;
+			// only extract with automation
+			if (facing == null || facing == EnumFacing.DOWN)
+			{
+				return true;
+			}
+			return false;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -101,7 +78,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 		}
 		return super.getCapability(capability, facing);
 	}
-
+	
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{

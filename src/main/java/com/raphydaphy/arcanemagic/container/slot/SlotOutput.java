@@ -18,15 +18,5 @@ public class SlotOutput extends SlotItemHandler
 	{
 		return false;
 	}
-	
-	@Override
-	public void putStack(ItemStack stack)
-    {
-		if (ModRegistry.ITEMS.contains(stack.getItem()))
-		{
-			this.inventory.setInventorySlotContents(super.slotNumber, stack);
-			this.onSlotChanged();
-		}
-    }
 
 }

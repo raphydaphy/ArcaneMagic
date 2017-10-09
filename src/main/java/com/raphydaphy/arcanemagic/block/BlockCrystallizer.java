@@ -20,7 +20,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class BlockCrystallizer extends BlockBase
 {
-	public static final int GUI_ID = 3;
+	public static final int GUI_ID = 2;
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
 
 	public BlockCrystallizer()
