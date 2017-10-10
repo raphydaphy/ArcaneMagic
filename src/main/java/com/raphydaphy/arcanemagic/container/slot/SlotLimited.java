@@ -21,15 +21,5 @@ public class SlotLimited extends SlotItemHandler
 	{
 		return canAccept.test(stack);
 	}
-	
-	@Override
-	public void putStack(ItemStack stack)
-    {
-		if (canAccept.test(stack))
-		{
-			this.inventory.setInventorySlotContents(super.slotNumber, stack);
-			this.onSlotChanged();
-		}
-    }
 
 }

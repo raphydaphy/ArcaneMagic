@@ -279,7 +279,7 @@ public class ClientProxy extends CommonProxy
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent.Pre event)
 	{
-		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/orb"));
+		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball"));
 		ScepterRegistry.getValues().forEach(part ->
 		{
 			event.getMap().registerSprite(part.getTexture());

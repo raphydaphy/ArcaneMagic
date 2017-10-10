@@ -26,7 +26,7 @@ public class ContainerWritingDesk extends Container
 		addOwnSlots();
 		addPlayerSlots(playerInventory);
 	}
-
+	
 	private void addPlayerSlots(IInventory playerInventory)
 	{
 		// Slots for the main inventory
@@ -35,7 +35,7 @@ public class ContainerWritingDesk extends Container
 			for (int col = 0; col < 9; ++col)
 			{
 				int x = 8 + col * 18;
-				int y = row * 18 + 84;
+				int y = row * 18 + 110;
 				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
 			}
 		}
@@ -44,7 +44,7 @@ public class ContainerWritingDesk extends Container
 		for (int row = 0; row < 9; ++row)
 		{
 			int x = 8 + row * 18;
-			int y = 142;
+			int y = 168;
 			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
 		}
 	}
@@ -73,7 +73,7 @@ public class ContainerWritingDesk extends Container
 			if (index < TileEntityWritingDesk.SIZE)
 			{
 				// TODO: not hardcode the max inv size to support mods that altar the player inventory
-				if (!this.mergeItemStack(cur, TileEntityWritingDesk.SIZE, 42, true))
+				if (!this.mergeItemStack(cur, TileEntityWritingDesk.SIZE, 38, true))
 				{
 					return ItemStack.EMPTY;
 				}
@@ -81,7 +81,10 @@ public class ContainerWritingDesk extends Container
 			// TODO: From player to writing desk - should transfer only notebook or paper 
 			else
 			{
-				return ItemStack.EMPTY;
+				if (!this.mergeItemStack(cur, 0, TileEntityWritingDesk.SIZE, true))
+				{
+					return ItemStack.EMPTY;
+				}
 			}
 
 			if (cur.getCount() == 0)

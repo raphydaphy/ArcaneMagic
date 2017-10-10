@@ -21,6 +21,7 @@ import com.raphydaphy.arcanemagic.item.ItemTip;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.util.IHasRecipe;
 
 import net.minecraft.block.Block;
@@ -124,5 +125,7 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityCrystallizer.class, ArcaneMagic.MODID + "_crystallizer");
 		GameRegistry.registerTileEntity(TileEntityEssenceConcentrator.class,
 				ArcaneMagic.MODID + "_essence_concentrator");
+		GameRegistry.registerTileEntity(TileEntityWritingDesk.class,
+				ArcaneMagic.MODID + "_writing_desk");
 	}
 }
