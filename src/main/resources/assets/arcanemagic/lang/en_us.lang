@@ -18,11 +18,10 @@ item.arcanemagic.scribing_tools.name=Scribing Tools
 item.arcanemagic.ancient_parchment.name=Ancient Parchment
 
 # Blocks
-tile.arcanemagic.table.name=Table
 tile.arcanemagic.elemental_crafting_table.name=Elemental Crafting Table
 tile.arcanemagic.crystallizer.name=Crystallizer
 tile.arcanemagic.essence_concentrator.name=Essence Concentrator
-tile.arcanemagic.research_table.name=notebook Table
+tile.arcanemagic.writing_desk.name=Writing Desk
 
 # Sounds
 subtitle.arcanemagic.craft_start=Started Crafting
