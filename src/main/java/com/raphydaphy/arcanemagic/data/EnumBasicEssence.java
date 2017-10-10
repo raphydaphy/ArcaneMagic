@@ -7,7 +7,7 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 public enum EnumBasicEssence implements IPropertyEnum
 {
 	OZONE(Essence.OZONE), DEPTH(Essence.DEPTH), INFERNO(Essence.INFERNO), HORIZON(Essence.HORIZON), PEACE(
-			Essence.PEACE), CHAOS(Essence.CHAOS), CREATION(Essence.CREATION);
+			Essence.PEACE), CHAOS(Essence.CHAOS);
 
 	final Essence essence;
 

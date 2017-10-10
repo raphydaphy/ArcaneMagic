@@ -2,11 +2,9 @@ package com.raphydaphy.arcanemagic;
 
 import org.apache.logging.log4j.Logger;
 
-import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
 import com.raphydaphy.arcanemagic.api.notebook.CategoryRegistry;
-import com.raphydaphy.arcanemagic.api.recipe.ElementalCraftingRecipe;
 import com.raphydaphy.arcanemagic.capabilities.Capabilities;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicCreativeTab;
@@ -15,10 +13,11 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.proxy.GuiProxy;
+import com.raphydaphy.arcanemagic.util.RecipeHelper;
 
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -73,22 +72,13 @@ public class ArcaneMagic
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		NotebookCategories.register();
-
-		// TODO: make this a less rubbish registeration system
-		// TODO: add actual recipes
 		
-		ItemStack[][] quillRecipe = {
-				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) },
-				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) },
-				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) } };
-		ArcaneMagicAPI.registerElementalCraftingRecipe(new ElementalCraftingRecipe(quillRecipe.clone(), new ItemStack(Items.DYE)));
-		
-		ItemStack[][] quartzRecipe = {
-				{ new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE) },
-				{ ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY },
-				{ new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE) } };
-		ArcaneMagicAPI.registerElementalCraftingRecipe(new ElementalCraftingRecipe(quartzRecipe.clone(), new ItemStack(Items.QUARTZ)));
-		
+		Block s = Blocks.STONE;
+		RecipeHelper.addElementalShaped(Items.DYE, Essence.HORIZON, 25, s, s, s, null, null, null, s, s, s);
+		Block g = Blocks.GLOWSTONE;
+		RecipeHelper.addElementalShaped(Items.QUARTZ, Essence.PEACE, 10, g, null, g, null, g, null, g, null, g);
+		RecipeHelper.addElementalShapeless(ModRegistry.ANCIENT_PARCHMENT, Essence.CHAOS, 150, "plankWood", "plankWood", "cobblestone", g, s);
+		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		proxy.postInit(event);
 	}
 

@@ -1,8 +1,14 @@
 package com.raphydaphy.arcanemagic.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.ShapedElementalRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.ShapelessElementalRecipe;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 
 import net.minecraft.block.Block;
@@ -31,9 +37,10 @@ public class RecipeHelper
 	private static final String MODID = ArcaneMagic.MODID;
 	private static final String MODNAME = ArcaneMagic.MODNAME;
 	public static final List<IRecipe> RECIPES = ModRegistry.RECIPES;
+	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
 
 	/**
-	 * This adds the recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipeX, where X is the current recipe you are adding.
+	 * This adds a recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipeX, where X is the current recipe you are adding.
 	 */
 	public static void addRecipe(int j, IRecipe rec)
 	{
@@ -44,7 +51,7 @@ public class RecipeHelper
 	}
 
 	/**
-	 * This adds the recipe to the list of crafting recipes.  Cares about names.
+	 * This adds a recipe to the list of crafting recipes.  Cares about names.
 	 */
 	public static void addRecipe(String name, IRecipe rec)
 	{
@@ -52,6 +59,14 @@ public class RecipeHelper
 			RECIPES.add(rec.setRegistryName(new ResourceLocation(MODID, name)));
 		else
 			RECIPES.add(rec);
+	}
+	
+	/**
+	 * This adds an elemental recipe to the master list.
+	 */
+	public static void addElementalRecipe(IElementalRecipe rec)
+	{
+		ELEMENTAL_RECIPES.add(rec);
 	}
 
 	/**
@@ -348,6 +363,57 @@ public class RecipeHelper
 			PotionType outputPot)
 	{
 		addPotionRecipe(Items.POTIONITEM, inputPot, makeStack(reagent), Items.POTIONITEM, outputPot);
+	}
+	
+	/**
+	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
+	 */
+	public static void addElementalShapeless(ItemStack output, Essence essence, int reqEssence, Object... inputs)
+	{
+		addElementalRecipe(new ShapelessElementalRecipe(output, createElementalInput(inputs), new EssenceStack(essence, reqEssence)));
+	}
+
+	public static <T extends IForgeRegistryEntry<?>> void addElementalShapeless(T output, Essence essence, int reqEssence, Object... inputs)
+	{
+		addElementalShapeless(makeStack(output), essence, reqEssence, inputs);
+	}
+
+	/**
+	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
+	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid.
+	 */
+	public static void addElementalShaped(ItemStack output, Essence essence, int reqEssence, Object... input)
+	{
+		addElementalRecipe(new ShapedElementalRecipe(output, createElementalInput(input), new EssenceStack(essence, reqEssence)));
+	}
+
+	public static <T extends IForgeRegistryEntry<?>> void addElementalShaped(T output, Essence essence, int reqEssence, Object... input)
+	{
+		addElementalShaped(makeStack(output), essence, reqEssence, input); 
+	}
+	
+	/**
+	 * Creates a list of ingredients based on an Object[].  Valid types are {@link String}, {@link ItemStack}, {@link Item}, and {@link Block}.
+	 * Used for elemental recipes.
+	 */
+	public static NonNullList<Ingredient> createElementalInput(Object[] input)
+	{
+		if (input[0] instanceof List)
+			input = ((List<?>) input[0]).toArray();
+		else if (input[0] instanceof Object[])
+			input = (Object[]) input[0];
+		NonNullList<Ingredient> inputL = NonNullList.withSize(9, Ingredient.EMPTY);
+		for (int i = 0; i < input.length; i++)
+		{
+			Object k = input[i];
+			if (k instanceof String)
+				inputL.set(i, new OreIngredient((String) k));
+			else if (k instanceof ItemStack && !((ItemStack) k).isEmpty())
+				inputL.set(i, Ingredient.fromStacks((ItemStack) k));
+			else if (k instanceof IForgeRegistryEntry)
+				inputL.set(i, Ingredient.fromStacks(makeStack((IForgeRegistryEntry<?>) k)));
+		}
+		return inputL;
 	}
 
 }

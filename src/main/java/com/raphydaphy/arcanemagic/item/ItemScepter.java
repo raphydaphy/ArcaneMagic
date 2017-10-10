@@ -12,21 +12,15 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
-import com.raphydaphy.arcanemagic.api.recipe.ElementalCraftingRecipe;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
-import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
+import com.raphydaphy.arcanemagic.data.EnumBasicEssence;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -43,10 +37,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -55,8 +47,6 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class ItemScepter extends ItemBase
 {
@@ -140,6 +130,8 @@ public class ItemScepter extends ItemBase
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		//player.setActiveHand(hand);
+		if(!world.isRemote) stack.getCapability(IEssenceStorage.CAP, null).store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
+		
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
@@ -147,76 +139,6 @@ public class ItemScepter extends ItemBase
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
 			float hitX, float hitY, float hitZ)
 	{
-
-		Block block = world.getBlockState(pos).getBlock();
-		if (block.equals(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
-		{
-
-			TileEntityElementalCraftingTable te = (TileEntityElementalCraftingTable) world.getTileEntity(pos);
-			if (te == null)
-			{
-				return EnumActionResult.FAIL;
-			}
-
-			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			ItemStack[][] recipeIn = new ItemStack[3][3];
-
-			int slot = 0;
-			for (int slotX = 0; slotX < 3; slotX++)
-			{
-				for (int slotY = 0; slotY < 3; slotY++)
-				{
-					recipeIn[slotX][slotY] = cap.getStackInSlot(slot);
-					slot++;
-				}
-			}
-
-			ElementalCraftingRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(recipeIn);
-			
-			if (foundRecipe != null)
-			{
-				
-				if (!world.isRemote)
-				{
-					int x = 0;
-					int y = 0;
-					for (int curSlot = 0; curSlot < 9; curSlot++)
-					{
-						System.out.println(curSlot + ": " + x + ", " + y);
-						cap.getStackInSlot(curSlot).setCount(
-								cap.getStackInSlot(curSlot).getCount() - foundRecipe.getInput()[y][x].getCount());
-						te.markDirty();
-
-						x++;
-						if (x > 2)
-						{
-							x = 0;
-							y++;
-						}
-					}
-					EntityItemFancy craftResult = new EntityItemFancy(world, pos.getX() + 0.5,
-							pos.getY() + 9d * (1d / 16d), pos.getZ() + 0.5, foundRecipe.getOutput());
-					craftResult.motionX = 0;
-					craftResult.motionY = 0;
-					craftResult.motionZ = 0;
-					world.spawnEntity(craftResult);
-
-					return EnumActionResult.SUCCESS;
-				} else
-				{
-					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
-							pos.getZ() + 0.5, 0f, 0.1f, 0f);
-					world.playSound(player, pos, ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1,
-							1);
-					return EnumActionResult.PASS;
-				}
-			}
-
-			if (!world.isRemote)
-			{
-				return EnumActionResult.SUCCESS;
-			}
-		}
 
 		return EnumActionResult.PASS;
 	}

@@ -1,6 +1,10 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
+import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.block.material.Material;
@@ -12,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -82,8 +88,7 @@ public class BlockElementalCraftingTable extends BlockBase
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		TileEntity te = world.getTileEntity(pos);
 		if (!(te instanceof TileEntityElementalCraftingTable))
@@ -91,11 +96,40 @@ public class BlockElementalCraftingTable extends BlockBase
 			return false;
 		}
 		ItemStack stack = player.getHeldItem(hand);
-		if (stack.isItemEqualIgnoreDurability(new ItemStack(ModRegistry.SCEPTER)))
+		if (stack.getItem() instanceof ItemScepter)
 		{
+			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
+
+			for(int i = 0; i < 9; i++) recipeInputs.set(i, cap.getStackInSlot(i));
+
+			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(stack, recipeInputs, world);
+			if (foundRecipe != null)
+			{
+				if (!world.isRemote)
+				{
+					foundRecipe.craft(stack, recipeInputs);
+					te.markDirty();
+					EntityItemFancy craftResult = new EntityItemFancy(world, pos.getX() + 0.5,
+							pos.getY() + 9d * (1d / 16d), pos.getZ() + 0.5, foundRecipe.getRecipeOutput());
+					craftResult.motionX = 0;
+					craftResult.motionY = 0;
+					craftResult.motionZ = 0;
+					world.spawnEntity(craftResult);
+					return true;
+				} else
+				{
+					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
+							pos.getZ() + 0.5, 0f, 0.1f, 0f);
+					world.playSound(player, pos, ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1,
+							1);
+					return true;
+				}
+			}
 			return false;
 		}
-		if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
+		
+		else if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
 		{
 			float divX = (hitX - 0.203f);
 			float divZ = (hitZ - 0.203f);
@@ -124,19 +158,18 @@ public class BlockElementalCraftingTable extends BlockBase
 			if (stack != null && !stack.isEmpty() && !player.isSneaking())
 			{
 				ItemStack insertStack = stack.copy();
-				insertStack.setCount(1);
-				if (cap.insertItem(slot, insertStack, true).isEmpty())
-				{
+				ItemStack remain = cap.insertItem(slot, insertStack, false);
+				if(remain.getCount() != insertStack.getCount()) {
 					if (!world.isRemote)
 					{
-						player.getHeldItem(hand).shrink(1);
-						cap.insertItem(slot, insertStack, false);
+						player.setHeldItem(hand, remain);
 						te.markDirty();
 					} else
 					{
 						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 					}
 				}
+				
 			}
 			else
 			{
