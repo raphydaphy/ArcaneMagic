@@ -5,6 +5,7 @@ import java.util.Random;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryElementalParticles;
@@ -53,6 +54,10 @@ public class ModEvents
 			if (info != null)
 			{
 				info.setUnlocked(CategoryElementalParticles.REQUIRED_TAG);
+				if (ev.player.world.isRemote)
+				{
+					Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(new CategoryElementalParticles()));
+				}
 			}
 		}
 	}
@@ -68,12 +73,16 @@ public class ModEvents
 			}
 		}
 		
-		if (ev.pickedUp.getItem().getItem().equals(ModRegistry.WRITING_DESK.createItemBlock()))
+		if (ev.pickedUp.getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 		{
 			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
 			if (info != null)
 			{
 				info.setUnlocked(CategoryElementalParticles.REQUIRED_TAG);
+				if (ev.player.world.isRemote)
+				{
+					Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(new CategoryElementalParticles()));
+				}
 			}
 		}
 	}
