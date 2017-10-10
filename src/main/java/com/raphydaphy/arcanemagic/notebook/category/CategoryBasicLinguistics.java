@@ -34,4 +34,9 @@ public class CategoryBasicLinguistics extends NotebookCategory
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 1, 0x000000));
 		return entries;
 	}
+	
+	public ItemStack getIcon()
+	{
+		return new ItemStack(ModRegistry.WRITING_DESK);
+	}
 }

@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
+
+import net.minecraft.item.ItemStack;
 
 public class CategoryElementalParticles extends NotebookCategory
 {
@@ -34,5 +37,11 @@ public class CategoryElementalParticles extends NotebookCategory
 	public String getRequiredTag()
 	{
 		return REQUIRED_TAG;
+	}
+	
+	@Override
+	public ItemStack getIcon()
+	{
+		return new ItemStack(ModRegistry.ANCIENT_PARCHMENT);
 	}
 }

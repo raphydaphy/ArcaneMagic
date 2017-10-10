@@ -46,4 +46,10 @@ public class CategoryCrystallization extends NotebookCategory
 	{
 		return REQUIRED_TAG;
 	}
+
+	@Override
+	public ItemStack getIcon()
+	{
+		return new ItemStack(ModRegistry.CRYSTALLIZER);
+	}
 }

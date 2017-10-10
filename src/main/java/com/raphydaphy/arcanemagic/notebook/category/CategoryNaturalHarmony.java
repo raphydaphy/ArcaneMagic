@@ -3,9 +3,12 @@ package com.raphydaphy.arcanemagic.notebook.category;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.notebook.entry.NotebookEntryText;
+
+import net.minecraft.item.ItemStack;
 
 public class CategoryNaturalHarmony extends NotebookCategory
 {
@@ -33,5 +36,11 @@ public class CategoryNaturalHarmony extends NotebookCategory
 	public String getRequiredTag()
 	{
 		return REQUIRED_TAG;
+	}
+	
+	@Override
+	public ItemStack getIcon()
+	{
+		return Essence.CREATION.getItemForm();
 	}
 }

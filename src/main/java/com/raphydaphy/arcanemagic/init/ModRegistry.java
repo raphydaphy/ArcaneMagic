@@ -112,6 +112,7 @@ public class ModRegistry
 		ArcaneMagicSoundHandler.register("zap_2", registry);
 		ArcaneMagicSoundHandler.register("hh_on", registry);
 		ArcaneMagicSoundHandler.register("hh_off", registry);
+		ArcaneMagicSoundHandler.register("learn", registry);
 		ArcaneMagicSoundHandler.register("infuser", registry);
 		ArcaneMagicSoundHandler.register("infuser_start", registry);
 		ArcaneMagicSoundHandler.register("camera_clack_1", registry);

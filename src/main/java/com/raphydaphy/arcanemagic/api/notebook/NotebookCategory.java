@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.api.notebook;
 
 import java.util.List;
 
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<NotebookCategory>
@@ -17,5 +18,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	{
 		return "usedNotebook";
 	}
+	
+	public abstract ItemStack getIcon();
 
 }

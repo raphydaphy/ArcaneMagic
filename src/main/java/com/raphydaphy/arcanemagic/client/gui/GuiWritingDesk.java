@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 public class GuiWritingDesk extends GuiContainer
 {
 	public static final int WIDTH = 176;
-	public static final int HEIGHT = 192;
+	public static final int HEIGHT = 203;
 	private TileEntityWritingDesk te;
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/writing_desk.png");
@@ -37,6 +37,7 @@ public class GuiWritingDesk extends GuiContainer
 	{
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 250, 203);
-		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.writing_desk"), guiLeft + 58, guiTop + 7, 0x000000);
+		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.writing_desk"), guiLeft + 75, guiTop + 8, 4210752);
+		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 107, 4210752);
 	}
 }

@@ -35,7 +35,7 @@ public class ContainerWritingDesk extends Container
 			for (int col = 0; col < 9; ++col)
 			{
 				int x = 8 + col * 18;
-				int y = row * 18 + 110;
+				int y = row * 18 + 118;
 				this.addSlotToContainer(new Slot(playerInventory, slot++, x, y));
 			}
 		}
@@ -44,7 +44,7 @@ public class ContainerWritingDesk extends Container
 		for (int row = 0; row < 9; ++row)
 		{
 			int x = 8 + row * 18;
-			int y = 168;
+			int y = 176;
 			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
 		}
 	}
@@ -54,8 +54,8 @@ public class ContainerWritingDesk extends Container
 		IItemHandler itemHandler = this.te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		addSlotToContainer(
-				new SlotLimited(itemHandler, 0, 15, 42, instance -> instance.getItem().equals(ModRegistry.NOTEBOOK)));
-		addSlotToContainer(new SlotLimited(itemHandler, 1, 15, 64, instance -> instance.getItem().equals(Items.PAPER)));
+				new SlotLimited(itemHandler, 0, 15, 41, instance -> instance.getItem().equals(ModRegistry.NOTEBOOK)));
+		addSlotToContainer(new SlotLimited(itemHandler, 1, 15, 63, instance -> instance.getItem().equals(Items.PAPER)));
 	}
 
 	@Override
