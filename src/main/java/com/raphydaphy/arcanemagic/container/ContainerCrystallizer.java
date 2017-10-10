@@ -34,7 +34,7 @@ public class ContainerCrystallizer extends Container
 			for (int col = 0; col < 9; ++col)
 			{
 				int x = 8 + col * 18;
-				int y = row * 18 + 84;
+				int y = row * 18 + 99;
 				this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
 				slot++;
 			}
@@ -44,7 +44,7 @@ public class ContainerCrystallizer extends Container
 		for (int row = 0; row < 9; ++row)
 		{
 			int x = 8 + row * 18;
-			int y = 142;
+			int y = 157;
 			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
 		}
 	}

@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiCrystallizer extends GuiContainer
 {
 	public static final int WIDTH = 176;
-	public static final int HEIGHT = 166;
+	public static final int HEIGHT = 181;
 	private TileEntityCrystallizer te;
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/crystallizer.png");
@@ -48,18 +48,18 @@ public class GuiCrystallizer extends GuiContainer
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1, 1, 1, 1);
-		drawModalRectWithCustomSizedTexture(x, y, 177, 2, 12, 60, 196, 166);
+		drawModalRectWithCustomSizedTexture(x, y, 177, 2, 12, 60, 196, 181);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1, 1, 1, 0.2f);
-		drawModalRectWithCustomSizedTexture(x + 2, y + 6, 179, 63, 8, 48, 196, 166);
+		drawModalRectWithCustomSizedTexture(x + 2, y + 6, 179, 63, 8, 48, 196, 181);
 		drawTexturedModalRect(x + 1, y + 4, 104, 0, 8, 29);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(r, g, b, 1f);
-		drawModalRectWithCustomSizedTexture(x + 2, y + 6 + (48 - essence), 179, 63, 8, essence, 196, 166);
+		drawModalRectWithCustomSizedTexture(x + 2, y + 6 + (48 - essence), 179, 63, 8, essence, 196, 181);
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();
@@ -77,13 +77,13 @@ public class GuiCrystallizer extends GuiContainer
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
 	{
 		mc.getTextureManager().bindTexture(background);
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 196, 166);
+		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 196, 181);
 		for (int x = 0; x < 2; x++)
 		{
 			for (int y = 0; y < 3; y++)
 			{
 				drawModalRectWithCustomSizedTexture(guiLeft + 13 + (x * 20), guiTop + 20 + (y * 20), 176, 113, 18, 18,
-						196, 166);
+						196, 181);
 			}
 		}
 
@@ -99,6 +99,7 @@ public class GuiCrystallizer extends GuiContainer
 					(int) Math.floor(stack.getCount() / 20.4f), 0);
 		}
 
-		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 0x000000);
+		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 4210752);
+		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 87, 4210752);
 	}
 }
