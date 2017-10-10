@@ -6,8 +6,8 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryAncientRelics;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryBasicLinguistics;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryCrystallization;
-import com.raphydaphy.arcanemagic.notebook.category.CategoryElementalParticles;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryEssenceCollection;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryForgottenKnowledge;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryManipulatingMagic;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryMysticalEnergy;
 import com.raphydaphy.arcanemagic.notebook.category.CategoryNaturalHarmony;
@@ -16,9 +16,9 @@ public class NotebookCategories
 {
 	public static final NotebookCategory ANCIENT_RELICS = new CategoryAncientRelics().setRegistryName(ArcaneMagic.MODID,
 			"ancient_relics");
-	public static final NotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics()
+	public static final NotebookCategory FORGOTTEN_KNOWLEDGE = new CategoryForgottenKnowledge()
 			.setRegistryName(ArcaneMagic.MODID, "basic_linguistics");
-	public static final NotebookCategory ELEMENTAL_PARTICLES = new CategoryElementalParticles()
+	public static final NotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics()
 			.setRegistryName(ArcaneMagic.MODID, "elemental_particles");
 	public static final NotebookCategory MYSTICAL_ENERGY = new CategoryMysticalEnergy()
 			.setRegistryName(ArcaneMagic.MODID, "mystical_energy");
@@ -40,8 +40,8 @@ public class NotebookCategories
 		done = true;
 
 		ArcaneMagicAPI.registerCategory(ANCIENT_RELICS);
+		ArcaneMagicAPI.registerCategory(FORGOTTEN_KNOWLEDGE);
 		ArcaneMagicAPI.registerCategory(BASIC_LINGUISTICS);
-		ArcaneMagicAPI.registerCategory(ELEMENTAL_PARTICLES);
 		ArcaneMagicAPI.registerCategory(MYSTICAL_ENERGY);
 		ArcaneMagicAPI.registerCategory(ESSENCE_COLLECTION);
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);

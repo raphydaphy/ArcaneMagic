@@ -5,10 +5,10 @@ import java.util.Random;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
-import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
-import com.raphydaphy.arcanemagic.notebook.category.CategoryElementalParticles;
+import com.raphydaphy.arcanemagic.notebook.NotebookCategories;
+import com.raphydaphy.arcanemagic.notebook.category.CategoryBasicLinguistics;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -25,6 +25,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -46,6 +47,20 @@ public class ModEvents
 	}
 	
 	@SubscribeEvent
+	public static void onEntityItemPickup(EntityItemPickupEvent ev)
+	{
+		if (ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
+		{
+			NotebookInfo info = ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
+			if (info != null)
+			{
+				info.setUnlocked(CategoryBasicLinguistics.REQUIRED_TAG);
+				ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
+			}
+		}
+	}
+	
+	@SubscribeEvent
 	public static void onItemCrafted(ItemCraftedEvent ev)
 	{
 		if (ev.crafting.getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
@@ -53,11 +68,8 @@ public class ModEvents
 			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
 			if (info != null)
 			{
-				info.setUnlocked(CategoryElementalParticles.REQUIRED_TAG);
-				if (ev.player.world.isRemote)
-				{
-					Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(new CategoryElementalParticles()));
-				}
+				info.setUnlocked(CategoryBasicLinguistics.REQUIRED_TAG);
+				ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
 			}
 		}
 	}
@@ -70,19 +82,6 @@ public class ModEvents
 			if (ev.pickedUp.world.getBlockState(ev.pickedUp.getPosition()).getBlock() == ModRegistry.FANCY_LIGHT)
 			{
 				ev.pickedUp.world.setBlockToAir(ev.pickedUp.getPosition());
-			}
-		}
-		
-		if (ev.pickedUp.getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
-		{
-			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
-			if (info != null)
-			{
-				info.setUnlocked(CategoryElementalParticles.REQUIRED_TAG);
-				if (ev.player.world.isRemote)
-				{
-					Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(new CategoryElementalParticles()));
-				}
 			}
 		}
 	}

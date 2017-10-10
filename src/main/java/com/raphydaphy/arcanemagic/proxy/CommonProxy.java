@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.proxy;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -33,6 +34,11 @@ public abstract class CommonProxy
 	{
 
 	}
-
+	
+	public void addCategoryUnlockToast(NotebookCategory category)
+	{
+		
+	}
+	
 	public abstract String translate(String key, Object... args);
 }

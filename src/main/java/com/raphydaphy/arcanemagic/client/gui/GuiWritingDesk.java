@@ -38,6 +38,6 @@ public class GuiWritingDesk extends GuiContainer
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 250, 203);
 		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.writing_desk"), guiLeft + 75, guiTop + 8, 4210752);
-		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 107, 4210752);
+		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 106, 4210752);
 	}
 }

@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.client.model.SceptreModel;
@@ -17,6 +18,7 @@ import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
+import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -189,6 +191,12 @@ public class ClientProxy extends CommonProxy
 		Essence.sendEssence(Minecraft.getMinecraft().world, essence, from, to, false, spawnParticles);
 	}
 
+	@Override
+	public void addCategoryUnlockToast(NotebookCategory category)
+	{
+		Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(category));
+	}
+	
 	@SubscribeEvent
 	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
 	{

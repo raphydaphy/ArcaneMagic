@@ -129,7 +129,7 @@ public class ItemScepter extends ItemBase
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
-		//player.setActiveHand(hand);
+		player.setActiveHand(hand);
 		if (!world.isRemote)
 			stack.getCapability(IEssenceStorage.CAP, null)
 					.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
