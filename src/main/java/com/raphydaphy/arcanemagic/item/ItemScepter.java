@@ -130,8 +130,10 @@ public class ItemScepter extends ItemBase
 	{
 		ItemStack stack = player.getHeldItem(hand);
 		//player.setActiveHand(hand);
-		if(!world.isRemote) stack.getCapability(IEssenceStorage.CAP, null).store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
-		
+		if (!world.isRemote)
+			stack.getCapability(IEssenceStorage.CAP, null)
+					.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
+
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
@@ -265,8 +267,8 @@ public class ItemScepter extends ItemBase
 		GlStateManager.popMatrix();
 	}
 
-	public static List<Pair<Integer, Integer>> barPositions = Arrays.asList(Pair.of(37, 1), Pair.of(24, -12), Pair.of(7, -20),
-			Pair.of(-12, -20), Pair.of(-29, -14), Pair.of(-42, -1));
+	public static List<Pair<Integer, Integer>> barPositions = Arrays.asList(Pair.of(37, 1), Pair.of(24, -12),
+			Pair.of(7, -20), Pair.of(-12, -20), Pair.of(-29, -14), Pair.of(-42, -1));
 
 	@SideOnly(Side.CLIENT)
 	public static void renderHUD(Minecraft mc, ScaledResolution res, ItemStack stack)

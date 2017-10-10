@@ -16,7 +16,7 @@ public class TileEntityWritingDesk extends TileEntity
 
 	public TileEntityWritingDesk()
 	{
-		
+
 	}
 
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
@@ -78,7 +78,7 @@ public class TileEntityWritingDesk extends TileEntity
 		}
 		return super.getCapability(capability, facing);
 	}
-	
+
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
 	{

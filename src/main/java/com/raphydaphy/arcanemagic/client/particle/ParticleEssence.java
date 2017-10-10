@@ -35,8 +35,7 @@ public class ParticleEssence extends Particle
 		this.posY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		this.posZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
-		this.setRBGColorF(essence.getColor().getRed(),
-				essence.getColor().getGreen(), essence.getColor().getBlue());
+		this.setRBGColorF(essence.getColor().getRed(), essence.getColor().getGreen(), essence.getColor().getBlue());
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
@@ -73,7 +72,6 @@ public class ParticleEssence extends Particle
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
 
-		
 		if (!isCosmetic)
 		{
 			TileEntity hit = world.getTileEntity(new BlockPos((int) Math.floor(travelPos.x),
@@ -96,7 +94,7 @@ public class ParticleEssence extends Particle
 		double distX = travelPos.x - this.posX;
 		double distY = travelPos.y - this.posY;
 		double distZ = travelPos.z - this.posZ;
-		
+
 		if (Math.abs(distY) >= Math.abs(distX))
 		{
 			distX /= 3;
@@ -117,6 +115,5 @@ public class ParticleEssence extends Particle
 	{
 		super.renderParticle(buffer, entity, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
 
-		
 	}
 }

@@ -23,7 +23,7 @@ public class GuiWritingDesk extends GuiContainer
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
-	
+
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{

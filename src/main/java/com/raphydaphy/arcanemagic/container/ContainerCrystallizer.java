@@ -62,18 +62,18 @@ public class ContainerCrystallizer extends Container
 			}
 		}
 	}
-	
+
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
 	{
 		ItemStack prev = null;
-		Slot slot = (Slot)this.inventorySlots.get(index);
-		
+		Slot slot = (Slot) this.inventorySlots.get(index);
+
 		if (slot != null && slot.getHasStack())
 		{
 			ItemStack cur = slot.getStack();
 			prev = cur.copy();
-			
+
 			// From crystlaizer -> player
 			if (index < TileEntityCrystallizer.SIZE)
 			{
@@ -88,24 +88,23 @@ public class ContainerCrystallizer extends Container
 			{
 				return ItemStack.EMPTY;
 			}
-			
+
 			if (cur.getCount() == 0)
 			{
 				slot.putStack(ItemStack.EMPTY);
-			}
-			else
+			} else
 			{
 				slot.onSlotChanged();
 			}
-			
+
 			if (cur.getCount() == prev.getCount())
 			{
 				return ItemStack.EMPTY;
 			}
-			
+
 		}
 		return prev;
-    }
+	}
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn)

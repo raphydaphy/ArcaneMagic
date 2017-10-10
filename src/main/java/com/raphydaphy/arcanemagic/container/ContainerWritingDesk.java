@@ -11,7 +11,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -26,7 +25,7 @@ public class ContainerWritingDesk extends Container
 		addOwnSlots();
 		addPlayerSlots(playerInventory);
 	}
-	
+
 	private void addPlayerSlots(IInventory playerInventory)
 	{
 		// Slots for the main inventory

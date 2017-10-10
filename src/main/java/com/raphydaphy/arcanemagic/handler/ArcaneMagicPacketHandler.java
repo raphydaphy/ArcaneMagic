@@ -26,12 +26,11 @@ public class ArcaneMagicPacketHandler
 	public static void registerMessages()
 	{
 		// Client - > Server
-		
-		INSTANCE.registerMessage(PacketNotebookInfo.Handler.class, PacketNotebookInfo.class, packetId++,
-				Side.SERVER);
+
+		INSTANCE.registerMessage(PacketNotebookInfo.Handler.class, PacketNotebookInfo.class, packetId++, Side.SERVER);
 
 		// Server -> Client
-		
+
 		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++,
 				Side.CLIENT);
 	}

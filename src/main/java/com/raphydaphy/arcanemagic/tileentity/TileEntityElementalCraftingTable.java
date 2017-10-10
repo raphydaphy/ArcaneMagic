@@ -55,12 +55,12 @@ public class TileEntityElementalCraftingTable extends TileEntity
 						state, state, 1 | 2);
 			}
 		}
-		
-	    @Override
-	    public int getSlotLimit(int slot)
-	    {
-	        return 1;
-	    }
+
+		@Override
+		public int getSlotLimit(int slot)
+		{
+			return 1;
+		}
 	};
 
 	@Override

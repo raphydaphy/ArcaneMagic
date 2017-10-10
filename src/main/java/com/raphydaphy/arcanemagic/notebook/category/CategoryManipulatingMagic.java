@@ -26,7 +26,7 @@ public class CategoryManipulatingMagic extends NotebookCategory
 
 		return entries;
 	}
-	
+
 	public static final String REQUIRED_TAG = "unlockedManipulatingMagic";
 
 	@Override

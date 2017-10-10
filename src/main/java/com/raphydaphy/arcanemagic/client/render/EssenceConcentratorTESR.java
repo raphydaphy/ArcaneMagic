@@ -21,9 +21,9 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
-		
+
 		renderItem(te);
-		
+
 		GlStateManager.popMatrix();
 	}
 

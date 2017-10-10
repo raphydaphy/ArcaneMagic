@@ -32,10 +32,10 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		super(1000);
 
 	}
-	
+
 	private boolean canForm(EssenceStack formStack)
 	{
-		
+
 		boolean shouldContinue = false;
 		for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
 		{
@@ -43,18 +43,16 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 			{
 				shouldContinue = true;
 				break;
-			} else if (this.itemStackHandler
-					.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
+			} else if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
 			{
 				shouldContinue = true;
 				break;
 			}
 		}
-		
+
 		if (shouldContinue)
 		{
-			EssenceStack couldTakeThis = essenceStorage
-					.take(new EssenceStack(formStack.getEssence(), 10), false);
+			EssenceStack couldTakeThis = essenceStorage.take(new EssenceStack(formStack.getEssence(), 10), false);
 			if (couldTakeThis != null && !couldTakeThis.isEmpty())
 			{
 				shouldContinue = false;
@@ -62,7 +60,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		}
 		return shouldContinue;
 	}
-	
+
 	@Override
 	public void update()
 	{
@@ -89,7 +87,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								curFormingTimer = 0;
 								this.markDirty();
 							}
-						} 
+						}
 						// i said u could :D
 						else
 						{

@@ -65,7 +65,7 @@ public class GuiProxy implements IGuiHandler
 		case BlockWritingDesk.GUI_ID:
 			if (te instanceof TileEntityWritingDesk)
 			{
-				TileEntityWritingDesk containerTE = (TileEntityWritingDesk)te;
+				TileEntityWritingDesk containerTE = (TileEntityWritingDesk) te;
 				return new GuiWritingDesk(containerTE, new ContainerWritingDesk(player.inventory, containerTE));
 			}
 			break;

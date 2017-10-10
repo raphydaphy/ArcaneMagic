@@ -13,16 +13,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
-public class WrapperElementalCrafting implements ICustomCraftingRecipeWrapper {
+public class WrapperElementalCrafting implements ICustomCraftingRecipeWrapper
+{
 
 	private final IElementalRecipe recipe;
 
-	public WrapperElementalCrafting(IElementalRecipe rec) {
+	public WrapperElementalCrafting(IElementalRecipe rec)
+	{
 		recipe = rec;
 	}
 
 	@Override
-	public void getIngredients(IIngredients ingredients) {
+	public void getIngredients(IIngredients ingredients)
+	{
 		List<List<ItemStack>> inputs = new ArrayList<>();
 		for (Ingredient i : recipe.getIngredients())
 			inputs.add(Arrays.asList(i.getMatchingStacks()));
@@ -31,12 +34,15 @@ public class WrapperElementalCrafting implements ICustomCraftingRecipeWrapper {
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout layout, IIngredients input) {
-		if (recipe.isShapeless()) layout.setShapeless();
+	public void setRecipe(IRecipeLayout layout, IIngredients input)
+	{
+		if (recipe.isShapeless())
+			layout.setShapeless();
 	}
 
 	@Override
-	public void drawInfo(Minecraft mc, int width, int height, int mouseX, int mouseY) {
+	public void drawInfo(Minecraft mc, int width, int height, int mouseX, int mouseY)
+	{
 		//TODO draw essence stack in here or something
 	}
 

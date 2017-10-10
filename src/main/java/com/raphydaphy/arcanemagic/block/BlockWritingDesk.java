@@ -8,7 +8,6 @@ import com.raphydaphy.arcanemagic.util.RecipeHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -32,19 +31,19 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 	{
 		super("writing_desk", Material.ROCK, 2.5f);
 	}
-	
+
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
 		return AABB;
 	}
-	
+
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntityWritingDesk te = (TileEntityWritingDesk) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+
 		for (int i = 0; i < cap.getSlots(); ++i)
 		{
 			ItemStack itemstack = cap.getStackInSlot(i);
@@ -102,6 +101,7 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addShaped(this, 3, 3, "paper","dyeBlack", "paper", "plankWood","plankWood", "plankWood","plankWood",null,"plankWood");
+		RecipeHelper.addShaped(this, 3, 3, "paper", "dyeBlack", "paper", "plankWood", "plankWood", "plankWood",
+				"plankWood", null, "plankWood");
 	}
 }

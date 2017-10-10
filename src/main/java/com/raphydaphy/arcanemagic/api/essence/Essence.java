@@ -167,7 +167,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 								for (int i = 0; i < 5; i++)
 								{
 									double radius = 2.5;
-									double radians = Math.toRadians( world.rand.nextInt(360));
+									double radians = Math.toRadians(world.rand.nextInt(360));
 									Vec3d fxFrom = new Vec3d(to.x + Math.cos(radians) * radius, to.y - 2.5,
 											to.z + Math.sin(radians) * radius);
 									ArcaneMagic.proxy.spawnEssenceParticles(world, fxFrom, new Vec3d(0, 0, 0),

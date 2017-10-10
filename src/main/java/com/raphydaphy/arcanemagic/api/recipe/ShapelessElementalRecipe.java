@@ -13,13 +13,15 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class ShapelessElementalRecipe implements IElementalRecipe {
+public class ShapelessElementalRecipe implements IElementalRecipe
+{
 
 	private final ItemStack output;
 	private final NonNullList<Ingredient> inputs;
 	private final ImmutableEssenceStack essence;
 
-	public ShapelessElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, EssenceStack reqEssence) {
+	public ShapelessElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, EssenceStack reqEssence)
+	{
 		Preconditions.checkArgument(inputs.size() == 9);
 		this.output = output;
 		this.inputs = inputs;
@@ -27,7 +29,8 @@ public class ShapelessElementalRecipe implements IElementalRecipe {
 	}
 
 	@Override
-	public EssenceStack getReqEssence() {
+	public EssenceStack getReqEssence()
+	{
 		return essence;
 	}
 
@@ -37,32 +40,40 @@ public class ShapelessElementalRecipe implements IElementalRecipe {
 	 */
 
 	@Override
-	public boolean matches(ItemStack wand, NonNullList<ItemStack> stacks, World world) {
+	public boolean matches(ItemStack wand, NonNullList<ItemStack> stacks, World world)
+	{
 		List<ItemStack> toCheck = Lists.newArrayList(stacks);
-		for (Ingredient i : this.inputs) {
-			for (int ix = 0; ix < toCheck.size(); ix++) {
-				if (i.apply(toCheck.get(ix))) {
+		for (Ingredient i : this.inputs)
+		{
+			for (int ix = 0; ix < toCheck.size(); ix++)
+			{
+				if (i.apply(toCheck.get(ix)))
+				{
 					toCheck.remove(ix);
 					break;
-				}
-				else if(i == Ingredient.EMPTY && toCheck.get(ix).isEmpty()) toCheck.remove(ix);
+				} else if (i == Ingredient.EMPTY && toCheck.get(ix).isEmpty())
+					toCheck.remove(ix);
 			}
 		}
-		return toCheck.isEmpty() && (essence.isEmpty() || wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null);
+		return toCheck.isEmpty()
+				&& (essence.isEmpty() || wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null);
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getRecipeOutput()
+	{
 		return output;
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
+	public NonNullList<Ingredient> getIngredients()
+	{
 		return inputs;
 	}
 
 	@Override
-	public boolean isShapeless() {
+	public boolean isShapeless()
+	{
 		return true;
 	}
 

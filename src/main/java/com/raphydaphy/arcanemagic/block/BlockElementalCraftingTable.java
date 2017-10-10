@@ -88,7 +88,8 @@ public class BlockElementalCraftingTable extends BlockBase
 	}
 
 	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		TileEntity te = world.getTileEntity(pos);
 		if (!(te instanceof TileEntityElementalCraftingTable))
@@ -101,7 +102,8 @@ public class BlockElementalCraftingTable extends BlockBase
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
 
-			for(int i = 0; i < 9; i++) recipeInputs.set(i, cap.getStackInSlot(i));
+			for (int i = 0; i < 9; i++)
+				recipeInputs.set(i, cap.getStackInSlot(i));
 
 			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(stack, recipeInputs, world);
 			if (foundRecipe != null)
@@ -128,7 +130,7 @@ public class BlockElementalCraftingTable extends BlockBase
 			}
 			return false;
 		}
-		
+
 		else if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
 		{
 			float divX = (hitX - 0.203f);
@@ -159,7 +161,8 @@ public class BlockElementalCraftingTable extends BlockBase
 			{
 				ItemStack insertStack = stack.copy();
 				ItemStack remain = cap.insertItem(slot, insertStack, false);
-				if(remain.getCount() != insertStack.getCount()) {
+				if (remain.getCount() != insertStack.getCount())
+				{
 					if (!world.isRemote)
 					{
 						player.setHeldItem(hand, remain);
@@ -169,9 +172,8 @@ public class BlockElementalCraftingTable extends BlockBase
 						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 					}
 				}
-				
-			}
-			else
+
+			} else
 			{
 				ItemStack toExtract = cap.getStackInSlot(slot);
 				if (toExtract != null && !toExtract.isEmpty())

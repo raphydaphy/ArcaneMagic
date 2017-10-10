@@ -18,7 +18,7 @@ public class ArcaneMagicAPI
 	public static final String VERSION = "0.1";
 
 	private static ImmutableList<NotebookCategory> sorted_categories;
-	
+
 	public static void registerCategory(NotebookCategory category)
 	{
 		NotebookCategory.REGISTRY.register(category);
@@ -62,13 +62,15 @@ public class ArcaneMagicAPI
 		ArcaneMagic.LOGGER
 				.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}
-	
-	public static IElementalRecipe getElementalCraftingRecipe(ItemStack wand, NonNullList<ItemStack> inputs, World world)
+
+	public static IElementalRecipe getElementalCraftingRecipe(ItemStack wand, NonNullList<ItemStack> inputs,
+			World world)
 	{
 		Preconditions.checkArgument(inputs.size() == 9);
 		Preconditions.checkArgument(wand.hasTagCompound() && wand.hasCapability(IEssenceStorage.CAP, null));
 		for (IElementalRecipe curRecipe : RecipeHelper.ELEMENTAL_RECIPES)
-			if(curRecipe.matches(wand, inputs, world)) return curRecipe;
+			if (curRecipe.matches(wand, inputs, world))
+				return curRecipe;
 		return null;
 	}
 }

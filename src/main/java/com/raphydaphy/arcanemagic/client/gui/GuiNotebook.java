@@ -46,7 +46,7 @@ public class GuiNotebook extends GuiScreen
 	{
 		this.player = player;
 		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
-		
+
 		// player opened it for the first time!
 		if (cap != null && !cap.getUsed())
 		{
@@ -140,7 +140,7 @@ public class GuiNotebook extends GuiScreen
 			{
 				cap.setCategory(0);
 				curCategory = 0;
-				
+
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
 			}
 			mc.getTextureManager().bindTexture(notebook);

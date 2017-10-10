@@ -72,12 +72,13 @@ public class ArcaneMagic
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		NotebookCategories.register();
-		
+
 		Block s = Blocks.STONE;
 		RecipeHelper.addElementalShaped(Items.DYE, Essence.HORIZON, 25, s, s, s, null, null, null, s, s, s);
 		Block g = Blocks.GLOWSTONE;
 		RecipeHelper.addElementalShaped(Items.QUARTZ, Essence.PEACE, 10, g, null, g, null, g, null, g, null, g);
-		RecipeHelper.addElementalShapeless(ModRegistry.ANCIENT_PARCHMENT, Essence.CHAOS, 150, "plankWood", "plankWood", "cobblestone", g, s);
+		RecipeHelper.addElementalShapeless(ModRegistry.ANCIENT_PARCHMENT, Essence.CHAOS, 150, "plankWood", "plankWood",
+				"cobblestone", g, s);
 		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		proxy.postInit(event);
 	}

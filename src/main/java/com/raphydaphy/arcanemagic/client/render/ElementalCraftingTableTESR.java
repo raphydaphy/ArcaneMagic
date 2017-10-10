@@ -52,7 +52,7 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
 			GlStateManager.pushMatrix();
-			GlStateManager.translate((slotX / 5.35d) +  0.315, .62, (slotY / 5.35d) + 0.315);
+			GlStateManager.translate((slotX / 5.35d) + 0.315, .62, (slotY / 5.35d) + 0.315);
 			GlStateManager.scale(.1f, .1f, .1f);
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();

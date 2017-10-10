@@ -27,13 +27,13 @@ public class BlockCrystallizer extends BlockBase
 	{
 		super("crystallizer", Material.ROCK, 2.5f);
 	}
-	
+
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntityCrystallizer te = (TileEntityCrystallizer) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+
 		for (int i = 0; i < cap.getSlots(); ++i)
 		{
 			ItemStack itemstack = cap.getStackInSlot(i);

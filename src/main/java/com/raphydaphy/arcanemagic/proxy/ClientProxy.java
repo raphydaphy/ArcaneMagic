@@ -253,7 +253,7 @@ public class ClientProxy extends CommonProxy
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceConcentrator.class,
 				new EssenceConcentratorTESR());
-		
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElementalCraftingTable.class,
 				new ElementalCraftingTableTESR());
 	}

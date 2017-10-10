@@ -26,7 +26,7 @@ public class CategoryNaturalHarmony extends NotebookCategory
 
 		return entries;
 	}
-	
+
 	public static final String REQUIRED_TAG = "unlockedNaturalHarmony";
 
 	@Override

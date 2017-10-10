@@ -47,12 +47,12 @@ public class PacketNotebookInfo implements IMessage
 		{
 			// Server-side only
 			NotebookInfo cap = ctx.getServerHandler().player.getCapability(NotebookInfo.CAP, null);
-			
+
 			System.out.println("Setting cap: category: " + message.category + " USED: " + message.usedNotebook);
 			if (cap != null)
 			{
 				cap.setCategory(message.category);
-				cap.setPage(message.page); 
+				cap.setPage(message.page);
 				cap.setIndexPage(message.indexPage);
 				cap.setUsed(message.usedNotebook);
 			}
@@ -66,7 +66,7 @@ public class PacketNotebookInfo implements IMessage
 		page = buf.readInt();
 		indexPage = buf.readInt();
 		usedNotebook = buf.readBoolean();
-		
+
 		System.out.println("came out of the byte eater with category: " + category);
 	}
 
@@ -77,7 +77,7 @@ public class PacketNotebookInfo implements IMessage
 		buf.writeInt(page);
 		buf.writeInt(indexPage);
 		buf.writeBoolean(usedNotebook);
-		
+
 		System.out.println("went into the byte eater with category: " + category);
 	}
 }

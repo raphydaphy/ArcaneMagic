@@ -121,11 +121,11 @@ public class ModRegistry
 
 	public static void registerTiles()
 	{
-		GameRegistry.registerTileEntity(TileEntityElementalCraftingTable.class, ArcaneMagic.MODID + "_elemental_crafting_table");
+		GameRegistry.registerTileEntity(TileEntityElementalCraftingTable.class,
+				ArcaneMagic.MODID + "_elemental_crafting_table");
 		GameRegistry.registerTileEntity(TileEntityCrystallizer.class, ArcaneMagic.MODID + "_crystallizer");
 		GameRegistry.registerTileEntity(TileEntityEssenceConcentrator.class,
 				ArcaneMagic.MODID + "_essence_concentrator");
-		GameRegistry.registerTileEntity(TileEntityWritingDesk.class,
-				ArcaneMagic.MODID + "_writing_desk");
+		GameRegistry.registerTileEntity(TileEntityWritingDesk.class, ArcaneMagic.MODID + "_writing_desk");
 	}
 }

@@ -60,7 +60,7 @@ public class RecipeHelper
 		else
 			RECIPES.add(rec);
 	}
-	
+
 	/**
 	 * This adds an elemental recipe to the master list.
 	 */
@@ -364,16 +364,18 @@ public class RecipeHelper
 	{
 		addPotionRecipe(Items.POTIONITEM, inputPot, makeStack(reagent), Items.POTIONITEM, outputPot);
 	}
-	
+
 	/**
 	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
 	 */
 	public static void addElementalShapeless(ItemStack output, Essence essence, int reqEssence, Object... inputs)
 	{
-		addElementalRecipe(new ShapelessElementalRecipe(output, createElementalInput(inputs), new EssenceStack(essence, reqEssence)));
+		addElementalRecipe(new ShapelessElementalRecipe(output, createElementalInput(inputs),
+				new EssenceStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> void addElementalShapeless(T output, Essence essence, int reqEssence, Object... inputs)
+	public static <T extends IForgeRegistryEntry<?>> void addElementalShapeless(T output, Essence essence,
+			int reqEssence, Object... inputs)
 	{
 		addElementalShapeless(makeStack(output), essence, reqEssence, inputs);
 	}
@@ -384,14 +386,16 @@ public class RecipeHelper
 	 */
 	public static void addElementalShaped(ItemStack output, Essence essence, int reqEssence, Object... input)
 	{
-		addElementalRecipe(new ShapedElementalRecipe(output, createElementalInput(input), new EssenceStack(essence, reqEssence)));
+		addElementalRecipe(
+				new ShapedElementalRecipe(output, createElementalInput(input), new EssenceStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> void addElementalShaped(T output, Essence essence, int reqEssence, Object... input)
+	public static <T extends IForgeRegistryEntry<?>> void addElementalShaped(T output, Essence essence, int reqEssence,
+			Object... input)
 	{
-		addElementalShaped(makeStack(output), essence, reqEssence, input); 
+		addElementalShaped(makeStack(output), essence, reqEssence, input);
 	}
-	
+
 	/**
 	 * Creates a list of ingredients based on an Object[].  Valid types are {@link String}, {@link ItemStack}, {@link Item}, and {@link Block}.
 	 * Used for elemental recipes.
