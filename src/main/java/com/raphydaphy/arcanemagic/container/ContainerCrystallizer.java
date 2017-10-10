@@ -28,13 +28,15 @@ public class ContainerCrystallizer extends Container
 	private void addPlayerSlots(IInventory playerInventory)
 	{
 		// Slots for the main inventory
+		int slot = 9;
 		for (int row = 0; row < 3; ++row)
 		{
 			for (int col = 0; col < 9; ++col)
 			{
 				int x = 8 + col * 18;
 				int y = row * 18 + 84;
-				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
+				this.addSlotToContainer(new Slot(playerInventory, slot, x, y));
+				slot++;
 			}
 		}
 

@@ -168,7 +168,7 @@ public class ModEvents
 	{
 		if (event.getEntity() != null && event.getEntity() instanceof EntityWitch)
 		{
-			if (event.getEntity().world.rand.nextInt(15) == 1)
+			if (event.getEntity().world.rand.nextInt(2) == 1)
 			{
 				event.getDrops().add(new EntityItemFancy(event.getEntity().world, event.getEntity().posX,
 						event.getEntity().posY, event.getEntity().posZ, new ItemStack(ModRegistry.ANCIENT_PARCHMENT)));
