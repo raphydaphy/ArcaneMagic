@@ -45,6 +45,7 @@ subtitle.arcanemagic.camera_clack=Something Clicks
 itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.elemental_crafting=Elemental Crafting
 gui.arcanemagic.crystallizer=Crystallizer
+gui.arcanemagic.writing_desk=Writing Desk
 
 # JEI Description cards
 desc.arcanemagic.ancient_parchment=Rare drop from witches. Shift+right-click bedrock while holding to use.

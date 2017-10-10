@@ -8,7 +8,6 @@ import com.raphydaphy.arcanemagic.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.block.BlockElementalCraftingTable;
 import com.raphydaphy.arcanemagic.block.BlockEssenceConcentrator;
 import com.raphydaphy.arcanemagic.block.BlockFancyLight;
-import com.raphydaphy.arcanemagic.block.BlockTable;
 import com.raphydaphy.arcanemagic.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
@@ -18,7 +17,6 @@ import com.raphydaphy.arcanemagic.item.ItemCore;
 import com.raphydaphy.arcanemagic.item.ItemEnum;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
-import com.raphydaphy.arcanemagic.item.ItemScribingTools;
 import com.raphydaphy.arcanemagic.item.ItemTip;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
@@ -26,7 +24,6 @@ import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
 import com.raphydaphy.arcanemagic.util.IHasRecipe;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
@@ -42,12 +39,10 @@ public class ModRegistry
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
 
-	public static final BlockTable TABLE = new BlockTable("table", Material.WOOD, 2f, "axe", 0);
 	public static final BlockWritingDesk WRITING_DESK = new BlockWritingDesk();
 	public static final BlockElementalCraftingTable ELEMENTAL_CRAFTING_TABLE = new BlockElementalCraftingTable();
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
 	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
-	public static final BlockWritingDesk RESEARCH_TABLE = new BlockWritingDesk();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 
 	public static final ItemBase TIP = new ItemTip();
@@ -55,7 +50,6 @@ public class ModRegistry
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values());
-	public static final ItemScribingTools SCRIBING_TOOLS = new ItemScribingTools("scribing_tools");
 	public static final ItemAncientParchment ANCIENT_PARCHMENT = new ItemAncientParchment("ancient_parchment");
 
 	@SubscribeEvent
@@ -80,8 +74,8 @@ public class ModRegistry
 			if (b instanceof IHasRecipe)
 				((IHasRecipe) b).initRecipes(e);
 
-		//The day I work with JSON recipes is the day the world ends.
-
+		// @Shadows: The day I work with JSON recipes is the day the world ends.
+		// @raphy: uhoh
 		e.getRegistry().registerAll(RECIPES.toArray(new IRecipe[RECIPES.size()]));
 	}
 
@@ -126,7 +120,7 @@ public class ModRegistry
 
 	public static void registerTiles()
 	{
-		GameRegistry.registerTileEntity(TileEntityElementalCraftingTable.class, ArcaneMagic.MODID + "_arcane_worktable");
+		GameRegistry.registerTileEntity(TileEntityElementalCraftingTable.class, ArcaneMagic.MODID + "_elemental_crafting_table");
 		GameRegistry.registerTileEntity(TileEntityCrystallizer.class, ArcaneMagic.MODID + "_crystallizer");
 		GameRegistry.registerTileEntity(TileEntityEssenceConcentrator.class,
 				ArcaneMagic.MODID + "_essence_concentrator");

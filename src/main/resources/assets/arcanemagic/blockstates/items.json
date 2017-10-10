@@ -19,11 +19,6 @@
 					"layer0": "arcanemagic:items/notebook"
 				}
 			},
-			"scribing_tools": {
-				"textures": {
-					"layer0": "arcanemagic:items/scribing_tools"
-				}
-			},
 			"essence_ozone": {
 				"textures": {
 					"layer0": "arcanemagic:items/essence/ozone"
@@ -61,16 +56,6 @@
 			"ancient_parchment": {
 				"textures": {
 					"layer0": "arcanemagic:items/ancient_parchment"
-				}
-			},
-			"focus_fire": {
-				"textures": {
-					"layer0": "arcanemagic:items/focus_fire"
-				}
-			},
-			"scepter_tip_iron": {
-				"textures": {
-					"layer0": "arcanemagic:items/scepter_tip_iron"
 				}
 			},
 			"tip_iron": {

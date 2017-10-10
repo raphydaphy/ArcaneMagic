@@ -81,7 +81,7 @@ public class ArcaneMagic
 				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) },
 				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) },
 				{ new ItemStack(Blocks.STONE), ItemStack.EMPTY, new ItemStack(Blocks.STONE) } };
-		ArcaneMagicAPI.registerElementalCraftingRecipe(new ElementalCraftingRecipe(quillRecipe.clone(), new ItemStack(ModRegistry.SCRIBING_TOOLS)));
+		ArcaneMagicAPI.registerElementalCraftingRecipe(new ElementalCraftingRecipe(quillRecipe.clone(), new ItemStack(Items.DYE)));
 		
 		ItemStack[][] quartzRecipe = {
 				{ new ItemStack(Blocks.GLOWSTONE), ItemStack.EMPTY, new ItemStack(Blocks.GLOWSTONE) },

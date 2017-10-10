@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.handler;
 
-import com.raphydaphy.arcanemagic.network.PacketElementalCraftingSync;
 import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
 import com.raphydaphy.arcanemagic.network.PacketNotebookInfo;
 
@@ -27,9 +26,6 @@ public class ArcaneMagicPacketHandler
 	public static void registerMessages()
 	{
 		// Client - > Server
-		
-		INSTANCE.registerMessage(PacketElementalCraftingSync.Handler.class, PacketElementalCraftingSync.class, packetId++,
-				Side.SERVER);
 		
 		INSTANCE.registerMessage(PacketNotebookInfo.Handler.class, PacketNotebookInfo.class, packetId++,
 				Side.SERVER);

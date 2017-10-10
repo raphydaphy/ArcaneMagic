@@ -8,6 +8,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -18,7 +20,6 @@ import com.raphydaphy.arcanemagic.api.recipe.ElementalCraftingRecipe;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
-import com.raphydaphy.arcanemagic.api.util.Pos2;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
@@ -342,8 +343,8 @@ public class ItemScepter extends ItemBase
 		GlStateManager.popMatrix();
 	}
 
-	public static List<Pos2> barPositions = Arrays.asList(new Pos2(37, 1), new Pos2(24, -12), new Pos2(7, -20),
-			new Pos2(-12, -20), new Pos2(-29, -14), new Pos2(-42, -1));
+	public static List<Pair<Integer, Integer>> barPositions = Arrays.asList(Pair.of(37, 1), Pair.of(24, -12), Pair.of(7, -20),
+			Pair.of(-12, -20), Pair.of(-29, -14), Pair.of(-42, -1));
 
 	@SideOnly(Side.CLIENT)
 	public static void renderHUD(Minecraft mc, ScaledResolution res, ItemStack stack)
@@ -372,10 +373,10 @@ public class ItemScepter extends ItemBase
 				for (int curEssence = 0; curEssence < storedEssence.size(); curEssence++)
 				{
 					EssenceStack essence = storedEssenceArray[curEssence];
-					Pos2 essencePos = barPositions.get(curEssence);
+					Pair<Integer, Integer> essencePos = barPositions.get(curEssence);
 					Color color = essence.getEssence().getColor();
 					// System.out.println(color.toString());
-					drawBar(essencePos.getX(), essencePos.getY(), color.getRed() / 256, color.getGreen() / 256f,
+					drawBar(essencePos.getLeft(), essencePos.getRight(), color.getRed() / 256, color.getGreen() / 256f,
 							color.getBlue() / 256f, essence.getCount() / 28, rot);
 					rot += 23;
 				}
