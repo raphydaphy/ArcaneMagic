@@ -2,12 +2,16 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityWritingDesk;
+import com.raphydaphy.arcanemagic.util.IHasRecipe;
+import com.raphydaphy.arcanemagic.util.RecipeHelper;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -15,10 +19,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockWritingDesk extends BlockBase
+public class BlockWritingDesk extends BlockBase implements IHasRecipe
 {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 13d * (1d / 16d), 1.0D);
 	public static final int GUI_ID = 3;
@@ -92,5 +97,11 @@ public class BlockWritingDesk extends BlockBase
 		}
 		player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
+	}
+
+	@Override
+	public void initRecipes(Register<IRecipe> e)
+	{
+		RecipeHelper.addShaped(this, 3, 3, "paper","dyeBlack", "paper", "plankWood","plankWood", "plankWood","plankWood",null,"plankWood");
 	}
 }
