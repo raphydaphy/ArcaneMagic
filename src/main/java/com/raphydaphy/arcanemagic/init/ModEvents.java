@@ -45,7 +45,7 @@ public class ModEvents
 			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"), new NotebookInfo());
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onEntityItemPickup(EntityItemPickupEvent ev)
 	{
@@ -59,7 +59,7 @@ public class ModEvents
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onItemCrafted(ItemCraftedEvent ev)
 	{

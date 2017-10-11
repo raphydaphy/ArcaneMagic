@@ -38,7 +38,7 @@ public class CategoryBasicLinguistics extends NotebookCategory
 	{
 		return REQUIRED_TAG;
 	}
-	
+
 	@Override
 	public ItemStack getIcon()
 	{

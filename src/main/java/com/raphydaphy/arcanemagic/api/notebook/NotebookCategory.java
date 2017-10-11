@@ -18,7 +18,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	{
 		return "usedNotebook";
 	}
-	
+
 	public abstract ItemStack getIcon();
 
 }

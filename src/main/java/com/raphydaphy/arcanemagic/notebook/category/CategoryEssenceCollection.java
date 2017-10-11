@@ -37,7 +37,7 @@ public class CategoryEssenceCollection extends NotebookCategory
 	{
 		return REQUIRED_TAG;
 	}
-	
+
 	@Override
 	public ItemStack getIcon()
 	{

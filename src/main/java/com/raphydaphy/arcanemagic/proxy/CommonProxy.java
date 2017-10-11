@@ -34,11 +34,11 @@ public abstract class CommonProxy
 	{
 
 	}
-	
+
 	public void addCategoryUnlockToast(NotebookCategory category)
 	{
-		
+
 	}
-	
+
 	public abstract String translate(String key, Object... args);
 }

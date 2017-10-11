@@ -196,7 +196,7 @@ public class ClientProxy extends CommonProxy
 	{
 		Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(category));
 	}
-	
+
 	@SubscribeEvent
 	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
 	{

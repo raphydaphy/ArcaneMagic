@@ -30,8 +30,8 @@ public class CategoryUnlockedToast implements IToast
 		GlStateManager.color(1.0F, 1.0F, 1.0F);
 		toastGui.drawTexturedModalRect(0, 0, 0, 0, 160, 32);
 
-
-		toastGui.getMinecraft().fontRenderer.drawString(I18n.format("toast.arcanemagic.page_unlocked"), 30, 7, 0x5bc14d);
+		toastGui.getMinecraft().fontRenderer.drawString(I18n.format("toast.arcanemagic.page_unlocked"), 30, 7,
+				0x5bc14d);
 		toastGui.getMinecraft().fontRenderer.drawString(I18n.format(unlocked.getUnlocalizedName()), 30, 18, 0x65a595);
 
 		if (!this.hasPlayedSound && delta > 0L)
@@ -44,8 +44,8 @@ public class CategoryUnlockedToast implements IToast
 		}
 
 		RenderHelper.enableGUIStandardItemLighting();
-		toastGui.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI((EntityLivingBase) null,
-				unlocked.getIcon(), 8, 8);
+		toastGui.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI((EntityLivingBase) null, unlocked.getIcon(),
+				8, 8);
 		return delta >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
 	}
 }

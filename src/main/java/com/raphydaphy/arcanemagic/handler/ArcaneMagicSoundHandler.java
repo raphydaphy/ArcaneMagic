@@ -99,7 +99,7 @@ public final class ArcaneMagicSoundHandler
 
 	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":learn")
 	public static SoundEvent learn;
-	
+
 	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":infuser_start")
 	public static SoundEvent infuser_start;
 

@@ -37,7 +37,7 @@ public class CategoryManipulatingMagic extends NotebookCategory
 	{
 		return REQUIRED_TAG;
 	}
-	
+
 	@Override
 	public ItemStack getIcon()
 	{

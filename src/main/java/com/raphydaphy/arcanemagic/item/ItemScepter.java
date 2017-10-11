@@ -20,6 +20,8 @@ import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.data.EnumBasicEssence;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.PacketItemEssenceChanged;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -30,6 +32,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -131,8 +134,14 @@ public class ItemScepter extends ItemBase
 		ItemStack stack = player.getHeldItem(hand);
 		player.setActiveHand(hand);
 		if (!world.isRemote)
-			stack.getCapability(IEssenceStorage.CAP, null)
-					.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
+		{
+			IEssenceStorage cap = stack.getCapability(IEssenceStorage.CAP, null);
+			cap.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
+			if (player instanceof EntityPlayerMP)
+			{
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(cap), (EntityPlayerMP)player);
+			}
+		}
 
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
@@ -171,6 +180,7 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+		
 		if (handler != null && !player.world.isRemote)
 		{
 			for (Essence essence : Essence.REGISTRY.getValues())
@@ -178,7 +188,11 @@ public class ItemScepter extends ItemBase
 				handler.store(new EssenceStack(essence, itemRand.nextInt(2)), false);
 			}
 		}
-		// player.activeItemStack = stack;
+		
+		if (handler != null && handler.getStored().get(Essence.INFERNO) != null)
+		{
+			System.out.println("Storing " + handler.getStored().get(Essence.INFERNO).getCount());
+		}
 	}
 
 	@Override
@@ -230,10 +244,6 @@ public class ItemScepter extends ItemBase
 	{
 		ModelLoader.setCustomModelResourceLocation(this, 0, new ModelResourceLocation(getRegistryName(), "inventory"));
 	}
-
-	/**
-	 * Hack to let scepters continue use when nbt changes.
-	 */
 
 	@SideOnly(Side.CLIENT)
 	private static void drawBar(int x, int y, float r, float g, float b, int essence, float rotation)
