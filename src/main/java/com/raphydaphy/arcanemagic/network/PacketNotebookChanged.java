@@ -7,48 +7,43 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+import net.minecraftforge.fml.relauncher.Side;
 
-/*
- * There's really no reason to validate this info, 
- * the book will be reset to the first category 
- * if the player tires to choose a category that 
- * dosen't exist or hasn't been unlocked yet
-*/
-public class PacketNotebookInfo implements IMessage
+// FOR WHEN THE CLIENT CLICKS A BUTTON IN THE NOTEBOOK
+// SENT TO THE SERVER
+public class PacketNotebookChanged implements IMessage
 {
 	private int category;
 	private int page;
 	private int indexPage;
 	private boolean usedNotebook;
 
-	public PacketNotebookInfo()
+	public PacketNotebookChanged()
 	{
 	}
 
-	public PacketNotebookInfo(NotebookInfo cap)
+	public PacketNotebookChanged(NotebookInfo cap)
 	{
 		this.category = cap.getCategory();
 		this.page = cap.getPage();
-		System.out.println("makin the pakit with category: " + category);
 		this.indexPage = cap.getIndexPage();
 		this.usedNotebook = cap.getUsed();
 	}
 
-	public static class Handler implements IMessageHandler<PacketNotebookInfo, IMessage>
+	public static class Handler implements IMessageHandler<PacketNotebookChanged, IMessage>
 	{
 		@Override
-		public IMessage onMessage(PacketNotebookInfo message, MessageContext ctx)
+		public IMessage onMessage(PacketNotebookChanged message, MessageContext ctx)
 		{
-			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
+			FMLCommonHandler.instance().getWorldThread(ctx.netHandler)
+					.addScheduledTask(() -> handleNotebookInfo(message, ctx, ctx.side));
 			return null;
 		}
 
-		private void handle(PacketNotebookInfo message, MessageContext ctx)
+		public void handleNotebookInfo(PacketNotebookChanged message, MessageContext ctx, Side side)
 		{
-			// Server-side only
 			NotebookInfo cap = ctx.getServerHandler().player.getCapability(NotebookInfo.CAP, null);
 
-			System.out.println("Setting cap: category: " + message.category + " USED: " + message.usedNotebook);
 			if (cap != null)
 			{
 				cap.setCategory(message.category);
@@ -66,8 +61,6 @@ public class PacketNotebookInfo implements IMessage
 		page = buf.readInt();
 		indexPage = buf.readInt();
 		usedNotebook = buf.readBoolean();
-
-		System.out.println("came out of the byte eater with category: " + category);
 	}
 
 	@Override
@@ -77,7 +70,5 @@ public class PacketNotebookInfo implements IMessage
 		buf.writeInt(page);
 		buf.writeInt(indexPage);
 		buf.writeBoolean(usedNotebook);
-
-		System.out.println("went into the byte eater with category: " + category);
 	}
 }

@@ -2,7 +2,8 @@ package com.raphydaphy.arcanemagic.handler;
 
 import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
 import com.raphydaphy.arcanemagic.network.PacketItemEssenceChanged;
-import com.raphydaphy.arcanemagic.network.PacketNotebookInfo;
+import com.raphydaphy.arcanemagic.network.PacketNotebookChanged;
+import com.raphydaphy.arcanemagic.network.PacketNotebookOpened;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -28,7 +29,7 @@ public class ArcaneMagicPacketHandler
 	{
 		// Client - > Server
 
-		INSTANCE.registerMessage(PacketNotebookInfo.Handler.class, PacketNotebookInfo.class, packetId++, Side.SERVER);
+		INSTANCE.registerMessage(PacketNotebookChanged.Handler.class, PacketNotebookChanged.class, packetId++, Side.SERVER);
 
 		// Server -> Client
 
@@ -36,5 +37,7 @@ public class ArcaneMagicPacketHandler
 				Side.CLIENT);
 		INSTANCE.registerMessage(PacketItemEssenceChanged.Handler.class, PacketItemEssenceChanged.class, packetId++,
 				Side.CLIENT);
+		
+		INSTANCE.registerMessage(PacketNotebookOpened.Handler.class, PacketNotebookOpened.class, packetId++, Side.CLIENT);
 	}
 }

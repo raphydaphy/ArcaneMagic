@@ -49,11 +49,15 @@ public class ModEvents
 	@SubscribeEvent
 	public static void onEntityItemPickup(EntityItemPickupEvent ev)
 	{
-		if (ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
+		NotebookInfo info = ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
+
+		if (info != null)
 		{
-			NotebookInfo info = ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
-			if (info != null)
+			System.out.println("IS CLIENT? " + ev.getEntityPlayer().world.isRemote + " IS UNLOCKED? " + info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
+			if (!info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG)
+					&& ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 			{
+
 				info.setUnlocked(CategoryBasicLinguistics.REQUIRED_TAG);
 				ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
 			}
@@ -63,11 +67,14 @@ public class ModEvents
 	@SubscribeEvent
 	public static void onItemCrafted(ItemCraftedEvent ev)
 	{
-		if (ev.crafting.getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
+		NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
+		if (info != null)
 		{
-			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
-			if (info != null)
+			System.out.println("IS CLIENT? " + ev.player.world.isRemote + " IS UNLOCKED? " + info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
+			if (!info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG)
+					&& ev.crafting.getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 			{
+
 				info.setUnlocked(CategoryBasicLinguistics.REQUIRED_TAG);
 				ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
 			}

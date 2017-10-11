@@ -129,7 +129,7 @@ public class ItemScepter extends ItemBase
 		return stack.getTagCompound();
 	}
 	
-	private int stupidGetSlot(InventoryPlayer inv, ItemStack stack)
+	public static int stupidGetSlot(InventoryPlayer inv, ItemStack stack)
 	{
 		for (int i = 0; i < inv.mainInventory.size(); ++i)
         {
@@ -210,7 +210,6 @@ public class ItemScepter extends ItemBase
 			}
 			if (player instanceof EntityPlayerMP)
 			{
-				System.out.println("capper is very strong!");
 				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler, stupidGetSlot(((EntityPlayer)player).inventory, stack), stack), (EntityPlayerMP)player);
 			}
 		}

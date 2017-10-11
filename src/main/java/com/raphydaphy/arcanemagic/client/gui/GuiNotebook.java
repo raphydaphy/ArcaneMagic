@@ -9,7 +9,7 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.network.PacketNotebookInfo;
+import com.raphydaphy.arcanemagic.network.PacketNotebookChanged;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -51,7 +51,8 @@ public class GuiNotebook extends GuiScreen
 		if (cap != null && !cap.getUsed())
 		{
 			cap.setUsed(true);
-			ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
+			System.out.println("opened for first time");
+			ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 		}
 	}
 
@@ -140,8 +141,8 @@ public class GuiNotebook extends GuiScreen
 			{
 				cap.setCategory(0);
 				curCategory = 0;
-
-				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
+				System.out.println("set cat to 0");
+				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 			}
 			mc.getTextureManager().bindTexture(notebook);
 			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
@@ -243,7 +244,8 @@ public class GuiNotebook extends GuiScreen
 										ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
 										false);
 								cap.setCategory(unRealTab);
-								ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookInfo(cap));
+								System.out.println("sending new page");
+								ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 							}
 							break;
 						}

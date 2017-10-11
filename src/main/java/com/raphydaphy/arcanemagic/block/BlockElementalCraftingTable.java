@@ -1,15 +1,19 @@
 package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.item.ItemScepter;
+import com.raphydaphy.arcanemagic.network.PacketItemEssenceChanged;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -118,6 +122,8 @@ public class BlockElementalCraftingTable extends BlockBase
 					craftResult.motionY = 0;
 					craftResult.motionZ = 0;
 					world.spawnEntity(craftResult);
+					
+					ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(stack.getCapability(IEssenceStorage.CAP, null), ItemScepter.stupidGetSlot(player.inventory, stack), stack), (EntityPlayerMP)player);
 					return true;
 				} else
 				{
@@ -185,6 +191,10 @@ public class BlockElementalCraftingTable extends BlockBase
 							cap.getStackInSlot(slot).setCount(0);
 							te.markDirty();
 						}
+					}
+					else
+					{
+						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1, 1);
 					}
 				}
 			}

@@ -2,10 +2,13 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.network.PacketNotebookOpened;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -32,14 +35,21 @@ public class ItemNotebook extends ItemBase
 		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
 		if (cap != null)
 		{
-			System.out.println("OPEN THE BOOK! Used: " + cap.getUsed() + " cat: " + cap.getCategory());
+			if (world.isRemote)
+			{
+				world.playSound(player.posX, player.posY, player.posZ, ArcaneMagicSoundHandler.randomPageSound(),
+						SoundCategory.MASTER, 1f, 1f, false);
+			}
+			else
+			{
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookOpened(cap), (EntityPlayerMP)player);
+			}
+			player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		}
-		if (world.isRemote)
+		else
 		{
-			world.playSound(player.posX, player.posY, player.posZ, ArcaneMagicSoundHandler.randomPageSound(),
-					SoundCategory.MASTER, 1f, 1f, false);
+			System.out.println("NULL NOTEBOOK CAPABILITY FOUND FOR PLAYER WITH UUID " + player.getUniqueID().toString() + "! THIS IS BAD!");
 		}
-		player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
