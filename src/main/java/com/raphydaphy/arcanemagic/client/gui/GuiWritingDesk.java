@@ -1,10 +1,18 @@
 package com.raphydaphy.arcanemagic.client.gui;
 
+import java.awt.Color;
+
+import org.lwjgl.opengl.GL11;
+
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.container.ContainerWritingDesk;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -66,11 +74,36 @@ public class GuiWritingDesk extends GuiContainer
 
 			if (drawWarning)
 			{
-				fontRenderer.drawString(text, (guiLeft + 103 - fontRenderer.getStringWidth(text) / 2), guiTop + 57,
-						4210752);
+				this.drawHoveringText(text, (guiLeft + 92 - fontRenderer.getStringWidth(text) / 2), guiTop + 68);
 			} else
 			{
+				GlStateManager.pushMatrix();
+				GlStateManager.pushAttrib();
 
+				GlStateManager.disableTexture2D();
+				GlStateManager.enableBlend();
+				GlStateManager.disableAlpha();
+				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+						GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+						GlStateManager.DestFactor.ZERO);
+				GlStateManager.shadeModel(7425);
+				GL11.glLineWidth(10F);
+				Tessellator tes = Tessellator.getInstance();
+				BufferBuilder vb = tes.getBuffer();
+				vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+				double radius = 1;
+				Color color = Color.GREEN;
+				for (int deg = 0; deg <= 360; deg++)
+				{
+					vb.pos(guiLeft + 30 + Math.cos(Math.toRadians(deg)) * (radius), guiTop + 30,
+							guiTop + 30 + Math.sin(Math.toRadians(deg)) * radius)
+							.color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
+				}
+
+				tes.draw();
+
+				GlStateManager.popAttrib();
+				GlStateManager.popMatrix();
 			}
 		}
 	}
