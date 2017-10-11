@@ -12,14 +12,14 @@ public class GuiWritingDesk extends GuiContainer
 {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 203;
-	private TileEntityWritingDesk te;
+	//private TileEntityWritingDesk te;
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/writing_desk.png");
 
 	public GuiWritingDesk(TileEntityWritingDesk tileEntity, ContainerWritingDesk container)
 	{
 		super(container);
-		te = tileEntity;
+		//te = tileEntity;
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
