@@ -135,11 +135,13 @@ public class ItemScepter extends ItemBase
 		player.setActiveHand(hand);
 		if (!world.isRemote)
 		{
+			System.out.println("capper is servery");
 			IEssenceStorage cap = stack.getCapability(IEssenceStorage.CAP, null);
 			cap.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
 			if (player instanceof EntityPlayerMP)
 			{
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(cap), (EntityPlayerMP)player);
+				System.out.println("capper is very strong!");
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(cap, ((EntityPlayer)player).inventory.getSlotFor(stack), stack), (EntityPlayerMP)player);
 			}
 		}
 
@@ -186,6 +188,11 @@ public class ItemScepter extends ItemBase
 			for (Essence essence : Essence.REGISTRY.getValues())
 			{
 				handler.store(new EssenceStack(essence, itemRand.nextInt(2)), false);
+			}
+			if (player instanceof EntityPlayerMP)
+			{
+				System.out.println("capper is very strong!");
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler, ((EntityPlayer)player).inventory.getSlotFor(stack), stack), (EntityPlayerMP)player);
 			}
 		}
 		

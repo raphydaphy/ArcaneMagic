@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.handler;
 
 import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
+import com.raphydaphy.arcanemagic.network.PacketItemEssenceChanged;
 import com.raphydaphy.arcanemagic.network.PacketNotebookInfo;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -32,6 +33,8 @@ public class ArcaneMagicPacketHandler
 		// Server -> Client
 
 		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++,
+				Side.CLIENT);
+		INSTANCE.registerMessage(PacketItemEssenceChanged.Handler.class, PacketItemEssenceChanged.class, packetId++,
 				Side.CLIENT);
 	}
 }

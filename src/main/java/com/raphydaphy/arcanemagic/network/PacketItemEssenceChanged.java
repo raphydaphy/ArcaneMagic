@@ -6,6 +6,8 @@ import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -16,14 +18,18 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PacketItemEssenceChanged implements IMessage
 {
 	private NBTTagCompound cap;
-
+	private int slot;
+	private ItemStack stack;
+	
 	public PacketItemEssenceChanged()
 	{
 	}
 
-	public PacketItemEssenceChanged(IEssenceStorage cap)
+	public PacketItemEssenceChanged(IEssenceStorage cap, int slot, ItemStack stack)
 	{
 		this.cap = cap.serializeNBT();
+		this.slot = slot;
+		this.stack = stack;
 	}
 
 	public static class Handler implements IMessageHandler<PacketItemEssenceChanged, IMessage>
@@ -37,11 +43,16 @@ public class PacketItemEssenceChanged implements IMessage
 
 		private void handle(PacketItemEssenceChanged message, MessageContext ctx)
 		{
-			IEssenceStorage playerCap = Minecraft.getMinecraft().player.getCapability(IEssenceStorage.CAP, null);
+			Minecraft.getMinecraft().player.inventory.setInventorySlotContents(message.slot, message.stack);
+			
+			ItemStack inSlot = Minecraft.getMinecraft().player.inventory.getStackInSlot(message.slot);
+			IEssenceStorage playerCap = inSlot.getCapability(IEssenceStorage.CAP, null);
 			if (playerCap != null)
 			{
 				playerCap.deserializeNBT(message.cap);
+				System.out.println("deserialised successfully!");
 			}
+			System.out.println("does cap exist? " + inSlot.hasCapability(IEssenceStorage.CAP, null));
 		}
 	}
 
@@ -49,22 +60,25 @@ public class PacketItemEssenceChanged implements IMessage
 	public void fromBytes(ByteBuf buf)
 	{
 		PacketBuffer pbuf = new PacketBuffer(buf);
-
+		slot = pbuf.readInt();
 		try
 		{
 			cap = pbuf.readCompoundTag();
+			stack = pbuf.readItemStack();
 		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+		
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
 		PacketBuffer pbuf = new PacketBuffer(buf);
-
+		pbuf.writeInt(slot);
 		pbuf.writeCompoundTag(cap);
+		pbuf.writeItemStack(stack);
 
 	}
 }
