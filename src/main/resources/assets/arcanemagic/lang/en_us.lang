@@ -45,6 +45,8 @@ itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.elemental_crafting=Elemental Crafting
 gui.arcanemagic.crystallizer=Crystallizer
 gui.arcanemagic.writing_desk=Writing Desk
+gui.arcanemagic.writing_desk.nobook=Insert Book
+gui.arcanemagic.writing_desk.nopaper=Insert Paper
 
 # Toasts
 toast.arcanemagic.page_unlocked=Notebook Page Revealed

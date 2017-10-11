@@ -227,32 +227,40 @@ public class GuiNotebook extends GuiScreen
 			{
 				// Things from drawScreen to calculate positions based on GUI Scale
 				ScaledResolution res = new ScaledResolution(mc);
-				final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
-				int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
 
-				int tab = 0;
-				for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++)
+				final int SCALED_NOTEBOOK_WIDTH = (int) (NOTEBOOK_WIDTH * scale);
+				final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
+
+				int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
+				int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
+				
+				if (relMouseX >= screenX + 10 && relMouseX <= screenX + 118)
 				{
-					// if they have unlocked this category
-					if (cap.isUnlocked(ArcaneMagicAPI.getNotebookCategories().get(unRealTab).getRequiredTag()))
+					int tab = 0;
+
+					for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++)
 					{
-						if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 32)
+						// if they have unlocked this category
+						if (cap.isUnlocked(ArcaneMagicAPI.getNotebookCategories().get(unRealTab).getRequiredTag()))
 						{
-							if (cap.getCategory() != unRealTab)
+							if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 32)
 							{
-								player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
-										ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
-										false);
-								cap.setCategory(unRealTab);
-								System.out.println("sending new page");
-								ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+								if (cap.getCategory() != unRealTab)
+								{
+									player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
+											ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f,
+											1f, false);
+									cap.setCategory(unRealTab);
+									System.out.println("sending new page");
+									ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+								}
+								break;
 							}
-							break;
+
+							tab++;
 						}
 
-						tab++;
 					}
-
 				}
 			}
 		}
