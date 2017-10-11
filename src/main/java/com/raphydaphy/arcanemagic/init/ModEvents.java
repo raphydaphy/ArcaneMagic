@@ -53,7 +53,8 @@ public class ModEvents
 
 		if (info != null)
 		{
-			System.out.println("IS CLIENT? " + ev.getEntityPlayer().world.isRemote + " IS UNLOCKED? " + info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
+			System.out.println("IS CLIENT? " + ev.getEntityPlayer().world.isRemote + " IS UNLOCKED? "
+					+ info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
 			if (!info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG)
 					&& ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 			{
@@ -70,7 +71,8 @@ public class ModEvents
 		NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
 		if (info != null)
 		{
-			System.out.println("IS CLIENT? " + ev.player.world.isRemote + " IS UNLOCKED? " + info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
+			System.out.println("IS CLIENT? " + ev.player.world.isRemote + " IS UNLOCKED? "
+					+ info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
 			if (!info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG)
 					&& ev.crafting.getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 			{

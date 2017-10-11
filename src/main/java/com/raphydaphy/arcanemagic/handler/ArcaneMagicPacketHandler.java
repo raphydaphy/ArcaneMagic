@@ -29,7 +29,8 @@ public class ArcaneMagicPacketHandler
 	{
 		// Client - > Server
 
-		INSTANCE.registerMessage(PacketNotebookChanged.Handler.class, PacketNotebookChanged.class, packetId++, Side.SERVER);
+		INSTANCE.registerMessage(PacketNotebookChanged.Handler.class, PacketNotebookChanged.class, packetId++,
+				Side.SERVER);
 
 		// Server -> Client
 
@@ -37,7 +38,8 @@ public class ArcaneMagicPacketHandler
 				Side.CLIENT);
 		INSTANCE.registerMessage(PacketItemEssenceChanged.Handler.class, PacketItemEssenceChanged.class, packetId++,
 				Side.CLIENT);
-		
-		INSTANCE.registerMessage(PacketNotebookOpened.Handler.class, PacketNotebookOpened.class, packetId++, Side.CLIENT);
+
+		INSTANCE.registerMessage(PacketNotebookOpened.Handler.class, PacketNotebookOpened.class, packetId++,
+				Side.CLIENT);
 	}
 }

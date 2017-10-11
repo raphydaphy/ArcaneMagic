@@ -128,25 +128,27 @@ public class ItemScepter extends ItemBase
 		}
 		return stack.getTagCompound();
 	}
-	
+
 	public static int stupidGetSlot(InventoryPlayer inv, ItemStack stack)
 	{
 		for (int i = 0; i < inv.mainInventory.size(); ++i)
-        {
-            if (!((ItemStack)inv.mainInventory.get(i)).isEmpty())
-            {
-            	ItemStack stack1 = inv.mainInventory.get(i);
-            	
-            	// are stacks exactly equal
-            	if (stack.getItem() == stack1.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == stack1.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, stack1))
-            	{
-            		return i;
-            	}
-                
-            }
-        }
+		{
+			if (!((ItemStack) inv.mainInventory.get(i)).isEmpty())
+			{
+				ItemStack stack1 = inv.mainInventory.get(i);
 
-        return -1;
+				// are stacks exactly equal
+				if (stack.getItem() == stack1.getItem()
+						&& (!stack.getHasSubtypes() || stack.getMetadata() == stack1.getMetadata())
+						&& ItemStack.areItemStackTagsEqual(stack, stack1))
+				{
+					return i;
+				}
+
+			}
+		}
+
+		return -1;
 	}
 
 	@Override
@@ -160,7 +162,9 @@ public class ItemScepter extends ItemBase
 			cap.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
 			if (player instanceof EntityPlayerMP)
 			{
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(cap, stupidGetSlot(player.inventory, stack), stack), (EntityPlayerMP)player);
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(
+						new PacketItemEssenceChanged(cap, stupidGetSlot(player.inventory, stack), stack),
+						(EntityPlayerMP) player);
 			}
 		}
 
@@ -201,7 +205,7 @@ public class ItemScepter extends ItemBase
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
-		
+
 		if (handler != null && !player.world.isRemote)
 		{
 			for (Essence essence : Essence.REGISTRY.getValues())
@@ -210,10 +214,11 @@ public class ItemScepter extends ItemBase
 			}
 			if (player instanceof EntityPlayerMP)
 			{
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler, stupidGetSlot(((EntityPlayer)player).inventory, stack), stack), (EntityPlayerMP)player);
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler,
+						stupidGetSlot(((EntityPlayer) player).inventory, stack), stack), (EntityPlayerMP) player);
 			}
 		}
-		
+
 		if (handler != null && handler.getStored().get(Essence.INFERNO) != null)
 		{
 			System.out.println("Storing " + handler.getStored().get(Essence.INFERNO).getCount());

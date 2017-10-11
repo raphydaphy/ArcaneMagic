@@ -122,8 +122,11 @@ public class BlockElementalCraftingTable extends BlockBase
 					craftResult.motionY = 0;
 					craftResult.motionZ = 0;
 					world.spawnEntity(craftResult);
-					
-					ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(stack.getCapability(IEssenceStorage.CAP, null), ItemScepter.stupidGetSlot(player.inventory, stack), stack), (EntityPlayerMP)player);
+
+					ArcaneMagicPacketHandler.INSTANCE.sendTo(
+							new PacketItemEssenceChanged(stack.getCapability(IEssenceStorage.CAP, null),
+									ItemScepter.stupidGetSlot(player.inventory, stack), stack),
+							(EntityPlayerMP) player);
 					return true;
 				} else
 				{
@@ -191,10 +194,10 @@ public class BlockElementalCraftingTable extends BlockBase
 							cap.getStackInSlot(slot).setCount(0);
 							te.markDirty();
 						}
-					}
-					else
+					} else
 					{
-						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1, 1);
+						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1,
+								1);
 					}
 				}
 			}

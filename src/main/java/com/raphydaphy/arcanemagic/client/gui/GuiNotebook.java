@@ -233,7 +233,7 @@ public class GuiNotebook extends GuiScreen
 
 				int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
 				int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
-				
+
 				if (relMouseX >= screenX + 10 && relMouseX <= screenX + 118)
 				{
 					int tab = 0;

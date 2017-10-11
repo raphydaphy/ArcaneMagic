@@ -162,7 +162,6 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		curPage = nbt.getInteger(tagPage);
 		curIndexPage = nbt.getInteger(tagIndexPage);
 
-
 	}
 
 	@Override

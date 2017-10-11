@@ -39,16 +39,16 @@ public class ItemNotebook extends ItemBase
 			{
 				world.playSound(player.posX, player.posY, player.posZ, ArcaneMagicSoundHandler.randomPageSound(),
 						SoundCategory.MASTER, 1f, 1f, false);
-			}
-			else
+			} else
 			{
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookOpened(cap), (EntityPlayerMP)player);
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookOpened(cap), (EntityPlayerMP) player);
 			}
-			player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-		}
-		else
+			player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY,
+					(int) player.posZ);
+		} else
 		{
-			System.out.println("NULL NOTEBOOK CAPABILITY FOUND FOR PLAYER WITH UUID " + player.getUniqueID().toString() + "! THIS IS BAD!");
+			System.out.println("NULL NOTEBOOK CAPABILITY FOUND FOR PLAYER WITH UUID " + player.getUniqueID().toString()
+					+ "! THIS IS BAD!");
 		}
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}

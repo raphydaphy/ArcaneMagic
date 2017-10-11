@@ -6,7 +6,6 @@ import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -20,7 +19,7 @@ public class PacketItemEssenceChanged implements IMessage
 	private NBTTagCompound cap;
 	private int slot;
 	private ItemStack stack;
-	
+
 	public PacketItemEssenceChanged()
 	{
 	}
@@ -43,8 +42,7 @@ public class PacketItemEssenceChanged implements IMessage
 
 		private void handle(PacketItemEssenceChanged message, MessageContext ctx)
 		{
-			
-			
+
 			//ItemStack inSlot = Minecraft.getMinecraft().player.inventory.getStackInSlot(message.slot);
 			IEssenceStorage playerCap = message.stack.getCapability(IEssenceStorage.CAP, null);
 			if (playerCap != null)
@@ -53,7 +51,7 @@ public class PacketItemEssenceChanged implements IMessage
 				System.out.println("deserialised successfully!");
 			}
 			System.out.println("does cap exist? " + message.stack.hasCapability(IEssenceStorage.CAP, null));
-			
+
 			Minecraft.getMinecraft().player.inventory.setInventorySlotContents(message.slot, message.stack);
 		}
 	}
@@ -71,7 +69,7 @@ public class PacketItemEssenceChanged implements IMessage
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	@Override
