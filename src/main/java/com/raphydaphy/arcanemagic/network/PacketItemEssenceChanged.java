@@ -43,16 +43,18 @@ public class PacketItemEssenceChanged implements IMessage
 
 		private void handle(PacketItemEssenceChanged message, MessageContext ctx)
 		{
-			Minecraft.getMinecraft().player.inventory.setInventorySlotContents(message.slot, message.stack);
 			
-			ItemStack inSlot = Minecraft.getMinecraft().player.inventory.getStackInSlot(message.slot);
-			IEssenceStorage playerCap = inSlot.getCapability(IEssenceStorage.CAP, null);
+			
+			//ItemStack inSlot = Minecraft.getMinecraft().player.inventory.getStackInSlot(message.slot);
+			IEssenceStorage playerCap = message.stack.getCapability(IEssenceStorage.CAP, null);
 			if (playerCap != null)
 			{
 				playerCap.deserializeNBT(message.cap);
 				System.out.println("deserialised successfully!");
 			}
-			System.out.println("does cap exist? " + inSlot.hasCapability(IEssenceStorage.CAP, null));
+			System.out.println("does cap exist? " + message.stack.hasCapability(IEssenceStorage.CAP, null));
+			
+			Minecraft.getMinecraft().player.inventory.setInventorySlotContents(message.slot, message.stack);
 		}
 	}
 

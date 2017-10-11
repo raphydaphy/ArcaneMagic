@@ -33,6 +33,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -127,6 +128,26 @@ public class ItemScepter extends ItemBase
 		}
 		return stack.getTagCompound();
 	}
+	
+	private int stupidGetSlot(InventoryPlayer inv, ItemStack stack)
+	{
+		for (int i = 0; i < inv.mainInventory.size(); ++i)
+        {
+            if (!((ItemStack)inv.mainInventory.get(i)).isEmpty())
+            {
+            	ItemStack stack1 = inv.mainInventory.get(i);
+            	
+            	// are stacks exactly equal
+            	if (stack.getItem() == stack1.getItem() && (!stack.getHasSubtypes() || stack.getMetadata() == stack1.getMetadata()) && ItemStack.areItemStackTagsEqual(stack, stack1))
+            	{
+            		return i;
+            	}
+                
+            }
+        }
+
+        return -1;
+	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
@@ -135,13 +156,11 @@ public class ItemScepter extends ItemBase
 		player.setActiveHand(hand);
 		if (!world.isRemote)
 		{
-			System.out.println("capper is servery");
 			IEssenceStorage cap = stack.getCapability(IEssenceStorage.CAP, null);
 			cap.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
 			if (player instanceof EntityPlayerMP)
 			{
-				System.out.println("capper is very strong!");
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(cap, ((EntityPlayer)player).inventory.getSlotFor(stack), stack), (EntityPlayerMP)player);
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(cap, stupidGetSlot(player.inventory, stack), stack), (EntityPlayerMP)player);
 			}
 		}
 
@@ -192,7 +211,7 @@ public class ItemScepter extends ItemBase
 			if (player instanceof EntityPlayerMP)
 			{
 				System.out.println("capper is very strong!");
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler, ((EntityPlayer)player).inventory.getSlotFor(stack), stack), (EntityPlayerMP)player);
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler, stupidGetSlot(((EntityPlayer)player).inventory, stack), stack), (EntityPlayerMP)player);
 			}
 		}
 		
