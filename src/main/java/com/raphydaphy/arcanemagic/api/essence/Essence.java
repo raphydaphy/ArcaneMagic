@@ -41,14 +41,14 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		@SubscribeEvent
 		public void onEssenceRegister(Register<Essence> event)
 		{
-			event.getRegistry().registerAll(OZONE, DEPTH, INFERNO, HORIZON, PEACE, CHAOS);
+			event.getRegistry().registerAll(OZONE, DEPTH, INFERNO, HORIZON, PEACE, CHAOS, CREATION);
 			OZONE.setItemForm(new ItemStack(ModRegistry.ESSENCE));
 			DEPTH.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 1));
 			INFERNO.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 2));
 			HORIZON.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 3));
 			PEACE.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 4));
 			CHAOS.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 5));
-			CREATION.setItemForm(new ItemStack(ModRegistry.ESSENCE, 1, 6));
+			CREATION.setItemForm(new ItemStack(ModRegistry.CREATION));
 		}
 	}
 
