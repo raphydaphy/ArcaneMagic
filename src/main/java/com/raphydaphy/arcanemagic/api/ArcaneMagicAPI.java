@@ -2,12 +2,12 @@ package com.raphydaphy.arcanemagic.api;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
-import com.raphydaphy.arcanemagic.util.RecipeHelper;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;

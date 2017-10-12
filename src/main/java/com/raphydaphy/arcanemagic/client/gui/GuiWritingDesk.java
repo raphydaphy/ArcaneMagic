@@ -2,11 +2,11 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.awt.Color;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.container.ContainerWritingDesk;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityWritingDesk;
-import com.raphydaphy.arcanemagic.util.GLHelper;
+import com.raphydaphy.arcanemagic.client.render.GLHelper;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.container.ContainerWritingDesk;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;

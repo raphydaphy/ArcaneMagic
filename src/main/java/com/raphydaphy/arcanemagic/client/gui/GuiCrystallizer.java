@@ -2,12 +2,12 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.util.Map;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
-import com.raphydaphy.arcanemagic.container.ContainerCrystallizer;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.container.ContainerCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

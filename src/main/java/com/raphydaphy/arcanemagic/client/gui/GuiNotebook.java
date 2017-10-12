@@ -2,14 +2,14 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.io.IOException;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.capabilities.NotebookInfo;
-import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.network.PacketNotebookChanged;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookChanged;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;

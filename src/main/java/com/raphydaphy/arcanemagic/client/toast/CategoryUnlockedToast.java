@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.client.toast;
 
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.toasts.GuiToast;

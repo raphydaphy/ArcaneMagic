@@ -2,12 +2,12 @@ package com.raphydaphy.arcanemagic.api.essence;
 
 import java.awt.Color;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.essence.EssenceCreation;
-import com.raphydaphy.arcanemagic.handler.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.PacketEssenceTransfer;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceStorage;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.essence.EssenceCreation;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.network.PacketEssenceTransfer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceStorage;
 
 import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;

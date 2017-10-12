@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;

@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

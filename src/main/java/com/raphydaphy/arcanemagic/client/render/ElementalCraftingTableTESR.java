@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client.render;
 
-import com.raphydaphy.arcanemagic.tileentity.TileEntityElementalCraftingTable;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

@@ -5,9 +5,8 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.entity.EntityMagicCircles;
-import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.util.GLHelper;
+import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

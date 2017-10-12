@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack.ImmutableEssenceStack;
-import com.raphydaphy.arcanemagic.item.ItemScepter;
+import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

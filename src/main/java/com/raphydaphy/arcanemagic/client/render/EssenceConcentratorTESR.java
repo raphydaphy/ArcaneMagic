@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client.render;
 
-import com.raphydaphy.arcanemagic.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

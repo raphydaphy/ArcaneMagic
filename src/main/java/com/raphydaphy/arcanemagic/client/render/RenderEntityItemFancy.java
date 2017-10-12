@@ -1,8 +1,7 @@
 package com.raphydaphy.arcanemagic.client.render;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.entity.EntityItemFancy;
-import com.raphydaphy.arcanemagic.util.GLHelper;
+import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
