@@ -292,6 +292,64 @@ public class GLHelper
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
+	
+	public static void renderFancyBeam2D(double x, double y, float rot, Color color, long seed, long continuousTick,float scale)
+	{
+		int dstJump = 16;
+		
+		Random rand = new Random(seed);
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+		GlStateManager.translate(x, y, 0);
+
+		Tessellator tes = Tessellator.getInstance();
+		BufferBuilder vb = tes.getBuffer();
+
+		RenderHelper.disableStandardItemLighting();
+		float beamSize = 0.9F;
+
+		GlStateManager.disableTexture2D();
+		GlStateManager.shadeModel(GL11.GL_SMOOTH);
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+		GlStateManager.depthMask(false);
+		GlStateManager.pushMatrix();
+		//GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+		//GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+		//GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
+		
+		GlStateManager.rotate(rot, 0,0,1);
+		vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
+		// length and width of the individual beams
+		float length = 0.4f;
+		length *= 90;
+		float width = 3;
+
+		
+		vb.pos(0, 0, 0)
+				.color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255.0F * (1.0F - beamSize)) * 10)
+				.endVertex();
+		vb.pos(-0.7D * width, length, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
+				.endVertex();
+		vb.pos(0.7D * width, length, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
+				.endVertex();
+		vb.pos(0.0D, length, 1.0F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0).endVertex();
+		vb.pos(-0.7D * width, length, -0.5F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
+				.endVertex();
+		tes.draw();
+		GlStateManager.popMatrix();
+		GlStateManager.depthMask(true);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.disableBlend();
+		GlStateManager.shadeModel(GL11.GL_FLAT);
+		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableAlpha();
+		RenderHelper.enableStandardItemLighting();
+
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+	}
 
 	public static void renderFancyBeams(double x, double y, double z, Color color, long seed, long continuousTick,
 			float scale)
