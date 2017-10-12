@@ -39,7 +39,6 @@ import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientEvents
@@ -58,7 +57,6 @@ public class ClientEvents
 				((IHasModel) b).initModels(event);
 	}
 
-	
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
 	{
@@ -186,7 +184,7 @@ public class ClientEvents
 		GlStateManager.popMatrix();
 
 	}
-	
+
 	@SubscribeEvent
 	public void onTextureStitch(TextureStitchEvent.Pre event)
 	{
@@ -198,7 +196,6 @@ public class ClientEvents
 		ArcaneMagic.LOGGER.info("Stiched textures!");
 	}
 
-	
 	@SubscribeEvent
 	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
 	{

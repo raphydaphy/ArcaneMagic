@@ -292,8 +292,9 @@ public class GLHelper
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
-	
-	public static void renderFancyBeam2D(double x, double y, float rot, Color color, long seed, long continuousTick,float scale)
+
+	public static void renderFancyBeam2D(double x, double y, float rot, Color color, long seed, long continuousTick,
+			float scale)
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
@@ -314,22 +315,19 @@ public class GLHelper
 		//GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 		//GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
 		//GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
-		
-		GlStateManager.rotate(rot, 0,0,1);
+
+		GlStateManager.rotate(rot, 0, 0, 1);
 		vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
 		// length and width of the individual beams
 		float length = 0.4f;
 		length *= 90;
 		float width = 3;
 
-		
 		vb.pos(0, 0, 0)
 				.color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255.0F * (1.0F - beamSize)) * 10)
 				.endVertex();
-		vb.pos(-0.7D * width, length, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
-				.endVertex();
-		vb.pos(0.7D * width, length, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
-				.endVertex();
+		vb.pos(-0.7D * width, length, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 0).endVertex();
+		vb.pos(0.7D * width, length, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 0).endVertex();
 		vb.pos(0.0D, length, 1.0F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0).endVertex();
 		vb.pos(-0.7D * width, length, -0.5F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
 				.endVertex();
