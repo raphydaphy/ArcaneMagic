@@ -51,6 +51,7 @@ public class ModRegistry
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values());
+	public static final Item CREATION = new ItemBase("essence_creation");
 	public static final ItemAncientParchment ANCIENT_PARCHMENT = new ItemAncientParchment("ancient_parchment");
 
 	@SubscribeEvent
