@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.item;
 
 import java.awt.Color;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -329,21 +328,17 @@ public class ItemScepter extends ItemBase
 		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
 		if (handler != null)
 		{
-			Collection<EssenceStack> storedEssence = handler.getStored().values();
-			EssenceStack[] storedEssenceArray = new EssenceStack[storedEssence.size()];
-			storedEssence.toArray(storedEssenceArray);
-			if (storedEssence.size() > 0)
+			for (int curEssence = 0; curEssence < 6; curEssence++)
 			{
-				for (int curEssence = 0; curEssence < storedEssence.size(); curEssence++)
-				{
-					EssenceStack essence = storedEssenceArray[curEssence];
-					Pair<Integer, Integer> essencePos = barPositions.get(curEssence);
-					Color color = essence.getEssence().getColor();
-					// System.out.println(color.toString());
-					drawBar(essencePos.getLeft(), essencePos.getRight(), color.getRed() / 256, color.getGreen() / 256f,
-							color.getBlue() / 256f, essence.getCount() / 28, rot);
-					rot += 23;
-				}
+				Essence cur = Essence.REGISTRY.getValues().get(curEssence);
+				EssenceStack essence = new EssenceStack(cur,
+						handler.getStored().containsKey(cur) ? handler.getStored().get(cur).getCount() : 0);
+				Pair<Integer, Integer> essencePos = barPositions.get(curEssence);
+				Color color = essence.getEssence().getColor();
+				// System.out.println(color.toString());
+				drawBar(essencePos.getLeft(), essencePos.getRight(), color.getRed() / 256, color.getGreen() / 256f,
+						color.getBlue() / 256f, essence.getCount() / 28, rot);
+				rot += 23;
 			}
 		}
 

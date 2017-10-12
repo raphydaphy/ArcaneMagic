@@ -112,7 +112,7 @@ public class GuiWritingDesk extends GuiContainer
 				// CHAOS
 				GLHelper.renderFancyBeams2D(guiLeft + 92, guiTop + 27, Essence.CHAOS.getColor(), mc.world.getSeed(),
 						age, 0.18f, 40, 30);
-
+				
 				// DEPTH
 				GLHelper.renderFancyBeams2D(guiLeft + 111, guiTop + 92, Essence.DEPTH.getColor(), mc.world.getSeed(),
 						age + 2023, 0.18f, 40, 30);

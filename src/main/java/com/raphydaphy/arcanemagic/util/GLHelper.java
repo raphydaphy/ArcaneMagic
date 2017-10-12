@@ -295,9 +295,6 @@ public class GLHelper
 	
 	public static void renderFancyBeam2D(double x, double y, float rot, Color color, long seed, long continuousTick,float scale)
 	{
-		int dstJump = 16;
-		
-		Random rand = new Random(seed);
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.translate(x, y, 0);
