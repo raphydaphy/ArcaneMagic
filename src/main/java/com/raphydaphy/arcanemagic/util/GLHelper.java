@@ -31,11 +31,12 @@ public class GLHelper
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.enableCull();
-		GlStateManager.alphaFunc(516, 0.1F);
-		GlStateManager.enableBlend();
 		GlStateManager.depthMask(true);
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.enableAlpha();
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.alphaFunc(516, 0.1F);
+		GlStateManager.enableBlend();
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
 				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
 				GlStateManager.DestFactor.ZERO);
@@ -46,6 +47,108 @@ public class GLHelper
 				transform, false);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, transformedModel);
 
+		GlStateManager.disableBlend();
+		GlStateManager.disableAlpha();
+		RenderHelper.disableStandardItemLighting();
+		GlStateManager.depthMask(false);
+		GlStateManager.disableCull();
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+	}
+
+	public static void drawCircle2D(double radius, double x, double y, Color color, int accuracy, int lineWidth)
+	{
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+				GlStateManager.DestFactor.ZERO);
+		GlStateManager.shadeModel(7425);
+
+		GL11.glLineWidth(lineWidth);
+		Tessellator tes = Tessellator.getInstance();
+		BufferBuilder vb = tes.getBuffer();
+		vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+
+		for (int seg = 0; seg < (360 / accuracy); seg++)
+		{
+			vb.pos(x + (Math.cos(Math.toRadians(seg * accuracy)) * radius),
+					y + (Math.sin(Math.toRadians(seg * accuracy)) * radius), 0)
+					.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+		}
+		tes.draw();
+
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.disableBlend();
+		GlStateManager.shadeModel(GL11.GL_FLAT);
+		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableAlpha();
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+	}
+
+	public static void drawTriangle2D(double width, float rotation, double x, double y, Color color, int lineWidth)
+	{
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+
+		GlStateManager.translate(x, y, 0);
+		GlStateManager.rotate(rotation, 0, 0, 1);
+		double p = (3 * width) / 2;
+		double area = Math.sqrt((p * (p - width) * (p - width) * (p - width)));
+		double height = 2 * (area / width);
+
+		GlStateManager.disableTexture2D();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA,
+				GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE,
+				GlStateManager.DestFactor.ZERO);
+		GlStateManager.shadeModel(7425);
+
+		GL11.glLineWidth(lineWidth);
+		Tessellator tes = Tessellator.getInstance();
+		BufferBuilder vb = tes.getBuffer();
+
+		GlStateManager.rotate(60f, 0, 0, 1);
+		vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+
+		vb.pos(0, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+
+		vb.pos(width, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+
+		tes.draw();
+
+		GlStateManager.rotate(60f, 0, 0, 1);
+		vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+
+		vb.pos(0, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+
+		vb.pos(width, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+
+		tes.draw();
+
+		GlStateManager.rotate(60f, 0, 0, 1);
+		GlStateManager.translate(0, -height, 0);
+		vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+
+		vb.pos(-width / 2, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+
+		vb.pos(width / 2, 0, 0).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+
+		tes.draw();
+
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.disableBlend();
+		GlStateManager.shadeModel(GL11.GL_FLAT);
+		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableAlpha();
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
@@ -125,10 +228,75 @@ public class GLHelper
 		GlStateManager.popMatrix();
 	}
 
+	public static void renderFancyBeams2D(double x, double y, Color color, long seed, long continuousTick, float scale,
+			int countFancy, int countNormal)
+	{
+		int dstJump = 16;
+		Random rand = new Random(seed);
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+		GlStateManager.translate(x, y, 0);
+		int fancy_count = !FMLClientHandler.instance().getClient().gameSettings.fancyGraphics ? countNormal
+				: countFancy;
+
+		Tessellator tes = Tessellator.getInstance();
+		BufferBuilder vb = tes.getBuffer();
+
+		RenderHelper.disableStandardItemLighting();
+		float rotateSpeed = continuousTick / 1000.0F;
+		float beamSize = 0.9F;
+
+		GlStateManager.disableTexture2D();
+		GlStateManager.shadeModel(GL11.GL_SMOOTH);
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+		GlStateManager.depthMask(false);
+		GlStateManager.pushMatrix();
+		for (int i = 0; i < fancy_count; i++)
+		{
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
+			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
+
+			// Animate the beams spinning
+			GlStateManager.rotate(rand.nextFloat() * 360.0F + rotateSpeed * 360.0F, 0.0F, 0.0F, 1.0F);
+
+			vb.begin(GL11.GL_TRIANGLE_FAN, DefaultVertexFormats.POSITION_COLOR);
+			// length and width of the individual beams
+			float length = (rand.nextFloat() * 20.0F + 5.0F + beamSize * 10.0F)
+					/ (30.0F / (Math.min(dstJump, 10 * scale) / 10.0F));
+			length *= 90;
+			float width = 3;
+
+			vb.pos(0, 0, 0)
+					.color(color.getRed(), color.getGreen(), color.getBlue(), (int) (255.0F * (1.0F - beamSize)) * 10)
+					.endVertex();
+			vb.pos(-0.7D * width, length, -0.5F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
+					.endVertex();
+			vb.pos(0.7D * width, length, -0.5F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
+					.endVertex();
+			vb.pos(0.0D, length, 1.0F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0).endVertex();
+			vb.pos(-0.7D * width, length, -0.5F * width).color(color.getRed(), color.getGreen(), color.getBlue(), 0)
+					.endVertex();
+			tes.draw();
+		}
+		GlStateManager.popMatrix();
+		GlStateManager.depthMask(true);
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GlStateManager.disableBlend();
+		GlStateManager.shadeModel(GL11.GL_FLAT);
+		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.enableTexture2D();
+		GlStateManager.enableAlpha();
+		RenderHelper.enableStandardItemLighting();
+
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+	}
+
 	public static void renderFancyBeams(double x, double y, double z, Color color, long seed, long continuousTick,
 			float scale)
 	{
-		GLHelper.renderFancyBeams(x, y, z, color, seed, continuousTick, 16, seed, 30, 10);
+		GLHelper.renderFancyBeams(x, y, z, color, seed, continuousTick, 16, scale, 30, 10);
 	}
 
 	public static void renderFancyBeams(double x, double y, double z, Color color, long seed, long continuousTick,
@@ -196,6 +364,7 @@ public class GLHelper
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableAlpha();
 		RenderHelper.enableStandardItemLighting();
+
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}

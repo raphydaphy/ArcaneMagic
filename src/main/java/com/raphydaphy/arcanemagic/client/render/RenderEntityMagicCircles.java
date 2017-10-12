@@ -147,6 +147,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 				ItemCameraTransforms.TransformType.GROUND);
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
+
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 		if (entity.hasBook)
