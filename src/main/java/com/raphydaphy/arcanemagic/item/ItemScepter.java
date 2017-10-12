@@ -207,8 +207,9 @@ public class ItemScepter extends ItemBase
 
 		if (handler != null && !player.world.isRemote)
 		{
-			for (Essence essence : Essence.REGISTRY.getValues())
+			for (int e = 0; e < 6; e++)
 			{
+				Essence essence = Essence.REGISTRY.getValues().get(e);
 				handler.store(new EssenceStack(essence, itemRand.nextInt(2)), false);
 			}
 			if (player instanceof EntityPlayerMP)
