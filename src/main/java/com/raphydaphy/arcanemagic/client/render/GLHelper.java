@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.client.render;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
@@ -8,6 +9,7 @@ import org.lwjgl.opengl.GL11;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -31,6 +33,9 @@ public class GLHelper
 	public static void renderParchmentFirstPerson(ItemStack parchment, float pitch, float p_187463_2_,
 			float p_187463_3_)
 	{
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+		
 		float f = MathHelper.sqrt(p_187463_3_);
 		float f1 = -0.2F * MathHelper.sin(p_187463_3_ * (float) Math.PI);
 		float f2 = -0.4F * MathHelper.sin(f * (float) Math.PI);
@@ -43,17 +48,20 @@ public class GLHelper
 		GlStateManager.rotate(f4 * 20.0F, 1.0F, 0.0F, 0.0F);
 		GlStateManager.scale(2.0F, 2.0F, 2.0F);
 		renderParchmentFirstPerson(parchment);
+		
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
 	}
 
 	// [VanillaCopy]
 	public static void renderParchmentFirstPerson(ItemStack stack)
 	{
+		Minecraft mc = Minecraft.getMinecraft();
 		GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
 		GlStateManager.scale(0.38F, 0.38F, 0.38F);
 		GlStateManager.disableLighting();
-		Minecraft.getMinecraft().getTextureManager()
-				.bindTexture(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/parchment.png"));
+		mc.getTextureManager().bindTexture(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/parchment.png"));
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		GlStateManager.translate(-0.5F, -0.5F, 0.0F);
@@ -65,9 +73,32 @@ public class GLHelper
 		bufferbuilder.pos(-7.0D, -7.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
 		tessellator.draw();
 
-		// TODO: render text here
+		
+		GlStateManager.translate(0, 0, -1);
+		GlStateManager.translate(63,  61,  0);
+		mc.fontRenderer.drawString("Ancient Secrets", 0 - (mc.fontRenderer.getStringWidth("Ancient Secrets") / 2), -50, 0x000000);
+		GlStateManager.scale(0.7, 0.7, 0.7);
+		
+		drawCenteredSplitString(mc.fontRenderer,
+				"The arcane magicians have left several clues, but I cannot piece together what they want.\n\n Their parchments do seem to attract an odd variety of dust particles when deep in the world however. Soon I will try using the parchment on the bedrock itself, but I am afraid of losing it.",
+				0, 0, 150, 0x000000);
 
 		GlStateManager.enableLighting();
+	}
+
+	public static void drawCenteredSplitString(FontRenderer fontRenderer, String text, float x, float y, int wrap,
+			int color)
+	{
+		List<String> strings = fontRenderer.listFormattedStringToWidth(text, wrap);
+		
+		y -=  (strings.size() * 4.15f);
+		
+		for (String s : strings)
+		{
+			fontRenderer.drawString(s, (float) (x - fontRenderer.getStringWidth(s) / 2), y, color, false);
+			y += fontRenderer.FONT_HEIGHT;
+		}
+
 	}
 
 	public static void drawCircle(double radius, double innerWidth, double x, double y, double z, Color color)

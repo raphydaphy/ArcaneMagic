@@ -54,11 +54,9 @@ public class ClientEvents
 {
 	@SubscribeEvent
 	public static void onRenderHand(RenderHandEvent ev)
-	{
-		
-		
+	{	
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if (player.getHeldItemMainhand().getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		if (player.getHeldItemMainhand().getItem().equals(ModRegistry.ANCIENT_PARCHMENT) && player.getHeldItemOffhand().isEmpty())
 		{
 
 			float f = player.getSwingProgress(ev.getPartialTicks());
