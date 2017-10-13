@@ -126,6 +126,39 @@ public class ModEvents
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
 						}
 					}
+					
+					if (item.equals(Item.getItemFromBlock(ModRegistry.ESSENCE_CONCENTRATOR))
+							&& !info.isUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag()))
+					{
+						info.setUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag());
+						
+						if (ev.player.world.isRemote)
+						{
+							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.ESSENCE_COLLECTION);
+						}
+					}
+					
+					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
+							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
+					{
+						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());
+						
+						if (ev.player.world.isRemote)
+						{
+							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.CRYSTALLIZATION);
+						}
+					}
+					
+					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
+							&& !info.isUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag()))
+					{
+						info.setUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag());
+						
+						if (ev.player.world.isRemote)
+						{
+							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.MANIPULATING_MAGIC);
+						}
+					}
 				}
 			}
 
