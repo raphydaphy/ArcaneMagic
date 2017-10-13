@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -75,12 +76,12 @@ public class GLHelper
 
 		
 		GlStateManager.translate(0, 0, -1);
-		GlStateManager.translate(63,  61,  0);
-		mc.fontRenderer.drawString("Ancient Secrets", 0 - (mc.fontRenderer.getStringWidth("Ancient Secrets") / 2), -50, 0x000000);
+		GlStateManager.translate(63,  25,  0);
+		mc.fontRenderer.drawString(I18n.format("arcanemagic.message.ancient_parchment"), 0 - (mc.fontRenderer.getStringWidth(I18n.format("arcanemagic.message.ancient_parchment")) / 2), -15, 0x000000);
 		GlStateManager.scale(0.7, 0.7, 0.7);
 		
 		drawCenteredSplitString(mc.fontRenderer,
-				"The arcane magicians have left several clues, but I cannot piece together what they want.\n\n Their parchments do seem to attract an odd variety of dust particles when deep in the world however. Soon I will try using the parchment on the bedrock itself, but I am afraid of losing it.",
+				I18n.format("arcanemagic.message.ancient_parchment.0") + "\n\n" + I18n.format("arcanemagic.message.ancient_parchment.1"),
 				0, 0, 150, 0x000000);
 
 		GlStateManager.enableLighting();
@@ -90,8 +91,6 @@ public class GLHelper
 			int color)
 	{
 		List<String> strings = fontRenderer.listFormattedStringToWidth(text, wrap);
-		
-		y -=  (strings.size() * 4.15f);
 		
 		for (String s : strings)
 		{
