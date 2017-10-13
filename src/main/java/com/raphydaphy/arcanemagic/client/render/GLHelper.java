@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -31,8 +32,38 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GLHelper
 {
 	// [VanillaCopy]
-	public static void renderParchmentFirstPerson(ItemStack parchment, float pitch, float p_187463_2_,
-			float p_187463_3_)
+	public static void renderParchmentFirstPersonSide(float p_187465_1_, EnumHandSide hand, float p_187465_3_, ItemStack stack)
+    {
+		Minecraft mc = Minecraft.getMinecraft();
+		
+        float f = hand == EnumHandSide.RIGHT ? 1.0F : -1.0F;
+        GlStateManager.translate(f * 0.125F, -0.125F, 0.0F);
+
+        if (!mc.player.isInvisible())
+        {
+            GlStateManager.pushMatrix();
+            GlStateManager.rotate(f * 10.0F, 0.0F, 0.0F, 1.0F);
+            mc.getItemRenderer().renderArmFirstPerson(p_187465_1_, p_187465_3_, hand);
+            GlStateManager.popMatrix();
+        }
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate(f * 0.51F, -0.08F + p_187465_1_ * -1.2F, -0.75F);
+        float f1 = MathHelper.sqrt(p_187465_3_);
+        float f2 = MathHelper.sin(f1 * (float)Math.PI);
+        float f3 = -0.5F * f2;
+        float f4 = 0.4F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
+        float f5 = -0.3F * MathHelper.sin(p_187465_3_ * (float)Math.PI);
+        GlStateManager.translate(f * f3, f4 - 0.3F * f2, f5);
+        GlStateManager.rotate(f2 * -45.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(f * f2 * -30.0F, 0.0F, 1.0F, 0.0F);
+        renderParchmentFirstPerson(stack);
+        GlStateManager.popMatrix();
+    }
+	
+	// [VanillaCopy]
+	public static void renderParchmentFirstPerson(float pitch, float p_187463_2_,
+			float p_187463_3_,ItemStack parchment)
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();

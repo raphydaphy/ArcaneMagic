@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.base.MoreObjects;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
@@ -33,6 +32,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -40,7 +40,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.client.event.RenderHandEvent;
+import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -53,23 +53,33 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ClientEvents
 {
 	@SubscribeEvent
-	public static void onRenderHand(RenderHandEvent ev)
-	{	
+	public static void onRenderHand(RenderSpecificHandEvent ev)
+	{
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if (!player.isSneaking() && player.getHeldItemMainhand().getItem().equals(ModRegistry.ANCIENT_PARCHMENT) && player.getHeldItemOffhand().isEmpty())
+		if (!player.isSneaking() && ev.getItemStack().getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
 		{
 
 			float f = player.getSwingProgress(ev.getPartialTicks());
-			EnumHand enumhand = (EnumHand) MoreObjects.firstNonNull(player.swingingHand, EnumHand.MAIN_HAND);
 			float f1 = player.prevRotationPitch
 					+ (player.rotationPitch - player.prevRotationPitch) * ev.getPartialTicks();
 
 			ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer();
-			float f5 = 1.0F - (itemrenderer.prevEquippedProgressMainHand
-					+ (itemrenderer.equippedProgressMainHand - itemrenderer.prevEquippedProgressMainHand)
-							* ev.getPartialTicks());
 
-			GLHelper.renderParchmentFirstPerson(player.getHeldItemMainhand(), f1, f5, f);
+			float prevEquipProgress = ev.getHand() == EnumHand.MAIN_HAND ? itemrenderer.prevEquippedProgressMainHand
+					: itemrenderer.prevEquippedProgressOffHand;
+			float equipProgress = ev.getHand() == EnumHand.MAIN_HAND ? itemrenderer.equippedProgressMainHand : itemrenderer.equippedProgressOffHand;
+			float f5 = 1.0F - (prevEquipProgress + (equipProgress - prevEquipProgress) * ev.getPartialTicks());
+
+			if (ev.getHand() == EnumHand.MAIN_HAND && player.getHeldItemOffhand().isEmpty())
+			{
+				GLHelper.renderParchmentFirstPerson(f1, f5, f, ev.getItemStack());
+			} else
+			{
+				EnumHandSide enumhandside = ev.getHand() == EnumHand.MAIN_HAND ? player.getPrimaryHand()
+						: player.getPrimaryHand().opposite();
+				GLHelper.renderParchmentFirstPersonSide(f5, enumhandside, f, ev.getItemStack());
+			}
+			
 			ev.setCanceled(true);
 		}
 	}
@@ -91,7 +101,7 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
 	{
-		
+
 		World world = Minecraft.getMinecraft().world;
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
@@ -209,7 +219,7 @@ public class ClientEvents
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableAlpha();
-		
+
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 
@@ -218,7 +228,7 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
 	{
-		
+
 		Minecraft mc = Minecraft.getMinecraft();
 		if (event.getType() == ElementType.ALL)
 		{
