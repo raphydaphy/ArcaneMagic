@@ -6,6 +6,7 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import net.minecraft.item.ItemStack;
@@ -30,13 +31,16 @@ public class CategoryBasicLinguistics extends NotebookCategory
 
 		return entries;
 	}
-
-	public static final String REQUIRED_TAG = "unlockedElementalParticles";
-
 	@Override
 	public String getRequiredTag()
 	{
-		return REQUIRED_TAG;
+		return "unlockedBasicLinguistics";
+	}
+	
+	@Override
+	public String getPrerequisiteTag()
+	{
+		return NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag();
 	}
 
 	@Override

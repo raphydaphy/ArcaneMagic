@@ -30,12 +30,10 @@ public class CategoryNaturalHarmony extends NotebookCategory
 		return entries;
 	}
 
-	public static final String REQUIRED_TAG = "unlockedNaturalHarmony";
-
 	@Override
 	public String getRequiredTag()
 	{
-		return REQUIRED_TAG;
+		return "unlockedNaturalHarmony";
 	}
 
 	@Override

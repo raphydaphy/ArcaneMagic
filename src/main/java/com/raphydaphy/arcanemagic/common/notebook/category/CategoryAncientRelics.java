@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryAncientRelics extends NotebookCategory
 {
+
 	@Override
 	public String getUnlocalizedName()
 	{
@@ -30,8 +31,14 @@ public class CategoryAncientRelics extends NotebookCategory
 	}
 
 	@Override
+	public String getRequiredTag()
+	{
+		return "unlockedAncientRelics";
+	}
+
+	@Override
 	public ItemStack getIcon()
 	{
-		return new ItemStack(ModRegistry.NOTEBOOK);
+		return new ItemStack(ModRegistry.ANCIENT_PARCHMENT);
 	}
 }

@@ -11,15 +11,22 @@ import com.raphydaphy.arcanemagic.common.notebook.category.CategoryForgottenKnow
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryManipulatingMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryMysticalEnergy;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalHarmony;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryUnknownRealms;
 
 public class NotebookCategories
 {
+	// the player should NOT have this category unlocked ! it is only shown if they open a notebook before obtaining an ancient parchment, which should be impossible!
+	public static final NotebookCategory UNKNOWN_REALMS = new CategoryUnknownRealms().setRegistryName(ArcaneMagic.MODID, "unknown_realms");
+	
+	// regular categories
 	public static final NotebookCategory ANCIENT_RELICS = new CategoryAncientRelics().setRegistryName(ArcaneMagic.MODID,
 			"ancient_relics");
 	public static final NotebookCategory FORGOTTEN_KNOWLEDGE = new CategoryForgottenKnowledge()
 			.setRegistryName(ArcaneMagic.MODID, "basic_linguistics");
 	public static final NotebookCategory BASIC_LINGUISTICS = new CategoryBasicLinguistics()
 			.setRegistryName(ArcaneMagic.MODID, "elemental_particles");
+	
+	// these categories are just temporary until a real category replaces them
 	public static final NotebookCategory MYSTICAL_ENERGY = new CategoryMysticalEnergy()
 			.setRegistryName(ArcaneMagic.MODID, "mystical_energy");
 	public static final NotebookCategory ESSENCE_COLLECTION = new CategoryEssenceCollection()
@@ -39,6 +46,7 @@ public class NotebookCategories
 			return;
 		done = true;
 
+		ArcaneMagicAPI.registerCategory(UNKNOWN_REALMS);
 		ArcaneMagicAPI.registerCategory(ANCIENT_RELICS);
 		ArcaneMagicAPI.registerCategory(FORGOTTEN_KNOWLEDGE);
 		ArcaneMagicAPI.registerCategory(BASIC_LINGUISTICS);

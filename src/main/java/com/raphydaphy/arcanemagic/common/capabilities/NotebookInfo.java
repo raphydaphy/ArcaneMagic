@@ -6,6 +6,9 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -117,15 +120,27 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 
 	public boolean isUnlocked(String tag)
 	{
-		if (tag.equals(tagUsedNotebook))
+		if (tag != null)
+		{
+			if (tag.equals(tagUsedNotebook))
+			{
+				return true;
+			}
+			if (unlockedCategories.containsKey(tag) && unlockedCategories.get(tag))
+			{
+				return unlockedCategories.get(tag);
+			}
+		}
+		return false;
+	}
+	
+	public boolean isVisible(NotebookCategory cat)
+	{
+		if (!isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag()) && cat.equals(NotebookCategories.UNKNOWN_REALMS))
 		{
 			return true;
 		}
-		if (unlockedCategories.containsKey(tag) && unlockedCategories.get(tag))
-		{
-			return unlockedCategories.get(tag);
-		}
-		return false;
+		return (isUnlocked(cat.getRequiredTag()) && isUnlocked(cat.getPrerequisiteTag()));
 	}
 
 	@Override

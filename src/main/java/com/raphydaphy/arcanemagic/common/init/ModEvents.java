@@ -7,7 +7,6 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryBasicLinguistics;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityWitch;
@@ -48,11 +47,11 @@ public class ModEvents
 
 		if (info != null)
 		{
-			if (!info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG)
+			if (!info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag())
 					&& ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 			{
 
-				info.setUnlocked(CategoryBasicLinguistics.REQUIRED_TAG);
+				info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
 
 				if (ev.getEntityPlayer().world.isRemote)
 				{
@@ -65,23 +64,7 @@ public class ModEvents
 	@SubscribeEvent
 	public static void onItemCrafted(ItemCraftedEvent ev)
 	{
-		NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
-		if (info != null)
-		{
-			System.out.println("IS CLIENT? " + ev.player.world.isRemote + " IS UNLOCKED? "
-					+ info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG));
-			if (!info.isUnlocked(CategoryBasicLinguistics.REQUIRED_TAG)
-					&& ev.crafting.getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
-			{
 
-				info.setUnlocked(CategoryBasicLinguistics.REQUIRED_TAG);
-
-				if (ev.player.world.isRemote)
-				{
-					ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
-				}
-			}
-		}
 	}
 
 	@SubscribeEvent
@@ -99,6 +82,54 @@ public class ModEvents
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
+		if (ev.player.world.getTotalWorldTime() % 50 == 0)
+		{
+			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
+			
+			if (info != null)
+			{
+				for (int i = 0; i < ev.player.inventory.getSizeInventory(); i++)
+				{
+					Item item = ev.player.inventory.getStackInSlot(i).getItem();
+
+					// Check for all item-based notebook category unlocks here
+					
+					if (item.equals(ModRegistry.ANCIENT_PARCHMENT)
+							&& !info.isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag()))
+					{
+						info.setUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
+						
+						if (ev.player.world.isRemote)
+						{
+							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.ANCIENT_RELICS);
+						}
+					}
+					
+					if (item.equals(ModRegistry.NOTEBOOK)
+							&& !info.isUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag()))
+					{
+						info.setUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
+						
+						if (ev.player.world.isRemote)
+						{
+							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.FORGOTTEN_KNOWLEDGE);
+						}
+					}
+					
+					if (item.equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK))
+							&& !info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag()))
+					{
+						info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
+						
+						if (ev.player.world.isRemote)
+						{
+							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
+						}
+					}
+				}
+			}
+
+		}
 
 		Random rand = ev.player.world.rand;
 		if (ev.phase == TickEvent.Phase.START)
@@ -148,8 +179,6 @@ public class ModEvents
 			}
 		}
 	}
-
-	
 
 	@SubscribeEvent
 	public static void onLivingDrops(LivingDropsEvent event)

@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.container.ContainerCrystallizer;
+import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.client.Minecraft;
@@ -89,8 +90,9 @@ public class GuiCrystallizer extends GuiContainer
 
 		Map<Essence, EssenceStack> essenceStored = te.getCapability(IEssenceStorage.CAP, null).getStored();
 		int i = 0;
-		for (Essence essence : Essence.REGISTRY.getValues())
+		for (EnumBasicEssence e : EnumBasicEssence.values())
 		{
+			Essence essence = e.getEssence();
 			i++;
 			EssenceStack stack = essenceStored.containsKey(essence) ? essenceStored.get(essence)
 					: new EssenceStack(essence, 0);

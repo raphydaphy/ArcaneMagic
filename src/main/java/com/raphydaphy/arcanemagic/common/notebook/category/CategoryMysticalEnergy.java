@@ -30,12 +30,10 @@ public class CategoryMysticalEnergy extends NotebookCategory
 		return entries;
 	}
 
-	public static final String REQUIRED_TAG = "unlockedMysticalEnergy";
-
 	@Override
 	public String getRequiredTag()
 	{
-		return REQUIRED_TAG;
+		return "unlockedMysticalEnergy";
 	}
 
 	@Override

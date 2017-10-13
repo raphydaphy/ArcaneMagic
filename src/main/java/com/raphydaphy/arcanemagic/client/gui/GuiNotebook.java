@@ -51,7 +51,6 @@ public class GuiNotebook extends GuiScreen
 		if (cap != null && !cap.getUsed())
 		{
 			cap.setUsed(true);
-			System.out.println("opened for first time");
 			ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 		}
 	}
@@ -124,7 +123,7 @@ public class GuiNotebook extends GuiScreen
 
 			for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
 			{
-				if (cap.isUnlocked(ArcaneMagicAPI.getNotebookCategories().get(category).getRequiredTag()))
+				if (cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(category)))
 				{
 					if (category < curCategory)
 					{
@@ -137,11 +136,10 @@ public class GuiNotebook extends GuiScreen
 			}
 			// if they haven't unlocked the current category, or it dosen't exist
 			if (curCategory > ArcaneMagicAPI.getNotebookCategories().size()
-					|| !cap.isUnlocked(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getRequiredTag()))
+					|| !cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(curCategory)))
 			{
-				cap.setCategory(0);
-				curCategory = 0;
-				System.out.println("set cat to 0");
+				cap.setCategory(1);
+				curCategory = 1;
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 			}
 			mc.getTextureManager().bindTexture(notebook);
@@ -163,9 +161,9 @@ public class GuiNotebook extends GuiScreen
 			// Current Category Name
 			double largeText = 1.4;
 			GlStateManager.scale(largeText, largeText, largeText);
-			fontRenderer.drawStringWithShadow(
+			fontRenderer.drawString(
 					I18n.format(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedName()),
-					(int) ((screenX + 145) / largeText), (int) ((screenY + 17) / largeText), 0x666666); // satan is coming
+					(int) ((screenX + 145) / largeText), (int) ((screenY + 20) / largeText), 0x000000); // satan is coming
 
 			// Category List
 			double categoryNameSize = 0.8;
@@ -175,8 +173,8 @@ public class GuiNotebook extends GuiScreen
 			int cat = 0;
 			for (NotebookCategory category : ArcaneMagicAPI.getNotebookCategories())
 			{
-				// if the category is unlocked
-				if (cap.isUnlocked(category.getRequiredTag()))
+				// if the category is visible in the book
+				if (cap.isVisible(category))
 				{
 					// Draw the category!
 					fontRenderer.drawString(I18n.format(category.getUnlocalizedName()),
@@ -241,7 +239,7 @@ public class GuiNotebook extends GuiScreen
 					for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++)
 					{
 						// if they have unlocked this category
-						if (cap.isUnlocked(ArcaneMagicAPI.getNotebookCategories().get(unRealTab).getRequiredTag()))
+						if (cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(unRealTab)))
 						{
 							if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 32)
 							{
@@ -251,7 +249,6 @@ public class GuiNotebook extends GuiScreen
 											ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f,
 											1f, false);
 									cap.setCategory(unRealTab);
-									System.out.println("sending new page");
 									ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 								}
 								break;

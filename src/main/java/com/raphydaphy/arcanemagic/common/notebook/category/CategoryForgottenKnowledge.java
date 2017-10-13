@@ -6,6 +6,7 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
@@ -34,9 +35,21 @@ public class CategoryForgottenKnowledge extends NotebookCategory
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 1, 0x000000));
 		return entries;
 	}
-
+	
+	@Override
+	public String getRequiredTag()
+	{
+		return "unlockedForgottenKnowledge";
+	}
+	
+	@Override
+	public String getPrerequisiteTag()
+	{
+		return NotebookCategories.ANCIENT_RELICS.getRequiredTag();
+	}
+	
 	public ItemStack getIcon()
 	{
-		return new ItemStack(ModRegistry.ANCIENT_PARCHMENT);
+		return new ItemStack(ModRegistry.NOTEBOOK);
 	}
 }

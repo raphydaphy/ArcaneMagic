@@ -76,12 +76,16 @@ arcanemagic.message.ancient_parchment.0=The arcane magicians have left several c
 arcanemagic.message.ancient_parchment.1=Their parchments do seem to attract an odd variety of dust particles when deep in the world however. Soon I will try placing the parchment on the bedrock itself, but I am afraid of losing it.
 
 # Notebook
+arcanemagic.notebook.category.unknown_realms=Unknown Realms
+arcanemagic.notebook.category.unknown_realms.0=It seems impossible that this notebook could exist. You never witnessed it's creation, or understand why it is so empty.
+arcanemagic.notebook.category.unknown_realms.1=It is possible that you were given this by someone else, and in that case it would seem wise to throw it away, as if you wanted to obtain a similar book of your own it would likely be possible without the help of others.
+arcanemagic.notebook.category.unknown_realms.2=If you wanted to keep this, you would have to at least understand it's origins.
 arcanemagic.notebook.category.ancient_relics=Ancient Relics
-arcanemagic.notebook.category.ancient_relics.0=It seems almost supernatural how you managed to conjure this book from just a parchment and some bedrock. The witch who was previously carrying the paper clearly had no idea of the power it contained.
+arcanemagic.notebook.category.ancient_relics.0=It feels almost supernatural how you managed to conjure this book from just a parchment and some bedrock. The witch who was previously carrying the paper clearly had no idea of the power it contained.
 arcanemagic.notebook.category.ancient_relics.1=The particles collected when holding a similar parchment while deep underground are very intriguing. They may contain similar properties to those that allowed this book to be formed.
 arcanemagic.notebook.category.ancient_relics.2=By studying the notes left here by arcane magicians who passed away long ago, you hope it will be possible to understand this form of magic better, and perhaps even use it to your advantage.
 arcanemagic.notebook.category.forgotten_knowledge=Forgotten Knowledge
-arcanemagic.notebook.category.forgotten_knowledge.0=Unfortunately, it seems that the rest of this book is missing. It might prove useful to make a Writing Desk, as this would give you a cleaner environment to try and uncover the missing pages.
+arcanemagic.notebook.category.forgotten_knowledge.0=Unfortunately, it appears that the rest of this book is missing. It might prove useful to make a Writing Desk, as this would give you a cleaner environment to try and uncover the missing pages.
 arcanemagic.notebook.category.forgotten_knowledge.1=The pages must have been removed for a reason, though. It would make sense if the witch you killed only had a small part of the book, and was trying to piece it together - similar to what you are doing now.
 arcanemagic.notebook.category.basic_linguistics=Basic Linguistics
 arcanemagic.notebook.category.basic_linguistics.0=Your new Writing Desk has helped limit your distractions, but it appears that it can do more than just that. When you place your notebook and some paper onto the table, a new section becomes visible, allowing you to interact with it.

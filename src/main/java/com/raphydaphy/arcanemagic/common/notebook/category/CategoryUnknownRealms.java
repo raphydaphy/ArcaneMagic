@@ -5,17 +5,18 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
-public class CategoryEssenceCollection extends NotebookCategory
+public class CategoryUnknownRealms extends NotebookCategory
 {
+
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.essence_collection";
+		return "arcanemagic.notebook.category.unknown_realms";
 	}
 
 	@Override
@@ -26,19 +27,18 @@ public class CategoryEssenceCollection extends NotebookCategory
 		{
 			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
-
 		return entries;
 	}
 
 	@Override
 	public String getRequiredTag()
 	{
-		return "unlockedEssenceCollection";
+		return null;
 	}
 
 	@Override
 	public ItemStack getIcon()
 	{
-		return new ItemStack(ModRegistry.ESSENCE_CONCENTRATOR);
+		return new ItemStack(Blocks.BARRIER);
 	}
 }

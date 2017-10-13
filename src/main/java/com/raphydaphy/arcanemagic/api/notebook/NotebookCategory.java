@@ -19,6 +19,11 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 		return "usedNotebook";
 	}
 
+	public String getPrerequisiteTag()
+	{
+		return getRequiredTag();
+	}
+	
 	public abstract ItemStack getIcon();
 
 }
