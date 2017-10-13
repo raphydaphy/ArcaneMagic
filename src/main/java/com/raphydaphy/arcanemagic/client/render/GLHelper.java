@@ -5,6 +5,8 @@ import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
 
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -15,11 +17,59 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class GLHelper
 {
+	// [VanillaCopy]
+	public static void renderParchmentFirstPerson(ItemStack parchment, float pitch, float p_187463_2_,
+			float p_187463_3_)
+	{
+		float f = MathHelper.sqrt(p_187463_3_);
+		float f1 = -0.2F * MathHelper.sin(p_187463_3_ * (float) Math.PI);
+		float f2 = -0.4F * MathHelper.sin(f * (float) Math.PI);
+		GlStateManager.translate(0.0F, -f1 / 2.0F, f2);
+		float f3 = Minecraft.getMinecraft().getItemRenderer().getMapAngleFromPitch(pitch);
+		GlStateManager.translate(0.0F, 0.04F + p_187463_2_ * -1.2F + f3 * -0.5F, -0.72F);
+		GlStateManager.rotate(f3 * -85.0F, 1.0F, 0.0F, 0.0F);
+		Minecraft.getMinecraft().getItemRenderer().renderArms();
+		float f4 = MathHelper.sin(f * (float) Math.PI);
+		GlStateManager.rotate(f4 * 20.0F, 1.0F, 0.0F, 0.0F);
+		GlStateManager.scale(2.0F, 2.0F, 2.0F);
+		renderParchmentFirstPerson(parchment);
+	}
+
+	// [VanillaCopy]
+	public static void renderParchmentFirstPerson(ItemStack stack)
+	{
+		GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+		GlStateManager.scale(0.38F, 0.38F, 0.38F);
+		GlStateManager.disableLighting();
+		Minecraft.getMinecraft().getTextureManager()
+				.bindTexture(new ResourceLocation(ArcaneMagic.MODID, "textures/misc/parchment.png"));
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		GlStateManager.translate(-0.5F, -0.5F, 0.0F);
+		GlStateManager.scale(0.0078125F, 0.0078125F, 0.0078125F);
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos(-7.0D, 135.0D, 0.0D).tex(0.0D, 1.0D).endVertex();
+		bufferbuilder.pos(135.0D, 135.0D, 0.0D).tex(1.0D, 1.0D).endVertex();
+		bufferbuilder.pos(135.0D, -7.0D, 0.0D).tex(1.0D, 0.0D).endVertex();
+		bufferbuilder.pos(-7.0D, -7.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
+		tessellator.draw();
+
+		// TODO: render text here
+
+		GlStateManager.enableLighting();
+	}
+
 	public static void drawCircle(double radius, double innerWidth, double x, double y, double z, Color color)
 	{
 		drawCircle(radius, innerWidth, x, y, z, color, 360);

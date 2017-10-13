@@ -5,33 +5,42 @@ import java.util.Collection;
 
 import org.lwjgl.opengl.GL11;
 
+import com.google.common.base.MoreObjects;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
+import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
+import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -43,6 +52,27 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientEvents
 {
+	@SubscribeEvent
+	public static void onRenderHand(RenderHandEvent ev)
+	{
+		EntityPlayer player = Minecraft.getMinecraft().player;
+
+		float f = player.getSwingProgress(ev.getPartialTicks());
+		EnumHand enumhand = (EnumHand) MoreObjects.firstNonNull(player.swingingHand, EnumHand.MAIN_HAND);
+		float f1 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * ev.getPartialTicks();
+
+		if (player.getHeldItemMainhand().getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		{
+			ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer();
+			float f5 = 1.0F - (itemrenderer.prevEquippedProgressMainHand
+					+ (itemrenderer.equippedProgressMainHand - itemrenderer.prevEquippedProgressMainHand)
+							* ev.getPartialTicks());
+
+			GLHelper.renderParchmentFirstPerson(player.getHeldItemMainhand(), f1, f5, f);
+			ev.setCanceled(true);
+		}
+	}
+
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event)
 	{
@@ -186,7 +216,29 @@ public class ClientEvents
 	}
 
 	@SubscribeEvent
-	public void onTextureStitch(TextureStitchEvent.Pre event)
+	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
+	{
+		Minecraft mc = Minecraft.getMinecraft();
+		if (event.getType() == ElementType.ALL)
+		{
+			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
+
+			if ((!player.getHeldItemMainhand().isEmpty()
+					&& player.getHeldItemMainhand().getItem().equals(ModRegistry.SCEPTER)))
+			{
+				ItemScepter.renderHUD(mc, event.getResolution(), player.getHeldItemMainhand());
+			}
+
+			else if (!player.getHeldItemOffhand().isEmpty()
+					&& player.getHeldItemOffhand().getItem().equals(ModRegistry.SCEPTER))
+			{
+				ItemScepter.renderHUD(mc, event.getResolution(), player.getHeldItemOffhand());
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onTextureStitch(TextureStitchEvent.Pre event)
 	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball"));
 		ScepterRegistry.getValues().forEach(part ->

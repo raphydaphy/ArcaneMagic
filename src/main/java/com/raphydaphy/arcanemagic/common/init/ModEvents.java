@@ -6,11 +6,9 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
-import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryBasicLinguistics;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,8 +19,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
@@ -31,8 +27,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod.EventBusSubscriber
 public class ModEvents
@@ -155,28 +149,7 @@ public class ModEvents
 		}
 	}
 
-	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
-	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
-	{
-		Minecraft mc = Minecraft.getMinecraft();
-		if (event.getType() == ElementType.ALL)
-		{
-			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
-
-			if ((!player.getHeldItemMainhand().isEmpty()
-					&& player.getHeldItemMainhand().getItem().equals(ModRegistry.SCEPTER)))
-			{
-				ItemScepter.renderHUD(mc, event.getResolution(), player.getHeldItemMainhand());
-			}
-
-			else if (!player.getHeldItemOffhand().isEmpty()
-					&& player.getHeldItemOffhand().getItem().equals(ModRegistry.SCEPTER))
-			{
-				ItemScepter.renderHUD(mc, event.getResolution(), player.getHeldItemOffhand());
-			}
-		}
-	}
+	
 
 	@SubscribeEvent
 	public static void onLivingDrops(LivingDropsEvent event)
