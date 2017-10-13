@@ -55,14 +55,17 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void onRenderHand(RenderHandEvent ev)
 	{
+		
+		
 		EntityPlayer player = Minecraft.getMinecraft().player;
-
-		float f = player.getSwingProgress(ev.getPartialTicks());
-		EnumHand enumhand = (EnumHand) MoreObjects.firstNonNull(player.swingingHand, EnumHand.MAIN_HAND);
-		float f1 = player.prevRotationPitch + (player.rotationPitch - player.prevRotationPitch) * ev.getPartialTicks();
-
 		if (player.getHeldItemMainhand().getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
 		{
+
+			float f = player.getSwingProgress(ev.getPartialTicks());
+			EnumHand enumhand = (EnumHand) MoreObjects.firstNonNull(player.swingingHand, EnumHand.MAIN_HAND);
+			float f1 = player.prevRotationPitch
+					+ (player.rotationPitch - player.prevRotationPitch) * ev.getPartialTicks();
+
 			ItemRenderer itemrenderer = Minecraft.getMinecraft().getItemRenderer();
 			float f5 = 1.0F - (itemrenderer.prevEquippedProgressMainHand
 					+ (itemrenderer.equippedProgressMainHand - itemrenderer.prevEquippedProgressMainHand)
@@ -90,6 +93,7 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
 	{
+		
 		World world = Minecraft.getMinecraft().world;
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 
@@ -207,9 +211,7 @@ public class ClientEvents
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.enableTexture2D();
 		GlStateManager.enableAlpha();
-
-		RenderHelper.enableStandardItemLighting();
-
+		
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 
@@ -218,6 +220,7 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
 	{
+		
 		Minecraft mc = Minecraft.getMinecraft();
 		if (event.getType() == ElementType.ALL)
 		{
