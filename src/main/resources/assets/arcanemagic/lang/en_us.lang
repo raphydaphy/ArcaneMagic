@@ -22,6 +22,7 @@ tile.arcanemagic.elemental_crafting_table.name=Elemental Crafting Table
 tile.arcanemagic.crystallizer.name=Crystallizer
 tile.arcanemagic.essence_concentrator.name=Essence Concentrator
 tile.arcanemagic.writing_desk.name=Writing Desk
+tile.arcanemagic.infusion_altar.name=Infusion Altar
 
 # Sounds
 subtitle.arcanemagic.craft_start=Started Crafting
@@ -45,9 +46,9 @@ subtitle.arcanemagic.camera_clack=Something Clicks
 itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.elemental_crafting=Elemental Crafting
 gui.arcanemagic.crystallizer=Crystallizer
-gui.arcanemagic.writing_desk=Writing Desk
-gui.arcanemagic.writing_desk.nobook=Insert Book
-gui.arcanemagic.writing_desk.nopaper=Insert Paper
+gui.arcanemagic.infusion_altar=Writing Desk
+gui.arcanemagic.infusion_altar.nobook=Insert Book
+gui.arcanemagic.infusion_altar.nopaper=Insert Paper
 
 # Toasts
 toast.arcanemagic.page_unlocked=Notebook Page Revealed

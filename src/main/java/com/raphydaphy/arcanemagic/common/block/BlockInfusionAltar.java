@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.common.block;
 
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -21,13 +22,14 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockWritingDesk extends BlockBase implements IHasRecipe
+public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 {
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 13d * (1d / 16d), 1.0D);
+	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10d * (1d / 16d), 1.0D);
+	public static final int GUI_ID = 3;
 
-	public BlockWritingDesk()
+	public BlockInfusionAltar()
 	{
-		super("writing_desk", Material.ROCK, 2.5f);
+		super("infusion_altar", Material.ROCK, 5.5f);
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		TileEntityWritingDesk te = (TileEntityWritingDesk) world.getTileEntity(pos);
+		TileEntityInfusionAltar te = (TileEntityInfusionAltar) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		for (int i = 0; i < cap.getSlots(); ++i)
@@ -76,7 +78,7 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileEntityWritingDesk();
+		return new TileEntityInfusionAltar();
 	}
 
 	@Override
@@ -88,17 +90,18 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 			return true;
 		}
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityWritingDesk))
+		if (!(te instanceof TileEntityInfusionAltar))
 		{
 			return false;
 		}
+		player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addShaped(this, 3, 3, "paper", "dyeBlack", "paper", "plankWood", "plankWood", "plankWood",
-				"plankWood", null, "plankWood");
+		RecipeHelper.addShaped(this, 3, 3, null, "formationEssence", null, "obsidian", "obsidian", "obsidian",
+				"obsidian", null, "obsidian");
 	}
 }

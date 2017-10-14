@@ -1,16 +1,16 @@
 package com.raphydaphy.arcanemagic.client.proxy;
 
 import com.raphydaphy.arcanemagic.client.gui.GuiCrystallizer;
+import com.raphydaphy.arcanemagic.client.gui.GuiInfusionAltar;
 import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
-import com.raphydaphy.arcanemagic.client.gui.GuiWritingDesk;
 import com.raphydaphy.arcanemagic.common.block.BlockCrystallizer;
-import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
+import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
 import com.raphydaphy.arcanemagic.common.container.ContainerCrystallizer;
-import com.raphydaphy.arcanemagic.common.container.ContainerWritingDesk;
+import com.raphydaphy.arcanemagic.common.container.ContainerInfusionAltar;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -32,9 +32,9 @@ public class GuiProxy implements IGuiHandler
 			if (te instanceof TileEntityCrystallizer)
 				return new ContainerCrystallizer(player.inventory, (TileEntityCrystallizer) te);
 			break;
-		case BlockWritingDesk.GUI_ID:
-			if (te instanceof TileEntityWritingDesk)
-				return new ContainerWritingDesk(player.inventory, (TileEntityWritingDesk) te);
+		case BlockInfusionAltar.GUI_ID:
+			if (te instanceof TileEntityInfusionAltar)
+				return new ContainerInfusionAltar(player.inventory, (TileEntityInfusionAltar) te);
 			break;
 		}
 		return null;
@@ -57,16 +57,14 @@ public class GuiProxy implements IGuiHandler
 		case BlockCrystallizer.GUI_ID:
 			if (te instanceof TileEntityCrystallizer)
 			{
-				TileEntityCrystallizer containerTileEntity = (TileEntityCrystallizer) te;
-				return new GuiCrystallizer(containerTileEntity,
-						new ContainerCrystallizer(player.inventory, containerTileEntity));
+				return new GuiCrystallizer((TileEntityCrystallizer) te,
+						new ContainerCrystallizer(player.inventory, (TileEntityCrystallizer) te));
 			}
 			break;
-		case BlockWritingDesk.GUI_ID:
-			if (te instanceof TileEntityWritingDesk)
+		case BlockInfusionAltar.GUI_ID:
+			if (te instanceof TileEntityInfusionAltar)
 			{
-				TileEntityWritingDesk containerTE = (TileEntityWritingDesk) te;
-				return new GuiWritingDesk(containerTE, new ContainerWritingDesk(player.inventory, containerTE));
+				return new GuiInfusionAltar((TileEntityInfusionAltar) te, new ContainerInfusionAltar(player.inventory, (TileEntityInfusionAltar) te));
 			}
 			break;
 		}

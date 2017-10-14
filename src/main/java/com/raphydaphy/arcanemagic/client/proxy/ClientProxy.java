@@ -7,10 +7,12 @@ import com.raphydaphy.arcanemagic.client.model.SceptreModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
 import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
+import com.raphydaphy.arcanemagic.client.render.WritingDeskTESR;
 import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -54,6 +56,9 @@ public class ClientProxy extends CommonProxy
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElementalCraftingTable.class,
 				new ElementalCraftingTableTESR());
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class,
+				new WritingDeskTESR());
 	}
 
 	public static void registerColors()

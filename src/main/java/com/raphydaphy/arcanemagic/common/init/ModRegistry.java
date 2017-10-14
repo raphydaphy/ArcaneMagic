@@ -8,6 +8,7 @@ import com.raphydaphy.arcanemagic.common.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.common.block.BlockElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.block.BlockEssenceConcentrator;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
+import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
@@ -21,16 +22,19 @@ import com.raphydaphy.arcanemagic.common.item.ItemTip;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModRegistry
@@ -41,6 +45,7 @@ public class ModRegistry
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
 
 	public static final BlockWritingDesk WRITING_DESK = new BlockWritingDesk();
+	public static final BlockInfusionAltar INFUSION_ALTAR = new BlockInfusionAltar();
 	public static final BlockElementalCraftingTable ELEMENTAL_CRAFTING_TABLE = new BlockElementalCraftingTable();
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
 	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
@@ -69,6 +74,10 @@ public class ModRegistry
 	@SubscribeEvent
 	public void onRecipeRegister(Register<IRecipe> e)
 	{
+		// TODO: shadows will probably make this better.. hopefully :-)
+	    OreDictionary.registerOre("formationEssence",     new ItemStack(ModRegistry.ESSENCE, 1, OreDictionary.WILDCARD_VALUE));
+	    
+	    
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasRecipe)
 				((IHasRecipe) i).initRecipes(e);
@@ -129,5 +138,6 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityEssenceConcentrator.class,
 				ArcaneMagic.MODID + "_essence_concentrator");
 		GameRegistry.registerTileEntity(TileEntityWritingDesk.class, ArcaneMagic.MODID + "_writing_desk");
+		GameRegistry.registerTileEntity(TileEntityInfusionAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 	}
 }

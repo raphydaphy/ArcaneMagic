@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.container;
 
 import com.raphydaphy.arcanemagic.common.container.slot.SlotLimited;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,11 +14,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ContainerWritingDesk extends Container
+public class ContainerInfusionAltar extends Container
 {
-	private TileEntityWritingDesk te;
+	private TileEntityInfusionAltar te;
 
-	public ContainerWritingDesk(InventoryPlayer playerInventory, TileEntityWritingDesk te)
+	public ContainerInfusionAltar(InventoryPlayer playerInventory, TileEntityInfusionAltar te)
 	{
 		super();
 		this.te = te;
@@ -69,19 +69,19 @@ public class ContainerWritingDesk extends Container
 			ItemStack cur = slot.getStack();
 			prev = cur.copy();
 
-			// From writing desk -> player
-			if (index < TileEntityWritingDesk.SIZE)
+			// From altar -> player
+			if (index < TileEntityInfusionAltar.SIZE)
 			{
 				// TODO: not hardcode the max inv size to support mods that altar the player inventory
-				if (!this.mergeItemStack(cur, TileEntityWritingDesk.SIZE, 38, true))
+				if (!this.mergeItemStack(cur, TileEntityInfusionAltar.SIZE, 38, true))
 				{
 					return ItemStack.EMPTY;
 				}
 			}
-			// TODO: From player to writing desk - should transfer only notebook or paper 
+			// From player -> altar
 			else
 			{
-				if (!this.mergeItemStack(cur, 0, TileEntityWritingDesk.SIZE, true))
+				if (!this.mergeItemStack(cur, 0, 2, true))
 				{
 					return ItemStack.EMPTY;
 				}
