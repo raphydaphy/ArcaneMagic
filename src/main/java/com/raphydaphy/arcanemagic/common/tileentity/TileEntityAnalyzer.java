@@ -12,12 +12,12 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityWritingDesk extends TileEntity implements ITickable
+public class TileEntityAnalyzer extends TileEntity implements ITickable
 {
-	public static int SIZE = 2;
+	public static int SIZE = 1;
 	private int age;
 	
-	public TileEntityWritingDesk()
+	public TileEntityAnalyzer()
 	{
 
 	}
@@ -29,7 +29,7 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
-			TileEntityWritingDesk.this.markDirty();
+			TileEntityAnalyzer.this.markDirty();
 		}
 	};
 	
@@ -39,14 +39,14 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 	public void markDirty()
 	{
 		super.markDirty();
-		if (TileEntityWritingDesk.this.world != null && TileEntityWritingDesk.this.pos != null)
+		if (TileEntityAnalyzer.this.world != null && TileEntityAnalyzer.this.pos != null)
 		{
-			IBlockState state = TileEntityWritingDesk.this.world
-					.getBlockState(TileEntityWritingDesk.this.pos);
-			TileEntityWritingDesk.this.world
+			IBlockState state = TileEntityAnalyzer.this.world
+					.getBlockState(TileEntityAnalyzer.this.pos);
+			TileEntityAnalyzer.this.world
 					.markAndNotifyBlock(
-							TileEntityWritingDesk.this.pos, TileEntityWritingDesk.this.world
-									.getChunkFromBlockCoords(TileEntityWritingDesk.this.pos),
+							TileEntityAnalyzer.this.pos, TileEntityAnalyzer.this.world
+									.getChunkFromBlockCoords(TileEntityAnalyzer.this.pos),
 							state, state, 1 | 2);
 		}
 	}

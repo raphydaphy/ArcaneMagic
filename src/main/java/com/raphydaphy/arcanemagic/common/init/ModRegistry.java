@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.block.BlockAnalyzer;
 import com.raphydaphy.arcanemagic.common.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.common.block.BlockElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.block.BlockEssenceConcentrator;
@@ -19,6 +20,7 @@ import com.raphydaphy.arcanemagic.common.item.ItemEnum;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.item.ItemTip;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
@@ -45,6 +47,7 @@ public class ModRegistry
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
 
 	public static final BlockWritingDesk WRITING_DESK = new BlockWritingDesk();
+	public static final BlockAnalyzer ANALYZER = new BlockAnalyzer();
 	public static final BlockInfusionAltar INFUSION_ALTAR = new BlockInfusionAltar();
 	public static final BlockElementalCraftingTable ELEMENTAL_CRAFTING_TABLE = new BlockElementalCraftingTable();
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
@@ -139,5 +142,6 @@ public class ModRegistry
 				ArcaneMagic.MODID + "_essence_concentrator");
 		GameRegistry.registerTileEntity(TileEntityWritingDesk.class, ArcaneMagic.MODID + "_writing_desk");
 		GameRegistry.registerTileEntity(TileEntityInfusionAltar.class, ArcaneMagic.MODID + "_infusion_altar");
+		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
 	}
 }

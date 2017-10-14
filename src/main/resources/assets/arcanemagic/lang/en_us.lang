@@ -23,6 +23,7 @@ tile.arcanemagic.crystallizer.name=Crystallizer
 tile.arcanemagic.essence_concentrator.name=Essence Concentrator
 tile.arcanemagic.writing_desk.name=Writing Desk
 tile.arcanemagic.infusion_altar.name=Infusion Altar
+tile.arcanemagic.analyzer.name=Analyzer
 
 # Sounds
 subtitle.arcanemagic.craft_start=Started Crafting

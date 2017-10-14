@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.api.notebook;
 
 import java.util.List;
 
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
@@ -22,6 +24,11 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	public String getPrerequisiteTag()
 	{
 		return getRequiredTag();
+	}
+	
+	public FontRenderer getFontRenderer(GuiScreen notebook)
+	{
+		return notebook.mc.fontRenderer;
 	}
 	
 	public abstract ItemStack getIcon();

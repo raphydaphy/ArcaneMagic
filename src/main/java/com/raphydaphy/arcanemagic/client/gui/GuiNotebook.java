@@ -161,7 +161,7 @@ public class GuiNotebook extends GuiScreen
 			// Current Category Name
 			double largeText = 1.4;
 			GlStateManager.scale(largeText, largeText, largeText);
-			fontRenderer.drawString(
+			ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(
 					I18n.format(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedName()),
 					(int) ((screenX + 145) / largeText), (int) ((screenY + 20) / largeText), 0x000000); // satan is coming
 
@@ -177,7 +177,7 @@ public class GuiNotebook extends GuiScreen
 				if (cap.isVisible(category))
 				{
 					// Draw the category!
-					fontRenderer.drawString(I18n.format(category.getUnlocalizedName()),
+					ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(I18n.format(category.getUnlocalizedName()),
 							(int) ((screenX + (cat == renderCurCategory ? 26 : 18)) * (1 / categoryNameSize)),
 							(int) ((screenY + 24 + (cat * 20)) * (1 / categoryNameSize)),
 							cat == renderCurCategory ? 0x515151 : 0x32363d);
