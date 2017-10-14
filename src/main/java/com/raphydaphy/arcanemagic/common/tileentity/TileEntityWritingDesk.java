@@ -1,19 +1,22 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityWritingDesk extends TileEntity
+public class TileEntityWritingDesk extends TileEntity implements ITickable
 {
 	public static int SIZE = 2;
-
+	private int age;
+	
 	public TileEntityWritingDesk()
 	{
 
@@ -29,7 +32,25 @@ public class TileEntityWritingDesk extends TileEntity
 			TileEntityWritingDesk.this.markDirty();
 		}
 	};
+	
+	
 
+	@Override
+	public void markDirty()
+	{
+		super.markDirty();
+		if (TileEntityWritingDesk.this.world != null && TileEntityWritingDesk.this.pos != null)
+		{
+			IBlockState state = TileEntityWritingDesk.this.world
+					.getBlockState(TileEntityWritingDesk.this.pos);
+			TileEntityWritingDesk.this.world
+					.markAndNotifyBlock(
+							TileEntityWritingDesk.this.pos, TileEntityWritingDesk.this.world
+									.getChunkFromBlockCoords(TileEntityWritingDesk.this.pos),
+							state, state, 1 | 2);
+		}
+	}
+	
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
@@ -38,6 +59,7 @@ public class TileEntityWritingDesk extends TileEntity
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
+		age = compound.getInteger("age");
 	}
 
 	@Override
@@ -45,7 +67,13 @@ public class TileEntityWritingDesk extends TileEntity
 	{
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
+		compound.setInteger("age", age);
 		return compound;
+	}
+	
+	public int getAge()
+	{
+		return age;
 	}
 
 	public boolean canInteractWith(EntityPlayer playerIn)
@@ -96,5 +124,13 @@ public class TileEntityWritingDesk extends TileEntity
 	{
 		// shadows told me to put 150 so i did
 		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+	}
+
+	@Override
+	public void update()
+	{
+		age++;
+		
+		this.markDirty();
 	}
 }

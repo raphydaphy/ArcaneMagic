@@ -7,12 +7,14 @@ import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -23,7 +25,7 @@ import net.minecraftforge.items.IItemHandler;
 
 public class BlockWritingDesk extends BlockBase implements IHasRecipe
 {
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 13d * (1d / 16d), 1.0D);
+	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10d * (1d / 16d), 1.0D);
 
 	public BlockWritingDesk()
 	{
@@ -92,6 +94,47 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 		{
 			return false;
 		}
+
+		ItemStack stack = player.getHeldItem(hand);
+
+		int slot = 0;
+		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+
+		if (stack != null && !stack.isEmpty() && !player.isSneaking())
+		{
+			ItemStack insertStack = stack.copy();
+			ItemStack remain = cap.insertItem(slot, insertStack, false);
+			if (remain.getCount() != insertStack.getCount())
+			{
+				if (!world.isRemote)
+				{
+					player.setHeldItem(hand, remain);
+					te.markDirty();
+				} else
+				{
+					world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
+				}
+			}
+
+		} else if (player.isSneaking())
+		{
+			ItemStack toExtract = cap.getStackInSlot(slot);
+			if (toExtract != null && !toExtract.isEmpty())
+			{
+				if (!world.isRemote)
+				{
+					if (player.addItemStackToInventory(toExtract.copy()))
+					{
+						cap.getStackInSlot(slot).setCount(0);
+						te.markDirty();
+					}
+				} else
+				{
+					world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1, 1);
+				}
+			}
+		}
+
 		return true;
 	}
 
