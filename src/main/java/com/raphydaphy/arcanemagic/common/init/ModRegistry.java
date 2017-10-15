@@ -13,11 +13,11 @@ import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.common.item.ItemAncientParchment;
 import com.raphydaphy.arcanemagic.common.item.ItemBase;
 import com.raphydaphy.arcanemagic.common.item.ItemCore;
 import com.raphydaphy.arcanemagic.common.item.ItemEnum;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
+import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.item.ItemTip;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
@@ -60,7 +60,8 @@ public class ModRegistry
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values());
 	public static final Item CREATION = new ItemBase("essence_creation");
-	public static final ItemAncientParchment ANCIENT_PARCHMENT = new ItemAncientParchment("ancient_parchment");
+	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
+	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");
 
 	@SubscribeEvent
 	public void onBlockRegister(Register<Block> e)

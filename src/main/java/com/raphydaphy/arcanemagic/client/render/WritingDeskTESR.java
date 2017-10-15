@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
@@ -39,20 +38,6 @@ public class WritingDeskTESR extends TileEntitySpecialRenderer<TileEntityWriting
 			//renderItems(cap.getStackInSlot(i + 1), i + 1, te);
 		}
 		GlStateManager.popMatrix();
-	}
-
-	private void renderItems(ItemStack stack, int slot, TileEntityWritingDesk te)
-	{
-		if (stack != null && !stack.isEmpty())
-		{
-			RenderHelper.enableStandardItemLighting();
-			GlStateManager.enableLighting();
-			GlStateManager.pushMatrix();
-			GlStateManager.translate(0.5, .62, 0.5);
-			GlStateManager.scale(.1f, .1f, .1f);
-			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
-			GlStateManager.popMatrix();
-		}
 	}
 
 	private void renderPapers(ItemStack stack, int slot, TileEntityWritingDesk te)

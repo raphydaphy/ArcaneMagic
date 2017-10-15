@@ -7,6 +7,7 @@ import java.util.Random;
 import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -17,7 +18,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
@@ -108,13 +108,15 @@ public class GLHelper
 
 		GlStateManager.translate(0, 0, -1);
 		GlStateManager.translate(63, 25, 0);
-		mc.fontRenderer.drawString(I18n.format("arcanemagic.message.ancient_parchment"),
-				0 - (mc.fontRenderer.getStringWidth(I18n.format("arcanemagic.message.ancient_parchment")) / 2), -15,
-				0x000000);
+
+		FontRenderer renderer = ModRegistry.WRITTEN_PARCHMENT.getParchmentRenderer(stack);
+		String title = ModRegistry.WRITTEN_PARCHMENT.getLocalizedTitle(stack);
+		String desc = ModRegistry.WRITTEN_PARCHMENT.getLocalizedDesc(stack);
+
+		renderer.drawString(title, 0 - (renderer.getStringWidth(title) / 2), -15, 0x000000);
 		GlStateManager.scale(0.7, 0.7, 0.7);
 
-		drawCenteredSplitString(mc.fontRenderer, I18n.format("arcanemagic.message.ancient_parchment.0") + "\n\n"
-				+ I18n.format("arcanemagic.message.ancient_parchment.1"), 0, 0, 150, 0x000000);
+		drawCenteredSplitString(renderer, desc, 0, 0, 150, 0x000000);
 
 		GlStateManager.enableLighting();
 	}

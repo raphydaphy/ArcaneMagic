@@ -19,6 +19,11 @@
 					"layer0": "arcanemagic:items/notebook"
 				}
 			},
+			"written_parchment": {
+				"textures": {
+					"layer0": "items/paper"
+				}
+			},
 			"essence_ozone": {
 				"textures": {
 					"layer0": "arcanemagic:items/essence/ozone"

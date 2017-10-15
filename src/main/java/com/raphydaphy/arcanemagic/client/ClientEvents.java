@@ -16,6 +16,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
 import net.minecraft.block.Block;
@@ -56,7 +57,7 @@ public class ClientEvents
 	public static void onRenderHand(RenderSpecificHandEvent ev)
 	{
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if (!player.isSneaking() && ev.getItemStack().getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		if (!player.isSneaking() && ev.getItemStack().getItem() instanceof ItemParchment)
 		{
 
 			float f = player.getSwingProgress(ev.getPartialTicks());
