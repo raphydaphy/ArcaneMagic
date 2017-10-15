@@ -6,11 +6,14 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,19 +46,20 @@ public class ModEvents
 	@SubscribeEvent
 	public static void onEntityItemPickup(EntityItemPickupEvent ev)
 	{
-		NotebookInfo info = ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
-
-		if (info != null)
+		if (!ev.getEntityPlayer().world.isRemote)
 		{
-			if (!info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag())
-					&& ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
+			NotebookInfo info = ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
+	
+			if (info != null)
 			{
-
-				info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
-
-				if (ev.getEntityPlayer().world.isRemote)
+				if (!info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag())
+						&& ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
 				{
-					ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
+	
+					info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
+	
+					
+					ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.BASIC_LINGUISTICS), (EntityPlayerMP)ev.getEntityPlayer());
 				}
 			}
 		}
@@ -82,7 +86,7 @@ public class ModEvents
 	@SubscribeEvent
 	public static void playerTick(TickEvent.PlayerTickEvent ev)
 	{
-		if (ev.player.world.getTotalWorldTime() % 50 == 0)
+		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
 		{
 			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
 
@@ -99,10 +103,7 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
 
-						if (ev.player.world.isRemote)
-						{
-							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.ANCIENT_RELICS);
-						}
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.ANCIENT_RELICS), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(ModRegistry.NOTEBOOK)
@@ -110,10 +111,7 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
 
-						if (ev.player.world.isRemote)
-						{
-							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.FORGOTTEN_KNOWLEDGE);
-						}
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.FORGOTTEN_KNOWLEDGE), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK))
@@ -121,10 +119,7 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
 
-						if (ev.player.world.isRemote)
-						{
-							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
-						}
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.BASIC_LINGUISTICS), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ESSENCE_CONCENTRATOR))
@@ -132,10 +127,7 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag());
 
-						if (ev.player.world.isRemote)
-						{
-							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.ESSENCE_COLLECTION);
-						}
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.ESSENCE_COLLECTION), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
@@ -143,10 +135,7 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());
 
-						if (ev.player.world.isRemote)
-						{
-							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.CRYSTALLIZATION);
-						}
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.CRYSTALLIZATION), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
@@ -154,10 +143,7 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag());
 
-						if (ev.player.world.isRemote)
-						{
-							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.MANIPULATING_MAGIC);
-						}
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.MANIPULATING_MAGIC), (EntityPlayerMP)ev.player);
 					}
 				}
 			}

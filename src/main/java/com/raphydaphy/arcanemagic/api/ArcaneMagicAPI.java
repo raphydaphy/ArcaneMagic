@@ -46,43 +46,61 @@ public class ArcaneMagicAPI
 	@Nullable
 	public static List<NotebookCategory> getFromAnalysis(ItemStack analyzed)
 	{
-		if (ANALYZED_ITEMS.containsKey(analyzed))
+		for (ItemStack cached : ANALYZED_ITEMS.keySet())
 		{
-			return ANALYZED_ITEMS.get(analyzed);
-		} else
-		{
-			List<NotebookCategory> ret = new ArrayList<NotebookCategory>();
-
-			if (ANALYSIS_ITEMS.containsKey(analyzed))
+			if (ItemStack.areItemsEqualIgnoreDurability(cached, analyzed))
 			{
-				ret.add(ANALYSIS_ITEMS.get(analyzed));
+				return ANALYZED_ITEMS.get(cached);
 			}
+		}
 
-			// might kill ur computer
-			for (IRecipe recipe : ForgeRegistries.RECIPES.getValues())
+		List<NotebookCategory> ret = new ArrayList<NotebookCategory>();
+
+		for (ItemStack analysisItem : ANALYSIS_ITEMS.keySet())
+		{
+			if (ItemStack.areItemsEqualIgnoreDurability(analysisItem, analyzed))
 			{
-				if (recipe.getRecipeOutput().equals(analyzed))
+				ret.add(ANALYSIS_ITEMS.get(analysisItem));
+				break;
+			}
+		}
+
+		// might kill ur computer
+		for (IRecipe recipe : ForgeRegistries.RECIPES.getValues())
+		{
+			if (ItemStack.areItemsEqualIgnoreDurability(recipe.getRecipeOutput(), analyzed))
+			{
+				for (Ingredient i : recipe.getIngredients())
 				{
-					for (Ingredient i : recipe.getIngredients())
+					for (ItemStack ingredientStack : i.getMatchingStacks())
 					{
-						for (ItemStack ingredientStack : i.getMatchingStacks())
+						boolean didAdd = false;
+						for (ItemStack cached : ANALYZED_ITEMS.keySet())
 						{
-							if (ANALYZED_ITEMS.containsKey(ingredientStack))
+							System.out.println("comparing cached stack " + cached.toString() + "with " + ingredientStack.toString());
+							if (ItemStack.areItemsEqualIgnoreDurability(cached, ingredientStack))
 							{
-								ret.addAll(ANALYZED_ITEMS.get(ingredientStack));
-							} else
-							{
-								ret.addAll(getFromAnalysis(ingredientStack));
+								ret.addAll(ANALYZED_ITEMS.get(cached));
+								didAdd = true;
 							}
+						}
+
+						if (!didAdd)
+						{
+							System.out.println("adding everytihing for " + ingredientStack.toString());
+							//ret.addAll(getFromAnalysis(ingredientStack));
 						}
 					}
 				}
 			}
-
-			// cache the thing!
-			ANALYZED_ITEMS.put(analyzed, ret);
-			return ret;
 		}
+
+		// cache the thing!
+		ANALYZED_ITEMS.put(analyzed, ret);
+
+		System.out.println("CACHED NEW ENTRY: " + analyzed.toString() + " as " + ret);
+		return ret;
+
 	}
 
 	public static void registerEssence(Essence e)

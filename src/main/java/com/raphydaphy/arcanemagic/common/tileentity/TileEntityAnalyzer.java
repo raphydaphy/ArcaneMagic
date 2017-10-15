@@ -2,11 +2,13 @@ package com.raphydaphy.arcanemagic.common.tileentity;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -121,6 +123,10 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 
 	public void analyze(EntityPlayer player)
 	{
+		if (player.world.isRemote)
+		{
+			return;
+		}
 		if (getStack() != null && !getStack().isEmpty())
 		{
 			NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
@@ -128,20 +134,23 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 			if (info != null && info.getUsed())
 			{
 				System.out.println("on the way to success");
+				
+				System.out.println(ArcaneMagicAPI.getFromAnalysis(getStack().copy()));
 				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy()))
 				{
 					System.out.println("Theres something here, but i dont know quite what yet");
-					if (!info.isUnlocked(unlockableCat.getRequiredTag()))
-					{
-						System.out.println("Seems like we might be able to find out!");
-						if (info.isUnlocked(unlockableCat.getPrerequisiteTag()))
-						{
-							System.out.println("we did it!");
-							info.setUnlocked(unlockableCat.getRequiredTag());
 
-							if (player.world.isRemote)
+					if (unlockableCat != null)
+					{
+						if (!info.isUnlocked(unlockableCat.getRequiredTag()))
+						{
+							System.out.println("Seems like we might be able to find out!");
+							if (info.isUnlocked(unlockableCat.getPrerequisiteTag()))
 							{
-								ArcaneMagic.proxy.addCategoryUnlockToast(unlockableCat);
+								System.out.println("we did it!");
+								info.setUnlocked(unlockableCat.getRequiredTag());
+
+								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat), (EntityPlayerMP)player);
 							}
 						}
 					}

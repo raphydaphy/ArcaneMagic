@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.common.network.PacketEssenceTransfer;
 import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookChanged;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookOpened;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
 
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -38,8 +39,9 @@ public class ArcaneMagicPacketHandler
 				Side.CLIENT);
 		INSTANCE.registerMessage(PacketItemEssenceChanged.Handler.class, PacketItemEssenceChanged.class, packetId++,
 				Side.CLIENT);
-
 		INSTANCE.registerMessage(PacketNotebookOpened.Handler.class, PacketNotebookOpened.class, packetId++,
+				Side.CLIENT);
+		INSTANCE.registerMessage(PacketNotebookToast.Handler.class, PacketNotebookToast.class, packetId++,
 				Side.CLIENT);
 	}
 }
