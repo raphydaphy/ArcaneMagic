@@ -11,8 +11,6 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 @SideOnly(Side.CLIENT)
 public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
@@ -24,11 +22,10 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
-		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		GlStateManager.translate(0, 0, 0);
 
-		renderItem(cap.getStackInSlot(0), te);
+		renderItem(te.getStack(), te);
 
 		GlStateManager.popMatrix();
 	}

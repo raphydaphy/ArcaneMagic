@@ -22,8 +22,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 
 public class BlockAnalyzer extends BlockBase implements IHasRecipe
 {
@@ -45,18 +43,11 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
 		TileEntityAnalyzer te = (TileEntityAnalyzer) world.getTileEntity(pos);
-		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		for (int i = 0; i < cap.getSlots(); ++i)
+		if (!te.getStack().isEmpty())
 		{
-			ItemStack itemstack = cap.getStackInSlot(i);
-
-			if (!itemstack.isEmpty())
-			{
-				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
-			}
+			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStack().copy());
 		}
-
 		super.breakBlock(world, pos, state);
 	}
 
@@ -97,43 +88,40 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 		{
 			return true;
 		}
-		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityAnalyzer))
+		TileEntity teUnchecked = world.getTileEntity(pos);
+		if (!(teUnchecked instanceof TileEntityAnalyzer))
 		{
 			return false;
 		}
-
+		TileEntityAnalyzer te = (TileEntityAnalyzer) teUnchecked;
 		ItemStack stack = player.getHeldItem(hand);
-
-		int slot = 0;
-		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		if (stack != null && !stack.isEmpty() && !player.isSneaking())
 		{
 			ItemStack insertStack = stack.copy();
-			ItemStack remain = cap.insertItem(slot, insertStack, false);
-			if (remain.getCount() != insertStack.getCount())
+			if (te.getStack().isEmpty())
 			{
-				if (!world.isRemote)
-				{
-					player.setHeldItem(hand, remain);
-					te.markDirty();
-				} else
-				{
-					world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
-				}
+				stack.shrink(1);
+				insertStack.setCount(1);
+				player.setHeldItem(hand, stack);
+				te.setStack(insertStack);
+				((TileEntityAnalyzer) te).analyze(player);
+				te.markDirty();
+				world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
+
 			}
 
 		} else if (player.isSneaking())
 		{
-			ItemStack toExtract = cap.getStackInSlot(slot);
+			ItemStack toExtract = te.getStack().copy();
 			if (toExtract != null && !toExtract.isEmpty())
 			{
 				if (!world.isRemote)
 				{
 					if (player.addItemStackToInventory(toExtract.copy()))
 					{
-						cap.getStackInSlot(slot).setCount(0);
+						System.out.println("bam");
+						te.setStack(ItemStack.EMPTY);
 						te.markDirty();
 					}
 				} else

@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.common;
 
 import org.apache.logging.log4j.Logger;
 
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
 import com.raphydaphy.arcanemagic.api.notebook.CategoryRegistry;
@@ -18,6 +19,7 @@ import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -80,6 +82,10 @@ public class ArcaneMagic
 		RecipeHelper.addElementalShapeless(ModRegistry.ANCIENT_PARCHMENT, Essence.CHAOS, 150, "plankWood", "plankWood",
 				"cobblestone", g, s);
 		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
+		
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Items.GOLD_INGOT), NotebookCategories.NATURAL_HARMONY);
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Items.DIAMOND), NotebookCategories.CRYSTALLIZATION);
+		
 		proxy.postInit(event);
 	}
 

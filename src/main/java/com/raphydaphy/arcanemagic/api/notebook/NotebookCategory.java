@@ -23,7 +23,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 
 	public String getPrerequisiteTag()
 	{
-		return getRequiredTag();
+		return "usedNotebook";
 	}
 
 	public FontRenderer getFontRenderer(GuiScreen notebook)
