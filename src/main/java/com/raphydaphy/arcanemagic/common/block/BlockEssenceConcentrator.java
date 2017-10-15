@@ -87,42 +87,46 @@ public class BlockEssenceConcentrator extends BlockBase
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (!world.isRemote)
+		if (!player.isSneaking())
 		{
-			TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(pos);
-			if (te.getStack().isEmpty())
+			if (!world.isRemote)
 			{
-				if (!player.getHeldItem(hand).isEmpty())
+				TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(pos);
+				if (te.getStack().isEmpty())
 				{
-					ItemStack heldItemClone = player.getHeldItem(hand).copy();
-					heldItemClone.setCount(1);
+					if (!player.getHeldItem(hand).isEmpty())
+					{
+						ItemStack heldItemClone = player.getHeldItem(hand).copy();
+						heldItemClone.setCount(1);
 
-					if (player.getHeldItem(hand).getCount() > 1)
-					{
-						player.getHeldItem(hand).shrink(1);
-					} else
-					{
-						player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
+						if (player.getHeldItem(hand).getCount() > 1)
+						{
+							player.getHeldItem(hand).shrink(1);
+						} else
+						{
+							player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
+						}
+						te.setStack(heldItemClone);
+
+						player.openContainer.detectAndSendChanges();
 					}
-					te.setStack(heldItemClone);
-
-					player.openContainer.detectAndSendChanges();
-				}
-			} else
-			{
-				ItemStack stack = te.getStack();
-				te.setStack(ItemStack.EMPTY);
-				if (!player.inventory.addItemStackToInventory(stack))
-				{
-					EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack);
-					world.spawnEntity(entityItem);
 				} else
 				{
-					player.openContainer.detectAndSendChanges();
+					ItemStack stack = te.getStack();
+					te.setStack(ItemStack.EMPTY);
+					if (!player.inventory.addItemStackToInventory(stack))
+					{
+						EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack);
+						world.spawnEntity(entityItem);
+					} else
+					{
+						player.openContainer.detectAndSendChanges();
+					}
 				}
 			}
-		}
 
-		return true;
+			return true;
+		}
+		return false;
 	}
 }

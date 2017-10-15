@@ -113,8 +113,11 @@ public class BlockElementalCraftingTable extends BlockBase
 			return false;
 		}
 		ItemStack stack = player.getHeldItem(hand);
+		boolean ret = false;
 		if (stack.getItem() instanceof ItemScepter)
 		{
+			ret = true;
+			
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
 
@@ -139,21 +142,23 @@ public class BlockElementalCraftingTable extends BlockBase
 							new PacketItemEssenceChanged(stack.getCapability(IEssenceStorage.CAP, null),
 									ItemScepter.stupidGetSlot(player.inventory, stack), stack),
 							(EntityPlayerMP) player);
-					return true;
+					return ret;
 				} else
 				{
 					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
 							pos.getZ() + 0.5, 0f, 0.1f, 0f);
 					world.playSound(player, pos, ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1,
 							1);
-					return true;
+					return ret;
 				}
 			}
-			return false;
+			return ret;
 		}
 
 		else if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
 		{
+			ret = true;
+			
 			float divX = (hitX - 0.203f);
 			float divZ = (hitZ - 0.203f);
 			int slotX = 2;
@@ -199,6 +204,7 @@ public class BlockElementalCraftingTable extends BlockBase
 				ItemStack toExtract = cap.getStackInSlot(slot);
 				if (toExtract != null && !toExtract.isEmpty())
 				{
+					ret = true;
 					if (!world.isRemote)
 					{
 						if (player.addItemStackToInventory(toExtract.copy()))
@@ -214,7 +220,10 @@ public class BlockElementalCraftingTable extends BlockBase
 				}
 			}
 		}
-
+		if (player.isSneaking() && !ret)
+		{
+			return false;
+		}
 		return true;
 	}
 }
