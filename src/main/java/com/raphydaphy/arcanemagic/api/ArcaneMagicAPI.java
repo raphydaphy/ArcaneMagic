@@ -17,11 +17,13 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ArcaneMagicAPI
 {
@@ -50,6 +52,7 @@ public class ArcaneMagicAPI
 		{
 			if (ItemStack.areItemsEqualIgnoreDurability(cached, analyzed))
 			{
+				System.out.println(cached.toString() + " was already cached as " + ANALYZED_ITEMS.get(cached));
 				return ANALYZED_ITEMS.get(cached);
 			}
 		}
@@ -58,10 +61,15 @@ public class ArcaneMagicAPI
 
 		for (ItemStack analysisItem : ANALYSIS_ITEMS.keySet())
 		{
-			if (ItemStack.areItemsEqualIgnoreDurability(analysisItem, analyzed))
+			if (OreDictionary.itemMatches(analysisItem, analyzed, false))
 			{
+				System.out.println("BOOM we found something for " + analysisItem.toString());
 				ret.add(ANALYSIS_ITEMS.get(analysisItem));
 				break;
+			}
+			else
+			{
+				System.out.println(analyzed.toString() + " is not " + analysisItem.toString());
 			}
 		}
 
@@ -92,7 +100,7 @@ public class ArcaneMagicAPI
 							{
 								System.out.println("comparing cached stack " + cached.toString() + "with "
 										+ ingredientStack.toString());
-								if (ItemStack.areItemsEqualIgnoreDurability(cached, ingredientStack))
+								if (OreDictionary.itemMatches(cached,ingredientStack, false))
 								{
 									ret.addAll(ANALYZED_ITEMS.get(cached));
 									didAdd = true;
@@ -110,7 +118,41 @@ public class ArcaneMagicAPI
 				}
 			}
 		}
+		for (ItemStack in : FurnaceRecipes.instance().getSmeltingList().keySet())
+		{
+			ItemStack out = FurnaceRecipes.instance().getSmeltingResult(in);
+			// this recipe produces the thing you are analyzing
+			if (ItemStack.areItemsEqualIgnoreDurability(out, analyzed))
+			{
+				System.out.println("ah i see");
 
+				for (ItemStack i : ANALYSIS_ITEMS.keySet())
+				{
+					if (OreDictionary.itemMatches(in, i, false))
+					{
+						System.out.println("oh look " + i.toString() + " is literally right there on the list");
+						ret.add(ANALYSIS_ITEMS.get(i));
+					}
+				}
+
+				boolean alreadyAnalyzed = false;
+				for (ItemStack i : ANALYZED_ITEMS.keySet())
+				{
+					if (OreDictionary.itemMatches(in, i, false))
+					{
+						alreadyAnalyzed = true;
+						System.out.println("oh look " + i.toString() + " has already been analyzed");
+						ret.addAll(ANALYZED_ITEMS.get(i));
+					}
+				}
+
+				if (!alreadyAnalyzed)
+				{
+					System.out.println("ah we will have to analyze it again");
+					ret.addAll(getFromAnalysis(in, ignore));
+				}
+			}
+		}
 		// cache the thing!
 		ANALYZED_ITEMS.put(analyzed, ret);
 

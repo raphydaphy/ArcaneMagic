@@ -166,21 +166,16 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 
 			if (info != null && info.getUsed())
 			{
-				System.out.println("on the way to success");
 
 				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy(),
 						new ArrayList<>()))
 				{
-					System.out.println("Theres something here, but i dont know quite what yet");
-
 					if (unlockableCat != null)
 					{
 						if (!info.isUnlocked(unlockableCat.getRequiredTag()))
 						{
-							System.out.println("Seems like we might be able to find out!");
 							if (info.isUnlocked(unlockableCat.getPrerequisiteTag()))
 							{
-								System.out.println("we did it!");
 								info.setUnlocked(unlockableCat.getRequiredTag());
 
 								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat),

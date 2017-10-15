@@ -83,9 +83,10 @@ public class ArcaneMagic
 				"cobblestone", g, s);
 		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Items.GOLD_INGOT), NotebookCategories.NATURAL_HARMONY);
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Items.DIAMOND), NotebookCategories.CRYSTALLIZATION);
-		
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.GOLD_ORE), NotebookCategories.NATURAL_HARMONY);
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.DIAMOND_ORE), NotebookCategories.CRYSTALLIZATION);
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.IRON_ORE), NotebookCategories.ESSENCE_COLLECTION);
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.REDSTONE_ORE), NotebookCategories.MYSTICAL_ENERGY);
 		proxy.postInit(event);
 	}
 

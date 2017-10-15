@@ -120,7 +120,6 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 				{
 					if (player.addItemStackToInventory(toExtract.copy()))
 					{
-						System.out.println("bam");
 						te.setStack(ItemStack.EMPTY);
 						te.markDirty();
 					}
