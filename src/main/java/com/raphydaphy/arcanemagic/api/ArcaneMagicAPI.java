@@ -44,7 +44,7 @@ public class ArcaneMagicAPI
 	}
 
 	@Nullable
-	public static List<NotebookCategory> getFromAnalysis(ItemStack analyzed)
+	public static List<NotebookCategory> getFromAnalysis(ItemStack analyzed, List<ItemStack> ignore)
 	{
 		for (ItemStack cached : ANALYZED_ITEMS.keySet())
 		{
@@ -74,21 +74,37 @@ public class ArcaneMagicAPI
 				{
 					for (ItemStack ingredientStack : i.getMatchingStacks())
 					{
-						boolean didAdd = false;
-						for (ItemStack cached : ANALYZED_ITEMS.keySet())
+						boolean shouldIgnore = false;
+
+						for (ItemStack ignored : ignore)
 						{
-							System.out.println("comparing cached stack " + cached.toString() + "with " + ingredientStack.toString());
-							if (ItemStack.areItemsEqualIgnoreDurability(cached, ingredientStack))
+							if (ItemStack.areItemsEqualIgnoreDurability(ingredientStack, ignored))
 							{
-								ret.addAll(ANALYZED_ITEMS.get(cached));
-								didAdd = true;
+								shouldIgnore = true;
+								break;
 							}
 						}
 
-						if (!didAdd)
+						if (!shouldIgnore)
 						{
-							System.out.println("adding everytihing for " + ingredientStack.toString());
-							//ret.addAll(getFromAnalysis(ingredientStack));
+							boolean didAdd = false;
+							for (ItemStack cached : ANALYZED_ITEMS.keySet())
+							{
+								System.out.println("comparing cached stack " + cached.toString() + "with "
+										+ ingredientStack.toString());
+								if (ItemStack.areItemsEqualIgnoreDurability(cached, ingredientStack))
+								{
+									ret.addAll(ANALYZED_ITEMS.get(cached));
+									didAdd = true;
+								}
+							}
+
+							if (!didAdd)
+							{
+								System.out.println("adding everytihing for " + ingredientStack.toString());
+								ignore.add(analyzed);
+								ret.addAll(getFromAnalysis(ingredientStack, ignore));
+							}
 						}
 					}
 				}

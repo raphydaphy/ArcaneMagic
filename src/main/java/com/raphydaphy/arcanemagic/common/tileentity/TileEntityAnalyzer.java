@@ -1,5 +1,7 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
+import java.util.ArrayList;
+
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
@@ -135,8 +137,7 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 			{
 				System.out.println("on the way to success");
 				
-				System.out.println(ArcaneMagicAPI.getFromAnalysis(getStack().copy()));
-				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy()))
+				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy(), new ArrayList<>()))
 				{
 					System.out.println("Theres something here, but i dont know quite what yet");
 
