@@ -64,7 +64,8 @@ public class GuiProxy implements IGuiHandler
 		case BlockInfusionAltar.GUI_ID:
 			if (te instanceof TileEntityInfusionAltar)
 			{
-				return new GuiInfusionAltar((TileEntityInfusionAltar) te, new ContainerInfusionAltar(player.inventory, (TileEntityInfusionAltar) te));
+				return new GuiInfusionAltar((TileEntityInfusionAltar) te,
+						new ContainerInfusionAltar(player.inventory, (TileEntityInfusionAltar) te));
 			}
 			break;
 		}

@@ -32,42 +32,43 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GLHelper
 {
 	// [VanillaCopy]
-	public static void renderParchmentFirstPersonSide(float p_187465_1_, EnumHandSide hand, float p_187465_3_, ItemStack stack)
-    {
+	public static void renderParchmentFirstPersonSide(float p_187465_1_, EnumHandSide hand, float p_187465_3_,
+			ItemStack stack)
+	{
 		Minecraft mc = Minecraft.getMinecraft();
-		
-        float f = hand == EnumHandSide.RIGHT ? 1.0F : -1.0F;
-        GlStateManager.translate(f * 0.125F, -0.125F, 0.0F);
 
-        if (!mc.player.isInvisible())
-        {
-            GlStateManager.pushMatrix();
-            GlStateManager.rotate(f * 10.0F, 0.0F, 0.0F, 1.0F);
-            mc.getItemRenderer().renderArmFirstPerson(p_187465_1_, p_187465_3_, hand);
-            GlStateManager.popMatrix();
-        }
+		float f = hand == EnumHandSide.RIGHT ? 1.0F : -1.0F;
+		GlStateManager.translate(f * 0.125F, -0.125F, 0.0F);
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(f * 0.51F, -0.08F + p_187465_1_ * -1.2F, -0.75F);
-        float f1 = MathHelper.sqrt(p_187465_3_);
-        float f2 = MathHelper.sin(f1 * (float)Math.PI);
-        float f3 = -0.5F * f2;
-        float f4 = 0.4F * MathHelper.sin(f1 * ((float)Math.PI * 2F));
-        float f5 = -0.3F * MathHelper.sin(p_187465_3_ * (float)Math.PI);
-        GlStateManager.translate(f * f3, f4 - 0.3F * f2, f5);
-        GlStateManager.rotate(f2 * -45.0F, 1.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(f * f2 * -30.0F, 0.0F, 1.0F, 0.0F);
-        renderParchmentFirstPerson(stack);
-        GlStateManager.popMatrix();
-    }
-	
+		if (!mc.player.isInvisible())
+		{
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(f * 10.0F, 0.0F, 0.0F, 1.0F);
+			mc.getItemRenderer().renderArmFirstPerson(p_187465_1_, p_187465_3_, hand);
+			GlStateManager.popMatrix();
+		}
+
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(f * 0.51F, -0.08F + p_187465_1_ * -1.2F, -0.75F);
+		float f1 = MathHelper.sqrt(p_187465_3_);
+		float f2 = MathHelper.sin(f1 * (float) Math.PI);
+		float f3 = -0.5F * f2;
+		float f4 = 0.4F * MathHelper.sin(f1 * ((float) Math.PI * 2F));
+		float f5 = -0.3F * MathHelper.sin(p_187465_3_ * (float) Math.PI);
+		GlStateManager.translate(f * f3, f4 - 0.3F * f2, f5);
+		GlStateManager.rotate(f2 * -45.0F, 1.0F, 0.0F, 0.0F);
+		GlStateManager.rotate(f * f2 * -30.0F, 0.0F, 1.0F, 0.0F);
+		renderParchmentFirstPerson(stack);
+		GlStateManager.popMatrix();
+	}
+
 	// [VanillaCopy]
-	public static void renderParchmentFirstPerson(float pitch, float p_187463_2_,
-			float p_187463_3_,ItemStack parchment)
+	public static void renderParchmentFirstPerson(float pitch, float p_187463_2_, float p_187463_3_,
+			ItemStack parchment)
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-		
+
 		float f = MathHelper.sqrt(p_187463_3_);
 		float f1 = -0.2F * MathHelper.sin(p_187463_3_ * (float) Math.PI);
 		float f2 = -0.4F * MathHelper.sin(f * (float) Math.PI);
@@ -80,7 +81,7 @@ public class GLHelper
 		GlStateManager.rotate(f4 * 20.0F, 1.0F, 0.0F, 0.0F);
 		GlStateManager.scale(2.0F, 2.0F, 2.0F);
 		renderParchmentFirstPerson(parchment);
-		
+
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
@@ -105,15 +106,15 @@ public class GLHelper
 		bufferbuilder.pos(-7.0D, -7.0D, 0.0D).tex(0.0D, 0.0D).endVertex();
 		tessellator.draw();
 
-		
 		GlStateManager.translate(0, 0, -1);
-		GlStateManager.translate(63,  25,  0);
-		mc.fontRenderer.drawString(I18n.format("arcanemagic.message.ancient_parchment"), 0 - (mc.fontRenderer.getStringWidth(I18n.format("arcanemagic.message.ancient_parchment")) / 2), -15, 0x000000);
+		GlStateManager.translate(63, 25, 0);
+		mc.fontRenderer.drawString(I18n.format("arcanemagic.message.ancient_parchment"),
+				0 - (mc.fontRenderer.getStringWidth(I18n.format("arcanemagic.message.ancient_parchment")) / 2), -15,
+				0x000000);
 		GlStateManager.scale(0.7, 0.7, 0.7);
-		
-		drawCenteredSplitString(mc.fontRenderer,
-				I18n.format("arcanemagic.message.ancient_parchment.0") + "\n\n" + I18n.format("arcanemagic.message.ancient_parchment.1"),
-				0, 0, 150, 0x000000);
+
+		drawCenteredSplitString(mc.fontRenderer, I18n.format("arcanemagic.message.ancient_parchment.0") + "\n\n"
+				+ I18n.format("arcanemagic.message.ancient_parchment.1"), 0, 0, 150, 0x000000);
 
 		GlStateManager.enableLighting();
 	}
@@ -122,7 +123,7 @@ public class GLHelper
 			int color)
 	{
 		List<String> strings = fontRenderer.listFormattedStringToWidth(text, wrap);
-		
+
 		for (String s : strings)
 		{
 			fontRenderer.drawString(s, (float) (x - fontRenderer.getStringWidth(s) / 2), y, color, false);

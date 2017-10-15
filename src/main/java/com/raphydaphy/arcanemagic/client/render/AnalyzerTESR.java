@@ -27,7 +27,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		GlStateManager.translate(0, 0, 0);
-		
+
 		renderItem(cap.getStackInSlot(0), te);
 
 		GlStateManager.popMatrix();
@@ -43,22 +43,20 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 			GlStateManager.enableLighting();
 			GlStateManager.translate(0.5, .54, 0.5);
 			GlStateManager.scale(.18f, .18f, .18f);
-			
+
 			if (!(stack.getItem() instanceof ItemBlock))
 			{
 				GlStateManager.scale(1.2f, 1.2f, 1.2f);
 				GlStateManager.rotate(90, 1, 0, 0);
-				
-				GlStateManager.rotate(-te.getAge() * 1.5f, 0, 0,1);
-			}
-			else
+
+				GlStateManager.rotate(-te.getAge() * 1.5f, 0, 0, 1);
+			} else
 			{
 				GlStateManager.rotate(te.getAge() * 1.5f, 0, 1, 0);
 			}
-			
-			
+
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
-			
+
 			GlStateManager.popMatrix();
 		}
 	}

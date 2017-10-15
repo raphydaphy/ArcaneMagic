@@ -31,12 +31,13 @@ public class CategoryBasicLinguistics extends NotebookCategory
 
 		return entries;
 	}
+
 	@Override
 	public String getRequiredTag()
 	{
 		return "unlockedBasicLinguistics";
 	}
-	
+
 	@Override
 	public String getPrerequisiteTag()
 	{

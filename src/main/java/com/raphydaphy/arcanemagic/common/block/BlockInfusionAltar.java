@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryHelper;
@@ -22,6 +23,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
+// TODO: RENAME ME!!!
 public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10d * (1d / 16d), 1.0D);
@@ -36,6 +38,11 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
 	{
 		return AABB;
+	}
+
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	{
+		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Override
@@ -85,17 +92,21 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if (world.isRemote)
+		if (!player.isSneaking())
 		{
+			if (world.isRemote)
+			{
+				return true;
+			}
+			TileEntity te = world.getTileEntity(pos);
+			if (!(te instanceof TileEntityInfusionAltar))
+			{
+				return false;
+			}
+			player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
 			return true;
 		}
-		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityInfusionAltar))
-		{
-			return false;
-		}
-		player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
-		return true;
+		return false;
 	}
 
 	@Override

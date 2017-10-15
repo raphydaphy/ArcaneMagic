@@ -35,19 +35,19 @@ public class CategoryForgottenKnowledge extends NotebookCategory
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 1, 0x000000));
 		return entries;
 	}
-	
+
 	@Override
 	public String getRequiredTag()
 	{
 		return "unlockedForgottenKnowledge";
 	}
-	
+
 	@Override
 	public String getPrerequisiteTag()
 	{
 		return NotebookCategories.ANCIENT_RELICS.getRequiredTag();
 	}
-	
+
 	public ItemStack getIcon()
 	{
 		return new ItemStack(ModRegistry.NOTEBOOK);

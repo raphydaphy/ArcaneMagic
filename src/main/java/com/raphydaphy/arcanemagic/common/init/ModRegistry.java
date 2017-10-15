@@ -78,9 +78,9 @@ public class ModRegistry
 	public void onRecipeRegister(Register<IRecipe> e)
 	{
 		// TODO: shadows will probably make this better.. hopefully :-)
-	    OreDictionary.registerOre("formationEssence",     new ItemStack(ModRegistry.ESSENCE, 1, OreDictionary.WILDCARD_VALUE));
-	    
-	    
+		OreDictionary.registerOre("formationEssence",
+				new ItemStack(ModRegistry.ESSENCE, 1, OreDictionary.WILDCARD_VALUE));
+
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasRecipe)
 				((IHasRecipe) i).initRecipes(e);

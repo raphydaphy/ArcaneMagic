@@ -16,7 +16,7 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 {
 	public static int SIZE = 2;
 	private int age;
-	
+
 	public TileEntityWritingDesk()
 	{
 
@@ -32,8 +32,6 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 			TileEntityWritingDesk.this.markDirty();
 		}
 	};
-	
-	
 
 	@Override
 	public void markDirty()
@@ -41,16 +39,13 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 		super.markDirty();
 		if (TileEntityWritingDesk.this.world != null && TileEntityWritingDesk.this.pos != null)
 		{
-			IBlockState state = TileEntityWritingDesk.this.world
-					.getBlockState(TileEntityWritingDesk.this.pos);
-			TileEntityWritingDesk.this.world
-					.markAndNotifyBlock(
-							TileEntityWritingDesk.this.pos, TileEntityWritingDesk.this.world
-									.getChunkFromBlockCoords(TileEntityWritingDesk.this.pos),
-							state, state, 1 | 2);
+			IBlockState state = TileEntityWritingDesk.this.world.getBlockState(TileEntityWritingDesk.this.pos);
+			TileEntityWritingDesk.this.world.markAndNotifyBlock(TileEntityWritingDesk.this.pos,
+					TileEntityWritingDesk.this.world.getChunkFromBlockCoords(TileEntityWritingDesk.this.pos), state,
+					state, 1 | 2);
 		}
 	}
-	
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound)
 	{
@@ -70,7 +65,7 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 		compound.setInteger("age", age);
 		return compound;
 	}
-	
+
 	public int getAge()
 	{
 		return age;
@@ -125,7 +120,7 @@ public class TileEntityWritingDesk extends TileEntity implements ITickable
 	public void update()
 	{
 		age++;
-		
+
 		this.markDirty();
 	}
 }

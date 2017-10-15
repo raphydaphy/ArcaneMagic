@@ -58,12 +58,10 @@ public class ClientProxy extends CommonProxy
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElementalCraftingTable.class,
 				new ElementalCraftingTableTESR());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class,
-				new WritingDeskTESR());
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class,
-				new AnalyzerTESR());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class, new WritingDeskTESR());
+
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class, new AnalyzerTESR());
 	}
 
 	public static void registerColors()

@@ -25,12 +25,12 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	{
 		return getRequiredTag();
 	}
-	
+
 	public FontRenderer getFontRenderer(GuiScreen notebook)
 	{
 		return notebook.mc.fontRenderer;
 	}
-	
+
 	public abstract ItemStack getIcon();
 
 }

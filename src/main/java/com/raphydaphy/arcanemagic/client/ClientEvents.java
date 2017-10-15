@@ -67,7 +67,8 @@ public class ClientEvents
 
 			float prevEquipProgress = ev.getHand() == EnumHand.MAIN_HAND ? itemrenderer.prevEquippedProgressMainHand
 					: itemrenderer.prevEquippedProgressOffHand;
-			float equipProgress = ev.getHand() == EnumHand.MAIN_HAND ? itemrenderer.equippedProgressMainHand : itemrenderer.equippedProgressOffHand;
+			float equipProgress = ev.getHand() == EnumHand.MAIN_HAND ? itemrenderer.equippedProgressMainHand
+					: itemrenderer.equippedProgressOffHand;
 			float f5 = 1.0F - (prevEquipProgress + (equipProgress - prevEquipProgress) * ev.getPartialTicks());
 
 			if (ev.getHand() == EnumHand.MAIN_HAND && player.getHeldItemOffhand().isEmpty())
@@ -79,7 +80,7 @@ public class ClientEvents
 						: player.getPrimaryHand().opposite();
 				GLHelper.renderParchmentFirstPersonSide(f5, enumhandside, f, ev.getItemStack());
 			}
-			
+
 			ev.setCanceled(true);
 		}
 	}

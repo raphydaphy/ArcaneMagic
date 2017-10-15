@@ -28,7 +28,8 @@ public class CategoryUnknownRealms extends NotebookCategory
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		for (int i = 0; i < 3; i++)
 		{
-			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000, Minecraft.getMinecraft().standardGalacticFontRenderer));
+			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000,
+					Minecraft.getMinecraft().standardGalacticFontRenderer));
 		}
 		return entries;
 	}
@@ -44,7 +45,7 @@ public class CategoryUnknownRealms extends NotebookCategory
 	{
 		return notebook.mc.standardGalacticFontRenderer;
 	}
-	
+
 	@Override
 	public ItemStack getIcon()
 	{

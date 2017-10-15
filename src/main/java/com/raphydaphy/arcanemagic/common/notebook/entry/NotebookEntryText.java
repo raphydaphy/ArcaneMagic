@@ -13,14 +13,14 @@ public class NotebookEntryText implements INotebookEntry
 {
 	private String unlocalizedText;
 	private int color;
-	
+
 	private FontRenderer renderer;
 
 	public NotebookEntryText(String unlocalizedText, int color)
 	{
 		this(unlocalizedText, color, Minecraft.getMinecraft().fontRenderer);
 	}
-	
+
 	public NotebookEntryText(String unlocalizedText, int color, FontRenderer renderer)
 	{
 		this.unlocalizedText = unlocalizedText;

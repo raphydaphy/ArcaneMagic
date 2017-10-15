@@ -85,7 +85,7 @@ public class ModEvents
 		if (ev.player.world.getTotalWorldTime() % 50 == 0)
 		{
 			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
-			
+
 			if (info != null)
 			{
 				for (int i = 0; i < ev.player.inventory.getSizeInventory(); i++)
@@ -93,67 +93,67 @@ public class ModEvents
 					Item item = ev.player.inventory.getStackInSlot(i).getItem();
 
 					// Check for all item-based notebook category unlocks here
-					
+
 					if (item.equals(ModRegistry.ANCIENT_PARCHMENT)
 							&& !info.isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
-						
+
 						if (ev.player.world.isRemote)
 						{
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.ANCIENT_RELICS);
 						}
 					}
-					
+
 					if (item.equals(ModRegistry.NOTEBOOK)
 							&& !info.isUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
-						
+
 						if (ev.player.world.isRemote)
 						{
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.FORGOTTEN_KNOWLEDGE);
 						}
 					}
-					
+
 					if (item.equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK))
 							&& !info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
-						
+
 						if (ev.player.world.isRemote)
 						{
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.BASIC_LINGUISTICS);
 						}
 					}
-					
+
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ESSENCE_CONCENTRATOR))
 							&& !info.isUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag());
-						
+
 						if (ev.player.world.isRemote)
 						{
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.ESSENCE_COLLECTION);
 						}
 					}
-					
+
 					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
 							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());
-						
+
 						if (ev.player.world.isRemote)
 						{
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.CRYSTALLIZATION);
 						}
 					}
-					
+
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
 							&& !info.isUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag());
-						
+
 						if (ev.player.world.isRemote)
 						{
 							ArcaneMagic.proxy.addCategoryUnlockToast(NotebookCategories.MANIPULATING_MAGIC);

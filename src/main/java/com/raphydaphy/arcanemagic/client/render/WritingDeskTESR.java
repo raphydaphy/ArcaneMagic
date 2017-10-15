@@ -31,7 +31,7 @@ public class WritingDeskTESR extends TileEntitySpecialRenderer<TileEntityWriting
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		GlStateManager.translate(0, 0, 0);
-		
+
 		renderPapers(cap.getStackInSlot(0), 0, te);
 
 		for (int i = 0; i < 6; i++)
@@ -40,7 +40,7 @@ public class WritingDeskTESR extends TileEntitySpecialRenderer<TileEntityWriting
 		}
 		GlStateManager.popMatrix();
 	}
-	
+
 	private void renderItems(ItemStack stack, int slot, TileEntityWritingDesk te)
 	{
 		if (stack != null && !stack.isEmpty())
@@ -89,27 +89,26 @@ public class WritingDeskTESR extends TileEntitySpecialRenderer<TileEntityWriting
 				if (side == 1)
 				{
 					GlStateManager.translate(0, 0, 0.001);
-					GlStateManager.rotate(180, 0,1,0);
+					GlStateManager.rotate(180, 0, 1, 0);
 					//GlStateManager.rotate(180,0,0,1);
-					
+
 				}
 				GlStateManager.pushMatrix();
 				GlStateManager.pushAttrib();
 				GlStateManager.scale(0.008, 0.008, 0.008);
-	
-				GLHelper.drawCenteredSplitString(Minecraft.getMinecraft().fontRenderer,
-						"Manipulation Magic", 0, -15, 100,
-						0x000000);
-	
+
+				GLHelper.drawCenteredSplitString(Minecraft.getMinecraft().fontRenderer, "Manipulation Magic", 0, -15,
+						100, 0x000000);
+
 				GlStateManager.popAttrib();
 				GlStateManager.popMatrix();
-				
+
 				GlStateManager.pushMatrix();
 				GlStateManager.pushAttrib();
 				GlStateManager.scale(0.005, 0.005, 0.005);
 				GLHelper.drawCenteredSplitString(Minecraft.getMinecraft().fontRenderer,
-						"Manipulating Essence directly would be a powerful ability, if only you could obtain the right items to learn how.\n\nLuckily, your new discoveries should aid you greatly in this process.", 0, 0, 130,
-						0x000000);
+						"Manipulating Essence directly would be a powerful ability, if only you could obtain the right items to learn how.\n\nLuckily, your new discoveries should aid you greatly in this process.",
+						0, 0, 130, 0x000000);
 				GlStateManager.popAttrib();
 				GlStateManager.popMatrix();
 			}

@@ -177,7 +177,8 @@ public class GuiNotebook extends GuiScreen
 				if (cap.isVisible(category))
 				{
 					// Draw the category!
-					ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(I18n.format(category.getUnlocalizedName()),
+					ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(
+							I18n.format(category.getUnlocalizedName()),
 							(int) ((screenX + (cat == renderCurCategory ? 26 : 18)) * (1 / categoryNameSize)),
 							(int) ((screenY + 24 + (cat * 20)) * (1 / categoryNameSize)),
 							cat == renderCurCategory ? 0x515151 : 0x32363d);

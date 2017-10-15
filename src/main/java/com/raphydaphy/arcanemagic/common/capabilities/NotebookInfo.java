@@ -133,10 +133,11 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		}
 		return false;
 	}
-	
+
 	public boolean isVisible(NotebookCategory cat)
 	{
-		if (!isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag()) && cat.equals(NotebookCategories.UNKNOWN_REALMS))
+		if (!isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag())
+				&& cat.equals(NotebookCategories.UNKNOWN_REALMS))
 		{
 			return true;
 		}
