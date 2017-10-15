@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
@@ -21,7 +22,9 @@ import net.minecraft.util.ITickable;
 public class TileEntityAnalyzer extends TileEntity implements ITickable
 {
 	private ItemStack stack = ItemStack.EMPTY;
-	private int age;
+	private int age = 0;
+
+	private UUID stackOwner = null;
 
 	public TileEntityAnalyzer()
 	{
@@ -33,9 +36,23 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 		return stack;
 	}
 
+	public void setPlayer(EntityPlayer player)
+	{
+		if (player != null)
+		{
+			this.stackOwner = player.getUniqueID();
+		}
+		else
+		{
+			this.stackOwner = null;
+		}
+		markDirty();
+	}
+
 	public void setStack(ItemStack stack)
 	{
 		this.stack = stack;
+		this.age = 0;
 		markDirty();
 
 		if (world != null)
@@ -70,6 +87,11 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 			stack = ItemStack.EMPTY;
 		}
 		age = compound.getInteger("age");
+
+		if (compound.hasKey("stackOwner"))
+		{
+			stackOwner = compound.getUniqueId("stackOwner");
+		}
 	}
 
 	@Override
@@ -83,6 +105,10 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 			compound.setTag("item", tagCompound);
 		}
 		compound.setInteger("age", age);
+		if (stackOwner != null)
+		{
+			compound.setUniqueId("stackOwner", stackOwner);
+		}
 		return compound;
 	}
 
@@ -120,6 +146,11 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 	public void update()
 	{
 		age++;
+		
+		if (!world.isRemote && age == 50 && getStack() != null && !getStack().isEmpty() && stackOwner != null)
+		{
+			analyze(world.getPlayerEntityByUUID(stackOwner));
+		}
 		this.markDirty();
 	}
 
@@ -136,8 +167,9 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 			if (info != null && info.getUsed())
 			{
 				System.out.println("on the way to success");
-				
-				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy(), new ArrayList<>()))
+
+				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy(),
+						new ArrayList<>()))
 				{
 					System.out.println("Theres something here, but i dont know quite what yet");
 
@@ -151,7 +183,8 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 								System.out.println("we did it!");
 								info.setUnlocked(unlockableCat.getRequiredTag());
 
-								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat), (EntityPlayerMP)player);
+								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat),
+										(EntityPlayerMP) player);
 							}
 						}
 					}

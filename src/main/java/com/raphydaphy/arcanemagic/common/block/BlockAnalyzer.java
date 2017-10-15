@@ -105,7 +105,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 				insertStack.setCount(1);
 				player.setHeldItem(hand, stack);
 				te.setStack(insertStack);
-				((TileEntityAnalyzer) te).analyze(player);
+				((TileEntityAnalyzer) te).setPlayer(player);
 				te.markDirty();
 				world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 
