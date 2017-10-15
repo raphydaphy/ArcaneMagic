@@ -6,7 +6,6 @@ import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookOpened;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -16,8 +15,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemNotebook extends ItemBase
 {
@@ -25,7 +22,7 @@ public class ItemNotebook extends ItemBase
 
 	public ItemNotebook(String name)
 	{
-		super(name);
+		super(name, TextFormatting.DARK_PURPLE);
 		maxStackSize = 1;
 	}
 
@@ -51,12 +48,5 @@ public class ItemNotebook extends ItemBase
 					+ "! THIS IS BAD!");
 		}
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(hand));
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public String getItemStackDisplayName(ItemStack stack)
-	{
-		return TextFormatting.DARK_PURPLE + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
 	}
 }

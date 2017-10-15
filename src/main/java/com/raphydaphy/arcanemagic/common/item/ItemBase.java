@@ -4,30 +4,53 @@ import com.raphydaphy.arcanemagic.client.IHasModel;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBase extends Item implements IHasModel
 {
 	protected final int variants;
-
+	protected final TextFormatting color;
+	
 	public ItemBase(String name)
 	{
-		this(name, 0);
+		this(name, 0, TextFormatting.WHITE);
+	}
+	
+	public ItemBase(String name, int variants)
+	{
+		this(name, variants, TextFormatting.WHITE);
+	}
+	
+	public ItemBase(String name, TextFormatting color)
+	{
+		this(name, 0, color);
 	}
 
-	public ItemBase(String name, int variants)
+	public ItemBase(String name, int variants, TextFormatting color)
 	{
 		setRegistryName(name);
 		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
 		setCreativeTab(ArcaneMagic.creativeTab);
 		this.variants = variants;
+		this.color = color;
 		if (variants > 0)
 			setHasSubtypes(true);
 		init();
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public String getItemStackDisplayName(ItemStack stack)
+	{
+		return color + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 
 public class ItemEnum<E extends Enum<E> & IPropertyEnum> extends ItemBase
@@ -16,7 +17,12 @@ public class ItemEnum<E extends Enum<E> & IPropertyEnum> extends ItemBase
 
 	public ItemEnum(String name, E[] values)
 	{
-		super(name, values.length);
+		this(name, values, TextFormatting.WHITE);
+	}
+	
+	public ItemEnum(String name, E[] values, TextFormatting color)
+	{
+		super(name, values.length, color);
 		this.values = values;
 	}
 
