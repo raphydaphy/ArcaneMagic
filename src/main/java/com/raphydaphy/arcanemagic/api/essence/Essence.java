@@ -9,7 +9,6 @@ import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.network.PacketEssenceTransfer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceStorage;
 
-import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -228,9 +227,9 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			return Essence.DEPTH;
 		else if (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS))
 			return Essence.HORIZON;
-		else if (BiomeDictionary.hasType(biome, Type.DRY) || BiomeDictionary.hasType(biome, Type.NETHER))
+		else if (BiomeDictionary.hasType(biome, Type.DRY) || BiomeDictionary.hasType(biome, Type.NETHER) || BiomeDictionary.hasType(biome, Type.HOT))
 			return Essence.INFERNO;
-		else if (BiomeDictionary.hasType(biome, Type.HILLS))
+		else if (BiomeDictionary.hasType(biome, Type.HILLS) || BiomeDictionary.hasType(biome, Type.MOUNTAIN) || BiomeDictionary.hasType(biome, Type.COLD))
 			return Essence.OZONE;
 		else if (BiomeDictionary.hasType(biome, Type.MESA))
 			return Essence.CHAOS;
