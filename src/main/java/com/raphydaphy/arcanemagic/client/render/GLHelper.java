@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -110,8 +111,8 @@ public class GLHelper
 		GlStateManager.translate(63, 25, 0);
 
 		FontRenderer renderer = ModRegistry.WRITTEN_PARCHMENT.getParchmentRenderer(stack);
-		String title = ModRegistry.WRITTEN_PARCHMENT.getLocalizedTitle(stack);
-		String desc = ModRegistry.WRITTEN_PARCHMENT.getLocalizedDesc(stack);
+		String title = ItemParchment.getLocalizedTitle(stack);
+		String desc = ItemParchment.getLocalizedDesc(stack);
 		renderer.drawString(title, 0 - (renderer.getStringWidth(title) / 2), -15, 0x000000);
 		GlStateManager.scale(0.7, 0.7, 0.7);
 

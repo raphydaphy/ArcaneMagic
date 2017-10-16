@@ -1,6 +1,9 @@
 package com.raphydaphy.arcanemagic.common.item;
 
+import javax.annotation.Nullable;
+
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
@@ -13,6 +16,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -27,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemParchment extends ItemBase
 {
 	public static final String TITLE = "unlocTitle";
-	public static final String DESC = "unlocDesc";
+	public static final String CATEGORY = "unlocCategory";
 	public static final String PARAGRAPHS = "numParagraphs";
 
 	public ItemParchment(String name)
@@ -74,7 +78,8 @@ public class ItemParchment extends ItemBase
 			return Minecraft.getMinecraft().fontRenderer;
 		} else
 		{
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE) && stack.getTagCompound().hasKey(DESC) && !stack.getTagCompound().getString(TITLE).equals("arcanemagic.notebook.category.unknown_realms"))
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE)
+					&& !stack.getTagCompound().getString(TITLE).equals("arcanemagic.notebook.category.unknown_realms"))
 			{
 				return Minecraft.getMinecraft().fontRenderer;
 			}
@@ -84,7 +89,7 @@ public class ItemParchment extends ItemBase
 	}
 
 	@SideOnly(Side.CLIENT)
-	public String getLocalizedTitle(ItemStack stack)
+	public static String getLocalizedTitle(ItemStack stack)
 	{
 		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
 		{
@@ -101,32 +106,49 @@ public class ItemParchment extends ItemBase
 	}
 
 	@SideOnly(Side.CLIENT)
-	public String getLocalizedDesc(ItemStack stack)
+	public static String getLocalizedDesc(ItemStack stack)
 	{
-		if (stack.getItem().equals( ModRegistry.ANCIENT_PARCHMENT))
+		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
 		{
 			return I18n.format("arcanemagic.message.ancient_parchment.0") + "\n\n"
 					+ I18n.format("arcanemagic.message.ancient_parchment.1");
 		} else
 		{
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(DESC))
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE))
 			{
 				String formattedDesc = "";
-				if (stack.getTagCompound().hasKey(PARAGRAPHS))
+				for (int p = 0; p < stack.getTagCompound().getInteger(PARAGRAPHS); p++)
 				{
-					for (int p = 0; p < stack.getTagCompound().getInteger(PARAGRAPHS); p++)
-					{
-						formattedDesc += I18n.format(stack.getTagCompound().getString(DESC) + "." + p) + "\n\n";
-					}
-				} else
-				{
-					formattedDesc = I18n.format(stack.getTagCompound().getString(DESC));
+					formattedDesc += I18n.format(stack.getTagCompound().getString(TITLE) + "." + p) + "\n\n";
 				}
 				return formattedDesc;
 			}
 
-			return I18n.format("arcanemagic.notebook.category.unknown_realms.0") + "\n\n" + I18n.format("arcanemagic.notebook.category.unknown_realms.1");
+			return I18n.format("arcanemagic.notebook.category.unknown_realms.0") + "\n\n"
+					+ I18n.format("arcanemagic.notebook.category.unknown_realms.1");
 		}
+	}
+
+	@Nullable
+	public static NotebookCategory getToUnlock(ItemStack stack)
+	{
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(CATEGORY))
+		{
+			for (NotebookCategory potentialCat : NotebookCategory.REGISTRY)
+			{
+				if (potentialCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY)))
+				{
+					return potentialCat;
+				}
+			}
+		}
+		return null;
+	}
+
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+	{
+		ItemStack stack = player.getHeldItem(hand);
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
 	@Override
@@ -153,7 +175,7 @@ public class ItemParchment extends ItemBase
 
 				return EnumActionResult.SUCCESS;
 			}
-			
+
 		}
 		return EnumActionResult.PASS;
 	}

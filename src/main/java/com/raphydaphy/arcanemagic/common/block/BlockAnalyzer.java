@@ -1,7 +1,9 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -52,7 +54,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 		{
 			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStacks()[0].copy());
 		}
-		
+
 		if (te.getStacks()[1] != null && !te.getStacks()[1].isEmpty())
 		{
 			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStacks()[1].copy());
@@ -110,7 +112,8 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 			ItemStack insertStack = stack.copy();
 			if (stack.getItem().equals(Items.PAPER))
 			{
-				List<NotebookCategory> unlockable = te.analyze(player);
+				List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(te.getStacks()[0].copy(),
+						new ArrayList<>());
 				if (te.getStacks()[0] != null && !te.getStacks()[0].isEmpty() && unlockable.size() > 0
 						&& (te.getStacks()[1] == null || te.getStacks()[1].isEmpty()))
 				{
