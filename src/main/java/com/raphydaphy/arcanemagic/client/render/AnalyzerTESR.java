@@ -38,7 +38,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 
 	private void renderItem(int slot, TileEntityAnalyzer te)
 	{
-		ItemStack stack = te.getStacks()[slot];
+		ItemStack stack = te.getStack(slot);
 		if (stack != null && !stack.isEmpty())
 		{
 			if (slot == 1)

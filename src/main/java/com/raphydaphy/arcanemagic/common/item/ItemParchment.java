@@ -5,15 +5,20 @@ import javax.annotation.Nullable;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -23,6 +28,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -148,6 +155,38 @@ public class ItemParchment extends ItemBase
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
 		ItemStack stack = player.getHeldItem(hand);
+		if (stack.getItem().equals(ModRegistry.WRITTEN_PARCHMENT))
+		{
+			NotebookCategory cat = getToUnlock(stack);
+			boolean didUnlock = false;
+			if (!world.isRemote && cat != null && !cat.equals(NotebookCategories.UNKNOWN_REALMS))
+			{
+				NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+				if (cap != null && cap.isUnlocked(cat.getPrerequisiteTag()))
+				{
+					if (!cap.isUnlocked(cat.getRequiredTag()))
+					{
+						cap.setUnlocked(cat.getRequiredTag());
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(cat), (EntityPlayerMP) player);
+					}
+					didUnlock = true;
+				}
+			}
+
+			if (!didUnlock)
+			{
+				player.sendStatusMessage(new TextComponentTranslation("arcanemagic.message.cantlearn")
+						.setStyle(new Style().setColor(TextFormatting.RED)), true);
+			}
+			world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomWriteSound(),
+					SoundCategory.PLAYERS, 1, 1);
+			player.setHeldItem(hand, ItemStack.EMPTY);
+			player.swingArm(hand);
+			if (!world.isRemote)
+			{
+				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+			}
+		}
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 

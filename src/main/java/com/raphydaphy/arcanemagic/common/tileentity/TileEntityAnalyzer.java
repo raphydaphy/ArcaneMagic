@@ -38,18 +38,13 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		super(200);
 	}
 
-	public ItemStack[] getStacks()
+	public ItemStack getStack(int stack)
 	{
-		ItemStack[] ret = stacks.clone();
-		if (ret[0] == null)
+		if (stacks[stack] == null)
 		{
-			ret[0] = ItemStack.EMPTY;
+			return ItemStack.EMPTY;
 		}
-		if (ret[1] == null)
-		{
-			ret[1] = ItemStack.EMPTY;
-		}
-		return stacks;
+		return stacks[stack];
 	}
 
 	public void setPlayer(EntityPlayer player)
@@ -77,7 +72,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			this.age = 0;
 
 			if (item != null && !item.isEmpty()
-					&& ArcaneMagicAPI.getFromAnalysis(getStacks()[0].copy(), new ArrayList<>()).size() > 0)
+					&& ArcaneMagicAPI.getFromAnalysis(getStack(0).copy(), new ArrayList<>()).size() > 0)
 			{
 				hasValidStack = true;
 			} else
@@ -135,16 +130,16 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		if (!getStacks()[0].isEmpty())
+		if (!getStack(0).isEmpty())
 		{
 			NBTTagCompound tagCompound = new NBTTagCompound();
-			stacks[0].writeToNBT(tagCompound);
+			getStack(0).writeToNBT(tagCompound);
 			compound.setTag("analyzingStack", tagCompound);
 		}
-		if (!getStacks()[1].isEmpty())
+		if (!getStack(1).isEmpty())
 		{
 			NBTTagCompound tagCompound = new NBTTagCompound();
-			stacks[1].writeToNBT(tagCompound);
+			getStack(1).writeToNBT(tagCompound);
 			compound.setTag("parchmentStack", tagCompound);
 		}
 		compound.setInteger("age", age);
@@ -175,7 +170,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 
 		if (hasValidStack)
 		{
-			if (getStacks()[1] != null && !getStacks()[1].isEmpty() && !world.isRemote)
+			if (!getStack(1).isEmpty() && !world.isRemote)
 			{
 				if ((essenceStorage.getTotalStored() >= 200) && stackOwner != null)
 				{
@@ -187,7 +182,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 					}
 					if (age == -50)
 					{
-						List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(getStacks()[0].copy(),
+						List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(getStack(0).copy(),
 								new ArrayList<>());
 						ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
 						if (!writtenParchment.hasTagCompound())
@@ -246,10 +241,10 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 						pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
 			}
 
-		} else if (getStacks()[1] != null && !getStacks()[1].isEmpty() && !world.isRemote)
+		} else if (!getStack(1).isEmpty() && !world.isRemote)
 		{
 			EntityItem blankParchment = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
-					getStacks()[1].copy());
+					getStack(1).copy());
 			blankParchment.motionX = 0;
 			blankParchment.motionY = 0;
 			blankParchment.motionZ = 0;

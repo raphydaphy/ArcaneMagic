@@ -50,14 +50,14 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	{
 		TileEntityAnalyzer te = (TileEntityAnalyzer) world.getTileEntity(pos);
 
-		if (te.getStacks()[0] != null && !te.getStacks()[0].isEmpty())
+		if (!te.getStack(0).isEmpty())
 		{
-			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStacks()[0].copy());
+			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStack(0).copy());
 		}
 
-		if (te.getStacks()[1] != null && !te.getStacks()[1].isEmpty())
+		if (!te.getStack(1).isEmpty())
 		{
-			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStacks()[1].copy());
+			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStack(1).copy());
 		}
 		super.breakBlock(world, pos, state);
 	}
@@ -107,21 +107,20 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 		TileEntityAnalyzer te = (TileEntityAnalyzer) teUnchecked;
 		ItemStack stack = player.getHeldItem(hand);
 
-		if (stack != null && !stack.isEmpty() && !player.isSneaking())
+		if (!stack.isEmpty() && !player.isSneaking())
 		{
 			ItemStack insertStack = stack.copy();
 			if (stack.getItem().equals(Items.PAPER))
 			{
-				List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(te.getStacks()[0].copy(),
+				List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(te.getStack(0).copy(),
 						new ArrayList<>());
-				if (te.getStacks()[0] != null && !te.getStacks()[0].isEmpty() && unlockable.size() > 0
-						&& (te.getStacks()[1] == null || te.getStacks()[1].isEmpty()))
+				if (!te.getStack(0).isEmpty() && unlockable.size() > 0 && te.getStack(1).isEmpty())
 				{
 
 					stack.shrink(1);
 					te.setStack(1, new ItemStack(Items.PAPER));
 				}
-			} else if (te.getStacks()[0].isEmpty())
+			} else if (te.getStack(0).isEmpty())
 			{
 				stack.shrink(1);
 				insertStack.setCount(1);
@@ -134,8 +133,8 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 			}
 		} else if (player.isSneaking())
 		{
-			ItemStack toExtract = te.getStacks()[0].copy();
-			if (toExtract != null && !toExtract.isEmpty())
+			ItemStack toExtract = te.getStack(0).copy();
+			if (!toExtract.isEmpty())
 			{
 				if (!world.isRemote)
 				{

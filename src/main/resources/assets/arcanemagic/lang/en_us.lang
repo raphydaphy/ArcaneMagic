@@ -74,6 +74,7 @@ part.arcanemagic.core.greatwood.name=Greatwood
 
 # Message
 desc.arcanemagic.ancient_parchment=Rare drop from witches. Shift+right-click bedrock while holding to use.
+arcanemagic.message.cantlearn=Nothing new can be learned from this
 arcanemagic.message.ancient_parchment=Ancient Secrets
 arcanemagic.message.ancient_parchment.0=The arcane magicians have left several clues, but I cannot piece together what they want.
 arcanemagic.message.ancient_parchment.1=Their parchments do seem to attract an odd variety of dust particles when deep in the world however. Soon I will try placing the parchment on the bedrock itself, but I am afraid of losing it.
