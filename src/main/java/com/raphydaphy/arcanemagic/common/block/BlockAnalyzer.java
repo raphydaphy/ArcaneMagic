@@ -3,8 +3,6 @@ package com.raphydaphy.arcanemagic.common.block;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.common.init.ModRegistry;
-import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -18,7 +16,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -114,27 +111,12 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 			if (stack.getItem().equals(Items.PAPER))
 			{
 				List<NotebookCategory> unlockable = te.analyze(player);
-				System.out.println(te.getStacks()[1]);
-				System.out.println(unlockable.size());
 				if (te.getStacks()[0] != null && !te.getStacks()[0].isEmpty() && unlockable.size() > 0
 						&& (te.getStacks()[1] == null || te.getStacks()[1].isEmpty()))
 				{
 
 					stack.shrink(1);
-					ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
-					if (!writtenParchment.hasTagCompound())
-					{
-						writtenParchment.setTagCompound(new NBTTagCompound());
-					}
-					writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
-							unlockable.get(0).getUnlocParchmentInfo().first());
-					writtenParchment.getTagCompound().setString(ItemParchment.DESC,
-							unlockable.get(0).getUnlocParchmentInfo().first());
-					writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
-							unlockable.get(0).getUnlocParchmentInfo().second());
-
-					System.out.println("Paragraphs: " + unlockable.get(0).getEntries().size());
-					te.setStack(1, writtenParchment);
+					te.setStack(1, new ItemStack(Items.PAPER));
 				}
 			} else if (te.getStacks()[0].isEmpty())
 			{

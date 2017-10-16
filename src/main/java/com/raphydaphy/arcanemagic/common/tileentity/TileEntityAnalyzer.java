@@ -11,9 +11,12 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -165,35 +168,43 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		{
 			if (getStacks()[1] != null && !getStacks()[1].isEmpty() && !world.isRemote)
 			{
-				if ((essenceStorage.getTotalStored() >= 200))
+				if ((essenceStorage.getTotalStored() >= 200) && stackOwner != null)
 				{
-					EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 1.5,
-							pos.getZ() + 0.5, getStacks()[1].copy());
-					parchmentEntity.motionX = 0;
-					parchmentEntity.motionY = 0;
-					parchmentEntity.motionZ = 0;
-					world.spawnEntity(parchmentEntity);
-					int taken = 0;
-					System.out.println("was " + essenceStorage.getTotalStored());
-					for (EssenceStack e : essenceStorage.getStored().values())
+
+					// just reached 200
+					if (age > 0)
 					{
-						if (taken < 200)
-						{
-							if (e.getCount() >= 200 - taken)
-							{
-								System.out.println(essenceStorage.take(e.copy().setCount(e.getCount() - (200 - taken)), false));
-								taken = 200;
-							} else
-							{
-								taken += e.getCount();
-								essenceStorage.take(e, false);
-							}
-							
-						}
+						age = -200;
 					}
-					
-					System.out.println("now " + essenceStorage.getTotalStored());
-					setStack(1, ItemStack.EMPTY);
+					if (age == -50)
+					{
+						List<NotebookCategory> unlockable = analyze(world.getPlayerEntityByUUID(stackOwner));
+						ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
+						if (!writtenParchment.hasTagCompound())
+						{
+							writtenParchment.setTagCompound(new NBTTagCompound());
+						}
+						writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
+								unlockable.get(0).getUnlocParchmentInfo().first());
+						writtenParchment.getTagCompound().setString(ItemParchment.DESC,
+								unlockable.get(0).getUnlocParchmentInfo().first());
+						writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
+								unlockable.get(0).getUnlocParchmentInfo().second());
+
+						EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 1.5,
+								pos.getZ() + 0.5, writtenParchment);
+						parchmentEntity.motionX = 0;
+						parchmentEntity.motionY = 0;
+						parchmentEntity.motionZ = 0;
+						world.spawnEntity(parchmentEntity);
+						for (EssenceStack e : essenceStorage.getStored().values())
+						{
+							essenceStorage.take(e, false);
+						}
+						setStack(1, ItemStack.EMPTY);
+
+						age = 0;
+					}
 				}
 				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
 				{
@@ -223,6 +234,21 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			{
 				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
 						pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
+			}
+
+		} else if (getStacks()[1] != null && !getStacks()[1].isEmpty() && !world.isRemote)
+		{
+			EntityItem blankParchment = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
+					getStacks()[1].copy());
+			blankParchment.motionX = 0;
+			blankParchment.motionY = 0;
+			blankParchment.motionZ = 0;
+			world.spawnEntity(blankParchment);
+			setStack(1, ItemStack.EMPTY);
+
+			for (EssenceStack e : essenceStorage.getStored().values())
+			{
+				essenceStorage.take(e, false);
 			}
 
 		}
