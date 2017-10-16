@@ -95,21 +95,26 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	public static boolean sendEssence(World world, EssenceStack stack, Vec3d from, Vec3d to, boolean simulate,
 			boolean spawnParticles)
 	{
+		return sendEssence(world, stack, from, to, to, simulate, spawnParticles);
+	}
+
+	public static boolean sendEssence(World world, EssenceStack stack, Vec3d from, Vec3d to, Vec3d toCosmetic,
+			boolean simulate, boolean spawnParticles)
+	{
 		BlockPos fromPos = new BlockPos(Math.floor(from.x), Math.floor(from.y), Math.floor(from.z));
 		BlockPos toPos = new BlockPos(Math.floor(to.x), Math.floor(to.y), Math.floor(to.z));
 
 		TileEntity fromTEUnchecked = world.getTileEntity(fromPos);
 		TileEntity toTEUnchecked = world.getTileEntity(toPos);
-
+		
 		if (toTEUnchecked instanceof TileEntityEssenceStorage)
 		{
 			IEssenceStorage storage = toTEUnchecked.getCapability(IEssenceStorage.CAP, null);
 			if (storage != null)
 			{
-
 				if (fromTEUnchecked instanceof TileEntityEssenceStorage)
 				{
-
+					
 					IEssenceStorage storageFrom = fromTEUnchecked.getCapability(IEssenceStorage.CAP, null);
 					// sending from block to block, such as concentrator -> crystallizer
 					if (storageFrom != null)
@@ -122,6 +127,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 							{
 								if (!simulate)
 								{
+									
 									if (!world.isRemote)
 									{
 										// send and recieve essence
@@ -131,12 +137,12 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 										toTEUnchecked.markDirty();
 										fromTEUnchecked.markDirty();
 
-										ArcaneMagicPacketHandler.INSTANCE
-												.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
+										ArcaneMagicPacketHandler.INSTANCE.sendToAll(
+												new PacketEssenceTransfer(stack, from, to, toCosmetic, spawnParticles));
 									} else if (spawnParticles)
 									{
 										ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
-												stack.getEssence(), to, false);
+												stack.getEssence(), toCosmetic, false);
 									}
 								}
 								return true;
@@ -152,7 +158,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 					{
 						if (!simulate)
 						{
-
 							if (!world.isRemote)
 							{
 								// do the thing!
@@ -160,19 +165,13 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 								toTEUnchecked.markDirty();
 
-								ArcaneMagicPacketHandler.INSTANCE
-										.sendToAll(new PacketEssenceTransfer(stack, from, to, spawnParticles));
+								ArcaneMagicPacketHandler.INSTANCE.sendToAll(
+										new PacketEssenceTransfer(stack, from, to, toCosmetic, spawnParticles));
 							} else
 							{
-								for (int i = 0; i < 5; i++)
-								{
-									double radius = 2.5;
-									double radians = Math.toRadians(world.rand.nextInt(360));
-									Vec3d fxFrom = new Vec3d(to.x + Math.cos(radians) * radius, to.y - 2.5,
-											to.z + Math.sin(radians) * radius);
-									ArcaneMagic.proxy.spawnEssenceParticles(world, fxFrom, new Vec3d(0, 0, 0),
-											stack.getEssence(), to, false);
-								}
+								ArcaneMagic.proxy.spawnEssenceParticles(world, from, new Vec3d(0, 0, 0),
+										stack.getEssence(), toCosmetic, to.equals(toCosmetic) ? false : true);
+
 							}
 						}
 						return true;

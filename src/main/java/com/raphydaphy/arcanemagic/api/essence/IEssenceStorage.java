@@ -21,6 +21,11 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 * @return a map of all the currently stored EssenceStacks
 	 */
 	Map<Essence, EssenceStack> getStored();
+	
+	/**
+	 * @return the total Essence stored across all different types
+	 */
+	int getTotalStored();
 
 	/**
 	 * Store the stack in the storage

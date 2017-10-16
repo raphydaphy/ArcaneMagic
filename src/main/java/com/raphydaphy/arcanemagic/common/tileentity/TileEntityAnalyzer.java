@@ -5,26 +5,30 @@ import java.util.List;
 import java.util.UUID;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 
-public class TileEntityAnalyzer extends TileEntity implements ITickable
+public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITickable
 {
-	private ItemStack[] stacks = {ItemStack.EMPTY, ItemStack.EMPTY};
-	
+	// TODO: make this a nonnulllist
+	private ItemStack[] stacks = { ItemStack.EMPTY, ItemStack.EMPTY };
+
 	private int age = 0;
 	private boolean hasValidStack = false;
 
@@ -32,7 +36,7 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 
 	public TileEntityAnalyzer()
 	{
-
+		super(200);
 	}
 
 	public ItemStack[] getStacks()
@@ -55,11 +59,11 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 	public void setStack(int stack, ItemStack item)
 	{
 		this.stacks[stack] = item;
-		
+
 		if (stack == 0)
 		{
 			this.age = 0;
-	
+
 			if (item != null && !item.isEmpty()
 					&& ArcaneMagicAPI.getFromAnalysis(getStacks()[0].copy(), new ArrayList<>()).size() > 0)
 			{
@@ -100,7 +104,7 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 		if (compound.hasKey("analyzingStack"))
 		{
 			stacks[0] = new ItemStack(compound.getCompoundTag("analyzingStack"));
-		} 
+		}
 		if (compound.hasKey("parchmentStack"))
 		{
 			stacks[1] = new ItemStack(compound.getCompoundTag("parchmentStack"));
@@ -153,33 +157,73 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
-		readFromNBT(pkt.getNbtCompound());
-	}
-
-	@Override
-	public NBTTagCompound getUpdateTag()
-	{
-		return this.writeToNBT(new NBTTagCompound());
-	}
-
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
-		// shadows told me to put 150 so i did
-		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
-	}
-
-	@Override
 	public void update()
 	{
 		age++;
 
-		if (world.rand.nextInt(3) == 1 && hasValidStack)
+		if (hasValidStack)
 		{
-			world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
-					pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
+			if (getStacks()[1] != null && !getStacks()[1].isEmpty() && !world.isRemote)
+			{
+				if ((essenceStorage.getTotalStored() >= 200))
+				{
+					EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 1.5,
+							pos.getZ() + 0.5, getStacks()[1].copy());
+					parchmentEntity.motionX = 0;
+					parchmentEntity.motionY = 0;
+					parchmentEntity.motionZ = 0;
+					world.spawnEntity(parchmentEntity);
+					int taken = 0;
+					System.out.println("was " + essenceStorage.getTotalStored());
+					for (EssenceStack e : essenceStorage.getStored().values())
+					{
+						if (taken < 200)
+						{
+							if (e.getCount() >= 200 - taken)
+							{
+								System.out.println(essenceStorage.take(e.copy().setCount(e.getCount() - (200 - taken)), false));
+								taken = 200;
+							} else
+							{
+								taken += e.getCount();
+								essenceStorage.take(e, false);
+							}
+							
+						}
+					}
+					
+					System.out.println("now " + essenceStorage.getTotalStored());
+					setStack(1, ItemStack.EMPTY);
+				}
+				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
+				{
+					for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
+					{
+						for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
+						{
+							if (world.rand.nextInt(2000) == 1)
+							{
+								BlockPos here = new BlockPos(x, y, z);
+								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+								{
+									// Send some essence to the parchment for ink
+									Essence.sendEssence(world,
+											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+											new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5),
+											new Vec3d(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5), false,
+											true);
+
+								}
+							}
+						}
+					}
+				}
+			} else if (world.isRemote && world.rand.nextInt(3) == 1)
+			{
+				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
+						pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
+			}
 
 		}
 		this.markDirty();
@@ -199,18 +243,22 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 			{
 				List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(getStacks()[0].copy(),
 						new ArrayList<>());
-				for (NotebookCategory unlockableCat : unlockable)
+				if (essenceStorage.getTotalStored() >= 200)
 				{
-					if (unlockableCat != null)
+					System.out.println(essenceStorage.getTotalStored());
+					for (NotebookCategory unlockableCat : unlockable)
 					{
-						if (!info.isUnlocked(unlockableCat.getRequiredTag()))
+						if (unlockableCat != null)
 						{
-							if (info.isUnlocked(unlockableCat.getPrerequisiteTag()))
+							if (!info.isUnlocked(unlockableCat.getRequiredTag()))
 							{
-								info.setUnlocked(unlockableCat.getRequiredTag());
-								
-								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat),
-										(EntityPlayerMP) player);
+								if (info.isUnlocked(unlockableCat.getPrerequisiteTag()))
+								{
+									info.setUnlocked(unlockableCat.getRequiredTag());
+
+									ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat),
+											(EntityPlayerMP) player);
+								}
 							}
 						}
 					}

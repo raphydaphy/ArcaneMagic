@@ -30,7 +30,7 @@ public abstract class CommonProxy
 
 	}
 
-	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
+	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
 	{
 
 	}

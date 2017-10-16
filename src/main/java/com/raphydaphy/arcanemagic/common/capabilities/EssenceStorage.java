@@ -53,6 +53,17 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 		}
 		return ret;
 	}
+	
+	@Override
+	public int getTotalStored()
+	{
+		int total = 0;
+		for (EssenceStack e : getStored().values())
+		{
+			total += e.getCount();
+		}
+		return total;
+	}
 
 	@Override
 	public EssenceStack store(EssenceStack in, boolean simulate)

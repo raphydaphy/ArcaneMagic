@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.client.render;
 
 import java.awt.Color;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 
 import net.minecraft.client.Minecraft;
@@ -12,7 +11,6 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -47,10 +45,10 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 				GlStateManager.pushMatrix();
 				GlStateManager.pushAttrib();
 
-				float frequency = 0.3f;
-				double r = Math.sin(frequency * te.getAge()) * 127 + 128;
-				double g = Math.sin(frequency * te.getAge() + 2) * 127 + 128;
-				double b = Math.sin(frequency * te.getAge() + 4) * 127 + 128;
+				float frequency = 0.1f;
+				double r = Math.sin(frequency * (te.getAge())) * 127 + 128;
+				double g = Math.sin(frequency * (te.getAge()) + 2) * 127 + 128;
+				double b = Math.sin(frequency * (te.getAge()) + 4) * 127 + 128;
 
 				Color rainbow = new Color((int) r, (int) g, (int) b);
 				//Essence.getFromBiome(te.getWorld().getBiome(new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()))).getColor()
@@ -83,7 +81,16 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 				GlStateManager.rotate(age, 0, 1, 0);
 			}
 
-			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
+			if (slot == 1)
+			{
+				GlStateManager.scale(2.7, 2.7,2.7);
+				GlStateManager.translate(0, -0.1, 0);
+				GlStateManager.translate(0, Math.sin(0.2 * (te.getAge()/2)) / 10, 0);
+				GLHelper.renderItemWithTransform(te.getWorld(), stack, ItemCameraTransforms.TransformType.GROUND);
+			} else
+			{
+				Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
+			}
 
 			GlStateManager.popMatrix();
 		}

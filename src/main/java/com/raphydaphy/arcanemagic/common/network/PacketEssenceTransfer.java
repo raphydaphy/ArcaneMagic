@@ -14,6 +14,7 @@ public class PacketEssenceTransfer implements IMessage
 {
 	private Vec3d from;
 	private Vec3d to;
+	private Vec3d toCosmetic;
 	private EssenceStack essence;
 	private boolean spawnParticles;
 
@@ -21,10 +22,11 @@ public class PacketEssenceTransfer implements IMessage
 	{
 	}
 
-	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to, boolean spawnParticles)
+	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
 	{
 		this.from = from;
 		this.to = to;
+		this.toCosmetic = toCosmetic;
 		this.essence = essence;
 	}
 
@@ -39,7 +41,7 @@ public class PacketEssenceTransfer implements IMessage
 
 		private void handle(PacketEssenceTransfer message, MessageContext ctx)
 		{
-			ArcaneMagic.proxy.sendEssenceSafe(message.essence, message.from, message.to, message.spawnParticles);
+			ArcaneMagic.proxy.sendEssenceSafe(message.essence, message.from, message.to, message.toCosmetic, message.spawnParticles);
 		}
 	}
 
@@ -48,6 +50,7 @@ public class PacketEssenceTransfer implements IMessage
 	{
 		from = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		to = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
+		toCosmetic = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		essence = EssenceStack.readFromBuf(buf);
 		spawnParticles = buf.readBoolean();
 	}
@@ -61,6 +64,9 @@ public class PacketEssenceTransfer implements IMessage
 		buf.writeDouble(to.x);
 		buf.writeDouble(to.y);
 		buf.writeDouble(to.z);
+		buf.writeDouble(toCosmetic.x);
+		buf.writeDouble(toCosmetic.y);
+		buf.writeDouble(toCosmetic.z);
 		EssenceStack.writeToBuf(buf, essence);
 		buf.writeBoolean(spawnParticles);
 	}
