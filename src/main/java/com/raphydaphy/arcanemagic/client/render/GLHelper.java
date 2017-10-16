@@ -112,7 +112,6 @@ public class GLHelper
 		FontRenderer renderer = ModRegistry.WRITTEN_PARCHMENT.getParchmentRenderer(stack);
 		String title = ModRegistry.WRITTEN_PARCHMENT.getLocalizedTitle(stack);
 		String desc = ModRegistry.WRITTEN_PARCHMENT.getLocalizedDesc(stack);
-
 		renderer.drawString(title, 0 - (renderer.getStringWidth(title) / 2), -15, 0x000000);
 		GlStateManager.scale(0.7, 0.7, 0.7);
 

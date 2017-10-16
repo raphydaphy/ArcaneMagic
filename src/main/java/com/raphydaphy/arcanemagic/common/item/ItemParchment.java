@@ -74,7 +74,7 @@ public class ItemParchment extends ItemBase
 			return Minecraft.getMinecraft().fontRenderer;
 		} else
 		{
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE) && stack.getTagCompound().hasKey(DESC))
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE) && stack.getTagCompound().hasKey(DESC) && !stack.getTagCompound().getString(TITLE).equals("arcanemagic.notebook.category.unknown_realms"))
 			{
 				return Minecraft.getMinecraft().fontRenderer;
 			}
@@ -116,7 +116,7 @@ public class ItemParchment extends ItemBase
 				{
 					for (int p = 0; p < stack.getTagCompound().getInteger(PARAGRAPHS); p++)
 					{
-						formattedDesc += I18n.format(stack.getTagCompound().getString(DESC + "." + p)) + "\n\n";
+						formattedDesc += I18n.format(stack.getTagCompound().getString(DESC) + "." + p) + "\n\n";
 					}
 				} else
 				{

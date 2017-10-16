@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -17,12 +18,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 
 public class TileEntityAnalyzer extends TileEntity implements ITickable
 {
-	private ItemStack stack = ItemStack.EMPTY;
+	private ItemStack[] stacks = {ItemStack.EMPTY, ItemStack.EMPTY};
+	
 	private int age = 0;
+	private boolean hasValidStack = false;
 
 	private UUID stackOwner = null;
 
@@ -31,9 +35,9 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 
 	}
 
-	public ItemStack getStack()
+	public ItemStack[] getStacks()
 	{
-		return stack;
+		return stacks;
 	}
 
 	public void setPlayer(EntityPlayer player)
@@ -41,18 +45,31 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 		if (player != null)
 		{
 			this.stackOwner = player.getUniqueID();
-		}
-		else
+		} else
 		{
 			this.stackOwner = null;
 		}
 		markDirty();
 	}
 
-	public void setStack(ItemStack stack)
+	public void setStack(int stack, ItemStack item)
 	{
-		this.stack = stack;
-		this.age = 0;
+		this.stacks[stack] = item;
+		
+		if (stack == 0)
+		{
+			this.age = 0;
+	
+			if (item != null && !item.isEmpty()
+					&& ArcaneMagicAPI.getFromAnalysis(getStacks()[0].copy(), new ArrayList<>()).size() > 0)
+			{
+				hasValidStack = true;
+			} else
+			{
+				hasValidStack = false;
+			}
+		}
+
 		markDirty();
 
 		if (world != null)
@@ -79,12 +96,14 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		if (compound.hasKey("item"))
+		stacks = new ItemStack[2];
+		if (compound.hasKey("analyzingStack"))
 		{
-			stack = new ItemStack(compound.getCompoundTag("item"));
-		} else
+			stacks[0] = new ItemStack(compound.getCompoundTag("analyzingStack"));
+		} 
+		if (compound.hasKey("parchmentStack"))
 		{
-			stack = ItemStack.EMPTY;
+			stacks[1] = new ItemStack(compound.getCompoundTag("parchmentStack"));
 		}
 		age = compound.getInteger("age");
 
@@ -92,23 +111,33 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 		{
 			stackOwner = compound.getUniqueId("stackOwner");
 		}
+
+		hasValidStack = compound.getBoolean("hasValidStack");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		if (!stack.isEmpty())
+		if (!stacks[0].isEmpty())
 		{
 			NBTTagCompound tagCompound = new NBTTagCompound();
-			stack.writeToNBT(tagCompound);
-			compound.setTag("item", tagCompound);
+			stacks[0].writeToNBT(tagCompound);
+			compound.setTag("analyzingStack", tagCompound);
+		}
+		if (!stacks[1].isEmpty())
+		{
+			NBTTagCompound tagCompound = new NBTTagCompound();
+			stacks[1].writeToNBT(tagCompound);
+			compound.setTag("parchmentStack", tagCompound);
 		}
 		compound.setInteger("age", age);
 		if (stackOwner != null)
 		{
 			compound.setUniqueId("stackOwner", stackOwner);
 		}
+
+		compound.setBoolean("hasValidStack", hasValidStack);
 		return compound;
 	}
 
@@ -146,29 +175,31 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 	public void update()
 	{
 		age++;
-		
-		if (!world.isRemote && age == 50 && getStack() != null && !getStack().isEmpty() && stackOwner != null)
+
+		if (world.rand.nextInt(3) == 1 && hasValidStack)
 		{
-			analyze(world.getPlayerEntityByUUID(stackOwner));
+			world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
+					pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
+
 		}
 		this.markDirty();
 	}
 
-	public void analyze(EntityPlayer player)
+	public List<NotebookCategory> analyze(EntityPlayer player)
 	{
 		if (player.world.isRemote)
 		{
-			return;
+			return new ArrayList<>();
 		}
-		if (getStack() != null && !getStack().isEmpty())
+		if (getStacks()[0] != null && !getStacks()[0].isEmpty())
 		{
 			NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
 
 			if (info != null && info.getUsed())
 			{
-
-				for (NotebookCategory unlockableCat : ArcaneMagicAPI.getFromAnalysis(getStack().copy(),
-						new ArrayList<>()))
+				List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(getStacks()[0].copy(),
+						new ArrayList<>());
+				for (NotebookCategory unlockableCat : unlockable)
 				{
 					if (unlockableCat != null)
 					{
@@ -177,14 +208,16 @@ public class TileEntityAnalyzer extends TileEntity implements ITickable
 							if (info.isUnlocked(unlockableCat.getPrerequisiteTag()))
 							{
 								info.setUnlocked(unlockableCat.getRequiredTag());
-
+								
 								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(unlockableCat),
 										(EntityPlayerMP) player);
 							}
 						}
 					}
 				}
+				return unlockable;
 			}
 		}
+		return new ArrayList<>();
 	}
 }

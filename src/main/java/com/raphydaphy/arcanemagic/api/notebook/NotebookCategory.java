@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.api.notebook;
 
 import java.util.List;
 
+import akka.japi.Pair;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
@@ -15,6 +16,11 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	public abstract String getUnlocalizedName();
 
 	public abstract List<INotebookEntry> getEntries();
+	
+	public Pair<String, Integer> getUnlocParchmentInfo()
+	{
+		return new Pair<String, Integer>("arcanemagic.notebook.category.unknown_realms", 2);
+	}
 
 	public String getRequiredTag()
 	{

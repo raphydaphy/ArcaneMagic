@@ -1,5 +1,10 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import java.util.List;
+
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -8,10 +13,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -44,9 +51,14 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	{
 		TileEntityAnalyzer te = (TileEntityAnalyzer) world.getTileEntity(pos);
 
-		if (!te.getStack().isEmpty())
+		if (te.getStacks()[0] != null && !te.getStacks()[0].isEmpty())
 		{
-			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStack().copy());
+			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStacks()[0].copy());
+		}
+		
+		if (te.getStacks()[1] != null && !te.getStacks()[1].isEmpty())
+		{
+			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStacks()[1].copy());
 		}
 		super.breakBlock(world, pos, state);
 	}
@@ -99,28 +111,52 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 		if (stack != null && !stack.isEmpty() && !player.isSneaking())
 		{
 			ItemStack insertStack = stack.copy();
-			if (te.getStack().isEmpty())
+			if (stack.getItem().equals(Items.PAPER))
+			{
+				List<NotebookCategory> unlockable = te.analyze(player);
+				System.out.println(te.getStacks()[1]);
+				System.out.println(unlockable.size());
+				if (te.getStacks()[0] != null && !te.getStacks()[0].isEmpty() && unlockable.size() > 0
+						&& (te.getStacks()[1] == null || te.getStacks()[1].isEmpty()))
+				{
+
+					stack.shrink(1);
+					ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
+					if (!writtenParchment.hasTagCompound())
+					{
+						writtenParchment.setTagCompound(new NBTTagCompound());
+					}
+					writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
+							unlockable.get(0).getUnlocParchmentInfo().first());
+					writtenParchment.getTagCompound().setString(ItemParchment.DESC,
+							unlockable.get(0).getUnlocParchmentInfo().first());
+					writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
+							unlockable.get(0).getUnlocParchmentInfo().second());
+
+					System.out.println("Paragraphs: " + unlockable.get(0).getEntries().size());
+					te.setStack(1, writtenParchment);
+				}
+			} else if (te.getStacks()[0].isEmpty())
 			{
 				stack.shrink(1);
 				insertStack.setCount(1);
 				player.setHeldItem(hand, stack);
-				te.setStack(insertStack);
+				te.setStack(0, insertStack);
 				((TileEntityAnalyzer) te).setPlayer(player);
 				te.markDirty();
 				world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 
 			}
-
 		} else if (player.isSneaking())
 		{
-			ItemStack toExtract = te.getStack().copy();
+			ItemStack toExtract = te.getStacks()[0].copy();
 			if (toExtract != null && !toExtract.isEmpty())
 			{
 				if (!world.isRemote)
 				{
 					if (player.addItemStackToInventory(toExtract.copy()))
 					{
-						te.setStack(ItemStack.EMPTY);
+						te.setStack(0, ItemStack.EMPTY);
 						te.markDirty();
 					}
 				} else

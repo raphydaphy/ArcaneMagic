@@ -52,7 +52,6 @@ public class ArcaneMagicAPI
 		{
 			if (ItemStack.areItemsEqualIgnoreDurability(cached, analyzed))
 			{
-				System.out.println(cached.toString() + " was already cached as " + ANALYZED_ITEMS.get(cached));
 				return ANALYZED_ITEMS.get(cached);
 			}
 		}
@@ -63,13 +62,8 @@ public class ArcaneMagicAPI
 		{
 			if (OreDictionary.itemMatches(analysisItem, analyzed, false))
 			{
-				System.out.println("BOOM we found something for " + analysisItem.toString());
 				ret.add(ANALYSIS_ITEMS.get(analysisItem));
 				break;
-			}
-			else
-			{
-				System.out.println(analyzed.toString() + " is not " + analysisItem.toString());
 			}
 		}
 
@@ -98,8 +92,6 @@ public class ArcaneMagicAPI
 							boolean didAdd = false;
 							for (ItemStack cached : ANALYZED_ITEMS.keySet())
 							{
-								System.out.println("comparing cached stack " + cached.toString() + "with "
-										+ ingredientStack.toString());
 								if (OreDictionary.itemMatches(cached,ingredientStack, false))
 								{
 									ret.addAll(ANALYZED_ITEMS.get(cached));
@@ -109,7 +101,6 @@ public class ArcaneMagicAPI
 
 							if (!didAdd)
 							{
-								System.out.println("adding everytihing for " + ingredientStack.toString());
 								ignore.add(analyzed);
 								ret.addAll(getFromAnalysis(ingredientStack, ignore));
 							}
@@ -124,13 +115,10 @@ public class ArcaneMagicAPI
 			// this recipe produces the thing you are analyzing
 			if (ItemStack.areItemsEqualIgnoreDurability(out, analyzed))
 			{
-				System.out.println("ah i see");
-
 				for (ItemStack i : ANALYSIS_ITEMS.keySet())
 				{
 					if (OreDictionary.itemMatches(in, i, false))
 					{
-						System.out.println("oh look " + i.toString() + " is literally right there on the list");
 						ret.add(ANALYSIS_ITEMS.get(i));
 					}
 				}
@@ -141,14 +129,12 @@ public class ArcaneMagicAPI
 					if (OreDictionary.itemMatches(in, i, false))
 					{
 						alreadyAnalyzed = true;
-						System.out.println("oh look " + i.toString() + " has already been analyzed");
 						ret.addAll(ANALYZED_ITEMS.get(i));
 					}
 				}
 
 				if (!alreadyAnalyzed)
 				{
-					System.out.println("ah we will have to analyze it again");
 					ret.addAll(getFromAnalysis(in, ignore));
 				}
 			}
@@ -156,7 +142,6 @@ public class ArcaneMagicAPI
 		// cache the thing!
 		ANALYZED_ITEMS.put(analyzed, ret);
 
-		System.out.println("CACHED NEW ENTRY: " + analyzed.toString() + " as " + ret);
 		return ret;
 
 	}
