@@ -28,7 +28,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -173,10 +172,12 @@ public class ItemParchment extends ItemBase
 				}
 			}
 
-			if (!didUnlock)
+			if (!didUnlock && !world.isRemote)
 			{
-				player.sendStatusMessage(new TextComponentTranslation("arcanemagic.message.cantlearn")
-						.setStyle(new Style().setColor(TextFormatting.RED)), true);
+				// TODO: Render in action bar
+				TextComponentTranslation t = new TextComponentTranslation("arcanemagic.message.cantlearn");
+				t.getStyle().setColor(TextFormatting.RED);
+				player.sendStatusMessage(t, false);
 			}
 			world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomWriteSound(),
 					SoundCategory.PLAYERS, 1, 1);

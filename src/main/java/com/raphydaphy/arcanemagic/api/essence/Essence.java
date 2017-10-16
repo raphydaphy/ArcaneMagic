@@ -222,7 +222,6 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		return "Essence: " + getRegistryName().toString();
 	}
 
-	// kms this is worse function evar die pls
 	public static Essence getFromBiome(Biome biome)
 	{
 		if (BiomeDictionary.hasType(biome, Type.WATER))
@@ -235,7 +234,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			return Essence.OZONE;
 		else if (BiomeDictionary.hasType(biome, Type.MESA))
 			return Essence.CHAOS;
-		else if (biome.equals(Biomes.MUSHROOM_ISLAND) || biome.equals(Biomes.MUSHROOM_ISLAND_SHORE))
+		else if (BiomeDictionary.hasType(biome, Type.RARE))
 			return Essence.PEACE;
 		else
 			return Essence.HORIZON;
