@@ -112,10 +112,6 @@ public class GuiNotebook extends GuiScreen
 			drawScaledCustomSizeModalRect(screenX, screenY, 0, 0, NOTEBOOK_WIDTH, NOTEBOOK_HEIGHT,
 					SCALED_NOTEBOOK_WIDTH, SCALED_NOTEBOOK_HEIGHT, NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
 
-			// Some arrows! These ones let you choose your category page
-			drawArrow(true, 13, 240, mouseX, mouseY, screenX, screenY);
-			drawArrow(false, 89, 240, mouseX, mouseY, screenX, screenY);
-
 			// Selected Category indicator
 			int curCategory = cap.getCategory();
 			int curPage = cap.getPage();
@@ -149,6 +145,22 @@ public class GuiNotebook extends GuiScreen
 				cap.setPage(0);
 				curPage = 0;
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+			}
+
+			// If there are more than 1 pages in this category, draw arrows to navitage!
+			if (ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages().size() > 1)
+			{
+				// if they are past the first page, draw an arrow to go back
+				if (curPage > 0)
+				{
+					drawArrow(true, 144, 238, mouseX, mouseY, screenX, screenY);
+				}
+
+				// If they are before the last page, draw an arrow to go forwards
+				if (curPage < ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages().size() - 1)
+				{
+					drawArrow(false, 285, 238, mouseX, mouseY, screenX, screenY);
+				}
 			}
 			mc.getTextureManager().bindTexture(notebook);
 			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
@@ -229,6 +241,41 @@ public class GuiNotebook extends GuiScreen
 
 				int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
 				int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
+
+				// if there are arrows to click on
+				if (ArcaneMagicAPI.getNotebookCategories().get(cap.getCategory()).getPages().size() > 1)
+				{
+					// if there if a backwards arrow
+					if (cap.getPage() > 0)
+					{
+						// .. and if the mouse is over it
+						if (relMouseX >= screenX + 144 && relMouseY >= screenY + 238 && relMouseX <= screenX + 144 + (18 * scale)
+								&& relMouseY <= screenY + 238 + (10 * scale))
+						{
+							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
+									ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
+									false);
+							cap.setPage(cap.getPage() - 1);
+							ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+						}
+					}
+					
+					// if there if a forwards arrow
+					if (cap.getPage() < ArcaneMagicAPI.getNotebookCategories().get(cap.getCategory()).getPages().size()
+							- 1)
+					{
+						// .. and if the mouse is over it
+						if (relMouseX >= screenX + 285 && relMouseY >= screenY + 238 && relMouseX <= screenX + 285 + (18 * scale)
+								&& relMouseY <= screenY + 238 + (10 * scale))
+						{
+							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
+									ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
+									false);
+							cap.setPage(cap.getPage() + 1);
+							ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+						}
+					}
+				}
 
 				if (relMouseX >= screenX + 10 && relMouseX <= screenX + 118)
 				{
