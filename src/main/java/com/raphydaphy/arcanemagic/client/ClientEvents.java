@@ -28,6 +28,9 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.ViewFrustum;
+import net.minecraft.client.renderer.culling.Frustum;
+import net.minecraft.client.renderer.culling.ICamera;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -114,38 +117,49 @@ public class ClientEvents
 	{
 		World world = Minecraft.getMinecraft().world;
 		EntityPlayer player = Minecraft.getMinecraft().player;
+
 		if (world != null && player != null)
 		{
-
-			Vec3d eyes = Vec3d.ZERO;
-			boolean doIlluminatorParticles = player.getHeldItemMainhand().getItem()
-					.equals(ModRegistry.MYSTICAL_ILLUMINATOR)
-					|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR);
-			if (doIlluminatorParticles)
+			if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
+					|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
 			{
-				eyes = player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).addVector(0, -30, 0);
-			}
-			for (int x = -50; x < 50; x++)
-			{
-				for (int y = -50; y < 50; y++)
+				ICamera icamera = new Frustum();
+				float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
+				double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
+				double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
+				double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
+				icamera.setPosition(d0, d1, d2);
+				ViewFrustum vf = Minecraft.getMinecraft().renderGlobal.viewFrustum;
+				for (int x = -50; x < 50; x++)
 				{
-					for (int z = -50; z < 50; z++)
+					for (int y = -50; y < 50; y++)
 					{
-						if (world.rand.nextInt(10) == 1)
+						if (y > 0 && y < 256)
 						{
-							BlockPos first = new BlockPos(player.posX + x, player.posY + y, player.posZ + z);
-							if (world.isBlockLoaded(first))
+							for (int z = -50; z < 50; z++)
 							{
-								Block firstBlock = player.world.getBlockState(first).getBlock();
-								if (firstBlock != Blocks.AIR)
+								if (world.rand.nextInt(10) == 1)
 								{
-									if (doIlluminatorParticles && ArcaneMagicAPI.canAnalyseBlock(firstBlock))
+									BlockPos first = new BlockPos(player.posX + x, player.posY + y, player.posZ + z);
+									if (icamera.isBoundingBoxInFrustum(vf.getRenderChunk(first).boundingBox))
 									{
-										world.spawnParticle(EnumParticleTypes.PORTAL,
-												first.getX() + 0.4 + (world.rand.nextFloat() / 4), first.getY() + 1,
-												first.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0, 0, 0);
+										if (world.isBlockLoaded(first))
+										{
+											Block firstBlock = player.world.getBlockState(first).getBlock();
+											if (firstBlock != Blocks.AIR)
+											{
+												if (ArcaneMagicAPI.canAnalyseBlock(firstBlock))
+												{
+													world.spawnParticle(EnumParticleTypes.PORTAL,
+															first.getX() + 0.4 + (world.rand.nextFloat() / 4),
+															first.getY() + 1,
+															first.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0, 0, 0);
 
+												}
+											}
+										}
 									}
+
 								}
 							}
 						}
