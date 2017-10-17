@@ -78,11 +78,15 @@ public class ClientProxy extends CommonProxy
 		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x,
 				speed.y, speed.z, essence, travelPos, isCosmetic));
 	}
-	
+
 	@Override
-	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX,
+			float hitY, float hitZ)
 	{
-		item.addParticle(world, pos, facing, hitX, hitY, hitZ);
+		if (world.isRemote)
+		{
+			item.addParticle(world, pos, facing, hitX, hitY, hitZ);
+		}
 	}
 
 	@Override

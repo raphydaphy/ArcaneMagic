@@ -36,13 +36,15 @@ public class ItemIlluminator extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
 	{
-		if (isSelected)
+		if (isSelected && world.isRemote)
 		{
 			Map<ParticlePos, Integer> newParticles = new HashMap<ParticlePos, Integer>();
 			for (ParticlePos p : particles.keySet())
 			{
+
 				if (particles.get(p) > 0)
 				{
+
 					doParticle(world, p);
 					newParticles.put(p, particles.get(p) - 1);
 				}
@@ -54,38 +56,41 @@ public class ItemIlluminator extends ItemBase
 	@SideOnly(Side.CLIENT)
 	private void doParticle(World world, ParticlePos ppos)
 	{
-		BlockPos pos = ppos.getPos();
-		for (int x = 0; x < 10; x++)
+		if (world.rand.nextInt(3) == 1)
 		{
-			switch (ppos.getFacing())
+			BlockPos pos = ppos.getPos();
+			for (int x = 0; x < 10; x++)
 			{
-			case UP:
-				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
-						pos.getY() + 0.4 + (world.rand.nextFloat() / 4),
-						pos.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0, 0, 0);
-				break;
-			case NORTH:
-				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
-						pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4), 1,
-						0, 0);
-				break;
-			case EAST:
-				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
-						pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4), -1,
-						1, 0);
-				break;
-			case SOUTH:
-				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
-						pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0,
-						0, 1);
-				break;
-			case WEST:
-				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
-						pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0,
-						0, -1);
-				break;
-			case DOWN:
-				break;
+				switch (ppos.getFacing())
+				{
+				case UP:
+					world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
+							pos.getY() + 0.4 + (world.rand.nextFloat() / 4),
+							pos.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0, 0.3, 0);
+					break;
+				case EAST:
+					world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
+							pos.getY() - (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4),
+							1, 0.5, 0);
+					break;
+				case WEST:
+					world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
+							pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4),
+							-1, 0.5, 0);
+					break;
+				case SOUTH:
+					world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
+							pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4),
+							0, 0.5, 1);
+					break;
+				case NORTH:
+					world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
+							pos.getY() + (world.rand.nextFloat() / 4), pos.getZ() + 0.4 + (world.rand.nextFloat() / 4),
+							0, 0.5, -1);
+					break;
+				case DOWN:
+					break;
+				}
 			}
 		}
 	}
@@ -93,18 +98,21 @@ public class ItemIlluminator extends ItemBase
 	@SideOnly(Side.CLIENT)
 	public void addParticle(World world, BlockPos newPos, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		boolean alreadyDid = false;
-		ParticlePos ppos1 = new ParticlePos(newPos, facing, hitX, hitY, hitZ);
-		for (ParticlePos ppos2 : particles.keySet())
+		if (world.isRemote)
 		{
-			if (ppos1.equals(ppos2))
+			boolean alreadyDid = false;
+			ParticlePos ppos1 = new ParticlePos(newPos, facing, hitX, hitY, hitZ);
+			for (ParticlePos ppos2 : particles.keySet())
 			{
-				alreadyDid = true;
+				if (ppos1.equals(ppos2))
+				{
+					alreadyDid = true;
+				}
 			}
-		}
-		if (!alreadyDid)
-		{
-			particles.put(ppos1, 100);
+			if (!alreadyDid)
+			{
+				particles.put(ppos1, 30);
+			}
 		}
 	}
 
