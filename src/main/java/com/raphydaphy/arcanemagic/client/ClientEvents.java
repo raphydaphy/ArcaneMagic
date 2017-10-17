@@ -74,7 +74,7 @@ public class ClientEvents
 
 			GlStateManager.pushMatrix();
 			GlStateManager.pushAttrib();
-			
+
 			if (ev.getHand() == EnumHand.MAIN_HAND && player.getHeldItemOffhand().isEmpty())
 			{
 				GLHelper.renderParchmentFirstPerson(f1, f5, f, ev.getItemStack());
@@ -84,7 +84,7 @@ public class ClientEvents
 						: player.getPrimaryHand().opposite();
 				GLHelper.renderParchmentFirstPersonSide(f5, enumhandside, f, ev.getItemStack());
 			}
-			
+
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
 			ev.setCanceled(true);

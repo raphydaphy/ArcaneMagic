@@ -10,6 +10,7 @@ import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
 import com.raphydaphy.arcanemagic.client.render.WritingDeskTESR;
 import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
+import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
@@ -18,6 +19,8 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -74,6 +77,12 @@ public class ClientProxy extends CommonProxy
 	{
 		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x,
 				speed.y, speed.z, essence, travelPos, isCosmetic));
+	}
+	
+	@Override
+	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		item.addParticle(world, pos, facing, hitX, hitY, hitZ);
 	}
 
 	@Override
