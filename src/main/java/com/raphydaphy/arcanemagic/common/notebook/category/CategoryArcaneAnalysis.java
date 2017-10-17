@@ -12,13 +12,13 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import net.minecraft.item.ItemStack;
 
-public class CategoryAnalyzation extends NotebookCategory
+public class CategoryArcaneAnalysis extends NotebookCategory
 {
 
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.analyzation";
+		return "arcanemagic.notebook.category.arcane_analysis";
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class CategoryAnalyzation extends NotebookCategory
 	@Override
 	public String getRequiredTag()
 	{
-		return "unlockedAnalyzation";
+		return "unlockedArcaneAnalysis";
 	}
 
 	@Override

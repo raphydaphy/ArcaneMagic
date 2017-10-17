@@ -92,11 +92,11 @@ public class ModEvents
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ANALYZER))
-							&& !info.isUnlocked(NotebookCategories.ANALYATION.getRequiredTag()))
+							&& !info.isUnlocked(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag()))
 					{
-						info.setUnlocked(NotebookCategories.ANALYATION.getRequiredTag());
+						info.setUnlocked(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.ANALYATION, false), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.ARCANE_ANALYSIS, false), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ESSENCE_CONCENTRATOR))

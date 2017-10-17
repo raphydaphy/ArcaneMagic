@@ -4,7 +4,7 @@ import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryAncientRelics;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryAnalyzation;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryArcaneAnalysis;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallization;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryEssenceCollection;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryForgottenKnowledge;
@@ -24,8 +24,8 @@ public class NotebookCategories
 			"ancient_relics");
 	public static final NotebookCategory FORGOTTEN_KNOWLEDGE = new CategoryForgottenKnowledge()
 			.setRegistryName(ArcaneMagic.MODID, "forgotten_knowledge");
-	public static final NotebookCategory ANALYATION = new CategoryAnalyzation()
-			.setRegistryName(ArcaneMagic.MODID, "analyzation");
+	public static final NotebookCategory ARCANE_ANALYSIS = new CategoryArcaneAnalysis()
+			.setRegistryName(ArcaneMagic.MODID, "arcane_analysis");
 	public static final NotebookCategory MAGICAL_INSIGHTS = new CategoryMagicalInsights()
 			.setRegistryName(ArcaneMagic.MODID, "magical_insights");
 	
@@ -50,7 +50,7 @@ public class NotebookCategories
 		ArcaneMagicAPI.registerCategory(UNKNOWN_REALMS);
 		ArcaneMagicAPI.registerCategory(ANCIENT_RELICS);
 		ArcaneMagicAPI.registerCategory(FORGOTTEN_KNOWLEDGE);
-		ArcaneMagicAPI.registerCategory(ANALYATION);
+		ArcaneMagicAPI.registerCategory(ARCANE_ANALYSIS);
 		ArcaneMagicAPI.registerCategory(MAGICAL_INSIGHTS);
 		ArcaneMagicAPI.registerCategory(ESSENCE_COLLECTION);
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);

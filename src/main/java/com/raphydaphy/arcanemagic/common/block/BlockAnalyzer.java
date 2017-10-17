@@ -156,8 +156,8 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addShaped(this, 3, 3, "paper", "dyeBlack", "paper", "plankWood", "plankWood", "plankWood",
-				"plankWood", "glass", "plankWood");
+		RecipeHelper.addShaped(this, 3, 3, null, "enderpearl", null, "plankWood", "blockGlass", "plankWood",
+				"plankWood", null, "plankWood");
 	}
 
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
