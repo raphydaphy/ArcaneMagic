@@ -92,7 +92,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 
 			if (slot == 1)
 			{
-				GlStateManager.scale(2.7, 2.7,2.7);
+				GlStateManager.scale(3.5, 3.5,3.5);
 				GlStateManager.translate(0, -0.1, 0);
 				GlStateManager.translate(0, Math.sin(0.2 * (te.getAge()/2)) / 10, 0);
 				GLHelper.renderItemWithTransform(te.getWorld(), stack, ItemCameraTransforms.TransformType.GROUND);
