@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.lwjgl.opengl.GL11;
 
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
@@ -30,10 +31,12 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -48,6 +51,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
@@ -106,6 +110,52 @@ public class ClientEvents
 	}
 
 	@SubscribeEvent
+	public static void clientTick(ClientTickEvent ev)
+	{
+		World world = Minecraft.getMinecraft().world;
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (world != null && player != null)
+		{
+
+			Vec3d eyes = Vec3d.ZERO;
+			boolean doIlluminatorParticles = player.getHeldItemMainhand().getItem()
+					.equals(ModRegistry.MYSTICAL_ILLUMINATOR)
+					|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR);
+			if (doIlluminatorParticles)
+			{
+				eyes = player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).addVector(0, -30, 0);
+			}
+			for (int x = -50; x < 50; x++)
+			{
+				for (int y = -50; y < 50; y++)
+				{
+					for (int z = -50; z < 50; z++)
+					{
+						if (world.rand.nextInt(10) == 1)
+						{
+							BlockPos first = new BlockPos(player.posX + x, player.posY + y, player.posZ + z);
+							if (world.isBlockLoaded(first))
+							{
+								Block firstBlock = player.world.getBlockState(first).getBlock();
+								if (firstBlock != Blocks.AIR)
+								{
+									if (doIlluminatorParticles && ArcaneMagicAPI.canAnalyseBlock(firstBlock))
+									{
+										world.spawnParticle(EnumParticleTypes.PORTAL,
+												first.getX() + 0.4 + (world.rand.nextFloat() / 4), first.getY() + 1,
+												first.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0, 0, 0);
+
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
 	{
 
@@ -138,82 +188,94 @@ public class ClientEvents
 				for (int z = -10; z < 10; z++)
 				{
 					BlockPos first = new BlockPos(player.posX + x, player.posY + y, player.posZ + z);
-
-					if (world.getBlockState(first).getBlock() == ModRegistry.CRYSTALLIZER)
+					if (world.isBlockLoaded(first))
 					{
-						for (int x2 = -10; x2 < 10; x2++)
+						Block firstBlock = player.world.getBlockState(first).getBlock();
+						if (firstBlock != Blocks.AIR)
 						{
-							for (int y2 = -10; y2 < 10; y2++)
+							if (firstBlock == ModRegistry.CRYSTALLIZER)
 							{
-								for (int z2 = -10; z2 < 10; z2++)
+								for (int x2 = -10; x2 < 10; x2++)
 								{
-									BlockPos second = new BlockPos(first.getX() + x2, first.getY() + y2,
-											first.getZ() + z2);
-
-									if (world.getBlockState(second).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
+									for (int y2 = -10; y2 < 10; y2++)
 									{
-										Vec3d to = new Vec3d(first.getX() + 0.5, first.getY() + 2.3,
-												first.getZ() + 0.5);
-										Vec3d from = new Vec3d(second.getX() + 0.5, second.getY() + 2.2,
-												second.getZ() + 0.5);
-										Vec3d dist = new Vec3d(Math.pow(to.x - from.x, 2), Math.pow(to.y - from.y, 2),
-												Math.pow(to.z - from.z, 2));
-										Vec3d lineFrom = new Vec3d(from.x, from.y, from.z);
-										// sqrt(pow((endA-startA), 2)+pow((endB-startB), 2));
-										Color color = Essence
-												.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
-												.getColor();
-
-										int r = color.getRed();
-										int g = color.getGreen();
-										int b = color.getBlue();
-
-										GL11.glLineWidth(10);
-										Tessellator tes = Tessellator.getInstance();
-										BufferBuilder vb = tes.getBuffer();
-
-										RenderHelper.disableStandardItemLighting();
-
-										vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
-
-										double radius = 0.5;
-
-										for (int deg = 0; deg < 360; deg++)
+										for (int z2 = -10; z2 < 10; z2++)
 										{
-											double radians = Math.toRadians(deg);
-											Vec3d vertex = new Vec3d(from.x + Math.cos(radians) * radius, from.y,
-													from.z + Math.sin(radians) * radius);
-											Vec3d newDist = new Vec3d(Math.pow(to.x - vertex.x, 2),
-													Math.pow(to.y - vertex.y, 2), Math.pow(to.z - vertex.z, 2));
-											if (newDist.x <= dist.x && newDist.z <= dist.z)
+											BlockPos second = new BlockPos(first.getX() + x2, first.getY() + y2,
+													first.getZ() + z2);
+
+											if (world.getBlockState(second)
+													.getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
 											{
-												dist = newDist;
-												lineFrom = vertex;
+												Vec3d to = new Vec3d(first.getX() + 0.5, first.getY() + 2.3,
+														first.getZ() + 0.5);
+												Vec3d from = new Vec3d(second.getX() + 0.5, second.getY() + 2.2,
+														second.getZ() + 0.5);
+												Vec3d dist = new Vec3d(Math.pow(to.x - from.x, 2),
+														Math.pow(to.y - from.y, 2), Math.pow(to.z - from.z, 2));
+												Vec3d lineFrom = new Vec3d(from.x, from.y, from.z);
+												// sqrt(pow((endA-startA), 2)+pow((endB-startB), 2));
+												Color color = Essence
+														.getFromBiome(
+																world.getBiome(new BlockPos(from.x, from.y, from.z)))
+														.getColor();
+
+												int r = color.getRed();
+												int g = color.getGreen();
+												int b = color.getBlue();
+
+												GL11.glLineWidth(10);
+												Tessellator tes = Tessellator.getInstance();
+												BufferBuilder vb = tes.getBuffer();
+
+												RenderHelper.disableStandardItemLighting();
+
+												vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
+
+												double radius = 0.5;
+
+												for (int deg = 0; deg < 360; deg++)
+												{
+													double radians = Math.toRadians(deg);
+													Vec3d vertex = new Vec3d(from.x + Math.cos(radians) * radius,
+															from.y, from.z + Math.sin(radians) * radius);
+													Vec3d newDist = new Vec3d(Math.pow(to.x - vertex.x, 2),
+															Math.pow(to.y - vertex.y, 2), Math.pow(to.z - vertex.z, 2));
+													if (newDist.x <= dist.x && newDist.z <= dist.z)
+													{
+														dist = newDist;
+														lineFrom = vertex;
+													}
+
+													vb.pos(vertex.x, vertex.y, vertex.z).color(r, g, b, 0).endVertex();
+													;
+												}
+
+												tes.draw();
+
+												vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+
+												vb.pos(lineFrom.x, lineFrom.y, lineFrom.z).color(r, g, b, 1)
+														.endVertex();
+												vb.pos(to.x, to.y, to.z).color(r, g, b, 0).endVertex();
+
+												tes.draw();
+
 											}
-
-											vb.pos(vertex.x, vertex.y, vertex.z).color(r, g, b, 0).endVertex();
-											;
 										}
-
-										tes.draw();
-
-										vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
-
-										vb.pos(lineFrom.x, lineFrom.y, lineFrom.z).color(r, g, b, 1).endVertex();
-										vb.pos(to.x, to.y, to.z).color(r, g, b, 0).endVertex();
-
-										tes.draw();
-
 									}
 								}
 							}
 						}
+
 					}
 				}
+
 			}
 		}
 
 		if (lighting)
+
 		{
 			GL11.glEnable(GL11.GL_LIGHTING);
 		}

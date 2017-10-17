@@ -19,7 +19,6 @@ import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -83,10 +82,10 @@ public class ArcaneMagic
 				"cobblestone", g, s);
 		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.GOLD_ORE), NotebookCategories.NATURAL_HARMONY);
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.DIAMOND_ORE), NotebookCategories.CRYSTALLIZATION);
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.IRON_ORE), NotebookCategories.ESSENCE_COLLECTION);
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.REDSTONE_ORE), NotebookCategories.MAGICAL_INSIGHTS);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.GOLD_ORE, NotebookCategories.NATURAL_HARMONY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.DIAMOND_ORE, NotebookCategories.CRYSTALLIZATION);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.IRON_ORE, NotebookCategories.ESSENCE_COLLECTION);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
 		proxy.postInit(event);
 	}
 

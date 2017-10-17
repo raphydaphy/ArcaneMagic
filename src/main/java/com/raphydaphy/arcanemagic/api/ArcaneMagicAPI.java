@@ -16,6 +16,7 @@ import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -32,7 +33,11 @@ public class ArcaneMagicAPI
 	private static ImmutableList<NotebookCategory> sorted_categories;
 
 	// i hope shadows approves
-	private static Map<ItemStack, NotebookCategory> ANALYSIS_ITEMS = new HashMap<ItemStack, NotebookCategory>();
+	private static Map<Block, NotebookCategory> ANALYSIS_ITEMS = new HashMap<Block, NotebookCategory>();
+	
+	public static List<Block> CAN_ANALYZE = new ArrayList<Block>(); 
+	private static List<Block> CANNOT_ANALYZE = new ArrayList<Block>();
+	
 	private static final Map<ItemStack, List<NotebookCategory>> ANALYZED_ITEMS = new HashMap<ItemStack, List<NotebookCategory>>();
 
 	public static void registerCategory(NotebookCategory category)
@@ -40,11 +45,37 @@ public class ArcaneMagicAPI
 		NotebookCategory.REGISTRY.register(category);
 	}
 
-	public static void registerForAnalysis(ItemStack item, NotebookCategory category)
+	public static void registerForAnalysis(Block b, NotebookCategory category)
 	{
-		ANALYSIS_ITEMS.put(item, category);
+		ANALYSIS_ITEMS.put(b, category);
+		CAN_ANALYZE.add(b);
 	}
 
+	public static boolean canAnalyseBlock(Block b)
+	{
+		if (CAN_ANALYZE.contains(b))
+		{
+			return true;
+		}
+		else if (CANNOT_ANALYZE.contains(b))
+		{
+			return false;
+		}
+		else
+		{
+			if (getFromAnalysis(new ItemStack(b), new ArrayList<ItemStack>()).size() > 0)
+			{
+				CAN_ANALYZE.add(b);
+				return true;
+			}
+			else
+			{
+				CANNOT_ANALYZE.add(b);
+				return false;
+			}
+		}
+	}
+	
 	@Nullable
 	public static List<NotebookCategory> getFromAnalysis(ItemStack analyzed, List<ItemStack> ignore)
 	{
@@ -58,11 +89,11 @@ public class ArcaneMagicAPI
 
 		List<NotebookCategory> ret = new ArrayList<NotebookCategory>();
 
-		for (ItemStack analysisItem : ANALYSIS_ITEMS.keySet())
+		for (Block b : ANALYSIS_ITEMS.keySet())
 		{
-			if (OreDictionary.itemMatches(analysisItem, analyzed, false))
+			if (OreDictionary.itemMatches(new ItemStack(b), analyzed, false))
 			{
-				ret.add(ANALYSIS_ITEMS.get(analysisItem));
+				ret.add(ANALYSIS_ITEMS.get(b));
 				break;
 			}
 		}
@@ -115,11 +146,11 @@ public class ArcaneMagicAPI
 			// this recipe produces the thing you are analyzing
 			if (ItemStack.areItemsEqualIgnoreDurability(out, analyzed))
 			{
-				for (ItemStack i : ANALYSIS_ITEMS.keySet())
+				for (Block b : ANALYSIS_ITEMS.keySet())
 				{
-					if (OreDictionary.itemMatches(in, i, false))
+					if (OreDictionary.itemMatches(in, new ItemStack(b), false))
 					{
-						ret.add(ANALYSIS_ITEMS.get(i));
+						ret.add(ANALYSIS_ITEMS.get(b));
 					}
 				}
 
