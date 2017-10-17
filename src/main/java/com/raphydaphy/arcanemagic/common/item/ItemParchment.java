@@ -10,7 +10,7 @@ import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
-import com.raphydaphy.arcanemagic.common.network.PacketNotebookToast;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastOrFail;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
 import net.minecraft.block.Block;
@@ -28,7 +28,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -157,28 +156,17 @@ public class ItemParchment extends ItemBase
 		if (stack.getItem().equals(ModRegistry.WRITTEN_PARCHMENT))
 		{
 			NotebookCategory cat = getToUnlock(stack);
-			boolean didUnlock = false;
-			if (!world.isRemote && cat != null && !cat.equals(NotebookCategories.UNKNOWN_REALMS))
+			if (!world.isRemote)
 			{
 				NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
-				if (cap != null && cap.isUnlocked(cat.getPrerequisiteTag()))
+				if (cap != null)
 				{
-					if (!cap.isUnlocked(cat.getRequiredTag()))
+					if (cat != null && !cat.equals(NotebookCategories.UNKNOWN_REALMS) && cap.isUnlocked(cat.getPrerequisiteTag()) && !cap.isUnlocked(cat.getRequiredTag()))
 					{
 						cap.setUnlocked(cat.getRequiredTag());
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(cat), (EntityPlayerMP) player);
-						didUnlock = true;
 					}
-					
+					ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true), (EntityPlayerMP) player);
 				}
-			}
-
-			if (!didUnlock && world.isRemote)
-			{
-				// TODO: Render in action bar
-				TextComponentTranslation t = new TextComponentTranslation("arcanemagic.message.cantlearn");
-				t.getStyle().setColor(TextFormatting.RED);
-				player.sendStatusMessage(t, false);
 			}
 			world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomWriteSound(),
 					SoundCategory.PLAYERS, 1, 1);
