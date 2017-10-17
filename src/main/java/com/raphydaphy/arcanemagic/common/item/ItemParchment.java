@@ -167,12 +167,13 @@ public class ItemParchment extends ItemBase
 					{
 						cap.setUnlocked(cat.getRequiredTag());
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(cat), (EntityPlayerMP) player);
+						didUnlock = true;
 					}
-					didUnlock = true;
+					
 				}
 			}
 
-			if (!didUnlock && !world.isRemote)
+			if (!didUnlock && world.isRemote)
 			{
 				// TODO: Render in action bar
 				TextComponentTranslation t = new TextComponentTranslation("arcanemagic.message.cantlearn");

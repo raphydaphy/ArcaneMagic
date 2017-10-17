@@ -23,7 +23,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -40,28 +39,6 @@ public class ModEvents
 		if (ev.getObject() instanceof EntityPlayer)
 		{
 			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"), new NotebookInfo());
-		}
-	}
-
-	@SubscribeEvent
-	public static void onEntityItemPickup(EntityItemPickupEvent ev)
-	{
-		if (!ev.getEntityPlayer().world.isRemote)
-		{
-			NotebookInfo info = ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
-	
-			if (info != null)
-			{
-				if (!info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag())
-						&& ev.getItem().getItem().getItem().equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK)))
-				{
-	
-					info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
-	
-					
-					ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.BASIC_LINGUISTICS), (EntityPlayerMP)ev.getEntityPlayer());
-				}
-			}
 		}
 	}
 
@@ -114,12 +91,12 @@ public class ModEvents
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.FORGOTTEN_KNOWLEDGE), (EntityPlayerMP)ev.player);
 					}
 
-					if (item.equals(Item.getItemFromBlock(ModRegistry.WRITING_DESK))
-							&& !info.isUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag()))
+					if (item.equals(Item.getItemFromBlock(ModRegistry.ANALYZER))
+							&& !info.isUnlocked(NotebookCategories.ANALYATION.getRequiredTag()))
 					{
-						info.setUnlocked(NotebookCategories.BASIC_LINGUISTICS.getRequiredTag());
+						info.setUnlocked(NotebookCategories.ANALYATION.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.BASIC_LINGUISTICS), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToast(NotebookCategories.ANALYATION), (EntityPlayerMP)ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ESSENCE_CONCENTRATOR))

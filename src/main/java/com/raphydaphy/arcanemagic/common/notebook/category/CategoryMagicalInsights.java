@@ -9,15 +9,15 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
+import akka.japi.Pair;
 import net.minecraft.item.ItemStack;
 
-public class CategoryAncientRelics extends NotebookCategory
+public class CategoryMagicalInsights extends NotebookCategory
 {
-
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.ancient_relics";
+		return "arcanemagic.notebook.category.magical_insights";
 	}
 
 	@Override
@@ -33,15 +33,21 @@ public class CategoryAncientRelics extends NotebookCategory
 		return pages;
 	}
 
+
 	@Override
 	public String getRequiredTag()
 	{
-		return "unlockedAncientRelics";
+		return "unlockedMagicalInsights";
+	}
+	
+	public Pair<String, Integer> getUnlocParchmentInfo()
+	{
+		return new Pair<String, Integer>("arcanemagic.message.parchment.redstone", 2);
 	}
 
 	@Override
 	public ItemStack getIcon()
 	{
-		return new ItemStack(ModRegistry.ANCIENT_PARCHMENT);
+		return new ItemStack(ModRegistry.MYSTICAL_ILLUMINATOR);
 	}
 }

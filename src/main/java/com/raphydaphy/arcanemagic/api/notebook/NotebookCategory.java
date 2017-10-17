@@ -15,7 +15,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 
 	public abstract String getUnlocalizedName();
 
-	public abstract List<INotebookEntry> getEntries();
+	public abstract List<NotebookPage> getPages();
 	
 	public Pair<String, Integer> getUnlocParchmentInfo()
 	{

@@ -86,7 +86,7 @@ public class ArcaneMagic
 		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.GOLD_ORE), NotebookCategories.NATURAL_HARMONY);
 		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.DIAMOND_ORE), NotebookCategories.CRYSTALLIZATION);
 		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.IRON_ORE), NotebookCategories.ESSENCE_COLLECTION);
-		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.REDSTONE_ORE), NotebookCategories.MYSTICAL_ENERGY);
+		ArcaneMagicAPI.registerForAnalysis(new ItemStack(Blocks.REDSTONE_ORE), NotebookCategories.MAGICAL_INSIGHTS);
 		proxy.postInit(event);
 	}
 

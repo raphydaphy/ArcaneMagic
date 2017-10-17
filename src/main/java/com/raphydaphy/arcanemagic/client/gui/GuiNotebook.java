@@ -3,7 +3,6 @@ package com.raphydaphy.arcanemagic.client.gui;
 import java.io.IOException;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
@@ -119,6 +118,7 @@ public class GuiNotebook extends GuiScreen
 
 			// Selected Category indicator
 			int curCategory = cap.getCategory();
+			int curPage = cap.getPage();
 			int renderCurCategory = 0;
 
 			for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
@@ -142,17 +142,21 @@ public class GuiNotebook extends GuiScreen
 				curCategory = 1;
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 			}
+
+			// if they haven't unlocked the current page, or it dosen't exist
+			if (curPage >= ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages().size())
+			{
+				cap.setPage(0);
+				curPage = 0;
+				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+			}
 			mc.getTextureManager().bindTexture(notebook);
 			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
 					(int) ((screenY + 14 + (renderCurCategory * 20)) + (1 * scale)), 86, 182, 70, 16,
 					(int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
 
-			int curY = 0;
-			for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(curCategory).getEntries())
-			{
-				entry.draw(screenX + 145, screenY + 40 + curY, mouseX, mouseY, this);
-				curY += entry.getHeight(this) + 5;
-			}
+			ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages().get(curPage).draw(screenX + 145,
+					screenY + 40, mouseX, mouseY, this);
 
 			// Custom matrix for drawing scaled strings
 			GlStateManager.pushMatrix();
@@ -191,15 +195,8 @@ public class GuiNotebook extends GuiScreen
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
 
-			// Reset curY for the second round of drawing the entries
-			curY = 0;
-
-			// Draw all the entries a second time for tooltip rendering etc
-			for (INotebookEntry entry : ArcaneMagicAPI.getNotebookCategories().get(curCategory).getEntries())
-			{
-				entry.drawPost(screenX + 145, screenY + 40 + curY, mouseX, mouseY, this);
-				curY += entry.getHeight(this) + 5;
-			}
+			ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages().get(curPage).drawPost(screenX + 145,
+					screenY + 40, mouseX, mouseY, this);
 
 			// Goodbye matrix!
 			GlStateManager.popAttrib();
@@ -250,6 +247,7 @@ public class GuiNotebook extends GuiScreen
 											ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f,
 											1f, false);
 									cap.setCategory(unRealTab);
+									cap.setPage(0);
 									ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 								}
 								break;

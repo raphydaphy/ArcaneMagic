@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
@@ -22,8 +23,9 @@ public class CategoryCrystallization extends NotebookCategory
 	}
 
 	@Override
-	public List<INotebookEntry> getEntries()
+	public List<NotebookPage> getPages()
 	{
+		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		for (int i = 0; i < 2; i++)
 		{
@@ -35,8 +37,8 @@ public class CategoryCrystallization extends NotebookCategory
 				{ new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.IRON_BLOCK),
 						new ItemStack(Blocks.IRON_BLOCK) } };
 		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.CRYSTALLIZER)));
-
-		return entries;
+		pages.add(new NotebookPage(entries));
+		return pages;
 	}
 
 	@Override

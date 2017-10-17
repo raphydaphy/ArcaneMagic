@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
@@ -22,18 +23,21 @@ public class CategoryForgottenKnowledge extends NotebookCategory
 		return "arcanemagic.notebook.category.forgotten_knowledge";
 	}
 
+	
 	@Override
-	public List<INotebookEntry> getEntries()
+	public List<NotebookPage> getPages()
 	{
+		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 0, 0x000000));
 		ItemStack[][] itemsIn = {
-				{ new ItemStack(Items.PAPER), new ItemStack(Items.DYE, 1, 0), new ItemStack(Items.PAPER) },
-				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.PLANKS) },
+				{ ItemStack.EMPTY, new ItemStack(Items.ENDER_PEARL), ItemStack.EMPTY },
+				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.GLASS), new ItemStack(Blocks.PLANKS) },
 				{ new ItemStack(Blocks.PLANKS), ItemStack.EMPTY, new ItemStack(Blocks.PLANKS) } };
-		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.WRITING_DESK)));
+		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.ANALYZER)));
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 1, 0x000000));
-		return entries;
+		pages.add(new NotebookPage(entries));
+		return pages;
 	}
 
 	@Override

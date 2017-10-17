@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
@@ -19,16 +20,18 @@ public class CategoryManipulatingMagic extends NotebookCategory
 	}
 
 	@Override
-	public List<INotebookEntry> getEntries()
+	public List<NotebookPage> getPages()
 	{
-		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
+		List<NotebookPage> pages = new ArrayList<NotebookPage>();
+		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
 		for (int i = 0; i < 3; i++)
 		{
-			entries.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
+			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
-
-		return entries;
+		pages.add(new NotebookPage(page0));
+		return pages;
 	}
+
 
 	@Override
 	public String getRequiredTag()
