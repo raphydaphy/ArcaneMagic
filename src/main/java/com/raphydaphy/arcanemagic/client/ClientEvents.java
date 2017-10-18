@@ -21,10 +21,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.ViewFrustum;
-import net.minecraft.client.renderer.culling.Frustum;
-import net.minecraft.client.renderer.culling.ICamera;
+import net.minecraft.client.renderer.culling.ClippingHelperImpl;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -40,6 +39,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
+import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -107,6 +107,13 @@ public class ClientEvents
 	@SubscribeEvent
 	public static void clientTick(ClientTickEvent ev)
 	{
+		
+	}
+
+	
+	@SubscribeEvent
+	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
+	{
 		World world = Minecraft.getMinecraft().world;
 		EntityPlayer player = Minecraft.getMinecraft().player;
 
@@ -118,18 +125,16 @@ public class ClientEvents
 						|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
 				{
 					ItemIlluminator i = ModRegistry.MYSTICAL_ILLUMINATOR;
-					ICamera icamera = new Frustum();
 					float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-					double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
-					double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
-					double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
-					icamera.setPosition(d0, d1, d2);
-					ViewFrustum vf = Minecraft.getMinecraft().renderGlobal.viewFrustum;
 
 					double posX = player.posX;
 					double posY = player.posY;
 					double posZ = player.posZ;
 
+					Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+			        double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
+			        double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
+			        double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
 					for (int x = -50; x < 50; x++)
 					{
 						for (int y = -50; y < 50; y++)
@@ -145,7 +150,9 @@ public class ClientEvents
 										if (firstBlock != Blocks.AIR)
 										{
 
-											if (icamera.isBoundingBoxInFrustum(vf.getRenderChunk(first).boundingBox))
+											if (ClippingHelperImpl.getInstance().isBoxInFrustum(first.getX() - cx,
+													first.getY() - cy, first.getZ() - cz, first.getX() + 1 - cx,
+													first.getY() + 1 - cy, first.getZ() + 1 - cz))
 											{
 												if (ArcaneMagicAPI.canAnalyseBlock(firstBlock))
 												{
@@ -164,22 +171,6 @@ public class ClientEvents
 			}
 		}
 	}
-
-	/*
-	@SubscribeEvent
-	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
-	{
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
-	
-		GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
-				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
-				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
-		GlStateManager.pushMatrix();
-		GlStateManager.pushAttrib();
-	
-		GlStateManager.popAttrib();
-		GlStateManager.popMatrix();
-	}*/
 
 	@SubscribeEvent
 	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)

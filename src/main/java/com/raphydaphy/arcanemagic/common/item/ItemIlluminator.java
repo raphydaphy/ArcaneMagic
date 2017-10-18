@@ -38,6 +38,7 @@ public class ItemIlluminator extends ItemBase
 	{
 		if (isSelected && world.isRemote)
 		{
+			System.out.println(particles.size());
 			Map<ParticlePos, Integer> newParticles = new HashMap<ParticlePos, Integer>();
 			for (ParticlePos p : particles.keySet())
 			{
@@ -59,7 +60,7 @@ public class ItemIlluminator extends ItemBase
 		if (world.rand.nextInt(3) == 1)
 		{
 			BlockPos pos = ppos.getPos();
-			for (int x = 0; x < 10; x++)
+			for (int x = 0; x < 1; x++)
 			{
 				switch (ppos.getFacing())
 				{

@@ -50,7 +50,7 @@ public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrysta
 			{
 				for (int z2 = (int)z-10; z2 < z+10; z2++)
 				{
-					//if (world.getBlockState(new BlockPos(x2,y2,z2)).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
+					if (world.getBlockState(new BlockPos(x2,y2,z2)).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
 					{
 						Vec3d to = new Vec3d(x + 0.5, y + 0.58, z + 0.5);
 						Vec3d from = new Vec3d(x2 + 0.5, y2 + 0.8, z2 + 0.5);
