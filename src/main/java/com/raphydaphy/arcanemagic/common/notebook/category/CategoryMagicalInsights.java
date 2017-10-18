@@ -7,11 +7,11 @@ import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import akka.japi.Pair;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
@@ -58,6 +58,12 @@ public class CategoryMagicalInsights extends NotebookCategory
 		return new Pair<String, Integer>("arcanemagic.message.parchment.redstone", 2);
 	}
 
+	@Override
+	public String getPrerequisiteTag()
+	{
+		return NotebookCategories.ARCANE_ANALYSIS.getRequiredTag();
+	}
+	
 	@Override
 	public ItemStack getIcon()
 	{

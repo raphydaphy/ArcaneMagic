@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
+// TODO: get the player who is crafting the recipe... ? how
 public class UnlockableRecipe implements IRecipe
 {
 	public UnlockableRecipe(String requiredTag)

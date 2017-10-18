@@ -84,7 +84,11 @@ public class ArcaneMagic
 		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.GOLD_ORE, NotebookCategories.NATURAL_HARMONY);
 		ArcaneMagicAPI.registerForAnalysis(Blocks.DIAMOND_ORE, NotebookCategories.CRYSTALLIZATION);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.IRON_ORE, NotebookCategories.ESSENCE_COLLECTION);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.DOUBLE_PLANT, NotebookCategories.AFTER_LIFE);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_FLOWER, NotebookCategories.AFTER_LIFE);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.YELLOW_FLOWER, NotebookCategories.AFTER_LIFE);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_MUSHROOM, NotebookCategories.AFTER_LIFE);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.BROWN_MUSHROOM, NotebookCategories.AFTER_LIFE);
 		ArcaneMagicAPI.registerForAnalysis(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
 		proxy.postInit(event);
 	}

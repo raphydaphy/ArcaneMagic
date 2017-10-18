@@ -7,22 +7,15 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
-import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabilityProvider
 {

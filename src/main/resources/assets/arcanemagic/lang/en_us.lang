@@ -82,6 +82,9 @@ arcanemagic.message.ancient_parchment.1=Their parchments do seem to attract an o
 arcanemagic.message.parchment.redstone=Stored Energy
 arcanemagic.message.parchment.redstone.0=The way redstone is able to absorb energy for release at a later time is incredible. You believe it may use similar mechanics to the Analyzer, which releases the knowledge stored in items.
 arcanemagic.message.parchment.redstone.1=If you knew which items had this energy inside them, it would make it much easier to use the analyzer. Perhaps some device can be consturcted using the properties of redstone?
+arcanemagic.message.parchment.plants=Lost Souls
+arcanemagic.message.parchment.plants.0=After watching several plants die when harvesting them for inspection, you have observed an odd change in the atmosphere around them. This is very similar to what happens when people are killed, before they respawn.
+arcanemagic.message.parchment.plants.1=However, instead of the plants soul moving on to a new life, it almost feels like it has departed this world forever. This notion may help you unveil powerful knowledge.
 
 # Notebook
 arcanemagic.notebook.category.unknown_realms=Unknown Realms
@@ -104,10 +107,13 @@ arcanemagic.notebook.category.magical_insights=Magical Insights
 arcanemagic.notebook.category.magical_insights.0=Analyzing redstone has given you a great insight into the mechanics behind Energy Storage. Since you believe your Analyzer to work in a similar way, you have designed an item capable of detecting unknown knowledge present in the world.
 arcanemagic.notebook.category.magical_insights.1=When the newly constructed Illuminator is held, particles seem to drift into any blocks that contain important knowledge. 
 arcanemagic.notebook.category.magical_insights.2=This gives you a huge advantage when trying to determine what to analyze next, as it should be easily visible simply by traveling throughout the world while holding the item.
-arcanemagic.notebook.category.essence_collection=Essence Collection
-arcanemagic.notebook.category.essence_collection.0=
-arcanemagic.notebook.category.essence_collection.1=
-arcanemagic.notebook.category.essence_collection.2=
+arcanemagic.notebook.category.after_life=After Life
+arcanemagic.notebook.category.after_life.0=By investigating plants, you have discovered more about life and its eventual end. Once any living thing leaves this world in their physical form, their soul is not lost.
+arcanemagic.notebook.category.after_life.1=You know this to be true due to the way you have respawned after your otherwise fatal deaths. From your studies, you have observed other living things behaving in a similar way. There is one crucial difference though - they do not return to the world that we have come to know.
+arcanemagic.notebook.category.after_life.2=No - other living entities seem to respawn deep underneath our world, with only fragments of their soul left. Nothing else can survive the harsh reality of the Void. 
+arcanemagic.notebook.category.after_life.3=This information has been incredibly useful to you, as it has allowed you to discover the meaning of the mystical particles!
+arcanemagic.notebook.category.after_life.4=You have came to the conclusion that the particles and the fragments of lost souls are one and the same thing. You are so confident in your theory that you have decided to call this Essence from now on - it seems to represent the entirety of magic in its physical form, and is produced directly from the essences of lost souls, making this name perfect.
+arcanemagic.notebook.category.after_life.5=You are incredibly excited about this discovery, and hope to be able to use it to your advantage in future experiments. You feel well on the way to re-discovering the art of Arcane Magic.
 arcanemagic.notebook.category.crystallization=Crystallization
 arcanemagic.notebook.category.crystallization.0=Through your journeys thus far, you have discovered light particles imbued with what appears to be some form of magic. Now that you have learned more about the behaviour of this energy, perhaps it might be time to try manipulating it to your advantage.
 arcanemagic.notebook.category.crystallization.1=An Essence Crystallizer appears to do exactly what you want. Perhaps placing one near the particles you found might prove useful?

@@ -6,7 +6,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryAncientRelics;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryArcaneAnalysis;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallization;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryEssenceCollection;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryAfterLife;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryForgottenKnowledge;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryManipulatingMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryMagicalInsights;
@@ -28,10 +28,10 @@ public class NotebookCategories
 			.setRegistryName(ArcaneMagic.MODID, "arcane_analysis");
 	public static final NotebookCategory MAGICAL_INSIGHTS = new CategoryMagicalInsights()
 			.setRegistryName(ArcaneMagic.MODID, "magical_insights");
+	public static final NotebookCategory AFTER_LIFE = new CategoryAfterLife()
+			.setRegistryName(ArcaneMagic.MODID, "after_life");
 	
 	// these categories are just temporary until a real category replaces them
-	public static final NotebookCategory ESSENCE_COLLECTION = new CategoryEssenceCollection()
-			.setRegistryName(ArcaneMagic.MODID, "essence_collection");
 	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization()
 			.setRegistryName(ArcaneMagic.MODID, "crystallization");
 	public static final NotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony()
@@ -52,7 +52,7 @@ public class NotebookCategories
 		ArcaneMagicAPI.registerCategory(FORGOTTEN_KNOWLEDGE);
 		ArcaneMagicAPI.registerCategory(ARCANE_ANALYSIS);
 		ArcaneMagicAPI.registerCategory(MAGICAL_INSIGHTS);
-		ArcaneMagicAPI.registerCategory(ESSENCE_COLLECTION);
+		ArcaneMagicAPI.registerCategory(AFTER_LIFE);
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);
 		ArcaneMagicAPI.registerCategory(NATURAL_HARMONY);
 		ArcaneMagicAPI.registerCategory(MANIPULATING_MAGIC);

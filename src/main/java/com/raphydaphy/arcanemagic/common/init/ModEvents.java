@@ -99,14 +99,6 @@ public class ModEvents
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.ARCANE_ANALYSIS, false), (EntityPlayerMP)ev.player);
 					}
 
-					if (item.equals(Item.getItemFromBlock(ModRegistry.ESSENCE_CONCENTRATOR))
-							&& !info.isUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag()))
-					{
-						info.setUnlocked(NotebookCategories.ESSENCE_COLLECTION.getRequiredTag());
-
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.ESSENCE_COLLECTION, false), (EntityPlayerMP)ev.player);
-					}
-
 					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
 							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
 					{

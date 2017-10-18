@@ -17,6 +17,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
@@ -34,10 +35,10 @@ public class ArcaneMagicAPI
 
 	// i hope shadows approves
 	private static Map<Block, NotebookCategory> ANALYSIS_ITEMS = new HashMap<Block, NotebookCategory>();
-	
-	public static List<Block> CAN_ANALYZE = new ArrayList<Block>(); 
+
+	public static List<Block> CAN_ANALYZE = new ArrayList<Block>();
 	private static List<Block> CANNOT_ANALYZE = new ArrayList<Block>();
-	
+
 	private static final Map<ItemStack, List<NotebookCategory>> ANALYZED_ITEMS = new HashMap<ItemStack, List<NotebookCategory>>();
 
 	public static void registerCategory(NotebookCategory category)
@@ -56,29 +57,27 @@ public class ArcaneMagicAPI
 		if (CAN_ANALYZE.contains(b))
 		{
 			return true;
-		}
-		else if (CANNOT_ANALYZE.contains(b))
+		} else if (CANNOT_ANALYZE.contains(b))
 		{
 			return false;
-		}
-		else
+		} else
 		{
 			if (getFromAnalysis(new ItemStack(b), new ArrayList<ItemStack>()).size() > 0)
 			{
 				CAN_ANALYZE.add(b);
 				return true;
-			}
-			else
+			} else
 			{
 				CANNOT_ANALYZE.add(b);
 				return false;
 			}
 		}
 	}
-	
+
 	@Nullable
 	public static List<NotebookCategory> getFromAnalysis(ItemStack analyzed, List<ItemStack> ignore)
 	{
+
 		for (ItemStack cached : ANALYZED_ITEMS.keySet())
 		{
 			if (ItemStack.areItemsEqualIgnoreDurability(cached, analyzed))
@@ -88,6 +87,15 @@ public class ArcaneMagicAPI
 		}
 
 		List<NotebookCategory> ret = new ArrayList<NotebookCategory>();
+
+		if (analyzed.getItem() instanceof ItemBlock)
+		{
+			Block b = Block.getBlockFromItem(analyzed.getItem());
+			if (ANALYSIS_ITEMS.containsKey(b))
+			{
+				ret.add(ANALYSIS_ITEMS.get(b));
+			}
+		}
 
 		for (Block b : ANALYSIS_ITEMS.keySet())
 		{
@@ -123,7 +131,7 @@ public class ArcaneMagicAPI
 							boolean didAdd = false;
 							for (ItemStack cached : ANALYZED_ITEMS.keySet())
 							{
-								if (OreDictionary.itemMatches(cached,ingredientStack, false))
+								if (OreDictionary.itemMatches(cached, ingredientStack, false))
 								{
 									ret.addAll(ANALYZED_ITEMS.get(cached));
 									didAdd = true;
