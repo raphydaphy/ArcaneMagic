@@ -13,6 +13,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
@@ -28,9 +29,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -111,46 +112,44 @@ public class ClientEvents
 
 		if (world != null && player != null)
 		{
-			if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
-					|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
+			if (world.getTotalWorldTime() % 18 == 0)
 			{
-				ICamera icamera = new Frustum();
-				float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-				double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
-				double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
-				double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
-				icamera.setPosition(d0, d1, d2);
-				ViewFrustum vf = Minecraft.getMinecraft().renderGlobal.viewFrustum;
-
-				double posX = player.posX;
-				double posY = player.posY;
-				double posZ = player.posZ;
-
-				for (int x = -50; x < 50; x++)
+				if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
+						|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
 				{
-					for (int y = -50; y < 50; y++)
+					ItemIlluminator i = ModRegistry.MYSTICAL_ILLUMINATOR;
+					ICamera icamera = new Frustum();
+					float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
+					double d0 = player.lastTickPosX + (player.posX - player.lastTickPosX) * (double) partialTicks;
+					double d1 = player.lastTickPosY + (player.posY - player.lastTickPosY) * (double) partialTicks;
+					double d2 = player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * (double) partialTicks;
+					icamera.setPosition(d0, d1, d2);
+					ViewFrustum vf = Minecraft.getMinecraft().renderGlobal.viewFrustum;
+
+					double posX = player.posX;
+					double posY = player.posY;
+					double posZ = player.posZ;
+
+					for (int x = -50; x < 50; x++)
 					{
-						if (posY + y > 0 && posY + y < 256)
+						for (int y = -50; y < 50; y++)
 						{
-							for (int z = -50; z < 50; z++)
+							if (posY + y > 0 && posY + y < 256)
 							{
-								if (world.rand.nextInt(10) == 1)
+								for (int z = -50; z < 50; z++)
 								{
 									BlockPos first = new BlockPos(posX + x, posY + y, posZ + z);
-									if (icamera.isBoundingBoxInFrustum(vf.getRenderChunk(first).boundingBox))
+									if (world.isBlockLoaded(first))
 									{
-										if (world.isBlockLoaded(first))
+										Block firstBlock = player.world.getBlockState(first).getBlock();
+										if (firstBlock != Blocks.AIR)
 										{
-											Block firstBlock = player.world.getBlockState(first).getBlock();
-											if (firstBlock != Blocks.AIR)
+
+											if (icamera.isBoundingBoxInFrustum(vf.getRenderChunk(first).boundingBox))
 											{
 												if (ArcaneMagicAPI.canAnalyseBlock(firstBlock))
 												{
-													System.out.println("can see and analyze: " + firstBlock.toString());
-													world.spawnParticle(EnumParticleTypes.PORTAL,
-															first.getX() + 0.4 + (world.rand.nextFloat() / 4),
-															first.getY() + 1,
-															first.getZ() + 0.4 + (world.rand.nextFloat() / 4), 0, 0, 0);
+													i.addParticle(world, first, EnumFacing.UP, 0, 0, 0);
 
 												}
 											}
@@ -171,13 +170,13 @@ public class ClientEvents
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
 	{
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
-
+	
 		GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
 				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
 				-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
-
+	
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}*/

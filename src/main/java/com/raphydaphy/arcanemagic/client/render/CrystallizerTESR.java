@@ -44,22 +44,17 @@ public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrysta
 
 		GlStateManager.pushMatrix();
 		World world = Minecraft.getMinecraft().world;
-		for (int x2 = -10; x2 < 10; x2++)
+		for (int x2 = (int)x - 10; x2 < x + 10; x2++)
 		{
-			for (int y2 = -10; y2 < 10; y2++)
+			for (int y2 = (int)y - 10; y2 < y + 10; y2++)
 			{
-				for (int z2 = -10; z2 < 10; z2++)
+				for (int z2 = (int)z-10; z2 < z+10; z2++)
 				{
-					BlockPos second = new BlockPos(x + x2, y + y2, z + z2);
-
-					if (world.getBlockState(second).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
+					//if (world.getBlockState(new BlockPos(x2,y2,z2)).getBlock() == ModRegistry.ESSENCE_CONCENTRATOR)
 					{
-						Vec3d to = new Vec3d(x + 0.5, y + 2.3, z + 0.5);
-						Vec3d from = new Vec3d(second.getX() + 0.5, second.getY() + 2.2, second.getZ() + 0.5);
-						Vec3d dist = new Vec3d(Math.pow(to.x - from.x, 2), Math.pow(to.y - from.y, 2),
-								Math.pow(to.z - from.z, 2));
-						Vec3d lineFrom = new Vec3d(from.x, from.y, from.z);
-						// sqrt(pow((endA-startA), 2)+pow((endB-startB), 2));
+						Vec3d to = new Vec3d(x + 0.5, y + 0.58, z + 0.5);
+						Vec3d from = new Vec3d(x2 + 0.5, y2 + 0.8, z2 + 0.5);
+						
 						Color color = Essence.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
 								.getColor();
 
@@ -67,39 +62,16 @@ public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrysta
 						int g = color.getGreen();
 						int b = color.getBlue();
 
-						GL11.glLineWidth(10);
+						
 						Tessellator tes = Tessellator.getInstance();
 						BufferBuilder vb = tes.getBuffer();
 
 						RenderHelper.disableStandardItemLighting();
-
-						vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
-
-						double radius = 0.5;
-
-						for (int deg = 0; deg < 360; deg++)
-						{
-							double radians = Math.toRadians(deg);
-							Vec3d vertex = new Vec3d(from.x + Math.cos(radians) * radius, from.y,
-									from.z + Math.sin(radians) * radius);
-							Vec3d newDist = new Vec3d(Math.pow(to.x - vertex.x, 2), Math.pow(to.y - vertex.y, 2),
-									Math.pow(to.z - vertex.z, 2));
-							if (newDist.x <= dist.x && newDist.z <= dist.z)
-							{
-								dist = newDist;
-								lineFrom = vertex;
-							}
-
-							vb.pos(vertex.x, vertex.y, vertex.z).color(r, g, b, 0).endVertex();
-							;
-						}
-
-						tes.draw();
-
+						GL11.glLineWidth(100);
 						vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
-
-						vb.pos(lineFrom.x, lineFrom.y, lineFrom.z).color(r, g, b, 1).endVertex();
-						vb.pos(to.x, to.y, to.z).color(r, g, b, 0).endVertex();
+						
+						vb.pos(to.x, to.y, to.z).color(r, g, b, 1).endVertex();
+						vb.pos(from.x,from.y, from.z).color(r, g, b, 0).endVertex();
 
 						tes.draw();
 
@@ -124,4 +96,9 @@ public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrysta
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 	}
+	
+	public boolean isGlobalRenderer(TileEntityCrystallizer te)
+    {
+        return true;
+    }
 }
