@@ -44,7 +44,6 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
@@ -102,15 +101,6 @@ public class ClientEvents
 				((IHasModel) b).initModels(event);
 	}
 
-	//private static boolean[][][] = new boolean[100][100][100];
-
-	@SubscribeEvent
-	public static void clientTick(ClientTickEvent ev)
-	{
-		
-	}
-
-	
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
 	{
@@ -132,9 +122,9 @@ public class ClientEvents
 					double posZ = player.posZ;
 
 					Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-			        double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double)partialTicks;
-			        double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double)partialTicks;
-			        double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double)partialTicks;
+					double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
+					double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
+					double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
 					for (int x = -50; x < 50; x++)
 					{
 						for (int y = -50; y < 50; y++)
