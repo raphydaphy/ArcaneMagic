@@ -104,6 +104,11 @@ public class RecipeHelper
 		addRecipe(j++, genShaped(output, width, height, input));
 	}
 
+	public static int getJ()
+	{
+		return j;
+	}
+	
 	public static <T extends IForgeRegistryEntry<?>> void addShaped(T output, int width, int height, Object... input)
 	{
 		addShaped(makeStack(output), width, height, input);

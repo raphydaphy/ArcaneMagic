@@ -38,7 +38,6 @@ public class ItemIlluminator extends ItemBase
 	{
 		if (isSelected && world.isRemote)
 		{
-			System.out.println(particles.size());
 			Map<ParticlePos, Integer> newParticles = new HashMap<ParticlePos, Integer>();
 			for (ParticlePos p : particles.keySet())
 			{
@@ -101,19 +100,8 @@ public class ItemIlluminator extends ItemBase
 	{
 		if (world.isRemote)
 		{
-			boolean alreadyDid = false;
 			ParticlePos ppos1 = new ParticlePos(newPos, facing, hitX, hitY, hitZ);
-			for (ParticlePos ppos2 : particles.keySet())
-			{
-				if (ppos1.equals(ppos2))
-				{
-					alreadyDid = true;
-				}
-			}
-			if (!alreadyDid)
-			{
-				particles.put(ppos1, 30);
-			}
+			particles.put(ppos1, 50);
 		}
 	}
 

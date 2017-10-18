@@ -7,9 +7,12 @@ import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import akka.japi.Pair;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class CategoryMagicalInsights extends NotebookCategory
@@ -25,11 +28,21 @@ public class CategoryMagicalInsights extends NotebookCategory
 	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 3; i++)
-		{
-			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
-		}
+		page0.add(new NotebookEntryText(getUnlocalizedName() + ".0", 0x000000));
+		ItemStack[][] itemsIn = { { ItemStack.EMPTY, new ItemStack(Items.REDSTONE), ItemStack.EMPTY },
+				{ new ItemStack(Items.REDSTONE), new ItemStack(Items.COMPASS),
+						new ItemStack(Items.REDSTONE) },
+				{ ItemStack.EMPTY, new ItemStack(Items.REDSTONE),
+							ItemStack.EMPTY } };
+		page0.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.MYSTICAL_ILLUMINATOR)));
+		page0.add(new NotebookEntryText(getUnlocalizedName() + ".1", 0x000000));
 		pages.add(new NotebookPage(page0));
+		List<INotebookEntry> page1 = new ArrayList<INotebookEntry>();
+		for (int i = 2; i < 3; i++)
+		{
+			page1.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
+		}
+		pages.add(new NotebookPage(page1));
 		return pages;
 	}
 

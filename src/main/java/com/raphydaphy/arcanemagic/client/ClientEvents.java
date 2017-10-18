@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.client;
 
 import java.util.Collection;
 
+import org.apache.logging.log4j.Level;
+
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
@@ -109,8 +111,10 @@ public class ClientEvents
 
 		if (world != null && player != null)
 		{
-			if (world.getTotalWorldTime() % 18 == 0)
+			if (world.getTotalWorldTime() % 38 == 0)
 			{
+				long oldNano = System.nanoTime();
+				int range = 20;
 				if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
 						|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
 				{
@@ -125,13 +129,14 @@ public class ClientEvents
 					double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
 					double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
 					double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
-					for (int x = -50; x < 50; x++)
+
+					for (int x = -range; x < range; x++)
 					{
-						for (int y = -50; y < 50; y++)
+						for (int y = -range; y < range; y++)
 						{
 							if (posY + y > 0 && posY + y < 256)
 							{
-								for (int z = -50; z < 50; z++)
+								for (int z = -range; z < range; z++)
 								{
 									BlockPos first = new BlockPos(posX + x, posY + y, posZ + z);
 									if (world.isBlockLoaded(first))
@@ -157,7 +162,11 @@ public class ClientEvents
 							}
 						}
 					}
+
 				}
+				int diameter = range * 2;
+				ArcaneMagic.LOGGER.log(Level.DEBUG, "Particle Calculations for " + diameter + "x" + diameter + "x"
+						+ diameter + " area took " + (System.nanoTime() - oldNano) + " nanos");
 			}
 		}
 	}

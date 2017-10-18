@@ -33,6 +33,8 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(1d * (1d / 16d), 0.0D, 1d * (1d / 16d),
 			15d * (1d / 16d), 10d * (1d / 16d), 15d * (1d / 16d));
+	
+	public int recipeID = -1;
 
 	public BlockAnalyzer()
 	{
@@ -158,6 +160,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	{
 		RecipeHelper.addShaped(this, 3, 3, null, "enderpearl", null, "plankWood", "blockGlass", "plankWood",
 				"plankWood", null, "plankWood");
+		recipeID = RecipeHelper.getJ();
 	}
 
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)

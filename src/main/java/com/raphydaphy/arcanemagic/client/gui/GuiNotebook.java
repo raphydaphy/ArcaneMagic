@@ -253,7 +253,7 @@ public class GuiNotebook extends GuiScreen
 								&& relMouseY <= screenY + 238 + (10 * scale))
 						{
 							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
-									ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
+									ArcaneMagicSoundHandler.randomPageSound(), SoundCategory.MASTER, 1f, 1f,
 									false);
 							cap.setPage(cap.getPage() - 1);
 							ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
@@ -269,7 +269,7 @@ public class GuiNotebook extends GuiScreen
 								&& relMouseY <= screenY + 238 + (10 * scale))
 						{
 							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
-									ArcaneMagicSoundHandler.randomCameraClackSound(), SoundCategory.MASTER, 1f, 1f,
+									ArcaneMagicSoundHandler.randomPageSound(), SoundCategory.MASTER, 1f, 1f,
 									false);
 							cap.setPage(cap.getPage() + 1);
 							ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
