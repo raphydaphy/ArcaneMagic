@@ -176,15 +176,12 @@ public class ItemParchment extends ItemBase
 						NotebookCategory cat = catInfo.first();
 						if (cat != null)
 						{
-							System.out.println(cat.getPrerequisiteTag());
 							if (!cat.equals(NotebookCategories.UNKNOWN_REALMS)
 									&& cap.isUnlocked(cat.getPrerequisiteTag())
 									&& !cap.isUnlocked(cat.getRequiredTag()))
 							{
-								System.out.println("set to unlocked!");
 								cap.setUnlocked(cat.getRequiredTag());
 							}
-							System.out.println(cat.getRequiredTag() + " needs " + cat.getPrerequisiteTag());
 							if (catInfo.second())
 							{
 								for (NotebookCategory mightBeParent : NotebookCategory.REGISTRY.getValues())
@@ -193,7 +190,6 @@ public class ItemParchment extends ItemBase
 									{
 										if (mightBeParent.getRequiredTag().equals(cat.getPrerequisiteTag()))
 										{
-											System.out.println("Unlocking sub!");
 											ArcaneMagicPacketHandler.INSTANCE
 													.sendTo(new PacketNotebookToastExpanded(mightBeParent,
 															cat.getRequiredTag(), true), (EntityPlayerMP) player);
@@ -208,7 +204,6 @@ public class ItemParchment extends ItemBase
 
 						} else
 						{
-							System.out.println("was null :(");
 							ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true),
 									(EntityPlayerMP) player);
 						}

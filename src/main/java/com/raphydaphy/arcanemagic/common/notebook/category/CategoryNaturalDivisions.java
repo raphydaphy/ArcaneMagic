@@ -29,13 +29,13 @@ public class CategoryNaturalDivisions extends NotebookCategory
 		int fakePage = page;
 		for (int potPage = 0; potPage < 7; potPage++)
 		{
-			if (potPage > page)
+			if (potPage > fakePage)
 			{
 				break;
 			}
 			// this page is not visible yet to the player!
-			if (potPage < 1
-					|| !info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[potPage - 1].getRequiredTag()))
+			if (potPage > 0 &&
+					!info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[potPage - 1].getRequiredTag()))
 			{
 				fakePage++;
 			}

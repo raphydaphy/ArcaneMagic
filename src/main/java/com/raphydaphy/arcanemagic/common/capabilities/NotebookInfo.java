@@ -107,7 +107,6 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 
 	public void setUnlocked(String tag)
 	{
-		System.out.println("trying to set " + tag + " to unlocked");
 		if (unlockedCategories.containsKey(tag))
 		{
 			if (!unlockedCategories.get(tag))
@@ -122,7 +121,6 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	{
 		if (tag != null)
 		{
-			System.out.println("Seeing if " + tag + " is unlocked");
 			if (tag.equals(tagUsedNotebook))
 			{
 				return true;
@@ -131,17 +129,11 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 			{
 				if (tag.equals(unlocked) && unlockedCategories.get(unlocked))
 				{
-					System.out.println("we have entry for " + tag);
 					return unlockedCategories.get(unlocked);
 				}
-				else
-				{
-					//System.out.println(tag + " is not " + unlocked);
-				}
 			}
-			
+
 		}
-		System.out.println("no entry found for " + tag + " full entry list: " + unlockedCategories.toString());
 		return false;
 	}
 
