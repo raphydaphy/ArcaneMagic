@@ -69,7 +69,10 @@ public class CategoryRegistry implements IForgeRegistry<NotebookCategory>
 	public void registerAll(NotebookCategory... values)
 	{
 		for (NotebookCategory e : values)
+		{
+			System.out.println("Registered category: " + e.getUnlocalizedName());
 			register(e);
+		}
 	}
 
 	@Override
