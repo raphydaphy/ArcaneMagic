@@ -38,15 +38,15 @@ public class NotebookCategories
 
 	public static final CategoryNaturalDivisionsSub HORIZON_CATEGORY = new CategoryNaturalDivisionsSub(Essence.HORIZON,
 			1, 2);
-	public static final CategoryNaturalDivisionsSub OZONE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.OZONE, 1,
+	public static final CategoryNaturalDivisionsSub OZONE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.OZONE, 2,
 			2);
 	public static final CategoryNaturalDivisionsSub INFERNO_CATEGORY = new CategoryNaturalDivisionsSub(Essence.INFERNO,
-			1, 2);
-	public static final CategoryNaturalDivisionsSub DEPTH_CATEGORY = new CategoryNaturalDivisionsSub(Essence.DEPTH, 1,
+			3, 2);
+	public static final CategoryNaturalDivisionsSub DEPTH_CATEGORY = new CategoryNaturalDivisionsSub(Essence.DEPTH, 4,
 			2);
-	public static final CategoryNaturalDivisionsSub CHAOS_CATEGORY = new CategoryNaturalDivisionsSub(Essence.CHAOS, 1,
+	public static final CategoryNaturalDivisionsSub CHAOS_CATEGORY = new CategoryNaturalDivisionsSub(Essence.CHAOS, 5,
 			2);
-	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.PEACE, 1,
+	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.PEACE, 6,
 			2);
 	
 	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY, INFERNO_CATEGORY,
