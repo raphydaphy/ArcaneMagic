@@ -89,7 +89,24 @@ arcanemagic.message.parchment.plants.1=However, instead of the plants soul movin
 arcanemagic.message.parchment.natural_divisions=Leafy Subdivisions
 arcanemagic.message.parchment.natural_divisions.0=While exploring the world, you have observed a special trait in leaves that could lead to some interesting discoveries. Depending on where they are placed, they behave slightly different.
 arcanemagic.message.parchment.natural_divisions.1=When in forests, they are lush and green, whilst in deserts they are dry and yellow. Perhaps these changes could be found in things other than leaves if you looked futher into it?
-
+arcanemagic.message.parchment.natural_divisions.horizon=Undulating Plains
+arcanemagic.message.parchment.natural_divisions.horizon.0=Your journeys through forests and plains have allowed you to investigate the natural properties in the area. One interesting thing you have discovered could lead to the revelation of an entierly new type of Essence.
+arcanemagic.message.parchment.natural_divisions.horizon.1=Since the color and size of any Essence traveling through these areas is distinctly different, you have decided this to be worth a further investigation.
+arcanemagic.message.parchment.natural_divisions.ozone=Cloudy Skies
+arcanemagic.message.parchment.natural_divisions.ozone.0=By standing on top of the icy mountains, your are able to see the entire world spread out before you. You have learned, however, that even greater things tend to lie underneath the surface.
+arcanemagic.message.parchment.natural_divisions.ozone.1=Mountainous areas do certainly have the potential to contain their own form of Essence. You will need to study this further.
+arcanemagic.message.parchment.natural_divisions.inferno=Fiery Abyss
+arcanemagic.message.parchment.natural_divisions.inferno.0=The Nether, as well as some slightly less volatile areas such as deserts, have been hugely beneficial for your studies. They too seem to contain a different form of Essence.
+arcanemagic.message.parchment.natural_divisions.inferno.1=This new breed of Essence could lead to some very interesting discoveries, if there was a way to investigate it safely.
+arcanemagic.message.parchment.natural_divisions.depth=Aquatic Temples
+arcanemagic.message.parchment.natural_divisions.depth.0=The underwater monuments dedicated to Guardians are very intriguing. The huge structures surrounding their lair could not possibly be built by such incapable creatures.
+arcanemagic.message.parchment.natural_divisions.depth.1=Something even more interesting can be found deep below the temples, however. You believe this may lead to the discovery of a new form of Essence.
+arcanemagic.message.parchment.natural_divisions.chaos=Unstable Mountains
+arcanemagic.message.parchment.natural_divisions.chaos.0=The unique mountains found in Mesas are nothing like the snow-capped peaks from elsewhere. You have observed their unstable nature, and realised that it may be the key to discovering yet another type of Essence.
+arcanemagic.message.parchment.natural_divisions.chaos.1=Any Essence you have seen in these areas is clearly different from what you have found in other biomes, and its unstable nature may prove very useful.
+arcanemagic.message.parchment.natural_divisions.peace=Hostile Paradise
+arcanemagic.message.parchment.natural_divisions.peace.0=The peaceful shores of Mushroom Islands have allowed you to conduct several experiments without the interference of enemies. However, it seems it has not always been this way.
+arcanemagic.message.parchment.natural_divisions.peace.1=The Essence embedded deep underneath these islands is clearly vastly different from anything you have experienced before. It may even help you discover how the island came to be.
 
 # Notebook
 arcanemagic.notebook.category.unknown_realms=Stretch Niktu
