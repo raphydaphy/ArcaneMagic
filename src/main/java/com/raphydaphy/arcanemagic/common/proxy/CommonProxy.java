@@ -43,7 +43,7 @@ public abstract class CommonProxy
 
 	}
 
-	public void addCategoryUnlockToast(NotebookCategory category)
+	public void addCategoryUnlockToast(NotebookCategory category, boolean expanded)
 	{
 
 	}

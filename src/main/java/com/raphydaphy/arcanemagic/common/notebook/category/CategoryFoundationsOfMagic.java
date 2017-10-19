@@ -6,6 +6,7 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
+import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
@@ -13,16 +14,16 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 import akka.japi.Pair;
 import net.minecraft.item.ItemStack;
 
-public class CategoryAfterLife extends NotebookCategory
+public class CategoryFoundationsOfMagic extends NotebookCategory
 {
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.after_life";
+		return "arcanemagic.notebook.category.foundations_of_magic";
 	}
 
 	@Override
-	public List<NotebookPage> getPages()
+	public List<NotebookPage> getPages(NotebookInfo info)
 	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
@@ -44,7 +45,7 @@ public class CategoryAfterLife extends NotebookCategory
 	@Override
 	public String getRequiredTag()
 	{
-		return "unlockedAfterLife";
+		return "unlockedFoundationsOfMagic";
 	}
 	
 	public Pair<String, Integer> getUnlocParchmentInfo()
@@ -55,7 +56,7 @@ public class CategoryAfterLife extends NotebookCategory
 	@Override
 	public String getPrerequisiteTag()
 	{
-		return NotebookCategories.MAGICAL_INSIGHTS.getRequiredTag();
+		return NotebookCategories.ARCANE_ANALYSIS.getRequiredTag();
 	}
 
 	@Override

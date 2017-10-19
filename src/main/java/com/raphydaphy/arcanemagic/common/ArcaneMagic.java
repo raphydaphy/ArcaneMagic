@@ -82,14 +82,23 @@ public class ArcaneMagic
 				"cobblestone", g, s);
 		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		
-		ArcaneMagicAPI.registerForAnalysis(Blocks.GOLD_ORE, NotebookCategories.NATURAL_HARMONY);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.DIAMOND_ORE, NotebookCategories.CRYSTALLIZATION);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.DOUBLE_PLANT, NotebookCategories.AFTER_LIFE);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_FLOWER, NotebookCategories.AFTER_LIFE);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.YELLOW_FLOWER, NotebookCategories.AFTER_LIFE);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_MUSHROOM, NotebookCategories.AFTER_LIFE);
-		ArcaneMagicAPI.registerForAnalysis(Blocks.BROWN_MUSHROOM, NotebookCategories.AFTER_LIFE);
 		ArcaneMagicAPI.registerForAnalysis(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
+		
+		ArcaneMagicAPI.registerForAnalysis(Blocks.DOUBLE_PLANT, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.YELLOW_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_MUSHROOM, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.BROWN_MUSHROOM, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		
+		ArcaneMagicAPI.registerForAnalysis(Blocks.LEAVES, NotebookCategories.NATURAL_DIVISIONS);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.LEAVES2, NotebookCategories.NATURAL_DIVISIONS);
+		
+		ArcaneMagicAPI.registerForAnalysis(Blocks.TALLGRASS, NotebookCategories.HORIZON_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.SNOW, NotebookCategories.OZONE_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.MAGMA, NotebookCategories.INFERNO_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.PRISMARINE, NotebookCategories.DEPTH_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.MYCELIUM, NotebookCategories.PEACE_CATEGORY);
 		proxy.postInit(event);
 	}
 

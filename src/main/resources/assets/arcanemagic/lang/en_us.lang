@@ -55,6 +55,7 @@ gui.arcanemagic.infusion_altar.nopaper=Insert Paper
 
 # Toasts
 toast.arcanemagic.page_unlocked=Notebook Page Revealed
+toast.arcanemagic.page_expanded=Notebook Page Expanded
 
 # Essence
 essence.arcanemagic.ozone.name=Ozone
@@ -84,13 +85,13 @@ arcanemagic.message.parchment.redstone.0=The way redstone is able to absorb ener
 arcanemagic.message.parchment.redstone.1=If you knew which items had this energy inside them, it would make it much easier to use the analyzer. Perhaps some device can be consturcted using the properties of redstone?
 arcanemagic.message.parchment.plants=Lost Souls
 arcanemagic.message.parchment.plants.0=After watching several plants die when harvesting them for inspection, you have observed an odd change in the atmosphere around them. This is very similar to what happens when people are killed, before they respawn.
-arcanemagic.message.parchment.plants.1=However, instead of the plants soul moving on to a new life, it almost feels like it has departed this world forever. This notion may help you unveil powerful knowledge.
+arcanemagic.message.parchment.plants.1=However, instead of the plants soul moving on to a new life, it almost feels like it has departed this world forever. This may help you unveil powerful knowledge.
 
 # Notebook
-arcanemagic.notebook.category.unknown_realms=Unknown Realms
-arcanemagic.notebook.category.unknown_realms.0=It seems impossible that this notebook could exist. You never witnessed it's creation, or understand why it is so empty.
-arcanemagic.notebook.category.unknown_realms.1=It is possible that you were given this by someone else, and in that case it would seem wise to throw it away, as if you wanted to obtain a similar book of your own it would likely be possible without the help of others.
-arcanemagic.notebook.category.unknown_realms.2=If you wanted to keep this, you would have to at least understand it's origins.
+arcanemagic.notebook.category.unknown_realms=Stretch Niktu
+arcanemagic.notebook.category.unknown_realms.0=scrolls ignite snuff light wet cold fiddle water xyzzy air elder fire bless shorten dry berata niktu stretch hot twist the embiggen curse destroy darkness earth klaatu
+arcanemagic.notebook.category.unknown_realms.1=self undead spirit cube mental ball fresh humanoid elemental creature other enchant limited animal inside free stale galvanize  sphere imbue beast of grow demon physical towards range shrink
+arcanemagic.notebook.category.unknown_realms.2=towards rlyeh sphere mglwnafh wgahnagl phnglui cthulhu inside fhtagnbaguette
 arcanemagic.notebook.category.ancient_relics=Ancient Relics
 arcanemagic.notebook.category.ancient_relics.0=It feels almost supernatural how you managed to conjure this book from just a parchment and some bedrock. The witch who was previously carrying the paper clearly had no idea of the power it contained.
 arcanemagic.notebook.category.ancient_relics.1=The particles collected when holding a similar parchment while deep underground are very intriguing. They may contain similar properties to those that allowed this book to be formed.
@@ -107,13 +108,27 @@ arcanemagic.notebook.category.magical_insights=Magical Insights
 arcanemagic.notebook.category.magical_insights.0=Analyzing redstone has given you a great insight into the mechanics behind Energy Storage. Since you believe your Analyzer to work in a similar way, you have designed an item capable of detecting unknown knowledge present in the world.
 arcanemagic.notebook.category.magical_insights.1=When the newly constructed Illuminator is held, particles seem to drift into any blocks that contain important knowledge. 
 arcanemagic.notebook.category.magical_insights.2=This gives you a huge advantage when trying to determine what to analyze next, as it should be easily visible simply by traveling throughout the world while holding the item.
-arcanemagic.notebook.category.after_life=After Life
-arcanemagic.notebook.category.after_life.0=By investigating plants, you have discovered more about life and its eventual end. Once any living thing leaves this world in their physical form, their soul is not lost.
-arcanemagic.notebook.category.after_life.1=You know this to be true due to the way you have respawned after your otherwise fatal deaths. From your studies, you have observed other living things behaving in a similar way. There is one crucial difference though - they do not return to the world that we have come to know.
-arcanemagic.notebook.category.after_life.2=No - other living entities seem to respawn deep underneath our world, with only fragments of their soul left. Nothing else can survive the harsh reality of the Void. 
-arcanemagic.notebook.category.after_life.3=This information has been incredibly useful to you, as it has allowed you to discover the meaning of the mystical particles!
-arcanemagic.notebook.category.after_life.4=You have came to the conclusion that the particles and the fragments of lost souls are one and the same thing. You are so confident in your theory that you have decided to call this Essence from now on - it seems to represent the entirety of magic in its physical form, and is produced directly from the essences of lost souls, making this name perfect.
-arcanemagic.notebook.category.after_life.5=You are incredibly excited about this discovery, and hope to be able to use it to your advantage in future experiments. You feel well on the way to re-discovering the art of Arcane Magic.
+arcanemagic.notebook.category.foundations_of_magic=Foundations of Magic
+arcanemagic.notebook.category.foundations_of_magic.0=By investigating plants, you have discovered more about life and its eventual end. Once any living thing leaves this world in their physical form, their soul is not lost.
+arcanemagic.notebook.category.foundations_of_magic.1=You know this to be true due to the way you have respawned after your otherwise fatal deaths. From your studies, you have observed other living things behaving in a similar way. There is one crucial difference though - they do not return to the world that we have come to know.
+arcanemagic.notebook.category.foundations_of_magic.2=No - other living entities seem to respawn deep underneath our world, with only fragments of their soul left. Nothing else can survive the harsh reality of the Void. 
+arcanemagic.notebook.category.foundations_of_magic.3=This information has been incredibly useful to you, as it has allowed you to discover the meaning of the mystical particles!
+arcanemagic.notebook.category.foundations_of_magic.4=You have came to the conclusion that the particles and the fragments of lost souls are one and the same thing. You are so confident in your theory that you have decided to call this Essence from now on - it seems to represent the entirety of magic in its physical form, and is produced directly from the essences of lost souls, making this name perfect.
+arcanemagic.notebook.category.foundations_of_magic.5=You are incredibly excited about this discovery, and hope to be able to use it to your advantage in future experiments. You feel well on the way to re-discovering the art of Arcane Magic.
+arcanemagic.notebook.category.natural_divisions=Natural Divisions
+arcanemagic.notebook.category.natural_divisions.0.0=You have found many things in the world, but the most interesting yet is the way that essence is different colors depending on the area!
+arcanemagic.notebook.category.natural_divisions.1=Horizion
+arcanemagic.notebook.category.natural_divisions.1.0=Horizon Essence is obtained from biomes such as plains and forests.
+arcanemagic.notebook.category.natural_divisions.2=Ozone
+arcanemagic.notebook.category.natural_divisions.2.0=Ozone essence is obtained from mountains and hills.
+arcanemagic.notebook.category.natural_divisions.3=Inferno
+arcanemagic.notebook.category.natural_divisions.3.0=Inferno essence is obtained from dry and hot areas such as deserts and the nether.
+arcanemagic.notebook.category.natural_divisions.4=Depth
+arcanemagic.notebook.category.natural_divisions.4.0=Depth essence is obtained from the sea, rivers and oceans.
+arcanemagic.notebook.category.natural_divisions.5=Chaos
+arcanemagic.notebook.category.natural_divisions.5.0=Chaos essence is obtained from Mesas
+arcanemagic.notebook.category.natural_divisions.6=Peace
+arcanemagic.notebook.category.natural_divisions.6.0=Peace essence is obtained only from mushroom islands, making it very rare!
 arcanemagic.notebook.category.crystallization=Crystallization
 arcanemagic.notebook.category.crystallization.0=Through your journeys thus far, you have discovered light particles imbued with what appears to be some form of magic. Now that you have learned more about the behaviour of this energy, perhaps it might be time to try manipulating it to your advantage.
 arcanemagic.notebook.category.crystallization.1=An Essence Crystallizer appears to do exactly what you want. Perhaps placing one near the particles you found might prove useful?

@@ -53,6 +53,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 	private final Color color;
 	private String unlocName;
+	private String indexName;
 	protected ItemStack itemForm = ItemStack.EMPTY;
 
 	private Essence(String name, String unlocName, int r, int g, int b)
@@ -64,6 +65,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	{
 		setRegistryName(ArcaneMagic.MODID, name);
 		setUnlocalizedName(unlocName);
+		this.indexName = name;
 		this.color = color;
 	}
 
@@ -71,13 +73,21 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	{
 		setUnlocalizedName(unlocName);
 		this.color = color;
+		this.indexName = unlocName;
 	}
 
 	public Essence(Color color)
 	{
 		this.color = color;
+		this.indexName = "unnamed";
 	}
 
+	public Essence setIndexName(String index)
+	{
+		this.indexName = index;
+		return this;
+	}
+		
 	public Essence setUnlocalizedName(String unloc)
 	{
 		this.unlocName = unloc;
@@ -189,6 +199,11 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	public String getUnlocalizedName()
 	{
 		return "essence." + unlocName;
+	}
+	
+	public String getIndexName()
+	{
+		return this.indexName;
 	}
 
 	public String getTranslationName()

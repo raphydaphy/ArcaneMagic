@@ -10,9 +10,11 @@ import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastExpanded;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastOrFail;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
+import akka.japi.Pair;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -135,7 +137,7 @@ public class ItemParchment extends ItemBase
 	}
 
 	@Nullable
-	public static NotebookCategory getToUnlock(ItemStack stack)
+	public static Pair<NotebookCategory, Boolean> getToUnlock(ItemStack stack)
 	{
 		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(CATEGORY))
 		{
@@ -143,7 +145,15 @@ public class ItemParchment extends ItemBase
 			{
 				if (potentialCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY)))
 				{
-					return potentialCat;
+					return new Pair<NotebookCategory, Boolean>(potentialCat, false);
+				}
+			}
+
+			for (NotebookCategory subCat : NotebookCategory.SUB_REGISTRY)
+			{
+				if (subCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY)))
+				{
+					return new Pair<NotebookCategory, Boolean>(subCat, true);
 				}
 			}
 		}
@@ -155,19 +165,57 @@ public class ItemParchment extends ItemBase
 		ItemStack stack = player.getHeldItem(hand);
 		if (stack.getItem().equals(ModRegistry.WRITTEN_PARCHMENT))
 		{
-			NotebookCategory cat = getToUnlock(stack);
-			if (!world.isRemote)
+			Pair<NotebookCategory, Boolean> catInfo = getToUnlock(stack);
+			if (catInfo != null)
 			{
-				NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
-				if (cap != null)
+				if (!world.isRemote)
 				{
-					if (cat != null && !cat.equals(NotebookCategories.UNKNOWN_REALMS) && cap.isUnlocked(cat.getPrerequisiteTag()) && !cap.isUnlocked(cat.getRequiredTag()))
+					NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+					if (cap != null)
 					{
-						cap.setUnlocked(cat.getRequiredTag());
+						NotebookCategory cat = catInfo.first();
+						if (cat != null)
+						{
+							System.out.println(cat.getPrerequisiteTag());
+							if (!cat.equals(NotebookCategories.UNKNOWN_REALMS)
+									&& cap.isUnlocked(cat.getPrerequisiteTag())
+									&& !cap.isUnlocked(cat.getRequiredTag()))
+							{
+								System.out.println("set to unlocked!");
+								cap.setUnlocked(cat.getRequiredTag());
+							}
+							System.out.println(cat.getRequiredTag() + " needs " + cat.getPrerequisiteTag());
+							if (catInfo.second())
+							{
+								for (NotebookCategory mightBeParent : NotebookCategory.REGISTRY.getValues())
+								{
+									if (mightBeParent != null && mightBeParent.getRequiredTag() != null)
+									{
+										if (mightBeParent.getRequiredTag().equals(cat.getPrerequisiteTag()))
+										{
+											System.out.println("Unlocking sub!");
+											ArcaneMagicPacketHandler.INSTANCE
+													.sendTo(new PacketNotebookToastExpanded(mightBeParent,
+															cat.getRequiredTag(), true), (EntityPlayerMP) player);
+										}
+									}
+								}
+							} else
+							{
+								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true),
+										(EntityPlayerMP) player);
+							}
+
+						} else
+						{
+							System.out.println("was null :(");
+							ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true),
+									(EntityPlayerMP) player);
+						}
 					}
-					ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true), (EntityPlayerMP) player);
 				}
 			}
+
 			world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomWriteSound(),
 					SoundCategory.PLAYERS, 1, 1);
 			player.setHeldItem(hand, ItemStack.EMPTY);

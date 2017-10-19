@@ -41,9 +41,9 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void addCategoryUnlockToast(NotebookCategory category)
+	public void addCategoryUnlockToast(NotebookCategory category, boolean expanded)
 	{
-		Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(category));
+		Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(category, expanded));
 	}
 
 	@Override

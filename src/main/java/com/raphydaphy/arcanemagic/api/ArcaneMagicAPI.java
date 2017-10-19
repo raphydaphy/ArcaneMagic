@@ -44,6 +44,12 @@ public class ArcaneMagicAPI
 	public static void registerCategory(NotebookCategory category)
 	{
 		NotebookCategory.REGISTRY.register(category);
+
+	}
+
+	public static void registerSubCategories(NotebookCategory... sub)
+	{
+		NotebookCategory.SUB_REGISTRY.registerAll(sub);
 	}
 
 	public static void registerForAnalysis(Block b, NotebookCategory category)

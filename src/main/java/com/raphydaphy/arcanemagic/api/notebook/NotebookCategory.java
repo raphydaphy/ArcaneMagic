@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.api.notebook;
 
 import java.util.List;
 
+import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+
 import akka.japi.Pair;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
@@ -12,10 +14,16 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 {
 
 	public static final CategoryRegistry REGISTRY = new CategoryRegistry();
-
+	public static final CategoryRegistry SUB_REGISTRY = new CategoryRegistry();
+	
 	public abstract String getUnlocalizedName();
 
-	public abstract List<NotebookPage> getPages();
+	public String getUnlocalizedTitle(NotebookInfo info, int page)
+	{
+		return page == 0 ? getUnlocalizedName() : null;
+	}
+	
+	public abstract List<NotebookPage> getPages(NotebookInfo info);
 	
 	public Pair<String, Integer> getUnlocParchmentInfo()
 	{
