@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.network.PacketEssenceTransfer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceStorage;
 
+import net.minecraft.init.Biomes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -248,7 +249,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			return Essence.OZONE;
 		else if (BiomeDictionary.hasType(biome, Type.MESA))
 			return Essence.CHAOS;
-		else if (BiomeDictionary.hasType(biome, Type.RARE))
+		else if (biome.equals(Biomes.MUSHROOM_ISLAND) || biome.equals(Biomes.MUSHROOM_ISLAND_SHORE))
 			return Essence.PEACE;
 		else
 			return Essence.HORIZON;

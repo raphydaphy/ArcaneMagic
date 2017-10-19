@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.entity.Entity;
@@ -23,7 +24,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemIlluminator extends ItemBase
 {
-	@SideOnly(Side.CLIENT)
 	private Map<ParticlePos, Integer> particles = new HashMap<ParticlePos, Integer>();
 
 	public ItemIlluminator()
@@ -124,72 +124,5 @@ public class ItemIlluminator extends ItemBase
 			player.swingArm(hand);
 		}
 		return EnumActionResult.SUCCESS;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public class ParticlePos
-	{
-		private final BlockPos pos;
-		private final EnumFacing facing;
-		private final float hitX;
-		private final float hitY;
-		private final float hitZ;
-
-		public ParticlePos(BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ)
-		{
-			this.pos = pos;
-			this.facing = facing;
-			this.hitX = hitX;
-			this.hitY = hitY;
-			this.hitZ = hitZ;
-		}
-
-		public BlockPos getPos()
-		{
-			return pos;
-		}
-
-		public EnumFacing getFacing()
-		{
-			return facing;
-		}
-
-		public float getHitX()
-		{
-			return hitX;
-		}
-
-		public float getHitY()
-		{
-			return hitY;
-		}
-
-		public float getHitZ()
-		{
-			return hitZ;
-		}
-
-		@Override
-		public boolean equals(Object other)
-		{
-			if (other instanceof ParticlePos)
-			{
-				ParticlePos pos2 = (ParticlePos) other;
-
-				if (pos2.getPos().getX() == this.getPos().getX() && pos2.getPos().getY() == this.getPos().getY()
-						&& pos2.getPos().getZ() == this.getPos().getZ())
-				{
-					if (pos2.getFacing().equals(this.getFacing()))
-					{
-						if (pos2.getHitX() == this.getHitX() && pos2.getHitY() == this.getHitY()
-								&& pos2.getHitZ() == this.getHitZ())
-						{
-							return true;
-						}
-					}
-				}
-			}
-			return false;
-		}
 	}
 }

@@ -30,8 +30,6 @@ public class PacketNotebookToastExpanded implements IMessage
 		this.cat = cat;
 		this.additionalTag = additionalTag;
 		this.showIfFail = showIfFail;
-		
-		System.out.println(cat);
 	}
 
 	public static class Handler implements IMessageHandler<PacketNotebookToastExpanded, IMessage>
