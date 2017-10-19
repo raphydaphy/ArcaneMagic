@@ -86,6 +86,10 @@ arcanemagic.message.parchment.redstone.1=If you knew which items had this energy
 arcanemagic.message.parchment.plants=Lost Souls
 arcanemagic.message.parchment.plants.0=After watching several plants die when harvesting them for inspection, you have observed an odd change in the atmosphere around them. This is very similar to what happens when people are killed, before they respawn.
 arcanemagic.message.parchment.plants.1=However, instead of the plants soul moving on to a new life, it almost feels like it has departed this world forever. This may help you unveil powerful knowledge.
+arcanemagic.message.parchment.natural_divisions=Leafy Subdivisions
+arcanemagic.message.parchment.natural_divisions.0=While exploring the world, you have observed a special trait in leaves that could lead to some interesting discoveries. Depending on where they are placed, they behave slightly different.
+arcanemagic.message.parchment.natural_divisions.1=When in forests, they are lush and green, whilst in deserts they are dry and yellow. Perhaps these changes could be found in things other than leaves if you looked futher into it?
+
 
 # Notebook
 arcanemagic.notebook.category.unknown_realms=Stretch Niktu
@@ -116,11 +120,15 @@ arcanemagic.notebook.category.foundations_of_magic.3=This information has been i
 arcanemagic.notebook.category.foundations_of_magic.4=You have came to the conclusion that the particles and the fragments of lost souls are one and the same thing. You are so confident in your theory that you have decided to call this Essence from now on - it seems to represent the entirety of magic in its physical form, and is produced directly from the essences of lost souls, making this name perfect.
 arcanemagic.notebook.category.foundations_of_magic.5=You are incredibly excited about this discovery, and hope to be able to use it to your advantage in future experiments. You feel well on the way to re-discovering the art of Arcane Magic.
 arcanemagic.notebook.category.natural_divisions=Natural Divisions
-arcanemagic.notebook.category.natural_divisions.0.0=You have found many things in the world, but the most interesting yet is the way that essence is different colors depending on the area!
+arcanemagic.notebook.category.natural_divisions.0.0=The changes in the color of leaves depending on the biome they are planted in has inspired you to see if anything else reacts in a similar way. These experiments have given you great insights into the natural divisions of the world.
+arcanemagic.notebook.category.natural_divisions.0.1=However, one of these discoveries seems far greater than the rest. While holding an Ancient Parchment in a forest, green particles begin to flow from the ground. However, when in a desert, they are orange.
+arcanemagic.notebook.category.natural_divisions.0.2=By continuing your research, it may even be possible to determine exactly how many different colors exist, and what they mean. You decide to keep adding to this section as you discover more.
 arcanemagic.notebook.category.natural_divisions.1=Horizion
-arcanemagic.notebook.category.natural_divisions.1.0=Horizon Essence is obtained from biomes such as plains and forests.
+arcanemagic.notebook.category.natural_divisions.1.0=While walking amongst the grass in nearby forests and plains, you have observed a new variety of Essence. Due to the nature of the areas it is found in, you decide to call it Horizon Essence.
+arcanemagic.notebook.category.natural_divisions.1.1=This lush, green blend of Essence is likely the most abundant type you have discovered yet, and it seems to travel very quickly through the air. The fragile, green particles it leaves in its wake are perhaps smaller, but otherwise almost identical to the others that you have seen. Horizon Essence should prove quite useful throughout your experiments in magic.
 arcanemagic.notebook.category.natural_divisions.2=Ozone
-arcanemagic.notebook.category.natural_divisions.2.0=Ozone essence is obtained from mountains and hills.
+arcanemagic.notebook.category.natural_divisions.2.0=When climbing great mountains and decending into deep valleys, the Essence in the area has clearly been different to any you have seen before. This cold and unforgiving variety is almost as pale as the gas you have named it after - Ozone.
+arcanemagic.notebook.category.natural_divisions.2.1=From your limited testing, Ozone Essence is undoubtedly very slow, but also very useful as it seems to form into much larger spheres than the faster moving variants. This should be excellent when gathering large quantities of Essence for testing.
 arcanemagic.notebook.category.natural_divisions.3=Inferno
 arcanemagic.notebook.category.natural_divisions.3.0=Inferno essence is obtained from dry and hot areas such as deserts and the nether.
 arcanemagic.notebook.category.natural_divisions.4=Depth

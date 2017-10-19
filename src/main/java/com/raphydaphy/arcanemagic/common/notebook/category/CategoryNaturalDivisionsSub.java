@@ -62,7 +62,7 @@ public class CategoryNaturalDivisionsSub extends NotebookCategory
 		List<INotebookEntry> page = new ArrayList<INotebookEntry>();
 		for (int i = 0; i < pageCount; i++)
 		{
-			page.add(new NotebookEntryText(getUnlocalizedName() + "." + indexPage + "." + i, 0x000000));
+			page.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page));
 		return pages;

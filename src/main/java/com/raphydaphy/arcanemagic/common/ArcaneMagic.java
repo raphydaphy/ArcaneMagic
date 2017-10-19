@@ -94,11 +94,21 @@ public class ArcaneMagic
 		ArcaneMagicAPI.registerForAnalysis(Blocks.LEAVES2, NotebookCategories.NATURAL_DIVISIONS);
 		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.TALLGRASS, NotebookCategories.HORIZON_CATEGORY);
+		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.SNOW, NotebookCategories.OZONE_CATEGORY);
+		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.MAGMA, NotebookCategories.INFERNO_CATEGORY);
+		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.PRISMARINE, NotebookCategories.DEPTH_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.SEA_LANTERN, NotebookCategories.DEPTH_CATEGORY);
+		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.STAINED_HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
+		
 		ArcaneMagicAPI.registerForAnalysis(Blocks.MYCELIUM, NotebookCategories.PEACE_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.BROWN_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
+		ArcaneMagicAPI.registerForAnalysis(Blocks.RED_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
+		
 		proxy.postInit(event);
 	}
 

@@ -4,7 +4,6 @@ import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
-import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -31,11 +30,8 @@ public class PacketNotebookToastExpanded implements IMessage
 		this.cat = cat;
 		this.additionalTag = additionalTag;
 		this.showIfFail = showIfFail;
-
-		if (cat != null && cat.equals(NotebookCategories.UNKNOWN_REALMS))
-		{
-			cat = null;
-		}
+		
+		System.out.println(cat);
 	}
 
 	public static class Handler implements IMessageHandler<PacketNotebookToastExpanded, IMessage>
