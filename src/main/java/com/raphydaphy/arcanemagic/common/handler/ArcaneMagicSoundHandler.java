@@ -6,51 +6,34 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
+@ObjectHolder(ArcaneMagic.MODID)
 public final class ArcaneMagicSoundHandler
 {
 	private static Random rand = new Random();
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":spell")
-	public static SoundEvent spell;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":scepter_1")
-	public static SoundEvent scepter_1;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":scepter_2")
-	public static SoundEvent scepter_2;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":scepter_3")
-	public static SoundEvent scepter_3;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":page_1")
-	public static SoundEvent page_1;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":page_2")
-	public static SoundEvent page_2;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":elemental_crafting_success")
-	public static SoundEvent elemental_crafting_success;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":write_1")
-	public static SoundEvent write_1;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":write_2")
-	public static SoundEvent write_2;
-
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":learn_1")
-	public static SoundEvent learn_1;
 	
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":learn_2")
-	public static SoundEvent learn_2;
+	public static final SoundEvent spell = null;
+	
+	public static final SoundEvent scepter_1 = null;
+	public static final SoundEvent scepter_2 = null;
+	public static final SoundEvent scepter_3 = null;
 
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":reconstruct")
-	public static SoundEvent reconstruct;
+	public static final SoundEvent page_1 = null;
+	public static final SoundEvent page_2 = null;
 
-	@GameRegistry.ObjectHolder(ArcaneMagic.MODID + ":clack")
-	public static SoundEvent clack;
+	public static final SoundEvent elemental_crafting_success = null;
+
+	public static final SoundEvent write_1 = null;
+	public static final SoundEvent write_2 = null;
+
+	public static final SoundEvent learn_1 = null;
+	public static final SoundEvent learn_2 = null;
+
+	public static final SoundEvent reconstruct = null;
+
+	public static final SoundEvent clack = null;
 
 	public static SoundEvent register(String name, IForgeRegistry<SoundEvent> registry)
 	{

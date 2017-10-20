@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.common.entity;
 
-import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.entity.Entity;
@@ -71,7 +70,7 @@ public class EntityMagicCircles extends Entity
 
 		if (rand.nextInt(30) == 1)
 		{
-			this.playSound(ArcaneMagicSoundHandler.reconstruct, 1f, 1f);
+			//this.playSound(ArcaneMagicSoundHandler.reconstruct, 1f, 1f);
 		}
 		this.constantRot += 1;
 

@@ -45,8 +45,10 @@ public class ModEvents
 	public static void onPlayerClone(PlayerEvent.Clone ev)
 	{
 		NotebookInfo oldCap = ev.getOriginal().getCapability(NotebookInfo.CAP, null);
-		
-		ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null).deserializeNBT(oldCap.serializeNBT());
+		if (oldCap != null)
+		{
+			ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null).deserializeNBT(oldCap.serializeNBT());
+		}
 	}
 
 	@SubscribeEvent
@@ -81,7 +83,9 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.ANCIENT_RELICS, false), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(
+								new PacketNotebookToastOrFail(NotebookCategories.ANCIENT_RELICS, false),
+								(EntityPlayerMP) ev.player);
 					}
 
 					if (item.equals(ModRegistry.NOTEBOOK)
@@ -89,7 +93,9 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.FORGOTTEN_KNOWLEDGE, false), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(
+								new PacketNotebookToastOrFail(NotebookCategories.FORGOTTEN_KNOWLEDGE, false),
+								(EntityPlayerMP) ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ANALYZER))
@@ -97,7 +103,9 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.ARCANE_ANALYSIS, false), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(
+								new PacketNotebookToastOrFail(NotebookCategories.ARCANE_ANALYSIS, false),
+								(EntityPlayerMP) ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
@@ -105,7 +113,9 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.CRYSTALLIZATION, false), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(
+								new PacketNotebookToastOrFail(NotebookCategories.CRYSTALLIZATION, false),
+								(EntityPlayerMP) ev.player);
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
@@ -113,7 +123,9 @@ public class ModEvents
 					{
 						info.setUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag());
 
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(NotebookCategories.MANIPULATING_MAGIC, false), (EntityPlayerMP)ev.player);
+						ArcaneMagicPacketHandler.INSTANCE.sendTo(
+								new PacketNotebookToastOrFail(NotebookCategories.MANIPULATING_MAGIC, false),
+								(EntityPlayerMP) ev.player);
 					}
 				}
 			}
