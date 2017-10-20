@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 
@@ -20,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
@@ -180,7 +182,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 					{
 						age = -200;
 					}
-					if (age == -50)
+					if (age == -10)
 					{
 						List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(getStack(0).copy(),
 								new ArrayList<>());
@@ -202,6 +204,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 						parchmentEntity.motionY = 0;
 						parchmentEntity.motionZ = 0;
 						world.spawnEntity(parchmentEntity);
+						world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success, SoundCategory.BLOCKS, 1, 1);
 						for (EssenceStack e : essenceStorage.getStored().values())
 						{
 							essenceStorage.take(e, false);

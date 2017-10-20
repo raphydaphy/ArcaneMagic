@@ -147,7 +147,7 @@ public class BlockElementalCraftingTable extends BlockBase
 				{
 					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
 							pos.getZ() + 0.5, 0f, 0.1f, 0f);
-					world.playSound(player, pos, ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1,
+					world.playSound(player, pos, ArcaneMagicSoundHandler.elemental_crafting_success, SoundCategory.BLOCKS, 1,
 							1);
 					return ret;
 				}

@@ -28,22 +28,14 @@ tile.arcanemagic.infusion_altar.name=Infusion Altar
 tile.arcanemagic.analyzer.name=Analyzer
 
 # Sounds
-subtitle.arcanemagic.craft_start=Started Crafting
+subtitle.arcanemagic.spell=Spell Cast
+subtitle.arcanemagic.reconstruct=Something Infuses
 subtitle.arcanemagic.scepter=Used Scepter
 subtitle.arcanemagic.page=Turned Page
-subtitle.arcanemagic.creak=Ominous Creak
-subtitle.arcanemagic.tool=Tool Broken
-subtitle.arcanemagic.fly=Fly Buzzes
-subtitle.arcanemagic.gore=Blood Splatters
-subtitle.arcanemagic.wind=Wind Whistles
+subtitle.arcanemagic.elemental_crafting_success=Conjured Something
 subtitle.arcanemagic.write=Wrote Something
-subtitle.arcanemagic.shock=Something Shocked
-subtitle.arcanemagic.swing=Something Swings
-subtitle.arcanemagic.squeek=Something Squeaks
-subtitle.arcanemagic.hh_on=HH Turned On
-subtitle.arcanemagic.hh_off=HH Turned Off
-subtitle.arcanemagic.learn=Notebook Page Revealed
-subtitle.arcanemagic.camera_clack=Something Clicks
+subtitle.arcanemagic.learn=Learnt Something
+subtitle.arcanemagic.clack=Something Clicks
 
 # Guis
 itemGroup.arcanemagic=Arcane Magic

@@ -20,6 +20,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.EssenceStorage;
 import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
 
 import net.minecraft.client.Minecraft;
@@ -42,6 +43,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -166,7 +168,7 @@ public class ItemScepter extends ItemBase
 						(EntityPlayerMP) player);
 			}
 		}
-
+		world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomLearnSound(), SoundCategory.BLOCKS, 1, 1);
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 

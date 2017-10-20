@@ -41,7 +41,7 @@ public class CategoryUnlockedToast implements IToast
 			this.hasPlayedSound = true;
 
 			toastGui.getMinecraft().getSoundHandler()
-					.playSound(PositionedSoundRecord.getRecord(ArcaneMagicSoundHandler.learn, 1.0F, 1.0F));
+					.playSound(PositionedSoundRecord.getRecord(ArcaneMagicSoundHandler.randomLearnSound(), 1.0F, 1.0F));
 
 		}
 

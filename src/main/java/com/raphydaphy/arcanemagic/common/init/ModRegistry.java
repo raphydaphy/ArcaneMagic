@@ -101,40 +101,19 @@ public class ModRegistry
 	public void registerSounds(Register<SoundEvent> event)
 	{
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
-		ArcaneMagicSoundHandler.register("craft_start", registry);
+		ArcaneMagicSoundHandler.register("spell", registry);
 		ArcaneMagicSoundHandler.register("scepter_1", registry);
 		ArcaneMagicSoundHandler.register("scepter_2", registry);
 		ArcaneMagicSoundHandler.register("scepter_3", registry);
 		ArcaneMagicSoundHandler.register("page_1", registry);
 		ArcaneMagicSoundHandler.register("page_2", registry);
-		ArcaneMagicSoundHandler.register("creak_1", registry);
-		ArcaneMagicSoundHandler.register("creak_2", registry);
-		ArcaneMagicSoundHandler.register("tool_1", registry);
-		ArcaneMagicSoundHandler.register("tool_2", registry);
-		ArcaneMagicSoundHandler.register("fly_1", registry);
-		ArcaneMagicSoundHandler.register("fly_2", registry);
-		ArcaneMagicSoundHandler.register("gore_1", registry);
-		ArcaneMagicSoundHandler.register("gore_2", registry);
-		ArcaneMagicSoundHandler.register("wind_1", registry);
-		ArcaneMagicSoundHandler.register("wind_2", registry);
+		ArcaneMagicSoundHandler.register("elemental_crafting_success", registry);
 		ArcaneMagicSoundHandler.register("write_1", registry);
 		ArcaneMagicSoundHandler.register("write_2", registry);
-		ArcaneMagicSoundHandler.register("shock_1", registry);
-		ArcaneMagicSoundHandler.register("shock_2", registry);
-		ArcaneMagicSoundHandler.register("swing_1", registry);
-		ArcaneMagicSoundHandler.register("swing_2", registry);
-		ArcaneMagicSoundHandler.register("squeek_1", registry);
-		ArcaneMagicSoundHandler.register("squeek_2", registry);
-		ArcaneMagicSoundHandler.register("zap_1", registry);
-		ArcaneMagicSoundHandler.register("zap_2", registry);
-		ArcaneMagicSoundHandler.register("hh_on", registry);
-		ArcaneMagicSoundHandler.register("hh_off", registry);
-		ArcaneMagicSoundHandler.register("learn", registry);
-		ArcaneMagicSoundHandler.register("infuser", registry);
-		ArcaneMagicSoundHandler.register("infuser_start", registry);
-		ArcaneMagicSoundHandler.register("camera_clack_1", registry);
-		ArcaneMagicSoundHandler.register("camera_clack_2", registry);
-		ArcaneMagicSoundHandler.register("camera_clack_3", registry);
+		ArcaneMagicSoundHandler.register("learn_1", registry);
+		ArcaneMagicSoundHandler.register("learn_2", registry);
+		ArcaneMagicSoundHandler.register("reconstruct", registry);
+		ArcaneMagicSoundHandler.register("clack", registry);
 	}
 
 	public static void registerTiles()

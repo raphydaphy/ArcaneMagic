@@ -71,7 +71,7 @@ public class EntityMagicCircles extends Entity
 
 		if (rand.nextInt(30) == 1)
 		{
-			this.playSound(ArcaneMagicSoundHandler.infuser, 1f, 1f);
+			this.playSound(ArcaneMagicSoundHandler.reconstruct, 1f, 1f);
 		}
 		this.constantRot += 1;
 
