@@ -23,16 +23,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @Mod.EventBusSubscriber
 public class ModEvents
 {
-
 	@SubscribeEvent
 	public static void onAttachCapability(AttachCapabilitiesEvent<Entity> ev)
 	{
@@ -43,9 +42,11 @@ public class ModEvents
 	}
 
 	@SubscribeEvent
-	public static void onItemCrafted(ItemCraftedEvent ev)
+	public static void onPlayerClone(PlayerEvent.Clone ev)
 	{
-
+		NotebookInfo oldCap = ev.getOriginal().getCapability(NotebookInfo.CAP, null);
+		
+		ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null).deserializeNBT(oldCap.serializeNBT());
 	}
 
 	@SubscribeEvent
