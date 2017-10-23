@@ -52,13 +52,15 @@ public class NotebookCategories
 	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY, INFERNO_CATEGORY,
 			DEPTH_CATEGORY, CHAOS_CATEGORY, PEACE_CATEGORY };
 	
+	public static final NotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic()
+			.setRegistryName(ArcaneMagic.MODID, "manipulating_magic");
+	
 	// these categories are just temporary until a real category replaces them
 	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization()
 			.setRegistryName(ArcaneMagic.MODID, "crystallization");
 	public static final NotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony()
 			.setRegistryName(ArcaneMagic.MODID, "natural_harmony");
-	public static final NotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic()
-			.setRegistryName(ArcaneMagic.MODID, "manipulating_magic");
+	
 
 	private static boolean done = false;
 
@@ -78,9 +80,10 @@ public class NotebookCategories
 		
 		ArcaneMagicAPI.registerSubCategories(NATURAL_DIVISION_PAGES);
 		
+		ArcaneMagicAPI.registerCategory(MANIPULATING_MAGIC);
+		
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);
 		ArcaneMagicAPI.registerCategory(NATURAL_HARMONY);
-		ArcaneMagicAPI.registerCategory(MANIPULATING_MAGIC);
 	}
 
 }

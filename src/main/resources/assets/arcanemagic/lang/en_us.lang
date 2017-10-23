@@ -18,6 +18,7 @@ item.arcanemagic.scribing_tools.name=Scribing Tools
 item.arcanemagic.ancient_parchment.name=Ancient Parchment
 item.arcanemagic.written_parchment.name=Written Parchment
 item.arcanemagic.mystical_illuminator.name=Mystical Illuminator
+item.arcanemagic.essence_channeling_rod.name=Essence Channeling Rod
 
 # Blocks
 tile.arcanemagic.elemental_crafting_table.name=Elemental Crafting Table
