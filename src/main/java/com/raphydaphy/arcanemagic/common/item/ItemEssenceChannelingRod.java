@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.item;
 
+import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -7,7 +8,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent.Register;
 
-public class ItemEssenceChannelingRod extends ItemBase implements IHasRecipe
+public class ItemEssenceChannelingRod extends ItemBase implements IHasRecipe, IElementalCraftingItem
 {
 	public ItemEssenceChannelingRod()
 	{
@@ -20,6 +21,10 @@ public class ItemEssenceChannelingRod extends ItemBase implements IHasRecipe
 		RecipeHelper.addShaped(this, 3, 3, null, "dustGlowstone", "dustRedstone", 
 										   null, "stickWood", "dustGlowstone",
 										   "stickWood", null, null);
+	}
+
+	@Override
+	public boolean containsEssence() {
 	}
 
 }

@@ -10,14 +10,14 @@ import javax.annotation.Nullable;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -35,6 +35,7 @@ public class ArcaneMagicAPI
 	private static ImmutableList<NotebookCategory> sorted_categories;
 
 	// i hope shadows approves
+	//literally all of this is illegal its not even using IBlockState *THIS IS HORRIBLE AAAAAAAAAA*
 	private static Map<Block, NotebookCategory> ANALYSIS_ITEMS = new HashMap<Block, NotebookCategory>();
 
 	public static List<Block> CAN_ANALYZE = new ArrayList<Block>();
@@ -231,16 +232,14 @@ public class ArcaneMagicAPI
 				.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}
 
-	public static IElementalRecipe getElementalCraftingRecipe(ItemStack wand, NonNullList<ItemStack> inputs,
-			World world)
+	public static IElementalRecipe getElementalCraftingRecipe(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> inputs, World world)
 	{
-		Preconditions.checkArgument(inputs.size() == 9);
-		if (wand.getItem() instanceof ItemScepter)
-		{
-			Preconditions.checkArgument(wand.hasTagCompound() && wand.hasCapability(IEssenceStorage.CAP, null));
-		}
+		Preconditions.checkArgument(inputs.size() == 9, "[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid input list size!");
+		Preconditions.checkArgument(wand.getItem() instanceof IElementalCraftingItem, "[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
+		Preconditions.checkArgument(wand.hasTagCompound(), "[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Needs NBT)");
+		
 		for (IElementalRecipe curRecipe : RecipeHelper.ELEMENTAL_RECIPES)
-			if (curRecipe.matches(wand, inputs, world))
+			if (curRecipe.matches(player, wand, inputs, world))
 				return curRecipe;
 		return null;
 	}

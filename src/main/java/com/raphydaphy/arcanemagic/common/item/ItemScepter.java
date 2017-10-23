@@ -13,6 +13,7 @@ import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
@@ -53,7 +54,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemScepter extends ItemBase
+public class ItemScepter extends ItemBase implements IElementalCraftingItem
 {
 	public static final String KEY_CORE = "coreType";
 	public static final String KEY_TIP = "tipType";
@@ -354,6 +355,11 @@ public class ItemScepter extends ItemBase
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt)
 	{
 		return new EssenceStorage();// This is serialisable, so Forge should handle save/load
+	}
+
+	@Override
+	public boolean containsEssence() {
+		return true;
 	}
 
 }

@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -22,7 +23,7 @@ public interface IElementalRecipe
 	/**
 	 * Used to check if a recipe matches current crafting inventory
 	 */
-	public boolean matches(ItemStack wand, NonNullList<ItemStack> stacks, World world);
+	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world);
 
 	/**
 	 * @return The recipe output stack, with access to the input.

@@ -126,7 +126,7 @@ public class BlockElementalCraftingTable extends BlockBase
 			for (int i = 0; i < 9; i++)
 				recipeInputs.set(i, cap.getStackInSlot(i));
 
-			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(stack, recipeInputs, world);
+			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(player, stack, recipeInputs, world);
 			if (foundRecipe != null)
 			{
 				if (!world.isRemote)

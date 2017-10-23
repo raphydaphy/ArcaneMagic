@@ -6,9 +6,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack.ImmutableEssenceStack;
-import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -23,7 +23,7 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 
 	public ShapelessElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, EssenceStack reqEssence)
 	{
-		Preconditions.checkArgument(inputs.size() == 9);
+		Preconditions.checkArgument(inputs.size() == 9, "Attempting to create invalid elemental recipe! (Wrong input list size)");
 		this.output = output;
 		this.inputs = inputs;
 		this.essence = reqEssence.toImmutable();
@@ -41,8 +41,8 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 	 */
 
 	@Override
-	public boolean matches(ItemStack wand, NonNullList<ItemStack> stacks, World world)
-	{
+	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world)
+	{	
 		List<ItemStack> toCheck = Lists.newArrayList(stacks);
 		for (Ingredient i : this.inputs)
 		{
@@ -56,17 +56,10 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 					toCheck.remove(ix);
 			}
 		}
-		if (wand.getItem() instanceof ItemEssenceChannelingRod)
-		{
-			if (essence.getCount() == 0)
-			{
-				return essence.isEmpty();
-			}
-			return false;
-		}
 		
-		return toCheck.isEmpty()
-				&& (essence.isEmpty() || wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null);
+		IElementalCraftingItem crafter = (IElementalCraftingItem) wand.getItem();
+		if(!crafter.matches(this, player, wand, stacks, world)) return false;
+		return toCheck.isEmpty() && (essence.isEmpty() || (crafter.containsEssence() && wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null));
 	}
 
 	@Override
