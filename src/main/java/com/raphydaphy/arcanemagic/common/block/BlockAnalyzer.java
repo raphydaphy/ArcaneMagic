@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.common.block;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -115,8 +114,8 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 			ItemStack insertStack = stack.copy();
 			if (stack.getItem().equals(Items.PAPER))
 			{
-				List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(te.getStack(0).copy(),
-						new ArrayList<>());
+				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(te.getStack(0).copy());
+				
 				if (!te.getStack(0).isEmpty() && unlockable.size() > 0 && te.getStack(1).isEmpty())
 				{
 

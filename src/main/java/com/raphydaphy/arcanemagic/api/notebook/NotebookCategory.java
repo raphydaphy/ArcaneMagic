@@ -5,6 +5,7 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 
 import akka.japi.Pair;
+//TODO: No scala pair pls
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;

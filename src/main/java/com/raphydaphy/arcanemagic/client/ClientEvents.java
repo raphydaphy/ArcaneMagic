@@ -21,6 +21,7 @@ import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -158,19 +159,18 @@ public class ClientEvents
 									BlockPos first = new BlockPos(posX + x, posY + y, posZ + z);
 									if (world.isBlockLoaded(first))
 									{
-										Block firstBlock = player.world.getBlockState(first).getBlock();
-										if (firstBlock != Blocks.AIR)
+										IBlockState state = player.world.getBlockState(first);
+										if (state.getBlock() != Blocks.AIR)
 										{
 
 											if (ClippingHelperImpl.getInstance().isBoxInFrustum(first.getX() - cx,
 													first.getY() - cy, first.getZ() - cz, first.getX() + 1 - cx,
 													first.getY() + 1 - cy, first.getZ() + 1 - cz))
 											{
-												if (ArcaneMagicAPI.canAnalyseBlock(firstBlock))
+												if (!ArcaneMagicAPI.getAnalyzer().getAnalysisResults(state).isEmpty())
 												{
 													ParticleQueue.getInstance().addParticle(world,
 															new ParticlePos(first, EnumFacing.UP, 0, 0, 0));
-
 												}
 											}
 										}

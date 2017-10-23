@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -74,7 +73,6 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			this.age = 0;
 
 			if (item != null && !item.isEmpty()
-					&& ArcaneMagicAPI.getFromAnalysis(getStack(0).copy(), new ArrayList<>()).size() > 0)
 			{
 				hasValidStack = true;
 			} else
@@ -184,34 +182,33 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 					}
 					if (age == -10)
 					{
-						List<NotebookCategory> unlockable = ArcaneMagicAPI.getFromAnalysis(getStack(0).copy(),
-								new ArrayList<>());
-						ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
-						if (!writtenParchment.hasTagCompound())
-						{
-							writtenParchment.setTagCompound(new NBTTagCompound());
-						}
-						writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
+						List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
+						if(!unlockable.isEmpty()) {
+							ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
+							if (!writtenParchment.hasTagCompound())
+								writtenParchment.setTagCompound(new NBTTagCompound());
+
+							writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
 								unlockable.get(0).getUnlocParchmentInfo().first());
-						writtenParchment.getTagCompound().setString(ItemParchment.CATEGORY,
+							writtenParchment.getTagCompound().setString(ItemParchment.CATEGORY,
 								unlockable.get(0).getUnlocalizedName());
-						writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
+							writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
 								unlockable.get(0).getUnlocParchmentInfo().second());
 
-						EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 1.5,
+							EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 1.5,
 								pos.getZ() + 0.5, writtenParchment);
-						parchmentEntity.motionX = 0;
-						parchmentEntity.motionY = 0;
-						parchmentEntity.motionZ = 0;
-						world.spawnEntity(parchmentEntity);
-						world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success, SoundCategory.BLOCKS, 1, 1);
-						for (EssenceStack e : essenceStorage.getStored().values())
-						{
-							essenceStorage.take(e, false);
-						}
+							parchmentEntity.motionX = 0;
+							parchmentEntity.motionY = 0;
+							parchmentEntity.motionZ = 0;
+							world.spawnEntity(parchmentEntity);
+							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success, SoundCategory.BLOCKS, 1, 1);
+							for (EssenceStack e : essenceStorage.getStored().values())
+								essenceStorage.take(e, false);
+
 						setStack(1, ItemStack.EMPTY);
 
 						age = 0;
+						}
 					}
 				}
 				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
