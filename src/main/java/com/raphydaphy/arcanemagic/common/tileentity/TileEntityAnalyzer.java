@@ -73,6 +73,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			this.age = 0;
 
 			if (item != null && !item.isEmpty()
+					&& ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0)).size() > 0)
 			{
 				hasValidStack = true;
 			} else
