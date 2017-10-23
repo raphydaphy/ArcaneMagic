@@ -24,6 +24,11 @@
 					"layer0": "items/glowstone_dust"
 				}
 			},
+			"essence_channeling_rod": {
+				"textures": {
+					"layer0": "items/blaze_rod"
+				}
+			},
 			"written_parchment": {
 				"textures": {
 					"layer0": "items/paper"

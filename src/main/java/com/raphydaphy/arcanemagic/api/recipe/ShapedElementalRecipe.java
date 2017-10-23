@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack.ImmutableEssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -40,6 +41,14 @@ public class ShapedElementalRecipe implements IElementalRecipe
 				continue;
 			if (!this.inputs.get(i).apply(stacks.get(i)))
 				return false;
+		}
+		if (wand.getItem() instanceof ItemEssenceChannelingRod)
+		{
+			if (essence.getCount() == 0)
+			{
+				return essence.isEmpty();
+			}
+			return false;
 		}
 		return essence.isEmpty() || wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null;
 	}

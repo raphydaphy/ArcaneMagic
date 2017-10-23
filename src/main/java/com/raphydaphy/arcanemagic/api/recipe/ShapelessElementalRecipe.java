@@ -6,6 +6,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack.ImmutableEssenceStack;
+import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 
 import net.minecraft.item.ItemStack;
@@ -55,6 +56,15 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 					toCheck.remove(ix);
 			}
 		}
+		if (wand.getItem() instanceof ItemEssenceChannelingRod)
+		{
+			if (essence.getCount() == 0)
+			{
+				return essence.isEmpty();
+			}
+			return false;
+		}
+		
 		return toCheck.isEmpty()
 				&& (essence.isEmpty() || wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null);
 	}

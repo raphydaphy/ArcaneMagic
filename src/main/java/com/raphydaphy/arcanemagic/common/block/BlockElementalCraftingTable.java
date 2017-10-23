@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
@@ -114,7 +115,7 @@ public class BlockElementalCraftingTable extends BlockBase
 		}
 		ItemStack stack = player.getHeldItem(hand);
 		boolean ret = false;
-		if (stack.getItem() instanceof ItemScepter)
+		if (stack.getItem() instanceof ItemScepter || stack.getItem() instanceof ItemEssenceChannelingRod)
 		{
 			ret = true;
 			

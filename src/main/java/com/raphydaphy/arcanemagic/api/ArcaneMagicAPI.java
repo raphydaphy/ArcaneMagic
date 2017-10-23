@@ -14,6 +14,7 @@ import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.Block;
@@ -234,7 +235,10 @@ public class ArcaneMagicAPI
 			World world)
 	{
 		Preconditions.checkArgument(inputs.size() == 9);
-		Preconditions.checkArgument(wand.hasTagCompound() && wand.hasCapability(IEssenceStorage.CAP, null));
+		if (wand.getItem() instanceof ItemScepter)
+		{
+			Preconditions.checkArgument(wand.hasTagCompound() && wand.hasCapability(IEssenceStorage.CAP, null));
+		}
 		for (IElementalRecipe curRecipe : RecipeHelper.ELEMENTAL_RECIPES)
 			if (curRecipe.matches(wand, inputs, world))
 				return curRecipe;
