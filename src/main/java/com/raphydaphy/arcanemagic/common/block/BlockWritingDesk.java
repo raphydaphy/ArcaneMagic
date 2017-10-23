@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +32,7 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 
 	public BlockWritingDesk()
 	{
-		super("writing_desk", Material.WOOD, 2.5f);
+		super("writing_desk", Material.WOOD, 2.5f, SoundType.WOOD);
 	}
 
 	@Override

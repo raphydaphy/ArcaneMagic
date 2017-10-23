@@ -11,6 +11,7 @@ import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -40,7 +41,7 @@ public class BlockElementalCraftingTable extends BlockBase
 
 	public BlockElementalCraftingTable()
 	{
-		super("elemental_crafting_table", Material.WOOD, 2.5f);
+		super("elemental_crafting_table", Material.WOOD, 2.5f, SoundType.WOOD);
 
 		this.setLightLevel(1f);
 	}
