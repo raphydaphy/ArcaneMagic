@@ -25,6 +25,7 @@ public class ItemEssenceChannelingRod extends ItemBase implements IHasRecipe, IE
 
 	@Override
 	public boolean containsEssence() {
+		return false;
 	}
 
 }
