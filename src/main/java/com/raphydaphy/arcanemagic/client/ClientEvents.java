@@ -8,6 +8,8 @@ import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
+import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
+import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
@@ -15,7 +17,6 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
-import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
@@ -46,11 +47,28 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
 public class ClientEvents
 {
+	@SubscribeEvent
+	public static void onClientTick(ClientTickEvent ev)
+	{
+		World world = Minecraft.getMinecraft().world;
+
+		if (world != null)
+		{
+			EntityPlayer player = Minecraft.getMinecraft().player;
+
+			if (player != null)
+			{
+				ParticleQueue.getInstance().updateQueue(world, player);
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public static void onRenderHand(RenderSpecificHandEvent ev)
 	{
@@ -118,7 +136,6 @@ public class ClientEvents
 				if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
 						|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
 				{
-					ItemIlluminator i = ModRegistry.MYSTICAL_ILLUMINATOR;
 					float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
 
 					double posX = player.posX;
@@ -151,7 +168,8 @@ public class ClientEvents
 											{
 												if (ArcaneMagicAPI.canAnalyseBlock(firstBlock))
 												{
-													i.addParticle(world, first, EnumFacing.UP, 0, 0, 0);
+													ParticleQueue.getInstance().addParticle(world,
+															new ParticlePos(first, EnumFacing.UP, 0, 0, 0));
 
 												}
 											}

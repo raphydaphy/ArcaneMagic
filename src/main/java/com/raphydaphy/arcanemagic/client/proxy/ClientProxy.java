@@ -5,6 +5,8 @@ import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.model.SceptreModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
+import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
+import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
 import com.raphydaphy.arcanemagic.client.render.CrystallizerTESR;
 import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
@@ -89,7 +91,7 @@ public class ClientProxy extends CommonProxy
 	{
 		if (world.isRemote)
 		{
-			item.addParticle(world, pos, facing, hitX, hitY, hitZ);
+			ParticleQueue.getInstance().addParticle(world, new ParticlePos(pos, facing, hitX, hitY, hitZ));
 		}
 	}
 

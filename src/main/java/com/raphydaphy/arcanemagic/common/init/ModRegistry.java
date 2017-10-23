@@ -43,7 +43,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 public class ModRegistry
 {
-
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
@@ -60,7 +59,8 @@ public class ModRegistry
 	public static final ItemBase CORE = new ItemCore();
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
-	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values(), TextFormatting.DARK_AQUA);
+	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values(),
+			TextFormatting.DARK_AQUA);
 	public static final ItemBase CREATION = new ItemBase("essence_creation", TextFormatting.GOLD);
 	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
 	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");

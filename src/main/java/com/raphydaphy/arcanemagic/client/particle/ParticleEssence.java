@@ -8,6 +8,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -23,6 +24,7 @@ public class ParticleEssence extends Particle
 	private final Vec3d startPos;
 	private int speedDivisor = 30;
 	private final boolean isCosmetic;
+	private final Essence essence;
 
 	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
 			double ySpeedIn, double zSpeedIn, Essence essence, Vec3d travelPos, boolean isCosmetic)
@@ -40,6 +42,7 @@ public class ParticleEssence extends Particle
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
 		this.isCosmetic = isCosmetic;
+		this.essence = essence;
 
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
 				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball").toString());
@@ -103,9 +106,30 @@ public class ParticleEssence extends Particle
 		{
 			distZ /= 3;
 		}
-		this.motionX = distX / (speedDivisor + rand.nextDouble());
-		this.motionY = distY / (speedDivisor + rand.nextDouble());
-		this.motionZ = distZ / (speedDivisor + rand.nextDouble());
+
+		int modifiedSpeedDivisor = speedDivisor;
+		BlockPos pos = new BlockPos(posX, posY, posZ);
+		if (essence.equals(Essence.DEPTH))
+		{
+			if (world.getBlockState(pos).getBlock() != Blocks.WATER)
+			{
+				modifiedSpeedDivisor = speedDivisor * 10;
+			}
+		} else if (essence.equals(Essence.CHAOS))
+		{
+			if (rand.nextInt(30) == 1)
+			{
+				float hardness = world.getBlockState(pos).getBlockHardness(world, pos);
+				if (!world.isAirBlock(pos) && hardness > 0 && hardness < 15)
+				{
+					//world.setBlockToAir(pos);
+				}
+			}
+
+		}
+		this.motionX = distX / (modifiedSpeedDivisor + rand.nextDouble());
+		this.motionY = distY / (modifiedSpeedDivisor + rand.nextDouble());
+		this.motionZ = distZ / (modifiedSpeedDivisor + rand.nextDouble());
 
 	}
 
