@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -38,7 +39,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 
 	public BlockAnalyzer()
 	{
-		super("analyzer", Material.WOOD, 2.5f);
+		super("analyzer", Material.WOOD, 2.5f, SoundType.WOOD);
 	}
 
 	@Override

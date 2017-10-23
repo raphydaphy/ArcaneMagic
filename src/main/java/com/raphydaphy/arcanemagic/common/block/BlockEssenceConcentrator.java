@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.common.block;
 
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,7 @@ public class BlockEssenceConcentrator extends BlockBase
 
 	public BlockEssenceConcentrator()
 	{
-		super("essence_concentrator", Material.ROCK, 2.5f);
+		super("essence_concentrator", Material.ROCK, 2.5f, SoundType.STONE);
 	}
 
 	@Override

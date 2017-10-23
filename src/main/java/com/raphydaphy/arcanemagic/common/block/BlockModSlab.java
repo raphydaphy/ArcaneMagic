@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 
 import com.raphydaphy.arcanemagic.common.item.ItemBlockModSlab;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -32,9 +33,9 @@ public class BlockModSlab extends BlockBase
 	public static final PropertyEnum<SlabVariant> VARIANT = PropertyEnum.<SlabVariant>create("slab_variant",
 			SlabVariant.class);
 
-	public BlockModSlab(String name, Material material)
+	public BlockModSlab(String name, Material material, SoundType type)
 	{
-		super(name, material, 1.8f);
+		super(name, material, 1.8f, type);
 		useNeighborBrightness = true;
 		setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, SlabVariant.LOWER));
 		;

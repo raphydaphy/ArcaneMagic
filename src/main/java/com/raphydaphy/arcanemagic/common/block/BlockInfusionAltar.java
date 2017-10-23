@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -31,7 +32,7 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 
 	public BlockInfusionAltar()
 	{
-		super("infusion_altar", Material.ROCK, 5.5f);
+		super("infusion_altar", Material.ROCK, 5.5f, SoundType.STONE);
 	}
 
 	@Override

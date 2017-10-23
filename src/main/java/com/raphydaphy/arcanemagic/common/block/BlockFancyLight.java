@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -19,7 +20,7 @@ public class BlockFancyLight extends BlockBase
 {
 	public BlockFancyLight()
 	{
-		super("fancy_light", Material.AIR, 0.0f);
+		super("fancy_light", Material.AIR, 0.0f, SoundType.SNOW);
 		setTickRandomly(false);
 		setLightLevel(1.0F);
 	}

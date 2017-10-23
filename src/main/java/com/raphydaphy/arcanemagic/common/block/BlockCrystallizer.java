@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.common.block;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +27,7 @@ public class BlockCrystallizer extends BlockBase
 
 	public BlockCrystallizer()
 	{
-		super("crystallizer", Material.ROCK, 2.5f);
+		super("crystallizer", Material.ROCK, 2.5f, SoundType.STONE);
 	}
 
 	@Override
