@@ -109,6 +109,8 @@ public class ArcaneMagic
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.BROWN_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.RED_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
 		
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.GLOWSTONE, NotebookCategories.ESSENCE_MANIPULATION);
+		
 		proxy.postInit(event);
 	}
 
