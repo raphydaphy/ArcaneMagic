@@ -214,7 +214,7 @@ public class GuiNotebook extends GuiScreen
 			GlStateManager.popMatrix();
 
 			ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).get(curPage).drawPost(screenX + 145,
-					screenY + 40, mouseX, mouseY, this);
+					screenY + (shouldDrawTitle ? 40 : 18), mouseX, mouseY, this);
 
 			// Goodbye matrix!
 			GlStateManager.popAttrib();

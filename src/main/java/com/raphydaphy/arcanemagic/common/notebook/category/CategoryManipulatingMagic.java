@@ -8,6 +8,7 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
@@ -32,23 +33,22 @@ public class CategoryManipulatingMagic extends NotebookCategory
 		{
 			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
-		ItemStack[][] elementalCraftingTableRecipe = { { ItemStack.EMPTY, new ItemStack(Items.BLAZE_ROD), ItemStack.EMPTY },
-				{ new ItemStack(Items.BLAZE_ROD), new ItemStack(Items.PRISMARINE_CRYSTALS),
-						new ItemStack(Items.BLAZE_ROD) },
-				{ new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.IRON_BLOCK),
-						new ItemStack(Blocks.IRON_BLOCK) } };
-		page0.add(new NotebookEntryCraftingRecipe(elementalCraftingTableRecipe, new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE)));
+
 		pages.add(new NotebookPage(page0));
 		List<INotebookEntry> page1 = new ArrayList<INotebookEntry>();
-		for (int i = 2; i < 4; i++)
-		{
-			page1.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
-		}
-		ItemStack[][] essenceChannelingRodRecipe = { { ItemStack.EMPTY, new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.REDSTONE) },
-				{ ItemStack.EMPTY, new ItemStack(Items.STICK),
-						new ItemStack(Items.GLOWSTONE_DUST) },
+		ItemStack[][] elementalCraftingTableRecipe = {
+				{ ItemStack.EMPTY, new ItemStack(Items.GLOWSTONE_DUST), ItemStack.EMPTY },
+				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.CRAFTING_TABLE), new ItemStack(Blocks.PLANKS) },
+				{ new ItemStack(Blocks.PLANKS), ItemStack.EMPTY, new ItemStack(Blocks.PLANKS) } };
+		page1.add(new NotebookEntryCraftingRecipe(elementalCraftingTableRecipe,
+				new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE)));
+		page1.add(new NotebookEntryText(getUnlocalizedName() + ".2", 0x000000));
+		ItemStack[][] essenceChannelingRodRecipe = {
+				{ ItemStack.EMPTY, new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.REDSTONE) },
+				{ ItemStack.EMPTY, new ItemStack(Items.STICK), new ItemStack(Items.GLOWSTONE_DUST) },
 				{ new ItemStack(Items.STICK), ItemStack.EMPTY, ItemStack.EMPTY } };
-		page1.add(new NotebookEntryCraftingRecipe(essenceChannelingRodRecipe, new ItemStack(ModRegistry.ESSENCE_CHANNELING_ROD)));
+		page1.add(new NotebookEntryCraftingRecipe(essenceChannelingRodRecipe,
+				new ItemStack(ModRegistry.ESSENCE_CHANNELING_ROD)));
 		pages.add(new NotebookPage(page1));
 		return pages;
 	}
@@ -57,6 +57,12 @@ public class CategoryManipulatingMagic extends NotebookCategory
 	public String getRequiredTag()
 	{
 		return "unlockedManipulatingMagic";
+	}
+
+	@Override
+	public String getPrerequisiteTag()
+	{
+		return NotebookCategories.FOUNDATIONS_OF_MAGIC.getRequiredTag();
 	}
 
 	@Override

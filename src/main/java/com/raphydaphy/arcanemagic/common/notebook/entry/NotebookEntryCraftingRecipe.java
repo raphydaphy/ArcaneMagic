@@ -68,7 +68,10 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 
-		// Adjust the x and y to make renderering easier
+		// dodgy way of making the texture render properly. Not sure what GL thing I need to change for it to work without this/
+		notebook.mc.fontRenderer.drawString("", x, y, 0x000000);
+
+		// Adjust the x and y to make rendering easier
 		x += 22;
 		y += 3;
 
