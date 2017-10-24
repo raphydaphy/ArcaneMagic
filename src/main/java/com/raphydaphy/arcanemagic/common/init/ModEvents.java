@@ -68,6 +68,7 @@ public class ModEvents
 	{
 		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
 		{
+			System.out.println(Item.getItemFromBlock(Blocks.REDSTONE_ORE));
 			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
 
 			if (info != null)
@@ -108,23 +109,13 @@ public class ModEvents
 								(EntityPlayerMP) ev.player);
 					}
 
-					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
-							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
+					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
+							&& !info.isUnlocked(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
 								new PacketNotebookToastOrFail(NotebookCategories.CRYSTALLIZATION, false),
-								(EntityPlayerMP) ev.player);
-					}
-
-					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
-							&& !info.isUnlocked(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag()))
-					{
-						info.setUnlocked(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag());
-
-						ArcaneMagicPacketHandler.INSTANCE.sendTo(
-								new PacketNotebookToastOrFail(NotebookCategories.ESSENCE_MANIPULATION, false),
 								(EntityPlayerMP) ev.player);
 					}
 				}

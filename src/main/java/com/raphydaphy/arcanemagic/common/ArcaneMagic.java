@@ -19,6 +19,7 @@ import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -83,6 +84,7 @@ public class ArcaneMagic
 		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(new ItemStack(Items.REDSTONE), NotebookCategories.MAGICAL_INSIGHTS);
 		
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.DOUBLE_PLANT, NotebookCategories.FOUNDATIONS_OF_MAGIC);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.RED_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
