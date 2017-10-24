@@ -13,6 +13,7 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class AnalysisManager {
@@ -47,6 +48,10 @@ public class AnalysisManager {
 	public void registerForAnalysis(ItemStack stack, NotebookCategory... cats) {
 		registerForAnalysis(new AnalysisStack(stack), cats);
 	}
+	
+	public void registerForAnalysis(Item item, NotebookCategory... cats) {
+		registerForAnalysis(new AnalysisStack(item), cats);
+	}
 
 	public void registerForAnalysis(IBlockState state, NotebookCategory... cats) {
 		registerForAnalysis(new AnalysisIngredient(state), cats);
@@ -54,6 +59,11 @@ public class AnalysisManager {
 
 	public void registerForAnalysis(Block block, NotebookCategory... cats) {
 		registerForAnalysis(new AnalysisIngredient(block), cats);
+	}
+	
+	public void registerForAnalysisWithItem(Block block, NotebookCategory... cats) {
+		registerForAnalysis(block, cats);
+		registerForAnalysis(Item.getItemFromBlock(block), cats);
 	}
 
 }

@@ -84,32 +84,32 @@ public class ArcaneMagic
 		
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.DOUBLE_PLANT, NotebookCategories.FOUNDATIONS_OF_MAGIC);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.RED_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.YELLOW_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.RED_MUSHROOM, NotebookCategories.FOUNDATIONS_OF_MAGIC);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.BROWN_MUSHROOM, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.DOUBLE_PLANT, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.RED_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.YELLOW_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.RED_MUSHROOM, NotebookCategories.FOUNDATIONS_OF_MAGIC);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.BROWN_MUSHROOM, NotebookCategories.FOUNDATIONS_OF_MAGIC);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.LEAVES, NotebookCategories.NATURAL_DIVISIONS);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.LEAVES2, NotebookCategories.NATURAL_DIVISIONS);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.LEAVES, NotebookCategories.NATURAL_DIVISIONS);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.LEAVES2, NotebookCategories.NATURAL_DIVISIONS);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.TALLGRASS, NotebookCategories.HORIZON_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.TALLGRASS, NotebookCategories.HORIZON_CATEGORY);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.SNOW, NotebookCategories.OZONE_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.SNOW, NotebookCategories.OZONE_CATEGORY);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.MAGMA, NotebookCategories.INFERNO_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.MAGMA, NotebookCategories.INFERNO_CATEGORY);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.PRISMARINE, NotebookCategories.DEPTH_CATEGORY);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.SEA_LANTERN, NotebookCategories.DEPTH_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.PRISMARINE, NotebookCategories.DEPTH_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.SEA_LANTERN, NotebookCategories.DEPTH_CATEGORY);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.STAINED_HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.STAINED_HARDENED_CLAY, NotebookCategories.CHAOS_CATEGORY);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.MYCELIUM, NotebookCategories.PEACE_CATEGORY);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.BROWN_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.RED_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.MYCELIUM, NotebookCategories.PEACE_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.BROWN_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.RED_MUSHROOM_BLOCK, NotebookCategories.PEACE_CATEGORY);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.GLOWSTONE, NotebookCategories.ESSENCE_MANIPULATION);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.GLOWSTONE, NotebookCategories.ESSENCE_MANIPULATION);
 		
 		proxy.postInit(event);
 	}
