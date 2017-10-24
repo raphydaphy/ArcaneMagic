@@ -10,7 +10,7 @@ import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallizati
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryForgottenKnowledge;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryFoundationsOfMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryMagicalInsights;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryManipulatingMagic;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryEssenceManipulation;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisions;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisionsSub;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalHarmony;
@@ -52,8 +52,8 @@ public class NotebookCategories
 	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY, INFERNO_CATEGORY,
 			DEPTH_CATEGORY, CHAOS_CATEGORY, PEACE_CATEGORY };
 	
-	public static final NotebookCategory MANIPULATING_MAGIC = new CategoryManipulatingMagic()
-			.setRegistryName(ArcaneMagic.MODID, "manipulating_magic");
+	public static final NotebookCategory ESSENCE_MANIPULATION = new CategoryEssenceManipulation()
+			.setRegistryName(ArcaneMagic.MODID, "essence_manipulation");
 	
 	// these categories are just temporary until a real category replaces them
 	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization()
@@ -80,7 +80,7 @@ public class NotebookCategories
 		
 		ArcaneMagicAPI.registerSubCategories(NATURAL_DIVISION_PAGES);
 		
-		ArcaneMagicAPI.registerCategory(MANIPULATING_MAGIC);
+		ArcaneMagicAPI.registerCategory(ESSENCE_MANIPULATION);
 		
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);
 		ArcaneMagicAPI.registerCategory(NATURAL_HARMONY);

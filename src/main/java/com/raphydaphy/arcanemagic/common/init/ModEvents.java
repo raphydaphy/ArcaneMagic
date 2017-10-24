@@ -119,12 +119,12 @@ public class ModEvents
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
-							&& !info.isUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag()))
+							&& !info.isUnlocked(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag()))
 					{
-						info.setUnlocked(NotebookCategories.MANIPULATING_MAGIC.getRequiredTag());
+						info.setUnlocked(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
-								new PacketNotebookToastOrFail(NotebookCategories.MANIPULATING_MAGIC, false),
+								new PacketNotebookToastOrFail(NotebookCategories.ESSENCE_MANIPULATION, false),
 								(EntityPlayerMP) ev.player);
 					}
 				}

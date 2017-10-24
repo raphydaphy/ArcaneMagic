@@ -16,12 +16,12 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryManipulatingMagic extends NotebookCategory
+public class CategoryEssenceManipulation extends NotebookCategory
 {
 	@Override
 	public String getUnlocalizedName()
 	{
-		return "arcanemagic.notebook.category.manipulating_magic";
+		return "arcanemagic.notebook.category.essence_manipulation";
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CategoryManipulatingMagic extends NotebookCategory
 	@Override
 	public String getRequiredTag()
 	{
-		return "unlockedManipulatingMagic";
+		return "unlockedEssenceManipulation";
 	}
 
 	@Override
@@ -68,6 +68,6 @@ public class CategoryManipulatingMagic extends NotebookCategory
 	@Override
 	public ItemStack getIcon()
 	{
-		return new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE);
+		return new ItemStack(ModRegistry.ESSENCE_CHANNELING_ROD);
 	}
 }
