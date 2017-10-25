@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -113,7 +114,7 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addShaped(this, 3, 3, null, "formationEssence", null, "obsidian", "obsidian", "obsidian",
+		RecipeHelper.addElementalShaped(this,Essence.CREATION, 30,  null, "formationEssence", null, "obsidian", "obsidian", "obsidian",
 				"obsidian", null, "obsidian");
 	}
 }

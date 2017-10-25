@@ -6,14 +6,14 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryAncientRelics;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryArcaneAnalysis;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallization;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryElementalCrafting;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryEssenceManipulation;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryForgottenKnowledge;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryFoundationsOfMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryMagicalInsights;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryEssenceManipulation;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisions;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisionsSub;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalHarmony;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallization;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryUnknownRealms;
 
 public class NotebookCategories
@@ -54,12 +54,10 @@ public class NotebookCategories
 	
 	public static final NotebookCategory ESSENCE_MANIPULATION = new CategoryEssenceManipulation()
 			.setRegistryName(ArcaneMagic.MODID, "essence_manipulation");
-	
-	// these categories are just temporary until a real category replaces them
+	public static final NotebookCategory ELEMENTAL_CRAFTING = new CategoryElementalCrafting()
+			.setRegistryName(ArcaneMagic.MODID, "elemental_crafting");
 	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization()
 			.setRegistryName(ArcaneMagic.MODID, "crystallization");
-	public static final NotebookCategory NATURAL_HARMONY = new CategoryNaturalHarmony()
-			.setRegistryName(ArcaneMagic.MODID, "natural_harmony");
 	
 
 	private static boolean done = false;
@@ -81,9 +79,8 @@ public class NotebookCategories
 		ArcaneMagicAPI.registerSubCategories(NATURAL_DIVISION_PAGES);
 		
 		ArcaneMagicAPI.registerCategory(ESSENCE_MANIPULATION);
-		
+		ArcaneMagicAPI.registerCategory(ELEMENTAL_CRAFTING);
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);
-		ArcaneMagicAPI.registerCategory(NATURAL_HARMONY);
 	}
 
 }

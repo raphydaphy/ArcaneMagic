@@ -3,17 +3,22 @@ package com.raphydaphy.arcanemagic.common.item;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
+import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent.Register;
 
-public class ItemIlluminator extends ItemBase {
+public class ItemIlluminator extends ItemBase implements IHasRecipe{
 	public ItemIlluminator() {
 		super("mystical_illuminator", TextFormatting.GRAY);
 		setMaxStackSize(1);
@@ -35,5 +40,12 @@ public class ItemIlluminator extends ItemBase {
 			}
 		}
 		return EnumActionResult.PASS;
+	}
+	
+	@Override
+	public void initRecipes(Register<IRecipe> e)
+	{
+		RecipeHelper.addShaped(this, 3, 3, null, "dustRedstone", null, "dustRedstone", Items.COMPASS, "dustRedstone",
+				null, "dustRedstone", null);
 	}
 }

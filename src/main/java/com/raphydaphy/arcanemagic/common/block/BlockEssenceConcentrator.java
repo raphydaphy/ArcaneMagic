@@ -1,6 +1,8 @@
 package com.raphydaphy.arcanemagic.common.block;
 
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
+import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -8,8 +10,11 @@ import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -18,8 +23,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent.Register;
 
-public class BlockEssenceConcentrator extends BlockBase
+public class BlockEssenceConcentrator extends BlockBase implements IHasRecipe
 {
 	public static final int GUI_ID = 3;
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 6d * (1d / 16d), 1.0D);
@@ -129,5 +135,11 @@ public class BlockEssenceConcentrator extends BlockBase
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public void initRecipes(Register<IRecipe> e)
+	{
+		RecipeHelper.addElementalShaped(this, null, 0, null,Items.REDSTONE,null,Items.GLOWSTONE_DUST,Blocks.IRON_BLOCK,Items.GLOWSTONE_DUST,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK);
 	}
 }

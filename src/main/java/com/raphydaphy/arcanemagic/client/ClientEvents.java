@@ -1,12 +1,14 @@
 package com.raphydaphy.arcanemagic.client;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.logging.log4j.Level;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
@@ -14,6 +16,7 @@ import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -133,58 +136,79 @@ public class ClientEvents
 			if (world.getTotalWorldTime() % 38 == 0)
 			{
 				long oldNano = System.nanoTime();
-				int range = 20;
-				if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
-						|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
+				NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+				
+				if (info != null)
 				{
-					float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
-
-					double posX = player.posX;
-					double posY = player.posY;
-					double posZ = player.posZ;
-
-					Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
-					double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
-					double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
-					double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
-
-					for (int x = -range; x < range; x++)
+					int range = 20;
+					if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
+							|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
 					{
-						for (int y = -range; y < range; y++)
-						{
-							if (posY + y > 0 && posY + y < 256)
-							{
-								for (int z = -range; z < range; z++)
-								{
-									BlockPos first = new BlockPos(posX + x, posY + y, posZ + z);
-									if (world.isBlockLoaded(first))
-									{
-										IBlockState state = player.world.getBlockState(first);
-										if (state.getBlock() != Blocks.AIR)
-										{
+						float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
 
-											if (ClippingHelperImpl.getInstance().isBoxInFrustum(first.getX() - cx,
-													first.getY() - cy, first.getZ() - cz, first.getX() + 1 - cx,
-													first.getY() + 1 - cy, first.getZ() + 1 - cz))
+						double posX = player.posX;
+						double posY = player.posY;
+						double posZ = player.posZ;
+
+						Entity entity = Minecraft.getMinecraft().getRenderViewEntity();
+						double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
+						double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
+						double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
+						
+						for (int x = -range; x < range; x++)
+						{
+							for (int y = -range; y < range; y++)
+							{
+								if (posY + y > 0 && posY + y < 256)
+								{
+									for (int z = -range; z < range; z++)
+									{
+										BlockPos first = new BlockPos(posX + x, posY + y, posZ + z);
+										if (world.isBlockLoaded(first))
+										{
+											IBlockState state = player.world.getBlockState(first);
+											if (state.getBlock() != Blocks.AIR)
 											{
-												if (!ArcaneMagicAPI.getAnalyzer().getAnalysisResults(state).isEmpty())
+
+												if (ClippingHelperImpl.getInstance().isBoxInFrustum(first.getX() - cx,
+														first.getY() - cy, first.getZ() - cz, first.getX() + 1 - cx,
+														first.getY() + 1 - cy, first.getZ() + 1 - cz))
 												{
-													ParticleQueue.getInstance().addParticle(world,
-															new ParticlePos(first, EnumFacing.UP, 0, 0, 0));
+													List<NotebookCategory> obtainable = ArcaneMagicAPI.getAnalyzer()
+															.getAnalysisResults(state);
+													
+													if (!obtainable.isEmpty())
+													{
+														
+														boolean add = false;
+														for (NotebookCategory couldGet : obtainable)
+														{
+															if (!info.isUnlocked(couldGet.getRequiredTag())
+																	&& info.isUnlocked(couldGet.getPrerequisiteTag()))
+															{
+																add = true;
+															}
+														}
+														if (add)
+														{
+															ParticleQueue.getInstance().addParticle(world,
+																	new ParticlePos(first, EnumFacing.UP, 0, 0, 0));
+														}
+													}
 												}
 											}
 										}
-									}
 
+									}
 								}
 							}
 						}
 					}
-
+					int diameter = range * 2;
+					ArcaneMagic.LOGGER.log(Level.DEBUG, "Particle Calculations for " + diameter + "x" + diameter + "x"
+							+ diameter + " area took " + (System.nanoTime() - oldNano) + " nanos");
 				}
-				int diameter = range * 2;
-				ArcaneMagic.LOGGER.log(Level.DEBUG, "Particle Calculations for " + diameter + "x" + diameter + "x"
-						+ diameter + " area took " + (System.nanoTime() - oldNano) + " nanos");
+
 			}
 		}
 	}

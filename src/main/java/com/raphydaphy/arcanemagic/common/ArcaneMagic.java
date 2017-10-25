@@ -14,9 +14,7 @@ import com.raphydaphy.arcanemagic.common.init.ModEntities;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
-import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -74,18 +72,12 @@ public class ArcaneMagic
 	public void postInit(FMLPostInitializationEvent event)
 	{
 		NotebookCategories.register();
-
-		Block s = Blocks.STONE;
-		RecipeHelper.addElementalShaped(Items.DYE, Essence.HORIZON, 25, s, s, s, null, null, null, s, s, s);
-		Block g = Blocks.GLOWSTONE;
-		RecipeHelper.addElementalShaped(Items.QUARTZ, Essence.PEACE, 10, g, null, g, null, g, null, g, null, g);
-		RecipeHelper.addElementalShapeless(ModRegistry.ANCIENT_PARCHMENT, Essence.CHAOS, 150, "plankWood", "plankWood",
-				"cobblestone", g, s);
-		RecipeHelper.addElementalShapeless(ModRegistry.ESSENCE, null, 0, "plankWood", "plankWood", g, s);
 		
-		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.REDSTONE_ORE, NotebookCategories.MAGICAL_INSIGHTS);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(new ItemStack(Items.REDSTONE), NotebookCategories.MAGICAL_INSIGHTS);
 		
+		// yaY plants
+		ArcaneMagicAPI.getAnalyzer().registerForAnalysis("plant", NotebookCategories.FOUNDATIONS_OF_MAGIC);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.DOUBLE_PLANT, NotebookCategories.FOUNDATIONS_OF_MAGIC);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.RED_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.YELLOW_FLOWER, NotebookCategories.FOUNDATIONS_OF_MAGIC);

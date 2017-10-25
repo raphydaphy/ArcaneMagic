@@ -10,6 +10,8 @@ import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
+import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
+import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -20,6 +22,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -31,10 +34,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockElementalCraftingTable extends BlockBase
+public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 {
 	public static final int GUI_ID = 2;
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 9d * (1d / 16d), 1.0D);
@@ -227,5 +231,12 @@ public class BlockElementalCraftingTable extends BlockBase
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public void initRecipes(Register<IRecipe> e)
+	{
+		RecipeHelper.addShaped(this, 3, 3, null, "dustGlowstone", null, "plankWood", "workbench", "plankWood",
+				"plankWood", null, "plankWood");
 	}
 }

@@ -124,6 +124,9 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry
 		// Draw the output item in the recipe
 		notebook.mc.getRenderItem().renderItemAndEffectIntoGUI(recipeOut, x + 113, y + 25);
 
+		// So that it works when we render normal stuff after
+		RenderHelper.disableStandardItemLighting();
+		
 		// Go back to the main render matrix
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();

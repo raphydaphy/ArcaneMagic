@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -154,7 +155,7 @@ public class BlockWritingDesk extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addShaped(this, 3, 3, "paper", "dyeBlack", "paper", "plankWood", "plankWood", "plankWood",
-				"plankWood", null, "plankWood");
+		RecipeHelper.addElementalShaped(this, Essence.CREATION, 15, "paper", "dyeBlack", "paper", "plankWood",
+				"plankWood", "plankWood", "plankWood", null, "plankWood");
 	}
 }
