@@ -73,32 +73,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		{
 			this.age = 0;
 
-			hasValidStack = false;
-
-			if (stackOwner != null)
-			{
-				EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
-				if (player != null)
-				{
-					List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
-					if (item != null && !item.isEmpty() && unlockable.size() > 0)
-					{
-						NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
-						if (info != null)
-						{
-							for (NotebookCategory c : unlockable)
-							{
-								if (info.isUnlocked(c.getPrerequisiteTag()) && !info.isUnlocked(c.getRequiredTag()))
-								{
-									hasValidStack = true;
-									break;
-								}
-							}
-						}
-
-					}
-				}
-			}
+			evaulateStack();
 		}
 
 		markDirty();
@@ -144,6 +119,36 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		}
 
 		hasValidStack = compound.getBoolean("hasValidStack");
+	}
+	
+	public void evaulateStack()
+	{
+		hasValidStack = false;
+
+		if (stackOwner != null)
+		{
+			EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
+			if (player != null)
+			{
+				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
+				if (getStack(0) != null && !getStack(0).isEmpty() && unlockable.size() > 0)
+				{
+					NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+					if (info != null)
+					{
+						for (NotebookCategory c : unlockable)
+						{
+							if (info.isUnlocked(c.getPrerequisiteTag()) && !info.isUnlocked(c.getRequiredTag()))
+							{
+								hasValidStack = true;
+								break;
+							}
+						}
+					}
+
+				}
+			}
+		}
 	}
 
 	@Override
@@ -206,23 +211,47 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 								.getAnalysisResults(getStack(0));
 						if (!unlockable.isEmpty())
 						{
-							ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
-							if (!writtenParchment.hasTagCompound())
-								writtenParchment.setTagCompound(new NBTTagCompound());
+							if (stackOwner != null)
+							{
+								EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
+								if (player != null)
+								{
+									NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+									if (info != null)
+									{
+										for (NotebookCategory cat : unlockable)
+										{
+											if (info.isUnlocked(cat.getPrerequisiteTag())
+													&& !info.isUnlocked(cat.getRequiredTag()))
+											{
+												ItemStack writtenParchment = new ItemStack(
+														ModRegistry.WRITTEN_PARCHMENT, 1);
+												if (!writtenParchment.hasTagCompound())
+												{
+													writtenParchment.setTagCompound(new NBTTagCompound());
+												}
 
-							writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
-									unlockable.get(0).getUnlocParchmentInfo().first());
-							writtenParchment.getTagCompound().setString(ItemParchment.CATEGORY,
-									unlockable.get(0).getUnlocalizedName());
-							writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
-									unlockable.get(0).getUnlocParchmentInfo().second());
+												writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
+														cat.getUnlocParchmentInfo().first());
+												writtenParchment.getTagCompound().setString(ItemParchment.CATEGORY,
+														cat.getUnlocalizedName());
+												writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
+														cat.getUnlocParchmentInfo().second());
 
-							EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5,
-									pos.getY() + 1.5, pos.getZ() + 0.5, writtenParchment);
-							parchmentEntity.motionX = 0;
-							parchmentEntity.motionY = 0;
-							parchmentEntity.motionZ = 0;
-							world.spawnEntity(parchmentEntity);
+												EntityItemFancy parchmentEntity = new EntityItemFancy(world,
+														pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
+														writtenParchment);
+												parchmentEntity.motionX = 0;
+												parchmentEntity.motionY = 0;
+												parchmentEntity.motionZ = 0;
+												world.spawnEntity(parchmentEntity);
+												break;
+											}
+										}
+									}
+								}
+							}
+
 							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
 									SoundCategory.BLOCKS, 1, 1);
 							for (EssenceStack e : essenceStorage.getStored().values())
@@ -262,6 +291,12 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			{
 				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
 						pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
+			}
+			
+			
+			if (world.getTotalWorldTime() % 50 == 0)
+			{
+				evaulateStack();
 			}
 
 		} else if (!getStack(1).isEmpty() && !world.isRemote)
