@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -72,13 +73,31 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		{
 			this.age = 0;
 
-			if (item != null && !item.isEmpty()
-					&& ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0)).size() > 0)
+			hasValidStack = false;
+
+			if (stackOwner != null)
 			{
-				hasValidStack = true;
-			} else
-			{
-				hasValidStack = false;
+				EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
+				if (player != null)
+				{
+					List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
+					if (item != null && !item.isEmpty() && unlockable.size() > 0)
+					{
+						NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+						if (info != null)
+						{
+							for (NotebookCategory c : unlockable)
+							{
+								if (info.isUnlocked(c.getPrerequisiteTag()) && !info.isUnlocked(c.getRequiredTag()))
+								{
+									hasValidStack = true;
+									break;
+								}
+							}
+						}
+
+					}
+				}
 			}
 		}
 
@@ -183,32 +202,35 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 					}
 					if (age == -10)
 					{
-						List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
-						if(!unlockable.isEmpty()) {
+						List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
+								.getAnalysisResults(getStack(0));
+						if (!unlockable.isEmpty())
+						{
 							ItemStack writtenParchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT, 1);
 							if (!writtenParchment.hasTagCompound())
 								writtenParchment.setTagCompound(new NBTTagCompound());
 
 							writtenParchment.getTagCompound().setString(ItemParchment.TITLE,
-								unlockable.get(0).getUnlocParchmentInfo().first());
+									unlockable.get(0).getUnlocParchmentInfo().first());
 							writtenParchment.getTagCompound().setString(ItemParchment.CATEGORY,
-								unlockable.get(0).getUnlocalizedName());
+									unlockable.get(0).getUnlocalizedName());
 							writtenParchment.getTagCompound().setInteger(ItemParchment.PARAGRAPHS,
-								unlockable.get(0).getUnlocParchmentInfo().second());
+									unlockable.get(0).getUnlocParchmentInfo().second());
 
-							EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5, pos.getY() + 1.5,
-								pos.getZ() + 0.5, writtenParchment);
+							EntityItemFancy parchmentEntity = new EntityItemFancy(world, pos.getX() + 0.5,
+									pos.getY() + 1.5, pos.getZ() + 0.5, writtenParchment);
 							parchmentEntity.motionX = 0;
 							parchmentEntity.motionY = 0;
 							parchmentEntity.motionZ = 0;
 							world.spawnEntity(parchmentEntity);
-							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success, SoundCategory.BLOCKS, 1, 1);
+							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
+									SoundCategory.BLOCKS, 1, 1);
 							for (EssenceStack e : essenceStorage.getStored().values())
 								essenceStorage.take(e, false);
 
-						setStack(1, ItemStack.EMPTY);
+							setStack(1, ItemStack.EMPTY);
 
-						age = 0;
+							age = 0;
 						}
 					}
 				}
