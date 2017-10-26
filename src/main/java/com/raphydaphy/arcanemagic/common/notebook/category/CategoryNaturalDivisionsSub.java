@@ -13,46 +13,22 @@ import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import akka.japi.Pair;
-import net.minecraft.item.ItemStack;
 
 public class CategoryNaturalDivisionsSub extends NotebookCategory
 {
-	public final Essence categoryEssence;
-	public final int indexPage;
 	public final int pageCount;
 
 	public CategoryNaturalDivisionsSub(Essence categoryEssence, int indexPage, int pageCount)
 	{
-		this.categoryEssence = categoryEssence;
-		this.indexPage = indexPage;
 		this.pageCount = pageCount;
-		
+
 		this.setRegistryName(ArcaneMagic.MODID, "natural_divisions_" + indexPage);
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return NotebookCategories.NATURAL_DIVISIONS.getRequiredTag() + "_" + categoryEssence.getIndexName();
-	}
-
-	@Override
-	public Pair<String, Integer> getUnlocParchmentInfo()
-	{
-		return new Pair<String, Integer>(
-				"arcanemagic.message.parchment.natural_divisions." + categoryEssence.getIndexName(), 2);
-	}
-
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.NATURAL_DIVISIONS.getRequiredTag();
-	}
-
-	@Override
-	public String getUnlocalizedName()
-	{
-		return NotebookCategories.NATURAL_DIVISIONS.getUnlocalizedName() + "." + indexPage;
+		setUnlocalizedName(NotebookCategories.NATURAL_DIVISIONS.getUnlocalizedName() + "." + indexPage);
+		setUnlocParchmentInfo(new Pair<String, Integer>(
+				"arcanemagic.message.parchment.natural_divisions." + categoryEssence.getIndexName(), 2));
+		setRequiredTag(NotebookCategories.NATURAL_DIVISIONS.getRequiredTag() + "_" + categoryEssence.getIndexName());
+		setPrerequisiteTag(NotebookCategories.NATURAL_DIVISIONS.getRequiredTag());
+		setIcon(categoryEssence.getItemForm());
 	}
 
 	@Override
@@ -66,12 +42,6 @@ public class CategoryNaturalDivisionsSub extends NotebookCategory
 		}
 		pages.add(new NotebookPage(page));
 		return pages;
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return categoryEssence.getItemForm();
 	}
 
 }

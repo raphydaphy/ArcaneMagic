@@ -19,17 +19,14 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryEssenceManipulation extends NotebookCategory
 {
-	@Override
-	public String getUnlocalizedName()
+	public CategoryEssenceManipulation()
 	{
-		return "arcanemagic.notebook.category.essence_manipulation";
+		setUnlocalizedName("arcanemagic.notebook.category.essence_manipulation");
+		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.glowstone", 2));
+		setRequiredTag("unlockedEssenceManipulation");
+		setPrerequisiteTag(NotebookCategories.FOUNDATIONS_OF_MAGIC.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.ESSENCE_CHANNELING_ROD));
 	}
-	
-	public Pair<String, Integer> getUnlocParchmentInfo()
-	{
-		return new Pair<String, Integer>("arcanemagic.message.parchment.glowstone", 2);
-	}
-	
 
 	@Override
 	public List<NotebookPage> getPages(NotebookInfo info)
@@ -58,23 +55,5 @@ public class CategoryEssenceManipulation extends NotebookCategory
 				new ItemStack(ModRegistry.ESSENCE_CHANNELING_ROD)));
 		pages.add(new NotebookPage(page1));
 		return pages;
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedEssenceManipulation";
-	}
-
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.FOUNDATIONS_OF_MAGIC.getRequiredTag();
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.ESSENCE_CHANNELING_ROD);
 	}
 }

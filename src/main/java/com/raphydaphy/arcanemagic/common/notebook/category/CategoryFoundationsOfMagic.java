@@ -16,10 +16,13 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryFoundationsOfMagic extends NotebookCategory
 {
-	@Override
-	public String getUnlocalizedName()
+	public CategoryFoundationsOfMagic()
 	{
-		return "arcanemagic.notebook.category.foundations_of_magic";
+		setUnlocalizedName("arcanemagic.notebook.category.foundations_of_magic");
+		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.plants", 2));
+		setRequiredTag("unlockedFoundationsOfMagic");
+		setPrerequisiteTag(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.ESSENCE));
 	}
 
 	@Override
@@ -39,29 +42,5 @@ public class CategoryFoundationsOfMagic extends NotebookCategory
 		}
 		pages.add(new NotebookPage(page1));
 		return pages;
-	}
-
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedFoundationsOfMagic";
-	}
-	
-	public Pair<String, Integer> getUnlocParchmentInfo()
-	{
-		return new Pair<String, Integer>("arcanemagic.message.parchment.plants", 2);
-	}
-	
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.ARCANE_ANALYSIS.getRequiredTag();
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.ESSENCE);
 	}
 }

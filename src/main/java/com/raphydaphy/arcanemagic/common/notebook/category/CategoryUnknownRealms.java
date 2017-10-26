@@ -17,11 +17,11 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryUnknownRealms extends NotebookCategory
 {
-
-	@Override
-	public String getUnlocalizedName()
+	public CategoryUnknownRealms()
 	{
-		return "arcanemagic.notebook.category.unknown_realms";
+		setUnlocalizedName("arcanemagic.notebook.category.unknown_realms");
+		setRequiredTag(null);
+		setIcon(new ItemStack(Blocks.BARRIER));
 	}
 
 	@Override
@@ -37,22 +37,9 @@ public class CategoryUnknownRealms extends NotebookCategory
 		return pages;
 	}
 
-
-	@Override
-	public String getRequiredTag()
-	{
-		return null;
-	}
-
 	@Override
 	public FontRenderer getFontRenderer(GuiScreen notebook)
 	{
 		return notebook.mc.standardGalacticFontRenderer;
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(Blocks.BARRIER);
 	}
 }

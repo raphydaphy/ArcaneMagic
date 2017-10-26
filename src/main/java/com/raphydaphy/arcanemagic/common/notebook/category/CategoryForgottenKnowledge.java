@@ -18,12 +18,13 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryForgottenKnowledge extends NotebookCategory
 {
-	@Override
-	public String getUnlocalizedName()
+	public CategoryForgottenKnowledge()
 	{
-		return "arcanemagic.notebook.category.forgotten_knowledge";
+		setUnlocalizedName("arcanemagic.notebook.category.forgotten_knowledge");
+		setRequiredTag("unlockedForgottenKnowledge");
+		setPrerequisiteTag(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.NOTEBOOK));
 	}
-
 	
 	@Override
 	public List<NotebookPage> getPages(NotebookInfo info)
@@ -39,22 +40,5 @@ public class CategoryForgottenKnowledge extends NotebookCategory
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 1, 0x000000));
 		pages.add(new NotebookPage(entries));
 		return pages;
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedForgottenKnowledge";
-	}
-
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.ANCIENT_RELICS.getRequiredTag();
-	}
-
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.NOTEBOOK);
 	}
 }

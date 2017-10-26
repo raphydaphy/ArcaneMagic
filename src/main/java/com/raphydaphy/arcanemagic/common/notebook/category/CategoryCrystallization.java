@@ -8,16 +8,19 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import net.minecraft.item.ItemStack;
 
 public class CategoryCrystallization extends NotebookCategory
 {
-	@Override
-	public String getUnlocalizedName()
+	public CategoryCrystallization()
 	{
-		return "arcanemagic.notebook.category.crystallization";
+		setUnlocalizedName("arcanemagic.notebook.category.crystallization");
+		setRequiredTag("unlockedCrystallization");
+		setPrerequisiteTag(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.CRYSTALLIZER));
 	}
 
 	@Override
@@ -31,18 +34,5 @@ public class CategoryCrystallization extends NotebookCategory
 		}
 		pages.add(new NotebookPage(page0));
 		return pages;
-	}
-
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedCrystallization";
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.CRYSTALLIZER);
 	}
 }

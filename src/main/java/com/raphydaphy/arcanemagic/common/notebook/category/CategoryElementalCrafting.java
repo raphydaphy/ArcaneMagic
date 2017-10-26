@@ -18,10 +18,12 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryElementalCrafting extends NotebookCategory
 {
-	@Override
-	public String getUnlocalizedName()
+	public CategoryElementalCrafting()
 	{
-		return "arcanemagic.notebook.category.elemental_crafting";
+		setUnlocalizedName("arcanemagic.notebook.category.elemental_crafting");
+		setRequiredTag("unlockedElementalCrafting");
+		setPrerequisiteTag(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE));
 	}
 
 	@Override
@@ -52,23 +54,5 @@ public class CategoryElementalCrafting extends NotebookCategory
 		page1.add(new NotebookEntryCraftingRecipe(concentratorItemsIn, new ItemStack(ModRegistry.ESSENCE_CONCENTRATOR)));
 		pages.add(new NotebookPage(page1));
 		return pages;
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedElementalCrafting";
-	}
-	
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag();
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE);
 	}
 }

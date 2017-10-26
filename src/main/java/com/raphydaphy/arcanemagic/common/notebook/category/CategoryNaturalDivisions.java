@@ -16,11 +16,13 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryNaturalDivisions extends NotebookCategory
 {
-
-	@Override
-	public String getUnlocalizedName()
+	public CategoryNaturalDivisions()
 	{
-		return "arcanemagic.notebook.category.natural_divisions";
+		setUnlocalizedName("arcanemagic.notebook.category.natural_divisions");
+		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.natural_divisions", 2));
+		setRequiredTag("unlockedNaturalDisvisions");
+		setPrerequisiteTag(NotebookCategories.FOUNDATIONS_OF_MAGIC.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.ESSENCE, 1, 1));
 	}
 
 	@Override
@@ -63,29 +65,5 @@ public class CategoryNaturalDivisions extends NotebookCategory
 			}
 		}
 		return pages;
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedNaturalDisvisions";
-	}
-
-	@Override
-	public Pair<String, Integer> getUnlocParchmentInfo()
-	{
-		return new Pair<String, Integer>("arcanemagic.message.parchment.natural_divisions", 2);
-	}
-
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.FOUNDATIONS_OF_MAGIC.getRequiredTag();
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.ESSENCE, 1, 1);
 	}
 }

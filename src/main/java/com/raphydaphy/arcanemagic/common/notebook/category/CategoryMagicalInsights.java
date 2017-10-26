@@ -18,12 +18,15 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryMagicalInsights extends NotebookCategory
 {
-	@Override
-	public String getUnlocalizedName()
+	public CategoryMagicalInsights()
 	{
-		return "arcanemagic.notebook.category.magical_insights";
+		setUnlocalizedName("arcanemagic.notebook.category.magical_insights");
+		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.redstone", 2));
+		setRequiredTag("unlockedMagicalInsights");
+		setPrerequisiteTag(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.MYSTICAL_ILLUMINATOR));
 	}
-
+	
 	@Override
 	public List<NotebookPage> getPages(NotebookInfo info)
 	{
@@ -45,29 +48,5 @@ public class CategoryMagicalInsights extends NotebookCategory
 		}
 		pages.add(new NotebookPage(page1));
 		return pages;
-	}
-
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedMagicalInsights";
-	}
-	
-	public Pair<String, Integer> getUnlocParchmentInfo()
-	{
-		return new Pair<String, Integer>("arcanemagic.message.parchment.redstone", 2);
-	}
-
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.ARCANE_ANALYSIS.getRequiredTag();
-	}
-	
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.MYSTICAL_ILLUMINATOR);
 	}
 }

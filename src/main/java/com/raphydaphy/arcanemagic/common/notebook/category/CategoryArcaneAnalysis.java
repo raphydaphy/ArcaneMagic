@@ -15,11 +15,12 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryArcaneAnalysis extends NotebookCategory
 {
-
-	@Override
-	public String getUnlocalizedName()
+	public CategoryArcaneAnalysis()
 	{
-		return "arcanemagic.notebook.category.arcane_analysis";
+		setUnlocalizedName("arcanemagic.notebook.category.arcane_analysis");
+		setRequiredTag("unlockedArcaneAnalysis");
+		setPrerequisiteTag(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
+		setIcon(new ItemStack(ModRegistry.ANALYZER));
 	}
 
 	@Override
@@ -39,23 +40,5 @@ public class CategoryArcaneAnalysis extends NotebookCategory
 		}
 		pages.add(new NotebookPage(page1));
 		return pages;
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedArcaneAnalysis";
-	}
-
-	@Override
-	public String getPrerequisiteTag()
-	{
-		return NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag();
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.ANALYZER);
 	}
 }

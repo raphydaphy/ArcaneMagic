@@ -14,11 +14,11 @@ import net.minecraft.item.ItemStack;
 
 public class CategoryAncientRelics extends NotebookCategory
 {
-
-	@Override
-	public String getUnlocalizedName()
+	public CategoryAncientRelics()
 	{
-		return "arcanemagic.notebook.category.ancient_relics";
+		setUnlocalizedName("arcanemagic.notebook.category.ancient_relics");
+		setRequiredTag("unlockedAncientRelics");
+		setIcon( new ItemStack(ModRegistry.ANCIENT_PARCHMENT));
 	}
 
 	@Override
@@ -32,17 +32,5 @@ public class CategoryAncientRelics extends NotebookCategory
 		}
 		pages.add(new NotebookPage(page0));
 		return pages;
-	}
-
-	@Override
-	public String getRequiredTag()
-	{
-		return "unlockedAncientRelics";
-	}
-
-	@Override
-	public ItemStack getIcon()
-	{
-		return new ItemStack(ModRegistry.ANCIENT_PARCHMENT);
 	}
 }
