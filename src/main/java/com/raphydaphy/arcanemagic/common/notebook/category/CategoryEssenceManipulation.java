@@ -12,6 +12,7 @@ import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
+import akka.japi.Pair;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,12 @@ public class CategoryEssenceManipulation extends NotebookCategory
 	{
 		return "arcanemagic.notebook.category.essence_manipulation";
 	}
+	
+	public Pair<String, Integer> getUnlocParchmentInfo()
+	{
+		return new Pair<String, Integer>("arcanemagic.message.parchment.glowstone", 2);
+	}
+	
 
 	@Override
 	public List<NotebookPage> getPages(NotebookInfo info)

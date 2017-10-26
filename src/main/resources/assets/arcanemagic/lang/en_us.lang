@@ -100,7 +100,9 @@ arcanemagic.message.parchment.natural_divisions.chaos.1=Any Essence you have see
 arcanemagic.message.parchment.natural_divisions.peace=Hostile Paradise
 arcanemagic.message.parchment.natural_divisions.peace.0=The peaceful shores of Mushroom Islands have allowed you to conduct several experiments without the interference of enemies. However, it seems it has not always been this way.
 arcanemagic.message.parchment.natural_divisions.peace.1=The Essence embedded deep underneath these islands is clearly vastly different from anything you have experienced before. It may even help you discover how the island came to be.
-
+arcanemagic.message.parchment.glowstone=Fragile Manipulation
+arcanemagic.message.parchment.glowstone.0=The behavior of Glowstone is interesting - emmiting light until the point when it is harvested. When broken, glowstone seems to crumble into a dust, rendering it useless until recombined.
+arcanemagic.message.parchment.glowstone.1=Your ability to recombine the dust could perhaps be applied to other things you have discovered, as any attemps you have made to construct new magical items has resulted in them crumbling in a similar way.
 # Notebook
 arcanemagic.notebook.category.unknown_realms=Stretch Niktu
 arcanemagic.notebook.category.unknown_realms.0=scrolls ignite snuff light wet cold fiddle water xyzzy air elder fire bless shorten dry berata niktu stretch hot twist the embiggen curse destroy darkness earth klaatu

@@ -8,6 +8,7 @@ import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
+import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryCraftingRecipe;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
@@ -57,6 +58,12 @@ public class CategoryElementalCrafting extends NotebookCategory
 	public String getRequiredTag()
 	{
 		return "unlockedElementalCrafting";
+	}
+	
+	@Override
+	public String getPrerequisiteTag()
+	{
+		return NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag();
 	}
 
 	@Override
