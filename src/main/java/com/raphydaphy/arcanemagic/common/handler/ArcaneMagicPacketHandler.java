@@ -44,7 +44,7 @@ public class ArcaneMagicPacketHandler
 				Side.CLIENT);
 		INSTANCE.registerMessage(PacketNotebookToastOrFail.Handler.class, PacketNotebookToastOrFail.class, packetId++,
 				Side.CLIENT);
-		INSTANCE.registerMessage(PacketNotebookToastExpanded.Handler.class, PacketNotebookToastExpanded.class, packetId++,
-				Side.CLIENT);
+		INSTANCE.registerMessage(PacketNotebookToastExpanded.Handler.class, PacketNotebookToastExpanded.class,
+				packetId++, Side.CLIENT);
 	}
 }

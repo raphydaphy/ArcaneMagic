@@ -23,7 +23,8 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	private String prerequisiteTag = "usedNotebook";
 	private ItemStack icon = ItemStack.EMPTY;
 	private String unlocalizedName = "arcanemagic.notebook.category";
-	private Pair<String, Integer> unlocParchmentInfo = new Pair<String, Integer>("arcanemagic.notebook.category.unknown_realms", 2);
+	private Pair<String, Integer> unlocParchmentInfo = new Pair<String, Integer>(
+			"arcanemagic.notebook.category.unknown_realms", 2);
 
 	public NotebookCategory setRequiredTag(String requiredTag)
 	{
@@ -42,13 +43,13 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 		this.icon = icon;
 		return this;
 	}
-	
+
 	public NotebookCategory setUnlocalizedName(String unlocalizedName)
 	{
 		this.unlocalizedName = unlocalizedName;
 		return this;
 	}
-	
+
 	public NotebookCategory setUnlocParchmentInfo(Pair<String, Integer> unlocParchmentInfo)
 	{
 		this.unlocParchmentInfo = unlocParchmentInfo;
@@ -75,7 +76,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	{
 		return icon;
 	}
-	
+
 	public String getUnlocalizedName()
 	{
 		return unlocalizedName;

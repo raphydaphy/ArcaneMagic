@@ -120,7 +120,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 
 		hasValidStack = compound.getBoolean("hasValidStack");
 	}
-	
+
 	public void evaulateStack()
 	{
 		hasValidStack = false;
@@ -292,8 +292,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
 						pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
 			}
-			
-			
+
 			if (world.getTotalWorldTime() % 50 == 0)
 			{
 				evaulateStack();

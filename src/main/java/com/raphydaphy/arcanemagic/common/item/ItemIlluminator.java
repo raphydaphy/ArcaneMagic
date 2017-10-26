@@ -18,30 +18,38 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
 
-public class ItemIlluminator extends ItemBase implements IHasRecipe{
-	public ItemIlluminator() {
+public class ItemIlluminator extends ItemBase implements IHasRecipe
+{
+	public ItemIlluminator()
+	{
 		super("mystical_illuminator", TextFormatting.GRAY);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
+			float hitX, float hitY, float hitZ)
+	{
 		IBlockState state = world.getBlockState(pos);
 		String fancyDebug = "";
-		for(NotebookCategory cat : ArcaneMagicAPI.getAnalyzer().getAnalysisResults(state)) {
+		for (NotebookCategory cat : ArcaneMagicAPI.getAnalyzer().getAnalysisResults(state))
+		{
 			fancyDebug += cat.getRegistryName() + ", ";
 		}
-		ArcaneMagic.LOGGER.info("State " + state.toString() + (fancyDebug.isEmpty() ? " reveals no categories." : " reveals categories " + fancyDebug));
-		
-		if (!player.isSneaking()) {
-				if (!ArcaneMagicAPI.getAnalyzer().getAnalysisResults(state).isEmpty()) {
-					ArcaneMagic.proxy.addIlluminatorParticle(this, world, pos, facing, hitX, hitY, hitZ);
-					return EnumActionResult.SUCCESS;
+		ArcaneMagic.LOGGER.info("State " + state.toString()
+				+ (fancyDebug.isEmpty() ? " reveals no categories." : " reveals categories " + fancyDebug));
+
+		if (!player.isSneaking())
+		{
+			if (!ArcaneMagicAPI.getAnalyzer().getAnalysisResults(state).isEmpty())
+			{
+				ArcaneMagic.proxy.addIlluminatorParticle(this, world, pos, facing, hitX, hitY, hitZ);
+				return EnumActionResult.SUCCESS;
 			}
 		}
 		return EnumActionResult.PASS;
 	}
-	
+
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{

@@ -36,8 +36,8 @@ public class CategoryNaturalDivisions extends NotebookCategory
 				break;
 			}
 			// this page is not visible yet to the player!
-			if (potPage > 0 &&
-					!info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[potPage - 1].getRequiredTag()))
+			if (potPage > 0
+					&& !info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[potPage - 1].getRequiredTag()))
 			{
 				fakePage++;
 			}

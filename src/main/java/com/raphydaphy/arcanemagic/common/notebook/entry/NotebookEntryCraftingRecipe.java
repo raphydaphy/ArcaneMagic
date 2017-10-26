@@ -126,7 +126,7 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry
 
 		// So that it works when we render normal stuff after
 		RenderHelper.disableStandardItemLighting();
-		
+
 		// Go back to the main render matrix
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();

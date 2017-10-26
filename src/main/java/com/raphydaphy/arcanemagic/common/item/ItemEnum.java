@@ -19,7 +19,7 @@ public class ItemEnum<E extends Enum<E> & IPropertyEnum> extends ItemBase
 	{
 		this(name, values, TextFormatting.WHITE);
 	}
-	
+
 	public ItemEnum(String name, E[] values, TextFormatting color)
 	{
 		super(name, values.length, color);

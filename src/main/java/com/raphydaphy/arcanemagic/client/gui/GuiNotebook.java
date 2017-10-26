@@ -297,8 +297,7 @@ public class GuiNotebook extends GuiScreen
 								if (cap.getCategory() != unRealTab)
 								{
 									player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
-											ArcaneMagicSoundHandler.clack, SoundCategory.MASTER, 1f,
-											1f, false);
+											ArcaneMagicSoundHandler.clack, SoundCategory.MASTER, 1f, 1f, false);
 									cap.setCategory(unRealTab);
 									cap.setPage(0);
 									ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));

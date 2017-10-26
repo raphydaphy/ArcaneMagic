@@ -88,7 +88,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 		this.indexName = index;
 		return this;
 	}
-		
+
 	public Essence setUnlocalizedName(String unloc)
 	{
 		this.unlocName = unloc;
@@ -116,7 +116,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 
 		TileEntity fromTEUnchecked = world.getTileEntity(fromPos);
 		TileEntity toTEUnchecked = world.getTileEntity(toPos);
-		
+
 		if (toTEUnchecked instanceof TileEntityEssenceStorage)
 		{
 			IEssenceStorage storage = toTEUnchecked.getCapability(IEssenceStorage.CAP, null);
@@ -124,7 +124,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			{
 				if (fromTEUnchecked instanceof TileEntityEssenceStorage)
 				{
-					
+
 					IEssenceStorage storageFrom = fromTEUnchecked.getCapability(IEssenceStorage.CAP, null);
 					// sending from block to block, such as concentrator -> crystallizer
 					if (storageFrom != null)
@@ -137,7 +137,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 							{
 								if (!simulate)
 								{
-									
+
 									if (!world.isRemote)
 									{
 										// send and recieve essence
@@ -201,7 +201,7 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 	{
 		return "essence." + unlocName;
 	}
-	
+
 	public String getIndexName()
 	{
 		return this.indexName;
@@ -243,9 +243,11 @@ public class Essence extends IForgeRegistryEntry.Impl<Essence>
 			return Essence.DEPTH;
 		else if (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS))
 			return Essence.HORIZON;
-		else if (BiomeDictionary.hasType(biome, Type.DRY) || BiomeDictionary.hasType(biome, Type.NETHER) || BiomeDictionary.hasType(biome, Type.HOT))
+		else if (BiomeDictionary.hasType(biome, Type.DRY) || BiomeDictionary.hasType(biome, Type.NETHER)
+				|| BiomeDictionary.hasType(biome, Type.HOT))
 			return Essence.INFERNO;
-		else if (BiomeDictionary.hasType(biome, Type.HILLS) || BiomeDictionary.hasType(biome, Type.MOUNTAIN) || BiomeDictionary.hasType(biome, Type.COLD))
+		else if (BiomeDictionary.hasType(biome, Type.HILLS) || BiomeDictionary.hasType(biome, Type.MOUNTAIN)
+				|| BiomeDictionary.hasType(biome, Type.COLD))
 			return Essence.OZONE;
 		else if (BiomeDictionary.hasType(biome, Type.MESA))
 			return Essence.CHAOS;

@@ -9,7 +9,7 @@ public interface IBaseBlock extends IHasModel
 {
 
 	public void setup(String name, float hardness, float resist, SoundType sound);
-	
+
 	public void init();
 
 	public ItemBlock createItemBlock();

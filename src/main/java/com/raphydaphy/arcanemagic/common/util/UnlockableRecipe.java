@@ -11,8 +11,9 @@ public class UnlockableRecipe implements IRecipe
 {
 	public UnlockableRecipe(String requiredTag)
 	{
-		
+
 	}
+
 	@Override
 	public IRecipe setRegistryName(ResourceLocation name)
 	{

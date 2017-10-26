@@ -13,9 +13,9 @@ import net.minecraftforge.registries.IForgeRegistry;
 public final class ArcaneMagicSoundHandler
 {
 	private static Random rand = new Random();
-	
+
 	public static final SoundEvent spell = null;
-	
+
 	public static final SoundEvent scepter_1 = null;
 	public static final SoundEvent scepter_2 = null;
 	public static final SoundEvent scepter_3 = null;
@@ -63,7 +63,7 @@ public final class ArcaneMagicSoundHandler
 	{
 		return rand.nextInt(2) + 1 == 1 ? page_1 : page_2;
 	}
-	
+
 	public static SoundEvent randomLearnSound()
 	{
 		return rand.nextInt(2) + 1 == 1 ? learn_1 : learn_2;

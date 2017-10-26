@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class ArcaneMagicAPI
 {
 	public static final String VERSION = "0.1";
-	
+
 	private static final AnalysisManager MANAGER = new AnalysisManager();
 
 	private static ImmutableList<NotebookCategory> sorted_categories;
@@ -72,19 +72,24 @@ public class ArcaneMagicAPI
 				.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}
 
-	public static IElementalRecipe getElementalCraftingRecipe(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> inputs, World world)
+	public static IElementalRecipe getElementalCraftingRecipe(EntityPlayer player, ItemStack wand,
+			NonNullList<ItemStack> inputs, World world)
 	{
-		Preconditions.checkArgument(inputs.size() == 9, "[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid input list size!");
-		Preconditions.checkArgument(wand.getItem() instanceof IElementalCraftingItem, "[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
-		Preconditions.checkArgument(wand.hasTagCompound(), "[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Needs NBT)");
-		
+		Preconditions.checkArgument(inputs.size() == 9,
+				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid input list size!");
+		Preconditions.checkArgument(wand.getItem() instanceof IElementalCraftingItem,
+				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
+		Preconditions.checkArgument(wand.hasTagCompound(),
+				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Needs NBT)");
+
 		for (IElementalRecipe curRecipe : RecipeHelper.ELEMENTAL_RECIPES)
 			if (curRecipe.matches(player, wand, inputs, world))
 				return curRecipe;
 		return null;
 	}
-	
-	public static AnalysisManager getAnalyzer() {
+
+	public static AnalysisManager getAnalyzer()
+	{
 		return MANAGER;
 	}
 }

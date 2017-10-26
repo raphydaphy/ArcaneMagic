@@ -31,7 +31,8 @@ public class CategoryUnknownRealms extends NotebookCategory
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
 		for (int i = 0; i < 3; i++)
 		{
-			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000, Minecraft.getMinecraft().standardGalacticFontRenderer));
+			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000,
+					Minecraft.getMinecraft().standardGalacticFontRenderer));
 		}
 		pages.add(new NotebookPage(page0));
 		return pages;

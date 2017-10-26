@@ -25,15 +25,14 @@ public class CategoryForgottenKnowledge extends NotebookCategory
 		setPrerequisiteTag(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
 		setIcon(new ItemStack(ModRegistry.NOTEBOOK));
 	}
-	
+
 	@Override
 	public List<NotebookPage> getPages(NotebookInfo info)
 	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 0, 0x000000));
-		ItemStack[][] itemsIn = {
-				{ ItemStack.EMPTY, new ItemStack(Items.ENDER_PEARL), ItemStack.EMPTY },
+		ItemStack[][] itemsIn = { { ItemStack.EMPTY, new ItemStack(Items.ENDER_PEARL), ItemStack.EMPTY },
 				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.GLASS), new ItemStack(Blocks.PLANKS) },
 				{ new ItemStack(Blocks.PLANKS), ItemStack.EMPTY, new ItemStack(Blocks.PLANKS) } };
 		entries.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.ANALYZER)));

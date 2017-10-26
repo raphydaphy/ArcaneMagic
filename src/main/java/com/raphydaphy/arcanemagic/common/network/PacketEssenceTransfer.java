@@ -41,7 +41,8 @@ public class PacketEssenceTransfer implements IMessage
 
 		private void handle(PacketEssenceTransfer message, MessageContext ctx)
 		{
-			ArcaneMagic.proxy.sendEssenceSafe(message.essence, message.from, message.to, message.toCosmetic, message.spawnParticles);
+			ArcaneMagic.proxy.sendEssenceSafe(message.essence, message.from, message.to, message.toCosmetic,
+					message.spawnParticles);
 		}
 	}
 

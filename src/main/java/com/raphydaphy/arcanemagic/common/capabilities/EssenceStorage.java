@@ -53,7 +53,7 @@ public class EssenceStorage implements IEssenceStorage, ICapabilityProvider
 		}
 		return ret;
 	}
-	
+
 	@Override
 	public int getTotalStored()
 	{

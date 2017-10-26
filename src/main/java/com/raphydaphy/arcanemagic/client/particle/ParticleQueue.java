@@ -14,19 +14,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ParticleQueue
 {
 	private Map<ParticlePos, Integer> particles = new HashMap<ParticlePos, Integer>();
-	
+
 	public static final ParticleQueue INSTANCE = new ParticleQueue();
-	
+
 	public ParticleQueue()
 	{
-		
+
 	}
-	
+
 	public static ParticleQueue getInstance()
 	{
 		return INSTANCE;
 	}
-	
+
 	public void addParticle(World world, ParticlePos pos)
 	{
 		if (world.isRemote)
@@ -34,7 +34,7 @@ public class ParticleQueue
 			particles.put(pos, 50);
 		}
 	}
-	
+
 	private void doParticle(World world, ParticlePos ppos)
 	{
 		if (world.rand.nextInt(3) == 1)
@@ -76,7 +76,6 @@ public class ParticleQueue
 		}
 	}
 
-	
 	public void updateQueue(World world, EntityPlayer player)
 	{
 		if (world.isRemote)

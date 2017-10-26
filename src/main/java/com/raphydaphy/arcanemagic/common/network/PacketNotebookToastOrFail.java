@@ -28,7 +28,7 @@ public class PacketNotebookToastOrFail implements IMessage
 	{
 		this.cat = cat;
 		this.showIfFail = showIfFail;
-		
+
 		if (cat != null && cat.equals(NotebookCategories.UNKNOWN_REALMS))
 		{
 			cat = null;
@@ -47,17 +47,17 @@ public class PacketNotebookToastOrFail implements IMessage
 		private void handle(PacketNotebookToastOrFail message, MessageContext ctx)
 		{
 			NotebookInfo cap = Minecraft.getMinecraft().player.getCapability(NotebookInfo.CAP, null);
-			
+
 			if (cap != null)
 			{
 				if (message.cat != null && !cap.isUnlocked(message.cat.getRequiredTag()))
 				{
 					cap.setUnlocked(message.cat.getRequiredTag());
 					ArcaneMagic.proxy.addCategoryUnlockToast(message.cat, false);
-				}
-				else if (message.showIfFail)
+				} else if (message.showIfFail)
 				{
-					Minecraft.getMinecraft().ingameGUI.setOverlayMessage(TextFormatting.RED + I18n.format("arcanemagic.message.cantlearn"), false);
+					Minecraft.getMinecraft().ingameGUI.setOverlayMessage(
+							TextFormatting.RED + I18n.format("arcanemagic.message.cantlearn"), false);
 				}
 			}
 		}
@@ -70,8 +70,7 @@ public class PacketNotebookToastOrFail implements IMessage
 		if (id != -1)
 		{
 			cat = ArcaneMagicAPI.getNotebookCategories().get(id);
-		}
-		else
+		} else
 		{
 			cat = null;
 		}
@@ -84,8 +83,7 @@ public class PacketNotebookToastOrFail implements IMessage
 		if (cat != null)
 		{
 			buf.writeInt(ArcaneMagicAPI.getNotebookCategories().indexOf(cat));
-		}
-		else
+		} else
 		{
 			buf.writeInt(-1);
 		}

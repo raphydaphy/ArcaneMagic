@@ -117,7 +117,7 @@ public class ModEvents
 								new PacketNotebookToastOrFail(NotebookCategories.ELEMENTAL_CRAFTING, false),
 								(EntityPlayerMP) ev.player);
 					}
-					
+
 					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
 							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
 					{

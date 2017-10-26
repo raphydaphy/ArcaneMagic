@@ -169,7 +169,8 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 						(EntityPlayerMP) player);
 			}
 		}
-		world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomLearnSound(), SoundCategory.BLOCKS, 1, 1);
+		world.playSound(player, player.getPosition(), ArcaneMagicSoundHandler.randomLearnSound(), SoundCategory.BLOCKS,
+				1, 1);
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
@@ -358,7 +359,8 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 	}
 
 	@Override
-	public boolean containsEssence() {
+	public boolean containsEssence()
+	{
 		return true;
 	}
 

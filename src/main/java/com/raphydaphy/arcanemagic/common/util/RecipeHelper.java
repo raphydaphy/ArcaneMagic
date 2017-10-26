@@ -106,7 +106,7 @@ public class RecipeHelper
 	{
 		return addRecipe(j++, genShaped(output, width, height, input));
 	}
-	
+
 	public static <T extends IForgeRegistryEntry<?>> IRecipe addShaped(T output, int width, int height, Object... input)
 	{
 		return addShaped(makeStack(output), width, height, input);
@@ -229,12 +229,14 @@ public class RecipeHelper
 		return addSimpleShapeless(makeStack(output), makeStack(input), numInputs);
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(T output, ItemStack input, int numInputs)
+	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(T output, ItemStack input,
+			int numInputs)
 	{
 		return addSimpleShapeless(makeStack(output), input, numInputs);
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(ItemStack output, T input, int numInputs)
+	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(ItemStack output, T input,
+			int numInputs)
 	{
 		return addSimpleShapeless(output, makeStack(input), numInputs);
 	}
@@ -371,7 +373,8 @@ public class RecipeHelper
 	/**
 	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
 	 */
-	public static IElementalRecipe addElementalShapeless(ItemStack output, Essence essence, int reqEssence, Object... inputs)
+	public static IElementalRecipe addElementalShapeless(ItemStack output, Essence essence, int reqEssence,
+			Object... inputs)
 	{
 		return addElementalRecipe(new ShapelessElementalRecipe(output, createElementalInput(inputs),
 				new EssenceStack(essence, reqEssence)));
@@ -387,14 +390,15 @@ public class RecipeHelper
 	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
 	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid.
 	 */
-	public static IElementalRecipe addElementalShaped(ItemStack output, Essence essence, int reqEssence, Object... input)
+	public static IElementalRecipe addElementalShaped(ItemStack output, Essence essence, int reqEssence,
+			Object... input)
 	{
 		return addElementalRecipe(
 				new ShapedElementalRecipe(output, createElementalInput(input), new EssenceStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShaped(T output, Essence essence, int reqEssence,
-			Object... input)
+	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShaped(T output, Essence essence,
+			int reqEssence, Object... input)
 	{
 		return addElementalShaped(makeStack(output), essence, reqEssence, input);
 	}

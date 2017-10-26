@@ -18,7 +18,7 @@ public class CategoryAncientRelics extends NotebookCategory
 	{
 		setUnlocalizedName("arcanemagic.notebook.category.ancient_relics");
 		setRequiredTag("unlockedAncientRelics");
-		setIcon( new ItemStack(ModRegistry.ANCIENT_PARCHMENT));
+		setIcon(new ItemStack(ModRegistry.ANCIENT_PARCHMENT));
 	}
 
 	@Override

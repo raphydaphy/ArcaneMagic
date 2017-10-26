@@ -140,6 +140,7 @@ public class BlockEssenceConcentrator extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addElementalShaped(this, null, 0, null,Items.REDSTONE,null,Items.GLOWSTONE_DUST,Blocks.IRON_BLOCK,Items.GLOWSTONE_DUST,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK);
+		RecipeHelper.addElementalShaped(this, null, 0, null, Items.REDSTONE, null, Items.GLOWSTONE_DUST,
+				Blocks.IRON_BLOCK, Items.GLOWSTONE_DUST, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK);
 	}
 }

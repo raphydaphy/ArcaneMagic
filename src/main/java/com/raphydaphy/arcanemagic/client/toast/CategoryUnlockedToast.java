@@ -32,7 +32,8 @@ public class CategoryUnlockedToast implements IToast
 		GlStateManager.color(1.0F, 1.0F, 1.0F);
 		toastGui.drawTexturedModalRect(0, 0, 0, 0, 160, 32);
 
-		toastGui.getMinecraft().fontRenderer.drawString(I18n.format(expanded ? "toast.arcanemagic.page_expanded" : "toast.arcanemagic.page_unlocked"), 30, 7,
+		toastGui.getMinecraft().fontRenderer.drawString(
+				I18n.format(expanded ? "toast.arcanemagic.page_expanded" : "toast.arcanemagic.page_unlocked"), 30, 7,
 				0x5bc14d);
 		toastGui.getMinecraft().fontRenderer.drawString(I18n.format(unlocked.getUnlocalizedName()), 30, 18, 0x65a595);
 

@@ -69,7 +69,7 @@ public class ClientProxy extends CommonProxy
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class, new WritingDeskTESR());
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class, new AnalyzerTESR());
-		
+
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrystallizer.class, new CrystallizerTESR());
 	}
 

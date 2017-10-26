@@ -137,7 +137,7 @@ public class ClientEvents
 			{
 				long oldNano = System.nanoTime();
 				NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
-				
+
 				if (info != null)
 				{
 					int range = 20;
@@ -154,7 +154,7 @@ public class ClientEvents
 						double cx = entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * (double) partialTicks;
 						double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
 						double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
-						
+
 						for (int x = -range; x < range; x++)
 						{
 							for (int y = -range; y < range; y++)
@@ -176,10 +176,10 @@ public class ClientEvents
 												{
 													List<NotebookCategory> obtainable = ArcaneMagicAPI.getAnalyzer()
 															.getAnalysisResults(state);
-													
+
 													if (!obtainable.isEmpty())
 													{
-														
+
 														boolean add = false;
 														for (NotebookCategory couldGet : obtainable)
 														{

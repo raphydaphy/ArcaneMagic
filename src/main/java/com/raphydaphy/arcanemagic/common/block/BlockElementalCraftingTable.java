@@ -123,14 +123,15 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 		if (stack.getItem() instanceof ItemScepter || stack.getItem() instanceof ItemEssenceChannelingRod)
 		{
 			ret = true;
-			
+
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
 
 			for (int i = 0; i < 9; i++)
 				recipeInputs.set(i, cap.getStackInSlot(i));
 
-			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(player, stack, recipeInputs, world);
+			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(player, stack, recipeInputs,
+					world);
 			if (foundRecipe != null)
 			{
 				if (!world.isRemote)
@@ -153,8 +154,8 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 				{
 					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
 							pos.getZ() + 0.5, 0f, 0.1f, 0f);
-					world.playSound(player, pos, ArcaneMagicSoundHandler.elemental_crafting_success, SoundCategory.BLOCKS, 1,
-							1);
+					world.playSound(player, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
+							SoundCategory.BLOCKS, 1, 1);
 					return ret;
 				}
 			}
@@ -164,7 +165,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 		else if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
 		{
 			ret = true;
-			
+
 			float divX = (hitX - 0.203f);
 			float divZ = (hitZ - 0.203f);
 			int slotX = 2;

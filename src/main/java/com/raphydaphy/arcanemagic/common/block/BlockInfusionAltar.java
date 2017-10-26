@@ -114,7 +114,7 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addElementalShaped(this,Essence.CREATION, 30,  null, "formationEssence", null, "obsidian", "obsidian", "obsidian",
-				"obsidian", null, "obsidian");
+		RecipeHelper.addElementalShaped(this, Essence.CREATION, 30, null, "formationEssence", null, "obsidian",
+				"obsidian", "obsidian", "obsidian", null, "obsidian");
 	}
 }

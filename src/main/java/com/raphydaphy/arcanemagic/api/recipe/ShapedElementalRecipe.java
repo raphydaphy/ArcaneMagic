@@ -20,7 +20,8 @@ public class ShapedElementalRecipe implements IElementalRecipe
 
 	public ShapedElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, EssenceStack reqEssence)
 	{
-		Preconditions.checkArgument(inputs.size() == 9, "Attempting to create invalid elemental recipe! (Wrong input list size)");
+		Preconditions.checkArgument(inputs.size() == 9,
+				"Attempting to create invalid elemental recipe! (Wrong input list size)");
 		this.output = output;
 		this.inputs = inputs;
 		this.essence = reqEssence.toImmutable();
@@ -34,7 +35,7 @@ public class ShapedElementalRecipe implements IElementalRecipe
 
 	@Override
 	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world)
-	{	
+	{
 		for (int i = 0; i < 9; i++)
 		{
 			if (this.inputs.get(i) == Ingredient.EMPTY && stacks.get(i).isEmpty())
@@ -42,10 +43,12 @@ public class ShapedElementalRecipe implements IElementalRecipe
 			if (!this.inputs.get(i).apply(stacks.get(i)))
 				return false;
 		}
-		
+
 		IElementalCraftingItem crafter = (IElementalCraftingItem) wand.getItem();
-		if(!crafter.matches(this, player, wand, stacks, world)) return false;
-		return essence.isEmpty() || (crafter.containsEssence() && wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null);
+		if (!crafter.matches(this, player, wand, stacks, world))
+			return false;
+		return essence.isEmpty() || (crafter.containsEssence()
+				&& wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null);
 	}
 
 	@Override

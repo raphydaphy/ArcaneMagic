@@ -32,10 +32,11 @@ public abstract class CommonProxy
 	{
 
 	}
-	
-	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ)
+
+	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX,
+			float hitY, float hitZ)
 	{
-		
+
 	}
 
 	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)

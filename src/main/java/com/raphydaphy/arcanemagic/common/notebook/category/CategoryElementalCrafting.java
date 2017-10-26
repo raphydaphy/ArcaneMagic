@@ -51,7 +51,8 @@ public class CategoryElementalCrafting extends NotebookCategory
 						new ItemStack(Items.GLOWSTONE_DUST) },
 				{ new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.IRON_BLOCK),
 						new ItemStack(Blocks.IRON_BLOCK) } };
-		page1.add(new NotebookEntryCraftingRecipe(concentratorItemsIn, new ItemStack(ModRegistry.ESSENCE_CONCENTRATOR)));
+		page1.add(
+				new NotebookEntryCraftingRecipe(concentratorItemsIn, new ItemStack(ModRegistry.ESSENCE_CONCENTRATOR)));
 		pages.add(new NotebookPage(page1));
 		return pages;
 	}

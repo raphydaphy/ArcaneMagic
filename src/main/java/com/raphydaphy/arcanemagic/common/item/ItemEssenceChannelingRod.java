@@ -18,13 +18,13 @@ public class ItemEssenceChannelingRod extends ItemBase implements IHasRecipe, IE
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addShaped(this, 3, 3, null, "dustGlowstone", "dustRedstone", 
-										   null, "stickWood", "dustGlowstone",
-										   "stickWood", null, null);
+		RecipeHelper.addShaped(this, 3, 3, null, "dustGlowstone", "dustRedstone", null, "stickWood", "dustGlowstone",
+				"stickWood", null, null);
 	}
 
 	@Override
-	public boolean containsEssence() {
+	public boolean containsEssence()
+	{
 		return false;
 	}
 

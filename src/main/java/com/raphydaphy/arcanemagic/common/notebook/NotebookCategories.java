@@ -48,17 +48,16 @@ public class NotebookCategories
 			2);
 	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.PEACE, 6,
 			2);
-	
-	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY, INFERNO_CATEGORY,
-			DEPTH_CATEGORY, CHAOS_CATEGORY, PEACE_CATEGORY };
-	
+
+	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY,
+			INFERNO_CATEGORY, DEPTH_CATEGORY, CHAOS_CATEGORY, PEACE_CATEGORY };
+
 	public static final NotebookCategory ESSENCE_MANIPULATION = new CategoryEssenceManipulation()
 			.setRegistryName(ArcaneMagic.MODID, "essence_manipulation");
 	public static final NotebookCategory ELEMENTAL_CRAFTING = new CategoryElementalCrafting()
 			.setRegistryName(ArcaneMagic.MODID, "elemental_crafting");
 	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization()
 			.setRegistryName(ArcaneMagic.MODID, "crystallization");
-	
 
 	private static boolean done = false;
 
@@ -75,9 +74,9 @@ public class NotebookCategories
 		ArcaneMagicAPI.registerCategory(MAGICAL_INSIGHTS);
 		ArcaneMagicAPI.registerCategory(FOUNDATIONS_OF_MAGIC);
 		ArcaneMagicAPI.registerCategory(NATURAL_DIVISIONS);
-		
+
 		ArcaneMagicAPI.registerSubCategories(NATURAL_DIVISION_PAGES);
-		
+
 		ArcaneMagicAPI.registerCategory(ESSENCE_MANIPULATION);
 		ArcaneMagicAPI.registerCategory(ELEMENTAL_CRAFTING);
 		ArcaneMagicAPI.registerCategory(CRYSTALLIZATION);

@@ -16,13 +16,15 @@ public class BlockBase extends Block implements IBaseBlock
 		setup(name, hardness, resist, sound);
 		init();
 	}
-	
-	public BlockBase(String name, Material material, float hardness, SoundType sound) {
-		this(name, material, hardness, hardness * (5/3), sound);
+
+	public BlockBase(String name, Material material, float hardness, SoundType sound)
+	{
+		this(name, material, hardness, hardness * (5 / 3), sound);
 	}
-	
+
 	@Override
-	public void setup(String name, float hardness, float resist, SoundType sound) {
+	public void setup(String name, float hardness, float resist, SoundType sound)
+	{
 		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
 		setRegistryName(name);
 		setCreativeTab(ArcaneMagic.creativeTab);

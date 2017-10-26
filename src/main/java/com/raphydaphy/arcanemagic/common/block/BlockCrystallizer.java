@@ -110,6 +110,7 @@ public class BlockCrystallizer extends BlockBase implements IHasRecipe
 	@Override
 	public void initRecipes(Register<IRecipe> e)
 	{
-		RecipeHelper.addElementalShaped(this, null, 0, null,Items.BLAZE_ROD,null,Items.BLAZE_ROD,Items.PRISMARINE_CRYSTALS,Items.BLAZE_ROD,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK,Blocks.IRON_BLOCK);
+		RecipeHelper.addElementalShaped(this, null, 0, null, Items.BLAZE_ROD, null, Items.BLAZE_ROD,
+				Items.PRISMARINE_CRYSTALS, Items.BLAZE_ROD, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK);
 	}
 }

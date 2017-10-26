@@ -18,17 +18,17 @@ public class ItemBase extends Item implements IHasModel
 {
 	protected final int variants;
 	protected final TextFormatting color;
-	
+
 	public ItemBase(String name)
 	{
 		this(name, 0, TextFormatting.WHITE);
 	}
-	
+
 	public ItemBase(String name, int variants)
 	{
 		this(name, variants, TextFormatting.WHITE);
 	}
-	
+
 	public ItemBase(String name, TextFormatting color)
 	{
 		this(name, 0, color);
@@ -45,7 +45,7 @@ public class ItemBase extends Item implements IHasModel
 			setHasSubtypes(true);
 		init();
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getItemStackDisplayName(ItemStack stack)

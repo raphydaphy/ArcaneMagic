@@ -26,7 +26,7 @@ public class CategoryMagicalInsights extends NotebookCategory
 		setPrerequisiteTag(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
 		setIcon(new ItemStack(ModRegistry.MYSTICAL_ILLUMINATOR));
 	}
-	
+
 	@Override
 	public List<NotebookPage> getPages(NotebookInfo info)
 	{
@@ -34,10 +34,8 @@ public class CategoryMagicalInsights extends NotebookCategory
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
 		page0.add(new NotebookEntryText(getUnlocalizedName() + ".0", 0x000000));
 		ItemStack[][] itemsIn = { { ItemStack.EMPTY, new ItemStack(Items.REDSTONE), ItemStack.EMPTY },
-				{ new ItemStack(Items.REDSTONE), new ItemStack(Items.COMPASS),
-						new ItemStack(Items.REDSTONE) },
-				{ ItemStack.EMPTY, new ItemStack(Items.REDSTONE),
-							ItemStack.EMPTY } };
+				{ new ItemStack(Items.REDSTONE), new ItemStack(Items.COMPASS), new ItemStack(Items.REDSTONE) },
+				{ ItemStack.EMPTY, new ItemStack(Items.REDSTONE), ItemStack.EMPTY } };
 		page0.add(new NotebookEntryCraftingRecipe(itemsIn, new ItemStack(ModRegistry.MYSTICAL_ILLUMINATOR)));
 		page0.add(new NotebookEntryText(getUnlocalizedName() + ".1", 0x000000));
 		pages.add(new NotebookPage(page0));

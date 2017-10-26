@@ -33,7 +33,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(1d * (1d / 16d), 0.0D, 1d * (1d / 16d),
 			15d * (1d / 16d), 10d * (1d / 16d), 15d * (1d / 16d));
-	
+
 	public IRecipe recipe;
 
 	public BlockAnalyzer()
@@ -114,8 +114,9 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 			ItemStack insertStack = stack.copy();
 			if (stack.getItem().equals(Items.PAPER))
 			{
-				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(te.getStack(0).copy());
-				
+				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
+						.getAnalysisResults(te.getStack(0).copy());
+
 				if (!te.getStack(0).isEmpty() && unlockable.size() > 0 && te.getStack(1).isEmpty())
 				{
 
@@ -129,7 +130,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 				player.setHeldItem(hand, stack);
 				te.setPlayer(player);
 				te.setStack(0, insertStack);
-				
+
 				te.markDirty();
 				world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 
