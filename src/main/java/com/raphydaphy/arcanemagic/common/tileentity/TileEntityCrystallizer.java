@@ -17,6 +17,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -262,4 +264,11 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		}
 		return super.getCapability(capability, facing);
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+    {
+		return INFINITE_EXTENT_AABB;
+    }
 }

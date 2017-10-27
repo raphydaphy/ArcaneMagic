@@ -79,8 +79,6 @@ public class ArcaneMagicAPI
 				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid input list size!");
 		Preconditions.checkArgument(wand.getItem() instanceof IElementalCraftingItem,
 				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
-		Preconditions.checkArgument(wand.hasTagCompound(),
-				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Needs NBT)");
 
 		for (IElementalRecipe curRecipe : RecipeHelper.ELEMENTAL_RECIPES)
 			if (curRecipe.matches(player, wand, inputs, world))

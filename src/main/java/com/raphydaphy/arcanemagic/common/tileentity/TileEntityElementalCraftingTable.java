@@ -91,7 +91,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
 	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (facing == null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
 			return true;
 		}
@@ -101,7 +101,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
 	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (facing == null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}

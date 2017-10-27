@@ -28,11 +28,17 @@ public class CategoryCrystallization extends NotebookCategory
 	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page0));
+		List<INotebookEntry> page1 = new ArrayList<INotebookEntry>();
+		for (int i = 2; i < 3; i++)
+		{
+			page1.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
+		}
+		pages.add(new NotebookPage(page1));
 		return pages;
 	}
 }

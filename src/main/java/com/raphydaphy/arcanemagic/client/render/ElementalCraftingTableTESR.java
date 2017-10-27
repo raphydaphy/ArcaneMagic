@@ -7,6 +7,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -54,6 +55,11 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 			GlStateManager.pushMatrix();
 			GlStateManager.translate((slotX / 5.35d) + 0.315, .62, (slotY / 5.35d) + 0.315);
 			GlStateManager.scale(.1f, .1f, .1f);
+			if (!(stack.getItem() instanceof ItemBlock))
+			{
+				GlStateManager.rotate(-90, 1, 0, 0);
+				GlStateManager.translate(0,0,-0.5);
+			}
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
 		}

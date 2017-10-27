@@ -22,8 +22,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITickable
 {
@@ -316,4 +319,11 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		}
 		this.markDirty();
 	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+    public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+    {
+		return new AxisAlignedBB(pos, pos.add(1,2,1));
+    }
 }
