@@ -174,7 +174,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 			{
 				return true;
 			}
-			else if (I18n.format(cat.getUnlocalizedName()).toLowerCase().contains(getSearchKey().toLowerCase()))
+			else if (cat.matchesSearchKey(this))
 			{
 				return true;
 			}

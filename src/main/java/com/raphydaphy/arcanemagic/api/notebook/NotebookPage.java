@@ -12,6 +12,18 @@ public class NotebookPage
 	{
 		this.entries = entries;
 	}
+	
+	public boolean matchesText(String searchKey)
+	{
+		for (INotebookEntry entry : entries)
+		{
+			if (entry.containsSearchKey(searchKey))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	/*
 	 *  Should draw the entry onto the screen at the specified coordinates

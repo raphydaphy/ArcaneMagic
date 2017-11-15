@@ -45,4 +45,10 @@ public class NotebookEntryText implements INotebookEntry
 	{
 		return renderer.getWordWrappedHeight(I18n.format(unlocalizedText), 180);
 	}
+
+	@Override
+	public boolean containsSearchKey(String searchKey)
+	{
+		return I18n.format(unlocalizedText).toLowerCase().contains(searchKey.toLowerCase());
+	}
 }

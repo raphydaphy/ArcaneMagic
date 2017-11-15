@@ -8,6 +8,7 @@ import akka.japi.Pair;
 //TODO: No scala pair pls
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -85,6 +86,23 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	public String getUnlocalizedTitle(NotebookInfo info, int page)
 	{
 		return page == 0 ? getUnlocalizedName() : null;
+	}
+	
+	@SideOnly(Side.CLIENT)
+	public boolean matchesSearchKey(NotebookInfo info)
+	{
+		if (I18n.format(getUnlocalizedName()).toLowerCase().contains(info.getSearchKey().toLowerCase()))
+		{
+			return true;
+		}
+		for (NotebookPage page : getPages(info))
+		{
+			if (page.matchesText(info.getSearchKey().toLowerCase()))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public abstract List<NotebookPage> getPages(NotebookInfo info);
