@@ -29,6 +29,11 @@
 					"layer0": "items/essence_channeling_rod"
 				}
 			},
+			"blank_parchment": {
+				"textures": {
+					"layer0": "arcanemagic:items/parchment"
+				}
+			},
 			"written_parchment": {
 				"textures": {
 					"layer0": "arcanemagic:items/parchment_written"
@@ -70,7 +75,7 @@
 			},
 			"ancient_parchment": {
 				"textures": {
-					"layer0": "arcanemagic:items/parchment_ancient"
+					"layer0": "arcanemagic:items/parchment_written"
 				}
 			},
 			"tip_iron": {

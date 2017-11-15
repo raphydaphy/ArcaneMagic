@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -112,7 +113,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 		if (!stack.isEmpty() && !player.isSneaking())
 		{
 			ItemStack insertStack = stack.copy();
-			if (stack.getItem().equals(Items.PAPER))
+			if (stack.getItem().equals(ModRegistry.BLANK_PARCHMENt))
 			{
 				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
 						.getAnalysisResults(te.getStack(0).copy());
@@ -121,7 +122,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 				{
 
 					stack.shrink(1);
-					te.setStack(1, new ItemStack(Items.PAPER));
+					te.setStack(1, new ItemStack(ModRegistry.BLANK_PARCHMENt));
 				}
 			} else if (te.getStack(0).isEmpty())
 			{

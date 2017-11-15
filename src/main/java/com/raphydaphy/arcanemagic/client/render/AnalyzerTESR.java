@@ -73,11 +73,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 			if (!(stack.getItem() instanceof ItemBlock) && slot == 0)
 			{
 				GlStateManager.scale(1.2f, 1.2f, 1.2f);
-				GlStateManager.rotate(90, 1, 0, 0);
-
-				GlStateManager.rotate(-te.getAge() * 1.5f, 0, 0, 1);
-			} else
-			{
+			} 
 				float age = te.getAge() * 1.5f;
 				if (slot == 1)
 				{
@@ -85,7 +81,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 					age += 138;
 				}
 				GlStateManager.rotate(age, 0, 1, 0);
-			}
+			
 
 			if (slot == 1)
 			{
