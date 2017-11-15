@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -16,6 +17,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabilityProvider
 {
@@ -31,6 +34,9 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	// If the player has ever used a notebook
 	public static final String tagUsedNotebook = "usedNotebook";
 
+	// The current search text typed into the notebook
+	public static final String tagNotebookSearchKey = "notebookSearchKey";
+
 	@CapabilityInject(NotebookInfo.class)
 	public static Capability<NotebookInfo> CAP = null;
 
@@ -39,12 +45,14 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	private int curPage;
 	private int curIndexPage;
 	private boolean usedNotebook;
+	private String notebookSearchKey;
 
 	public NotebookInfo()
 	{
 		curCategory = 0;
 		curPage = 0;
 		curIndexPage = 0;
+		notebookSearchKey = "";
 		usedNotebook = false;
 	}
 
@@ -85,6 +93,23 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		this.curCategory = category;
 	}
 
+	public void setUnlocked(String tag)
+	{
+		if (unlockedCategories.containsKey(tag))
+		{
+			if (!unlockedCategories.get(tag))
+			{
+				unlockedCategories.remove(tag);
+			}
+		}
+		unlockedCategories.put(tag, true);
+	}
+
+	public void setSearchKey(String notebookSearchKey)
+	{
+		this.notebookSearchKey = notebookSearchKey;
+	}
+
 	public boolean getUsed()
 	{
 		return this.usedNotebook;
@@ -105,16 +130,9 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		return this.curCategory;
 	}
 
-	public void setUnlocked(String tag)
+	public String getSearchKey()
 	{
-		if (unlockedCategories.containsKey(tag))
-		{
-			if (!unlockedCategories.get(tag))
-			{
-				unlockedCategories.remove(tag);
-			}
-		}
-		unlockedCategories.put(tag, true);
+		return notebookSearchKey == null ? "" : notebookSearchKey;
 	}
 
 	public boolean isUnlocked(String tag)
@@ -146,6 +164,23 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		}
 		return (isUnlocked(cat.getRequiredTag()) && isUnlocked(cat.getPrerequisiteTag()));
 	}
+	
+	@SideOnly(Side.CLIENT)
+	public boolean matchesSearchKey(NotebookCategory cat)
+	{
+		if (isVisible(cat))
+		{
+			if (getSearchKey() == null || getSearchKey().isEmpty())
+			{
+				return true;
+			}
+			else if (I18n.format(cat.getUnlocalizedName()).toLowerCase().contains(getSearchKey().toLowerCase()))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public NBTTagCompound serializeNBT()
@@ -160,6 +195,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		tag.setInteger(tagCategory, curCategory);
 		tag.setInteger(tagPage, curPage);
 		tag.setInteger(tagIndexPage, curIndexPage);
+		tag.setString(tagNotebookSearchKey, notebookSearchKey);
 
 		return tag;
 	}
@@ -180,7 +216,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		curCategory = nbt.getInteger(tagCategory);
 		curPage = nbt.getInteger(tagPage);
 		curIndexPage = nbt.getInteger(tagIndexPage);
-
+		notebookSearchKey = nbt.getString(tagNotebookSearchKey);
 	}
 
 	@Override

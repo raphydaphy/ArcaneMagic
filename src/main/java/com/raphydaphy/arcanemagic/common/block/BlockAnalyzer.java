@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
@@ -31,20 +32,26 @@ import net.minecraftforge.event.RegistryEvent.Register;
 
 public class BlockAnalyzer extends BlockBase implements IHasRecipe
 {
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(1d * (1d / 16d), 0.0D, 1d * (1d / 16d),
-			15d * (1d / 16d), 10d * (1d / 16d), 15d * (1d / 16d));
+	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
+
+	static
+	{
+		BOUNDS.add(makeAABB(2, 0, 7, 4, 2, 9));
+		BOUNDS.add(makeAABB(7, 0, 2, 9, 2, 4));
+		BOUNDS.add(makeAABB(7, 0, 12, 9, 2, 14));
+		BOUNDS.add(makeAABB(12, 0, 7, 14, 2, 9));
+		BOUNDS.add(makeAABB(4, 0, 4, 12, 4, 12));
+		BOUNDS.add(makeAABB(2, 4, 2, 14, 8, 14));
+	}
 
 	public IRecipe recipe;
 
 	public BlockAnalyzer()
 	{
 		super("analyzer", Material.WOOD, 2.5f, SoundType.WOOD);
-	}
 
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
-		return AABB;
+		this.setRenderedAABB(makeAABB(0, 0, 0, 14, 8, 14));
+		this.setCollisionAABBList(BOUNDS);
 	}
 
 	@Override

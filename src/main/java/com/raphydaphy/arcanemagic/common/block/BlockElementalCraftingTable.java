@@ -48,11 +48,9 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 
 	static
 	{
-		BOUNDS.add(new AxisAlignedBB(2d * (1d / 16d), 0.0D, 2d * (1d / 16d), 13d * (1d / 16d), 4d * (1d / 16d),
-				13d * (1d / 16d)));
-		BOUNDS.add(new AxisAlignedBB(0.0D, 4d * (1d / 16d), 0.0D, 1.0D, 8d * (1d / 16d), 1.0d));
-		BOUNDS.add(new AxisAlignedBB(3d * (1d / 16d), 8d * (1d / 16d), 3d * (1d / 16d), 12d * (1d / 16d),
-				10d * (1d / 16d), 12d * (1d / 16d)));
+		BOUNDS.add(makeAABB(2, 0, 2, 14, 4, 14));
+		BOUNDS.add(makeAABB(0, 4, 0, 16, 8, 16));
+		BOUNDS.add(makeAABB(3, 8, 3, 13, 10, 13));
 	}
 
 	public BlockElementalCraftingTable()
@@ -60,7 +58,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 		super("elemental_crafting_table", Material.WOOD, 2.5f, SoundType.WOOD);
 
 		this.setLightLevel(1f);
-		this.setRenderedAABB(new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10d * (1d / 16d), 1.0D));
+		this.setRenderedAABB(makeAABB(0, 0, 0, 16, 10, 16));
 		this.setCollisionAABBList(BOUNDS);
 	}
 

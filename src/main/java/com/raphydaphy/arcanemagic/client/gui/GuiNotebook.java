@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
+
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
@@ -75,6 +77,37 @@ public class GuiNotebook extends GuiScreen
 	}
 
 	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException
+	{
+		super.keyTyped(typedChar, keyCode);
+
+		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+
+		if (cap != null)
+		{
+			if (keyCode == Keyboard.KEY_BACK || keyCode == Keyboard.KEY_DELETE)
+			{
+				if (cap.getSearchKey().length() > 0)
+				{
+					cap.setSearchKey(cap.getSearchKey().substring(0, cap.getSearchKey().length() - 1));
+				}
+			} else if (keyCode != Keyboard.KEY_APPS && keyCode != Keyboard.KEY_AT && keyCode != Keyboard.KEY_AX
+					&& keyCode != Keyboard.KEY_CAPITAL && keyCode != Keyboard.KEY_LSHIFT
+					&& keyCode != Keyboard.KEY_RSHIFT)
+			{
+				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+				{
+					cap.setSearchKey(cap.getSearchKey() + Character.toUpperCase(typedChar));
+				} else
+				{
+					cap.setSearchKey(cap.getSearchKey() + typedChar);
+				}
+
+			}
+		}
+	}
+
+	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
 		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
@@ -119,7 +152,7 @@ public class GuiNotebook extends GuiScreen
 
 			for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
 			{
-				if (cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(category)))
+				if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(category)))
 				{
 					if (category < curCategory)
 					{
@@ -163,9 +196,19 @@ public class GuiNotebook extends GuiScreen
 				}
 			}
 			mc.getTextureManager().bindTexture(notebook);
-			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
-					(int) ((screenY + 14 + (renderCurCategory * 20)) + (1 * scale)), 86, 182, 70, 16,
-					(int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
+
+			// selected category background bar
+			if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(curCategory)))
+			{
+				drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
+						(int) ((screenY + 40 + (renderCurCategory * 20)) + (1 * scale)), 86, 182, 70, 16,
+						(int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
+			}
+
+			// Search bar background
+			// TODO: proper texture
+			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)), (int) ((screenY + 15) + (1 * scale)),
+					86, 182, 70, 16, (int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
 
 			boolean shouldDrawTitle = ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedTitle(cap,
 					curPage) != null;
@@ -196,19 +239,25 @@ public class GuiNotebook extends GuiScreen
 			for (NotebookCategory category : ArcaneMagicAPI.getNotebookCategories())
 			{
 				// if the category is visible in the book
-				if (cap.isVisible(category))
+				if (cap.matchesSearchKey(category))
 				{
 					// Draw the category!
 					ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(
 							I18n.format(category.getUnlocalizedName()),
 							(int) ((screenX + (cat == renderCurCategory ? 26 : 18)) * (1 / categoryNameSize)),
-							(int) ((screenY + 24 + (cat * 20)) * (1 / categoryNameSize)),
+							(int) ((screenY + 50 + (cat * 20)) * (1 / categoryNameSize)),
 							cat == renderCurCategory ? 0x515151 : 0x32363d);
 
 					cat++;
 				}
 			}
 
+			if (!cap.getSearchKey().isEmpty())
+			{
+				// Draw the searched words into the bar
+				mc.fontRenderer.drawString(cap.getSearchKey(), (int) ((screenX + 26) * (1 / categoryNameSize)),
+						(int) ((screenY + 25) * (1 / categoryNameSize)), 0x32363d);
+			}
 			// Go back to default scaling
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
@@ -290,9 +339,9 @@ public class GuiNotebook extends GuiScreen
 					for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++)
 					{
 						// if they have unlocked this category
-						if (cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(unRealTab)))
+						if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(unRealTab)))
 						{
-							if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 32)
+							if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 60)
 							{
 								if (cap.getCategory() != unRealTab)
 								{

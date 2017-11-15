@@ -27,7 +27,7 @@ public class BlockBase extends Block implements IBaseBlock
 {
 	private static AxisAlignedBB RENDER_AABB = FULL_BLOCK_AABB;
 	private static List<AxisAlignedBB> COLLISION_AABB_LIST = new ArrayList<>();
-	
+
 	public BlockBase(String name, Material material, float hardness, float resist, SoundType sound)
 	{
 		super(material);
@@ -63,25 +63,25 @@ public class BlockBase extends Block implements IBaseBlock
 	{
 		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
 	}
-	
+
 	public BlockBase setRenderedAABB(AxisAlignedBB aabb)
 	{
 		RENDER_AABB = aabb;
 		return this;
 	}
-	
+
 	public BlockBase setCollisionAABBList(List<AxisAlignedBB> aabbList)
 	{
 		COLLISION_AABB_LIST = aabbList;
 		return this;
 	}
-	
+
 	@Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return RENDER_AABB;
-    }
-	
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
+		return RENDER_AABB;
+	}
+
 	@SuppressWarnings("deprecation")
 	@Nullable
 	@Override
@@ -99,17 +99,24 @@ public class BlockBase extends Block implements IBaseBlock
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
-    {
-        if (!isActualState)
-        {
-            state = this.getActualState(state, worldIn, pos);
-        }
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+			List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
+	{
+		if (!isActualState)
+		{
+			state = this.getActualState(state, worldIn, pos);
+		}
 
-        for (AxisAlignedBB aabb : COLLISION_AABB_LIST)
-        {
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, aabb);
-        }
-    }
+		for (AxisAlignedBB aabb : COLLISION_AABB_LIST)
+		{
+			addCollisionBoxToList(pos, entityBox, collidingBoxes, aabb);
+		}
+	}
+
+	public static AxisAlignedBB makeAABB(double x1, double y1, double z1, double x2, double y2, double z2)
+	{
+		return new AxisAlignedBB(x1 * (1d / 16d), y1 * (1d / 16d), z1 * (1d / 16d), x2 * (1d / 16d), y2 * (1d / 16d),
+				z2 * (1d / 16d));
+	}
 
 }
