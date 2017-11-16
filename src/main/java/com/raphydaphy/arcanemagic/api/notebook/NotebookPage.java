@@ -12,7 +12,7 @@ public class NotebookPage
 	{
 		this.entries = entries;
 	}
-	
+
 	public boolean matchesText(String searchKey)
 	{
 		for (INotebookEntry entry : entries)

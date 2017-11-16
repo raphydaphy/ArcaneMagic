@@ -167,7 +167,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		}
 		return (isUnlocked(cat.getRequiredTag()) && isUnlocked(cat.getPrerequisiteTag()));
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public boolean matchesSearchKey(NotebookCategory cat)
 	{
@@ -176,8 +176,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 			if (getSearchKey() == null || getSearchKey().isEmpty())
 			{
 				return true;
-			}
-			else if (cat.matchesSearchKey(this))
+			} else if (cat.matchesSearchKey(this))
 			{
 				return true;
 			}

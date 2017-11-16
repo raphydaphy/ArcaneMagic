@@ -179,8 +179,7 @@ public class GuiNotebook extends GuiScreen
 						}
 					}
 				}
-			}
-			else
+			} else
 			{
 				renderCurCategory = -1;
 			}

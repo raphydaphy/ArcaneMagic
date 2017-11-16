@@ -87,7 +87,6 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
-	
 
 	@Override
 	public void markDirty()
@@ -320,11 +319,11 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		}
 		this.markDirty();
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
-    public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
-    {
-		return new AxisAlignedBB(pos, pos.add(1,2,1));
-    }
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
+		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
+	}
 }

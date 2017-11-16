@@ -69,8 +69,7 @@ public class PacketNotebookChanged implements IMessage
 		if (pbuf.readBoolean())
 		{
 			searchKey = pbuf.readString(1024);
-		}
-		else
+		} else
 		{
 			searchKey = "";
 		}

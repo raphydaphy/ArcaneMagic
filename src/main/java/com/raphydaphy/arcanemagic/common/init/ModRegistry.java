@@ -63,7 +63,7 @@ public class ModRegistry
 	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values(),
 			TextFormatting.DARK_AQUA);
 	public static final ItemBase CREATION = new ItemBase("essence_creation", TextFormatting.GOLD);
-	public static final ItemBase BLANK_PARCHMENt = (ItemBase)new ItemBase("blank_parchment").setMaxStackSize(1);
+	public static final ItemBase BLANK_PARCHMENt = (ItemBase) new ItemBase("blank_parchment").setMaxStackSize(1);
 	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
 	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();

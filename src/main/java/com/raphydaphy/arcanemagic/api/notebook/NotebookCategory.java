@@ -87,7 +87,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	{
 		return page == 0 ? getUnlocalizedName() : null;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public boolean matchesSearchKey(NotebookInfo info)
 	{

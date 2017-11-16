@@ -58,7 +58,7 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 			if (!(stack.getItem() instanceof ItemBlock))
 			{
 				GlStateManager.rotate(-90, 1, 0, 0);
-				GlStateManager.translate(0,0,-0.5);
+				GlStateManager.translate(0, 0, -0.5);
 			}
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();

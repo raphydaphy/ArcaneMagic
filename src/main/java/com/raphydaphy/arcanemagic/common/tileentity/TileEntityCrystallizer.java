@@ -264,11 +264,11 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		}
 		return super.getCapability(capability, facing);
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
-    public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
-    {
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
 		return INFINITE_EXTENT_AABB;
-    }
+	}
 }

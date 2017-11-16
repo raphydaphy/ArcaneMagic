@@ -18,7 +18,7 @@ public interface INotebookEntry
 	 */
 	@SideOnly(Side.CLIENT)
 	public boolean containsSearchKey(String searchKey);
-	
+
 	/*
 	 *  Should draw the entry onto the screen at the specified coordinates
 	 */
