@@ -82,9 +82,9 @@ public class GuiNotebook extends GuiScreen
 			this.searchField.setCanLoseFocus(false);
 			this.searchField.setFocused(true);
 			this.searchField.setMaxStringLength(50);
-            this.searchField.setEnableBackgroundDrawing(false);
-            this.searchField.setText(cap.getSearchKey());
-            this.searchField.setTextColor(0x000000);
+			this.searchField.setEnableBackgroundDrawing(false);
+			this.searchField.setText(cap.getSearchKey());
+			this.searchField.setTextColor(0x000000);
 		}
 	}
 
@@ -111,14 +111,13 @@ public class GuiNotebook extends GuiScreen
 		if (cap != null)
 		{
 			if (this.searchField.textboxKeyTyped(typedChar, keyCode))
-            {
+			{
 				cap.setSearchKey(this.searchField.getText());
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
-            }
-			else
+			} else
 			{
-                super.keyTyped(typedChar, keyCode);
-            }
+				super.keyTyped(typedChar, keyCode);
+			}
 		}
 	}
 
@@ -165,18 +164,25 @@ public class GuiNotebook extends GuiScreen
 			int curPage = cap.getPage();
 			int renderCurCategory = 0;
 
-			for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
+			if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(curCategory)))
 			{
-				if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(category)))
+				for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
 				{
-					if (category < curCategory)
+					if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(category)))
 					{
-						renderCurCategory++;
-					} else
-					{
-						break;
+						if (category < curCategory)
+						{
+							renderCurCategory++;
+						} else
+						{
+							break;
+						}
 					}
 				}
+			}
+			else
+			{
+				renderCurCategory = -1;
 			}
 			// if they haven't unlocked the current category, or it dosen't exist
 			if (curCategory > ArcaneMagicAPI.getNotebookCategories().size()
@@ -213,7 +219,7 @@ public class GuiNotebook extends GuiScreen
 			mc.getTextureManager().bindTexture(notebook);
 
 			// selected category background bar
-			if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(curCategory)))
+			if (renderCurCategory >= 0)
 			{
 				drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
 						(int) ((screenY + 40 + (renderCurCategory * 20)) + (1 * scale)), 86, 182, 70, 16,
@@ -225,7 +231,7 @@ public class GuiNotebook extends GuiScreen
 			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)), (int) ((screenY + 15) + (1 * scale)),
 					86, 182, 70, 16, (int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
 			this.searchField.drawTextBox();
-			
+
 			boolean shouldDrawTitle = ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedTitle(cap,
 					curPage) != null;
 
