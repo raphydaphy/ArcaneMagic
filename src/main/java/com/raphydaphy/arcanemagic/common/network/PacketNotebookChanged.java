@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.common.network;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -17,6 +18,7 @@ public class PacketNotebookChanged implements IMessage
 	private int page;
 	private int indexPage;
 	private boolean usedNotebook;
+	private String searchKey;
 
 	public PacketNotebookChanged()
 	{
@@ -28,6 +30,7 @@ public class PacketNotebookChanged implements IMessage
 		this.page = cap.getPage();
 		this.indexPage = cap.getIndexPage();
 		this.usedNotebook = cap.getUsed();
+		this.searchKey = cap.getSearchKey();
 	}
 
 	public static class Handler implements IMessageHandler<PacketNotebookChanged, IMessage>
@@ -50,6 +53,7 @@ public class PacketNotebookChanged implements IMessage
 				cap.setPage(message.page);
 				cap.setIndexPage(message.indexPage);
 				cap.setUsed(message.usedNotebook);
+				cap.setSearchKey(message.searchKey);
 			}
 		}
 	}
@@ -57,18 +61,36 @@ public class PacketNotebookChanged implements IMessage
 	@Override
 	public void fromBytes(ByteBuf buf)
 	{
-		category = buf.readInt();
-		page = buf.readInt();
-		indexPage = buf.readInt();
-		usedNotebook = buf.readBoolean();
+		PacketBuffer pbuf = new PacketBuffer(buf);
+		category = pbuf.readInt();
+		page = pbuf.readInt();
+		indexPage = pbuf.readInt();
+		usedNotebook = pbuf.readBoolean();
+		if (pbuf.readBoolean())
+		{
+			searchKey = pbuf.readString(1024);
+		}
+		else
+		{
+			searchKey = "";
+		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf)
 	{
+		PacketBuffer pbuf = new PacketBuffer(buf);
 		buf.writeInt(category);
 		buf.writeInt(page);
 		buf.writeInt(indexPage);
 		buf.writeBoolean(usedNotebook);
+		if (searchKey != null && !searchKey.isEmpty())
+		{
+			pbuf.writeBoolean(true);
+			pbuf.writeString(searchKey);
+		} else
+		{
+			pbuf.writeBoolean(false);
+		}
 	}
 }

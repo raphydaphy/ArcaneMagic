@@ -93,8 +93,10 @@ public class GuiNotebook extends GuiScreen
 				}
 			} else if (keyCode != Keyboard.KEY_APPS && keyCode != Keyboard.KEY_AT && keyCode != Keyboard.KEY_AX
 					&& keyCode != Keyboard.KEY_CAPITAL && keyCode != Keyboard.KEY_LSHIFT
-					&& keyCode != Keyboard.KEY_RSHIFT)
+					&& keyCode != Keyboard.KEY_RSHIFT && keyCode != Keyboard.KEY_END && keyCode != Keyboard.KEY_LMETA
+					&& keyCode != Keyboard.KEY_RMETA && keyCode != Keyboard.KEY_LMENU && keyCode != Keyboard.KEY_RMENU)
 			{
+				System.out.println(keyCode);
 				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
 				{
 					cap.setSearchKey(cap.getSearchKey() + Character.toUpperCase(typedChar));
@@ -252,12 +254,15 @@ public class GuiNotebook extends GuiScreen
 				}
 			}
 
-			if (!cap.getSearchKey().isEmpty())
+			// Draw the searched words into the bar
+			String shortenedSearchKey = cap.getSearchKey() + "_";
+			if (mc.fontRenderer.getStringWidth(shortenedSearchKey) > 120)
 			{
-				// Draw the searched words into the bar
-				mc.fontRenderer.drawString(cap.getSearchKey(), (int) ((screenX + 26) * (1 / categoryNameSize)),
-						(int) ((screenY + 25) * (1 / categoryNameSize)), 0x32363d);
+				shortenedSearchKey = mc.fontRenderer.trimStringToWidth(shortenedSearchKey, 120, true);
 			}
+			mc.fontRenderer.drawString(shortenedSearchKey, (int) ((screenX + 26) * (1 / categoryNameSize)),
+					(int) ((screenY + 25) * (1 / categoryNameSize)), 0x32363d);
+
 			// Go back to default scaling
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();

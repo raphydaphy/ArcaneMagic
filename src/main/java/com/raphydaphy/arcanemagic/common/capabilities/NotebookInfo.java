@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -107,6 +106,10 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 
 	public void setSearchKey(String notebookSearchKey)
 	{
+		if (notebookSearchKey.length() >= 1024)
+		{
+			notebookSearchKey = notebookSearchKey.substring(0, 1024);
+		}
 		this.notebookSearchKey = notebookSearchKey;
 	}
 
