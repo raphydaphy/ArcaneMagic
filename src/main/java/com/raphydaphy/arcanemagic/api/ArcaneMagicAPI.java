@@ -68,6 +68,7 @@ public class ArcaneMagicAPI
 			sorted_categories = list;
 		else
 			throw new UnsupportedOperationException("Pls stop");
+		
 		ArcaneMagic.LOGGER
 				.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}

@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.item;
 
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookOpened;
@@ -29,7 +29,7 @@ public class ItemNotebook extends ItemBase
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
 	{
-		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 		if (cap != null)
 		{
 			if (world.isRemote)

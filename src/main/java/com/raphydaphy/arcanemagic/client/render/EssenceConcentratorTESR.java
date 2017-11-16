@@ -37,7 +37,7 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(.5, 0.92, .5);
 			GlStateManager.scale(.2f, .2f, .2f);
-			GlStateManager.rotate(Minecraft.getMinecraft().world.getWorldInfo().getWorldTime() * 5, 0, 1, 0);
+			GlStateManager.rotate(te.getAge() * 1.5f, 0, 1, 0);
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
 		}

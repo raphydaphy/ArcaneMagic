@@ -18,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage implements ITickable
 {
 	private ItemStack stack = ItemStack.EMPTY;
+	private int age = 0;
 
 	public TileEntityEssenceConcentrator()
 	{
@@ -40,6 +41,11 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
+	
+	public int getAge()
+	{
+		return age;
+	}
 
 	@Override
 	public void update()
@@ -48,6 +54,9 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 		{
 			return;
 		}
+
+		age++;
+
 		if (this.getStack().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 		{
 			if (world.getBlockState(pos.add(0, -1, 0)).getBlock() == Blocks.IRON_BLOCK
@@ -64,15 +73,13 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 								BlockPos here = new BlockPos(x, y, z);
 								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 								{
-									if (!world.isRemote)
-									{
-										// Send some essence to the crystallizer
-										Essence.sendEssence(world,
-												new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
-												new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false,
-												true);
-									}
+									// Send some essence to the crystallizer
+									Essence.sendEssence(world,
+											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+											new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false,
+											true);
+
 								}
 							}
 						}
@@ -80,6 +87,8 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 				}
 			}
 		}
+		
+		markDirty();
 	}
 
 	@Override
@@ -113,6 +122,7 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 		{
 			stack = ItemStack.EMPTY;
 		}
+		age = compound.getInteger("age");
 	}
 
 	@Override
@@ -125,6 +135,7 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 			stack.writeToNBT(tagCompound);
 			compound.setTag("item", tagCompound);
 		}
+		compound.setInteger("age", age);
 		return compound;
 	}
 

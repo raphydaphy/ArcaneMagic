@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.network;
 
 import java.io.IOException;
 
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -24,7 +24,7 @@ public class PacketNotebookOpened implements IMessage
 	{
 	}
 
-	public PacketNotebookOpened(NotebookInfo cap)
+	public PacketNotebookOpened(INotebookInfo cap)
 	{
 		this.notebookInfo = cap.serializeNBT();
 	}
@@ -41,7 +41,7 @@ public class PacketNotebookOpened implements IMessage
 
 		public void handleNotebookInfo(PacketNotebookOpened message, MessageContext ctx, Side side)
 		{
-			NotebookInfo cap = Minecraft.getMinecraft().player.getCapability(NotebookInfo.CAP, null);
+			INotebookInfo cap = Minecraft.getMinecraft().player.getCapability(INotebookInfo.CAP, null);
 			if (cap != null)
 			{
 				cap.deserializeNBT(message.getCompound());

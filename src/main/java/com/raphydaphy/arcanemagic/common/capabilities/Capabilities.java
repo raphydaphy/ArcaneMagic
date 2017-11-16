@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.common.capabilities;
 
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
 
@@ -16,7 +17,7 @@ public class Capabilities
 	public static void register()
 	{
 		CapabilityManager.INSTANCE.register(IEssenceStorage.class, storage, EssenceStorage.class);
-		CapabilityManager.INSTANCE.register(NotebookInfo.class, info, NotebookInfo.class);
+		CapabilityManager.INSTANCE.register(INotebookInfo.class, info, NotebookInfo.class);
 	}
 
 }

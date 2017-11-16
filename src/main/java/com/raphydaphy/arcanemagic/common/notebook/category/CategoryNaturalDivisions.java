@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookPage;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
@@ -26,7 +26,7 @@ public class CategoryNaturalDivisions extends NotebookCategory
 	}
 
 	@Override
-	public String getUnlocalizedTitle(NotebookInfo info, int page)
+	public String getUnlocalizedTitle(INotebookInfo info, int page)
 	{
 		int fakePage = page;
 		for (int potPage = 0; potPage < 7; potPage++)
@@ -46,7 +46,7 @@ public class CategoryNaturalDivisions extends NotebookCategory
 	}
 
 	@Override
-	public List<NotebookPage> getPages(NotebookInfo info)
+	public List<NotebookPage> getPages(INotebookInfo info)
 	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		for (int curPage = 0; curPage < 7; curPage++)

@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Level;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
@@ -16,7 +17,6 @@ import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -136,7 +136,7 @@ public class ClientEvents
 			if (world.getTotalWorldTime() % 38 == 0)
 			{
 				long oldNano = System.nanoTime();
-				NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+				INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
 
 				if (info != null)
 				{

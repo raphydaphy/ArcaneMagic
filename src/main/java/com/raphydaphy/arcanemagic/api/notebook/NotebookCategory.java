@@ -2,8 +2,6 @@ package com.raphydaphy.arcanemagic.api.notebook;
 
 import java.util.List;
 
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
-
 import akka.japi.Pair;
 //TODO: No scala pair pls
 import net.minecraft.client.gui.FontRenderer;
@@ -83,13 +81,13 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 		return unlocalizedName;
 	}
 
-	public String getUnlocalizedTitle(NotebookInfo info, int page)
+	public String getUnlocalizedTitle(INotebookInfo info, int page)
 	{
 		return page == 0 ? getUnlocalizedName() : null;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean matchesSearchKey(NotebookInfo info)
+	public boolean matchesSearchKey(INotebookInfo info)
 	{
 		if (I18n.format(getUnlocalizedName()).toLowerCase().contains(info.getSearchKey().toLowerCase()))
 		{
@@ -105,7 +103,7 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 		return false;
 	}
 
-	public abstract List<NotebookPage> getPages(NotebookInfo info);
+	public abstract List<NotebookPage> getPages(INotebookInfo info);
 
 	public Pair<String, Integer> getUnlocParchmentInfo()
 	{

@@ -1,9 +1,9 @@
 package com.raphydaphy.arcanemagic.common.network;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
 import io.netty.buffer.ByteBuf;
@@ -46,7 +46,7 @@ public class PacketNotebookToastOrFail implements IMessage
 
 		private void handle(PacketNotebookToastOrFail message, MessageContext ctx)
 		{
-			NotebookInfo cap = Minecraft.getMinecraft().player.getCapability(NotebookInfo.CAP, null);
+			INotebookInfo cap = Minecraft.getMinecraft().player.getCapability(INotebookInfo.CAP, null);
 
 			if (cap != null)
 			{

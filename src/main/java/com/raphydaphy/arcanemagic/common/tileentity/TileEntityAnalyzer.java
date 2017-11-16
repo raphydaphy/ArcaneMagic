@@ -6,8 +6,8 @@ import java.util.UUID;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -136,7 +136,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
 				if (getStack(0) != null && !getStack(0).isEmpty() && unlockable.size() > 0)
 				{
-					NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+					INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
 					if (info != null)
 					{
 						for (NotebookCategory c : unlockable)
@@ -219,7 +219,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 								EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
 								if (player != null)
 								{
-									NotebookInfo info = player.getCapability(NotebookInfo.CAP, null);
+									INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
 									if (info != null)
 									{
 										for (NotebookCategory cat : unlockable)

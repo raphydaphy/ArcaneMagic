@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.common.network;
 
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.PacketBuffer;
@@ -24,7 +24,7 @@ public class PacketNotebookChanged implements IMessage
 	{
 	}
 
-	public PacketNotebookChanged(NotebookInfo cap)
+	public PacketNotebookChanged(INotebookInfo cap)
 	{
 		this.category = cap.getCategory();
 		this.page = cap.getPage();
@@ -45,7 +45,7 @@ public class PacketNotebookChanged implements IMessage
 
 		public void handleNotebookInfo(PacketNotebookChanged message, MessageContext ctx, Side side)
 		{
-			NotebookInfo cap = ctx.getServerHandler().player.getCapability(NotebookInfo.CAP, null);
+			INotebookInfo cap = ctx.getServerHandler().player.getCapability(INotebookInfo.CAP, null);
 
 			if (cap != null)
 			{

@@ -3,9 +3,9 @@ package com.raphydaphy.arcanemagic.client.gui;
 import java.io.IOException;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookChanged;
@@ -47,7 +47,7 @@ public class GuiNotebook extends GuiScreen
 	public GuiNotebook(EntityPlayer player)
 	{
 		this.player = player;
-		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
 		// player opened it for the first time!
 		if (cap != null && !cap.getUsed())
@@ -63,7 +63,7 @@ public class GuiNotebook extends GuiScreen
 		super.initGui();
 		this.setGuiSize(mc.displayWidth, mc.displayHeight);
 
-		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
 		if (cap != null)
 		{
@@ -106,7 +106,7 @@ public class GuiNotebook extends GuiScreen
 	{
 		super.keyTyped(typedChar, keyCode);
 
-		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
 		if (cap != null)
 		{
@@ -124,7 +124,7 @@ public class GuiNotebook extends GuiScreen
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks)
 	{
-		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
 		if (cap != null)
 		{
@@ -299,7 +299,7 @@ public class GuiNotebook extends GuiScreen
 
 		if (mouseButton == 0)
 		{
-			NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+			INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
 			if (cap != null)
 			{

@@ -3,9 +3,9 @@ package com.raphydaphy.arcanemagic.common.item;
 import javax.annotation.Nullable;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
@@ -170,7 +170,7 @@ public class ItemParchment extends ItemBase
 			{
 				if (!world.isRemote)
 				{
-					NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+					INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 					if (cap != null)
 					{
 						NotebookCategory cat = catInfo.first();

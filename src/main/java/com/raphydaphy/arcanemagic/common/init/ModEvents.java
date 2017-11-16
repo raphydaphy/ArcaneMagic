@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.common.init;
 import java.util.Random;
 
 import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
@@ -44,7 +45,7 @@ public class ModEvents
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone ev)
 	{
-		NotebookInfo oldCap = ev.getOriginal().getCapability(NotebookInfo.CAP, null);
+		INotebookInfo oldCap = ev.getOriginal().getCapability(INotebookInfo.CAP, null);
 		if (oldCap != null)
 		{
 			ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null).deserializeNBT(oldCap.serializeNBT());
@@ -68,7 +69,7 @@ public class ModEvents
 	{
 		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
 		{
-			NotebookInfo info = ev.player.getCapability(NotebookInfo.CAP, null);
+			INotebookInfo info = ev.player.getCapability(INotebookInfo.CAP, null);
 
 			if (info != null)
 			{

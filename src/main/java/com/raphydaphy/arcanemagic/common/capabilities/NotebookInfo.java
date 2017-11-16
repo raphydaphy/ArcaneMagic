@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
@@ -13,13 +14,11 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabilityProvider
+public class NotebookInfo implements INotebookInfo, ICapabilityProvider
 {
 	// Current category selected
 	public static final String tagCategory = "notebookCategory";
@@ -35,9 +34,6 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 
 	// The current search text typed into the notebook
 	public static final String tagNotebookSearchKey = "notebookSearchKey";
-
-	@CapabilityInject(NotebookInfo.class)
-	public static Capability<NotebookInfo> CAP = null;
 
 	private Map<String, Boolean> unlockedCategories = new HashMap<>();
 	private int curCategory;
@@ -55,43 +51,48 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		usedNotebook = false;
 	}
 
-	public static class DefaultInfo implements Capability.IStorage<NotebookInfo>
+	public static class DefaultInfo implements Capability.IStorage<INotebookInfo>
 	{
 
 		@Nullable
 		@Override
-		public NBTBase writeNBT(Capability<NotebookInfo> capability, NotebookInfo instance, EnumFacing side)
+		public NBTBase writeNBT(Capability<INotebookInfo> capability, INotebookInfo instance, EnumFacing side)
 		{
 			return instance.serializeNBT();
 		}
 
 		@Override
-		public void readNBT(Capability<NotebookInfo> capability, NotebookInfo instance, EnumFacing side, NBTBase nbt)
+		public void readNBT(Capability<INotebookInfo> capability, INotebookInfo instance, EnumFacing side, NBTBase nbt)
 		{
 			instance.deserializeNBT((NBTTagCompound) nbt);
 		}
 	}
 
+	@Override
 	public void setUsed(boolean used)
 	{
 		this.usedNotebook = true;
 	}
 
+	@Override
 	public void setPage(int page)
 	{
 		this.curPage = page;
 	}
 
+	@Override
 	public void setIndexPage(int indexPage)
 	{
 		this.curIndexPage = indexPage;
 	}
 
+	@Override
 	public void setCategory(int category)
 	{
 		this.curCategory = category;
 	}
 
+	@Override
 	public void setUnlocked(String tag)
 	{
 		if (unlockedCategories.containsKey(tag))
@@ -104,6 +105,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		unlockedCategories.put(tag, true);
 	}
 
+	@Override
 	public void setSearchKey(String notebookSearchKey)
 	{
 		if (notebookSearchKey.length() >= 1024)
@@ -113,31 +115,37 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		this.notebookSearchKey = notebookSearchKey;
 	}
 
+	@Override
 	public boolean getUsed()
 	{
 		return this.usedNotebook;
 	}
 
+	@Override
 	public int getPage()
 	{
 		return this.curPage;
 	}
 
+	@Override
 	public int getIndexPage()
 	{
 		return this.curIndexPage;
 	}
 
+	@Override
 	public int getCategory()
 	{
 		return this.curCategory;
 	}
 
+	@Override
 	public String getSearchKey()
 	{
 		return notebookSearchKey == null ? "" : notebookSearchKey;
 	}
 
+	@Override
 	public boolean isUnlocked(String tag)
 	{
 		if (tag != null)
@@ -158,6 +166,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		return false;
 	}
 
+	@Override
 	public boolean isVisible(NotebookCategory cat)
 	{
 		if (!isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag())
@@ -168,6 +177,7 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 		return (isUnlocked(cat.getRequiredTag()) && isUnlocked(cat.getPrerequisiteTag()));
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean matchesSearchKey(NotebookCategory cat)
 	{
@@ -224,13 +234,13 @@ public class NotebookInfo implements INBTSerializable<NBTTagCompound>, ICapabili
 	@Override
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
 	{
-		return capability == NotebookInfo.CAP;
+		return capability == INotebookInfo.CAP;
 	}
 
 	@Nullable
 	@Override
 	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
 	{
-		return capability == NotebookInfo.CAP ? NotebookInfo.CAP.cast(this) : null;
+		return capability == INotebookInfo.CAP ? INotebookInfo.CAP.cast(this) : null;
 	}
 }
