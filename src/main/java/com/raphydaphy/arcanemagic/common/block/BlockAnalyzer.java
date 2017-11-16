@@ -50,7 +50,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	{
 		super("analyzer", Material.WOOD, 2.5f, SoundType.WOOD);
 
-		this.setRenderedAABB(makeAABB(0, 0, 0, 14, 8, 14));
+		this.setRenderedAABB(makeAABB(2, 0, 2, 14, 8, 14));
 		this.setCollisionAABBList(BOUNDS);
 	}
 

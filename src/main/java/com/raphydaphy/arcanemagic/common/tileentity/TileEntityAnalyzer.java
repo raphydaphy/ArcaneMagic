@@ -87,6 +87,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
+	
 
 	@Override
 	public void markDirty()
@@ -293,7 +294,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			} else if (world.isRemote && world.rand.nextInt(3) == 1)
 			{
 				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
-						pos.getY() + 0.7, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
+						pos.getY() + 0.5, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
 			}
 
 			if (world.getTotalWorldTime() % 50 == 0)

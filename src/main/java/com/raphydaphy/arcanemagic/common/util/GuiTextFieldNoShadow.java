@@ -43,7 +43,7 @@ public class GuiTextFieldNoShadow extends GuiTextField
             if (!s.isEmpty())
             {
                 String s1 = flag ? s.substring(0, j) : s;
-                j1 = this.fontRenderer.drawStringWithShadow(s1, (float)l, (float)i1, i);
+                j1 = this.fontRenderer.drawString(s1, (float)l, (float)i1, i, false);
             }
 
             boolean flag2 = this.getCursorPosition() < this.getText().length() || this.getText().length() >= this.getMaxStringLength();

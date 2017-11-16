@@ -77,7 +77,7 @@ public class GuiNotebook extends GuiScreen
 			// The start x and y coords of the notebook on the screen
 			int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
 			int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
-			this.searchField = new GuiTextFieldNoShadow(1, mc.fontRenderer, screenX + 23, screenY + 23, 110, 20);
+			this.searchField = new GuiTextFieldNoShadow(1, mc.fontRenderer, screenX + 27, screenY + 24, 88, 30);
 			this.searchField.setVisible(true);
 			this.searchField.setCanLoseFocus(false);
 			this.searchField.setFocused(true);

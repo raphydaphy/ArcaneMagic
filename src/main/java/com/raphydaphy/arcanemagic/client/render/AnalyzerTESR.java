@@ -67,7 +67,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
-			GlStateManager.translate(0.5, .54, 0.5);
+			GlStateManager.translate(0.5, .48, 0.5);
 			GlStateManager.scale(.18f, .18f, .18f);
 
 			if (!(stack.getItem() instanceof ItemBlock) && slot == 0)

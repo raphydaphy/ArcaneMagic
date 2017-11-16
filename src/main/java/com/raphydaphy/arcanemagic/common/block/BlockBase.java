@@ -25,8 +25,8 @@ import net.minecraft.world.World;
 
 public class BlockBase extends Block implements IBaseBlock
 {
-	private static AxisAlignedBB RENDER_AABB = FULL_BLOCK_AABB;
-	private static List<AxisAlignedBB> COLLISION_AABB_LIST = new ArrayList<>();
+	private AxisAlignedBB RENDER_AABB = FULL_BLOCK_AABB;
+	private List<AxisAlignedBB> COLLISION_AABB_LIST = new ArrayList<>();
 
 	public BlockBase(String name, Material material, float hardness, float resist, SoundType sound)
 	{
