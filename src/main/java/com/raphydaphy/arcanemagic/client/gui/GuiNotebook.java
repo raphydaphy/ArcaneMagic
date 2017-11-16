@@ -2,8 +2,6 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.io.IOException;
 
-import org.lwjgl.input.Keyboard;
-
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
@@ -11,6 +9,7 @@ import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookChanged;
+import com.raphydaphy.arcanemagic.common.util.GuiTextFieldNoShadow;
 
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -43,6 +42,8 @@ public class GuiNotebook extends GuiScreen
 	public static final ResourceLocation notebook = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/notebook.png");
 
+	private GuiTextFieldNoShadow searchField;
+
 	public GuiNotebook(EntityPlayer player)
 	{
 		this.player = player;
@@ -61,6 +62,30 @@ public class GuiNotebook extends GuiScreen
 	{
 		super.initGui();
 		this.setGuiSize(mc.displayWidth, mc.displayHeight);
+
+		NotebookInfo cap = player.getCapability(NotebookInfo.CAP, null);
+
+		if (cap != null)
+		{
+			// MC Screen resolution based on GUI scale
+			ScaledResolution res = new ScaledResolution(mc);
+
+			// Size of the notebook when taking the larger scale into account
+			final int SCALED_NOTEBOOK_WIDTH = (int) (NOTEBOOK_WIDTH * scale);
+			final int SCALED_NOTEBOOK_HEIGHT = (int) (NOTEBOOK_HEIGHT * scale);
+
+			// The start x and y coords of the notebook on the screen
+			int screenX = (res.getScaledWidth() / 2) - (SCALED_NOTEBOOK_WIDTH / 2);
+			int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
+			this.searchField = new GuiTextFieldNoShadow(1, mc.fontRenderer, screenX + 23, screenY + 23, 110, 20);
+			this.searchField.setVisible(true);
+			this.searchField.setCanLoseFocus(false);
+			this.searchField.setFocused(true);
+			this.searchField.setMaxStringLength(50);
+            this.searchField.setEnableBackgroundDrawing(false);
+            this.searchField.setText(cap.getSearchKey());
+            this.searchField.setTextColor(0x000000);
+		}
 	}
 
 	private void drawArrow(boolean isLeft, int x, int y, int mouseX, int mouseY, int screenX, int screenY)
@@ -85,27 +110,15 @@ public class GuiNotebook extends GuiScreen
 
 		if (cap != null)
 		{
-			if (keyCode == Keyboard.KEY_BACK || keyCode == Keyboard.KEY_DELETE)
+			if (this.searchField.textboxKeyTyped(typedChar, keyCode))
+            {
+				cap.setSearchKey(this.searchField.getText());
+				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
+            }
+			else
 			{
-				if (cap.getSearchKey().length() > 0)
-				{
-					cap.setSearchKey(cap.getSearchKey().substring(0, cap.getSearchKey().length() - 1));
-				}
-			} else if (keyCode != Keyboard.KEY_APPS && keyCode != Keyboard.KEY_AT && keyCode != Keyboard.KEY_AX
-					&& keyCode != Keyboard.KEY_CAPITAL && keyCode != Keyboard.KEY_LSHIFT
-					&& keyCode != Keyboard.KEY_RSHIFT && keyCode != Keyboard.KEY_END && keyCode != Keyboard.KEY_LMETA
-					&& keyCode != Keyboard.KEY_RMETA && keyCode != Keyboard.KEY_LMENU && keyCode != Keyboard.KEY_RMENU)
-			{
-				System.out.println(keyCode);
-				if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
-				{
-					cap.setSearchKey(cap.getSearchKey() + Character.toUpperCase(typedChar));
-				} else
-				{
-					cap.setSearchKey(cap.getSearchKey() + typedChar);
-				}
-
-			}
+                super.keyTyped(typedChar, keyCode);
+            }
 		}
 	}
 
@@ -211,7 +224,8 @@ public class GuiNotebook extends GuiScreen
 			// TODO: proper texture
 			drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)), (int) ((screenY + 15) + (1 * scale)),
 					86, 182, 70, 16, (int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
-
+			this.searchField.drawTextBox();
+			
 			boolean shouldDrawTitle = ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedTitle(cap,
 					curPage) != null;
 
@@ -253,15 +267,6 @@ public class GuiNotebook extends GuiScreen
 					cat++;
 				}
 			}
-
-			// Draw the searched words into the bar
-			String shortenedSearchKey = cap.getSearchKey() + "_";
-			if (mc.fontRenderer.getStringWidth(shortenedSearchKey) > 120)
-			{
-				shortenedSearchKey = mc.fontRenderer.trimStringToWidth(shortenedSearchKey, 120, true);
-			}
-			mc.fontRenderer.drawString(shortenedSearchKey, (int) ((screenX + 26) * (1 / categoryNameSize)),
-					(int) ((screenY + 25) * (1 / categoryNameSize)), 0x32363d);
 
 			// Go back to default scaling
 			GlStateManager.popAttrib();
