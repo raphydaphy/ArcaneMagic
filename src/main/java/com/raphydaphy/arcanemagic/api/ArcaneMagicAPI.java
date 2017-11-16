@@ -1,5 +1,11 @@
 package com.raphydaphy.arcanemagic.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.raphydaphy.arcanemagic.api.analysis.AnalysisManager;
@@ -7,8 +13,6 @@ import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
-import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,6 +26,10 @@ public class ArcaneMagicAPI
 	private static final AnalysisManager MANAGER = new AnalysisManager();
 
 	private static ImmutableList<NotebookCategory> sorted_categories;
+	
+	private static final Logger LOGGER = LogManager.getLogger("ArcaneMagicAPI");
+	
+	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
 
 	public static void registerCategory(NotebookCategory category)
 	{
@@ -69,8 +77,7 @@ public class ArcaneMagicAPI
 		else
 			throw new UnsupportedOperationException("Pls stop");
 		
-		ArcaneMagic.LOGGER
-				.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
+		LOGGER.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}
 
 	public static IElementalRecipe getElementalCraftingRecipe(EntityPlayer player, ItemStack wand,
@@ -81,7 +88,7 @@ public class ArcaneMagicAPI
 		Preconditions.checkArgument(wand.getItem() instanceof IElementalCraftingItem,
 				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
 
-		for (IElementalRecipe curRecipe : RecipeHelper.ELEMENTAL_RECIPES)
+		for (IElementalRecipe curRecipe : ELEMENTAL_RECIPES)
 			if (curRecipe.matches(player, wand, inputs, world))
 				return curRecipe;
 		return null;

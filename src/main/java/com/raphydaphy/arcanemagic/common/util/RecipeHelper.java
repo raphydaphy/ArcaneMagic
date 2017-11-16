@@ -1,8 +1,8 @@
 package com.raphydaphy.arcanemagic.common.util;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
@@ -37,7 +37,7 @@ public class RecipeHelper
 	private static final String MODID = ArcaneMagic.MODID;
 	private static final String MODNAME = ArcaneMagic.MODNAME;
 	public static final List<IRecipe> RECIPES = ModRegistry.RECIPES;
-	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
+	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = ArcaneMagicAPI.ELEMENTAL_RECIPES;
 
 	/**
 	 * This adds a recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipeX, where X is the current recipe you are adding.
