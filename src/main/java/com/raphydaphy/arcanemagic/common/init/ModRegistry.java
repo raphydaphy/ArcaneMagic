@@ -29,6 +29,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrato
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
+import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -94,6 +95,9 @@ public class ModRegistry
 		for (Block b : ModRegistry.BLOCKS)
 			if (b instanceof IHasRecipe)
 				((IHasRecipe) b).initRecipes(e);
+
+		RecipeHelper.addShaped(BLANK_PARCHMENt, 3, 3, null, "paper", null, "paper", "dye", "paper", null, "paper",
+				null);
 
 		// @Shadows: The day I work with JSON recipes is the day the world ends.
 		// @raphy: uhoh

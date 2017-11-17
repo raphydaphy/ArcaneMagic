@@ -7,16 +7,29 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityElementalCraftingTable extends TileEntity
+public class TileEntityElementalCraftingTable extends TileEntity implements ITickable
 {
 	public static final int SIZE = 10;
-
-	public TileEntityElementalCraftingTable()
+	private int age = 0;
+	
+	@Override
+	public void update()
 	{
+		if (world.isRemote)
+		{
+			return;
+		}
+
+		age++;
+		markDirty();
 	}
 
 	@Override
@@ -35,6 +48,11 @@ public class TileEntityElementalCraftingTable extends TileEntity
 		}
 	}
 
+	public int getAge()
+	{
+		return age;
+	}
+	
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{
 		@Override
@@ -71,7 +89,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
-
+		age = compound.getInteger("age");
 	}
 
 	@Override
@@ -79,6 +97,7 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	{
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
+		compound.setInteger("age", age);
 		return compound;
 	}
 
@@ -125,5 +144,12 @@ public class TileEntityElementalCraftingTable extends TileEntity
 	{
 		// shadows told me to put 150 so i did
 		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
+		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
 	}
 }

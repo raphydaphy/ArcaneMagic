@@ -1,5 +1,10 @@
 package com.raphydaphy.arcanemagic.client.render;
 
+import java.awt.Color;
+
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
+import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
+import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 
 import net.minecraft.client.Minecraft;
@@ -7,8 +12,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -28,6 +36,63 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 		for (int i = 0; i < cap.getSlots(); i++)
 		{
 			renderItem(cap.getStackInSlot(i), i);
+		}
+
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		World world = Minecraft.getMinecraft().world;
+
+		ItemStack held = player.getHeldItemMainhand();
+
+		if (held.isEmpty() || !(held.getItem() instanceof IElementalCraftingItem))
+		{
+			held = player.getHeldItemOffhand();
+		}
+
+		if (!held.isEmpty() && held.getItem() instanceof IElementalCraftingItem)
+		{
+			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
+
+			for (int i = 0; i < 9; i++)
+			{
+				recipeInputs.set(i, cap.getStackInSlot(i));
+			}
+
+			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(player, held, recipeInputs, world);
+
+			if (foundRecipe != null)
+			{
+				GlStateManager.pushMatrix();
+				GlStateManager.pushAttrib();
+
+				float frequency = 0.1f;
+				double r = Math.sin(frequency * (te.getAge())) * 127 + 128;
+				double g = Math.sin(frequency * (te.getAge()) + 2) * 127 + 128;
+				double b = Math.sin(frequency * (te.getAge()) + 4) * 127 + 128;
+
+				Color c = new Color((int) r, (int) g, (int) b);
+				
+				GLHelper.renderFancyBeams(0.5, 1.5, 0.5, c, te.getWorld().getSeed(), te.getAge(), 16, 0.5f, 30, 10);
+				GlStateManager.popAttrib();
+				GlStateManager.popMatrix();
+
+				GlStateManager.pushMatrix();
+
+				RenderHelper.enableStandardItemLighting();
+				GlStateManager.enableLighting();
+				GlStateManager.translate(0.5, .48, 0.5);
+				GlStateManager.scale(.18f, .18f, .18f);
+
+				float age = -te.getAge() * 1.5f;
+				GlStateManager.rotate(age, 0, 1, 0);
+
+				GlStateManager.scale(3.5, 3.5, 3.5);
+				GlStateManager.translate(0, 1.5, 0);
+				GlStateManager.translate(0, Math.sin(0.2 * (te.getAge() / 2)) / 10, 0);
+				GLHelper.renderItemWithTransform(te.getWorld(), foundRecipe.getRecipeOutput(),
+						ItemCameraTransforms.TransformType.GROUND);
+
+				GlStateManager.popMatrix();
+			}
 		}
 
 		GlStateManager.popMatrix();
