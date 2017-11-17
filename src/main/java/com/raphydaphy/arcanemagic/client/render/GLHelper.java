@@ -553,7 +553,7 @@ public class GLHelper
 			defaultColor = new Color((int) r, (int) g, (int) b);
 		}
 
-		GLHelper.renderFancyBeams(pos.x, pos.y, pos.z, defaultColor, seed, continuousTick, 16, 0.5f, 30, 10);
+		GLHelper.renderFancyBeams(pos.x + 0.5, pos.y, pos.z + 0.5, defaultColor, seed, continuousTick, 16, 0.5f, 30, 10);
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
 
