@@ -24,7 +24,7 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 		GlStateManager.popMatrix();
 	}
 
-	private int myFather = 0;
+	private int frameAge = 0;
 
 	private void renderItem(TileEntityEssenceConcentrator te) {
 		ItemStack stack = te.getStack();
@@ -34,9 +34,9 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(.5, 0.935, .5);
 			GlStateManager.scale(.2f, .2f, .2f);
-			GlStateManager.rotate(myFather, 0, 1, 0);
-			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (myFather++)) / 3.2 + 0.1, 0);
-			if(myFather < 0 || myFather == Integer.MAX_VALUE) myFather = 0;
+			GlStateManager.rotate(frameAge, 0, 1, 0);
+			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frameAge++)) / 3.2 + 0.1, 0);
+			if(frameAge < 0 || frameAge == Integer.MAX_VALUE) frameAge = 0;
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
 		}
