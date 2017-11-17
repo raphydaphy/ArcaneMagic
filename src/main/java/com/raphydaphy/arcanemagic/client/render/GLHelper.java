@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -533,6 +534,44 @@ public class GLHelper
 		RenderHelper.enableStandardItemLighting();
 
 		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+	}
+
+	public static void renderItemStackFancy(ItemStack stack, Vec3d pos, boolean useRainbow, Color defaultColor, int continuousTick,
+			long seed)
+	{
+		GlStateManager.pushMatrix();
+		GlStateManager.pushAttrib();
+
+		if (useRainbow)
+		{
+			float frequency = 0.1f;
+			double r = Math.sin(frequency * (continuousTick)) * 127 + 128;
+			double g = Math.sin(frequency * (continuousTick) + 2) * 127 + 128;
+			double b = Math.sin(frequency * (continuousTick) + 4) * 127 + 128;
+
+			defaultColor = new Color((int) r, (int) g, (int) b);
+		}
+
+		GLHelper.renderFancyBeams(pos.x, pos.y, pos.z, defaultColor, seed, continuousTick, 16, 0.5f, 30, 10);
+		GlStateManager.popAttrib();
+		GlStateManager.popMatrix();
+
+		GlStateManager.pushMatrix();
+
+		RenderHelper.enableStandardItemLighting();
+		GlStateManager.enableLighting();
+		GlStateManager.translate(0.5, .48, 0.5);
+		GlStateManager.scale(.18f, .18f, .18f);
+
+		GlStateManager.rotate(-continuousTick * 1.5f, 0, 1, 0);
+
+		GlStateManager.scale(3.5, 3.5, 3.5);
+		GlStateManager.translate(pos.x, pos.y, pos.z);
+		GlStateManager.translate(0, Math.sin(0.2 * (continuousTick / 2)) / 10, 0);
+		GLHelper.renderItemWithTransform(Minecraft.getMinecraft().world, stack,
+				ItemCameraTransforms.TransformType.GROUND);
+
 		GlStateManager.popMatrix();
 	}
 }
