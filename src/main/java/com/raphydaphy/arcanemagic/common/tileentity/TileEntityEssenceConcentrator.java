@@ -42,6 +42,19 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 		}
 	}
 	
+	@Override
+	public void markDirty()
+	{
+		super.markDirty();
+		if (TileEntityEssenceConcentrator.this.world != null && TileEntityEssenceConcentrator.this.pos != null)
+		{
+			IBlockState state = TileEntityEssenceConcentrator.this.world.getBlockState(TileEntityEssenceConcentrator.this.pos);
+			TileEntityEssenceConcentrator.this.world.markAndNotifyBlock(TileEntityEssenceConcentrator.this.pos,
+					TileEntityEssenceConcentrator.this.world.getChunkFromBlockCoords(TileEntityEssenceConcentrator.this.pos), state, state,
+					1 | 2);
+		}
+	}
+	
 	public int getAge()
 	{
 		return age;

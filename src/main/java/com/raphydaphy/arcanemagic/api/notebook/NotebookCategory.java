@@ -87,15 +87,15 @@ public abstract class NotebookCategory extends IForgeRegistryEntry.Impl<Notebook
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean matchesSearchKey(INotebookInfo info)
+	public boolean matchesSearchKey(String key, INotebookInfo info)
 	{
-		if (I18n.format(getUnlocalizedName()).toLowerCase().contains(info.getSearchKey().toLowerCase()))
+		if (I18n.format(getUnlocalizedName()).toLowerCase().contains(key))
 		{
 			return true;
 		}
 		for (NotebookPage page : getPages(info))
 		{
-			if (page.matchesText(info.getSearchKey().toLowerCase()))
+			if (page.matchesText(key))
 			{
 				return true;
 			}

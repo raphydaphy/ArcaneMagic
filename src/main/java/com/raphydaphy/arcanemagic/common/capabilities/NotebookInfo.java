@@ -186,10 +186,27 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider
 			if (getSearchKey() == null || getSearchKey().isEmpty())
 			{
 				return true;
-			} else if (cat.matchesSearchKey(this))
-			{
-				return true;
 			}
+			
+			String[] terms = getSearchKey().toLowerCase().split("\\|");
+			for (String term : terms)
+			{
+				boolean matchesTerm = true;
+				String[] words = term.split(" ");
+				for (String word : words)
+				{
+					if (!cat.matchesSearchKey(word, this))
+					{
+						matchesTerm = false;
+					}
+				}
+				if (matchesTerm)
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 		return false;
 	}

@@ -167,7 +167,7 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry
 	@Override
 	public boolean containsSearchKey(String searchKey)
 	{
-		if (recipeOut.getDisplayName().toLowerCase().contains(searchKey.toLowerCase()))
+		if (recipeOut.getDisplayName().toLowerCase().contains(searchKey))
 		{
 			return true;
 		}
@@ -175,7 +175,7 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry
 		{
 			for (ItemStack input : recipeIn[x])
 			{
-				if (input.getDisplayName().toLowerCase().contains(searchKey.toLowerCase()))
+				if (input.getDisplayName().toLowerCase().contains(searchKey))
 				{
 					return true;
 				}

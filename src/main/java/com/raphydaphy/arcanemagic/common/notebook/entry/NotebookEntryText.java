@@ -49,6 +49,6 @@ public class NotebookEntryText implements INotebookEntry
 	@Override
 	public boolean containsSearchKey(String searchKey)
 	{
-		return I18n.format(unlocalizedText).toLowerCase().contains(searchKey.toLowerCase());
+		return I18n.format(unlocalizedText).toLowerCase().contains(searchKey);
 	}
 }
