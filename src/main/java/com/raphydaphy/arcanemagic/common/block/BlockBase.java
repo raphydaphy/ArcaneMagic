@@ -102,15 +102,22 @@ public class BlockBase extends Block implements IBaseBlock
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
 			List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
 	{
-		if (!isActualState)
+		if (COLLISION_AABB_LIST.isEmpty())
 		{
-			state = this.getActualState(state, worldIn, pos);
+			super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
+		} else
+		{
+			if (!isActualState)
+			{
+				state = this.getActualState(state, worldIn, pos);
+			}
+
+			for (AxisAlignedBB aabb : COLLISION_AABB_LIST)
+			{
+				addCollisionBoxToList(pos, entityBox, collidingBoxes, aabb);
+			}
 		}
 
-		for (AxisAlignedBB aabb : COLLISION_AABB_LIST)
-		{
-			addCollisionBoxToList(pos, entityBox, collidingBoxes, aabb);
-		}
 	}
 
 	public static AxisAlignedBB makeAABB(double x1, double y1, double z1, double x2, double y2, double z2)
