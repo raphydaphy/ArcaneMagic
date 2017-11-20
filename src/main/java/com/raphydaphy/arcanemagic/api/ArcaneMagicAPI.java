@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ArcaneMagicAPI
 {
@@ -31,10 +32,10 @@ public class ArcaneMagicAPI
 	
 	private static final Logger LOGGER = LogManager.getLogger("ArcaneMagicAPI");
 	
-	private static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
+	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
 	
-	// relates a oredict string to a essence type that should be used to smelt the ore in an infernal furnace
-	public static Map<String, Essence> ESSENCE_ORE_REGISTRY = new HashMap<String, Essence>();
+	// relates a oredict ID to a essence type that should be used to smelt the ore in an infernal furnace
+	public static Map<Integer, Essence> ESSENCE_ORE_REGISTRY = new HashMap<Integer, Essence>();
 
 	public static void registerCategory(NotebookCategory category)
 	{
@@ -48,7 +49,19 @@ public class ArcaneMagicAPI
 	
 	public static void registerOre(String oreDict, Essence essence)
 	{
-		ESSENCE_ORE_REGISTRY.put(oreDict, essence);
+		ESSENCE_ORE_REGISTRY.put(OreDictionary.getOreID(oreDict), essence);
+	}
+	
+	public static Essence getEssenceFromStack(ItemStack stack)
+	{
+		for(int id : OreDictionary.getOreIDs(stack))
+		{
+			if (ESSENCE_ORE_REGISTRY.containsKey(id))
+			{
+				return ESSENCE_ORE_REGISTRY.get(id);
+			}
+		}
+		return null;
 	}
 
 	public static void registerEssence(Essence e)

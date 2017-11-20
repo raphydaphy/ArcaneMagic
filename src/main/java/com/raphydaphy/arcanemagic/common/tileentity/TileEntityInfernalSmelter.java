@@ -4,8 +4,10 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
+import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceCrystal;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
@@ -46,8 +48,8 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 		{
 			IBlockState state = TileEntityInfernalSmelter.this.world.getBlockState(TileEntityInfernalSmelter.this.pos);
 			TileEntityInfernalSmelter.this.world.markAndNotifyBlock(TileEntityInfernalSmelter.this.pos,
-					TileEntityInfernalSmelter.this.world.getChunkFromBlockCoords(TileEntityInfernalSmelter.this.pos), state, state,
-					1 | 2);
+					TileEntityInfernalSmelter.this.world.getChunkFromBlockCoords(TileEntityInfernalSmelter.this.pos),
+					state, state, 1 | 2);
 		}
 	}
 
@@ -70,7 +72,7 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 		}
 		return super.getCapability(capability, facing);
 	}
-	
+
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{
 		@Override
@@ -80,12 +82,28 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 			// that the chest contents is persisted
 			TileEntityInfernalSmelter.this.markDirty();
 		}
-		
+
 		@Override
 		protected int getStackLimit(int slot, @Nonnull ItemStack stack)
-	    {
+		{
 			return 1;
-	    }
+		}
+
+		@Override
+		@Nonnull
+		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
+		{
+			if (slot == ORE && ArcaneMagicAPI.getEssenceFromStack(stack) == null)
+			{
+				return stack;
+
+			} else if (slot != ORE && !stack.isEmpty() && !(stack.getItem() instanceof IEssenceCrystal))
+			{
+				return stack;
+			}
+
+			return super.insertItem(slot, stack, simulate);
+		}
 	};
 
 	@Override
@@ -126,7 +144,7 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 		}
 
 		IItemHandler cap = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+
 		if (!cap.getStackInSlot(ORE).isEmpty())
 		{
 			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
@@ -140,8 +158,9 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 							BlockPos here = new BlockPos(x, y, z);
 							if (world.getBlockState(here).getBlock().equals(ModRegistry.ESSENCE_CONCENTRATOR))
 							{
-								
-								TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(here);
+
+								TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world
+										.getTileEntity(here);
 
 								if (te != null)
 								{
@@ -161,19 +180,17 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 									{
 										if (!world.isRemote)
 										{
-											if (Essence.sendEssence(world,
-													new EssenceStack(useType, 1),
+											if (Essence.sendEssence(world, new EssenceStack(useType, 1),
 													new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-													new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, true))
+													new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5),
+													false, true))
 											{
-												
+
 											}
 										}
 
 									}
 								}
-								
-								
 
 							}
 						}
@@ -190,6 +207,6 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 	@SideOnly(Side.CLIENT)
 	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
 	{
-		return new AxisAlignedBB(pos.add(-1,0,-1), pos.add(1,1,1));
+		return new AxisAlignedBB(pos.add(-1, 0, -1), pos.add(1, 1, 1));
 	}
 }
