@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.common.tileentity;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import com.raphydaphy.arcanemagic.api.essence.Essence;
 import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
 import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
@@ -10,6 +12,7 @@ import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -198,11 +201,17 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{
 		@Override
-		protected void onContentsChanged(int slot)
+		public void onContentsChanged(int slot)
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
 			TileEntityCrystallizer.this.markDirty();
+		}
+		
+		@Override
+		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
+		{
+			return stack;
 		}
 	};
 
@@ -245,12 +254,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			// only extract with automation
-			if (facing == null || facing == EnumFacing.DOWN)
-			{
-				return true;
-			}
-			return false;
+			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}

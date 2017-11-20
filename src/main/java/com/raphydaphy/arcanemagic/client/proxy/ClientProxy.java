@@ -11,6 +11,7 @@ import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
 import com.raphydaphy.arcanemagic.client.render.CrystallizerTESR;
 import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
 import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
+import com.raphydaphy.arcanemagic.client.render.InfernalSmelterTESR;
 import com.raphydaphy.arcanemagic.client.render.WritingDeskTESR;
 import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
@@ -19,6 +20,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.Minecraft;
@@ -62,15 +64,12 @@ public class ClientProxy extends CommonProxy
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceConcentrator.class,
 				new EssenceConcentratorTESR());
-
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElementalCraftingTable.class,
 				new ElementalCraftingTableTESR());
-
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class, new WritingDeskTESR());
-
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class, new AnalyzerTESR());
-
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrystallizer.class, new CrystallizerTESR());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfernalSmelter.class, new InfernalSmelterTESR());
 	}
 
 	public static void registerColors()

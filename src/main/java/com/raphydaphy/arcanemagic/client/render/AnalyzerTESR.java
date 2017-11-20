@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 {
+	private int frame = 0;
 	@Override
 	public void render(TileEntityAnalyzer te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha)
@@ -25,6 +26,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
+		frame++;
 
 		GlStateManager.translate(0, 0, 0);
 
@@ -36,6 +38,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 		GlStateManager.popMatrix();
 	}
 
+	
 	private void renderItem(int slot, TileEntityAnalyzer te)
 	{
 		ItemStack stack = te.getStack(slot);
@@ -47,19 +50,19 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 				GlStateManager.pushAttrib();
 
 				Color c = Color.RED;
-
+				
 				IEssenceStorage e = te.getCapability(IEssenceStorage.CAP, null);
 				if (e != null && e.getTotalStored() > 0)
 				{
 					float frequency = 0.1f;
-					double r = Math.sin(frequency * (te.getAge())) * 127 + 128;
-					double g = Math.sin(frequency * (te.getAge()) + 2) * 127 + 128;
-					double b = Math.sin(frequency * (te.getAge()) + 4) * 127 + 128;
+					double r = Math.sin(frequency * (frame)) * 127 + 128;
+					double g = Math.sin(frequency * (frame) + 2) * 127 + 128;
+					double b = Math.sin(frequency * (frame) + 4) * 127 + 128;
 
 					c = new Color((int) r, (int) g, (int) b);
 				}
 				//Essence.getFromBiome(te.getWorld().getBiome(new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()))).getColor()
-				GLHelper.renderFancyBeams(0.5, 0.55, 0.5, c, te.getWorld().getSeed(), te.getAge(), 16, 0.5f, 30, 10);
+				GLHelper.renderFancyBeams(0.5, 0.55, 0.5, c, te.getWorld().getSeed(), frame, 16, 0.5f, 30, 10);
 				GlStateManager.popAttrib();
 				GlStateManager.popMatrix();
 			}
@@ -74,7 +77,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 			{
 				GlStateManager.scale(1.2f, 1.2f, 1.2f);
 			}
-			float age = te.getAge() * 1.5f;
+			float age = frame * 1.3f;
 			if (slot == 1)
 			{
 				age = -age;
@@ -86,7 +89,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 			{
 				GlStateManager.scale(3.5, 3.5, 3.5);
 				GlStateManager.translate(0, -0.1, 0);
-				GlStateManager.translate(0, Math.sin(0.2 * (te.getAge() / 2)) / 10, 0);
+				GlStateManager.translate(0, Math.sin(0.2 * (frame / 2)) / 10, 0);
 				GLHelper.renderItemWithTransform(te.getWorld(), stack, ItemCameraTransforms.TransformType.GROUND);
 			} else
 			{

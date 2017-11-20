@@ -33,7 +33,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 	// TODO: make this a nonnulllist
 	private ItemStack[] stacks = { ItemStack.EMPTY, ItemStack.EMPTY };
 
-	private int age = 0;
+	private int progress = 0;
 	private boolean hasValidStack = false;
 
 	private UUID stackOwner = null;
@@ -74,7 +74,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 
 		if (stack == 0)
 		{
-			this.age = 0;
+			this.progress = 0;
 
 			evaulateStack();
 		}
@@ -114,7 +114,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		{
 			setStack(1, new ItemStack(compound.getCompoundTag("parchmentStack")));
 		}
-		age = compound.getInteger("age");
+		progress = compound.getInteger("age");
 
 		if (compound.hasKey("stackOwner"))
 		{
@@ -170,7 +170,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			getStack(1).writeToNBT(tagCompound);
 			compound.setTag("parchmentStack", tagCompound);
 		}
-		compound.setInteger("age", age);
+		compound.setInteger("progress", progress);
 		if (stackOwner != null)
 		{
 			compound.setUniqueId("stackOwner", stackOwner);
@@ -180,9 +180,9 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		return compound;
 	}
 
-	public int getAge()
+	public int getProgress()
 	{
-		return age;
+		return progress;
 	}
 
 	public boolean canInteractWith(EntityPlayer playerIn)
@@ -194,7 +194,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 	@Override
 	public void update()
 	{
-		age++;
+		progress++;
 
 		if (hasValidStack)
 		{
@@ -204,11 +204,11 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 				{
 
 					// just reached 200
-					if (age > 0)
+					if (progress > 0)
 					{
-						age = -200;
+						progress = -200;
 					}
-					if (age == -10)
+					if (progress == -10)
 					{
 						List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
 								.getAnalysisResults(getStack(0));
@@ -262,7 +262,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 
 							setStack(1, ItemStack.EMPTY);
 
-							age = 0;
+							progress = 0;
 						}
 					}
 				}

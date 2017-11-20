@@ -59,12 +59,7 @@ public class TileEntityInfusionAltar extends TileEntity
 	{
 		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
-			// only extract with automation
-			if (facing == null || facing == EnumFacing.DOWN)
-			{
-				return true;
-			}
-			return false;
+			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}

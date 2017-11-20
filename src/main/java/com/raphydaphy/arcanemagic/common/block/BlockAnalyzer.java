@@ -126,7 +126,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 		if (!stack.isEmpty() && !player.isSneaking())
 		{
 			ItemStack insertStack = stack.copy();
-			if (stack.getItem().equals(ModRegistry.BLANK_PARCHMENt))
+			if (stack.getItem().equals(ModRegistry.BLANK_PARCHMENT))
 			{
 				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
 						.getAnalysisResults(te.getStack(0).copy());
@@ -135,7 +135,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 				{
 
 					stack.shrink(1);
-					te.setStack(1, new ItemStack(ModRegistry.BLANK_PARCHMENt));
+					te.setStack(1, new ItemStack(ModRegistry.BLANK_PARCHMENT));
 				}
 			} else if (te.getStack(0).isEmpty())
 			{

@@ -28,6 +28,7 @@ tile.arcanemagic.essence_concentrator.name=Essence Concentrator
 tile.arcanemagic.writing_desk.name=Writing Desk
 tile.arcanemagic.infusion_altar.name=Infusion Altar
 tile.arcanemagic.analyzer.name=Analyzer
+tile.arcanemagic.infernal_smelter.name=Infernal Smelter
 
 # Sounds
 subtitle.arcanemagic.spell=Spell Cast

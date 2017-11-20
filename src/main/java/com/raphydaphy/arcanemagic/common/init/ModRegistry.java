@@ -9,14 +9,15 @@ import com.raphydaphy.arcanemagic.common.block.BlockCrystallizer;
 import com.raphydaphy.arcanemagic.common.block.BlockElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.block.BlockEssenceConcentrator;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
+import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
-import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemBase;
 import com.raphydaphy.arcanemagic.common.item.ItemCore;
-import com.raphydaphy.arcanemagic.common.item.ItemEnum;
+import com.raphydaphy.arcanemagic.common.item.ItemCreationCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
+import com.raphydaphy.arcanemagic.common.item.ItemEssenceCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
@@ -26,6 +27,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -36,7 +38,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -56,15 +57,15 @@ public class ModRegistry
 	public static final BlockCrystallizer CRYSTALLIZER = new BlockCrystallizer();
 	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
+	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
 
 	public static final ItemBase TIP = new ItemTip();
 	public static final ItemBase CORE = new ItemCore();
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
-	public static final ItemEnum<EnumBasicEssence> ESSENCE = new ItemEnum<>("essence", EnumBasicEssence.values(),
-			TextFormatting.DARK_AQUA);
-	public static final ItemBase CREATION = new ItemBase("essence_creation", TextFormatting.GOLD);
-	public static final ItemBase BLANK_PARCHMENt = (ItemBase) new ItemBase("blank_parchment").setMaxStackSize(1);
+	public static final ItemEssenceCrystal ESSENCE = new ItemEssenceCrystal();
+	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();
+	public static final ItemBase BLANK_PARCHMENT = new ItemBase("blank_parchment");
 	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
 	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();
@@ -96,7 +97,7 @@ public class ModRegistry
 			if (b instanceof IHasRecipe)
 				((IHasRecipe) b).initRecipes(e);
 
-		RecipeHelper.addShaped(BLANK_PARCHMENt, 3, 3, null, "paper", null, "paper", "dye", "paper", null, "paper",
+		RecipeHelper.addShaped(BLANK_PARCHMENT, 3, 3, null, "paper", null, "paper", "dye", "paper", null, "paper",
 				null);
 
 		// @Shadows: The day I work with JSON recipes is the day the world ends.
@@ -133,5 +134,6 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityWritingDesk.class, ArcaneMagic.MODID + "_writing_desk");
 		GameRegistry.registerTileEntity(TileEntityInfusionAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
+		GameRegistry.registerTileEntity(TileEntityInfernalSmelter.class, ArcaneMagic.MODID + "_infernal_smelter");
 	}
 }
