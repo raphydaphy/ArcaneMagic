@@ -41,20 +41,23 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
-	
+
 	@Override
 	public void markDirty()
 	{
 		super.markDirty();
 		if (TileEntityEssenceConcentrator.this.world != null && TileEntityEssenceConcentrator.this.pos != null)
 		{
-			IBlockState state = TileEntityEssenceConcentrator.this.world.getBlockState(TileEntityEssenceConcentrator.this.pos);
-			TileEntityEssenceConcentrator.this.world.markAndNotifyBlock(TileEntityEssenceConcentrator.this.pos,
-					TileEntityEssenceConcentrator.this.world.getChunkFromBlockCoords(TileEntityEssenceConcentrator.this.pos), state, state,
-					1 | 2);
+			IBlockState state = TileEntityEssenceConcentrator.this.world
+					.getBlockState(TileEntityEssenceConcentrator.this.pos);
+			TileEntityEssenceConcentrator.this.world
+					.markAndNotifyBlock(
+							TileEntityEssenceConcentrator.this.pos, TileEntityEssenceConcentrator.this.world
+									.getChunkFromBlockCoords(TileEntityEssenceConcentrator.this.pos),
+							state, state, 1 | 2);
 		}
 	}
-	
+
 	public int getAge()
 	{
 		return age;
@@ -72,35 +75,30 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 
 		if (this.getStack().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 		{
-			if (world.getBlockState(pos.add(0, -1, 0)).getBlock() == Blocks.IRON_BLOCK
-					&& world.getBlockState(pos.add(0, -2, 0)).getBlock() == Blocks.IRON_BLOCK)
+			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
 			{
-				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
+				for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
 				{
-					for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
+					for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
 					{
-						for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
+						if (world.rand.nextInt(2000) == 1)
 						{
-							if (world.rand.nextInt(2000) == 1)
+							BlockPos here = new BlockPos(x, y, z);
+							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 							{
-								BlockPos here = new BlockPos(x, y, z);
-								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
-								{
-									// Send some essence to the crystallizer
-									Essence.sendEssence(world,
-											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
-											new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5), false,
-											true);
+								Essence.sendEssence(world,
+										new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+										new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, true);
 
-								}
 							}
 						}
 					}
 				}
+
 			}
 		}
-		
+
 		markDirty();
 	}
 

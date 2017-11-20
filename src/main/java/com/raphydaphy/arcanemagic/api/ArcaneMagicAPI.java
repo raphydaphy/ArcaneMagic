@@ -1,7 +1,9 @@
 package com.raphydaphy.arcanemagic.api;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,7 +31,10 @@ public class ArcaneMagicAPI
 	
 	private static final Logger LOGGER = LogManager.getLogger("ArcaneMagicAPI");
 	
-	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
+	private static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
+	
+	// relates a oredict string to a essence type that should be used to smelt the ore in an infernal furnace
+	public static Map<String, Essence> ESSENCE_ORE_REGISTRY = new HashMap<String, Essence>();
 
 	public static void registerCategory(NotebookCategory category)
 	{
@@ -39,6 +44,11 @@ public class ArcaneMagicAPI
 	public static void registerSubCategories(NotebookCategory... sub)
 	{
 		NotebookCategory.SUB_REGISTRY.registerAll(sub);
+	}
+	
+	public static void registerOre(String oreDict, Essence essence)
+	{
+		ESSENCE_ORE_REGISTRY.put(oreDict, essence);
 	}
 
 	public static void registerEssence(Essence e)

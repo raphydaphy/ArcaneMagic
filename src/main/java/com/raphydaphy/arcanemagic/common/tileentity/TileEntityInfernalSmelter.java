@@ -1,6 +1,13 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
+import java.util.Map;
+
 import javax.annotation.Nonnull;
+
+import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -9,10 +16,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implements ITickable
@@ -110,7 +120,70 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 	@Override
 	public void update()
 	{
+		if (world.isRemote)
+		{
+			return;
+		}
+
+		IItemHandler cap = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		
+		if (!cap.getStackInSlot(ORE).isEmpty())
+		{
+			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
+			{
+				for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
+				{
+					for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
+					{
+						if (world.rand.nextInt(2000) == 1)
+						{
+							BlockPos here = new BlockPos(x, y, z);
+							if (world.getBlockState(here).getBlock().equals(ModRegistry.ESSENCE_CONCENTRATOR))
+							{
+								
+								TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(here);
+
+								if (te != null)
+								{
+									Map<Essence, EssenceStack> storedEssenceConcentrator = te
+											.getCapability(IEssenceStorage.CAP, null).getStored();
+
+									Essence useType = null;
+									for (EssenceStack transferStack : storedEssenceConcentrator.values())
+									{
+										if (transferStack.getCount() > 0 && !world.isRemote)
+										{
+											useType = transferStack.getEssence();
+											this.markDirty();
+										}
+									}
+									if (useType != null && world.rand.nextInt(3) == 1)
+									{
+										if (!world.isRemote)
+										{
+											if (Essence.sendEssence(world,
+													new EssenceStack(useType, 1),
+													new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+													new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, true))
+											{
+												
+											}
+										}
+
+									}
+								}
+								
+								
+
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+		markDirty();
 	}
 
 	@Override

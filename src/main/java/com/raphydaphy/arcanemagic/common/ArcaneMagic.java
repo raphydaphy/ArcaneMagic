@@ -73,12 +73,12 @@ public class ArcaneMagic
 	{
 		NotebookCategories.register();
 
+		// TODO: a class for this 
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.REDSTONE_ORE,
 				NotebookCategories.MAGICAL_INSIGHTS);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis(new ItemStack(Items.REDSTONE),
 				NotebookCategories.MAGICAL_INSIGHTS);
-
-		// yaY plants
+		
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysis("plant", NotebookCategories.FOUNDATIONS_OF_MAGIC);
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.DOUBLE_PLANT,
 				NotebookCategories.FOUNDATIONS_OF_MAGIC);
@@ -116,6 +116,15 @@ public class ArcaneMagic
 
 		ArcaneMagicAPI.getAnalyzer().registerForAnalysisWithItem(Blocks.GLOWSTONE,
 				NotebookCategories.ESSENCE_MANIPULATION);
+		
+		// TODO: also a class for this
+		ArcaneMagicAPI.registerOre("oreEmerald", Essence.HORIZON);
+		ArcaneMagicAPI.registerOre("oreDiamond", Essence.DEPTH);
+		ArcaneMagicAPI.registerOre("oreGold", Essence.INFERNO);
+		ArcaneMagicAPI.registerOre("oreIron", Essence.OZONE);
+		ArcaneMagicAPI.registerOre("oreCoal", Essence.CHAOS);
+		ArcaneMagicAPI.registerOre("oreLapis", Essence.DEPTH);
+		ArcaneMagicAPI.registerOre("oreQuartz", Essence.OZONE);
 
 		proxy.postInit(event);
 	}
