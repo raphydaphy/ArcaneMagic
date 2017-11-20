@@ -32,7 +32,7 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		
 		GlStateManager.translate(.5, 0.935, .5);
-		renderItem(cap.getStackInSlot(TileEntityInfernalSmelter.ORE));
+		renderItem(cap.getStackInSlot(TileEntityInfernalSmelter.ORE), frame);
 
 		List<ItemStack> crystalStacks = new ArrayList<>();
 		
@@ -46,18 +46,21 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		
 		int accuracy = 60;
 		double radius = 1;
+		GlStateManager.pushMatrix();
+		GlStateManager.rotate(-frame / 2f, 0, 1, 0);
 		for (int seg = 0; seg < (360 / accuracy); seg++)
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.translate((Math.cos(Math.toRadians(seg * accuracy)) * radius),
 					0.2, (Math.sin(Math.toRadians(seg * accuracy)) * radius));
-			renderItem(cap.getStackInSlot(seg + 1));
+			renderItem(cap.getStackInSlot(seg + 1), -frame + (int)(Math.abs(Math.sin(seg)) * 3));
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.popMatrix();
+		GlStateManager.popMatrix();
 	}
 	
-	private void renderItem(ItemStack stack) {
+	private void renderItem(ItemStack stack, int offset) {
 		if (!stack.isEmpty()) {
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
