@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.client.render;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import net.minecraftforge.items.IItemHandler;
 public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInfernalSmelter>
 {
 	private int frame = 0;
+
 	@Override
 	public void render(TileEntityInfernalSmelter te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha)
@@ -30,20 +32,21 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		frame++;
 
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+
 		GlStateManager.translate(.5, 0.935, .5);
-		renderItem(cap.getStackInSlot(TileEntityInfernalSmelter.ORE), frame);
+		renderItem(cap.getStackInSlot(TileEntityInfernalSmelter.ORE), frame, false);
 
 		List<ItemStack> crystalStacks = new ArrayList<>();
-		
-		for (int crystalSlot = TileEntityInfernalSmelter.ORE + 1; crystalSlot < TileEntityInfernalSmelter.SIZE; crystalSlot++)
+
+		for (int crystalSlot = TileEntityInfernalSmelter.ORE
+				+ 1; crystalSlot < TileEntityInfernalSmelter.SIZE; crystalSlot++)
 		{
 			if (!cap.getStackInSlot(crystalSlot).isEmpty())
 			{
 				crystalStacks.add(cap.getStackInSlot(crystalSlot).copy());
 			}
 		}
-		
+
 		int accuracy = 60;
 		double radius = 1;
 		GlStateManager.pushMatrix();
@@ -51,25 +54,44 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		for (int seg = 0; seg < (360 / accuracy); seg++)
 		{
 			GlStateManager.pushMatrix();
-			GlStateManager.translate((Math.cos(Math.toRadians(seg * accuracy)) * radius),
-					0.2, (Math.sin(Math.toRadians(seg * accuracy)) * radius));
-			renderItem(cap.getStackInSlot(seg + 1), -frame + (int)(Math.abs(Math.sin(seg)) * 3));
+			GlStateManager.translate((Math.cos(Math.toRadians(seg * accuracy)) * radius), 0.2,
+					(Math.sin(Math.toRadians(seg * accuracy)) * radius));
+			renderItem(cap.getStackInSlot(seg + 1), -frame + (int) (Math.abs(Math.sin(seg)) * 3), true);
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
-	
-	private void renderItem(ItemStack stack, int offset) {
-		if (!stack.isEmpty()) {
+
+	private void renderItem(ItemStack stack, int offset, boolean rainbowBeams)
+	{
+		if (!stack.isEmpty())
+		{
+
+			Color c = Color.RED;
+
+			if (rainbowBeams)
+			{
+				float frequency = 0.1f;
+				double r = Math.sin(frequency * (offset)) * 127 + 128;
+				double g = Math.sin(frequency * (offset) + 2) * 127 + 128;
+				double b = Math.sin(frequency * (offset) + 4) * 127 + 128;
+
+				c = new Color((int) r, (int) g, (int) b);
+			}
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
 			GlStateManager.pushMatrix();
-			
+
 			GlStateManager.scale(.2f, .2f, .2f);
 			GlStateManager.rotate(frame, 0, 1, 0);
 			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frame)) / 3.2 + 0.1, 0);
-			if(frame < 0 || frame == Integer.MAX_VALUE) frame = 0;
+			if (frame < 0 || frame == Integer.MAX_VALUE)
+				frame = 0;
+			if (rainbowBeams)
+			{
+				GLHelper.renderFancyBeams(0, 0, 0, c, Minecraft.getMinecraft().world.getSeed(), offset, 20, 1.5f, 30, 10);
+			}
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
 		}
