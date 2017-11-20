@@ -207,7 +207,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 			// that the chest contents is persisted
 			TileEntityCrystallizer.this.markDirty();
 		}
-		
+
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
 		{

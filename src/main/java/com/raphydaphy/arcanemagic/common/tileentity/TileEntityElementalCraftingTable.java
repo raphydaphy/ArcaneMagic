@@ -19,7 +19,7 @@ public class TileEntityElementalCraftingTable extends TileEntity implements ITic
 {
 	public static final int SIZE = 10;
 	private int age = 0;
-	
+
 	@Override
 	public void update()
 	{
@@ -52,7 +52,7 @@ public class TileEntityElementalCraftingTable extends TileEntity implements ITic
 	{
 		return age;
 	}
-	
+
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
 	{
 		@Override
@@ -145,7 +145,7 @@ public class TileEntityElementalCraftingTable extends TileEntity implements ITic
 		// shadows told me to put 150 so i did
 		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()

@@ -90,7 +90,8 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 				frame = 0;
 			if (rainbowBeams)
 			{
-				GLHelper.renderFancyBeams(0, 0, 0, c, Minecraft.getMinecraft().world.getSeed(), offset, 32, 1.4f, 30, 10);
+				GLHelper.renderFancyBeams(0, 0, 0, c, Minecraft.getMinecraft().world.getSeed(), offset, 32, 1.4f, 30,
+						10);
 			}
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();

@@ -187,7 +187,7 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider
 			{
 				return true;
 			}
-			
+
 			String[] terms = getSearchKey().toLowerCase().split("\\|");
 			for (String term : terms)
 			{

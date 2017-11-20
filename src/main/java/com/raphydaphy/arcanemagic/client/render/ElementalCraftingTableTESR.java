@@ -62,7 +62,8 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 
 			if (foundRecipe != null)
 			{
-				GLHelper.renderItemStackFancy(foundRecipe.getRecipeOutput(), new Vec3d(0, 1.5, 0), true, Color.RED, te.getAge(), te.getWorld().getSeed());
+				GLHelper.renderItemStackFancy(foundRecipe.getRecipeOutput(), new Vec3d(0, 1.5, 0), true, Color.RED,
+						te.getAge(), te.getWorld().getSeed());
 			}
 		}
 

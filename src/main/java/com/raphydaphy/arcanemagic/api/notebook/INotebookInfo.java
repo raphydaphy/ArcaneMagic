@@ -12,7 +12,7 @@ public interface INotebookInfo extends INBTSerializable<NBTTagCompound>
 	/* PSA: this field will be null UNLESS you have a hard dep on the mod */
 	@CapabilityInject(INotebookInfo.class)
 	static Capability<INotebookInfo> CAP = null;
-	
+
 	/*
 	 * If set the true, the notebook will reset the players
 	 * usage information the next time it is opened.
@@ -91,7 +91,7 @@ public interface INotebookInfo extends INBTSerializable<NBTTagCompound>
 	 * prerequisite category unlocked.
 	 */
 	public boolean isUnlocked(String tag);
-	
+
 	/*
 	 * Returns true if the category is unlocked as well as
 	 * the prerequisite categories. Therefore, the

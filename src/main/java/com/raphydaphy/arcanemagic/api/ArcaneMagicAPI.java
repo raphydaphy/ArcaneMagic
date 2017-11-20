@@ -29,11 +29,11 @@ public class ArcaneMagicAPI
 	private static final AnalysisManager MANAGER = new AnalysisManager();
 
 	private static ImmutableList<NotebookCategory> sorted_categories;
-	
+
 	private static final Logger LOGGER = LogManager.getLogger("ArcaneMagicAPI");
-	
+
 	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
-	
+
 	// relates a oredict ID to a essence type that should be used to smelt the ore in an infernal furnace
 	public static Map<Integer, Essence> ESSENCE_ORE_REGISTRY = new HashMap<Integer, Essence>();
 
@@ -46,15 +46,15 @@ public class ArcaneMagicAPI
 	{
 		NotebookCategory.SUB_REGISTRY.registerAll(sub);
 	}
-	
+
 	public static void registerOre(String oreDict, Essence essence)
 	{
 		ESSENCE_ORE_REGISTRY.put(OreDictionary.getOreID(oreDict), essence);
 	}
-	
+
 	public static Essence getEssenceFromStack(ItemStack stack)
 	{
-		for(int id : OreDictionary.getOreIDs(stack))
+		for (int id : OreDictionary.getOreIDs(stack))
 		{
 			if (ESSENCE_ORE_REGISTRY.containsKey(id))
 			{
@@ -99,7 +99,7 @@ public class ArcaneMagicAPI
 			sorted_categories = list;
 		else
 			throw new UnsupportedOperationException("Pls stop");
-		
+
 		LOGGER.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}
 

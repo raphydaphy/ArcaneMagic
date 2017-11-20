@@ -183,19 +183,19 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	{
 		return BlockFaceShape.UNDEFINED;
 	}
-	
+
 	@Override
 	public IBlockState withRotation(IBlockState state, Rotation rot)
 	{
 		return state.withProperty(FACING, rot.rotate((EnumFacing) state.getValue(FACING)));
 	}
-	
+
 	@Override
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
 	{
 		return state.withRotation(mirrorIn.toRotation((EnumFacing) state.getValue(FACING)));
 	}
-	
+
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,
 			float hitZ, int meta, EntityLivingBase placer)

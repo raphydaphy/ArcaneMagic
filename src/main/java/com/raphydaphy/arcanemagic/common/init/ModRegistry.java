@@ -58,7 +58,7 @@ public class ModRegistry
 	public static final BlockEssenceConcentrator ESSENCE_CONCENTRATOR = new BlockEssenceConcentrator();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
-	
+
 	public static final ItemBase TIP = new ItemTip();
 	public static final ItemBase CORE = new ItemCore();
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");

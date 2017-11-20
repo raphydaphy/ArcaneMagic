@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 {
 	private int frame = 0;
+
 	@Override
 	public void render(TileEntityAnalyzer te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha)
@@ -38,7 +39,6 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 		GlStateManager.popMatrix();
 	}
 
-	
 	private void renderItem(int slot, TileEntityAnalyzer te)
 	{
 		ItemStack stack = te.getStack(slot);
@@ -50,7 +50,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 				GlStateManager.pushAttrib();
 
 				Color c = Color.RED;
-				
+
 				IEssenceStorage e = te.getCapability(IEssenceStorage.CAP, null);
 				if (e != null && e.getTotalStored() > 0)
 				{
