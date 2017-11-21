@@ -1,10 +1,10 @@
 package com.raphydaphy.arcanemagic.client.proxy;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.model.SceptreModel;
-import com.raphydaphy.arcanemagic.client.particle.ParticleEssence;
+import com.raphydaphy.arcanemagic.client.particle.ParticleAnima;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
@@ -39,9 +39,9 @@ public class ClientProxy extends CommonProxy
 {
 
 	@Override
-	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
+	public void sendAnimaSafe(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
 	{
-		Essence.sendEssence(Minecraft.getMinecraft().world, essence, from, to, toCosmetic, false, spawnParticles);
+		Anima.sendAnima(Minecraft.getMinecraft().world, anima, from, to, toCosmetic, false, spawnParticles);
 	}
 
 	@Override
@@ -77,11 +77,11 @@ public class ClientProxy extends CommonProxy
 	}
 
 	@Override
-	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos,
+	public void spawnAnimaParticles(World world, Vec3d pos, Vec3d speed, Anima anima, Vec3d travelPos,
 			boolean isCosmetic)
 	{
-		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleEssence(world, pos.x, pos.y, pos.z, speed.x,
-				speed.y, speed.z, essence, travelPos, isCosmetic));
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleAnima(world, pos.x, pos.y, pos.z, speed.x,
+				speed.y, speed.z, anima, travelPos, isCosmetic));
 	}
 
 	@Override

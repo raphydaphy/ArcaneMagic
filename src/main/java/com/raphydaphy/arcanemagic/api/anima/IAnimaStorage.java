@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.api.essence;
+package com.raphydaphy.arcanemagic.api.anima;
 
 import java.util.Map;
 
@@ -10,20 +10,20 @@ import net.minecraftforge.common.util.INBTSerializable;
 /**
  * TODO more operations
  */
-public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
+public interface IAnimaStorage extends INBTSerializable<NBTTagCompound>
 {
 
 	/* NB: do NOT use this field UNLESS you have a hard dep on this mod */
-	@CapabilityInject(IEssenceStorage.class)
-	static Capability<IEssenceStorage> CAP = null;
+	@CapabilityInject(IAnimaStorage.class)
+	static Capability<IAnimaStorage> CAP = null;
 
 	/**
-	 * @return a map of all the currently stored EssenceStacks
+	 * @return a map of all the currently stored AnimaStacks
 	 */
-	Map<Essence, EssenceStack> getStored();
+	Map<Anima, AnimaStack> getStored();
 
 	/**
-	 * @return the total Essence stored across all different types
+	 * @return the total animus stored across all different types
 	 */
 	int getTotalStored();
 
@@ -36,7 +36,7 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 *            actually do the thing?
 	 * @return the amount that couldn't be stored, or null if everything got stored
 	 */
-	EssenceStack store(EssenceStack in, boolean simulate);
+	AnimaStack store(AnimaStack in, boolean simulate);
 
 	/**
 	 * Take the stack out of the storage
@@ -47,13 +47,13 @@ public interface IEssenceStorage extends INBTSerializable<NBTTagCompound>
 	 * 				actually do the thing?
 	 * @return the amount that couldn't be taken, or null if the entire request was taken
 	 */
-	EssenceStack take(EssenceStack out, boolean simulate);
+	AnimaStack take(AnimaStack out, boolean simulate);
 
 	/**
-	 * @return the amount of essence that can be stored
+	 * @return the amount of anima that can be stored
 	 * 
 	 * @param type
-	 * 				the type of essence of which the capacity should be checked
+	 * 				the type of anima of which the capacity should be checked
 	 */
-	int getCapacity(Essence type);
+	int getCapacity(Anima type);
 }

@@ -7,13 +7,13 @@ item.arcanemagic.core.silverwood.name=Silverwood Core
 item.arcanemagic.core.greatwood.name=Greatwood Core
 item.arcanemagic.scepter.name=%s Tipped %s Scepter
 item.arcanemagic.notebook.name=Lost Notebook
-item.arcanemagic.essence_ozone.name=Formation of the Ozone
-item.arcanemagic.essence_depth.name=Formation of the Depths
-item.arcanemagic.essence_inferno.name=Formation of the Inferno
-item.arcanemagic.essence_horizon.name=Formation of the Horizon
-item.arcanemagic.essence_peace.name=Formation of Peace
-item.arcanemagic.essence_chaos.name=Formation of Chaos
-item.arcanemagic.essence_creation.name=Embodiment of Creation
+item.arcanemagic.anima_ozone.name=Formation of the Ozone
+item.arcanemagic.anima_depth.name=Formation of the Depths
+item.arcanemagic.anima_inferno.name=Formation of the Inferno
+item.arcanemagic.anima_horizon.name=Formation of the Horizon
+item.arcanemagic.anima_peace.name=Formation of Peace
+item.arcanemagic.anima_chaos.name=Formation of Chaos
+item.arcanemagic.anima_creation.name=Embodiment of Creation
 item.arcanemagic.scribing_tools.name=Scribing Tools
 item.arcanemagic.blank_parchment.name=Parchment
 item.arcanemagic.ancient_parchment.name=Ancient Parchment
@@ -52,14 +52,14 @@ gui.arcanemagic.infusion_altar.nopaper=Insert Paper
 toast.arcanemagic.page_unlocked=Notebook Page Revealed
 toast.arcanemagic.page_expanded=Notebook Page Expanded
 
-# Essence
-essence.arcanemagic.ozone.name=Ozone
-essence.arcanemagic.depth.name=Depth
-essence.arcanemagic.inferno.name=Inferno
-essence.arcanemagic.horizon.name=Horizon
-essence.arcanemagic.peace.name=Peace
-essence.arcanemagic.chaos.name=Chaos
-essence.arcanemagic.creation.name=Creation
+# Anima
+anima.arcanemagic.ozone.name=Ozone
+anima.arcanemagic.depth.name=Depth
+anima.arcanemagic.inferno.name=Inferno
+anima.arcanemagic.horizon.name=Horizon
+anima.arcanemagic.peace.name=Peace
+anima.arcanemagic.chaos.name=Chaos
+anima.arcanemagic.creation.name=Creation
 
 # Scepter
 part.arcanemagic.tip.iron.name=Iron

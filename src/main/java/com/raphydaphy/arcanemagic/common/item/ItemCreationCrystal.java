@@ -1,12 +1,12 @@
 package com.raphydaphy.arcanemagic.common.item;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceCrystal;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
-public class ItemCreationCrystal extends ItemBase implements IEssenceCrystal
+public class ItemCreationCrystal extends ItemBase implements IAnimaCrystal
 {
 
 	public ItemCreationCrystal()
@@ -15,9 +15,9 @@ public class ItemCreationCrystal extends ItemBase implements IEssenceCrystal
 	}
 
 	@Override
-	public Essence getEssence(ItemStack stack)
+	public Anima getAnima(ItemStack stack)
 	{
-		return Essence.CREATION;
+		return Anima.CREATION;
 	}
 
 }

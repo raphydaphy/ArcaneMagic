@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.init;
 
 import java.util.Random;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
@@ -154,9 +154,9 @@ public class ModEvents
 									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 									{
 										// client side only, these particles are just for looks!
-										ArcaneMagic.proxy.spawnEssenceParticles(world,
+										ArcaneMagic.proxy.spawnAnimaParticles(world,
 												new Vec3d(x + 0.5, y + 0.5, z + 0.5), new Vec3d(0, 0, 0),
-												Essence.getFromBiome(world.getBiome(here)),
+												Anima.getFromBiome(world.getBiome(here)),
 												ev.player.getPositionVector().addVector(0, 1, 0), true);
 
 									}

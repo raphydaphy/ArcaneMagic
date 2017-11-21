@@ -22,7 +22,7 @@ public class CategoryFoundationsOfMagic extends NotebookCategory
 		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.plants", 2));
 		setRequiredTag("unlockedFoundationsOfMagic");
 		setPrerequisiteTag(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
-		setIcon(new ItemStack(ModRegistry.ESSENCE));
+		setIcon(new ItemStack(ModRegistry.ANIMA));
 	}
 
 	@Override

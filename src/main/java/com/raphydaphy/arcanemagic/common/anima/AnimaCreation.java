@@ -1,17 +1,17 @@
-package com.raphydaphy.arcanemagic.common.essence;
+package com.raphydaphy.arcanemagic.common.anima;
 
 import java.awt.Color;
 import java.util.Random;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
-public final class EssenceCreation extends Essence
+public final class AnimaCreation extends Anima
 {
 
 	private static final Random RAND = new Random();
 
-	public EssenceCreation()
+	public AnimaCreation()
 	{
 		super(ArcaneMagic.MODID + ".creation", Color.BLACK);
 		setRegistryName(ArcaneMagic.MODID, "creation");

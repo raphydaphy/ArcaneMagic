@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.notebook;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryAncientRelics;
@@ -36,17 +36,17 @@ public class NotebookCategories
 	public static final NotebookCategory NATURAL_DIVISIONS = new CategoryNaturalDivisions()
 			.setRegistryName(ArcaneMagic.MODID, "natural_divisions");
 
-	public static final CategoryNaturalDivisionsSub HORIZON_CATEGORY = new CategoryNaturalDivisionsSub(Essence.HORIZON,
+	public static final CategoryNaturalDivisionsSub HORIZON_CATEGORY = new CategoryNaturalDivisionsSub(Anima.HORIZON,
 			1, 2);
-	public static final CategoryNaturalDivisionsSub OZONE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.OZONE, 2,
+	public static final CategoryNaturalDivisionsSub OZONE_CATEGORY = new CategoryNaturalDivisionsSub(Anima.OZONE, 2,
 			2);
-	public static final CategoryNaturalDivisionsSub INFERNO_CATEGORY = new CategoryNaturalDivisionsSub(Essence.INFERNO,
+	public static final CategoryNaturalDivisionsSub INFERNO_CATEGORY = new CategoryNaturalDivisionsSub(Anima.INFERNO,
 			3, 2);
-	public static final CategoryNaturalDivisionsSub DEPTH_CATEGORY = new CategoryNaturalDivisionsSub(Essence.DEPTH, 4,
+	public static final CategoryNaturalDivisionsSub DEPTH_CATEGORY = new CategoryNaturalDivisionsSub(Anima.DEPTH, 4,
 			2);
-	public static final CategoryNaturalDivisionsSub CHAOS_CATEGORY = new CategoryNaturalDivisionsSub(Essence.CHAOS, 5,
+	public static final CategoryNaturalDivisionsSub CHAOS_CATEGORY = new CategoryNaturalDivisionsSub(Anima.CHAOS, 5,
 			2);
-	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Essence.PEACE, 6,
+	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Anima.PEACE, 6,
 			2);
 
 	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY,

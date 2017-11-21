@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.raphydaphy.arcanemagic.api.essence.IEssenceCrystal;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 
@@ -121,7 +121,7 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 				ItemStack insertStack = stack.copy();
 				insertStack.setCount(1);
 
-				if (stack.getItem() instanceof IEssenceCrystal)
+				if (stack.getItem() instanceof IAnimaCrystal)
 				{
 					for (int slot = TileEntityInfernalSmelter.ORE + 1; slot < TileEntityInfernalSmelter.SIZE; slot++)
 					{

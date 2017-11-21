@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.logging.log4j.Level;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
@@ -254,7 +254,7 @@ public class ClientEvents
 		{
 
 			ItemStack stack = ev.getStack();
-			IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+			IAnimaStorage handler = stack.getCapability(IAnimaStorage.CAP, null);
 
 			int y = ev.getY();
 			for (int line = 0; line < ev.getLines().size(); line++)
@@ -268,19 +268,19 @@ public class ClientEvents
 			}
 			if (handler != null)
 			{
-				Collection<EssenceStack> storedEssence = handler.getStored().values();
+				Collection<AnimaStack> storedAnima = handler.getStored().values();
 
-				if (storedEssence.size() > 0)
+				if (storedAnima.size() > 0)
 				{
 					int x = ev.getX();
 					int curYCounter = 0;
 
-					for (EssenceStack essence : storedEssence)
+					for (AnimaStack essence : storedAnima)
 					{
 
 						String thisString = essence.getCount() + " "
-								+ I18n.format(essence.getEssence().getTranslationName()) + " ";
-						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getEssence().getColorInt());
+								+ I18n.format(essence.getAnima().getTranslationName()) + " ";
+						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getAnima().getColorInt());
 
 						x += 70;
 						curYCounter++;

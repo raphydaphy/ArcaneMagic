@@ -2,8 +2,8 @@ package com.raphydaphy.arcanemagic.common.tileentity;
 
 import javax.annotation.Nullable;
 
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
-import com.raphydaphy.arcanemagic.common.capabilities.EssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
+import com.raphydaphy.arcanemagic.common.capabilities.AnimaStorage;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,13 +21,13 @@ import net.minecraftforge.common.capabilities.Capability;
 public abstract class TileEntityEssenceStorage extends TileEntity
 {
 
-	protected EssenceStorage essenceStorage;
+	protected AnimaStorage essenceStorage;
 	private static final String ESSENCE_KEY = "essence_storage";
 
 	public TileEntityEssenceStorage(int capacity)
 	{
 		TileEntityEssenceStorage that = this;
-		essenceStorage = new EssenceStorage(() ->
+		essenceStorage = new AnimaStorage(() ->
 		{
 			that.markDirty();
 			if (this.world != null && this.pos != null)
@@ -76,14 +76,14 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 	@Override
 	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
 	{
-		return capability == IEssenceStorage.CAP || super.hasCapability(capability, facing);
+		return capability == IAnimaStorage.CAP || super.hasCapability(capability, facing);
 	}
 
 	@Nullable
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
 	{
-		return capability == IEssenceStorage.CAP ? IEssenceStorage.CAP.cast(essenceStorage)
+		return capability == IAnimaStorage.CAP ? IAnimaStorage.CAP.cast(essenceStorage)
 				: super.getCapability(capability, facing);
 	}
 }

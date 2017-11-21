@@ -24,9 +24,9 @@ public interface IElementalCraftingItem
 	}
 
 	/**
-	 * This method must return false if you do not have the IEssenceStorage capability.
-	 * @return If this item has essence inside.
+	 * This method must return false if you do not have the IAnimaStorage capability.
+	 * @return If this item has animus inside.
 	 */
-	public boolean containsEssence();
+	public boolean containsAnimus();
 
 }

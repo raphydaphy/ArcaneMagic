@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.client.render;
 
 import java.awt.Color;
 
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 
 import net.minecraft.client.Minecraft;
@@ -51,7 +51,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 
 				Color c = Color.RED;
 
-				IEssenceStorage e = te.getCapability(IEssenceStorage.CAP, null);
+				IAnimaStorage e = te.getCapability(IAnimaStorage.CAP, null);
 				if (e != null && e.getTotalStored() > 0)
 				{
 					float frequency = 0.1f;
@@ -61,7 +61,7 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
 
 					c = new Color((int) r, (int) g, (int) b);
 				}
-				//Essence.getFromBiome(te.getWorld().getBiome(new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()))).getColor()
+				//Anima.getFromBiome(te.getWorld().getBiome(new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ()))).getColor()
 				GLHelper.renderFancyBeams(0.5, 0.55, 0.5, c, te.getWorld().getSeed(), frame, 16, 0.5f, 30, 10);
 				GlStateManager.popAttrib();
 				GlStateManager.popMatrix();

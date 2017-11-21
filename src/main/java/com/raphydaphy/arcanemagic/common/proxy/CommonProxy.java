@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.proxy;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 
@@ -27,7 +27,7 @@ public abstract class CommonProxy
 	{
 	}
 
-	public void spawnEssenceParticles(World world, Vec3d pos, Vec3d speed, Essence essence, Vec3d travelPos,
+	public void spawnAnimaParticles(World world, Vec3d pos, Vec3d speed, Anima anima, Vec3d travelPos,
 			boolean isCosmetic)
 	{
 
@@ -39,7 +39,7 @@ public abstract class CommonProxy
 
 	}
 
-	public void sendEssenceSafe(EssenceStack essence, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
+	public void sendAnimaSafe(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
 	{
 
 	}

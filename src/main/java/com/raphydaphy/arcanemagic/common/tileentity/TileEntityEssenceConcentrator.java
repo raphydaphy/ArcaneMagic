@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
@@ -86,8 +86,8 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 							BlockPos here = new BlockPos(x, y, z);
 							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 							{
-								Essence.sendEssence(world,
-										new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+								Anima.sendAnima(world,
+										new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 										new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, true);
 

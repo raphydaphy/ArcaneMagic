@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.common.network;
 
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import io.netty.buffer.ByteBuf;
@@ -10,38 +10,38 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketEssenceTransfer implements IMessage
+public class PacketAnimaTransfer implements IMessage
 {
 	private Vec3d from;
 	private Vec3d to;
 	private Vec3d toCosmetic;
-	private EssenceStack essence;
+	private AnimaStack anima;
 	private boolean spawnParticles;
 
-	public PacketEssenceTransfer()
+	public PacketAnimaTransfer()
 	{
 	}
 
-	public PacketEssenceTransfer(EssenceStack essence, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
+	public PacketAnimaTransfer(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
 	{
 		this.from = from;
 		this.to = to;
 		this.toCosmetic = toCosmetic;
-		this.essence = essence;
+		this.anima = anima;
 	}
 
-	public static class Handler implements IMessageHandler<PacketEssenceTransfer, IMessage>
+	public static class Handler implements IMessageHandler<PacketAnimaTransfer, IMessage>
 	{
 		@Override
-		public IMessage onMessage(PacketEssenceTransfer message, MessageContext ctx)
+		public IMessage onMessage(PacketAnimaTransfer message, MessageContext ctx)
 		{
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 
-		private void handle(PacketEssenceTransfer message, MessageContext ctx)
+		private void handle(PacketAnimaTransfer message, MessageContext ctx)
 		{
-			ArcaneMagic.proxy.sendEssenceSafe(message.essence, message.from, message.to, message.toCosmetic,
+			ArcaneMagic.proxy.sendAnimaSafe(message.anima, message.from, message.to, message.toCosmetic,
 					message.spawnParticles);
 		}
 	}
@@ -52,7 +52,7 @@ public class PacketEssenceTransfer implements IMessage
 		from = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		to = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
 		toCosmetic = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-		essence = EssenceStack.readFromBuf(buf);
+		anima = AnimaStack.readFromBuf(buf);
 		spawnParticles = buf.readBoolean();
 	}
 
@@ -68,7 +68,7 @@ public class PacketEssenceTransfer implements IMessage
 		buf.writeDouble(toCosmetic.x);
 		buf.writeDouble(toCosmetic.y);
 		buf.writeDouble(toCosmetic.z);
-		EssenceStack.writeToBuf(buf, essence);
+		AnimaStack.writeToBuf(buf, anima);
 		buf.writeBoolean(spawnParticles);
 	}
 }

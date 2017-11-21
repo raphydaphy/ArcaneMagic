@@ -92,7 +92,7 @@ public class WritingDeskTESR extends TileEntitySpecialRenderer<TileEntityWriting
 				GlStateManager.pushAttrib();
 				GlStateManager.scale(0.005, 0.005, 0.005);
 				GLHelper.drawCenteredSplitString(Minecraft.getMinecraft().fontRenderer,
-						"Manipulating Essence directly would be a powerful ability, if only you could obtain the right items to learn how.\n\nLuckily, your new discoveries should aid you greatly in this process.",
+						"Manipulating Anima directly would be a powerful ability, if only you could obtain the right items to learn how.\n\nLuckily, your new discoveries should aid you greatly in this process.",
 						0, 0, 130, 0x000000);
 				GlStateManager.popAttrib();
 				GlStateManager.popMatrix();

@@ -3,8 +3,8 @@ package com.raphydaphy.arcanemagic.common;
 import org.apache.logging.log4j.Logger;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.Essence.EssenceSubscriber;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.Anima.AnimaSubscriber;
 import com.raphydaphy.arcanemagic.api.notebook.CategoryRegistry;
 import com.raphydaphy.arcanemagic.client.proxy.GuiProxy;
 import com.raphydaphy.arcanemagic.common.capabilities.Capabilities;
@@ -54,7 +54,7 @@ public class ArcaneMagic
 		ArcaneMagicPacketHandler.registerMessages(ArcaneMagic.MODID);
 		proxy.preInit(event);
 		MinecraftForge.EVENT_BUS.register(new ModRegistry());
-		MinecraftForge.EVENT_BUS.register(new EssenceSubscriber());
+		MinecraftForge.EVENT_BUS.register(new AnimaSubscriber());
 		ModRegistry.registerTiles();
 		Capabilities.register();
 	}
@@ -63,7 +63,7 @@ public class ArcaneMagic
 	public void init(FMLInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.post(
-				new Register<Essence>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Essence.REGISTRY));
+				new Register<Anima>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Anima.REGISTRY));
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);
 	}
@@ -118,13 +118,13 @@ public class ArcaneMagic
 				NotebookCategories.ESSENCE_MANIPULATION);
 
 		// TODO: also a class for this
-		ArcaneMagicAPI.registerOre("oreEmerald", Essence.HORIZON);
-		ArcaneMagicAPI.registerOre("oreDiamond", Essence.DEPTH);
-		ArcaneMagicAPI.registerOre("oreGold", Essence.INFERNO);
-		ArcaneMagicAPI.registerOre("oreIron", Essence.OZONE);
-		ArcaneMagicAPI.registerOre("oreCoal", Essence.CHAOS);
-		ArcaneMagicAPI.registerOre("oreLapis", Essence.DEPTH);
-		ArcaneMagicAPI.registerOre("oreQuartz", Essence.OZONE);
+		ArcaneMagicAPI.registerOre("oreEmerald", Anima.HORIZON);
+		ArcaneMagicAPI.registerOre("oreDiamond", Anima.DEPTH);
+		ArcaneMagicAPI.registerOre("oreGold", Anima.INFERNO);
+		ArcaneMagicAPI.registerOre("oreIron", Anima.OZONE);
+		ArcaneMagicAPI.registerOre("oreCoal", Anima.CHAOS);
+		ArcaneMagicAPI.registerOre("oreLapis", Anima.DEPTH);
+		ArcaneMagicAPI.registerOre("oreQuartz", Anima.OZONE);
 
 		proxy.postInit(event);
 	}

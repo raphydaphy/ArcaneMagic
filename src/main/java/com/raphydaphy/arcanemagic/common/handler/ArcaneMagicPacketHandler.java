@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.handler;
 
-import com.raphydaphy.arcanemagic.common.network.PacketEssenceTransfer;
-import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
+import com.raphydaphy.arcanemagic.common.network.PacketAnimaTransfer;
+import com.raphydaphy.arcanemagic.common.network.PacketItemAnimaChanged;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookChanged;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookOpened;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastExpanded;
@@ -36,9 +36,9 @@ public class ArcaneMagicPacketHandler
 
 		// Server -> Client
 
-		INSTANCE.registerMessage(PacketEssenceTransfer.Handler.class, PacketEssenceTransfer.class, packetId++,
+		INSTANCE.registerMessage(PacketAnimaTransfer.Handler.class, PacketAnimaTransfer.class, packetId++,
 				Side.CLIENT);
-		INSTANCE.registerMessage(PacketItemEssenceChanged.Handler.class, PacketItemEssenceChanged.class, packetId++,
+		INSTANCE.registerMessage(PacketItemAnimaChanged.Handler.class, PacketItemAnimaChanged.class, packetId++,
 				Side.CLIENT);
 		INSTANCE.registerMessage(PacketNotebookOpened.Handler.class, PacketNotebookOpened.class, packetId++,
 				Side.CLIENT);

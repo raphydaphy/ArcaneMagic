@@ -10,19 +10,19 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.google.common.base.Preconditions;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.capabilities.EssenceStorage;
-import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
+import com.raphydaphy.arcanemagic.common.capabilities.AnimaStorage;
+import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
-import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
+import com.raphydaphy.arcanemagic.common.network.PacketItemAnimaChanged;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
@@ -115,7 +115,7 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 				{
 					ItemStack stack = new ItemStack(this);
 					applyTipAndCore(stack, tip, core);
-					EssenceStack.writeDefaultEssence(stack.getTagCompound());
+					AnimaStack.writeDefaultAnimus(stack.getTagCompound());
 					items.add(stack);
 				}
 		}
@@ -126,7 +126,7 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 		if (!stack.hasTagCompound())
 		{
 			stack.setTagCompound(new NBTTagCompound());
-			return EssenceStack.writeDefaultEssence(stack.getTagCompound());
+			return AnimaStack.writeDefaultAnimus(stack.getTagCompound());
 		}
 		return stack.getTagCompound();
 	}
@@ -160,12 +160,12 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 		player.setActiveHand(hand);
 		if (!world.isRemote)
 		{
-			IEssenceStorage cap = stack.getCapability(IEssenceStorage.CAP, null);
-			cap.store(new EssenceStack(EnumBasicEssence.values()[itemRand.nextInt(6)].getEssence(), 50), false);
+			IAnimaStorage cap = stack.getCapability(IAnimaStorage.CAP, null);
+			cap.store(new AnimaStack(EnumBasicAnimus.values()[itemRand.nextInt(6)].getAnima(), 50), false);
 			if (player instanceof EntityPlayerMP)
 			{
 				ArcaneMagicPacketHandler.INSTANCE.sendTo(
-						new PacketItemEssenceChanged(cap, stupidGetSlot(player.inventory, stack), stack),
+						new PacketItemAnimaChanged(cap, stupidGetSlot(player.inventory, stack), stack),
 						(EntityPlayerMP) player);
 			}
 		}
@@ -207,25 +207,25 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count)
 	{
-		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+		IAnimaStorage handler = stack.getCapability(IAnimaStorage.CAP, null);
 
 		if (handler != null && !player.world.isRemote)
 		{
-			for (EnumBasicEssence e : EnumBasicEssence.values())
+			for (EnumBasicAnimus e : EnumBasicAnimus.values())
 			{
-				Essence essence = e.getEssence();
-				handler.store(new EssenceStack(essence, itemRand.nextInt(2)), false);
+				Anima essence = e.getAnima();
+				handler.store(new AnimaStack(essence, itemRand.nextInt(2)), false);
 			}
 			if (player instanceof EntityPlayerMP)
 			{
-				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemEssenceChanged(handler,
+				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketItemAnimaChanged(handler,
 						stupidGetSlot(((EntityPlayer) player).inventory, stack), stack), (EntityPlayerMP) player);
 			}
 		}
 
-		if (handler != null && handler.getStored().get(Essence.INFERNO) != null)
+		if (handler != null && handler.getStored().get(Anima.INFERNO) != null)
 		{
-			System.out.println("Storing " + handler.getStored().get(Essence.INFERNO).getCount());
+			System.out.println("Storing " + handler.getStored().get(Anima.INFERNO).getCount());
 		}
 	}
 
@@ -240,7 +240,7 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX,
 			float hitY, float hitZ, EnumHand hand)
 	{
-		EssenceStack.writeDefaultEssence(player.getHeldItem(hand));
+		AnimaStack.writeDefaultAnimus(player.getHeldItem(hand));
 		return EnumActionResult.PASS;
 	}
 
@@ -330,16 +330,16 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 
 		float rot = 76.1f;
 
-		IEssenceStorage handler = stack.getCapability(IEssenceStorage.CAP, null);
+		IAnimaStorage handler = stack.getCapability(IAnimaStorage.CAP, null);
 		if (handler != null)
 		{
 			for (int curEssence = 0; curEssence < 6; curEssence++)
 			{
-				Essence cur = Essence.REGISTRY.getValues().get(curEssence);
-				EssenceStack essence = new EssenceStack(cur,
+				Anima cur = Anima.REGISTRY.getValues().get(curEssence);
+				AnimaStack essence = new AnimaStack(cur,
 						handler.getStored().containsKey(cur) ? handler.getStored().get(cur).getCount() : 0);
 				Pair<Integer, Integer> essencePos = barPositions.get(curEssence);
-				Color color = essence.getEssence().getColor();
+				Color color = essence.getAnima().getColor();
 				// System.out.println(color.toString());
 				drawBar(essencePos.getLeft(), essencePos.getRight(), color.getRed() / 256, color.getGreen() / 256f,
 						color.getBlue() / 256f, essence.getCount() / 28, rot);
@@ -355,11 +355,11 @@ public class ItemScepter extends ItemBase implements IElementalCraftingItem
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt)
 	{
-		return new EssenceStorage();// This is serialisable, so Forge should handle save/load
+		return new AnimaStorage();// This is serialisable, so Forge should handle save/load
 	}
 
 	@Override
-	public boolean containsEssence()
+	public boolean containsAnimus()
 	{
 		return true;
 	}

@@ -22,7 +22,7 @@ public class CategoryNaturalDivisions extends NotebookCategory
 		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.natural_divisions", 2));
 		setRequiredTag("unlockedNaturalDisvisions");
 		setPrerequisiteTag(NotebookCategories.FOUNDATIONS_OF_MAGIC.getRequiredTag());
-		setIcon(new ItemStack(ModRegistry.ESSENCE, 1, 1));
+		setIcon(new ItemStack(ModRegistry.ANIMA, 1, 1));
 	}
 
 	@Override

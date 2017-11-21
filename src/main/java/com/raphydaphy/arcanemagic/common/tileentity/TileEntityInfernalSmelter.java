@@ -5,10 +5,10 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceCrystal;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
@@ -93,11 +93,11 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
 		{
-			if (slot == ORE && ArcaneMagicAPI.getEssenceFromStack(stack) == null)
+			if (slot == ORE && ArcaneMagicAPI.getAnimaFromStack(stack) == null)
 			{
 				return stack;
 
-			} else if (slot != ORE && !stack.isEmpty() && !(stack.getItem() instanceof IEssenceCrystal))
+			} else if (slot != ORE && !stack.isEmpty() && !(stack.getItem() instanceof IAnimaCrystal))
 			{
 				return stack;
 			}
@@ -164,15 +164,15 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 
 								if (te != null)
 								{
-									Map<Essence, EssenceStack> storedEssenceConcentrator = te
-											.getCapability(IEssenceStorage.CAP, null).getStored();
+									Map<Anima, AnimaStack> storedEssenceConcentrator = te
+											.getCapability(IAnimaStorage.CAP, null).getStored();
 
-									Essence useType = null;
-									for (EssenceStack transferStack : storedEssenceConcentrator.values())
+									Anima useType = null;
+									for (AnimaStack transferStack : storedEssenceConcentrator.values())
 									{
 										if (transferStack.getCount() > 0 && !world.isRemote)
 										{
-											useType = transferStack.getEssence();
+											useType = transferStack.getAnima();
 											this.markDirty();
 										}
 									}
@@ -180,7 +180,7 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 									{
 										if (!world.isRemote)
 										{
-											if (Essence.sendEssence(world, new EssenceStack(useType, 1),
+											if (Anima.sendAnima(world, new AnimaStack(useType, 1),
 													new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 													new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5),
 													false, true))

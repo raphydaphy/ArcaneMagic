@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.awt.Color;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.container.ContainerInfusionAltar;
@@ -110,47 +110,47 @@ public class GuiInfusionAltar extends GuiContainer
 				GLHelper.renderFancyBeam2D(guiLeft + 101, guiTop + 60, -78, rainbow, mc.world.getSeed(), age, 0.2f);
 
 				// CHAOS
-				GLHelper.renderFancyBeams2D(guiLeft + 92, guiTop + 27, Essence.CHAOS.getColor(), mc.world.getSeed(),
+				GLHelper.renderFancyBeams2D(guiLeft + 92, guiTop + 27, Anima.CHAOS.getColor(), mc.world.getSeed(),
 						age, 0.18f, 40, 30);
 
 				// DEPTH
-				GLHelper.renderFancyBeams2D(guiLeft + 111, guiTop + 92, Essence.DEPTH.getColor(), mc.world.getSeed(),
+				GLHelper.renderFancyBeams2D(guiLeft + 111, guiTop + 92, Anima.DEPTH.getColor(), mc.world.getSeed(),
 						age + 2023, 0.18f, 40, 30);
 
 				// HORIZON
-				GLHelper.renderFancyBeams2D(guiLeft + 78, guiTop + 83, Essence.HORIZON.getColor(), mc.world.getSeed(),
+				GLHelper.renderFancyBeams2D(guiLeft + 78, guiTop + 83, Anima.HORIZON.getColor(), mc.world.getSeed(),
 						age + 1123, 0.18f, 40, 30);
 
 				// INFERNO
-				GLHelper.renderFancyBeams2D(guiLeft + 126, guiTop + 36, Essence.INFERNO.getColor(), mc.world.getSeed(),
+				GLHelper.renderFancyBeams2D(guiLeft + 126, guiTop + 36, Anima.INFERNO.getColor(), mc.world.getSeed(),
 						age + 4341, 0.18f, 40, 30);
 
 				// OZONE
-				GLHelper.renderFancyBeams2D(guiLeft + 135, guiTop + 67, Essence.OZONE.getColor(), mc.world.getSeed(),
+				GLHelper.renderFancyBeams2D(guiLeft + 135, guiTop + 67, Anima.OZONE.getColor(), mc.world.getSeed(),
 						age + 6941, 0.18f, 40, 30);
 
 				// PEACE
-				GLHelper.renderFancyBeams2D(guiLeft + 68, guiTop + 51, Essence.PEACE.getColor(), mc.world.getSeed(),
+				GLHelper.renderFancyBeams2D(guiLeft + 68, guiTop + 51, Anima.PEACE.getColor(), mc.world.getSeed(),
 						age + 7812, 0.18f, 40, 30);
 
 				double scale = 0.7;
 				GlStateManager.scale(scale, scale, scale);
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.CREATION.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.CREATION.getItemForm(),
 						(int) ((guiLeft + 96) * (1 / scale)), (int) ((guiTop + 54) * (1 / scale)));
 
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.CHAOS.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.CHAOS.getItemForm(),
 						(int) ((guiLeft + 88) * (1 / scale)), (int) ((guiTop + 21) * (1 / scale)));
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.DEPTH.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.DEPTH.getItemForm(),
 						(int) ((guiLeft + 106) * (1 / scale)), (int) ((guiTop + 87) * (1 / scale)));
 
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.HORIZON.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.HORIZON.getItemForm(),
 						(int) ((guiLeft + 73) * (1 / scale)), (int) ((guiTop + 78) * (1 / scale)));
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.INFERNO.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.INFERNO.getItemForm(),
 						(int) ((guiLeft + 121) * (1 / scale)), (int) ((guiTop + 30) * (1 / scale)));
 
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.OZONE.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.OZONE.getItemForm(),
 						(int) ((guiLeft + 130) * (1 / scale)), (int) ((guiTop + 62.5) * (1 / scale)));
-				mc.getRenderItem().renderItemAndEffectIntoGUI(Essence.PEACE.getItemForm(),
+				mc.getRenderItem().renderItemAndEffectIntoGUI(Anima.PEACE.getItemForm(),
 						(int) ((guiLeft + 63) * (1 / scale)), (int) ((guiTop + 46) * (1 / scale)));
 				GlStateManager.popMatrix();
 			}

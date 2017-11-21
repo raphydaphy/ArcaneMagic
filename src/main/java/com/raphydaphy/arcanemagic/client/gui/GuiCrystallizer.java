@@ -2,12 +2,12 @@ package com.raphydaphy.arcanemagic.client.gui;
 
 import java.util.Map;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.container.ContainerCrystallizer;
-import com.raphydaphy.arcanemagic.common.data.EnumBasicEssence;
+import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 
 import net.minecraft.client.Minecraft;
@@ -88,14 +88,14 @@ public class GuiCrystallizer extends GuiContainer
 			}
 		}
 
-		Map<Essence, EssenceStack> essenceStored = te.getCapability(IEssenceStorage.CAP, null).getStored();
+		Map<Anima, AnimaStack> essenceStored = te.getCapability(IAnimaStorage.CAP, null).getStored();
 		int i = 0;
-		for (EnumBasicEssence e : EnumBasicEssence.values())
+		for (EnumBasicAnimus e : EnumBasicAnimus.values())
 		{
-			Essence essence = e.getEssence();
+			Anima essence = e.getAnima();
 			i++;
-			EssenceStack stack = essenceStored.containsKey(essence) ? essenceStored.get(essence)
-					: new EssenceStack(essence, 0);
+			AnimaStack stack = essenceStored.containsKey(essence) ? essenceStored.get(essence)
+					: new AnimaStack(essence, 0);
 			drawBar(guiLeft + 40 + (i * 18), guiTop + 19, essence.getColor().getRed() / 256f,
 					essence.getColor().getGreen() / 256f, essence.getColor().getBlue() / 256f,
 					(int) Math.floor(stack.getCount() / 20.4f), 0);

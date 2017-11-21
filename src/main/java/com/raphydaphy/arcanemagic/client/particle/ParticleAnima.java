@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.client.Minecraft;
@@ -18,16 +18,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ParticleEssence extends Particle
+public class ParticleAnima extends Particle
 {
 	private Vec3d travelPos;
 	private final Vec3d startPos;
 	private int speedDivisor = 30;
 	private final boolean isCosmetic;
-	private final Essence essence;
+	private final Anima anima;
 
-	public ParticleEssence(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
-			double ySpeedIn, double zSpeedIn, Essence essence, Vec3d travelPos, boolean isCosmetic)
+	public ParticleAnima(World worldIn, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn,
+			double ySpeedIn, double zSpeedIn, Anima anima, Vec3d travelPos, boolean isCosmetic)
 	{
 		super(worldIn, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn);
 		this.motionX = this.motionX * 0.009999999776482582D + xSpeedIn;
@@ -37,12 +37,12 @@ public class ParticleEssence extends Particle
 		this.posY += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		this.posZ += (this.rand.nextFloat() - this.rand.nextFloat()) * 0.05F;
 		startPos = new Vec3d(xCoordIn, yCoordIn, zCoordIn);
-		this.setRBGColorF(essence.getColor().getRed(), essence.getColor().getGreen(), essence.getColor().getBlue());
+		this.setRBGColorF(anima.getColor().getRed(), anima.getColor().getGreen(), anima.getColor().getBlue());
 		this.particleAlpha = 1f;
 		this.particleMaxAge = (int) (8.0D / (Math.random() * 0.8D + 0.2D)) + 4;
 		this.travelPos = travelPos;
 		this.isCosmetic = isCosmetic;
-		this.essence = essence;
+		this.anima = anima;
 
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
 				.getAtlasSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball").toString());
@@ -109,13 +109,13 @@ public class ParticleEssence extends Particle
 
 		int modifiedSpeedDivisor = speedDivisor;
 		BlockPos pos = new BlockPos(posX, posY, posZ);
-		if (essence.equals(Essence.DEPTH))
+		if (anima.equals(Anima.DEPTH))
 		{
 			if (world.getBlockState(pos).getBlock() != Blocks.WATER)
 			{
 				modifiedSpeedDivisor = speedDivisor * 10;
 			}
-		} else if (essence.equals(Essence.CHAOS))
+		} else if (anima.equals(Anima.CHAOS))
 		{
 			if (rand.nextInt(30) == 1)
 			{

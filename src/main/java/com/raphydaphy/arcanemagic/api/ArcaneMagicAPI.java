@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.raphydaphy.arcanemagic.api.analysis.AnalysisManager;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
@@ -34,8 +34,8 @@ public class ArcaneMagicAPI
 
 	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
 
-	// relates a oredict ID to a essence type that should be used to smelt the ore in an infernal furnace
-	public static Map<Integer, Essence> ESSENCE_ORE_REGISTRY = new HashMap<Integer, Essence>();
+	// relates a oredict ID to a anima type that should be used to smelt the ore in an infernal furnace
+	public static Map<Integer, Anima> ANIMA_ORE_REGISTRY = new HashMap<Integer, Anima>();
 
 	public static void registerCategory(NotebookCategory category)
 	{
@@ -47,26 +47,26 @@ public class ArcaneMagicAPI
 		NotebookCategory.SUB_REGISTRY.registerAll(sub);
 	}
 
-	public static void registerOre(String oreDict, Essence essence)
+	public static void registerOre(String oreDict, Anima anima)
 	{
-		ESSENCE_ORE_REGISTRY.put(OreDictionary.getOreID(oreDict), essence);
+		ANIMA_ORE_REGISTRY.put(OreDictionary.getOreID(oreDict), anima);
 	}
 
-	public static Essence getEssenceFromStack(ItemStack stack)
+	public static Anima getAnimaFromStack(ItemStack stack)
 	{
 		for (int id : OreDictionary.getOreIDs(stack))
 		{
-			if (ESSENCE_ORE_REGISTRY.containsKey(id))
+			if (ANIMA_ORE_REGISTRY.containsKey(id))
 			{
-				return ESSENCE_ORE_REGISTRY.get(id);
+				return ANIMA_ORE_REGISTRY.get(id);
 			}
 		}
 		return null;
 	}
 
-	public static void registerEssence(Essence e)
+	public static void registerAnima(Anima e)
 	{
-		Essence.REGISTRY.register(e);
+		Anima.REGISTRY.register(e);
 	}
 
 	public static void registerAllCategories(NotebookCategory... category)
@@ -74,9 +74,9 @@ public class ArcaneMagicAPI
 		NotebookCategory.REGISTRY.registerAll(category);
 	}
 
-	public static void registerAllEssences(Essence... e)
+	public static void registerAllAnimus(Anima... e)
 	{
-		Essence.REGISTRY.registerAll(e);
+		Anima.REGISTRY.registerAll(e);
 	}
 
 	public static int getCategoryCount()

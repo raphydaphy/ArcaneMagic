@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack.ImmutableEssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack.ImmutableAnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -19,21 +19,21 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 
 	private final ItemStack output;
 	private final NonNullList<Ingredient> inputs;
-	private final ImmutableEssenceStack essence;
+	private final ImmutableAnimaStack anima;
 
-	public ShapelessElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, EssenceStack reqEssence)
+	public ShapelessElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima)
 	{
 		Preconditions.checkArgument(inputs.size() == 9,
 				"Attempting to create invalid elemental recipe! (Wrong input list size)");
 		this.output = output;
 		this.inputs = inputs;
-		this.essence = reqEssence.toImmutable();
+		this.anima = reqAnima.toImmutable();
 	}
 
 	@Override
-	public EssenceStack getReqEssence()
+	public AnimaStack  getReqAnima()
 	{
-		return essence;
+		return anima;
 	}
 
 	/**
@@ -61,8 +61,8 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 		IElementalCraftingItem crafter = (IElementalCraftingItem) wand.getItem();
 		if (!crafter.matches(this, player, wand, stacks, world))
 			return false;
-		return toCheck.isEmpty() && (essence.isEmpty() || (crafter.containsEssence()
-				&& wand.getCapability(IEssenceStorage.CAP, null).take(essence, true) == null));
+		return toCheck.isEmpty() && (anima.isEmpty() || (crafter.containsAnimus()
+				&& wand.getCapability(IAnimaStorage.CAP, null).take(anima, true) == null));
 	}
 
 	@Override

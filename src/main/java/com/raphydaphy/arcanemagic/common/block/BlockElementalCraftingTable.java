@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
-import com.raphydaphy.arcanemagic.common.network.PacketItemEssenceChanged;
+import com.raphydaphy.arcanemagic.common.network.PacketItemAnimaChanged;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -154,7 +154,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 					world.spawnEntity(craftResult);
 
 					ArcaneMagicPacketHandler.INSTANCE.sendTo(
-							new PacketItemEssenceChanged(stack.getCapability(IEssenceStorage.CAP, null),
+							new PacketItemAnimaChanged(stack.getCapability(IAnimaStorage.CAP, null),
 									ItemScepter.stupidGetSlot(player.inventory, stack), stack),
 							(EntityPlayerMP) player);
 					return ret;

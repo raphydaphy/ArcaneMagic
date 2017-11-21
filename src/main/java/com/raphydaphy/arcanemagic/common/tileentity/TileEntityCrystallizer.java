@@ -4,9 +4,9 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
@@ -29,7 +29,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 {
 	public static int SIZE = 6;
 
-	private Essence curForming = null;
+	private Anima curForming = null;
 	private int curFormingTimer = 0;
 
 	public TileEntityCrystallizer()
@@ -38,7 +38,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 	}
 
-	private boolean canForm(EssenceStack formStack)
+	private boolean canForm(AnimaStack formStack)
 	{
 
 		boolean shouldContinue = false;
@@ -57,7 +57,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 		if (shouldContinue)
 		{
-			EssenceStack couldTakeThis = essenceStorage.take(new EssenceStack(formStack.getEssence(), 10), false);
+			AnimaStack couldTakeThis = essenceStorage.take(new AnimaStack(formStack.getAnima(), 10), false);
 			if (couldTakeThis != null && !couldTakeThis.isEmpty())
 			{
 				shouldContinue = false;
@@ -73,14 +73,14 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		{
 			return;
 		}
-		for (EssenceStack formStack : this.essenceStorage.getStored().values())
+		for (AnimaStack formStack : this.essenceStorage.getStored().values())
 		{
 			if (formStack != null && !formStack.isEmpty())
 			{
 				if (this.curForming != null)
 				{
 					// we are already forming this essence
-					if (formStack.getEssence().equals(this.curForming))
+					if (formStack.getAnima().equals(this.curForming))
 					{
 						// keep on going! u can get ther ;-)
 						if (this.curFormingTimer <= 100)
@@ -102,8 +102,8 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
 								{
-									EssenceStack couldTake = essenceStorage
-											.take(new EssenceStack(formStack.getEssence(), 100), false);
+									AnimaStack couldTake = essenceStorage
+											.take(new AnimaStack(formStack.getAnima(), 100), false);
 									couldTake = null;
 									if (couldTake == null || couldTake.isEmpty())
 									{
@@ -113,8 +113,8 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								} else if (this.itemStackHandler
 										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
 								{
-									EssenceStack couldTake = essenceStorage
-											.take(new EssenceStack(formStack.getEssence(), 100), false);
+									AnimaStack couldTake = essenceStorage
+											.take(new AnimaStack(formStack.getAnima(), 100), false);
 									couldTake = null;
 									if (couldTake == null || couldTake.isEmpty())
 									{
@@ -141,7 +141,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 					}
 				} else if (formStack.getCount() >= 1000)
 				{
-					this.curForming = formStack.getEssence();
+					this.curForming = formStack.getAnima();
 					this.curFormingTimer = 0;
 					break;
 				}
@@ -163,15 +163,15 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 						if (te != null)
 						{
-							Map<Essence, EssenceStack> storedEssenceConcentrator = te
-									.getCapability(IEssenceStorage.CAP, null).getStored();
+							Map<Anima, AnimaStack> storedEssenceConcentrator = te
+									.getCapability(IAnimaStorage.CAP, null).getStored();
 
-							Essence useType = null;
-							for (EssenceStack transferStack : storedEssenceConcentrator.values())
+							Anima useType = null;
+							for (AnimaStack transferStack : storedEssenceConcentrator.values())
 							{
 								if (transferStack.getCount() > 0 && !world.isRemote)
 								{
-									useType = transferStack.getEssence();
+									useType = transferStack.getAnima();
 									this.markDirty();
 								}
 							}
@@ -180,8 +180,8 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								if (!world.isRemote)
 								{
 									// actually send essence, not just particles
-									if (Essence.sendEssence(world,
-											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+									if (Anima.sendAnima(world,
+											new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 											new Vec3d(x + 0.5, y + 0.6, z + 0.5),
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), false,
 											false))
@@ -225,7 +225,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		}
 		if (compound.hasKey("curForming"))
 		{
-			curForming = Essence.getEssenceByID(compound.getInteger("curForming"));
+			curForming = Anima.getAnimaByID(compound.getInteger("curForming"));
 		}
 		curFormingTimer = compound.getInteger("curFormingTimer");
 	}
@@ -237,7 +237,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		compound.setTag("items", itemStackHandler.serializeNBT());
 		if (curForming != null)
 		{
-			compound.setInteger("curForming", Essence.REGISTRY.getValues().indexOf(this.curForming));
+			compound.setInteger("curForming", Anima.REGISTRY.getValues().indexOf(this.curForming));
 		}
 		compound.setInteger("curFormingTimer", this.curFormingTimer);
 		return compound;

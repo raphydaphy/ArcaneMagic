@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.common.notebook.category;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookEntry;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
@@ -18,7 +18,7 @@ public class CategoryNaturalDivisionsSub extends NotebookCategory
 {
 	public final int pageCount;
 
-	public CategoryNaturalDivisionsSub(Essence categoryEssence, int indexPage, int pageCount)
+	public CategoryNaturalDivisionsSub(Anima categoryEssence, int indexPage, int pageCount)
 	{
 		this.pageCount = pageCount;
 

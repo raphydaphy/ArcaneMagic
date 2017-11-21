@@ -17,7 +17,7 @@ import com.raphydaphy.arcanemagic.common.item.ItemBase;
 import com.raphydaphy.arcanemagic.common.item.ItemCore;
 import com.raphydaphy.arcanemagic.common.item.ItemCreationCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
-import com.raphydaphy.arcanemagic.common.item.ItemEssenceCrystal;
+import com.raphydaphy.arcanemagic.common.item.ItemAnimaCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
@@ -63,7 +63,7 @@ public class ModRegistry
 	public static final ItemBase CORE = new ItemCore();
 	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
-	public static final ItemEssenceCrystal ESSENCE = new ItemEssenceCrystal();
+	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
 	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();
 	public static final ItemBase BLANK_PARCHMENT = new ItemBase("blank_parchment");
 	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
@@ -87,8 +87,8 @@ public class ModRegistry
 	public void onRecipeRegister(Register<IRecipe> e)
 	{
 		// TODO: shadows will probably make this better.. hopefully :-)
-		OreDictionary.registerOre("formationEssence",
-				new ItemStack(ModRegistry.ESSENCE, 1, OreDictionary.WILDCARD_VALUE));
+		OreDictionary.registerOre("formationAnima",
+				new ItemStack(ModRegistry.ANIMA, 1, OreDictionary.WILDCARD_VALUE));
 
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasRecipe)

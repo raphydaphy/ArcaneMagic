@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
@@ -257,7 +257,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 
 							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
 									SoundCategory.BLOCKS, 1, 1);
-							for (EssenceStack e : essenceStorage.getStored().values())
+							for (AnimaStack e : essenceStorage.getStored().values())
 								essenceStorage.take(e, false);
 
 							setStack(1, ItemStack.EMPTY);
@@ -278,8 +278,8 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 								{
 									// Send some essence to the parchment for ink
-									Essence.sendEssence(world,
-											new EssenceStack(Essence.getFromBiome(world.getBiome(here)), 1),
+									Anima.sendAnima(world,
+											new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 											new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5),
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5), false,
@@ -311,7 +311,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			world.spawnEntity(blankParchment);
 			setStack(1, ItemStack.EMPTY);
 
-			for (EssenceStack e : essenceStorage.getStored().values())
+			for (AnimaStack e : essenceStorage.getStored().values())
 			{
 				essenceStorage.take(e, false);
 			}

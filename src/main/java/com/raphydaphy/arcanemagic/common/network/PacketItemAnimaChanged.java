@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.network;
 
 import java.io.IOException;
 
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -14,43 +14,43 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketItemEssenceChanged implements IMessage
+public class PacketItemAnimaChanged implements IMessage
 {
 	private NBTTagCompound cap;
 	private int slot;
 	private ItemStack stack;
 
-	public PacketItemEssenceChanged()
+	public PacketItemAnimaChanged()
 	{
 	}
 
-	public PacketItemEssenceChanged(IEssenceStorage cap, int slot, ItemStack stack)
+	public PacketItemAnimaChanged(IAnimaStorage cap, int slot, ItemStack stack)
 	{
 		this.cap = cap.serializeNBT();
 		this.slot = slot;
 		this.stack = stack;
 	}
 
-	public static class Handler implements IMessageHandler<PacketItemEssenceChanged, IMessage>
+	public static class Handler implements IMessageHandler<PacketItemAnimaChanged, IMessage>
 	{
 		@Override
-		public IMessage onMessage(PacketItemEssenceChanged message, MessageContext ctx)
+		public IMessage onMessage(PacketItemAnimaChanged message, MessageContext ctx)
 		{
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 
-		private void handle(PacketItemEssenceChanged message, MessageContext ctx)
+		private void handle(PacketItemAnimaChanged message, MessageContext ctx)
 		{
 
 			//ItemStack inSlot = Minecraft.getMinecraft().player.inventory.getStackInSlot(message.slot);
-			IEssenceStorage playerCap = message.stack.getCapability(IEssenceStorage.CAP, null);
+			IAnimaStorage playerCap = message.stack.getCapability(IAnimaStorage.CAP, null);
 			if (playerCap != null)
 			{
 				playerCap.deserializeNBT(message.cap);
 				System.out.println("deserialised successfully!");
 			}
-			System.out.println("does cap exist? " + message.stack.hasCapability(IEssenceStorage.CAP, null));
+			System.out.println("does cap exist? " + message.stack.hasCapability(IAnimaStorage.CAP, null));
 
 			Minecraft.getMinecraft().player.inventory.setInventorySlotContents(message.slot, message.stack);
 		}

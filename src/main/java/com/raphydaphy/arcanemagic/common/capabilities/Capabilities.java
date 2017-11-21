@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.common.capabilities;
 
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -11,12 +11,12 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 public class Capabilities
 {
 
-	public static EssenceStorage.DefaultStorage storage = new EssenceStorage.DefaultStorage();
+	public static AnimaStorage.DefaultStorage storage = new AnimaStorage.DefaultStorage();
 	public static NotebookInfo.DefaultInfo info = new NotebookInfo.DefaultInfo();
 
 	public static void register()
 	{
-		CapabilityManager.INSTANCE.register(IEssenceStorage.class, storage, EssenceStorage.class);
+		CapabilityManager.INSTANCE.register(IAnimaStorage.class, storage, AnimaStorage.class);
 		CapabilityManager.INSTANCE.register(INotebookInfo.class, info, NotebookInfo.class);
 	}
 

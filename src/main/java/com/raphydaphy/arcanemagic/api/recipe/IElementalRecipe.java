@@ -2,8 +2,8 @@ package com.raphydaphy.arcanemagic.api.recipe;
 
 import javax.annotation.Nonnull;
 
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.IEssenceStorage;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -15,10 +15,10 @@ public interface IElementalRecipe
 {
 
 	/**
-	 * @return The required essence for this recipe, may be empty.
+	 * @return The required anima for this recipe, may be empty.
 	 */
 	@Nonnull
-	public EssenceStack getReqEssence();
+	public AnimaStack getReqAnima();
 
 	/**
 	 * Used to check if a recipe matches current crafting inventory
@@ -41,8 +41,8 @@ public interface IElementalRecipe
 	{
 		for (ItemStack s : stacks)
 			s.shrink(1);
-		if (!getReqEssence().isEmpty())
-			wand.getCapability(IEssenceStorage.CAP, null).take(getReqEssence(), false);
+		if (!getReqAnima().isEmpty())
+			wand.getCapability(IAnimaStorage.CAP, null).take(getReqAnima(), false);
 	}
 
 	/**

@@ -3,8 +3,8 @@ package com.raphydaphy.arcanemagic.common.util;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
 import com.raphydaphy.arcanemagic.api.recipe.ShapedElementalRecipe;
 import com.raphydaphy.arcanemagic.api.recipe.ShapelessElementalRecipe;
@@ -373,14 +373,14 @@ public class RecipeHelper
 	/**
 	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
 	 */
-	public static IElementalRecipe addElementalShapeless(ItemStack output, Essence essence, int reqEssence,
+	public static IElementalRecipe addElementalShapeless(ItemStack output, Anima essence, int reqEssence,
 			Object... inputs)
 	{
 		return addElementalRecipe(new ShapelessElementalRecipe(output, createElementalInput(inputs),
-				new EssenceStack(essence, reqEssence)));
+				new AnimaStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShapeless(T output, Essence essence,
+	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShapeless(T output, Anima essence,
 			int reqEssence, Object... inputs)
 	{
 		return addElementalShapeless(makeStack(output), essence, reqEssence, inputs);
@@ -390,14 +390,14 @@ public class RecipeHelper
 	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
 	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid.
 	 */
-	public static IElementalRecipe addElementalShaped(ItemStack output, Essence essence, int reqEssence,
+	public static IElementalRecipe addElementalShaped(ItemStack output, Anima essence, int reqEssence,
 			Object... input)
 	{
 		return addElementalRecipe(
-				new ShapedElementalRecipe(output, createElementalInput(input), new EssenceStack(essence, reqEssence)));
+				new ShapedElementalRecipe(output, createElementalInput(input), new AnimaStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShaped(T output, Essence essence,
+	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShaped(T output, Anima essence,
 			int reqEssence, Object... input)
 	{
 		return addElementalShaped(makeStack(output), essence, reqEssence, input);

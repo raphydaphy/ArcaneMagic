@@ -5,9 +5,9 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack;
-import com.raphydaphy.arcanemagic.api.essence.EssenceStack.ImmutableEssenceStack;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack.ImmutableAnimaStack;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,18 +42,18 @@ public abstract class Spell
 	protected final Item icon;
 	protected final int potency;
 	protected final int cooldown;
-	protected final ImmutableEssenceStack[] reqEssence;
+	protected final ImmutableAnimaStack[] reqAnima;
 	protected final ResourceLocation name;
 	protected final boolean needsBlock;
 
 	public Spell(ResourceLocation name, Item icon, int potency, int cooldown, boolean needsBlock,
-			ImmutableEssenceStack... reqEssence)
+			ImmutableAnimaStack... reqAnima)
 	{
 		this.name = name;
 		this.icon = icon;
 		this.potency = potency;
 		this.cooldown = cooldown;
-		this.reqEssence = reqEssence;
+		this.reqAnima = reqAnima;
 		this.needsBlock = needsBlock;
 		spellMap.put(name, this);
 	}
@@ -65,12 +65,12 @@ public abstract class Spell
 
 	public boolean hasAllEssencesAndCanCast(ItemStack wand)
 	{
-		Map<Essence, EssenceStack> map = EssenceStack.buildMapFromNBT(wand.getTagCompound());
-		for (EssenceStack stack : reqEssence)
+		Map<Anima, AnimaStack> map = AnimaStack.buildMapFromNBT(wand.getTagCompound());
+		for (AnimaStack stack : reqAnima)
 		{
-			if (map.get(stack.getEssence()) == null)
+			if (map.get(stack.getAnima()) == null)
 				return false;
-			if (map.get(stack.getEssence()).getCount() < ItemScepter.getTip(wand).getCostMultiplier()
+			if (map.get(stack.getAnima()).getCount() < ItemScepter.getTip(wand).getCostMultiplier()
 					* stack.getCount())
 				return false;
 		}
@@ -112,7 +112,7 @@ public abstract class Spell
 	 * This is the cast spell event. This is fired after onCastPre returns true or
 	 * onPlayerStoppedUsing is called. onPlayerStoppedUsing is always called once
 	 * the wand is released from beind held after clicking the air, provided the
-	 * necessary essence is there.
+	 * necessary anima is there.
 	 * 
 	 * @param wand
 	 *            The Wand ItemStack
@@ -140,7 +140,7 @@ public abstract class Spell
 			EnumFacing side, float hitX, float hitY, float hitZ);
 
 	/**
-	 * This is the post-cast spell event. Do your essence removal here! This is
+	 * This is the post-cast spell event. Do your anima removal here! This is
 	 * always called immediately after onCast returns true, otherwise it is never
 	 * called.
 	 * 
@@ -193,9 +193,9 @@ public abstract class Spell
 	}
 
 	@Nullable
-	public EssenceStack[] getReqEssence()
+	public AnimaStack[] getReqAnima()
 	{
-		return reqEssence;
+		return reqAnima;
 	}
 
 	public boolean getNeedsBlock()

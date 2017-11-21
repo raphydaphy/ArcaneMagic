@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import org.lwjgl.opengl.GL11;
 
-import com.raphydaphy.arcanemagic.api.essence.Essence;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 
@@ -55,7 +55,7 @@ public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrysta
 						Vec3d to = new Vec3d(x + 0.5, y + 0.58, z + 0.5);
 						Vec3d from = new Vec3d(x2 + 0.5, y2 + 0.8, z2 + 0.5);
 
-						Color color = Essence.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
+						Color color = Anima.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
 								.getColor();
 
 						int r = color.getRed();
