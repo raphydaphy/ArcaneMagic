@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.block;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -26,20 +26,20 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockCrystallizer extends BlockBase implements IHasRecipe
+public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe
 {
 	public static final int GUI_ID = 2;
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
 
-	public BlockCrystallizer()
+	public BlockAnimusMaterializer()
 	{
-		super("crystallizer", Material.ROCK, 2.5f, SoundType.STONE);
+		super("animus_materializer", Material.ROCK, 2.5f, SoundType.STONE);
 	}
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		TileEntityCrystallizer te = (TileEntityCrystallizer) world.getTileEntity(pos);
+		TileEntityAnimusMaterializer te = (TileEntityAnimusMaterializer) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		for (int i = 0; i < cap.getSlots(); ++i)
@@ -82,7 +82,7 @@ public class BlockCrystallizer extends BlockBase implements IHasRecipe
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileEntityCrystallizer();
+		return new TileEntityAnimusMaterializer();
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class BlockCrystallizer extends BlockBase implements IHasRecipe
 			return true;
 		}
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityCrystallizer))
+		if (!(te instanceof TileEntityAnimusMaterializer))
 		{
 			return false;
 		}

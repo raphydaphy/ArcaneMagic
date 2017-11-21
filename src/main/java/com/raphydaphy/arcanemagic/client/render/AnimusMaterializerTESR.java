@@ -6,7 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -22,10 +22,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrystallizer>
+public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntityAnimusMaterializer>
 {
 	@Override
-	public void render(TileEntityCrystallizer te, double x, double y, double z, float partialTicks, int destroyStage,
+	public void render(TileEntityAnimusMaterializer te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha)
 	{
 		GlStateManager.pushMatrix();
@@ -96,7 +96,7 @@ public class CrystallizerTESR extends TileEntitySpecialRenderer<TileEntityCrysta
 		GlStateManager.popMatrix();
 	}
 
-	public boolean isGlobalRenderer(TileEntityCrystallizer te)
+	public boolean isGlobalRenderer(TileEntityAnimusMaterializer te)
 	{
 		return true;
 	}

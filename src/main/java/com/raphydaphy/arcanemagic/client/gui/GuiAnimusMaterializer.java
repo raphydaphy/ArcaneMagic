@@ -6,9 +6,9 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.container.ContainerCrystallizer;
+import com.raphydaphy.arcanemagic.common.container.ContainerAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -18,15 +18,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiCrystallizer extends GuiContainer
+public class GuiAnimusMaterializer extends GuiContainer
 {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 181;
-	private TileEntityCrystallizer te;
+	private TileEntityAnimusMaterializer te;
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
-			"textures/gui/crystallizer.png");
+			"textures/gui/animus_materializer.png");
 
-	public GuiCrystallizer(TileEntityCrystallizer tileEntity, ContainerCrystallizer container)
+	public GuiAnimusMaterializer(TileEntityAnimusMaterializer tileEntity, ContainerAnimusMaterializer container)
 	{
 		super(container);
 		te = tileEntity;

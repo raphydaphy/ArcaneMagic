@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "arcanemagic:crystallizer"
+    "model": "arcanemagic:animus_materializer"
   },
   "variants": {
     "normal": [{}],

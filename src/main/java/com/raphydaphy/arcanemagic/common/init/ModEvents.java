@@ -119,7 +119,7 @@ public class ModEvents
 								(EntityPlayerMP) ev.player);
 					}
 
-					if (item.equals(Item.getItemFromBlock(ModRegistry.CRYSTALLIZER))
+					if (item.equals(Item.getItemFromBlock(ModRegistry.ANIMUS_MATERIALIZER))
 							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());

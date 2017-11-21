@@ -20,7 +20,7 @@ public class CategoryCrystallization extends NotebookCategory
 		setUnlocalizedName("arcanemagic.notebook.category.crystallization");
 		setRequiredTag("unlockedCrystallization");
 		setPrerequisiteTag(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag());
-		setIcon(new ItemStack(ModRegistry.CRYSTALLIZER));
+		setIcon(new ItemStack(ModRegistry.ANIMUS_MATERIALIZER));
 	}
 
 	@Override

@@ -1,15 +1,15 @@
 package com.raphydaphy.arcanemagic.client.proxy;
 
-import com.raphydaphy.arcanemagic.client.gui.GuiCrystallizer;
+import com.raphydaphy.arcanemagic.client.gui.GuiAnimusMaterializer;
 import com.raphydaphy.arcanemagic.client.gui.GuiInfusionAltar;
 import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
-import com.raphydaphy.arcanemagic.common.block.BlockCrystallizer;
+import com.raphydaphy.arcanemagic.common.block.BlockAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
-import com.raphydaphy.arcanemagic.common.container.ContainerCrystallizer;
+import com.raphydaphy.arcanemagic.common.container.ContainerAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.container.ContainerInfusionAltar;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,10 +27,10 @@ public class GuiProxy implements IGuiHandler
 		TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
 		switch (ID)
 		{
-		case BlockCrystallizer.GUI_ID:
+		case BlockAnimusMaterializer.GUI_ID:
 
-			if (te instanceof TileEntityCrystallizer)
-				return new ContainerCrystallizer(player.inventory, (TileEntityCrystallizer) te);
+			if (te instanceof TileEntityAnimusMaterializer)
+				return new ContainerAnimusMaterializer(player.inventory, (TileEntityAnimusMaterializer) te);
 			break;
 		case BlockInfusionAltar.GUI_ID:
 			if (te instanceof TileEntityInfusionAltar)
@@ -54,11 +54,11 @@ public class GuiProxy implements IGuiHandler
 				return new GuiNotebook(player);
 			}
 			break;
-		case BlockCrystallizer.GUI_ID:
-			if (te instanceof TileEntityCrystallizer)
+		case BlockAnimusMaterializer.GUI_ID:
+			if (te instanceof TileEntityAnimusMaterializer)
 			{
-				return new GuiCrystallizer((TileEntityCrystallizer) te,
-						new ContainerCrystallizer(player.inventory, (TileEntityCrystallizer) te));
+				return new GuiAnimusMaterializer((TileEntityAnimusMaterializer) te,
+						new ContainerAnimusMaterializer(player.inventory, (TileEntityAnimusMaterializer) te));
 			}
 			break;
 		case BlockInfusionAltar.GUI_ID:

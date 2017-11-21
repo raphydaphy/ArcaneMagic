@@ -24,14 +24,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityCrystallizer extends TileEntityAnimaStorage implements ITickable
+public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage implements ITickable
 {
 	public static int SIZE = 6;
 
 	private Anima curForming = null;
 	private int curFormingTimer = 0;
 
-	public TileEntityCrystallizer()
+	public TileEntityAnimusMaterializer()
 	{
 		super(1000);
 
@@ -202,7 +202,7 @@ public class TileEntityCrystallizer extends TileEntityAnimaStorage implements IT
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
-			TileEntityCrystallizer.this.markDirty();
+			TileEntityAnimusMaterializer.this.markDirty();
 		}
 
 		@Override

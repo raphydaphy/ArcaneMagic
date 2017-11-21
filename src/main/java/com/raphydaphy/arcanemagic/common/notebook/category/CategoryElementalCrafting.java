@@ -44,7 +44,7 @@ public class CategoryElementalCrafting extends NotebookCategory
 						new ItemStack(Items.BLAZE_ROD) },
 				{ new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.IRON_BLOCK),
 						new ItemStack(Blocks.IRON_BLOCK) } };
-		page1.add(new NotebookEntryCraftingRecipe(crystallizerItemsIn, new ItemStack(ModRegistry.CRYSTALLIZER)));
+		page1.add(new NotebookEntryCraftingRecipe(crystallizerItemsIn, new ItemStack(ModRegistry.ANIMUS_MATERIALIZER)));
 		page1.add(new NotebookEntryText(getUnlocalizedName() + ".3", 0x000000));
 		ItemStack[][] concentratorItemsIn = { { ItemStack.EMPTY, new ItemStack(Items.REDSTONE), ItemStack.EMPTY },
 				{ new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Blocks.IRON_BLOCK),

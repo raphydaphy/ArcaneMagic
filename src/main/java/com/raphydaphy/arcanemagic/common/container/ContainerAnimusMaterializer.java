@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.common.container;
 
 import com.raphydaphy.arcanemagic.common.container.slot.SlotOutput;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,12 +12,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class ContainerCrystallizer extends Container
+public class ContainerAnimusMaterializer extends Container
 {
 
-	private TileEntityCrystallizer te;
+	private TileEntityAnimusMaterializer te;
 
-	public ContainerCrystallizer(InventoryPlayer playerInventory, TileEntityCrystallizer te)
+	public ContainerAnimusMaterializer(InventoryPlayer playerInventory, TileEntityAnimusMaterializer te)
 	{
 		super();
 		this.te = te;
@@ -77,10 +77,10 @@ public class ContainerCrystallizer extends Container
 			prev = cur.copy();
 
 			// From crystlaizer -> player
-			if (index < TileEntityCrystallizer.SIZE)
+			if (index < TileEntityAnimusMaterializer.SIZE)
 			{
 				// TODO: not hardcode the max inv size to support mods that altar the player inventory
-				if (!this.mergeItemStack(cur, TileEntityCrystallizer.SIZE, 42, true))
+				if (!this.mergeItemStack(cur, TileEntityAnimusMaterializer.SIZE, 42, true))
 				{
 					return ItemStack.EMPTY;
 				}

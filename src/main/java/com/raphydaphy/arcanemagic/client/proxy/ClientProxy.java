@@ -8,7 +8,7 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleAnima;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
-import com.raphydaphy.arcanemagic.client.render.CrystallizerTESR;
+import com.raphydaphy.arcanemagic.client.render.AnimusMaterializerTESR;
 import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
 import com.raphydaphy.arcanemagic.client.render.AnimaConjurerTESR;
 import com.raphydaphy.arcanemagic.client.render.InfernalSmelterTESR;
@@ -17,7 +17,7 @@ import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
@@ -68,7 +68,7 @@ public class ClientProxy extends CommonProxy
 				new ElementalCraftingTableTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class, new WritingDeskTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class, new AnalyzerTESR());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityCrystallizer.class, new CrystallizerTESR());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnimusMaterializer.class, new AnimusMaterializerTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfernalSmelter.class, new InfernalSmelterTESR());
 	}
 
