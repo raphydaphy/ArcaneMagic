@@ -39,38 +39,38 @@
 					"layer0": "arcanemagic:items/parchment_written"
 				}
 			},
-			"essence_ozone": {
+			"anima_ozone": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_ozone"
+					"layer0": "arcanemagic:items/anima_ozone"
 				}
 			},
-			"essence_depth": {
+			"anima_depth": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_depth"
+					"layer0": "arcanemagic:items/anima_depth"
 				}
 			},
-			"essence_inferno": {
+			"anima_inferno": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_inferno"
+					"layer0": "arcanemagic:items/anima_inferno"
 				}
 			},
-			"essence_horizon": {
+			"anima_horizon": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_horizon"
+					"layer0": "arcanemagic:items/anima_horizon"
 				}
 			},
-			"essence_peace": {
+			"anima_peace": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_peace"
+					"layer0": "arcanemagic:items/anima_peace"
 				}
 			},
-			"essence_chaos": {
+			"anima_chaos": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_chaos"
+					"layer0": "arcanemagic:items/anima_chaos"
 				}
-			},"essence_creation": {
+			},"anima_creation": {
 				"textures": {
-					"layer0": "arcanemagic:items/essence_creation"
+					"layer0": "arcanemagic:items/anima_creation"
 				}
 			},
 			"ancient_parchment": {

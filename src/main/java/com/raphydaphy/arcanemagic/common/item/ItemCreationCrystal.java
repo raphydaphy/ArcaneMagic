@@ -11,7 +11,7 @@ public class ItemCreationCrystal extends ItemBase implements IAnimaCrystal
 
 	public ItemCreationCrystal()
 	{
-		super("essence_creation", TextFormatting.GOLD);
+		super("anima_creation", TextFormatting.GOLD);
 	}
 
 	@Override
