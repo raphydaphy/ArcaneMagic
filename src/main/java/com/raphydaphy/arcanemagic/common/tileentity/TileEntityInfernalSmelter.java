@@ -27,7 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implements ITickable
+public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements ITickable
 {
 	public static int SIZE = 7;
 	public static int ORE = 0;
@@ -156,10 +156,10 @@ public class TileEntityInfernalSmelter extends TileEntityEssenceStorage implemen
 						if (world.rand.nextInt(2000) == 1)
 						{
 							BlockPos here = new BlockPos(x, y, z);
-							if (world.getBlockState(here).getBlock().equals(ModRegistry.ESSENCE_CONCENTRATOR))
+							if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER))
 							{
 
-								TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world
+								TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world
 										.getTileEntity(here);
 
 								if (te != null)

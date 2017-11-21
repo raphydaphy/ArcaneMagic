@@ -28,7 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITickable
+public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITickable
 {
 	// TODO: make this a nonnulllist
 	private ItemStack[] stacks = { ItemStack.EMPTY, ItemStack.EMPTY };
@@ -200,7 +200,7 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 		{
 			if (!getStack(1).isEmpty() && !world.isRemote)
 			{
-				if ((essenceStorage.getTotalStored() >= 200) && stackOwner != null)
+				if ((animaStorage.getTotalStored() >= 200) && stackOwner != null)
 				{
 
 					// just reached 200
@@ -257,8 +257,8 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 
 							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
 									SoundCategory.BLOCKS, 1, 1);
-							for (AnimaStack e : essenceStorage.getStored().values())
-								essenceStorage.take(e, false);
+							for (AnimaStack e : animaStorage.getStored().values())
+								animaStorage.take(e, false);
 
 							setStack(1, ItemStack.EMPTY);
 
@@ -311,9 +311,9 @@ public class TileEntityAnalyzer extends TileEntityEssenceStorage implements ITic
 			world.spawnEntity(blankParchment);
 			setStack(1, ItemStack.EMPTY);
 
-			for (AnimaStack e : essenceStorage.getStored().values())
+			for (AnimaStack e : animaStorage.getStored().values())
 			{
-				essenceStorage.take(e, false);
+				animaStorage.take(e, false);
 			}
 
 		}

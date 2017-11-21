@@ -10,7 +10,7 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
 import com.raphydaphy.arcanemagic.client.render.CrystallizerTESR;
 import com.raphydaphy.arcanemagic.client.render.ElementalCraftingTableTESR;
-import com.raphydaphy.arcanemagic.client.render.EssenceConcentratorTESR;
+import com.raphydaphy.arcanemagic.client.render.AnimaConjurerTESR;
 import com.raphydaphy.arcanemagic.client.render.InfernalSmelterTESR;
 import com.raphydaphy.arcanemagic.client.render.WritingDeskTESR;
 import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
@@ -19,7 +19,7 @@ import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityCrystallizer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
@@ -62,8 +62,8 @@ public class ClientProxy extends CommonProxy
 	{
 		registerColors();
 
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityEssenceConcentrator.class,
-				new EssenceConcentratorTESR());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnimaConjurer.class,
+				new AnimaConjurerTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityElementalCraftingTable.class,
 				new ElementalCraftingTableTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class, new WritingDeskTESR());

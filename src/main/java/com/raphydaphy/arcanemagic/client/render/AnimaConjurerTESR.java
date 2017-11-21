@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client.render;
 
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityEssenceConcentrator;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntityEssenceConcentrator>
+public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnimaConjurer>
 {
 	@Override
-	public void render(TileEntityEssenceConcentrator te, double x, double y, double z, float partialTicks,
+	public void render(TileEntityAnimaConjurer te, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha)
 	{
 		GlStateManager.pushMatrix();
@@ -29,7 +29,7 @@ public class EssenceConcentratorTESR extends TileEntitySpecialRenderer<TileEntit
 
 	private int frameAge = 0;
 
-	private void renderItem(TileEntityEssenceConcentrator te)
+	private void renderItem(TileEntityAnimaConjurer te)
 	{
 		ItemStack stack = te.getStack();
 		if (!stack.isEmpty())

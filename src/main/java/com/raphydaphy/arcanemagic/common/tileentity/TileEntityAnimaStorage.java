@@ -18,16 +18,16 @@ import net.minecraftforge.common.capabilities.Capability;
  *
  * ok
  */
-public abstract class TileEntityEssenceStorage extends TileEntity
+public abstract class TileEntityAnimaStorage extends TileEntity
 {
 
-	protected AnimaStorage essenceStorage;
-	private static final String ESSENCE_KEY = "essence_storage";
+	protected AnimaStorage animaStorage;
+	private static final String ANIMA_KEY = "anima_storage";
 
-	public TileEntityEssenceStorage(int capacity)
+	public TileEntityAnimaStorage(int capacity)
 	{
-		TileEntityEssenceStorage that = this;
-		essenceStorage = new AnimaStorage(() ->
+		TileEntityAnimaStorage that = this;
+		animaStorage = new AnimaStorage(() ->
 		{
 			that.markDirty();
 			if (this.world != null && this.pos != null)
@@ -62,14 +62,14 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		essenceStorage.deserializeNBT(compound.getCompoundTag(ESSENCE_KEY));
+		animaStorage.deserializeNBT(compound.getCompoundTag(ANIMA_KEY));
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		compound.setTag(ESSENCE_KEY, essenceStorage.serializeNBT());
+		compound.setTag(ANIMA_KEY, animaStorage.serializeNBT());
 		return compound;
 	}
 
@@ -83,7 +83,7 @@ public abstract class TileEntityEssenceStorage extends TileEntity
 	@Override
 	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
 	{
-		return capability == IAnimaStorage.CAP ? IAnimaStorage.CAP.cast(essenceStorage)
+		return capability == IAnimaStorage.CAP ? IAnimaStorage.CAP.cast(animaStorage)
 				: super.getCapability(capability, facing);
 	}
 }

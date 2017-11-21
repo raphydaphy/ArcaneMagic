@@ -15,12 +15,12 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage implements ITickable
+public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements ITickable
 {
 	private ItemStack stack = ItemStack.EMPTY;
 	private int age = 0;
 
-	public TileEntityEssenceConcentrator()
+	public TileEntityAnimaConjurer()
 	{
 		super(100);
 	}
@@ -46,14 +46,14 @@ public class TileEntityEssenceConcentrator extends TileEntityEssenceStorage impl
 	public void markDirty()
 	{
 		super.markDirty();
-		if (TileEntityEssenceConcentrator.this.world != null && TileEntityEssenceConcentrator.this.pos != null)
+		if (TileEntityAnimaConjurer.this.world != null && TileEntityAnimaConjurer.this.pos != null)
 		{
-			IBlockState state = TileEntityEssenceConcentrator.this.world
-					.getBlockState(TileEntityEssenceConcentrator.this.pos);
-			TileEntityEssenceConcentrator.this.world
+			IBlockState state = TileEntityAnimaConjurer.this.world
+					.getBlockState(TileEntityAnimaConjurer.this.pos);
+			TileEntityAnimaConjurer.this.world
 					.markAndNotifyBlock(
-							TileEntityEssenceConcentrator.this.pos, TileEntityEssenceConcentrator.this.world
-									.getChunkFromBlockCoords(TileEntityEssenceConcentrator.this.pos),
+							TileEntityAnimaConjurer.this.pos, TileEntityAnimaConjurer.this.world
+									.getChunkFromBlockCoords(TileEntityAnimaConjurer.this.pos),
 							state, state, 1 | 2);
 		}
 	}

@@ -11,7 +11,6 @@ import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -25,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityCrystallizer extends TileEntityEssenceStorage implements ITickable
+public class TileEntityCrystallizer extends TileEntityAnimaStorage implements ITickable
 {
 	public static int SIZE = 6;
 
@@ -57,7 +56,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 		if (shouldContinue)
 		{
-			AnimaStack couldTakeThis = essenceStorage.take(new AnimaStack(formStack.getAnima(), 10), false);
+			AnimaStack couldTakeThis = animaStorage.take(new AnimaStack(formStack.getAnima(), 10), false);
 			if (couldTakeThis != null && !couldTakeThis.isEmpty())
 			{
 				shouldContinue = false;
@@ -73,7 +72,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 		{
 			return;
 		}
-		for (AnimaStack formStack : this.essenceStorage.getStored().values())
+		for (AnimaStack formStack : this.animaStorage.getStored().values())
 		{
 			if (formStack != null && !formStack.isEmpty())
 			{
@@ -102,7 +101,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 
 								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
 								{
-									AnimaStack couldTake = essenceStorage
+									AnimaStack couldTake = animaStorage
 											.take(new AnimaStack(formStack.getAnima(), 100), false);
 									couldTake = null;
 									if (couldTake == null || couldTake.isEmpty())
@@ -113,7 +112,7 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 								} else if (this.itemStackHandler
 										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
 								{
-									AnimaStack couldTake = essenceStorage
+									AnimaStack couldTake = animaStorage
 											.take(new AnimaStack(formStack.getAnima(), 100), false);
 									couldTake = null;
 									if (couldTake == null || couldTake.isEmpty())
@@ -155,11 +154,9 @@ public class TileEntityCrystallizer extends TileEntityEssenceStorage implements 
 				{
 					BlockPos here = new BlockPos(x, y, z);
 
-					if (world.getBlockState(here).getBlock().equals(ModRegistry.ESSENCE_CONCENTRATOR)
-							&& world.getBlockState(here.add(0, -1, 0)).getBlock().equals(Blocks.IRON_BLOCK)
-							&& world.getBlockState(here.add(0, -2, 0)).getBlock().equals(Blocks.IRON_BLOCK))
+					if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER))
 					{
-						TileEntityEssenceConcentrator te = (TileEntityEssenceConcentrator) world.getTileEntity(here);
+						TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(here);
 
 						if (te != null)
 						{

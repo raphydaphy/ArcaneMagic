@@ -116,12 +116,12 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 		TileEntity fromTEUnchecked = world.getTileEntity(fromPos);
 		TileEntity toTEUnchecked = world.getTileEntity(toPos);
 
-		if (toTEUnchecked.hasCapability(IAnimaStorage.CAP, null))
+		if (toTEUnchecked != null && toTEUnchecked.hasCapability(IAnimaStorage.CAP, null))
 		{
 			IAnimaStorage storage = toTEUnchecked.getCapability(IAnimaStorage.CAP, null);
 			if (storage != null)
 			{
-				if (fromTEUnchecked.hasCapability(IAnimaStorage.CAP, null))
+				if (fromTEUnchecked != null && fromTEUnchecked.hasCapability(IAnimaStorage.CAP, null))
 				{
 
 					IAnimaStorage storageFrom = fromTEUnchecked.getCapability(IAnimaStorage.CAP, null);

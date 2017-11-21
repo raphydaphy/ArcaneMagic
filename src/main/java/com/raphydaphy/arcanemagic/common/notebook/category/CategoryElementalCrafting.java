@@ -52,7 +52,7 @@ public class CategoryElementalCrafting extends NotebookCategory
 				{ new ItemStack(Blocks.IRON_BLOCK), new ItemStack(Blocks.IRON_BLOCK),
 						new ItemStack(Blocks.IRON_BLOCK) } };
 		page1.add(
-				new NotebookEntryCraftingRecipe(concentratorItemsIn, new ItemStack(ModRegistry.ESSENCE_CONCENTRATOR)));
+				new NotebookEntryCraftingRecipe(concentratorItemsIn, new ItemStack(ModRegistry.ANIMA_CONJURER)));
 		pages.add(new NotebookPage(page1));
 		return pages;
 	}

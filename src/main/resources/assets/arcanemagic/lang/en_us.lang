@@ -24,7 +24,7 @@ item.arcanemagic.essence_channeling_rod.name=Essence Channeling Rod
 # Blocks
 tile.arcanemagic.elemental_crafting_table.name=Elemental Crafting Table
 tile.arcanemagic.crystallizer.name=Crystallizer
-tile.arcanemagic.essence_concentrator.name=Essence Concentrator
+tile.arcanemagic.anima_conjurer.name=Anima Conjurer
 tile.arcanemagic.writing_desk.name=Writing Desk
 tile.arcanemagic.infusion_altar.name=Infusion Altar
 tile.arcanemagic.analyzer.name=Analyzer
