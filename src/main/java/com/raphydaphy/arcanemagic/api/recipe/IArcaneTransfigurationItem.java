@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public interface IElementalCraftingItem
+public interface IArcaneTransfigurationItem
 {
 
 	/**
@@ -17,7 +17,7 @@ public interface IElementalCraftingItem
 	 * @param world The world
 	 * @return If this item can craft this recipe
 	 */
-	default public boolean matches(IElementalRecipe recipe, EntityPlayer player, ItemStack wand,
+	default public boolean matches(IArcaneTransfigurationRecipe recipe, EntityPlayer player, ItemStack wand,
 			NonNullList<ItemStack> stacks, World world)
 	{
 		return true;

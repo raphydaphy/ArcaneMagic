@@ -5,9 +5,9 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
-import com.raphydaphy.arcanemagic.api.recipe.ShapedElementalRecipe;
-import com.raphydaphy.arcanemagic.api.recipe.ShapelessElementalRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.ShapedArcaneTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.ShapelessArcaneTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
@@ -37,7 +37,7 @@ public class RecipeHelper
 	private static final String MODID = ArcaneMagic.MODID;
 	private static final String MODNAME = ArcaneMagic.MODNAME;
 	public static final List<IRecipe> RECIPES = ModRegistry.RECIPES;
-	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = ArcaneMagicAPI.ELEMENTAL_RECIPES;
+	public static final List<IArcaneTransfigurationRecipe> ELEMENTAL_RECIPES = ArcaneMagicAPI.ARCANE_TRANSFIGURATION_RECIPES;
 
 	/**
 	 * This adds a recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipeX, where X is the current recipe you are adding.
@@ -66,7 +66,7 @@ public class RecipeHelper
 	/**
 	 * This adds an elemental recipe to the master list.
 	 */
-	public static IElementalRecipe addElementalRecipe(IElementalRecipe rec)
+	public static IArcaneTransfigurationRecipe addArcaneTransfigurationRecipe(IArcaneTransfigurationRecipe rec)
 	{
 		ELEMENTAL_RECIPES.add(rec);
 		return rec;
@@ -373,14 +373,14 @@ public class RecipeHelper
 	/**
 	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
 	 */
-	public static IElementalRecipe addElementalShapeless(ItemStack output, Anima essence, int reqEssence,
+	public static IArcaneTransfigurationRecipe addElementalShapeless(ItemStack output, Anima essence, int reqEssence,
 			Object... inputs)
 	{
-		return addElementalRecipe(new ShapelessElementalRecipe(output, createElementalInput(inputs),
+		return addArcaneTransfigurationRecipe(new ShapelessArcaneTransfigurationRecipe(output, createElementalInput(inputs),
 				new AnimaStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShapeless(T output, Anima essence,
+	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShapeless(T output, Anima essence,
 			int reqEssence, Object... inputs)
 	{
 		return addElementalShapeless(makeStack(output), essence, reqEssence, inputs);
@@ -390,14 +390,14 @@ public class RecipeHelper
 	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
 	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid.
 	 */
-	public static IElementalRecipe addElementalShaped(ItemStack output, Anima essence, int reqEssence,
+	public static IArcaneTransfigurationRecipe addElementalShaped(ItemStack output, Anima essence, int reqEssence,
 			Object... input)
 	{
-		return addElementalRecipe(
-				new ShapedElementalRecipe(output, createElementalInput(input), new AnimaStack(essence, reqEssence)));
+		return addArcaneTransfigurationRecipe(
+				new ShapedArcaneTransfigurationRecipe(output, createElementalInput(input), new AnimaStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IElementalRecipe addElementalShaped(T output, Anima essence,
+	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShaped(T output, Anima essence,
 			int reqEssence, Object... input)
 	{
 		return addElementalShaped(makeStack(output), essence, reqEssence, input);

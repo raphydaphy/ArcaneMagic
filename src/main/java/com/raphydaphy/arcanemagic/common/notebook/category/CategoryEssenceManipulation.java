@@ -45,7 +45,7 @@ public class CategoryEssenceManipulation extends NotebookCategory
 				{ new ItemStack(Blocks.PLANKS), new ItemStack(Blocks.CRAFTING_TABLE), new ItemStack(Blocks.PLANKS) },
 				{ new ItemStack(Blocks.PLANKS), ItemStack.EMPTY, new ItemStack(Blocks.PLANKS) } };
 		page1.add(new NotebookEntryCraftingRecipe(elementalCraftingTableRecipe,
-				new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE)));
+				new ItemStack(ModRegistry.ARCANE_TRANSFIGURATION_TABLE)));
 		page1.add(new NotebookEntryText(getUnlocalizedName() + ".2", 0x000000));
 		ItemStack[][] essenceChannelingRodRecipe = {
 				{ ItemStack.EMPTY, new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.REDSTONE) },

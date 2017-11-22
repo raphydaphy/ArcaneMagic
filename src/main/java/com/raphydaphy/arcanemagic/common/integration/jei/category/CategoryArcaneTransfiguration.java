@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.common.integration.jei.category;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.common.integration.ArcaneMagicJEIPlugin;
-import com.raphydaphy.arcanemagic.common.integration.jei.wrapper.WrapperElementalCrafting;
+import com.raphydaphy.arcanemagic.common.integration.jei.wrapper.WrapperArcaneTransfiguration;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -16,7 +16,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class CategoryElementalCrafting implements IRecipeCategory<WrapperElementalCrafting>
+public class CategoryArcaneTransfiguration implements IRecipeCategory<WrapperArcaneTransfiguration>
 {
 
 	public static final int width = 116;
@@ -24,7 +24,7 @@ public class CategoryElementalCrafting implements IRecipeCategory<WrapperElement
 
 	private final IDrawable background;
 
-	public CategoryElementalCrafting(IGuiHelper guiHelper)
+	public CategoryArcaneTransfiguration(IGuiHelper guiHelper)
 	{
 		ResourceLocation location = Constants.RECIPE_GUI_VANILLA;
 		background = guiHelper.createDrawable(location, 0, 60, width, height);
@@ -33,13 +33,13 @@ public class CategoryElementalCrafting implements IRecipeCategory<WrapperElement
 	@Override
 	public String getUid()
 	{
-		return ArcaneMagicJEIPlugin.ELEMENTAL_CRAFTING_UID;
+		return ArcaneMagicJEIPlugin.ARCANE_TRANSFIGURATION_UID;
 	}
 
 	@Override
 	public String getTitle()
 	{
-		return I18n.format("gui.arcanemagic.elemental_crafting");
+		return I18n.format("gui.arcanemagic.arcane_transfiguration");
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class CategoryElementalCrafting implements IRecipeCategory<WrapperElement
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout layout, WrapperElementalCrafting wrapper, IIngredients ingredients)
+	public void setRecipe(IRecipeLayout layout, WrapperArcaneTransfiguration wrapper, IIngredients ingredients)
 	{
 		IGuiIngredientGroup<ItemStack> stacks = layout.getIngredientsGroup(ItemStack.class);
 		wrapper.setRecipe(layout, ingredients);

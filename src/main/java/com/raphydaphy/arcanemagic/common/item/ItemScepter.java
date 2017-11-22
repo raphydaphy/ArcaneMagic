@@ -13,7 +13,7 @@ import com.google.common.base.Preconditions;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationItem;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterPart.PartCategory;
 import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
@@ -54,7 +54,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemScepter extends ItemBase implements IElementalCraftingItem
+public class ItemScepter extends ItemBase implements IArcaneTransfigurationItem
 {
 	public static final String KEY_CORE = "coreType";
 	public static final String KEY_TIP = "tipType";

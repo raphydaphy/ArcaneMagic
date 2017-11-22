@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityElementalCraftingTable extends TileEntity implements ITickable
+public class TileEntityArcaneTransfigurationTable extends TileEntity implements ITickable
 {
 	public static final int SIZE = 10;
 	private int age = 0;
@@ -36,14 +36,14 @@ public class TileEntityElementalCraftingTable extends TileEntity implements ITic
 	public void markDirty()
 	{
 		super.markDirty();
-		if (TileEntityElementalCraftingTable.this.world != null && TileEntityElementalCraftingTable.this.pos != null)
+		if (TileEntityArcaneTransfigurationTable.this.world != null && TileEntityArcaneTransfigurationTable.this.pos != null)
 		{
-			IBlockState state = TileEntityElementalCraftingTable.this.world
-					.getBlockState(TileEntityElementalCraftingTable.this.pos);
-			TileEntityElementalCraftingTable.this.world
+			IBlockState state = TileEntityArcaneTransfigurationTable.this.world
+					.getBlockState(TileEntityArcaneTransfigurationTable.this.pos);
+			TileEntityArcaneTransfigurationTable.this.world
 					.markAndNotifyBlock(
-							TileEntityElementalCraftingTable.this.pos, TileEntityElementalCraftingTable.this.world
-									.getChunkFromBlockCoords(TileEntityElementalCraftingTable.this.pos),
+							TileEntityArcaneTransfigurationTable.this.pos, TileEntityArcaneTransfigurationTable.this.world
+									.getChunkFromBlockCoords(TileEntityArcaneTransfigurationTable.this.pos),
 							state, state, 1 | 2);
 		}
 	}
@@ -60,16 +60,16 @@ public class TileEntityElementalCraftingTable extends TileEntity implements ITic
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
-			TileEntityElementalCraftingTable.this.markDirty();
+			TileEntityArcaneTransfigurationTable.this.markDirty();
 
-			if (TileEntityElementalCraftingTable.this.world != null
-					&& TileEntityElementalCraftingTable.this.pos != null)
+			if (TileEntityArcaneTransfigurationTable.this.world != null
+					&& TileEntityArcaneTransfigurationTable.this.pos != null)
 			{
-				IBlockState state = TileEntityElementalCraftingTable.this.world
-						.getBlockState(TileEntityElementalCraftingTable.this.pos);
-				TileEntityElementalCraftingTable.this.world.markAndNotifyBlock(
-						TileEntityElementalCraftingTable.this.pos, TileEntityElementalCraftingTable.this.world
-								.getChunkFromBlockCoords(TileEntityElementalCraftingTable.this.pos),
+				IBlockState state = TileEntityArcaneTransfigurationTable.this.world
+						.getBlockState(TileEntityArcaneTransfigurationTable.this.pos);
+				TileEntityArcaneTransfigurationTable.this.world.markAndNotifyBlock(
+						TileEntityArcaneTransfigurationTable.this.pos, TileEntityArcaneTransfigurationTable.this.world
+								.getChunkFromBlockCoords(TileEntityArcaneTransfigurationTable.this.pos),
 						state, state, 1 | 2);
 			}
 		}

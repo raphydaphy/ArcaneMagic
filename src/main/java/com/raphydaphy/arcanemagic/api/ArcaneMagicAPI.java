@@ -13,8 +13,8 @@ import com.google.common.collect.ImmutableList;
 import com.raphydaphy.arcanemagic.api.analysis.AnalysisManager;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationItem;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationRecipe;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -32,7 +32,7 @@ public class ArcaneMagicAPI
 
 	private static final Logger LOGGER = LogManager.getLogger("ArcaneMagicAPI");
 
-	public static final List<IElementalRecipe> ELEMENTAL_RECIPES = new ArrayList<>();
+	public static final List<IArcaneTransfigurationRecipe> ARCANE_TRANSFIGURATION_RECIPES = new ArrayList<>();
 
 	// relates a oredict ID to a anima type that should be used to smelt the ore in an infernal furnace
 	public static Map<Integer, Anima> ANIMA_ORE_REGISTRY = new HashMap<Integer, Anima>();
@@ -103,15 +103,15 @@ public class ArcaneMagicAPI
 		LOGGER.info("Setting sorted category list - being called from " + Thread.currentThread().getStackTrace()[1]);
 	}
 
-	public static IElementalRecipe getElementalCraftingRecipe(EntityPlayer player, ItemStack wand,
+	public static IArcaneTransfigurationRecipe getArcaneTransfigurationRecipe(EntityPlayer player, ItemStack wand,
 			NonNullList<ItemStack> inputs, World world)
 	{
 		Preconditions.checkArgument(inputs.size() == 9,
-				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid input list size!");
-		Preconditions.checkArgument(wand.getItem() instanceof IElementalCraftingItem,
-				"[Arcane Magic]: Attempting to retrieve an elemental recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
+				"[Arcane Magic]: Attempting to retrieve an arcane transfiguration recipe with an invalid input list size!");
+		Preconditions.checkArgument(wand.getItem() instanceof IArcaneTransfigurationItem,
+				"[Arcane Magic]: Attempting to retrieve an arcane transfiguration recipe with an invalid wand stack! (Must be IElementalCraftingItem)");
 
-		for (IElementalRecipe curRecipe : ELEMENTAL_RECIPES)
+		for (IArcaneTransfigurationRecipe curRecipe : ARCANE_TRANSFIGURATION_RECIPES)
 			if (curRecipe.matches(player, wand, inputs, world))
 				return curRecipe;
 		return null;

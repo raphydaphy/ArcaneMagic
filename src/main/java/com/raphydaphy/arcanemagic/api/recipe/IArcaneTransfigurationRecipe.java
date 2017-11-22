@@ -11,7 +11,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public interface IElementalRecipe
+public interface IArcaneTransfigurationRecipe
 {
 
 	/**

@@ -109,7 +109,7 @@ public class ModEvents
 								(EntityPlayerMP) ev.player);
 					}
 
-					if (item.equals(Item.getItemFromBlock(ModRegistry.ELEMENTAL_CRAFTING_TABLE))
+					if (item.equals(Item.getItemFromBlock(ModRegistry.ARCANE_TRANSFIGURATION_TABLE))
 							&& !info.isUnlocked(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag()))
 					{
 						info.setUnlocked(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag());

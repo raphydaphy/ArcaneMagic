@@ -7,7 +7,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.block.BlockAnalyzer;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimusMaterializer;
-import com.raphydaphy.arcanemagic.common.block.BlockElementalCraftingTable;
+import com.raphydaphy.arcanemagic.common.block.BlockArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
 import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
@@ -26,7 +26,7 @@ import com.raphydaphy.arcanemagic.common.item.ItemTip;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
@@ -53,7 +53,7 @@ public class ModRegistry
 	public static final BlockWritingDesk WRITING_DESK = new BlockWritingDesk();
 	public static final BlockAnalyzer ANALYZER = new BlockAnalyzer();
 	public static final BlockInfusionAltar INFUSION_ALTAR = new BlockInfusionAltar();
-	public static final BlockElementalCraftingTable ELEMENTAL_CRAFTING_TABLE = new BlockElementalCraftingTable();
+	public static final BlockArcaneTransfigurationTable ARCANE_TRANSFIGURATION_TABLE = new BlockArcaneTransfigurationTable();
 	public static final BlockAnimusMaterializer ANIMUS_MATERIALIZER = new BlockAnimusMaterializer();
 	public static final BlockAnimaConjurer ANIMA_CONJURER = new BlockAnimaConjurer();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
@@ -115,7 +115,7 @@ public class ModRegistry
 		ArcaneMagicSoundHandler.register("scepter_3", registry);
 		ArcaneMagicSoundHandler.register("page_1", registry);
 		ArcaneMagicSoundHandler.register("page_2", registry);
-		ArcaneMagicSoundHandler.register("elemental_crafting_success", registry);
+		ArcaneMagicSoundHandler.register("arcane_transfiguration_success", registry);
 		ArcaneMagicSoundHandler.register("write_1", registry);
 		ArcaneMagicSoundHandler.register("write_2", registry);
 		ArcaneMagicSoundHandler.register("learn_1", registry);
@@ -126,11 +126,11 @@ public class ModRegistry
 
 	public static void registerTiles()
 	{
-		GameRegistry.registerTileEntity(TileEntityElementalCraftingTable.class,
-				ArcaneMagic.MODID + "_elemental_crafting_table");
-		GameRegistry.registerTileEntity(TileEntityAnimusMaterializer.class, ArcaneMagic.MODID + "_crystallizer");
+		GameRegistry.registerTileEntity(TileEntityArcaneTransfigurationTable.class,
+				ArcaneMagic.MODID + "_arcane_transfiguration_table");
+		GameRegistry.registerTileEntity(TileEntityAnimusMaterializer.class, ArcaneMagic.MODID + "_animus_materializer");
 		GameRegistry.registerTileEntity(TileEntityAnimaConjurer.class,
-				ArcaneMagic.MODID + "_essence_concentrator");
+				ArcaneMagic.MODID + "_anima_conjurer");
 		GameRegistry.registerTileEntity(TileEntityWritingDesk.class, ArcaneMagic.MODID + "_writing_desk");
 		GameRegistry.registerTileEntity(TileEntityInfusionAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");

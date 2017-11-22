@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationRecipe;
 
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
@@ -13,12 +13,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 
-public class WrapperElementalCrafting implements ICustomCraftingRecipeWrapper
+public class WrapperArcaneTransfiguration implements ICustomCraftingRecipeWrapper
 {
 
-	private final IElementalRecipe recipe;
+	private final IArcaneTransfigurationRecipe recipe;
 
-	public WrapperElementalCrafting(IElementalRecipe rec)
+	public WrapperArcaneTransfiguration(IArcaneTransfigurationRecipe rec)
 	{
 		recipe = rec;
 	}

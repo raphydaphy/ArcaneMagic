@@ -23,7 +23,7 @@ public class CategoryElementalCrafting extends NotebookCategory
 		setUnlocalizedName("arcanemagic.notebook.category.elemental_crafting");
 		setRequiredTag("unlockedElementalCrafting");
 		setPrerequisiteTag(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag());
-		setIcon(new ItemStack(ModRegistry.ELEMENTAL_CRAFTING_TABLE));
+		setIcon(new ItemStack(ModRegistry.ARCANE_TRANSFIGURATION_TABLE));
 	}
 
 	@Override

@@ -5,14 +5,14 @@ import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 import com.raphydaphy.arcanemagic.common.network.PacketItemAnimaChanged;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -41,7 +41,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
+public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRecipe
 {
 	public static final int GUI_ID = 2;
 	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
@@ -53,9 +53,9 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 		BOUNDS.add(makeAABB(3, 8, 3, 13, 10, 13));
 	}
 
-	public BlockElementalCraftingTable()
+	public BlockArcaneTransfigurationTable()
 	{
-		super("elemental_crafting_table", Material.WOOD, 2.5f, SoundType.WOOD);
+		super("arcane_transfiguration_table", Material.WOOD, 2.5f, SoundType.WOOD);
 
 		this.setLightLevel(1f);
 		this.setRenderedAABB(makeAABB(0, 0, 0, 16, 10, 16));
@@ -89,7 +89,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		TileEntityElementalCraftingTable te = (TileEntityElementalCraftingTable) world.getTileEntity(pos);
+		TileEntityArcaneTransfigurationTable te = (TileEntityArcaneTransfigurationTable) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		for (int i = 0; i < cap.getSlots(); ++i)
@@ -114,7 +114,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileEntityElementalCraftingTable();
+		return new TileEntityArcaneTransfigurationTable();
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 			EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityElementalCraftingTable))
+		if (!(te instanceof TileEntityArcaneTransfigurationTable))
 		{
 			return false;
 		}
@@ -138,7 +138,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 			for (int i = 0; i < 9; i++)
 				recipeInputs.set(i, cap.getStackInSlot(i));
 
-			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(player, stack, recipeInputs,
+			IArcaneTransfigurationRecipe foundRecipe = ArcaneMagicAPI.getArcaneTransfigurationRecipe(player, stack, recipeInputs,
 					world);
 			if (foundRecipe != null)
 			{
@@ -162,7 +162,7 @@ public class BlockElementalCraftingTable extends BlockBase implements IHasRecipe
 				{
 					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
 							pos.getZ() + 0.5, 0f, 0.1f, 0f);
-					world.playSound(player, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
+					world.playSound(player, pos, ArcaneMagicSoundHandler.arcane_transfiguration_success,
 							SoundCategory.BLOCKS, 1, 1);
 					return ret;
 				}

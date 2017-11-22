@@ -3,9 +3,9 @@ package com.raphydaphy.arcanemagic.client.render;
 import java.awt.Color;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalCraftingItem;
-import com.raphydaphy.arcanemagic.api.recipe.IElementalRecipe;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalCraftingTable;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationItem;
+import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -24,10 +24,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 @SideOnly(Side.CLIENT)
-public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEntityElementalCraftingTable>
+public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<TileEntityArcaneTransfigurationTable>
 {
 	@Override
-	public void render(TileEntityElementalCraftingTable te, double x, double y, double z, float partialTicks,
+	public void render(TileEntityArcaneTransfigurationTable te, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha)
 	{
 		GlStateManager.pushMatrix();
@@ -44,12 +44,12 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 
 		ItemStack held = player.getHeldItemMainhand();
 
-		if (held.isEmpty() || !(held.getItem() instanceof IElementalCraftingItem))
+		if (held.isEmpty() || !(held.getItem() instanceof IArcaneTransfigurationItem))
 		{
 			held = player.getHeldItemOffhand();
 		}
 
-		if (!held.isEmpty() && held.getItem() instanceof IElementalCraftingItem)
+		if (!held.isEmpty() && held.getItem() instanceof IArcaneTransfigurationItem)
 		{
 			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
 
@@ -58,7 +58,7 @@ public class ElementalCraftingTableTESR extends TileEntitySpecialRenderer<TileEn
 				recipeInputs.set(i, cap.getStackInSlot(i));
 			}
 
-			IElementalRecipe foundRecipe = ArcaneMagicAPI.getElementalCraftingRecipe(player, held, recipeInputs, world);
+			IArcaneTransfigurationRecipe foundRecipe = ArcaneMagicAPI.getArcaneTransfigurationRecipe(player, held, recipeInputs, world);
 
 			if (foundRecipe != null)
 			{

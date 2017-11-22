@@ -23,7 +23,7 @@ public final class ArcaneMagicSoundHandler
 	public static final SoundEvent page_1 = null;
 	public static final SoundEvent page_2 = null;
 
-	public static final SoundEvent elemental_crafting_success = null;
+	public static final SoundEvent arcane_transfiguration_success = null;
 
 	public static final SoundEvent write_1 = null;
 	public static final SoundEvent write_2 = null;

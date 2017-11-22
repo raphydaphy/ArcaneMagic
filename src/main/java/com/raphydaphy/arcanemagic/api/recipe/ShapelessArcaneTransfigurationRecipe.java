@@ -14,17 +14,17 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class ShapelessElementalRecipe implements IElementalRecipe
+public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurationRecipe
 {
 
 	private final ItemStack output;
 	private final NonNullList<Ingredient> inputs;
 	private final ImmutableAnimaStack anima;
 
-	public ShapelessElementalRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima)
+	public ShapelessArcaneTransfigurationRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima)
 	{
 		Preconditions.checkArgument(inputs.size() == 9,
-				"Attempting to create invalid elemental recipe! (Wrong input list size)");
+				"Attempting to create invalid arcane transfiguration recipe! (Wrong input list size)");
 		this.output = output;
 		this.inputs = inputs;
 		this.anima = reqAnima.toImmutable();
@@ -58,7 +58,7 @@ public class ShapelessElementalRecipe implements IElementalRecipe
 			}
 		}
 
-		IElementalCraftingItem crafter = (IElementalCraftingItem) wand.getItem();
+		IArcaneTransfigurationItem crafter = (IArcaneTransfigurationItem) wand.getItem();
 		if (!crafter.matches(this, player, wand, stacks, world))
 			return false;
 		return toCheck.isEmpty() && (anima.isEmpty() || (crafter.containsAnimus()

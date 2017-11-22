@@ -255,7 +255,7 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 								}
 							}
 
-							world.playSound(null, pos, ArcaneMagicSoundHandler.elemental_crafting_success,
+							world.playSound(null, pos, ArcaneMagicSoundHandler.arcane_transfiguration_success,
 									SoundCategory.BLOCKS, 1, 1);
 							for (AnimaStack e : animaStorage.getStored().values())
 								animaStorage.take(e, false);

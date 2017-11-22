@@ -1,7 +1,7 @@
 {
   "forge_marker": 1,
   "defaults": {
-    "model": "arcanemagic:elemental_crafting_table"
+    "model": "arcanemagic:arcane_transfiguration_table"
   },
   "variants": {
     "normal": [{}],
