@@ -50,10 +50,10 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 			{
 				for (int z2 = (int) z - 10; z2 < z + 10; z2++)
 				{
-					if (world.getBlockState(new BlockPos(x2, y2, z2)).getBlock() == ModRegistry.ANIMA_CONJURER)
+					if (world.getBlockState(new BlockPos(te.getPos().getX() + x2, te.getPos().getY() + y2, te.getPos().getZ() + z2)).getBlock() == ModRegistry.ANIMA_CONJURER)
 					{
 						Vec3d to = new Vec3d(x + 0.5, y + 0.58, z + 0.5);
-						Vec3d from = new Vec3d(x2 + 0.5, y2 + 0.8, z2 + 0.5);
+						Vec3d from = new Vec3d(x + x2 + 0.5, y + y2 + 0.96, z + z2 + 0.5);
 
 						Color color = Anima.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
 								.getColor();

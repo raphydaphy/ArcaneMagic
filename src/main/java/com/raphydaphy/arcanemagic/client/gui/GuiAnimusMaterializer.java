@@ -45,7 +45,7 @@ public class GuiAnimusMaterializer extends GuiContainer
 		GlStateManager.clearColor(1, 1, 1, 1);
 
 		Minecraft.getMinecraft().getTextureManager()
-				.bindTexture(new ResourceLocation(ArcaneMagic.MODID, "textures/gui/crystallizer.png"));
+				.bindTexture(background);
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1, 1, 1, 1);
@@ -101,7 +101,8 @@ public class GuiAnimusMaterializer extends GuiContainer
 					(int) Math.floor(stack.getCount() / 20.4f), 0);
 		}
 
-		this.fontRenderer.drawString(I18n.format("gui.arcanemagic.crystallizer"), guiLeft + 58, guiTop + 7, 4210752);
+		String title = I18n.format("gui.arcanemagic.animus_materializer");
+		mc.fontRenderer.drawString(title, (float)(guiLeft + 85 - mc.fontRenderer.getStringWidth(title) / 2), guiTop + 7, 4210752, false);
 		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 87, 4210752);
 	}
 }

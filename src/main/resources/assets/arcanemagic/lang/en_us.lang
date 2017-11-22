@@ -43,7 +43,7 @@ subtitle.arcanemagic.clack=Something Clicks
 # Guis
 itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.elemental_crafting=Elemental Crafting
-gui.arcanemagic.crystallizer=Crystallizer
+gui.arcanemagic.animus_materializer=Animus Materializer
 gui.arcanemagic.infusion_altar=Writing Desk
 gui.arcanemagic.infusion_altar.nobook=Insert Book
 gui.arcanemagic.infusion_altar.nopaper=Insert Paper

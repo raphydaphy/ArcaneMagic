@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -101,8 +102,8 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
 								{
-									AnimaStack couldTake = animaStorage
-											.take(new AnimaStack(formStack.getAnima(), 100), false);
+									AnimaStack couldTake = animaStorage.take(new AnimaStack(formStack.getAnima(), 100),
+											false);
 									couldTake = null;
 									if (couldTake == null || couldTake.isEmpty())
 									{
@@ -112,8 +113,8 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 								} else if (this.itemStackHandler
 										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
 								{
-									AnimaStack couldTake = animaStorage
-											.take(new AnimaStack(formStack.getAnima(), 100), false);
+									AnimaStack couldTake = animaStorage.take(new AnimaStack(formStack.getAnima(), 100),
+											false);
 									couldTake = null;
 									if (couldTake == null || couldTake.isEmpty())
 									{
@@ -160,8 +161,8 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 						if (te != null)
 						{
-							Map<Anima, AnimaStack> storedEssenceConcentrator = te
-									.getCapability(IAnimaStorage.CAP, null).getStored();
+							Map<Anima, AnimaStack> storedEssenceConcentrator = te.getCapability(IAnimaStorage.CAP, null)
+									.getStored();
 
 							Anima useType = null;
 							for (AnimaStack transferStack : storedEssenceConcentrator.values())
@@ -208,7 +209,11 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 		@Override
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
 		{
-			return stack;
+			if (!(stack.getItem() instanceof IAnimaCrystal))
+			{
+				return stack;
+			}
+			return super.insertItem(slot, stack, simulate);
 		}
 	};
 
