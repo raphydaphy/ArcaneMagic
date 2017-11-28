@@ -4,7 +4,7 @@
 	"parent": "block/block",
 	"textures": {
 		"particle": "arcanemagic:blocks/material_wood",
-		"texture": "arcanemagic:blocks/concentrator"
+		"texture": "arcanemagic:blocks/conjurer"
 	},
 	"elements": [ 	 
 		{

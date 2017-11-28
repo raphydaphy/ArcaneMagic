@@ -1,12 +1,28 @@
 {
-	"defaults": {
-		"model": "arcanemagic:analyzer"
-	},
-	"variants": {
-		"inventory": { "model": "arcanemagic:analyzer" },
-    	"facing=north": { "model": "arcanemagic:analyzer"},
-        "facing=east": { "model": "arcanemagic:analyzer", "y": 90},
-        "facing=south": { "model": "arcanemagic:analyzer", "y": 180 },
-        "facing=west": { "model": "arcanemagic:analyzer", "y" : 270 }
+    "forge_marker": 1,
+    "defaults": {
+        "model": "forge:multi-layer",
+        "custom": {
+        	"base": "arcanemagic:analyzer#base",
+            "Solid": "arcanemagic:analyzer#base",
+            "Translucent": "arcanemagic:analyzer#trans"
+        },
+        "transform": "forge:default-block"
+    },
+    "variants": {
+        "normal": [{}],
+        "inventory": [{}],
+        "base": [{
+            "model": "arcanemagic:analyzer"
+        }],
+        "trans": [{
+            "model": "arcanemagic:analyzer_lens"
+        }],
+        "facing": {
+        	"north": {},
+        	"south": {"y": 180},
+        	"east":  {"y": 90},
+        	"west":  {"y": 270 }
+        }
     }
 }

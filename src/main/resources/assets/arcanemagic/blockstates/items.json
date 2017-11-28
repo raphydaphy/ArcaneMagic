@@ -21,12 +21,12 @@
 			},
 			"mystical_illuminator": {
 				"textures": {
-					"layer0": "items/mystical_illuminator"
+					"layer0": "arcanemagic:items/mystical_illuminator"
 				}
 			},
 			"essence_channeling_rod": {
 				"textures": {
-					"layer0": "items/essence_channeling_rod"
+					"layer0": "arcanemagic:items/essence_channeling_rod"
 				}
 			},
 			"blank_parchment": {

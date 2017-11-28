@@ -148,7 +148,7 @@ public class TileEntityArcaneTransfigurationTable extends TileEntity implements 
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	public AxisAlignedBB getRenderBoundingBox()
 	{
 		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
 	}
