@@ -25,8 +25,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntityAnimusMaterializer>
 {
 	@Override
-	public void render(TileEntityAnimusMaterializer te, double x, double y, double z, float partialTicks, int destroyStage,
-			float alpha)
+	public void render(TileEntityAnimusMaterializer te, double x, double y, double z, float partialTicks,
+			int destroyStage, float alpha)
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
@@ -44,18 +44,23 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 
 		GlStateManager.pushMatrix();
 		World world = Minecraft.getMinecraft().world;
-		for (int x2 = (int) x - 10; x2 < x + 10; x2++)
+		for (int x2 = -10; x2 < 10; x2++)
 		{
-			for (int y2 = (int) y - 10; y2 < y + 10; y2++)
+			for (int y2 = -10; y2 < 10; y2++)
 			{
-				for (int z2 = (int) z - 10; z2 < z + 10; z2++)
+				for (int z2 = -10; z2 < 10; z2++)
 				{
-					if (world.getBlockState(new BlockPos(te.getPos().getX() + x2, te.getPos().getY() + y2, te.getPos().getZ() + z2)).getBlock() == ModRegistry.ANIMA_CONJURER)
+					if (world.getBlockState(
+							new BlockPos(te.getPos().getX() + x2, te.getPos().getY() + y2, te.getPos().getZ() + z2))
+							.getBlock() == ModRegistry.ANIMA_CONJURER)
 					{
+
 						Vec3d to = new Vec3d(x + 0.5, y + 0.58, z + 0.5);
 						Vec3d from = new Vec3d(x + x2 + 0.5, y + y2 + 0.96, z + z2 + 0.5);
 
-						Color color = Anima.getFromBiome(world.getBiome(new BlockPos(from.x, from.y, from.z)))
+						Color color = Anima
+								.getFromBiome(world.getBiome(
+										new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
 								.getColor();
 
 						int r = color.getRed();
@@ -94,10 +99,5 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 		GlStateManager.enableAlpha();
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
-	}
-
-	public boolean isGlobalRenderer(TileEntityAnimusMaterializer te)
-	{
-		return true;
 	}
 }

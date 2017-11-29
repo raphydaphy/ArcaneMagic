@@ -1,5 +1,8 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -29,11 +32,24 @@ import net.minecraftforge.items.IItemHandler;
 public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe
 {
 	public static final int GUI_ID = 2;
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
+	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
 
+	static
+	{
+		BOUNDS.add(makeAABB(2, 0, 2, 4, 2, 4));
+		BOUNDS.add(makeAABB(12, 0, 12, 14, 2, 14));
+		BOUNDS.add(makeAABB(2, 0, 12, 4, 2, 14));
+		BOUNDS.add(makeAABB(12, 0, 2, 14, 2, 4));
+		BOUNDS.add(makeAABB(2, 6, 2, 14, 8, 14));
+		BOUNDS.add(makeAABB(4, 8, 4, 12, 10, 12));
+	}
+	
 	public BlockAnimusMaterializer()
 	{
 		super("animus_materializer", Material.ROCK, 2.5f, SoundType.STONE);
+		
+		this.setRenderedAABB(makeAABB(2, 0, 2, 14, 10, 14));
+		this.setCollisionAABBList(BOUNDS);
 	}
 
 	@Override
@@ -53,12 +69,6 @@ public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe
 		}
 
 		super.breakBlock(world, pos, state);
-	}
-
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
-		return AABB;
 	}
 
 	@Override
