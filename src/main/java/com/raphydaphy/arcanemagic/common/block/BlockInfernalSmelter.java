@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.common.block;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
@@ -9,8 +10,12 @@ import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockFaceShape;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
@@ -20,12 +25,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
@@ -33,6 +44,7 @@ import net.minecraftforge.items.IItemHandler;
 public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 {
 	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
 	static
 	{
@@ -195,9 +207,68 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 		// TODO: recipe
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
+	{
+		Vec3d smoke = new Vec3d(pos.getX(), pos.getY() + 1.65, pos.getZ());
+		switch (state.getValue(FACING).getHorizontalIndex())
+		{
+		case 0:
+			smoke = smoke.addVector(0.5, 0, 0.6);
+			break;
+		case 1:
+			smoke = smoke.addVector(0.3, 0, 0.5);
+			break;
+		case 2:
+			smoke = smoke.addVector(0.5, 0, 0.3);
+			break;
+		case 3:
+			smoke = smoke.addVector(0.6, 0, 0.5);
+			break;
+		}
+		world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, smoke.x, smoke.y, smoke.z, 0, 0, 0, 0, 0);
+	}
+
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
 	{
 		return BlockFaceShape.UNDEFINED;
+	}
+
+	@Override
+	public IBlockState withRotation(IBlockState state, Rotation rot)
+	{
+		return state.withProperty(FACING, rot.rotate((EnumFacing) state.getValue(FACING)));
+	}
+
+	@Override
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
+	{
+		return state.withRotation(mirrorIn.toRotation((EnumFacing) state.getValue(FACING)));
+	}
+
+	@Override
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,
+			float hitZ, int meta, EntityLivingBase placer)
+	{
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta)
+	{
+		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state)
+	{
+		return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex();
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState()
+	{
+		return new BlockStateContainer(this, new IProperty[] { FACING });
 	}
 }

@@ -1,9 +1,8 @@
 package com.raphydaphy.arcanemagic.client.render;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 
+import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 
 import net.minecraft.client.Minecraft;
@@ -12,6 +11,7 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -32,34 +32,25 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		frame++;
 
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-
-		GlStateManager.translate(.5, 0.935, .5);
+		Vec3d ore = new Vec3d(0,0.25,0);
+		switch(te.getWorld().getBlockState(te.getPos()).getValue(BlockInfernalSmelter.FACING).getHorizontalIndex())
+		{
+		case 0:
+			ore = ore.addVector(0.5,0,0.135);
+			break;
+		case 1:
+			ore = ore.addVector(0.85, 0, 0.5);
+			break;
+		case 2:
+			ore = ore.addVector(0.5,0,0.85);
+			break;
+		case 3:
+			ore = ore.addVector(0.135, 0, 0.5);
+			break;
+		}
+		GlStateManager.translate(ore.x,ore.y,ore.z);
 		renderItem(cap.getStackInSlot(TileEntityInfernalSmelter.ORE), frame, false);
 
-		List<ItemStack> crystalStacks = new ArrayList<>();
-
-		for (int crystalSlot = TileEntityInfernalSmelter.ORE
-				+ 1; crystalSlot < TileEntityInfernalSmelter.SIZE; crystalSlot++)
-		{
-			if (!cap.getStackInSlot(crystalSlot).isEmpty())
-			{
-				crystalStacks.add(cap.getStackInSlot(crystalSlot).copy());
-			}
-		}
-
-		int accuracy = 60;
-		double radius = 1;
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(-frame / 2f, 0, 1, 0);
-		for (int seg = 0; seg < (360 / accuracy); seg++)
-		{
-			GlStateManager.pushMatrix();
-			GlStateManager.translate((Math.cos(Math.toRadians(seg * accuracy)) * radius), 0.2,
-					(Math.sin(Math.toRadians(seg * accuracy)) * radius));
-			renderItem(cap.getStackInSlot(seg + 1), -frame + (int) (Math.abs(Math.sin(seg)) * 3), true);
-			GlStateManager.popMatrix();
-		}
-		GlStateManager.popMatrix();
 		GlStateManager.popMatrix();
 	}
 
@@ -85,7 +76,7 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 
 			GlStateManager.scale(.2f, .2f, .2f);
 			GlStateManager.rotate(frame, 0, 1, 0);
-			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frame)) / 3.2 + 0.1, 0);
+			//GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frame)) / 3.2 + 0.1, 0);
 			if (frame < 0 || frame == Integer.MAX_VALUE)
 				frame = 0;
 			if (rainbowBeams)

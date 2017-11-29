@@ -4,7 +4,13 @@
     "model": "arcanemagic:furnace"
   },
   "variants": {
-    "normal": [{}],
-    "inventory": [{}]
-  }
+        "normal": [{}],
+        "inventory": [{}],
+        "facing": {
+        	"north": {},
+        	"south": {"y": 180},
+        	"east":  {"y": 90},
+        	"west":  {"y": 270 }
+        }
+    }
 }
