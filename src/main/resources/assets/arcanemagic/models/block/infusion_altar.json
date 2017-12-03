@@ -1,76 +1,49 @@
 {
+	"__comment": "Designed by Wiiv with Cubik Studio - https://cubik.studio",
+	"ambientocclusion": true,
 	"parent": "block/block",
-	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
-		"0": "blocks/obsidian",
-		"particle": "blocks/obsidian"
+		"particle": "arcanemagic:blocks/infusion_altar_top",
+		"texture": "arcanemagic:blocks/infusion_altar_top",
+		"texture1": "arcanemagic:blocks/infusion_altar_side",
+		"texture2": "arcanemagic:blocks/infusion_altar_bottom"
 	},
-	"elements": [
+	"elements": [ 	 
 		{
-			"name": "cube",
-			"from": [3, 0, 3],
-			"to": [6, 7, 6],
+			"from": [ 2, 0, 2 ],
+			"to": [ 14, 4, 14 ],
 			"faces": {
-				"north": {"uv": [7, 7, 10, 14], "texture": "#0"},
-				"east": {"uv": [3, 4, 6, 11], "texture": "#0"},
-				"south": {"uv": [9, 0, 12, 7], "texture": "#0"},
-				"west": {"uv": [6, 4, 9, 11], "texture": "#0"},
-				"up": {"uv": [1, 2, 4, 5], "texture": "#0"},
-				"down": {"uv": [11, 4, 14, 7], "texture": "#0"}
+				"down": { "uv": [ 2, 2, 14, 14 ], "texture": "#texture2" },
+				"up": { "uv": [ 2, 2, 14, 14 ], "texture": "#texture" },
+				"north": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" },
+				"south": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" },
+				"west": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" },
+				"east": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" }
 			}
 		},
 		{
-			"name": "cube",
-			"from": [3, 0, 10],
-			"to": [6, 7, 13],
+			"from": [ 4, 4, 4 ],
+			"to": [ 12, 6, 12 ],
 			"faces": {
-				"north": {"uv": [7, 4, 10, 11], "texture": "#0"},
-				"east": {"uv": [7, 7, 10, 14], "texture": "#0"},
-				"south": {"uv": [2, 3, 5, 10], "texture": "#0"},
-				"west": {"uv": [8, 4, 11, 11], "texture": "#0"},
-				"up": {"uv": [4, 9, 7, 12], "texture": "#0"},
-				"down": {"uv": [8, 8, 11, 11], "texture": "#0"}
+				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#texture2" },
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#texture" },
+				"north": { "uv": [ 4, 10, 12, 12 ], "texture": "#texture1" },
+				"south": { "uv": [ 4, 10, 12, 12 ], "texture": "#texture1" },
+				"west": { "uv": [ 4, 10, 12, 12 ], "texture": "#texture1" },
+				"east": { "uv": [ 4, 10, 12, 12 ], "texture": "#texture1" }
 			}
 		},
 		{
-			"name": "cube",
-			"from": [10, 0, 10],
-			"to": [13, 7, 13],
+			"from": [ 0, 6, 0 ],
+			"to": [ 16, 12, 16 ],
 			"faces": {
-				"north": {"uv": [2, 3, 5, 10], "texture": "#0"},
-				"east": {"uv": [8, 6, 11, 13], "texture": "#0"},
-				"south": {"uv": [5, 2, 8, 9], "texture": "#0"},
-				"west": {"uv": [5, 2, 8, 9], "texture": "#0"},
-				"up": {"uv": [3, 3, 6, 6], "texture": "#0"},
-				"down": {"uv": [5, 3, 8, 6], "texture": "#0"}
-			}
-		},
-		{
-			"name": "cube",
-			"from": [10, 0, 3],
-			"to": [13, 7, 6],
-			"faces": {
-				"north": {"uv": [7, 1, 10, 8], "texture": "#0"},
-				"east": {"uv": [0, 9, 3, 16], "texture": "#0"},
-				"south": {"uv": [8, 6, 11, 13], "texture": "#0"},
-				"west": {"uv": [10, 0, 13, 7], "texture": "#0"},
-				"up": {"uv": [9, 8, 12, 11], "texture": "#0"},
-				"down": {"uv": [12, 3, 15, 6], "texture": "#0"}
-			}
-		},
-		{
-			"name": "cube",
-			"from": [1, 7, 1],
-			"to": [15, 10, 15],
-			"faces": {
-				"north": {"uv": [2, 9, 16, 12], "texture": "#0"},
-				"east": {"uv": [2, 4, 16, 7], "texture": "#0"},
-				"south": {"uv": [2, 0, 16, 3], "texture": "#0"},
-				"west": {"uv": [0, 11, 14, 14], "texture": "#0"},
-				"up": {"uv": [1, 1, 15, 15], "texture": "#0"},
-				"down": {"uv": [1, 0, 15, 14], "texture": "#0"}
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture2" },
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
+				"north": { "uv": [ 0, 4, 16, 10 ], "texture": "#texture1" },
+				"south": { "uv": [ 0, 4, 16, 10 ], "texture": "#texture1" },
+				"west": { "uv": [ 0, 4, 16, 10 ], "texture": "#texture1" },
+				"east": { "uv": [ 0, 4, 16, 10 ], "texture": "#texture1" }
 			}
 		}
-	],
-	"groups": [3, 4, 2, 1, 0]
+	]
 }
