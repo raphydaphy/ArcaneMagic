@@ -27,8 +27,6 @@ public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnima
 		GlStateManager.popMatrix();
 	}
 
-	private int frameAge = 0;
-
 	private void renderItem(TileEntityAnimaConjurer te)
 	{
 		ItemStack stack = te.getStack();
@@ -39,10 +37,12 @@ public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnima
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(.5, 0.935, .5);
 			GlStateManager.scale(.2f, .2f, .2f);
-			GlStateManager.rotate(frameAge, 0, 1, 0);
-			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frameAge++)) / 3.2 + 0.1, 0);
-			if (frameAge < 0 || frameAge == Integer.MAX_VALUE)
-				frameAge = 0;
+			GlStateManager.rotate(te.getFrameAge(), 0, 1, 0);
+			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (te.increaseFrameAge())) / 3.2 + 0.1, 0);
+			if (te.getFrameAge() < 0 || te.getFrameAge() == Integer.MAX_VALUE)
+			{
+				te.setFrameAge(0);
+			}
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			GlStateManager.popMatrix();
 		}

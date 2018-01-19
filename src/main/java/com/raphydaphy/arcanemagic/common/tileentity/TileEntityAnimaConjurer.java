@@ -18,7 +18,8 @@ import net.minecraft.util.math.Vec3d;
 public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements ITickable
 {
 	private ItemStack stack = ItemStack.EMPTY;
-	private int age = 0;
+	
+	private int frameAge = 0;
 
 	public TileEntityAnimaConjurer()
 	{
@@ -58,9 +59,24 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 		}
 	}
 
-	public int getAge()
+	public int getFrameAge()
 	{
-		return age;
+		return frameAge;
+	}
+	
+	public int increaseFrameAge()
+	{
+		frameAge++;
+		
+		System.out.println(frameAge);
+		return frameAge;
+	}
+	
+	public int setFrameAge(int newAge)
+	{
+		frameAge = newAge;
+		
+		return frameAge;
 	}
 
 	@Override
@@ -70,9 +86,7 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 		{
 			return;
 		}
-
-		age++;
-
+		
 		if (this.getStack().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 		{
 			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
@@ -133,7 +147,6 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 		{
 			stack = ItemStack.EMPTY;
 		}
-		age = compound.getInteger("age");
 	}
 
 	@Override
@@ -146,7 +159,6 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 			stack.writeToNBT(tagCompound);
 			compound.setTag("item", tagCompound);
 		}
-		compound.setInteger("age", age);
 		return compound;
 	}
 

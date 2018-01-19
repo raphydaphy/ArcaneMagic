@@ -30,6 +30,8 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 	public void render(TileEntityArcaneTransfigurationTable te, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha)
 	{
+		te.frameAge++;
+		
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
@@ -63,7 +65,7 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 			if (foundRecipe != null)
 			{
 				GLHelper.renderItemStackFancy(foundRecipe.getRecipeOutput(), new Vec3d(0, 1.5, 0), true, Color.RED,
-						te.getAge(), te.getWorld().getSeed());
+						te.frameAge / 4, te.getWorld().getSeed());
 			}
 		}
 

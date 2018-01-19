@@ -20,7 +20,6 @@ import net.minecraftforge.items.IItemHandler;
 @SideOnly(Side.CLIENT)
 public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInfernalSmelter>
 {
-	private int frame = 0;
 
 	@Override
 	public void render(TileEntityInfernalSmelter te, double x, double y, double z, float partialTicks, int destroyStage,
@@ -29,7 +28,7 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
-		frame++;
+		te.frameAge++;
 
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		Vec3d ore = new Vec3d(0,0.25,0);
@@ -49,12 +48,12 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 			break;
 		}
 		GlStateManager.translate(ore.x,ore.y,ore.z);
-		renderItem(cap.getStackInSlot(TileEntityInfernalSmelter.ORE), frame, false);
+		renderItem(te, cap.getStackInSlot(TileEntityInfernalSmelter.ORE), te.frameAge, false);
 
 		GlStateManager.popMatrix();
 	}
 
-	private void renderItem(ItemStack stack, int offset, boolean rainbowBeams)
+	private void renderItem(TileEntityInfernalSmelter te, ItemStack stack, int offset, boolean rainbowBeams)
 	{
 		if (!stack.isEmpty())
 		{
@@ -75,10 +74,10 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 			GlStateManager.pushMatrix();
 
 			GlStateManager.scale(.2f, .2f, .2f);
-			GlStateManager.rotate(frame, 0, 1, 0);
+			GlStateManager.rotate(te.frameAge / 2, 0, 1, 0);
 			//GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frame)) / 3.2 + 0.1, 0);
-			if (frame < 0 || frame == Integer.MAX_VALUE)
-				frame = 0;
+			if (te.frameAge < 0 || te.frameAge == Integer.MAX_VALUE)
+				te.frameAge = 0;
 			if (rainbowBeams)
 			{
 				GLHelper.renderFancyBeams(0, 0, 0, c, Minecraft.getMinecraft().world.getSeed(), offset, 32, 1.4f, 30,

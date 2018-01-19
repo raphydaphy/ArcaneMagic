@@ -34,6 +34,7 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 	// crystals go in every slot above 0
 
 	private int progress = 0;
+	public int frameAge = 0;
 
 	public TileEntityInfernalSmelter()
 	{

@@ -18,7 +18,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class TileEntityArcaneTransfigurationTable extends TileEntity implements ITickable
 {
 	public static final int SIZE = 10;
-	private int age = 0;
+	public int frameAge = 0;
 
 	@Override
 	public void update()
@@ -27,8 +27,6 @@ public class TileEntityArcaneTransfigurationTable extends TileEntity implements 
 		{
 			return;
 		}
-
-		age++;
 		markDirty();
 	}
 
@@ -46,11 +44,6 @@ public class TileEntityArcaneTransfigurationTable extends TileEntity implements 
 									.getChunkFromBlockCoords(TileEntityArcaneTransfigurationTable.this.pos),
 							state, state, 1 | 2);
 		}
-	}
-
-	public int getAge()
-	{
-		return age;
 	}
 
 	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
@@ -89,7 +82,6 @@ public class TileEntityArcaneTransfigurationTable extends TileEntity implements 
 		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
-		age = compound.getInteger("age");
 	}
 
 	@Override
@@ -97,7 +89,6 @@ public class TileEntityArcaneTransfigurationTable extends TileEntity implements 
 	{
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
-		compound.setInteger("age", age);
 		return compound;
 	}
 
