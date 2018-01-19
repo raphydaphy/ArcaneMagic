@@ -4,14 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.api.recipe.IArcaneTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
-import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
-import com.raphydaphy.arcanemagic.common.item.ItemScepter;
-import com.raphydaphy.arcanemagic.common.network.PacketItemAnimaChanged;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -21,7 +17,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
@@ -128,7 +123,7 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 		}
 		ItemStack stack = player.getHeldItem(hand);
 		boolean ret = false;
-		if (stack.getItem() instanceof ItemScepter || stack.getItem() instanceof ItemEssenceChannelingRod)
+		if (stack.getItem() instanceof ItemEssenceChannelingRod)
 		{
 			ret = true;
 
@@ -153,10 +148,10 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 					craftResult.motionZ = 0;
 					world.spawnEntity(craftResult);
 
-					ArcaneMagicPacketHandler.INSTANCE.sendTo(
+					/*ArcaneMagicPacketHandler.INSTANCE.sendTo(
 							new PacketItemAnimaChanged(stack.getCapability(IAnimaStorage.CAP, null),
 									ItemScepter.stupidGetSlot(player.inventory, stack), stack),
-							(EntityPlayerMP) player);
+							(EntityPlayerMP) player);*/
 					return ret;
 				} else
 				{

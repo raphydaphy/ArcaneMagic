@@ -15,14 +15,11 @@ import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemAnimaCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemBase;
-import com.raphydaphy.arcanemagic.common.item.ItemCore;
 import com.raphydaphy.arcanemagic.common.item.ItemCreationCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
-import com.raphydaphy.arcanemagic.common.item.ItemScepter;
-import com.raphydaphy.arcanemagic.common.item.ItemTip;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
@@ -59,9 +56,6 @@ public class ModRegistry
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
 
-	public static final ItemBase TIP = new ItemTip();
-	public static final ItemBase CORE = new ItemCore();
-	public static final ItemScepter SCEPTER = new ItemScepter("scepter");
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
 	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();

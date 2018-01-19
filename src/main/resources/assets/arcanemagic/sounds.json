@@ -1,7 +1,7 @@
 {
-   "scepter_1": { "category": "master", "sounds": ["arcanemagic:scepter_1"], "subtitle": "subtitle.arcanemagic.scepter" },
-   "scepter_2": { "category": "master", "sounds": ["arcanemagic:scepter_2"], "subtitle": "subtitle.arcanemagic.scepter" },
-   "scepter_3": { "category": "master", "sounds": ["arcanemagic:scepter_3"], "subtitle": "subtitle.arcanemagic.scepter" },
+   "magic_1": { "category": "master", "sounds": ["arcanemagic:magic_1"], "subtitle": "subtitle.arcanemagic.magic" },
+   "magic_2": { "category": "master", "sounds": ["arcanemagic:magic_2"], "subtitle": "subtitle.arcanemagic.magic" },
+   "magic_3": { "category": "master", "sounds": ["arcanemagic:magic_3"], "subtitle": "subtitle.arcanemagic.magic" },
    "page_1": { "category": "master", "sounds": ["arcanemagic:page_1"], "subtitle": "subtitle.arcanemagic.page" },
    "page_2": { "category": "master", "sounds": ["arcanemagic:page_2"], "subtitle": "subtitle.arcanemagic.page" },
    "arcane_transfiguration_success": { "category": "master", "sounds": ["arcanemagic:arcane_transfiguration_success"], "subtitle": "subtitle.arcanemagic.arcane_transfiguration_success" },

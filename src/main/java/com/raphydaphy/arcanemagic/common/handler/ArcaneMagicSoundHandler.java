@@ -16,9 +16,9 @@ public final class ArcaneMagicSoundHandler
 
 	public static final SoundEvent spell = null;
 
-	public static final SoundEvent scepter_1 = null;
-	public static final SoundEvent scepter_2 = null;
-	public static final SoundEvent scepter_3 = null;
+	public static final SoundEvent magic_1 = null;
+	public static final SoundEvent magic_2 = null;
+	public static final SoundEvent magic_3 = null;
 
 	public static final SoundEvent page_1 = null;
 	public static final SoundEvent page_2 = null;
@@ -43,20 +43,20 @@ public final class ArcaneMagicSoundHandler
 		return e;
 	}
 
-	public static SoundEvent randomScepterSound()
+	public static SoundEvent randomMagicSound()
 	{
 		int sound = rand.nextInt(3) + 1;
 		switch (sound)
 		{
 		case 1:
-			return scepter_1;
+			return magic_1;
 		case 2:
-			return scepter_2;
+			return magic_2;
 		case 3:
-			return scepter_3;
+			return magic_3;
 		}
 
-		return scepter_1;
+		return magic_1;
 	}
 
 	public static SoundEvent randomPageSound()

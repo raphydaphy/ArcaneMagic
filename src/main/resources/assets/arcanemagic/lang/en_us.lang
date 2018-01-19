@@ -1,11 +1,4 @@
 # Items
-item.arcanemagic.tip.iron.name=Iron Tip
-item.arcanemagic.tip.gold.name=Gold Tip
-item.arcanemagic.tip.thaumium.name=Thaumium Tip
-item.arcanemagic.core.wood.name=Wooden Core
-item.arcanemagic.core.silverwood.name=Silverwood Core
-item.arcanemagic.core.greatwood.name=Greatwood Core
-item.arcanemagic.scepter.name=%s Tipped %s Scepter
 item.arcanemagic.notebook.name=Lost Notebook
 item.arcanemagic.anima_ozone.name=Formation of the Ozone
 item.arcanemagic.anima_depth.name=Formation of the Depths
@@ -33,7 +26,7 @@ tile.arcanemagic.infernal_smelter.name=Infernal Smelter
 # Sounds
 subtitle.arcanemagic.spell=Spell Cast
 subtitle.arcanemagic.reconstruct=Something Infuses
-subtitle.arcanemagic.scepter=Used Scepter
+subtitle.arcanemagic.magic=Used Magic
 subtitle.arcanemagic.page=Turned Page
 subtitle.arcanemagic.arcane_transfiguration_success=Conjured Something
 subtitle.arcanemagic.write=Wrote Something
@@ -60,14 +53,6 @@ anima.arcanemagic.horizon.name=Horizon
 anima.arcanemagic.peace.name=Peace
 anima.arcanemagic.chaos.name=Chaos
 anima.arcanemagic.creation.name=Creation
-
-# Scepter
-part.arcanemagic.tip.iron.name=Iron
-part.arcanemagic.tip.gold.name=Gold
-part.arcanemagic.tip.thaumium.name=Thaumium
-part.arcanemagic.core.wood.name=Wooden
-part.arcanemagic.core.silverwood.name=Silverwood
-part.arcanemagic.core.greatwood.name=Greatwood
 
 # Message
 desc.arcanemagic.ancient_parchment=Rare drop from witches. Shift+right-click bedrock while holding to use.

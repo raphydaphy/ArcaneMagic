@@ -126,7 +126,7 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 								if (doTheThing)
 								{
 									world.playSound(pos.getX(), pos.getY(), pos.getZ(),
-											ArcaneMagicSoundHandler.randomScepterSound(), SoundCategory.BLOCKS, 1.0F,
+											ArcaneMagicSoundHandler.randomMagicSound(), SoundCategory.BLOCKS, 1.0F,
 											1.0F, false);
 									//essenceStorage.take(new EssenceStack(formStack.getEssence(), 100), false);
 									this.markDirty();

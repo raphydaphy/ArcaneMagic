@@ -171,7 +171,7 @@ public class ModEvents
 			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty())
 			{
 				ItemStack held = ev.player.getHeldItem(ev.player.getActiveHand());
-				if (ev.player.activeItemStack.getItem() == ModRegistry.SCEPTER && held.getItem() == ModRegistry.SCEPTER)
+				if (ev.player.activeItemStack.getItem() == ModRegistry.ESSENCE_CHANNELING_ROD && held.getItem() == ModRegistry.ESSENCE_CHANNELING_ROD)
 				{
 					if (ev.player.activeItemStack != held)
 					{// TODO please check proper (anything that won't change)

@@ -1,16 +1,12 @@
 package com.raphydaphy.arcanemagic.client;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
-import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
-import com.raphydaphy.arcanemagic.api.scepter.ScepterRegistry;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
@@ -21,7 +17,6 @@ import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
-import com.raphydaphy.arcanemagic.common.item.ItemScepter;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -29,12 +24,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.culling.ClippingHelperImpl;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumHandSide;
@@ -45,7 +38,6 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderSpecificHandEvent;
-import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -222,17 +214,7 @@ public class ClientEvents
 		{
 			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 
-			if ((!player.getHeldItemMainhand().isEmpty()
-					&& player.getHeldItemMainhand().getItem().equals(ModRegistry.SCEPTER)))
-			{
-				ItemScepter.renderHUD(mc, event.getResolution(), player.getHeldItemMainhand());
-			}
-
-			else if (!player.getHeldItemOffhand().isEmpty()
-					&& player.getHeldItemOffhand().getItem().equals(ModRegistry.SCEPTER))
-			{
-				ItemScepter.renderHUD(mc, event.getResolution(), player.getHeldItemOffhand());
-			}
+			// a chance to do great things in the realm of huds
 		}
 	}
 
@@ -240,60 +222,6 @@ public class ClientEvents
 	public static void onTextureStitch(TextureStitchEvent.Pre event)
 	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball"));
-		ScepterRegistry.getValues().forEach(part ->
-		{
-			event.getMap().registerSprite(part.getTexture());
-		});
 		ArcaneMagic.LOGGER.info("Stiched textures!");
-	}
-
-	@SubscribeEvent
-	public static void renderTooltipPostBackground(RenderTooltipEvent.PostBackground ev)
-	{
-		if (ev.getStack().getItem() == ModRegistry.SCEPTER)
-		{
-
-			ItemStack stack = ev.getStack();
-			IAnimaStorage handler = stack.getCapability(IAnimaStorage.CAP, null);
-
-			int y = ev.getY();
-			for (int line = 0; line < ev.getLines().size(); line++)
-			{
-				if (ev.getLines().get(line).equals("\u00A77"))
-				{
-
-					break;
-				}
-				y += 11;
-			}
-			if (handler != null)
-			{
-				Collection<AnimaStack> storedAnima = handler.getStored().values();
-
-				if (storedAnima.size() > 0)
-				{
-					int x = ev.getX();
-					int curYCounter = 0;
-
-					for (AnimaStack essence : storedAnima)
-					{
-
-						String thisString = essence.getCount() + " "
-								+ I18n.format(essence.getAnima().getTranslationName()) + " ";
-						ev.getFontRenderer().drawStringWithShadow(thisString, x, y, essence.getAnima().getColorInt());
-
-						x += 70;
-						curYCounter++;
-
-						if (curYCounter % 2 == 0)
-						{
-							y += 10;
-							x = ev.getX();
-						}
-					}
-
-				}
-			}
-		}
 	}
 }
