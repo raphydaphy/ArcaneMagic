@@ -20,7 +20,7 @@ tile.arcanemagic.arcane_transfiguration_table.name=Arcane Transfiguration Table
 tile.arcanemagic.animus_materializer.name=Animus Materializer
 tile.arcanemagic.anima_conjurer.name=Anima Conjurer
 tile.arcanemagic.writing_desk.name=Writing Desk
-tile.arcanemagic.infusion_altar.name=Infusion Altar
+tile.arcanemagic.altar.name=Altar
 tile.arcanemagic.analyzer.name=Analyzer
 tile.arcanemagic.infernal_smelter.name=Infernal Smelter
 
@@ -38,9 +38,9 @@ subtitle.arcanemagic.clack=Something Clicks
 itemGroup.arcanemagic=Arcane Magic
 gui.arcanemagic.arcane_transfiguration=Arcane Transfiguration
 gui.arcanemagic.animus_materializer=Animus Materializer
-gui.arcanemagic.infusion_altar=Writing Desk
-gui.arcanemagic.infusion_altar.nobook=Insert Book
-gui.arcanemagic.infusion_altar.nopaper=Insert Paper
+gui.arcanemagic.altar=Altar
+gui.arcanemagic.altar.nobook=Insert Book
+gui.arcanemagic.altar.nopaper=Insert Paper
 
 # Toasts
 toast.arcanemagic.page_unlocked=Notebook Page Revealed

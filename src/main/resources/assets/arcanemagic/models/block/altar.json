@@ -3,10 +3,10 @@
 	"ambientocclusion": true,
 	"parent": "block/block",
 	"textures": {
-		"particle": "arcanemagic:blocks/infusion_altar_top",
-		"texture": "arcanemagic:blocks/infusion_altar_top",
-		"texture1": "arcanemagic:blocks/infusion_altar_side",
-		"texture2": "arcanemagic:blocks/infusion_altar_bottom"
+		"particle": "arcanemagic:blocks/altar_top",
+		"texture": "arcanemagic:blocks/altar_top",
+		"texture1": "arcanemagic:blocks/altar_side",
+		"texture2": "arcanemagic:blocks/altar_bottom"
 	},
 	"elements": [ 	 
 		{

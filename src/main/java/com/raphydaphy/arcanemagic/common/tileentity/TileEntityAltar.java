@@ -10,11 +10,11 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityInfusionAltar extends TileEntity
+public class TileEntityAltar extends TileEntity
 {
 	public static int SIZE = 7;
 
-	public TileEntityInfusionAltar()
+	public TileEntityAltar()
 	{
 
 	}
@@ -26,7 +26,7 @@ public class TileEntityInfusionAltar extends TileEntity
 		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
-			TileEntityInfusionAltar.this.markDirty();
+			TileEntityAltar.this.markDirty();
 		}
 	};
 

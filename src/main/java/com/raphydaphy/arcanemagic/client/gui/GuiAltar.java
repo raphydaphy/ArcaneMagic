@@ -6,7 +6,7 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.container.ContainerInfusionAltar;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -17,17 +17,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class GuiInfusionAltar extends GuiContainer
+public class GuiAltar extends GuiContainer
 {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 203;
-	private TileEntityInfusionAltar te;
+	private TileEntityAltar te;
 	private long age;
 	private Color rainbow;
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/writing_desk.png");
 
-	public GuiInfusionAltar(TileEntityInfusionAltar tileEntity, ContainerInfusionAltar container)
+	public GuiAltar(TileEntityAltar tileEntity, ContainerInfusionAltar container)
 	{
 		super(container);
 		te = tileEntity;
@@ -65,8 +65,8 @@ public class GuiInfusionAltar extends GuiContainer
 		ScaledResolution res = new ScaledResolution(mc);
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 250, 203);
-		fontRenderer.drawString(I18n.format("gui.arcanemagic.infusion_altar"),
-				(guiLeft + 103 - fontRenderer.getStringWidth(I18n.format("gui.arcanemagic.infusion_altar")) / 2),
+		fontRenderer.drawString(I18n.format("gui.arcanemagic.altar"),
+				(guiLeft + 103 - fontRenderer.getStringWidth(I18n.format("gui.arcanemagic.altar")) / 2),
 				guiTop + 9, 4210752);
 		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 106, 4210752);
 
@@ -81,11 +81,11 @@ public class GuiInfusionAltar extends GuiContainer
 
 			if (book.isEmpty())
 			{
-				text = I18n.format("gui.arcanemagic.infusion_altar.nobook");
+				text = I18n.format("gui.arcanemagic.altar.nobook");
 				drawWarning = true;
 			} else if (paper.isEmpty())
 			{
-				text = I18n.format("gui.arcanemagic.infusion_altar.nopaper");
+				text = I18n.format("gui.arcanemagic.altar.nopaper");
 				drawWarning = true;
 			}
 

@@ -1,6 +1,9 @@
 package com.raphydaphy.arcanemagic.common.item;
 
 import com.google.common.collect.Multimap;
+import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
+import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -8,15 +11,18 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemArcaneDagger extends ItemBase
+public class ItemArcaneDagger extends ItemBase implements IHasRecipe
 {
 	private final float attackDamage = 2.5f;
 	private final float attackSpeed = 0.5f;
@@ -86,4 +92,11 @@ public class ItemArcaneDagger extends ItemBase
     		
     	}
     }
+    
+    @Override
+	public void initRecipes(Register<IRecipe> e)
+	{
+		RecipeHelper.addElementalShaped(this, Anima.CREATION, 30, null, null, "gemDiamond", null,
+				Items.IRON_SWORD, null, "stickWood", null, null);
+	}
 }

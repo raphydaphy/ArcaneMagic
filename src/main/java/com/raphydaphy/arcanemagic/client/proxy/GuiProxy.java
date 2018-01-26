@@ -1,16 +1,16 @@
 package com.raphydaphy.arcanemagic.client.proxy;
 
 import com.raphydaphy.arcanemagic.client.gui.GuiAnimusMaterializer;
-import com.raphydaphy.arcanemagic.client.gui.GuiInfusionAltar;
+import com.raphydaphy.arcanemagic.client.gui.GuiAltar;
 import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimusMaterializer;
-import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
+import com.raphydaphy.arcanemagic.common.block.BlockAltar;
 import com.raphydaphy.arcanemagic.common.container.ContainerAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.container.ContainerInfusionAltar;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -32,9 +32,9 @@ public class GuiProxy implements IGuiHandler
 			if (te instanceof TileEntityAnimusMaterializer)
 				return new ContainerAnimusMaterializer(player.inventory, (TileEntityAnimusMaterializer) te);
 			break;
-		case BlockInfusionAltar.GUI_ID:
-			if (te instanceof TileEntityInfusionAltar)
-				return new ContainerInfusionAltar(player.inventory, (TileEntityInfusionAltar) te);
+		case BlockAltar.GUI_ID:
+			if (te instanceof TileEntityAltar)
+				return new ContainerInfusionAltar(player.inventory, (TileEntityAltar) te);
 			break;
 		}
 		return null;
@@ -61,11 +61,11 @@ public class GuiProxy implements IGuiHandler
 						new ContainerAnimusMaterializer(player.inventory, (TileEntityAnimusMaterializer) te));
 			}
 			break;
-		case BlockInfusionAltar.GUI_ID:
-			if (te instanceof TileEntityInfusionAltar)
+		case BlockAltar.GUI_ID:
+			if (te instanceof TileEntityAltar)
 			{
-				return new GuiInfusionAltar((TileEntityInfusionAltar) te,
-						new ContainerInfusionAltar(player.inventory, (TileEntityInfusionAltar) te));
+				return new GuiAltar((TileEntityAltar) te,
+						new ContainerInfusionAltar(player.inventory, (TileEntityAltar) te));
 			}
 			break;
 		}

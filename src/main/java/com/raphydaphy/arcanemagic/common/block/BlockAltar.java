@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.block;
 
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -26,14 +26,14 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 // TODO: RENAME ME!!!
-public class BlockInfusionAltar extends BlockBase implements IHasRecipe
+public class BlockAltar extends BlockBase implements IHasRecipe
 {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10d * (1d / 16d), 1.0D);
 	public static final int GUI_ID = 3;
 
-	public BlockInfusionAltar()
+	public BlockAltar()
 	{
-		super("infusion_altar", Material.ROCK, 5.5f, SoundType.STONE);
+		super("altar", Material.ROCK, 5.5f, SoundType.STONE);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		TileEntityInfusionAltar te = (TileEntityInfusionAltar) world.getTileEntity(pos);
+		TileEntityAltar te = (TileEntityAltar) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		for (int i = 0; i < cap.getSlots(); ++i)
@@ -87,7 +87,7 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileEntityInfusionAltar();
+		return new TileEntityAltar();
 	}
 
 	@Override
@@ -101,7 +101,7 @@ public class BlockInfusionAltar extends BlockBase implements IHasRecipe
 				return true;
 			}
 			TileEntity te = world.getTileEntity(pos);
-			if (!(te instanceof TileEntityInfusionAltar))
+			if (!(te instanceof TileEntityAltar))
 			{
 				return false;
 			}

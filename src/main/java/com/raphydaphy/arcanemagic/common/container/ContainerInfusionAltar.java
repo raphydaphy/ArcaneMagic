@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.container;
 
 import com.raphydaphy.arcanemagic.common.container.slot.SlotLimited;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfusionAltar;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -16,9 +16,9 @@ import net.minecraftforge.items.IItemHandler;
 
 public class ContainerInfusionAltar extends Container
 {
-	private TileEntityInfusionAltar te;
+	private TileEntityAltar te;
 
-	public ContainerInfusionAltar(InventoryPlayer playerInventory, TileEntityInfusionAltar te)
+	public ContainerInfusionAltar(InventoryPlayer playerInventory, TileEntityAltar te)
 	{
 		super();
 		this.te = te;
@@ -70,10 +70,10 @@ public class ContainerInfusionAltar extends Container
 			prev = cur.copy();
 
 			// From altar -> player
-			if (index < TileEntityInfusionAltar.SIZE)
+			if (index < TileEntityAltar.SIZE)
 			{
 				// TODO: not hardcode the max inv size to support mods that altar the player inventory
-				if (!this.mergeItemStack(cur, TileEntityInfusionAltar.SIZE, 38, true))
+				if (!this.mergeItemStack(cur, TileEntityAltar.SIZE, 38, true))
 				{
 					return ItemStack.EMPTY;
 				}
