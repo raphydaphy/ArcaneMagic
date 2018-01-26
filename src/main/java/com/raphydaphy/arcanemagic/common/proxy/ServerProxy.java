@@ -21,8 +21,10 @@ public class ServerProxy extends CommonProxy
 	}
 	
 	@Override
-	public void changeReachDist(EntityLivingBase entity, float additionalDist) {
+	public void setReachDist(EntityLivingBase entity, float to) {
 		if(entity instanceof EntityPlayerMP)
-			((EntityPlayerMP) entity).interactionManager.setBlockReachDistance(Math.max(5, ((EntityPlayerMP) entity).interactionManager.getBlockReachDistance() + additionalDist));
+		{
+			((EntityPlayerMP) entity).interactionManager.setBlockReachDistance(5 + to);
+		}
 	}
 }

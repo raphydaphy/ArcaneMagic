@@ -37,8 +37,18 @@ public class ArcaneMagicPlayerController extends PlayerControllerMP {
 	public void modifyReach(float by) {
 		distanceModifier += by;
 	}
+	
+	public void setExtraReach(float to)
+	{
+		distanceModifier = to;
+	}
 
 	public float getExtraReach() {
 		return distanceModifier;
+	}
+	
+	public void resetReach()
+	{
+		distanceModifier = 0;
 	}
 }

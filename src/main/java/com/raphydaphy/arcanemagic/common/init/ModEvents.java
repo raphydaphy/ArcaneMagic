@@ -24,6 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -193,6 +194,23 @@ public class ModEvents
 				event.getDrops().add(new EntityItemFancy(event.getEntity().world, event.getEntity().posX,
 						event.getEntity().posY, event.getEntity().posZ, new ItemStack(ModRegistry.ANCIENT_PARCHMENT)));
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
+	{
+		// decrease reach
+		if (event.getTo().getItem().equals(ModRegistry.ARCANE_DAGGER))
+		{
+			ArcaneMagic.proxy.setReachDist(event.getEntityLiving(), -2);
+			System.out.println("equipped dagger");
+		}
+		// reset reach
+		else if (event.getFrom().getItem().equals(ModRegistry.ARCANE_DAGGER))
+		{
+			ArcaneMagic.proxy.setReachDist(event.getEntityLiving(), 0);
+			System.out.println("Unequipped dagger");
 		}
 	}
 }

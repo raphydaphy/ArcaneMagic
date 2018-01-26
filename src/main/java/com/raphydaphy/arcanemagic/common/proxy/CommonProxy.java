@@ -52,5 +52,5 @@ public abstract class CommonProxy
 
 	public abstract String translate(String key, Object... args);
 	
-	public abstract void changeReachDist(EntityLivingBase entity, float additionalDist);
+	public abstract void setReachDist(EntityLivingBase entity, float to);
 }

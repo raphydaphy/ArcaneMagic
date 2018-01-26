@@ -101,14 +101,14 @@ public class ClientProxy extends CommonProxy
 	}
 	
 	@Override
-	public void changeReachDist(EntityLivingBase entity, float additionalDist) {
+	public void setReachDist(EntityLivingBase entity, float to) {
 		Minecraft mc = Minecraft.getMinecraft();
 		EntityPlayer player = mc.player;
 		if(entity == player) {
 			if(!(mc.playerController instanceof ArcaneMagicPlayerController)) {
 				new ArcaneMagicPlayerController(mc, mc.playerController.connection);
 			}
-			((ArcaneMagicPlayerController) mc.playerController).modifyReach(additionalDist);
+			((ArcaneMagicPlayerController) mc.playerController).setExtraReach(to);
 		}
 	}
 }
