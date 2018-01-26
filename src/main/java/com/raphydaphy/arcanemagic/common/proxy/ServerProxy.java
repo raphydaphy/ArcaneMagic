@@ -1,7 +1,7 @@
-package com.raphydaphy.arcanemagic.server.proxy;
+package com.raphydaphy.arcanemagic.common.proxy;
 
-import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
-
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -18,5 +18,11 @@ public class ServerProxy extends CommonProxy
 	public String translate(String key, Object... args)
 	{
 		return net.minecraft.util.text.translation.I18n.translateToLocalFormatted(key, args);
+	}
+	
+	@Override
+	public void changeReachDist(EntityLivingBase entity, float additionalDist) {
+		if(entity instanceof EntityPlayerMP)
+			((EntityPlayerMP) entity).interactionManager.setBlockReachDistance(Math.max(5, ((EntityPlayerMP) entity).interactionManager.getBlockReachDistance() + additionalDist));
 	}
 }

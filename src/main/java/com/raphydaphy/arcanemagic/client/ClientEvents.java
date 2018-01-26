@@ -205,6 +205,7 @@ public class ClientEvents
 		}
 	}
 
+	@SuppressWarnings("unused")
 	@SubscribeEvent
 	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
 	{

@@ -13,6 +13,7 @@ item.arcanemagic.ancient_parchment.name=Ancient Parchment
 item.arcanemagic.written_parchment.name=Written Parchment
 item.arcanemagic.mystical_illuminator.name=Mystical Illuminator
 item.arcanemagic.essence_channeling_rod.name=Essence Channeling Rod
+item.arcanemagic.arcane_dagger.name=Arcane Dagger
 
 # Blocks
 tile.arcanemagic.arcane_transfiguration_table.name=Arcane Transfiguration Table

@@ -68,7 +68,6 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 	{
 		frameAge++;
 		
-		System.out.println(frameAge);
 		return frameAge;
 	}
 	

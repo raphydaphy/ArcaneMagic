@@ -14,6 +14,7 @@ import com.raphydaphy.arcanemagic.common.block.BlockInfusionAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemAnimaCrystal;
+import com.raphydaphy.arcanemagic.common.item.ItemArcaneDagger;
 import com.raphydaphy.arcanemagic.common.item.ItemBase;
 import com.raphydaphy.arcanemagic.common.item.ItemCreationCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
@@ -64,6 +65,7 @@ public class ModRegistry
 	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();
 	public static final ItemEssenceChannelingRod ESSENCE_CHANNELING_ROD = new ItemEssenceChannelingRod();
+	public static final ItemArcaneDagger ARCANE_DAGGER = new ItemArcaneDagger();
 
 	@SubscribeEvent
 	public void onBlockRegister(Register<Block> e)

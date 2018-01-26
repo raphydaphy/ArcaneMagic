@@ -14,6 +14,11 @@
 					"tip": "arcanemagic:items/scepter_tip_iron"
 				}
 			},
+			"arcane_dagger": {
+				"textures": {
+					"layer0": "items/iron_sword"
+				}
+			},
 			"notebook": {
 				"textures": {
 					"layer0": "arcanemagic:items/notebook"

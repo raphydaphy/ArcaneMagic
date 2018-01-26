@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -50,4 +51,6 @@ public abstract class CommonProxy
 	}
 
 	public abstract String translate(String key, Object... args);
+	
+	public abstract void changeReachDist(EntityLivingBase entity, float additionalDist);
 }

@@ -13,6 +13,7 @@ import com.raphydaphy.arcanemagic.client.render.ArcaneTransfigurationTableTESR;
 import com.raphydaphy.arcanemagic.client.render.InfernalSmelterTESR;
 import com.raphydaphy.arcanemagic.client.render.WritingDeskTESR;
 import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
+import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPlayerController;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
@@ -24,6 +25,8 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -95,5 +98,17 @@ public class ClientProxy extends CommonProxy
 	public String translate(String key, Object... args)
 	{
 		return I18n.format(key, args);
+	}
+	
+	@Override
+	public void changeReachDist(EntityLivingBase entity, float additionalDist) {
+		Minecraft mc = Minecraft.getMinecraft();
+		EntityPlayer player = mc.player;
+		if(entity == player) {
+			if(!(mc.playerController instanceof ArcaneMagicPlayerController)) {
+				new ArcaneMagicPlayerController(mc, mc.playerController.connection);
+			}
+			((ArcaneMagicPlayerController) mc.playerController).modifyReach(additionalDist);
+		}
 	}
 }
