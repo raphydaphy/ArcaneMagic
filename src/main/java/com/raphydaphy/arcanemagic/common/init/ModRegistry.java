@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.block.BlockAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockAnalyzer;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.block.BlockArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
 import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
-import com.raphydaphy.arcanemagic.common.block.BlockAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
+import com.raphydaphy.arcanemagic.common.item.ItemAncientClothArmor;
 import com.raphydaphy.arcanemagic.common.item.ItemAnimaCrystal;
 import com.raphydaphy.arcanemagic.common.item.ItemArcaneDagger;
 import com.raphydaphy.arcanemagic.common.item.ItemBase;
@@ -21,12 +22,12 @@ import com.raphydaphy.arcanemagic.common.item.ItemEssenceChannelingRod;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
@@ -47,7 +48,7 @@ public class ModRegistry
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
-
+	
 	public static final BlockWritingDesk WRITING_DESK = new BlockWritingDesk();
 	public static final BlockAnalyzer ANALYZER = new BlockAnalyzer();
 	public static final BlockAltar ALTAR = new BlockAltar();
@@ -66,7 +67,12 @@ public class ModRegistry
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();
 	public static final ItemEssenceChannelingRod ESSENCE_CHANNELING_ROD = new ItemEssenceChannelingRod();
 	public static final ItemArcaneDagger ARCANE_DAGGER = new ItemArcaneDagger();
-
+	
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_HELMET = new ItemAncientClothArmor("ancient_cloth_helmet", 0);
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_CHESTPLATE = new ItemAncientClothArmor("ancient_cloth_chestplate", 1);
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_LEGGIONGS = new ItemAncientClothArmor("ancient_cloth_leggings", 2);
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_BOOTS = new ItemAncientClothArmor("ancient_cloth_boots", 3);
+	
 	@SubscribeEvent
 	public void onBlockRegister(Register<Block> e)
 	{

@@ -19,6 +19,26 @@
 					"layer0": "items/iron_sword"
 				}
 			},
+			"ancient_cloth_helmet": {
+				"textures:": {
+					"layer0": "items/iron_helmet"
+				}
+			},
+			"ancient_cloth_chestpalte": {
+				"textures:": {
+					"layer0": "items/iron_chestplate"
+				}
+			},
+			"ancient_cloth_leggings": {
+				"textures:": {
+					"layer0": "items/iron_leggings"
+				}
+			},
+			"ancient_cloth_boots": {
+				"textures:": {
+					"layer0": "items/iron_boots"
+				}
+			},
 			"notebook": {
 				"textures": {
 					"layer0": "arcanemagic:items/notebook"

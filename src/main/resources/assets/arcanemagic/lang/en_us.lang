@@ -14,6 +14,10 @@ item.arcanemagic.written_parchment.name=Written Parchment
 item.arcanemagic.mystical_illuminator.name=Mystical Illuminator
 item.arcanemagic.essence_channeling_rod.name=Essence Channeling Rod
 item.arcanemagic.arcane_dagger.name=Arcane Dagger
+item.arcanemagic.ancient_cloth_helmet.name=Ancient Cloth Helmet
+item.arcanemagic.ancient_cloth_chestplate.name=Ancient Cloth Chestplate
+item.arcanemagic.ancient_cloth_leggings.name=Ancient Cloth Leggins
+item.arcanemagic.ancient_cloth_boots.name=Ancient Cloth Boots
 
 # Blocks
 tile.arcanemagic.arcane_transfiguration_table.name=Arcane Transfiguration Table
