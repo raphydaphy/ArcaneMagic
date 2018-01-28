@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.common.init;
 
 import java.util.Random;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ListMultimap;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
@@ -12,6 +14,7 @@ import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastOrFail;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -203,13 +206,17 @@ public class ModEvents
 		// decrease reach
 		if (event.getTo().getItem().equals(ModRegistry.ARCANE_DAGGER))
 		{
-			ArcaneMagic.proxy.setReachDist(event.getEntityLiving(), -2);
-			System.out.println("equipped dagger");
+			ListMultimap<String, AttributeModifier> modifiers = ArrayListMultimap.create();
+			modifiers.put(EntityPlayer.REACH_DISTANCE.getName(), new AttributeModifier("Arcane Dagger", -2, 0).setSaved(false));
+			((EntityPlayer)event.getEntityLiving()).getAttributeMap().applyAttributeModifiers(modifiers);
+			System.out.println("Equipped dagger");
 		}
 		// reset reach
 		else if (event.getFrom().getItem().equals(ModRegistry.ARCANE_DAGGER))
 		{
-			ArcaneMagic.proxy.setReachDist(event.getEntityLiving(), 0);
+			ListMultimap<String, AttributeModifier> modifiers = ArrayListMultimap.create();
+			modifiers.put(EntityPlayer.REACH_DISTANCE.getName(), new AttributeModifier("Arcane Dagger", 2, 0).setSaved(false));
+			((EntityPlayer)event.getEntityLiving()).getAttributeMap().applyAttributeModifiers(modifiers);
 			System.out.println("Unequipped dagger");
 		}
 	}
