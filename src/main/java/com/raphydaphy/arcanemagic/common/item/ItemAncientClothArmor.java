@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.Entity;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -39,13 +40,24 @@ public class ItemAncientClothArmor extends ItemArmor implements IHasModel
 	}
 	
 	@Override
-	public void initModels(ModelRegistryEvent e)
-	{
-		IHasModel.sMRL("items", this, 0, "item=" + getRegistryName().getResourcePath());
-	}
-	
-	@Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack){
         return itemToRepair.getItem().equals((Items.LEATHER));
     }
+	
+	@Override
+	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+		if (stack.getItem() == ModRegistry.ANCIENT_CLOTH_LEGGINGS) return ArcaneMagic.MODID + ":textures/misc/ancient_cloth_2.png";
+
+		return ArcaneMagic.MODID + ":textures/misc/ancient_cloth_1.png";
+	}
+	
+	@Override
+	public void initModels(ModelRegistryEvent e)
+	{
+		int variants = 0;
+		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++)
+		{
+			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
+		}
+	}
 }

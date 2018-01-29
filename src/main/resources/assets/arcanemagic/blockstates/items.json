@@ -1,135 +1,213 @@
 {
 	"forge_marker": 1,
-	"defaults": {
+	"defaults": 
+	{
 		"model": "builtin/generated",
 		"transform": "forge:default-item"
 	},
-	"variants": {
-		"item": {
-			"scepter": {
-				"model": "arcanemagic:scepter",
 
-				"textures": {
+	"variants": 
+	{
+		"item": 
+		{
+			"scepter": 
+			{
+				"model": "arcanemagic:scepter",
+				"textures": 
+				{
 					"core": "arcanemagic:items/scepter_core_wood",
 					"tip": "arcanemagic:items/scepter_tip_iron"
 				}
 			},
-			"arcane_dagger": {
-				"textures": {
+
+			"arcane_dagger": 
+			{
+				"textures": 
+				{
 					"layer0": "items/iron_sword"
 				}
 			},
-			"ancient_cloth_helmet": {
-				"textures:": {
+
+			"ancient_cloth_helmet": 
+			{
+				"textures": 
+				{
 					"layer0": "items/iron_helmet"
 				}
 			},
-			"ancient_cloth_chestpalte": {
-				"textures:": {
+			
+			"ancient_cloth_chestplate": 
+			{
+				"textures": 
+				{
 					"layer0": "items/iron_chestplate"
 				}
 			},
-			"ancient_cloth_leggings": {
-				"textures:": {
+			
+			"ancient_cloth_leggings": 
+			{
+				"textures": 
+				{
 					"layer0": "items/iron_leggings"
 				}
 			},
-			"ancient_cloth_boots": {
-				"textures:": {
+			
+			"ancient_cloth_boots": 
+			{
+				"textures": 
+				{
 					"layer0": "items/iron_boots"
 				}
 			},
-			"notebook": {
-				"textures": {
+
+			"notebook": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/notebook"
 				}
 			},
-			"mystical_illuminator": {
-				"textures": {
+
+			"mystical_illuminator": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/mystical_illuminator"
 				}
 			},
-			"essence_channeling_rod": {
-				"textures": {
+
+			"essence_channeling_rod": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/essence_channeling_rod"
 				}
 			},
-			"blank_parchment": {
-				"textures": {
+
+			"blank_parchment": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/parchment"
 				}
 			},
-			"written_parchment": {
-				"textures": {
+
+			"written_parchment": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/parchment_written"
 				}
 			},
-			"anima_ozone": {
-				"textures": {
+
+			"anima_ozone": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_ozone"
 				}
 			},
-			"anima_depth": {
-				"textures": {
+
+			"anima_depth": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_depth"
 				}
 			},
-			"anima_inferno": {
-				"textures": {
+
+			"anima_inferno": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_inferno"
 				}
 			},
-			"anima_horizon": {
-				"textures": {
+
+			"anima_horizon": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_horizon"
 				}
 			},
-			"anima_peace": {
-				"textures": {
+
+			"anima_peace": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_peace"
 				}
 			},
-			"anima_chaos": {
-				"textures": {
+
+			"anima_chaos": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_chaos"
 				}
-			},"anima_creation": {
-				"textures": {
+			},
+
+			"anima_creation": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/anima_creation"
 				}
 			},
-			"ancient_parchment": {
-				"textures": {
+
+			"ancient_parchment": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/parchment_written"
 				}
 			},
-			"tip_iron": {
-				"textures": {
+
+			"tip_iron": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/scepter_tip_iron"
 				}
 			},
-			"tip_gold": {
-				"textures": {
+
+			"tip_gold": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/scepter_tip_gold"
 				}
 			},
-			"tip_thaumium": {
-				"textures": {
+
+			"tip_thaumium": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/scepter_tip_arcanium"
 				}
 			},
-			"core_wood": {
-				"textures": {
+
+			"core_wood": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/scepter_core_wood"
 				}
 			},
-			"core_silverwood": {
-				"textures": {
+
+			"core_silverwood": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/scepter_core_rosewood"
 				}
 			},
-			"core_greatwood": {
-				"textures": {
+
+			"core_greatwood": 
+			{
+				"textures": 
+				{
 					"layer0": "arcanemagic:items/scepter_core_elderwood"
 				}
 			}

@@ -26,6 +26,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
@@ -57,7 +58,8 @@ public class ModRegistry
 	public static final BlockAnimaConjurer ANIMA_CONJURER = new BlockAnimaConjurer();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
-
+	// ,public static final BlockArcaneForge ARCANE_FORGE = new BlockArcaneForge();
+	
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
 	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();
@@ -70,7 +72,7 @@ public class ModRegistry
 	
 	public static final ItemAncientClothArmor ANCIENT_CLOTH_HELMET = new ItemAncientClothArmor("ancient_cloth_helmet", 0);
 	public static final ItemAncientClothArmor ANCIENT_CLOTH_CHESTPLATE = new ItemAncientClothArmor("ancient_cloth_chestplate", 1);
-	public static final ItemAncientClothArmor ANCIENT_CLOTH_LEGGIONGS = new ItemAncientClothArmor("ancient_cloth_leggings", 2);
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_LEGGINGS = new ItemAncientClothArmor("ancient_cloth_leggings", 2);
 	public static final ItemAncientClothArmor ANCIENT_CLOTH_BOOTS = new ItemAncientClothArmor("ancient_cloth_boots", 3);
 	
 	@SubscribeEvent
@@ -88,7 +90,6 @@ public class ModRegistry
 	@SubscribeEvent
 	public void onRecipeRegister(Register<IRecipe> e)
 	{
-		// TODO: shadows will probably make this better.. hopefully :-)
 		OreDictionary.registerOre("formationAnima",
 				new ItemStack(ModRegistry.ANIMA, 1, OreDictionary.WILDCARD_VALUE));
 
@@ -102,8 +103,6 @@ public class ModRegistry
 		RecipeHelper.addShaped(BLANK_PARCHMENT, 3, 3, null, "paper", null, "paper", "dye", "paper", null, "paper",
 				null);
 
-		// @Shadows: The day I work with JSON recipes is the day the world ends.
-		// @raphy: uhoh
 		e.getRegistry().registerAll(RECIPES.toArray(new IRecipe[RECIPES.size()]));
 	}
 
@@ -137,5 +136,6 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
 		GameRegistry.registerTileEntity(TileEntityInfernalSmelter.class, ArcaneMagic.MODID + "_infernal_smelter");
+		GameRegistry.registerTileEntity(TileEntityArcaneForge.class, ArcaneMagic.MODID + "_arcane_forge");
 	}
 }
