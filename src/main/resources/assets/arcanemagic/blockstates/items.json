@@ -24,7 +24,7 @@
 			{
 				"textures": 
 				{
-					"layer0": "items/iron_sword"
+					"layer0": "arcanemagic:items/arcane_dagger"
 				}
 			},
 
@@ -32,7 +32,7 @@
 			{
 				"textures": 
 				{
-					"layer0": "items/iron_helmet"
+					"layer0": "arcanemagic:items/ancient_cloth_helmet"
 				}
 			},
 			
@@ -40,7 +40,7 @@
 			{
 				"textures": 
 				{
-					"layer0": "items/iron_chestplate"
+					"layer0": "arcanemagic:items/ancient_cloth_chestplate"
 				}
 			},
 			
@@ -48,7 +48,7 @@
 			{
 				"textures": 
 				{
-					"layer0": "items/iron_leggings"
+					"layer0": "arcanemagic:items/ancient_cloth_leggings"
 				}
 			},
 			
@@ -56,7 +56,7 @@
 			{
 				"textures": 
 				{
-					"layer0": "items/iron_boots"
+					"layer0": "arcanemagic:items/ancient_cloth_boots"
 				}
 			},
 

@@ -8,6 +8,7 @@ import com.raphydaphy.arcanemagic.common.block.BlockAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockAnalyzer;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimaConjurer;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimusMaterializer;
+import com.raphydaphy.arcanemagic.common.block.BlockArcaneForge;
 import com.raphydaphy.arcanemagic.common.block.BlockArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
 import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
@@ -58,7 +59,7 @@ public class ModRegistry
 	public static final BlockAnimaConjurer ANIMA_CONJURER = new BlockAnimaConjurer();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
-	// ,public static final BlockArcaneForge ARCANE_FORGE = new BlockArcaneForge();
+	public static final BlockArcaneForge ARCANE_FORGE = new BlockArcaneForge();
 	
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();

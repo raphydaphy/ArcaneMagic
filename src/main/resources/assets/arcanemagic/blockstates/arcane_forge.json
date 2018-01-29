@@ -1,8 +1,24 @@
 {
-    "variants": {
-        "facing=south": { "model": "anvil_undamaged" },
-        "facing=west": { "model": "anvil_undamaged", "y": 90 },
-        "facing=north": { "model": "anvil_undamaged", "y": 180 },
-        "facing=east": { "model": "anvil_undamaged", "y": 270 }
-    }
+	"forge_marker": 1,
+	"defaults": 
+	{
+		"model": "anvil_undamaged"
+	},
+
+	"variants": 
+	{
+		"normal": 
+		[
+			{
+				
+			}
+		],
+
+		"inventory": 
+		[
+			{
+				
+			}
+		]
+	}
 }
