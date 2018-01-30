@@ -10,18 +10,17 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileEntityArcaneForge extends TileEntity
 {
-	private ItemStack stack = ItemStack.EMPTY;
-	
-	private int frameAge = 0;
+	private ItemStack weapon = ItemStack.EMPTY;
+	private ItemStack[] gems = {ItemStack.EMPTY, ItemStack.EMPTY};
 
-	public ItemStack getStack()
+	public ItemStack getWeapon()
 	{
-		return stack;
+		return weapon;
 	}
 
-	public void setStack(ItemStack stack)
+	public void setWeapon(ItemStack stack)
 	{
-		this.stack = stack;
+		this.weapon = stack;
 		markDirty();
 
 		if (world != null)
@@ -29,6 +28,24 @@ public class TileEntityArcaneForge extends TileEntity
 			IBlockState state = world.getBlockState(this.pos);
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
+	}
+	
+	public void setGem(ItemStack gem, int num)
+	{
+		this.gems[num] = gem;
+		
+		markDirty();
+
+		if (world != null)
+		{
+			IBlockState state = world.getBlockState(this.pos);
+			world.notifyBlockUpdate(pos, state, state, 3);
+		}
+	}
+	
+	public ItemStack getGem(int num)
+	{
+		return gems[num];
 	}
 
 	@Override
@@ -45,25 +62,6 @@ public class TileEntityArcaneForge extends TileEntity
 									.getChunkFromBlockCoords(TileEntityArcaneForge.this.pos),
 							state, state, 1 | 2);
 		}
-	}
-
-	public int getFrameAge()
-	{
-		return frameAge;
-	}
-	
-	public int increaseFrameAge()
-	{
-		frameAge++;
-		
-		return frameAge;
-	}
-	
-	public int setFrameAge(int newAge)
-	{
-		frameAge = newAge;
-		
-		return frameAge;
 	}
 	
 	@Override
@@ -90,12 +88,26 @@ public class TileEntityArcaneForge extends TileEntity
 	public void readFromNBT(NBTTagCompound compound)
 	{
 		super.readFromNBT(compound);
-		if (compound.hasKey("item"))
+		if (compound.hasKey("weapon"))
 		{
-			stack = new ItemStack(compound.getCompoundTag("item"));
+			weapon = new ItemStack(compound.getCompoundTag("weapon"));
 		} else
 		{
-			stack = ItemStack.EMPTY;
+			weapon = ItemStack.EMPTY;
+		}
+		if (compound.hasKey("gem0"))
+		{
+			gems[0] = new ItemStack(compound.getCompoundTag("gem0"));
+		} else
+		{
+			gems[0] = ItemStack.EMPTY;
+		}
+		if (compound.hasKey("gem1"))
+		{
+			gems[1] = new ItemStack(compound.getCompoundTag("gem1"));
+		} else
+		{
+			gems[1] = ItemStack.EMPTY;
 		}
 	}
 
@@ -103,11 +115,23 @@ public class TileEntityArcaneForge extends TileEntity
 	public NBTTagCompound writeToNBT(NBTTagCompound compound)
 	{
 		super.writeToNBT(compound);
-		if (!stack.isEmpty())
+		if (!weapon.isEmpty())
 		{
 			NBTTagCompound tagCompound = new NBTTagCompound();
-			stack.writeToNBT(tagCompound);
-			compound.setTag("item", tagCompound);
+			weapon.writeToNBT(tagCompound);
+			compound.setTag("weapon", tagCompound);
+		}
+		if (!gems[0].isEmpty())
+		{
+			NBTTagCompound tagCompound = new NBTTagCompound();
+			gems[0].writeToNBT(tagCompound);
+			compound.setTag("gem0", tagCompound);
+		}
+		if (!gems[1].isEmpty())
+		{
+			NBTTagCompound tagCompound = new NBTTagCompound();
+			gems[1].writeToNBT(tagCompound);
+			compound.setTag("gem1", tagCompound);
 		}
 		return compound;
 	}

@@ -22,81 +22,72 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemArcaneDagger extends ItemBase implements IHasRecipe
-{
+public class ItemArcaneDagger extends ItemBase implements IHasRecipe {
 	private final float attackDamage = 2.5f;
 	private final float attackSpeed = 0.5f;
-	
+
 	public ItemArcaneDagger() {
 		super("arcane_dagger", TextFormatting.GRAY);
 		this.setMaxDamage(128);
 	}
-	
-	@Override
-	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
-    {
-        stack.damageItem(1, attacker);
-        return true;
-    }
 
 	@Override
-    public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos, EntityLivingBase entityLiving)
-    {
-        if ((double)state.getBlockHardness(worldIn, pos) != 0.0D)
-        {
-            stack.damageItem(2, entityLiving);
-        }
+	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+		stack.damageItem(1, attacker);
+		return true;
+	}
 
-        return true;
-    }
+	@Override
+	public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
+			EntityLivingBase entityLiving) {
+		if ((double) state.getBlockHardness(worldIn, pos) != 0.0D) {
+			stack.damageItem(2, entityLiving);
+		}
 
-    @Override
-    public boolean canHarvestBlock(IBlockState blockIn)
-    {
-        return blockIn.getBlock() == Blocks.WEB;
-    }
+		return true;
+	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean isFull3D()
-    {
-        return true;
-    }
+	@Override
+	public boolean canHarvestBlock(IBlockState blockIn) {
+		return blockIn.getBlock() == Blocks.WEB;
+	}
 
-    @Override
-    public int getItemEnchantability()
-    {
-        return 33;
-    }
-    
-    @Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot)
-    {
-        @SuppressWarnings("deprecation")
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean isFull3D() {
+		return true;
+	}
+
+	@Override
+	public int getItemEnchantability() {
+		return 33;
+	}
+
+	@Override
+	public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
+		@SuppressWarnings("deprecation")
 		Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 
-        if (equipmentSlot == EntityEquipmentSlot.MAINHAND)
-        {
-            multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double)this.attackDamage, 0));
-            multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double)this.attackSpeed, 0));
-        }
+		if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
+			multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(),
+					new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", (double) this.attackDamage, 0));
+			multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
+					new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", (double) this.attackSpeed, 0));
+		}
 
-        return multimap;
-    }
-    
-    @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected)
-    {
-    	if (isSelected)
-    	{
-    		
-    	}
-    }
-    
-    @Override
-	public void initRecipes(Register<IRecipe> e)
-	{
-		RecipeHelper.addElementalShaped(this, Anima.CREATION, 30, null, null, "gemDiamond", null,
-				Items.IRON_SWORD, null, "stickWood", null, null);
+		return multimap;
+	}
+
+	@Override
+	public void onUpdate(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+		if (isSelected) {
+
+		}
+	}
+
+	@Override
+	public void initRecipes(Register<IRecipe> e) {
+		RecipeHelper.addElementalShaped(this, Anima.CREATION, 30, null, null, "gemDiamond", null, Items.IRON_SWORD,
+				null, "stickWood", null, null);
 	}
 }
