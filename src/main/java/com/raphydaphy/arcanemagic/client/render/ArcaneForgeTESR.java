@@ -36,20 +36,28 @@ public class ArcaneForgeTESR extends TileEntitySpecialRenderer<TileEntityArcaneF
 
 			GlStateManager.rotate(90, 1, 0, 0);
 			GlStateManager.rotate(45, 0, 0, 1);
-			
+
 			Minecraft.getMinecraft().getRenderItem().renderItem(weapon, ItemCameraTransforms.TransformType.NONE);
 
 			GlStateManager.rotate(-45, 0, 0, 1);
 			GlStateManager.translate(0, -0.22, -0.035);
 			GlStateManager.scale(0.1, 0.1, 0.2);
-
-			Minecraft.getMinecraft().getRenderItem().renderItem(te.getGem(0),
-					ItemCameraTransforms.TransformType.NONE);
-
+			if (te.getDepth(0) > 0) {
+				GlStateManager.translate(0, 0, -(((double) te.getDepth(0)) / 100d));
+			}
+			Minecraft.getMinecraft().getRenderItem().renderItem(te.getGem(0), ItemCameraTransforms.TransformType.NONE);
+			if (te.getDepth(0) > 0) {
+				GlStateManager.translate(0, 0, (((double) te.getDepth(0)) / 100d));
+			}
 			GlStateManager.translate(0, -3.55, 0);
-			Minecraft.getMinecraft().getRenderItem().renderItem(te.getGem(1),
-					ItemCameraTransforms.TransformType.NONE);
-
+			
+			if (te.getDepth(1) > 0) {
+				GlStateManager.translate(0, 0, -(((double) te.getDepth(0)) / 100d));
+			}
+			Minecraft.getMinecraft().getRenderItem().renderItem(te.getGem(1), ItemCameraTransforms.TransformType.NONE);
+			if (te.getDepth(1) > 0) {
+				GlStateManager.translate(0, 0, (((double) te.getDepth(0)) / 100d));
+			}
 			GlStateManager.popMatrix();
 
 		}

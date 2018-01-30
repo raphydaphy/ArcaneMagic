@@ -12,6 +12,7 @@ public class TileEntityArcaneForge extends TileEntity
 {
 	private ItemStack weapon = ItemStack.EMPTY;
 	private ItemStack[] gems = {ItemStack.EMPTY, ItemStack.EMPTY};
+	private int[] insertDepth = {4,4};
 
 	public ItemStack getWeapon()
 	{
@@ -21,6 +22,24 @@ public class TileEntityArcaneForge extends TileEntity
 	public void setWeapon(ItemStack stack)
 	{
 		this.weapon = stack;
+		markDirty();
+
+		if (world != null)
+		{
+			IBlockState state = world.getBlockState(this.pos);
+			world.notifyBlockUpdate(pos, state, state, 3);
+		}
+	}
+	
+	public int getDepth(int gem)
+	{
+		return insertDepth[gem];
+	}
+	
+	public void setDepth(int depth, int gem)
+	{
+		insertDepth[gem] = depth;
+		
 		markDirty();
 
 		if (world != null)
@@ -109,6 +128,7 @@ public class TileEntityArcaneForge extends TileEntity
 		{
 			gems[1] = ItemStack.EMPTY;
 		}
+		insertDepth = compound.getIntArray("insertDepth");
 	}
 
 	@Override
@@ -133,6 +153,7 @@ public class TileEntityArcaneForge extends TileEntity
 			gems[1].writeToNBT(tagCompound);
 			compound.setTag("gem1", tagCompound);
 		}
+		compound.setIntArray("insertDepth", insertDepth);
 		return compound;
 	}
 

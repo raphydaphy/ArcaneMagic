@@ -1,5 +1,8 @@
 package com.raphydaphy.arcanemagic.common.block;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -19,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -84,36 +88,68 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!player.isSneaking()) {
+			TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(pos);
 			if (!world.isRemote) {
-				TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(pos);
+				
 				if (!player.getHeldItem(hand).isEmpty()) {
-					boolean didRemove = false;
-					ItemStack heldItemClone = player.getHeldItem(hand).copy();
-					heldItemClone.setCount(1);
-					if (player.getHeldItem(hand).getItem().equals(ModRegistry.ARCANE_DAGGER)
-							&& te.getWeapon().isEmpty()) {
-
-						te.setWeapon(heldItemClone);
-						didRemove = true;
-
-					} else if (player.getHeldItem(hand).getItem().equals(Items.DIAMOND)
-							|| player.getHeldItem(hand).getItem().equals(Items.EMERALD)) {
-						if (te.getGem(0).isEmpty()) {
-							te.setGem(heldItemClone, 0);
-							didRemove = true;
-						} else if (te.getGem(1).isEmpty()) {
-							te.setGem(heldItemClone, 1);
-							didRemove = true;
+					if (player.getHeldItem(hand).getItem().equals(Items.IRON_AXE)) {
+						List<Integer> gems = new ArrayList<>();
+						if (!te.getGem(0).isEmpty() && te.getDepth(0) > 0) {
+							gems.add(0);
 						}
-					}
-
-					if (didRemove) {
-						if (player.getHeldItem(hand).getCount() > 1) {
-							player.getHeldItem(hand).shrink(1);
-						} else {
-							player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
+						if (!te.getGem(1).isEmpty() && te.getDepth(1) > 0) {
+							gems.add(1);
 						}
-						player.openContainer.detectAndSendChanges();
+
+						for (int gem : gems) {
+							if (world.rand.nextInt(5) == 1) {
+								te.setDepth(te.getDepth(gem) - 1, gem);
+							}
+						}
+
+						if (te.getDepth(0) == 0 && te.getDepth(1) == 0) {
+
+							InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(),
+									te.getWeapon().copy());
+
+							te.setGem(ItemStack.EMPTY, 0);
+							te.setDepth(4, 0);
+							te.setGem(ItemStack.EMPTY, 1);
+							te.setDepth(4,1);
+							te.setWeapon(ItemStack.EMPTY);
+						}
+					} else {
+						boolean didRemove = false;
+						ItemStack heldItemClone = player.getHeldItem(hand).copy();
+						heldItemClone.setCount(1);
+						if (player.getHeldItem(hand).getItem().equals(ModRegistry.ARCANE_DAGGER)
+								&& te.getWeapon().isEmpty()) {
+
+							te.setWeapon(heldItemClone);
+							didRemove = true;
+
+						} else if (player.getHeldItem(hand).getItem().equals(Items.DIAMOND)
+								|| player.getHeldItem(hand).getItem().equals(Items.EMERALD)) {
+							if (te.getGem(0).isEmpty()) {
+								te.setGem(heldItemClone, 0);
+								te.setDepth(4, 0);
+								didRemove = true;
+							} else if (te.getGem(1).isEmpty()) {
+								te.setGem(heldItemClone, 1);
+								te.setDepth(4, 1);
+								didRemove = true;
+							}
+						}
+
+						if (didRemove) {
+							if (player.getHeldItem(hand).getCount() > 1) {
+								player.getHeldItem(hand).shrink(1);
+							} else {
+								player.inventory.setInventorySlotContents(player.inventory.currentItem,
+										ItemStack.EMPTY);
+							}
+							player.openContainer.detectAndSendChanges();
+						}
 					}
 				} else {
 					ItemStack stack = ItemStack.EMPTY;
@@ -132,8 +168,10 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 						InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
 					}
 				}
+			} else if (player.getHeldItem(hand).getItem().equals(Items.IRON_AXE) && !te.getWeapon().isEmpty()) {
+				world.spawnParticle(EnumParticleTypes.CRIT, pos.getX() + 0.35 + world.rand.nextInt(30) / 100d,
+						pos.getY() + 1.1, pos.getZ() + 0.2 + world.rand.nextInt(60) / 100d, 0, 0.01, 0);
 			}
-
 			return true;
 		}
 		return false;
