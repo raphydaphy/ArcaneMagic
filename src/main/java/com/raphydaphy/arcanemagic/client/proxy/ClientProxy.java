@@ -12,7 +12,6 @@ import com.raphydaphy.arcanemagic.client.render.AnimusMaterializerTESR;
 import com.raphydaphy.arcanemagic.client.render.ArcaneForgeTESR;
 import com.raphydaphy.arcanemagic.client.render.ArcaneTransfigurationTableTESR;
 import com.raphydaphy.arcanemagic.client.render.InfernalSmelterTESR;
-import com.raphydaphy.arcanemagic.client.render.WritingDeskTESR;
 import com.raphydaphy.arcanemagic.client.toast.CategoryUnlockedToast;
 import com.raphydaphy.arcanemagic.common.item.ItemIlluminator;
 import com.raphydaphy.arcanemagic.common.proxy.CommonProxy;
@@ -22,7 +21,6 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -65,7 +63,6 @@ public class ClientProxy extends CommonProxy
 				new AnimaConjurerTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArcaneTransfigurationTable.class,
 				new ArcaneTransfigurationTableTESR());
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityWritingDesk.class, new WritingDeskTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class, new AnalyzerTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnimusMaterializer.class, new AnimusMaterializerTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityInfernalSmelter.class, new InfernalSmelterTESR());

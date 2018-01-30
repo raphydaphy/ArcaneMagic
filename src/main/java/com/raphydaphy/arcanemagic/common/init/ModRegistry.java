@@ -12,7 +12,6 @@ import com.raphydaphy.arcanemagic.common.block.BlockArcaneForge;
 import com.raphydaphy.arcanemagic.common.block.BlockArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
 import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
-import com.raphydaphy.arcanemagic.common.block.BlockWritingDesk;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemAncientClothArmor;
 import com.raphydaphy.arcanemagic.common.item.ItemAnimaCrystal;
@@ -30,7 +29,6 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityWritingDesk;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -51,7 +49,6 @@ public class ModRegistry
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
 	
-	public static final BlockWritingDesk WRITING_DESK = new BlockWritingDesk();
 	public static final BlockAnalyzer ANALYZER = new BlockAnalyzer();
 	public static final BlockAltar ALTAR = new BlockAltar();
 	public static final BlockArcaneTransfigurationTable ARCANE_TRANSFIGURATION_TABLE = new BlockArcaneTransfigurationTable();
@@ -133,7 +130,6 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityAnimusMaterializer.class, ArcaneMagic.MODID + "_animus_materializer");
 		GameRegistry.registerTileEntity(TileEntityAnimaConjurer.class,
 				ArcaneMagic.MODID + "_anima_conjurer");
-		GameRegistry.registerTileEntity(TileEntityWritingDesk.class, ArcaneMagic.MODID + "_writing_desk");
 		GameRegistry.registerTileEntity(TileEntityAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
 		GameRegistry.registerTileEntity(TileEntityInfernalSmelter.class, ArcaneMagic.MODID + "_infernal_smelter");
