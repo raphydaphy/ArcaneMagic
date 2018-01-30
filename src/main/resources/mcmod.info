@@ -2,14 +2,14 @@
 {
   "modid": "arcanemagic",
   "name": "Arcane Magic",
-  "description": "A mod about ancient magic coming from the core of the earth",
+  "description": "A mod about ancient magic coming from the core of the earth.",
   "version": "0.1",
   "mcversion": "${mcversion}",
   "logoFile": "",
   "url": "",
   "updateUrl": "",
   "authorList": ["raphydaphy", "Shadows_Of_Fire", "Thiakil", "wiiv"],
-  "credits": "Sound effects obtained from https://www.zapsplat.com. Textures are currently from Thaumcraft, but this is temporary.",
+  "credits": "Sound effects obtained from https://www.zapsplat.com. All textures by wiiv, code by raphydaphy, Shadows_Of_Fire and Thiakil.",
   "parent": "",
   "screenshots": [],
   "dependencies": []
