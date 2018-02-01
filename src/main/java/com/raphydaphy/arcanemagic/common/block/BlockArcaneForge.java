@@ -44,8 +44,8 @@ import net.minecraftforge.event.RegistryEvent.Register;
 
 public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
-	public static final PropertyEnum<BlockArcaneForge.EnumForgePiece> PIECE = PropertyEnum.<BlockArcaneForge.EnumForgePiece>create(
-			"piece", BlockArcaneForge.EnumForgePiece.class);
+	public static final PropertyEnum<EnumForgePiece> PIECE = PropertyEnum.<EnumForgePiece>create(
+			"piece", EnumForgePiece.class);
 
 	public BlockArcaneForge() {
 		super("arcane_forge", Material.ROCK, 4f, SoundType.STONE);
@@ -69,7 +69,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 
-		if (state.getValue(PIECE).equals(BlockArcaneForge.EnumForgePiece.ONE)) {
+		if (state.getValue(PIECE).equals(EnumForgePiece.ONE)) {
 			TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(pos);
 
 			ItemStack[] stacks = { te.getWeapon(), te.getGem(0), te.getGem(1) };
@@ -106,7 +106,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
-		return state.getValue(PIECE).equals(BlockArcaneForge.EnumForgePiece.ONE) ? true : false;
+		return state.getValue(PIECE).equals(EnumForgePiece.ONE) ? true : false;
 	}
 
 	@Override
@@ -230,7 +230,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 			ItemStack stack) {
 		for (Vec3i piece : pieceLocations) {
 			worldIn.setBlockState(pos.add(piece),
-					state.withProperty(PIECE, BlockArcaneForge.EnumForgePiece.getFromRootPos(piece)));
+					state.withProperty(PIECE, EnumForgePiece.getFromRootPos(piece)));
 
 		}
 	}
@@ -253,7 +253,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(PIECE, BlockArcaneForge.EnumForgePiece.getFromNum(meta + 1));
+		return this.getDefaultState().withProperty(PIECE, EnumForgePiece.getFromNum(meta + 1));
 	}
 
 	@Override
@@ -268,7 +268,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return state.getValue(PIECE).equals(BlockArcaneForge.EnumForgePiece.ONE) ? Item.getItemFromBlock(this)
+		return state.getValue(PIECE).equals(EnumForgePiece.ONE) ? Item.getItemFromBlock(this)
 				: Items.AIR;
 	}
 
