@@ -26,12 +26,14 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -270,5 +272,44 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 	protected BlockStateContainer createBlockState()
 	{
 		return new BlockStateContainer(this, new IProperty[] { FACING });
+	}
+
+	private static final Vec3i[] piecePositions = { new Vec3i(0, 0, 0), new Vec3i(0, 1, 0) };
+
+	public static enum EnumSmelterHalf implements IStringSerializable
+	{
+		TOP, BOTTOM;
+
+		public String getName()
+		{
+			return this.equals(TOP) ? "top" : "bottom";
+		}
+
+		public int getNum()
+		{
+			return this.equals(BOTTOM) ? 1 : 2;
+		}
+
+		public static EnumSmelterHalf getFromNum(int num)
+		{
+			return num == 1 ? BOTTOM : TOP;
+		}
+
+		public Vec3i getRootPos()
+		{
+			return piecePositions[this.getNum() - 1];
+		}
+
+		public static EnumSmelterHalf getFromRootPos(Vec3i rootPos)
+		{
+			for (EnumSmelterHalf piece : EnumSmelterHalf.values())
+			{
+				if (piece.getRootPos().equals(rootPos))
+				{
+					return piece;
+				}
+			}
+			return BOTTOM;
+		}
 	}
 }
