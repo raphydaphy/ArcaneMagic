@@ -1,24 +1,8 @@
 {
-	"forge_marker": 1,
-	"defaults": 
-	{
-		"model": "anvil_undamaged"
-	},
-
-	"variants": 
-	{
-		"normal": 
-		[
-			{
-				
-			}
-		],
-
-		"inventory": 
-		[
-			{
-				
-			}
-		]
-	}
+    "variants": {
+        "piece=one":  { "model": "black_concrete" },
+        "piece=two": { "model": "white_concrete" },
+        "piece=three:  { "model": "yellow_concrete" },
+        "piece=four": { "model": "blue_concrete" }
+    }
 }
