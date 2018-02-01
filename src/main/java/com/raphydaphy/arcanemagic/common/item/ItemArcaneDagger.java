@@ -29,6 +29,7 @@ public class ItemArcaneDagger extends ItemBase implements IHasRecipe {
 	public ItemArcaneDagger() {
 		super("arcane_dagger", TextFormatting.GRAY);
 		this.setMaxDamage(128);
+		this.setMaxStackSize(1);
 	}
 
 	@Override

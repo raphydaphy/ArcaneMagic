@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
+import com.google.common.base.Predicate;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -16,7 +19,9 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -38,7 +43,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
 
 public class BlockArcaneForge extends BlockBase implements IHasRecipe {
-	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.125D, 0.0D, 0.0D, 0.875D, 1.0D, 1.0D);
+	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
 	public static final PropertyEnum<BlockArcaneForge.EnumForgePiece> PIECE = PropertyEnum.<BlockArcaneForge.EnumForgePiece>create(
 			"piece", BlockArcaneForge.EnumForgePiece.class);
 
@@ -63,17 +68,18 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(pos);
 
-		ItemStack[] stacks = { te.getWeapon(), te.getGem(0), te.getGem(1) };
-
-		for (ItemStack stack : stacks) {
-			if (!stack.isEmpty()) {
-				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-			}
-		}
-		
 		if (state.getValue(PIECE).equals(BlockArcaneForge.EnumForgePiece.ONE)) {
+			TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(pos);
+
+			ItemStack[] stacks = { te.getWeapon(), te.getGem(0), te.getGem(1) };
+
+			for (ItemStack stack : stacks) {
+				if (!stack.isEmpty()) {
+					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+				}
+			}
+
 			for (Vec3i piece : pieceLocations) {
 				BlockPos blockpos1 = pos.add(piece);
 				if (!blockpos1.equals(pos)) {
@@ -81,17 +87,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 				}
 			}
 		} else {
-			BlockPos root = pos.subtract(state.getValue(PIECE).getRootPos());
-			world.destroyBlock(root, true);/*
-			for (Vec3i piece : pieceLocations) {
-				BlockPos blockpos1 = root.add(piece);
-				if (blockpos1.equals(pos)) {
-					world.destroyBlock(blockpos1, true);
-				} else if (!blockpos1.equals(pos)) {
-					world.setBlockToAir(blockpos1);
-				}
-				world.setBlockToAir(pos);
-			}*/
+			world.destroyBlock(getRoot(state, pos), true);
 
 		}
 
@@ -110,19 +106,27 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 	@Override
 	public boolean hasTileEntity(IBlockState state) {
-		return true;
+		return state.getValue(PIECE).equals(BlockArcaneForge.EnumForgePiece.ONE) ? true : false;
 	}
 
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state) {
-		return new TileEntityArcaneForge();
+		if (hasTileEntity(state)) {
+			return new TileEntityArcaneForge();
+		}
+		return null;
+	}
+
+	public BlockPos getRoot(IBlockState state, BlockPos pos) {
+		return pos.subtract(state.getValue(PIECE).getRootPos());
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		BlockPos root = getRoot(state, pos);
 		if (!player.isSneaking()) {
-			TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(pos);
+			TileEntityArcaneForge te = (TileEntityArcaneForge) world.getTileEntity(root);
 			if (!world.isRemote) {
 
 				if (!player.getHeldItem(hand).isEmpty()) {
@@ -143,7 +147,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 						if (te.getDepth(0) == 0 && te.getDepth(1) == 0) {
 
-							InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(),
+							InventoryHelper.spawnItemStack(world, root.getX(), root.getY() + 0.5, root.getZ(),
 									te.getWeapon().copy());
 
 							te.setGem(ItemStack.EMPTY, 0);
@@ -201,12 +205,14 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 					}
 
 					if (!stack.isEmpty()) {
-						InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
+						InventoryHelper.spawnItemStack(world, root.getX(), root.getY() + 0.5, root.getZ(), stack);
 					}
 				}
 			} else if (player.getHeldItem(hand).getItem().equals(Items.IRON_AXE) && !te.getWeapon().isEmpty()) {
-				world.spawnParticle(EnumParticleTypes.CRIT, pos.getX() + 0.35 + world.rand.nextInt(30) / 100d,
-						pos.getY() + 1.1, pos.getZ() + 0.2 + world.rand.nextInt(60) / 100d, 0, 0.01, 0);
+				for (int i = 0; i < world.rand.nextInt(5); i++) {
+					world.spawnParticle(EnumParticleTypes.CRIT, root.getX() + 0.85 + world.rand.nextInt(30) / 100d,
+							root.getY() + 1.1, root.getZ() + 0.3 + world.rand.nextInt(120) / 100d, 0, 0.01, 0);
+				}
 			}
 			return true;
 		}
@@ -230,9 +236,15 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+	public boolean canPlaceBlockAt(World worldIn, BlockPos root) {
 		for (Vec3i piece : pieceLocations) {
-			if (!worldIn.isAirBlock(pos.add(piece))) {
+			BlockPos pos = root.add(piece);
+			if (!worldIn.isAirBlock(pos) || worldIn.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(),
+					pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>() {
+						public boolean apply(@Nullable Entity entity) {
+							return !(entity instanceof EntityItem);
+						}
+					}).size() > 0) {
 				return false;
 			}
 		}

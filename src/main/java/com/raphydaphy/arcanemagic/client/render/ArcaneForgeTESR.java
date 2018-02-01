@@ -31,8 +31,7 @@ public class ArcaneForgeTESR extends TileEntitySpecialRenderer<TileEntityArcaneF
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(.5, 1.01, .5);
-			GlStateManager.scale(.5f, .5f, .5f);
+			GlStateManager.translate(1, 1.01, 1);
 
 			GlStateManager.rotate(90, 1, 0, 0);
 			GlStateManager.rotate(45, 0, 0, 1);
