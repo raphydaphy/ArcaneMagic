@@ -178,8 +178,8 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 										new PacketAnimaTransfer(stack, from, to, toCosmetic, spawnParticles));
 							} else
 							{
-								ArcaneMagic.proxy.spawnAnimaParticles(world, from, new Vec3d(0, 0, 0),
-										stack.getAnima(), toCosmetic, to.equals(toCosmetic) ? false : true);
+								ArcaneMagic.proxy.spawnAnimaParticles(world, from, new Vec3d(0, 0, 0), stack.getAnima(),
+										toCosmetic, to.equals(toCosmetic) ? false : true);
 
 							}
 						}

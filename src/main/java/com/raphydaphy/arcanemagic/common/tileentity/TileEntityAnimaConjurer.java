@@ -18,7 +18,7 @@ import net.minecraft.util.math.Vec3d;
 public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements ITickable
 {
 	private ItemStack stack = ItemStack.EMPTY;
-	
+
 	private int frameAge = 0;
 
 	public TileEntityAnimaConjurer()
@@ -49,13 +49,10 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 		super.markDirty();
 		if (TileEntityAnimaConjurer.this.world != null && TileEntityAnimaConjurer.this.pos != null)
 		{
-			IBlockState state = TileEntityAnimaConjurer.this.world
-					.getBlockState(TileEntityAnimaConjurer.this.pos);
-			TileEntityAnimaConjurer.this.world
-					.markAndNotifyBlock(
-							TileEntityAnimaConjurer.this.pos, TileEntityAnimaConjurer.this.world
-									.getChunkFromBlockCoords(TileEntityAnimaConjurer.this.pos),
-							state, state, 1 | 2);
+			IBlockState state = TileEntityAnimaConjurer.this.world.getBlockState(TileEntityAnimaConjurer.this.pos);
+			TileEntityAnimaConjurer.this.world.markAndNotifyBlock(TileEntityAnimaConjurer.this.pos,
+					TileEntityAnimaConjurer.this.world.getChunkFromBlockCoords(TileEntityAnimaConjurer.this.pos), state,
+					state, 1 | 2);
 		}
 	}
 
@@ -63,18 +60,18 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 	{
 		return frameAge;
 	}
-	
+
 	public int increaseFrameAge()
 	{
 		frameAge++;
-		
+
 		return frameAge;
 	}
-	
+
 	public int setFrameAge(int newAge)
 	{
 		frameAge = newAge;
-		
+
 		return frameAge;
 	}
 
@@ -85,7 +82,7 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 		{
 			return;
 		}
-		
+
 		if (this.getStack().getItem() == ModRegistry.ANCIENT_PARCHMENT)
 		{
 			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
@@ -99,8 +96,7 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 							BlockPos here = new BlockPos(x, y, z);
 							if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 							{
-								Anima.sendAnima(world,
-										new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
+								Anima.sendAnima(world, new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 										new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, true);
 

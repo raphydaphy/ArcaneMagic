@@ -11,8 +11,8 @@ import net.minecraft.tileentity.TileEntity;
 public class TileEntityArcaneForge extends TileEntity
 {
 	private ItemStack weapon = ItemStack.EMPTY;
-	private ItemStack[] gems = {ItemStack.EMPTY, ItemStack.EMPTY};
-	private int[] insertDepth = {4,4};
+	private ItemStack[] gems = { ItemStack.EMPTY, ItemStack.EMPTY };
+	private int[] insertDepth = { 4, 4 };
 
 	public ItemStack getWeapon()
 	{
@@ -30,16 +30,16 @@ public class TileEntityArcaneForge extends TileEntity
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
-	
+
 	public int getDepth(int gem)
 	{
 		return insertDepth[gem];
 	}
-	
+
 	public void setDepth(int depth, int gem)
 	{
 		insertDepth[gem] = depth;
-		
+
 		markDirty();
 
 		if (world != null)
@@ -48,11 +48,11 @@ public class TileEntityArcaneForge extends TileEntity
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
-	
+
 	public void setGem(ItemStack gem, int num)
 	{
 		this.gems[num] = gem;
-		
+
 		markDirty();
 
 		if (world != null)
@@ -61,7 +61,7 @@ public class TileEntityArcaneForge extends TileEntity
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
-	
+
 	public ItemStack getGem(int num)
 	{
 		return gems[num];
@@ -73,16 +73,13 @@ public class TileEntityArcaneForge extends TileEntity
 		super.markDirty();
 		if (TileEntityArcaneForge.this.world != null && TileEntityArcaneForge.this.pos != null)
 		{
-			IBlockState state = TileEntityArcaneForge.this.world
-					.getBlockState(TileEntityArcaneForge.this.pos);
-			TileEntityArcaneForge.this.world
-					.markAndNotifyBlock(
-							TileEntityArcaneForge.this.pos, TileEntityArcaneForge.this.world
-									.getChunkFromBlockCoords(TileEntityArcaneForge.this.pos),
-							state, state, 1 | 2);
+			IBlockState state = TileEntityArcaneForge.this.world.getBlockState(TileEntityArcaneForge.this.pos);
+			TileEntityArcaneForge.this.world.markAndNotifyBlock(TileEntityArcaneForge.this.pos,
+					TileEntityArcaneForge.this.world.getChunkFromBlockCoords(TileEntityArcaneForge.this.pos), state,
+					state, 1 | 2);
 		}
 	}
-	
+
 	@Override
 	public NBTTagCompound getUpdateTag()
 	{

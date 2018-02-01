@@ -51,8 +51,8 @@ public class AnimaRegistry implements IForgeRegistry<Anima>
 			return;
 		} else if (oldEntry != null)
 		{
-			ArcaneMagic.LOGGER.info("Overriding entry {} in the Anima Registry with {}, using name {}", oldEntry,
-					value, key);
+			ArcaneMagic.LOGGER.info("Overriding entry {} in the Anima Registry with {}, using name {}", oldEntry, value,
+					key);
 		}
 		animus.put(key, value);
 	}

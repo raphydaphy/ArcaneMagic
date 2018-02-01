@@ -59,8 +59,7 @@ public class ClientProxy extends CommonProxy
 	{
 		registerColors();
 
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnimaConjurer.class,
-				new AnimaConjurerTESR());
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnimaConjurer.class, new AnimaConjurerTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArcaneTransfigurationTable.class,
 				new ArcaneTransfigurationTableTESR());
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnalyzer.class, new AnalyzerTESR());
@@ -77,8 +76,8 @@ public class ClientProxy extends CommonProxy
 	public void spawnAnimaParticles(World world, Vec3d pos, Vec3d speed, Anima anima, Vec3d travelPos,
 			boolean isCosmetic)
 	{
-		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleAnima(world, pos.x, pos.y, pos.z, speed.x,
-				speed.y, speed.z, anima, travelPos, isCosmetic));
+		Minecraft.getMinecraft().effectRenderer.addEffect(
+				new ParticleAnima(world, pos.x, pos.y, pos.z, speed.x, speed.y, speed.z, anima, travelPos, isCosmetic));
 	}
 
 	@Override

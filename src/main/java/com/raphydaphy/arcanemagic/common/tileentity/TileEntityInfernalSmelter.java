@@ -160,8 +160,7 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 							if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER))
 							{
 
-								TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world
-										.getTileEntity(here);
+								TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(here);
 
 								if (te != null)
 								{

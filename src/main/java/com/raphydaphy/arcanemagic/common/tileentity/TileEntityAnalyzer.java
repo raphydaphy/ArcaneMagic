@@ -278,8 +278,7 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 								{
 									// Send some essence to the parchment for ink
-									Anima.sendAnima(world,
-											new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
+									Anima.sendAnima(world, new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 											new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5),
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5), false,

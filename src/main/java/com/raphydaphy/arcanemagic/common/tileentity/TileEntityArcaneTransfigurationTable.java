@@ -34,15 +34,15 @@ public class TileEntityArcaneTransfigurationTable extends TileEntity implements 
 	public void markDirty()
 	{
 		super.markDirty();
-		if (TileEntityArcaneTransfigurationTable.this.world != null && TileEntityArcaneTransfigurationTable.this.pos != null)
+		if (TileEntityArcaneTransfigurationTable.this.world != null
+				&& TileEntityArcaneTransfigurationTable.this.pos != null)
 		{
 			IBlockState state = TileEntityArcaneTransfigurationTable.this.world
 					.getBlockState(TileEntityArcaneTransfigurationTable.this.pos);
-			TileEntityArcaneTransfigurationTable.this.world
-					.markAndNotifyBlock(
-							TileEntityArcaneTransfigurationTable.this.pos, TileEntityArcaneTransfigurationTable.this.world
-									.getChunkFromBlockCoords(TileEntityArcaneTransfigurationTable.this.pos),
-							state, state, 1 | 2);
+			TileEntityArcaneTransfigurationTable.this.world.markAndNotifyBlock(
+					TileEntityArcaneTransfigurationTable.this.pos, TileEntityArcaneTransfigurationTable.this.world
+							.getChunkFromBlockCoords(TileEntityArcaneTransfigurationTable.this.pos),
+					state, state, 1 | 2);
 		}
 	}
 

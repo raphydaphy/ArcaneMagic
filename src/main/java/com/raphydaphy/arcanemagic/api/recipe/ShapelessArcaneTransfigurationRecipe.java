@@ -31,7 +31,7 @@ public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurat
 	}
 
 	@Override
-	public AnimaStack  getReqAnima()
+	public AnimaStack getReqAnima()
 	{
 		return anima;
 	}
@@ -61,8 +61,8 @@ public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurat
 		IArcaneTransfigurationItem crafter = (IArcaneTransfigurationItem) wand.getItem();
 		if (!crafter.matches(this, player, wand, stacks, world))
 			return false;
-		return toCheck.isEmpty() && (anima.isEmpty() || (crafter.containsAnimus()
-				&& wand.getCapability(IAnimaStorage.CAP, null).take(anima, true) == null));
+		return toCheck.isEmpty() && (anima.isEmpty()
+				|| (crafter.containsAnimus() && wand.getCapability(IAnimaStorage.CAP, null).take(anima, true) == null));
 	}
 
 	@Override

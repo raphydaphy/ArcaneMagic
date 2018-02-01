@@ -107,12 +107,12 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	{
 		return EnumBlockRenderType.MODEL;
 	}
-	
+
 	@Override
 	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-    {
+	{
 		return layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT;
-    }
+	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,

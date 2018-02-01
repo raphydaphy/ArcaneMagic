@@ -82,15 +82,14 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 					ItemStack stack)
 			{
 				Block block = world.getBlockState(clickPos).getBlock();
-				
-		        if (block == Blocks.SNOW_LAYER && block.isReplaceable(world, clickPos))
-		        {
-		            side = EnumFacing.UP;
-		        }
-		        else if (!block.isReplaceable(world, clickPos))
-		        {
-		        	clickPos = clickPos.offset(side);
-		        }
+
+				if (block == Blocks.SNOW_LAYER && block.isReplaceable(world, clickPos))
+				{
+					side = EnumFacing.UP;
+				} else if (!block.isReplaceable(world, clickPos))
+				{
+					clickPos = clickPos.offset(side);
+				}
 				BlockPos root = BlockArcaneForge.getPlacementOffset(clickPos, player.getHorizontalFacing());
 				for (Vec3i piece : BlockArcaneForge.pieceLocations)
 				{

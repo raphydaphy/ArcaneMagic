@@ -66,8 +66,8 @@ public class GuiAltar extends GuiContainer
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 250, 203);
 		fontRenderer.drawString(I18n.format("gui.arcanemagic.altar"),
-				(guiLeft + 103 - fontRenderer.getStringWidth(I18n.format("gui.arcanemagic.altar")) / 2),
-				guiTop + 9, 4210752);
+				(guiLeft + 103 - fontRenderer.getStringWidth(I18n.format("gui.arcanemagic.altar")) / 2), guiTop + 9,
+				4210752);
 		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 106, 4210752);
 
 		IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -110,8 +110,8 @@ public class GuiAltar extends GuiContainer
 				GLHelper.renderFancyBeam2D(guiLeft + 101, guiTop + 60, -78, rainbow, mc.world.getSeed(), age, 0.2f);
 
 				// CHAOS
-				GLHelper.renderFancyBeams2D(guiLeft + 92, guiTop + 27, Anima.CHAOS.getColor(), mc.world.getSeed(),
-						age, 0.18f, 40, 30);
+				GLHelper.renderFancyBeams2D(guiLeft + 92, guiTop + 27, Anima.CHAOS.getColor(), mc.world.getSeed(), age,
+						0.18f, 40, 30);
 
 				// DEPTH
 				GLHelper.renderFancyBeams2D(guiLeft + 111, guiTop + 92, Anima.DEPTH.getColor(), mc.world.getSeed(),

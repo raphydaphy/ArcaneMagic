@@ -31,23 +31,23 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		te.frameAge++;
 
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		Vec3d ore = new Vec3d(0,0.25,0);
-		switch(te.getWorld().getBlockState(te.getPos()).getValue(BlockInfernalSmelter.FACING).getHorizontalIndex())
+		Vec3d ore = new Vec3d(0, 0.25, 0);
+		switch (te.getWorld().getBlockState(te.getPos()).getValue(BlockInfernalSmelter.FACING).getHorizontalIndex())
 		{
 		case 0:
-			ore = ore.addVector(0.5,0,0.135);
+			ore = ore.addVector(0.5, 0, 0.135);
 			break;
 		case 1:
 			ore = ore.addVector(0.85, 0, 0.5);
 			break;
 		case 2:
-			ore = ore.addVector(0.5,0,0.85);
+			ore = ore.addVector(0.5, 0, 0.85);
 			break;
 		case 3:
 			ore = ore.addVector(0.135, 0, 0.5);
 			break;
 		}
-		GlStateManager.translate(ore.x,ore.y,ore.z);
+		GlStateManager.translate(ore.x, ore.y, ore.z);
 		renderItem(te, cap.getStackInSlot(TileEntityInfernalSmelter.ORE), te.frameAge, false);
 
 		GlStateManager.popMatrix();

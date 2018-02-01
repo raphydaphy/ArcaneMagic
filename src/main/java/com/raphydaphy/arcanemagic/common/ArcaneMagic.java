@@ -62,8 +62,8 @@ public class ArcaneMagic
 	@Mod.EventHandler
 	public void init(FMLInitializationEvent event)
 	{
-		MinecraftForge.EVENT_BUS.post(
-				new Register<Anima>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Anima.REGISTRY));
+		MinecraftForge.EVENT_BUS
+				.post(new Register<Anima>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Anima.REGISTRY));
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
 		proxy.init(event);
 	}

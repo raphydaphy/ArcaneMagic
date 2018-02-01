@@ -31,7 +31,7 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 			int destroyStage, float alpha)
 	{
 		te.frameAge++;
-		
+
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
@@ -60,7 +60,8 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 				recipeInputs.set(i, cap.getStackInSlot(i));
 			}
 
-			IArcaneTransfigurationRecipe foundRecipe = ArcaneMagicAPI.getArcaneTransfigurationRecipe(player, held, recipeInputs, world);
+			IArcaneTransfigurationRecipe foundRecipe = ArcaneMagicAPI.getArcaneTransfigurationRecipe(player, held,
+					recipeInputs, world);
 
 			if (foundRecipe != null)
 			{

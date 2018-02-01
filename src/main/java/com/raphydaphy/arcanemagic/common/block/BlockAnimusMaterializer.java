@@ -43,11 +43,11 @@ public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe
 		BOUNDS.add(makeAABB(2, 6, 2, 14, 8, 14));
 		BOUNDS.add(makeAABB(4, 8, 4, 12, 10, 12));
 	}
-	
+
 	public BlockAnimusMaterializer()
 	{
 		super("animus_materializer", Material.ROCK, 2.5f, SoundType.STONE);
-		
+
 		this.setRenderedAABB(makeAABB(2, 0, 2, 14, 10, 14));
 		this.setCollisionAABBList(BOUNDS);
 	}

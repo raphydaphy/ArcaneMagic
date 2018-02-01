@@ -21,7 +21,8 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 	public void register(IModRegistry registry)
 	{
 		registry.addRecipes(RecipeHelper.ELEMENTAL_RECIPES, ARCANE_TRANSFIGURATION_UID);
-		registry.handleRecipes(IArcaneTransfigurationRecipe.class, WrapperArcaneTransfiguration::new, ARCANE_TRANSFIGURATION_UID);
+		registry.handleRecipes(IArcaneTransfigurationRecipe.class, WrapperArcaneTransfiguration::new,
+				ARCANE_TRANSFIGURATION_UID);
 		registry.addRecipeCatalyst(new ItemStack(ModRegistry.ARCANE_TRANSFIGURATION_TABLE), ARCANE_TRANSFIGURATION_UID);
 		registry.addIngredientInfo(new ItemStack(ModRegistry.ANCIENT_PARCHMENT), ItemStack.class,
 				"desc.arcanemagic.ancient_parchment");

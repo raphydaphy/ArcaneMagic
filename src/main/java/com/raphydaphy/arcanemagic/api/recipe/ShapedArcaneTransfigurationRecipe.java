@@ -47,8 +47,8 @@ public class ShapedArcaneTransfigurationRecipe implements IArcaneTransfiguration
 		IArcaneTransfigurationItem crafter = (IArcaneTransfigurationItem) wand.getItem();
 		if (!crafter.matches(this, player, wand, stacks, world))
 			return false;
-		return anima.isEmpty() || (crafter.containsAnimus()
-				&& wand.getCapability(IAnimaStorage.CAP, null).take(anima, true) == null);
+		return anima.isEmpty()
+				|| (crafter.containsAnimus() && wand.getCapability(IAnimaStorage.CAP, null).take(anima, true) == null);
 	}
 
 	@Override

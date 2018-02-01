@@ -6,8 +6,8 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 
 public enum EnumBasicAnimus implements IPropertyEnum
 {
-	OZONE(Anima.OZONE), DEPTH(Anima.DEPTH), INFERNO(Anima.INFERNO), HORIZON(Anima.HORIZON), PEACE(
-			Anima.PEACE), CHAOS(Anima.CHAOS);
+	OZONE(Anima.OZONE), DEPTH(Anima.DEPTH), INFERNO(Anima.INFERNO), HORIZON(Anima.HORIZON), PEACE(Anima.PEACE), CHAOS(
+			Anima.CHAOS);
 
 	final Anima anima;
 

@@ -376,12 +376,12 @@ public class RecipeHelper
 	public static IArcaneTransfigurationRecipe addElementalShapeless(ItemStack output, Anima essence, int reqEssence,
 			Object... inputs)
 	{
-		return addArcaneTransfigurationRecipe(new ShapelessArcaneTransfigurationRecipe(output, createElementalInput(inputs),
-				new AnimaStack(essence, reqEssence)));
+		return addArcaneTransfigurationRecipe(new ShapelessArcaneTransfigurationRecipe(output,
+				createElementalInput(inputs), new AnimaStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShapeless(T output, Anima essence,
-			int reqEssence, Object... inputs)
+	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShapeless(T output,
+			Anima essence, int reqEssence, Object... inputs)
 	{
 		return addElementalShapeless(makeStack(output), essence, reqEssence, inputs);
 	}
@@ -393,12 +393,12 @@ public class RecipeHelper
 	public static IArcaneTransfigurationRecipe addElementalShaped(ItemStack output, Anima essence, int reqEssence,
 			Object... input)
 	{
-		return addArcaneTransfigurationRecipe(
-				new ShapedArcaneTransfigurationRecipe(output, createElementalInput(input), new AnimaStack(essence, reqEssence)));
+		return addArcaneTransfigurationRecipe(new ShapedArcaneTransfigurationRecipe(output, createElementalInput(input),
+				new AnimaStack(essence, reqEssence)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShaped(T output, Anima essence,
-			int reqEssence, Object... input)
+	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShaped(T output,
+			Anima essence, int reqEssence, Object... input)
 	{
 		return addElementalShaped(makeStack(output), essence, reqEssence, input);
 	}

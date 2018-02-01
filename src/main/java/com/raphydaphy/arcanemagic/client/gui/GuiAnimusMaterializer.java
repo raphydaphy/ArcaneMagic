@@ -44,8 +44,7 @@ public class GuiAnimusMaterializer extends GuiContainer
 		GlStateManager.color(1, 1, 1);
 		GlStateManager.clearColor(1, 1, 1, 1);
 
-		Minecraft.getMinecraft().getTextureManager()
-				.bindTexture(background);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(background);
 
 		GlStateManager.pushMatrix();
 		GlStateManager.color(1, 1, 1, 1);
@@ -102,7 +101,8 @@ public class GuiAnimusMaterializer extends GuiContainer
 		}
 
 		String title = I18n.format("gui.arcanemagic.animus_materializer");
-		mc.fontRenderer.drawString(title, (float)(guiLeft + 85 - mc.fontRenderer.getStringWidth(title) / 2), guiTop + 7, 4210752, false);
+		mc.fontRenderer.drawString(title, (float) (guiLeft + 85 - mc.fontRenderer.getStringWidth(title) / 2),
+				guiTop + 7, 4210752, false);
 		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 87, 4210752);
 	}
 }

@@ -48,7 +48,7 @@ public class ModRegistry
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
-	
+
 	public static final BlockAnalyzer ANALYZER = new BlockAnalyzer();
 	public static final BlockAltar ALTAR = new BlockAltar();
 	public static final BlockArcaneTransfigurationTable ARCANE_TRANSFIGURATION_TABLE = new BlockArcaneTransfigurationTable();
@@ -57,7 +57,7 @@ public class ModRegistry
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
 	public static final BlockArcaneForge ARCANE_FORGE = new BlockArcaneForge();
-	
+
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
 	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();
@@ -67,12 +67,15 @@ public class ModRegistry
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();
 	public static final ItemEssenceChannelingRod ESSENCE_CHANNELING_ROD = new ItemEssenceChannelingRod();
 	public static final ItemArcaneDagger ARCANE_DAGGER = new ItemArcaneDagger();
-	
-	public static final ItemAncientClothArmor ANCIENT_CLOTH_HELMET = new ItemAncientClothArmor("ancient_cloth_helmet", 0);
-	public static final ItemAncientClothArmor ANCIENT_CLOTH_CHESTPLATE = new ItemAncientClothArmor("ancient_cloth_chestplate", 1);
-	public static final ItemAncientClothArmor ANCIENT_CLOTH_LEGGINGS = new ItemAncientClothArmor("ancient_cloth_leggings", 2);
+
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_HELMET = new ItemAncientClothArmor("ancient_cloth_helmet",
+			0);
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_CHESTPLATE = new ItemAncientClothArmor(
+			"ancient_cloth_chestplate", 1);
+	public static final ItemAncientClothArmor ANCIENT_CLOTH_LEGGINGS = new ItemAncientClothArmor(
+			"ancient_cloth_leggings", 2);
 	public static final ItemAncientClothArmor ANCIENT_CLOTH_BOOTS = new ItemAncientClothArmor("ancient_cloth_boots", 3);
-	
+
 	@SubscribeEvent
 	public void onBlockRegister(Register<Block> e)
 	{
@@ -88,8 +91,7 @@ public class ModRegistry
 	@SubscribeEvent
 	public void onRecipeRegister(Register<IRecipe> e)
 	{
-		OreDictionary.registerOre("formationAnima",
-				new ItemStack(ModRegistry.ANIMA, 1, OreDictionary.WILDCARD_VALUE));
+		OreDictionary.registerOre("formationAnima", new ItemStack(ModRegistry.ANIMA, 1, OreDictionary.WILDCARD_VALUE));
 
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasRecipe)
@@ -128,8 +130,7 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityArcaneTransfigurationTable.class,
 				ArcaneMagic.MODID + "_arcane_transfiguration_table");
 		GameRegistry.registerTileEntity(TileEntityAnimusMaterializer.class, ArcaneMagic.MODID + "_animus_materializer");
-		GameRegistry.registerTileEntity(TileEntityAnimaConjurer.class,
-				ArcaneMagic.MODID + "_anima_conjurer");
+		GameRegistry.registerTileEntity(TileEntityAnimaConjurer.class, ArcaneMagic.MODID + "_anima_conjurer");
 		GameRegistry.registerTileEntity(TileEntityAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
 		GameRegistry.registerTileEntity(TileEntityInfernalSmelter.class, ArcaneMagic.MODID + "_infernal_smelter");

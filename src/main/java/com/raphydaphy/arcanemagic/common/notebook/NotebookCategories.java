@@ -36,18 +36,14 @@ public class NotebookCategories
 	public static final NotebookCategory NATURAL_DIVISIONS = new CategoryNaturalDivisions()
 			.setRegistryName(ArcaneMagic.MODID, "natural_divisions");
 
-	public static final CategoryNaturalDivisionsSub HORIZON_CATEGORY = new CategoryNaturalDivisionsSub(Anima.HORIZON,
-			1, 2);
-	public static final CategoryNaturalDivisionsSub OZONE_CATEGORY = new CategoryNaturalDivisionsSub(Anima.OZONE, 2,
+	public static final CategoryNaturalDivisionsSub HORIZON_CATEGORY = new CategoryNaturalDivisionsSub(Anima.HORIZON, 1,
 			2);
-	public static final CategoryNaturalDivisionsSub INFERNO_CATEGORY = new CategoryNaturalDivisionsSub(Anima.INFERNO,
-			3, 2);
-	public static final CategoryNaturalDivisionsSub DEPTH_CATEGORY = new CategoryNaturalDivisionsSub(Anima.DEPTH, 4,
+	public static final CategoryNaturalDivisionsSub OZONE_CATEGORY = new CategoryNaturalDivisionsSub(Anima.OZONE, 2, 2);
+	public static final CategoryNaturalDivisionsSub INFERNO_CATEGORY = new CategoryNaturalDivisionsSub(Anima.INFERNO, 3,
 			2);
-	public static final CategoryNaturalDivisionsSub CHAOS_CATEGORY = new CategoryNaturalDivisionsSub(Anima.CHAOS, 5,
-			2);
-	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Anima.PEACE, 6,
-			2);
+	public static final CategoryNaturalDivisionsSub DEPTH_CATEGORY = new CategoryNaturalDivisionsSub(Anima.DEPTH, 4, 2);
+	public static final CategoryNaturalDivisionsSub CHAOS_CATEGORY = new CategoryNaturalDivisionsSub(Anima.CHAOS, 5, 2);
+	public static final CategoryNaturalDivisionsSub PEACE_CATEGORY = new CategoryNaturalDivisionsSub(Anima.PEACE, 6, 2);
 
 	public static final CategoryNaturalDivisionsSub[] NATURAL_DIVISION_PAGES = { HORIZON_CATEGORY, OZONE_CATEGORY,
 			INFERNO_CATEGORY, DEPTH_CATEGORY, CHAOS_CATEGORY, PEACE_CATEGORY };

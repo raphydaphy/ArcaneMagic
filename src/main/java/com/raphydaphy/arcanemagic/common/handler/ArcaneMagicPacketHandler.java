@@ -36,8 +36,7 @@ public class ArcaneMagicPacketHandler
 
 		// Server -> Client
 
-		INSTANCE.registerMessage(PacketAnimaTransfer.Handler.class, PacketAnimaTransfer.class, packetId++,
-				Side.CLIENT);
+		INSTANCE.registerMessage(PacketAnimaTransfer.Handler.class, PacketAnimaTransfer.class, packetId++, Side.CLIENT);
 		INSTANCE.registerMessage(PacketItemAnimaChanged.Handler.class, PacketItemAnimaChanged.class, packetId++,
 				Side.CLIENT);
 		INSTANCE.registerMessage(PacketNotebookOpened.Handler.class, PacketNotebookOpened.class, packetId++,

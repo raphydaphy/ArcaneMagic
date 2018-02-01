@@ -102,8 +102,7 @@ public class AnimaStorage implements IAnimaStorage, ICapabilityProvider
 			{
 				if (!simulate)
 				{
-					storage.put(in.getAnima(),
-							new AnimaStack(in.getAnima(), in.getCount() - amountToDiscardOnPut));
+					storage.put(in.getAnima(), new AnimaStack(in.getAnima(), in.getCount() - amountToDiscardOnPut));
 					markDirty();
 				}
 				return new AnimaStack(in.getAnima(), amountToDiscardOnPut);
@@ -156,8 +155,7 @@ public class AnimaStorage implements IAnimaStorage, ICapabilityProvider
 		}
 
 		@Override
-		public void readNBT(Capability<IAnimaStorage> capability, IAnimaStorage instance, EnumFacing side,
-				NBTBase nbt)
+		public void readNBT(Capability<IAnimaStorage> capability, IAnimaStorage instance, EnumFacing side, NBTBase nbt)
 		{
 			instance.deserializeNBT((NBTTagCompound) nbt);
 		}

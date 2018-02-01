@@ -135,8 +135,8 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 			GlStateManager.pushMatrix();
 			GlStateManager.pushAttrib();
 			GLHelper.renderFancyBeams(0, 0 + 0.1, 0,
-					Anima.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(),
-					entity.world.getSeed(), 4748342, 16, 0.7f, 30, 10);
+					Anima.getFromBiome(entity.world.getBiome(new BlockPos(x, y, z))).getColor(), entity.world.getSeed(),
+					4748342, 16, 0.7f, 30, 10);
 			GlStateManager.popAttrib();
 			GlStateManager.popMatrix();
 		}

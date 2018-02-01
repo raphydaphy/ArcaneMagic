@@ -15,8 +15,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnimaConjurer>
 {
 	@Override
-	public void render(TileEntityAnimaConjurer te, double x, double y, double z, float partialTicks,
-			int destroyStage, float alpha)
+	public void render(TileEntityAnimaConjurer te, double x, double y, double z, float partialTicks, int destroyStage,
+			float alpha)
 	{
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
