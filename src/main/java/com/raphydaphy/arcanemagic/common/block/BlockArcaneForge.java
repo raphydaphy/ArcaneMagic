@@ -259,56 +259,6 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos)
-	{
-		/*
-		if (!(state.getValue(PIECE) == BlockArcaneForge.EnumForgePiece.ONE))
-		{
-			BlockPos blockpos = pos.add(state.getValue(PIECE).getRootPos());
-			IBlockState iblockstate = worldIn.getBlockState(blockpos);
-
-			if (iblockstate.getBlock() != this)
-			{
-				//worldIn.setBlockToAir(pos);
-			} else if (blockIn != this)
-			{
-				iblockstate.neighborChanged(worldIn, blockpos, blockIn, fromPos);
-			}
-		} else
-		{
-			boolean flag1 = false;
-
-			for (Vec3i piece : pieceLocations)
-			{
-				BlockPos blockpos1 = pos.add(piece);
-				if (worldIn.getBlockState(blockpos1).getBlock() != this)
-				{
-					worldIn.setBlockToAir(pos);
-					flag1 = true;
-
-					break;
-				}
-			}
-
-			if (flag1)
-			{
-				for (Vec3i piece : pieceLocations)
-				{
-					BlockPos blockpos1 = pos.add(piece);
-					if (worldIn.getBlockState(blockpos1).getBlock() == this)
-					{
-						worldIn.setBlockToAir(blockpos1);
-					}
-				}
-				if (!worldIn.isRemote)
-				{
-					this.dropBlockAsItem(worldIn, pos, state, 0);
-				}
-			}
-		}*/
-	}
-
-	@Override
 	public IBlockState getStateFromMeta(int meta)
 	{
 		return this.getDefaultState().withProperty(PIECE, BlockArcaneForge.EnumForgePiece.getFromNum(meta + 1));
@@ -341,22 +291,27 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 			for (Vec3i piece : pieceLocations)
 			{
 				BlockPos blockpos1 = pos.add(piece);
+				if (!blockpos1.equals(pos))
+				{
 				worldIn.setBlockToAir(blockpos1);
+				}
 			}
 			this.dropBlockAsItem(worldIn, pos, state, 0);
+			worldIn.setBlockToAir(pos);
 		} else
 		{
-			BlockPos main = pos.subtract(state.getValue(PIECE).getRootPos());
+			BlockPos root = pos.subtract(state.getValue(PIECE).getRootPos());
 			for (Vec3i piece : pieceLocations)
 			{
-				BlockPos blockpos1 = pos.add(piece);
-				if (blockpos1.equals(main))
+				BlockPos blockpos1 = root.add(piece);
+				if (blockpos1.equals(pos))
 				{
-					worldIn.destroyBlock(main, true);
-				} else
+					worldIn.destroyBlock(blockpos1, true);
+				} else if (!blockpos1.equals(pos))
 				{
 					worldIn.setBlockToAir(blockpos1);
 				}
+				worldIn.setBlockToAir(pos);
 			}
 
 		}
