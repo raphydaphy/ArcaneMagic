@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
@@ -27,6 +28,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
@@ -41,11 +43,13 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 1, 1);
-	public static final PropertyEnum<EnumForgePiece> PIECE = PropertyEnum.<EnumForgePiece>create(
-			"piece", EnumForgePiece.class);
+	public static final PropertyEnum<EnumForgePiece> PIECE = PropertyEnum.<EnumForgePiece>create("piece",
+			EnumForgePiece.class);
 
 	public BlockArcaneForge() {
 		super("arcane_forge", Material.ROCK, 4f, SoundType.STONE);
@@ -65,6 +69,13 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
+	
+	@Override
+	public void init()
+	{
+		ModRegistry.BLOCKS.add(this);
+		ModRegistry.ITEMS.add(new ItemBlockArcaneForge());
+	}
 
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state) {
@@ -83,7 +94,9 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 			for (Vec3i piece : pieceLocations) {
 				BlockPos blockpos1 = pos.add(piece);
 				if (!blockpos1.equals(pos)) {
-					world.setBlockToAir(blockpos1);
+					if (world.getBlockState(blockpos1).getBlock().equals(this)) {
+						world.setBlockToAir(blockpos1);
+					}
 				}
 			}
 		} else {
@@ -228,26 +241,38 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
+		BlockPos root = getPlacementOffset(pos, placer.getHorizontalFacing());
+		
 		for (Vec3i piece : pieceLocations) {
-			worldIn.setBlockState(pos.add(piece),
-					state.withProperty(PIECE, EnumForgePiece.getFromRootPos(piece)));
+			worldIn.setBlockState(root.add(piece), state.withProperty(PIECE, EnumForgePiece.getFromRootPos(piece)));
 
 		}
+		
 	}
-
-	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos root) {
-		for (Vec3i piece : pieceLocations) {
-			BlockPos pos = root.add(piece);
-			if (!worldIn.isAirBlock(pos) || worldIn.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(),
-					pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>() {
-						public boolean apply(@Nullable Entity entity) {
-							return !(entity instanceof EntityItem);
-						}
-					}).size() > 0) {
-				return false;
-			}
+	
+	public static BlockPos getPlacementOffset(BlockPos pos, EnumFacing facing)
+	{
+		switch(facing)
+		{
+		case DOWN:
+			break;
+		case EAST:
+			return pos;
+		case NORTH:
+			return pos.add(0,0,-1);
+		case SOUTH:
+			return pos.add(-1,0,0);
+		case UP:
+			break;
+		case WEST:
+			return pos.add(-1,0,-1);
 		}
+		return pos;
+	}
+	
+	@Override
+	public boolean canPlaceBlockOnSide(World world, BlockPos placementPos, EnumFacing facing) {
+		
 		return true;
 	}
 
@@ -268,13 +293,43 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return state.getValue(PIECE).equals(EnumForgePiece.ONE) ? Item.getItemFromBlock(this)
-				: Items.AIR;
+		return state.getValue(PIECE).equals(EnumForgePiece.ONE) ? Item.getItemFromBlock(this) : Items.AIR;
 	}
 
-	private static final Vec3i[] pieceLocations = { new Vec3i(0, 0, 0), new Vec3i(1, 0, 0), new Vec3i(0, 0, 1),
+	public static final Vec3i[] pieceLocations = { new Vec3i(0, 0, 0), new Vec3i(1, 0, 0), new Vec3i(0, 0, 1),
 			new Vec3i(1, 0, 1) };
 
+	public class ItemBlockArcaneForge extends ItemBlock
+	{
+		public ItemBlockArcaneForge() {
+			super(ModRegistry.ARCANE_FORGE);
+			setRegistryName(ModRegistry.ARCANE_FORGE.getRegistryName());
+			setCreativeTab(ArcaneMagic.creativeTab);
+		}
+		
+		@SideOnly(Side.CLIENT)
+	    public boolean canPlaceBlockOnSide(World world, BlockPos placementPos, EnumFacing side, EntityPlayer player, ItemStack stack)
+	    {
+			BlockPos root = BlockArcaneForge.getPlacementOffset(placementPos, player.getHorizontalFacing());
+			for (Vec3i piece : BlockArcaneForge.pieceLocations) {
+				BlockPos pos = root.add(piece);
+				if (world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(),
+						pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>() {
+							public boolean apply(@Nullable Entity entity) {
+								return !(entity instanceof EntityItem);
+							}
+						}).size() > 0) {
+					return false;
+				}
+				if (!world.isAirBlock(pos))
+				{
+					return false;
+				}
+			}
+			return true;
+	    }
+	}
+	
 	public static enum EnumForgePiece implements IStringSerializable {
 		ONE, TWO, THREE, FOUR;
 
