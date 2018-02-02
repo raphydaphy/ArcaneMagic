@@ -354,13 +354,6 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public boolean canPlaceBlockOnSide(World world, BlockPos placementPos, EnumFacing facing)
-	{
-
-		return true;
-	}
-
-	@Override
 	public IBlockState getStateFromMeta(int meta)
 	{
 		return this.getDefaultState().withProperty(PIECE, EnumForgePiece.getFromNum(meta + 1));
@@ -389,74 +382,40 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 
 	public static enum EnumForgePiece implements IStringSerializable
 	{
-		ONE, TWO, THREE, FOUR;
+		ONE("one", 1), TWO("two", 2), THREE("three", 3), FOUR("four", 4);
 
-		public String toString()
+		private String name;
+		private int num;
+
+		private EnumForgePiece(String name, int num)
 		{
-			return this.getName();
+			this.name = name;
+			this.num = num;
 		}
 
 		public String getName()
 		{
-			switch (this)
-			{
-			case ONE:
-				return "one";
-			case TWO:
-				return "two";
-			case THREE:
-				return "three";
-			case FOUR:
-				return "four";
-			}
-			return "one";
+			return this.name;
 		}
 
 		public Vec3i getRootPos()
 		{
-			switch (this)
-			{
-			case ONE:
-				return pieceLocations[0];
-			case TWO:
-				return pieceLocations[1];
-			case THREE:
-				return pieceLocations[2];
-			case FOUR:
-				return pieceLocations[3];
-			}
-
-			return pieceLocations[0];
+			return pieceLocations[this.getNum() - 1];
 		}
 
 		public int getNum()
 		{
-			switch (this)
-			{
-			case ONE:
-				return 1;
-			case TWO:
-				return 2;
-			case THREE:
-				return 3;
-			case FOUR:
-				return 4;
-			}
-			return 1;
+			return this.num;
 		}
 
 		public static EnumForgePiece getFromNum(int num)
 		{
-			switch (num)
+			for (EnumForgePiece piece : EnumForgePiece.values())
 			{
-			case 1:
-				return ONE;
-			case 2:
-				return TWO;
-			case 3:
-				return THREE;
-			case 4:
-				return FOUR;
+				if (piece.getNum() == num)
+				{
+					return piece;
+				}
 			}
 			return ONE;
 		}

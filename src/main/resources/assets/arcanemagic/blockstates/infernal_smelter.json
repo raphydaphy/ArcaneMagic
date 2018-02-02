@@ -8,9 +8,13 @@
         "inventory": [{}],
         "facing": {
         	"north": {},
-        	"south": {"y": 180},
-        	"east":  {"y": 90},
+        	"south": {"y": 180 },
+        	"east":  {"y": 90 },
         	"west":  {"y": 270 }
-        }
+        },
+        "piece": {
+			"top": { "model": "arcanemagic:furnace_top" },
+			"bottom": { "model": "arcanemagic:furnace_bottom" }
+		}
     }
 }
