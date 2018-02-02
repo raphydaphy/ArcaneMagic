@@ -76,46 +76,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 	@Override
 	public ItemBlock createItemBlock()
 	{
-		return (ItemBlock) new ItemBlock(this)
-		{
-			public boolean canPlaceBlockOnSide(World world, BlockPos clickPos, EnumFacing side, EntityPlayer player,
-					ItemStack stack)
-			{
-				Block block = world.getBlockState(clickPos).getBlock();
-
-				if (block == Blocks.SNOW_LAYER && block.isReplaceable(world, clickPos))
-				{
-					side = EnumFacing.UP;
-				} else if (!block.isReplaceable(world, clickPos))
-				{
-					clickPos = clickPos.offset(side);
-				}
-				BlockPos root = BlockArcaneForge.getPlacementOffset(clickPos, player.getHorizontalFacing());
-				for (Vec3i piece : BlockArcaneForge.pieceLocations)
-				{
-					BlockPos pos = root.add(piece);
-					if (world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(),
-							pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>()
-							{
-								public boolean apply(@Nullable Entity entity)
-								{
-									return !(entity instanceof EntityItem);
-								}
-							}).size() > 0)
-					{
-						System.out.println("aha theres an entity");
-						return false;
-					}
-					if (!world.isAirBlock(pos))
-					{
-						System.out.println("aha not air its " + world.getBlockState(pos).getBlock());
-						return false;
-					}
-				}
-				System.out.println("aha all gud");
-				return true;
-			}
-		}.setRegistryName(getRegistryName());
+		return (ItemBlock) new ItemBlockArcaneForge(this);
 	}
 
 	@Override
@@ -331,6 +292,52 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 
 		}
 
+	}
+
+	private class ItemBlockArcaneForge extends ItemBlock
+	{
+
+		public ItemBlockArcaneForge(Block block)
+		{
+			super(block);
+			setRegistryName(block.getRegistryName());
+		}
+
+		@Override
+		public boolean canPlaceBlockOnSide(World world, BlockPos clickPos, EnumFacing side, EntityPlayer player,
+				ItemStack stack)
+		{
+			Block block = world.getBlockState(clickPos).getBlock();
+
+			if (block == Blocks.SNOW_LAYER && block.isReplaceable(world, clickPos))
+			{
+				side = EnumFacing.UP;
+			} else if (!block.isReplaceable(world, clickPos))
+			{
+				clickPos = clickPos.offset(side);
+			}
+			BlockPos root = BlockArcaneForge.getPlacementOffset(clickPos, player.getHorizontalFacing());
+			for (Vec3i piece : BlockArcaneForge.pieceLocations)
+			{
+				BlockPos pos = root.add(piece);
+				if (world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(),
+						pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>()
+						{
+							public boolean apply(@Nullable Entity entity)
+							{
+								return !(entity instanceof EntityItem);
+							}
+						}).size() > 0)
+				{
+					return false;
+				}
+				if (!world.isAirBlock(pos))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 
 	public static BlockPos getPlacementOffset(BlockPos pos, EnumFacing facing)
