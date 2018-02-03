@@ -258,10 +258,9 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		BlockPos root = getPlacementOffset(pos, placer.getHorizontalFacing());
 
 		for (Vec3i piece : getPieceLocations(placer.getHorizontalFacing())) {
-			worldIn.setBlockState(root.add(piece),
+			worldIn.setBlockState(pos.add(piece),
 					state.withProperty(PIECE, EnumForgePiece.getFromRootPos(placer.getHorizontalFacing(), piece)));
 
 		}
@@ -276,52 +275,36 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 		}
 
 		@Override
-		public boolean canPlaceBlockOnSide(World world, BlockPos clickPos, EnumFacing side, EntityPlayer player,
+		public boolean canPlaceBlockOnSide(World world, BlockPos root, EnumFacing side, EntityPlayer player,
 				ItemStack stack) {
-			Block block = world.getBlockState(clickPos).getBlock();
+			Block block = world.getBlockState(root).getBlock();
 
-			if (block == Blocks.SNOW_LAYER && block.isReplaceable(world, clickPos)) {
+			if (block == Blocks.SNOW_LAYER && block.isReplaceable(world, root)) {
 				side = EnumFacing.UP;
-			} else if (!block.isReplaceable(world, clickPos)) {
-				clickPos = clickPos.offset(side);
+			} else if (!block.isReplaceable(world, root)) {
+				root = root.offset(side);
 			}
-			BlockPos root = BlockArcaneForge.getPlacementOffset(clickPos, player.getHorizontalFacing());
-			for (Vec3i piece : BlockArcaneForge.getPieceLocations(player.getHorizontalFacing())) {
-				BlockPos pos = root.add(piece);
-				if (world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(),
-						pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>() {
-							public boolean apply(@Nullable Entity entity) {
-								return !(entity instanceof EntityItem);
-							}
-						}).size() > 0) {
-					return false;
-				}
-				if (!world.isAirBlock(pos)) {
-					return false;
-				}
-			}
-			return true;
-		}
-	}
 
-	public static BlockPos getPlacementOffset(BlockPos pos, EnumFacing facing) {
-		switch (facing) {
-		case DOWN:
-			break;
-		case EAST:
-			return pos;
-		case NORTH:
-			// nogud
-			return pos;
-		case SOUTH:
-			// nogud
-			return pos.add(0,0,1);
-		case UP:
-			break;
-		case WEST:
-			return pos;
+			if (root.getY() >= world.getHeight() - 1) {
+				return false;
+			} else {
+				for (Vec3i piece : BlockArcaneForge.getPieceLocations(player.getHorizontalFacing())) {
+					BlockPos pos = root.add(piece);
+					if (world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(),
+							pos.getX() + 1, pos.getY() + 1, pos.getZ() + 1), new Predicate<Entity>() {
+								public boolean apply(@Nullable Entity entity) {
+									return !(entity instanceof EntityItem);
+								}
+							}).size() > 0) {
+						return false;
+					}
+					if (!world.isAirBlock(pos)) {
+						return false;
+					}
+				}
+				return true;
+			}
 		}
-		return pos;
 	}
 
 	@Override
@@ -348,14 +331,14 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 	public static Vec3i[] pieceLocationsEast = { new Vec3i(0, 0, 0), new Vec3i(1, 0, 0), new Vec3i(0, 1, 0),
 			new Vec3i(1, 1, 0) };
 
-	public static Vec3i[] pieceLocationsWest = { new Vec3i(0, 0, 0), new Vec3i(-1,0,0), new Vec3i(0,1,0),
-			new Vec3i(-1,1,0) };
+	public static Vec3i[] pieceLocationsWest = { new Vec3i(0, 0, 0), new Vec3i(-1, 0, 0), new Vec3i(0, 1, 0),
+			new Vec3i(-1, 1, 0) };
 
 	public static Vec3i[] pieceLocationsNorth = { new Vec3i(0, 0, 0), new Vec3i(0, 0, -1), new Vec3i(0, 1, 0),
 			new Vec3i(0, 1, -1) };
 
-	public static Vec3i[] pieceLocationsSouth = { new Vec3i(0, 0, -1), new Vec3i(0, 0, 0), new Vec3i(0, 1, -1),
-			new Vec3i(0, 1, 0) };
+	public static Vec3i[] pieceLocationsSouth = { new Vec3i(0, 0, 0), new Vec3i(0, 0, 1), new Vec3i(0, 1, 0),
+			new Vec3i(0, 1, 1) };
 
 	public static Vec3i[] getPieceLocations(EnumFacing facing) {
 		switch (facing) {
