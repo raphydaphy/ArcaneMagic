@@ -4,13 +4,19 @@
     "model": "anvil_undamaged"
   },
   "variants": {
-  "normal": [{}],
-    "inventory": [{}],
-    "piece": {
-		"one":  { "model": "black_concrete" },
-        "two": { "model": "white_concrete" },
-        "three":  { "model": "yellow_concrete" },
-        "four": { "model": "blue_concrete" }
-	}
-	}
+	  "normal": [{}],
+	    "inventory": [{}],
+	    "piece": {
+			"one":  { "model": "black_glazed_terracotta" },
+	        "two": { "model": "white_glazed_terracotta" },
+	        "three":  { "model": "yellow_glazed_terracotta" },
+	        "four": { "model": "blue_glazed_terracotta" }
+		},
+		"facing": {
+	    	"north": {},
+	    	"south": {"y": 180 },
+	    	"east":  {"y": 90 },
+	    	"west":  {"y": 270 }
+	    }
+    }
 }
