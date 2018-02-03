@@ -147,7 +147,11 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 	{
 		return EnumBlockRenderType.MODEL;
 	}
-
+	
+	public BlockPos getRoot(BlockPos pos, IBlockState state)
+	{
+		return pos.subtract(state.getValue(HALF).getRootPos());
+	}
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -156,7 +160,8 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 		{
 			return true;
 		}
-		TileEntity teUnchecked = world.getTileEntity(pos);
+		BlockPos root = getRoot(pos, state);
+		TileEntity teUnchecked = world.getTileEntity(root);
 		if (!(teUnchecked instanceof TileEntityInfernalSmelter))
 		{
 			return false;
@@ -187,7 +192,7 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 								player.setHeldItem(hand, stack);
 
 								te.markDirty();
-								world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM,
+								world.playSound(player, root, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM,
 										SoundCategory.BLOCKS, 1, 1);
 
 								return true;
@@ -204,7 +209,7 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 						player.setHeldItem(hand, stack);
 
 						te.markDirty();
-						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1,
+						world.playSound(player, root, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1,
 								1);
 
 						return true;
@@ -225,7 +230,7 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 							{
 								cap.extractItem(slot, Math.min(toExtract.getCount(), cap.getSlotLimit(slot)), false);
 								te.markDirty();
-								world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM,
+								world.playSound(player, root, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM,
 										SoundCategory.BLOCKS, 1, 1);
 
 								return true;

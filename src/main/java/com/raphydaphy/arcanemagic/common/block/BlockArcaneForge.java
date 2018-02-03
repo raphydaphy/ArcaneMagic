@@ -384,8 +384,8 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe
 		return state.getValue(PIECE).equals(EnumForgePiece.ONE) ? Item.getItemFromBlock(this) : Items.AIR;
 	}
 
-	public static final Vec3i[] pieceLocations = { new Vec3i(0, 0, 0), new Vec3i(1, 0, 0), new Vec3i(0, 0, 1),
-			new Vec3i(1, 0, 1) };
+	public static final Vec3i[] pieceLocations = { new Vec3i(0, 0, 0), new Vec3i(1, 0, 0), new Vec3i(0, 1, 0),
+			new Vec3i(1, 1, 0) };
 
 	public static enum EnumForgePiece implements IStringSerializable
 	{

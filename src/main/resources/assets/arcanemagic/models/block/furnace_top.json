@@ -44,15 +44,15 @@
 			"to": [12, 3.9999999999999996, 10],
 			"faces": {
 				"north": {
-					"uv": [0, 8, 8, 12],
+					"uv": [0, 0, 8, 4],
 					"texture": "#texture8"
 				},
 				"east": {
-					"uv": [8, 8, 16, 12],
+					"uv": [0, 8, 8, 12],
 					"texture": "#texture8"
 				},
 				"south": {
-					"uv": [8, 8, 16, 12],
+					"uv": [0, 0, 8, 4],
 					"texture": "#texture8"
 				},
 				"west": {
