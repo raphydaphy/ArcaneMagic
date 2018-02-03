@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.common.item;
 
 import com.google.common.collect.Multimap;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.client.render.ModelArcaneDagger;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -18,6 +19,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -65,7 +68,14 @@ public class ItemArcaneDagger extends ItemBase implements IHasRecipe
 	{
 		return true;
 	}
-
+	
+	@Override
+	public void initModels(ModelRegistryEvent e)
+	{
+		super.initModels(e);
+		ModelLoaderRegistry.registerLoader(ModelArcaneDagger.LoaderArcaneDagger.instance);
+	}
+	
 	@Override
 	public int getItemEnchantability()
 	{

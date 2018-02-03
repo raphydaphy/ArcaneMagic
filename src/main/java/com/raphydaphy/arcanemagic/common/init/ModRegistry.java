@@ -61,7 +61,7 @@ public class ModRegistry
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
 	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();
-	public static final ItemBase BLANK_PARCHMENT = new ItemBase("blank_parchment");
+	public static final ItemBase BLANK_PARCHMENT = (ItemBase)new ItemBase("blank_parchment").setMaxStackSize(16);
 	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
 	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();

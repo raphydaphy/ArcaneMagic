@@ -32,6 +32,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -177,8 +178,19 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 
 						if (te.getDepth(0) == 0 && te.getDepth(1) == 0) {
 
+							ItemStack stackToSpawn = te.getWeapon().copy();
+							if (!stackToSpawn.hasTagCompound())
+							{
+								stackToSpawn.setTagCompound(new NBTTagCompound());
+							}
+							stackToSpawn.getTagCompound().setString(EnumForgeGem.HILT_NBT,
+									EnumForgeGem.getFromStack(te.getGem(0)).toString());
+							stackToSpawn.getTagCompound().setString(EnumForgeGem.POMMEL_NBT,
+									EnumForgeGem.getFromStack(te.getGem(1)).toString());
+
+							System.out.println(te.getGem(1).getDisplayName());
 							InventoryHelper.spawnItemStack(world, root.getX(), root.getY() + 0.5, root.getZ(),
-									te.getWeapon().copy());
+									stackToSpawn);
 
 							te.setGem(ItemStack.EMPTY, 0);
 							te.setDepth(4, 0);
@@ -190,7 +202,8 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 						boolean didRemove = false;
 						ItemStack heldItemClone = player.getHeldItem(hand).copy();
 						heldItemClone.setCount(1);
-						if (player.getHeldItem(hand).getItem().equals(ModRegistry.ARCANE_DAGGER)
+						if ((player.getHeldItem(hand).getItem().equals(ModRegistry.ARCANE_DAGGER)
+								|| player.getHeldItem(hand).getItem().equals(Items.IRON_SWORD))
 								&& te.getWeapon().isEmpty()) {
 
 							te.setWeapon(heldItemClone);
@@ -394,6 +407,53 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 				}
 			}
 			return ONE;
+		}
+	}
+
+	public static enum EnumForgeGem implements IStringSerializable {
+		DIAMOND(Items.DIAMOND), EMERALD(Items.EMERALD), HORIZON(ModRegistry.ANIMA, 3), OZONE(ModRegistry.ANIMA,
+				0), DEPTH(ModRegistry.ANIMA, 1), INFERNO(ModRegistry.ANIMA,
+						2), PEACE(ModRegistry.ANIMA, 4), CHAOS(ModRegistry.ANIMA, 5), CREATION(ModRegistry.CREATION);
+
+		private ItemStack stack;
+
+		public static final String HILT_NBT = "forgeGemHilt";
+		public static final String POMMEL_NBT = "forgeGemPommel";
+
+		private EnumForgeGem(Item item) {
+			stack = new ItemStack(item, 1);
+		}
+
+		private EnumForgeGem(Item item, int meta) {
+			stack = new ItemStack(item, 1, meta);
+		}
+
+		public ItemStack getStack() {
+			return stack;
+		}
+
+		public static EnumForgeGem getFromStack(ItemStack other) {
+			for (EnumForgeGem gem : EnumForgeGem.values()) {
+				if (gem.getStack().getItem().equals(other.getItem())
+						&& gem.getStack().getMetadata() == other.getMetadata()) {
+					return gem;
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public String getName() {
+			return this.name();
+		}
+
+		public static EnumForgeGem getFromName(String other) {
+			for (EnumForgeGem gem : EnumForgeGem.values()) {
+				if (gem.getName().equals(other)) {
+					return gem;
+				}
+			}
+			return null;
 		}
 	}
 

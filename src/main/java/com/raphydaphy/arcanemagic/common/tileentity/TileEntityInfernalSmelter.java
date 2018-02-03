@@ -207,6 +207,6 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 	@SideOnly(Side.CLIENT)
 	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
 	{
-		return new AxisAlignedBB(pos.add(-1, 0, -1), pos.add(1, 1, 1));
+		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
 	}
 }

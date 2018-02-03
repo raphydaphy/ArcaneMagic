@@ -22,10 +22,7 @@
 
 			"arcane_dagger": 
 			{
-				"textures": 
-				{
-					"layer0": "arcanemagic:items/arcane_dagger"
-				}
+				"model": "arcanemagic:generated_model_arcane_dagger"
 			},
 
 			"ancient_cloth_helmet": 
@@ -35,7 +32,7 @@
 					"layer0": "arcanemagic:items/ancient_cloth_helmet"
 				}
 			},
-			
+
 			"ancient_cloth_chestplate": 
 			{
 				"textures": 
@@ -43,7 +40,7 @@
 					"layer0": "arcanemagic:items/ancient_cloth_chestplate"
 				}
 			},
-			
+
 			"ancient_cloth_leggings": 
 			{
 				"textures": 
@@ -51,7 +48,7 @@
 					"layer0": "arcanemagic:items/ancient_cloth_leggings"
 				}
 			},
-			
+
 			"ancient_cloth_boots": 
 			{
 				"textures": 

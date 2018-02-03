@@ -2,6 +2,7 @@
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"parent": "block/block",
 	"textures": {
+		"particle": "arcanemagic:blocks/furnace_front",
 		"texture7": "arcanemagic:blocks/furnace_top",
 		"texture8": "arcanemagic:blocks/furnace_chimney"
 	},

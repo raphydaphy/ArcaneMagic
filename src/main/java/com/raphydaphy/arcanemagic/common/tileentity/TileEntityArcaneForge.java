@@ -7,6 +7,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TileEntityArcaneForge extends TileEntity
 {
@@ -158,5 +161,12 @@ public class TileEntityArcaneForge extends TileEntity
 	{
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
+	}
+	
+	@Override
+	@SideOnly(Side.CLIENT)
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
+		return new AxisAlignedBB(pos, pos.add(2, 2, 2));
 	}
 }
