@@ -96,6 +96,18 @@ public class ModelArcaneDagger implements IModel {
 
 		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/ozone_hilt"));
 		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/ozone_pommel"));
+		
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/peace_hilt"));
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/peace_pommel"));
+
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/chaos_hilt"));
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/chaos_pommel"));
+		
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/diamond_hilt"));
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/diamond_pommel"));
+
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/emerald_hilt"));
+		builder.add(new ResourceLocation(ArcaneMagic.MODID, "items/weapon_gems/emerald_pommel"));
 
 		return builder.build();
 	}
