@@ -1,15 +1,21 @@
 package com.raphydaphy.arcanemagic.client;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.util.vector.Vector3f;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.client.particle.FountainRenderer;
+import com.raphydaphy.arcanemagic.client.particle.ParticleFountain;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
-import com.raphydaphy.arcanemagic.client.render.AnimaTest;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
@@ -110,8 +116,8 @@ public class ClientEvents {
 
 	}
 
-	
-	public static AnimaTest curAnimaTest = null;
+	public static List<ParticleFountain> particles = new ArrayList<ParticleFountain>();
+	private static FountainRenderer renderer = new FountainRenderer();
 	
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev) {
@@ -119,26 +125,42 @@ public class ClientEvents {
 		EntityPlayer player = Minecraft.getMinecraft().player;
 
 		if (world != null && player != null) {
-			
-			if (curAnimaTest != null)
+
+			if (Keyboard.isKeyDown(Keyboard.KEY_Y))
 			{
-				GlStateManager.pushMatrix();
-				GlStateManager.pushAttrib();
-				GlStateManager.color(1, 1, 1, 1);
-				GlStateManager.disableTexture2D();
-				GlStateManager.enableBlend();
-				GlStateManager.enableCull();
-				GlStateManager.disableAlpha();
-				GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
-						-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
-						-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
-				curAnimaTest.draw();
-				
-				GlStateManager.popAttrib();
-				GlStateManager.popMatrix();
+				new ParticleFountain(new Vector3f(player.getPosition().getX(),player.getPosition().getY(),player.getPosition().getZ()), new Vector3f(0,10,0), 0f, 1300, 0, 1);
+				System.out.println(ClientEvents.particles.size());
 			}
+			GlStateManager.pushMatrix();
+			GlStateManager.pushAttrib();
+			GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
+					-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
+					-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
+
+			GlStateManager.disableTexture2D();
+			GlStateManager.shadeModel(GL11.GL_SMOOTH);
+			GlStateManager.enableBlend();
+			GlStateManager.disableAlpha();
+			GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+			GlStateManager.depthMask(false);
+			GlStateManager.disableCull();
 			
-			
+			Iterator<ParticleFountain> iterator = particles.iterator();
+			while(iterator.hasNext())
+			{
+				ParticleFountain p = iterator.next();
+				boolean stillAlive = p.update();
+				if (!stillAlive)
+				{
+					iterator.remove();
+				}
+			}
+			renderer.render(particles);
+
+			GlStateManager.popAttrib();
+			GlStateManager.popMatrix();
+
 			if (world.getTotalWorldTime() % 38 == 0) {
 				long oldNano = System.nanoTime();
 				INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
