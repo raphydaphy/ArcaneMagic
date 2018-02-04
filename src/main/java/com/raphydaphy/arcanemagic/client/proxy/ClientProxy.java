@@ -3,11 +3,13 @@ package com.raphydaphy.arcanemagic.client.proxy;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
+import com.raphydaphy.arcanemagic.client.ClientEvents;
 import com.raphydaphy.arcanemagic.client.particle.ParticleAnima;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
 import com.raphydaphy.arcanemagic.client.render.AnimaConjurerTESR;
+import com.raphydaphy.arcanemagic.client.render.AnimaTest;
 import com.raphydaphy.arcanemagic.client.render.AnimusMaterializerTESR;
 import com.raphydaphy.arcanemagic.client.render.ArcaneForgeTESR;
 import com.raphydaphy.arcanemagic.client.render.ArcaneTransfigurationTableTESR;
@@ -78,6 +80,9 @@ public class ClientProxy extends CommonProxy
 	{
 		Minecraft.getMinecraft().effectRenderer.addEffect(
 				new ParticleAnima(world, pos.x, pos.y, pos.z, speed.x, speed.y, speed.z, anima, travelPos, isCosmetic));
+		ClientEvents.curAnimaTest = new AnimaTest();
+		System.out.println("c");
+		ClientEvents.curAnimaTest.initFX();
 	}
 
 	@Override
@@ -87,6 +92,9 @@ public class ClientProxy extends CommonProxy
 		if (world.isRemote)
 		{
 			ParticleQueue.getInstance().addParticle(world, new ParticlePos(pos, facing, hitX, hitY, hitZ));
+			
+			
+			
 		}
 	}
 

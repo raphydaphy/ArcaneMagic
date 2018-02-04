@@ -111,9 +111,9 @@ public class ModRegistry
 	{
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
 		ArcaneMagicSoundHandler.register("spell", registry);
-		ArcaneMagicSoundHandler.register("scepter_1", registry);
-		ArcaneMagicSoundHandler.register("scepter_2", registry);
-		ArcaneMagicSoundHandler.register("scepter_3", registry);
+		ArcaneMagicSoundHandler.register("magic_1", registry);
+		ArcaneMagicSoundHandler.register("magic_2", registry);
+		ArcaneMagicSoundHandler.register("magic_3", registry);
 		ArcaneMagicSoundHandler.register("page_1", registry);
 		ArcaneMagicSoundHandler.register("page_2", registry);
 		ArcaneMagicSoundHandler.register("arcane_transfiguration_success", registry);

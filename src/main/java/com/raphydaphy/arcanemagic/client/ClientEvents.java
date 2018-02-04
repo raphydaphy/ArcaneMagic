@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
+import com.raphydaphy.arcanemagic.client.render.AnimaTest;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
@@ -109,12 +110,35 @@ public class ClientEvents {
 
 	}
 
+	
+	public static AnimaTest curAnimaTest = null;
+	
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev) {
 		World world = Minecraft.getMinecraft().world;
 		EntityPlayer player = Minecraft.getMinecraft().player;
 
 		if (world != null && player != null) {
+			
+			if (curAnimaTest != null)
+			{
+				GlStateManager.pushMatrix();
+				GlStateManager.pushAttrib();
+				GlStateManager.color(1, 1, 1, 1);
+				GlStateManager.disableTexture2D();
+				GlStateManager.enableBlend();
+				GlStateManager.enableCull();
+				GlStateManager.disableAlpha();
+				GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
+						-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
+						-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
+				curAnimaTest.draw();
+				
+				GlStateManager.popAttrib();
+				GlStateManager.popMatrix();
+			}
+			
+			
 			if (world.getTotalWorldTime() % 38 == 0) {
 				long oldNano = System.nanoTime();
 				INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
