@@ -39,6 +39,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 		this.initAlpha = a;
 		this.particleAngle = 2.0f * (float) Math.PI;
 		this.particleGravity = 0.1f;
+		this.particleAlpha = initAlpha;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
 		this.setParticleTexture(sprite);
 	}
@@ -59,8 +60,8 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	}
 
 	@Override
-	public void onUpdate() {
-		//super.onUpdate();
+	public void onUpdate() 
+	{
 		this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -84,14 +85,6 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 		if (rand.nextInt(6) == 0) {
 			this.particleAge++;
 		}
-		float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
-		this.particleScale = initScale + initScale * lifeCoeff;
-		if (this.particleScale < 0)
-		{
-			System.out.println("AHHH");
-			this.setExpired();
-		}
-		this.particleAlpha = initAlpha * (1.0f - lifeCoeff);
 		this.prevParticleAngle = particleAngle;
 		particleAngle += 1.0f;
 	}
@@ -103,6 +96,6 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 
 	@Override
 	public boolean isAdditive() {
-		return true;
+		return false;
 	}
 }

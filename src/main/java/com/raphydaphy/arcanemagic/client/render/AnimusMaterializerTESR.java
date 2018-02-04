@@ -5,18 +5,14 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -49,29 +45,21 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 							new BlockPos(te.getPos().getX() + x2, te.getPos().getY() + y2, te.getPos().getZ() + z2))
 							.getBlock() == ModRegistry.ANIMA_CONJURER) {
 
-						Vec3d to = new Vec3d(x + 0.5, y + 0.58, z + 0.5);
-						Vec3d from = new Vec3d(x + x2 + 0.5, y + y2 + 0.96, z + z2 + 0.5);
 
 						Color color = Anima
 								.getFromBiome(world.getBiome(
 										new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
 								.getColor();
 
-						int r = color.getRed();
-						int g = color.getGreen();
-						int b = color.getBlue();
-
-						Tessellator tes = Tessellator.getInstance();
-						BufferBuilder vb = tes.getBuffer();
-
-						RenderHelper.disableStandardItemLighting();
-						GL11.glLineWidth(100);
-						//vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
-
-						//vb.pos(to.x, to.y, to.z).color(r, g, b, 1).endVertex();
-						//vb.pos(from.x, from.y, from.z).color(r, g, b, 0).endVertex();
-
-						//tes.draw();
+						float distX = x2 - (float)x;
+						float vx = 0.01625f * distX;
+						
+						float distY = y2 - (float)(y);
+						float vy = 0.01625f * distY;
+						
+						ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, vx, .053f, vy,
+								color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
+								Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
 
 					}
 				}
