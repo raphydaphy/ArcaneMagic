@@ -63,12 +63,12 @@ public class ClientEvents {
 
 				ClientProxy.particleRenderer.updateParticles();
 
-				BlockPos pos = new BlockPos(0, 5, 0);
-				Color color = Color.orange;
-				ParticleUtil.spawnParticleGlowTest(world, pos.getX(), pos.getY(), pos.getZ(), 0, (float) .25, 0,
-						color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, 1f,
-						Math.min(world.rand.nextFloat() * 5, 2), 1000);
-
+				if (world.getTotalWorldTime() % 1 == 0) {
+					Color color = Color.blue;
+					ParticleUtil.spawnParticleGlowTest(world, -1.5f, 1.8f, 5.5f, .0325f, .053f, -.065f,
+							color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, .5f,
+							Math.min(Math.max(world.rand.nextFloat() * 4, 0.7f), 1), 100);
+				}
 			}
 
 		}

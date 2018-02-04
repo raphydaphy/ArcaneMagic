@@ -81,21 +81,6 @@ public class ParticleRenderer {
 			}
 			tess.draw();
 
-			GlStateManager.disableDepth();
-			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,
-					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-			for (Particle particle1 : particles) {
-				if (particle1 instanceof IModParticle) {
-
-					particle1.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
-
-				}
-			}
-			tess.draw();
-
-			GlStateManager.enableDepth();
-
 			GlStateManager.enableCull();
 			GlStateManager.depthMask(true);
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA,

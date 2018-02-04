@@ -38,6 +38,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 		this.motionZ = vz * 2.0f;
 		this.initAlpha = a;
 		this.particleAngle = 2.0f * (float) Math.PI;
+		this.particleGravity = 0.1f;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
 		this.setParticleTexture(sprite);
 	}
@@ -59,12 +60,37 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 
 	@Override
 	public void onUpdate() {
-		super.onUpdate();
+		//super.onUpdate();
+		this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+
+        if (this.particleAge++ >= this.particleMaxAge)
+        {
+            this.setExpired();
+        }
+
+        this.motionY -= 0.04D * (double)this.particleGravity;
+        this.move(this.motionX, this.motionY, this.motionZ);
+        this.motionX *= 0.9800000190734863D;
+        this.motionY *= 0.9800000190734863D;
+        this.motionZ *= 0.9800000190734863D;
+
+        if (this.onGround)
+        {
+            this.motionX *= 0.699999988079071D;
+            this.motionZ *= 0.699999988079071D;
+        }
 		if (rand.nextInt(6) == 0) {
 			this.particleAge++;
 		}
 		float lifeCoeff = (float) this.particleAge / (float) this.particleMaxAge;
-		this.particleScale = initScale - initScale * lifeCoeff;
+		this.particleScale = initScale + initScale * lifeCoeff;
+		if (this.particleScale < 0)
+		{
+			System.out.println("AHHH");
+			this.setExpired();
+		}
 		this.particleAlpha = initAlpha * (1.0f - lifeCoeff);
 		this.prevParticleAngle = particleAngle;
 		particleAngle += 1.0f;

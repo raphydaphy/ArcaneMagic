@@ -66,12 +66,12 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 
 						RenderHelper.disableStandardItemLighting();
 						GL11.glLineWidth(100);
-						vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
+						//vb.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
 
-						vb.pos(to.x, to.y, to.z).color(r, g, b, 1).endVertex();
-						vb.pos(from.x, from.y, from.z).color(r, g, b, 0).endVertex();
+						//vb.pos(to.x, to.y, to.z).color(r, g, b, 1).endVertex();
+						//vb.pos(from.x, from.y, from.z).color(r, g, b, 0).endVertex();
 
-						tes.draw();
+						//tes.draw();
 
 					}
 				}
