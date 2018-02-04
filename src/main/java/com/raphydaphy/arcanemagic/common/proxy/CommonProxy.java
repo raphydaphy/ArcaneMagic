@@ -13,39 +13,31 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public abstract class CommonProxy
-{
-	public void preInit(FMLPreInitializationEvent event)
-	{
+public abstract class CommonProxy {
+	public void preInit(FMLPreInitializationEvent event) {
 	}
 
-	public void init(FMLInitializationEvent event)
-	{
+	public void init(FMLInitializationEvent event) {
 	}
 
-	public void postInit(FMLPostInitializationEvent event)
-	{
+	public void postInit(FMLPostInitializationEvent event) {
 	}
 
 	public void spawnAnimaParticles(World world, Vec3d pos, Vec3d speed, Anima anima, Vec3d travelPos,
-			boolean isCosmetic)
-	{
+			boolean isCosmetic) {
 
 	}
 
 	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX,
-			float hitY, float hitZ)
-	{
+			float hitY, float hitZ) {
 
 	}
 
-	public void sendAnimaSafe(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
-	{
+	public void sendAnimaSafe(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles) {
 
 	}
 
-	public void addCategoryUnlockToast(NotebookCategory category, boolean expanded)
-	{
+	public void addCategoryUnlockToast(NotebookCategory category, boolean expanded) {
 
 	}
 

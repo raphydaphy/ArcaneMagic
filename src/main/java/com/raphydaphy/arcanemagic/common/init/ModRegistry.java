@@ -43,8 +43,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
-public class ModRegistry
-{
+public class ModRegistry {
 	public static final List<Block> BLOCKS = new ArrayList<>();
 	public static final List<Item> ITEMS = new ArrayList<>();
 	public static final List<IRecipe> RECIPES = new ArrayList<>();
@@ -61,7 +60,7 @@ public class ModRegistry
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
 	public static final ItemCreationCrystal CREATION = new ItemCreationCrystal();
-	public static final ItemBase BLANK_PARCHMENT = (ItemBase)new ItemBase("blank_parchment").setMaxStackSize(16);
+	public static final ItemBase BLANK_PARCHMENT = (ItemBase) new ItemBase("blank_parchment").setMaxStackSize(16);
 	public static final ItemParchment ANCIENT_PARCHMENT = new ItemParchment("ancient_parchment");
 	public static final ItemParchment WRITTEN_PARCHMENT = new ItemParchment("written_parchment");
 	public static final ItemIlluminator MYSTICAL_ILLUMINATOR = new ItemIlluminator();
@@ -77,20 +76,17 @@ public class ModRegistry
 	public static final ItemAncientClothArmor ANCIENT_CLOTH_BOOTS = new ItemAncientClothArmor("ancient_cloth_boots", 3);
 
 	@SubscribeEvent
-	public void onBlockRegister(Register<Block> e)
-	{
+	public void onBlockRegister(Register<Block> e) {
 		e.getRegistry().registerAll(BLOCKS.toArray(new Block[BLOCKS.size()]));
 	}
 
 	@SubscribeEvent
-	public void onItemRegister(Register<Item> e)
-	{
+	public void onItemRegister(Register<Item> e) {
 		e.getRegistry().registerAll(ITEMS.toArray(new Item[ITEMS.size()]));
 	}
 
 	@SubscribeEvent
-	public void onRecipeRegister(Register<IRecipe> e)
-	{
+	public void onRecipeRegister(Register<IRecipe> e) {
 		OreDictionary.registerOre("formationAnima", new ItemStack(ModRegistry.ANIMA, 1, OreDictionary.WILDCARD_VALUE));
 
 		for (Item i : ModRegistry.ITEMS)
@@ -107,8 +103,7 @@ public class ModRegistry
 	}
 
 	@SubscribeEvent
-	public void registerSounds(Register<SoundEvent> event)
-	{
+	public void registerSounds(Register<SoundEvent> event) {
 		IForgeRegistry<SoundEvent> registry = event.getRegistry();
 		ArcaneMagicSoundHandler.register("spell", registry);
 		ArcaneMagicSoundHandler.register("magic_1", registry);
@@ -125,8 +120,7 @@ public class ModRegistry
 		ArcaneMagicSoundHandler.register("clack", registry);
 	}
 
-	public static void registerTiles()
-	{
+	public static void registerTiles() {
 		GameRegistry.registerTileEntity(TileEntityArcaneTransfigurationTable.class,
 				ArcaneMagic.MODID + "_arcane_transfiguration_table");
 		GameRegistry.registerTileEntity(TileEntityAnimusMaterializer.class, ArcaneMagic.MODID + "_animus_materializer");

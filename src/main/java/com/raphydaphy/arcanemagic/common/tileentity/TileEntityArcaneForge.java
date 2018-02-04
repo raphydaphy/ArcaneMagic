@@ -11,71 +11,59 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityArcaneForge extends TileEntity
-{
+public class TileEntityArcaneForge extends TileEntity {
 	private ItemStack weapon = ItemStack.EMPTY;
 	private ItemStack[] gems = { ItemStack.EMPTY, ItemStack.EMPTY };
 	private int[] insertDepth = { 4, 4 };
 
-	public ItemStack getWeapon()
-	{
+	public ItemStack getWeapon() {
 		return weapon;
 	}
 
-	public void setWeapon(ItemStack stack)
-	{
+	public void setWeapon(ItemStack stack) {
 		this.weapon = stack;
 		markDirty();
 
-		if (world != null)
-		{
+		if (world != null) {
 			IBlockState state = world.getBlockState(this.pos);
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
 
-	public int getDepth(int gem)
-	{
+	public int getDepth(int gem) {
 		return insertDepth[gem];
 	}
 
-	public void setDepth(int depth, int gem)
-	{
+	public void setDepth(int depth, int gem) {
 		insertDepth[gem] = depth;
 
 		markDirty();
 
-		if (world != null)
-		{
+		if (world != null) {
 			IBlockState state = world.getBlockState(this.pos);
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
 
-	public void setGem(ItemStack gem, int num)
-	{
+	public void setGem(ItemStack gem, int num) {
 		this.gems[num] = gem;
 
 		markDirty();
 
-		if (world != null)
-		{
+		if (world != null) {
 			IBlockState state = world.getBlockState(this.pos);
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
 
-	public ItemStack getGem(int num)
-	{
+	public ItemStack getGem(int num) {
 		return gems[num];
 	}
 
 	@Override
-	public void markDirty()
-	{
+	public void markDirty() {
 		super.markDirty();
-		if (TileEntityArcaneForge.this.world != null && TileEntityArcaneForge.this.pos != null)
-		{
+		if (TileEntityArcaneForge.this.world != null && TileEntityArcaneForge.this.pos != null) {
 			IBlockState state = TileEntityArcaneForge.this.world.getBlockState(TileEntityArcaneForge.this.pos);
 			TileEntityArcaneForge.this.world.markAndNotifyBlock(TileEntityArcaneForge.this.pos,
 					TileEntityArcaneForge.this.world.getChunkFromBlockCoords(TileEntityArcaneForge.this.pos), state,
@@ -84,71 +72,57 @@ public class TileEntityArcaneForge extends TileEntity
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag()
-	{
+	public NBTTagCompound getUpdateTag() {
 		return writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		NBTTagCompound nbtTag = new NBTTagCompound();
 		this.writeToNBT(nbtTag);
 		return new SPacketUpdateTileEntity(pos, 1, nbtTag);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet)
-	{
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity packet) {
 		this.readFromNBT(packet.getNbtCompound());
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		if (compound.hasKey("weapon"))
-		{
+		if (compound.hasKey("weapon")) {
 			weapon = new ItemStack(compound.getCompoundTag("weapon"));
-		} else
-		{
+		} else {
 			weapon = ItemStack.EMPTY;
 		}
-		if (compound.hasKey("gem0"))
-		{
+		if (compound.hasKey("gem0")) {
 			gems[0] = new ItemStack(compound.getCompoundTag("gem0"));
-		} else
-		{
+		} else {
 			gems[0] = ItemStack.EMPTY;
 		}
-		if (compound.hasKey("gem1"))
-		{
+		if (compound.hasKey("gem1")) {
 			gems[1] = new ItemStack(compound.getCompoundTag("gem1"));
-		} else
-		{
+		} else {
 			gems[1] = ItemStack.EMPTY;
 		}
 		insertDepth = compound.getIntArray("insertDepth");
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
-		if (!weapon.isEmpty())
-		{
+		if (!weapon.isEmpty()) {
 			NBTTagCompound tagCompound = new NBTTagCompound();
 			weapon.writeToNBT(tagCompound);
 			compound.setTag("weapon", tagCompound);
 		}
-		if (!gems[0].isEmpty())
-		{
+		if (!gems[0].isEmpty()) {
 			NBTTagCompound tagCompound = new NBTTagCompound();
 			gems[0].writeToNBT(tagCompound);
 			compound.setTag("gem0", tagCompound);
 		}
-		if (!gems[1].isEmpty())
-		{
+		if (!gems[1].isEmpty()) {
 			NBTTagCompound tagCompound = new NBTTagCompound();
 			gems[1].writeToNBT(tagCompound);
 			compound.setTag("gem1", tagCompound);
@@ -157,16 +131,14 @@ public class TileEntityArcaneForge extends TileEntity
 		return compound;
 	}
 
-	public boolean canInteractWith(EntityPlayer playerIn)
-	{
+	public boolean canInteractWith(EntityPlayer playerIn) {
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
-	{
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(pos, pos.add(2, 2, 2));
 	}
 }

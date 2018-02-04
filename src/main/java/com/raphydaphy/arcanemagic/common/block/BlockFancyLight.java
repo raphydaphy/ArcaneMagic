@@ -16,68 +16,57 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockFancyLight extends BlockBase
-{
-	public BlockFancyLight()
-	{
+public class BlockFancyLight extends BlockBase {
+	public BlockFancyLight() {
 		super("fancy_light", Material.AIR, 0.0f, SoundType.SNOW);
 		setTickRandomly(false);
 		setLightLevel(1.0F);
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-	{
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state)
-	{
+	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		return;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer()
-	{
+	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 	}
 
 	@Override
 	@Nullable
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-	{
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
 		return NULL_AABB;
 	}
 
 	@Override
-	public void onLanded(World worldIn, Entity entityIn)
-	{
+	public void onLanded(World worldIn, Entity entityIn) {
 		return;
 	}
 
 	@Override
-	public void init()
-	{
+	public void init() {
 		ModRegistry.BLOCKS.add(this);
 	}
 }

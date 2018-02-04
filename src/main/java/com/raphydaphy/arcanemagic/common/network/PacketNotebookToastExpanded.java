@@ -15,57 +15,46 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketNotebookToastExpanded implements IMessage
-{
+public class PacketNotebookToastExpanded implements IMessage {
 	private NotebookCategory cat;
 	private String additionalTag;
 	private boolean showIfFail;
 
-	public PacketNotebookToastExpanded()
-	{
+	public PacketNotebookToastExpanded() {
 	}
 
-	public PacketNotebookToastExpanded(NotebookCategory cat, String additionalTag, boolean showIfFail)
-	{
+	public PacketNotebookToastExpanded(NotebookCategory cat, String additionalTag, boolean showIfFail) {
 		this.cat = cat;
 		this.additionalTag = additionalTag;
 		this.showIfFail = showIfFail;
 	}
 
-	public static class Handler implements IMessageHandler<PacketNotebookToastExpanded, IMessage>
-	{
+	public static class Handler implements IMessageHandler<PacketNotebookToastExpanded, IMessage> {
 		@Override
-		public IMessage onMessage(PacketNotebookToastExpanded message, MessageContext ctx)
-		{
+		public IMessage onMessage(PacketNotebookToastExpanded message, MessageContext ctx) {
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 
-		private void handle(PacketNotebookToastExpanded message, MessageContext ctx)
-		{
+		private void handle(PacketNotebookToastExpanded message, MessageContext ctx) {
 			INotebookInfo cap = Minecraft.getMinecraft().player.getCapability(INotebookInfo.CAP, null);
 
-			if (cap != null)
-			{
+			if (cap != null) {
 				boolean did = false;
-				if (message.cat != null)
-				{
-					if (!cap.isUnlocked(message.cat.getRequiredTag()))
-					{
+				if (message.cat != null) {
+					if (!cap.isUnlocked(message.cat.getRequiredTag())) {
 						did = true;
 						cap.setUnlocked(message.cat.getRequiredTag());
 						ArcaneMagic.proxy.addCategoryUnlockToast(message.cat, false);
 					}
-					if (message.additionalTag != null && !cap.isUnlocked(message.additionalTag))
-					{
+					if (message.additionalTag != null && !cap.isUnlocked(message.additionalTag)) {
 						did = true;
 						cap.setUnlocked(message.cat.getRequiredTag());
 						ArcaneMagic.proxy.addCategoryUnlockToast(message.cat, true);
 					}
 				}
 
-				if (!did && message.showIfFail)
-				{
+				if (!did && message.showIfFail) {
 					Minecraft.getMinecraft().ingameGUI.setOverlayMessage(
 							TextFormatting.RED + I18n.format("arcanemagic.message.cantlearn"), false);
 				}
@@ -74,15 +63,12 @@ public class PacketNotebookToastExpanded implements IMessage
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf)
-	{
+	public void fromBytes(ByteBuf buf) {
 		PacketBuffer pbuf = new PacketBuffer(buf);
 		int id = buf.readInt();
-		if (id != -1)
-		{
+		if (id != -1) {
 			cat = ArcaneMagicAPI.getNotebookCategories().get(id);
-		} else
-		{
+		} else {
 			cat = null;
 		}
 		additionalTag = pbuf.readString(1000);
@@ -90,14 +76,11 @@ public class PacketNotebookToastExpanded implements IMessage
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf)
-	{
+	public void toBytes(ByteBuf buf) {
 		PacketBuffer pbuf = new PacketBuffer(buf);
-		if (cat != null)
-		{
+		if (cat != null) {
 			buf.writeInt(ArcaneMagicAPI.getNotebookCategories().indexOf(cat));
-		} else
-		{
+		} else {
 			buf.writeInt(-1);
 		}
 		pbuf.writeString(additionalTag);

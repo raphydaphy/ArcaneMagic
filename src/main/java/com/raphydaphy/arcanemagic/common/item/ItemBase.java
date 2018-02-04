@@ -14,28 +14,23 @@ import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBase extends Item implements IHasModel
-{
+public class ItemBase extends Item implements IHasModel {
 	protected final int variants;
 	protected final TextFormatting color;
 
-	public ItemBase(String name)
-	{
+	public ItemBase(String name) {
 		this(name, 0, TextFormatting.WHITE);
 	}
 
-	public ItemBase(String name, int variants)
-	{
+	public ItemBase(String name, int variants) {
 		this(name, variants, TextFormatting.WHITE);
 	}
 
-	public ItemBase(String name, TextFormatting color)
-	{
+	public ItemBase(String name, TextFormatting color) {
 		this(name, 0, color);
 	}
 
-	public ItemBase(String name, int variants, TextFormatting color)
-	{
+	public ItemBase(String name, int variants, TextFormatting color) {
 		setRegistryName(name);
 		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
 		setCreativeTab(ArcaneMagic.creativeTab);
@@ -48,55 +43,44 @@ public class ItemBase extends Item implements IHasModel
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public String getItemStackDisplayName(ItemStack stack)
-	{
+	public String getItemStackDisplayName(ItemStack stack) {
 		return color + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
 	}
 
 	@Override
-	public void initModels(ModelRegistryEvent e)
-	{
-		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++)
-		{
+	public void initModels(ModelRegistryEvent e) {
+		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++) {
 			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
 		}
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
-	{
-		if (isInCreativeTab(tab))
-		{
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (isInCreativeTab(tab)) {
 			if (variants == 0)
 				items.add(new ItemStack(this));
 			else
-				for (int i = 0; i < variants; i++)
-				{
+				for (int i = 0; i < variants; i++) {
 					items.add(new ItemStack(this, 1, i));
 				}
 		}
 	}
 
 	@Override
-	public int getMetadata(int damage)
-	{
-		if (variants > 0)
-		{
+	public int getMetadata(int damage) {
+		if (variants > 0) {
 			return damage;
 		}
 		return 0;
 	}
 
-	public void init()
-	{
+	public void init() {
 		ModRegistry.ITEMS.add(this);
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack)
-	{
-		if (variants > 0)
-		{
+	public String getUnlocalizedName(ItemStack stack) {
+		if (variants > 0) {
 			return super.getUnlocalizedName() + "." + stack.getMetadata();
 		}
 		return super.getUnlocalizedName();

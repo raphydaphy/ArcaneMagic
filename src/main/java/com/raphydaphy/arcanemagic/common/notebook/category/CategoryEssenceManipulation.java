@@ -17,10 +17,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryEssenceManipulation extends NotebookCategory
-{
-	public CategoryEssenceManipulation()
-	{
+public class CategoryEssenceManipulation extends NotebookCategory {
+	public CategoryEssenceManipulation() {
 		setUnlocalizedName("arcanemagic.notebook.category.essence_manipulation");
 		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.glowstone", 2));
 		setRequiredTag("unlockedEssenceManipulation");
@@ -29,12 +27,10 @@ public class CategoryEssenceManipulation extends NotebookCategory
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info)
-	{
+	public List<NotebookPage> getPages(INotebookInfo info) {
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 2; i++)
-		{
+		for (int i = 0; i < 2; i++) {
 			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 

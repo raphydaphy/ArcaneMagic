@@ -6,16 +6,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ParticlePos
-{
+public class ParticlePos {
 	private final BlockPos pos;
 	private final EnumFacing facing;
 	private final float hitX;
 	private final float hitY;
 	private final float hitZ;
 
-	public ParticlePos(BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
+	public ParticlePos(BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		this.pos = pos;
 		this.facing = facing;
 		this.hitX = hitX;
@@ -23,46 +21,36 @@ public class ParticlePos
 		this.hitZ = hitZ;
 	}
 
-	public BlockPos getPos()
-	{
+	public BlockPos getPos() {
 		return pos;
 	}
 
-	public EnumFacing getFacing()
-	{
+	public EnumFacing getFacing() {
 		return facing;
 	}
 
-	public float getHitX()
-	{
+	public float getHitX() {
 		return hitX;
 	}
 
-	public float getHitY()
-	{
+	public float getHitY() {
 		return hitY;
 	}
 
-	public float getHitZ()
-	{
+	public float getHitZ() {
 		return hitZ;
 	}
 
 	@Override
-	public boolean equals(Object other)
-	{
-		if (other instanceof ParticlePos)
-		{
+	public boolean equals(Object other) {
+		if (other instanceof ParticlePos) {
 			ParticlePos pos2 = (ParticlePos) other;
 
 			if (pos2.getPos().getX() == this.getPos().getX() && pos2.getPos().getY() == this.getPos().getY()
-					&& pos2.getPos().getZ() == this.getPos().getZ())
-			{
-				if (pos2.getFacing().equals(this.getFacing()))
-				{
+					&& pos2.getPos().getZ() == this.getPos().getZ()) {
+				if (pos2.getFacing().equals(this.getFacing())) {
 					if (pos2.getHitX() == this.getHitX() && pos2.getHitY() == this.getHitY()
-							&& pos2.getHitZ() == this.getHitZ())
-					{
+							&& pos2.getHitZ() == this.getHitZ()) {
 						return true;
 					}
 				}

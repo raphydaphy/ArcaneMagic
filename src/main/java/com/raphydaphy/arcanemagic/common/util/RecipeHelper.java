@@ -30,8 +30,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreIngredient;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class RecipeHelper
-{
+public class RecipeHelper {
 
 	private static int j = 0;
 	private static final String MODID = ArcaneMagic.MODID;
@@ -40,10 +39,11 @@ public class RecipeHelper
 	public static final List<IArcaneTransfigurationRecipe> ELEMENTAL_RECIPES = ArcaneMagicAPI.ARCANE_TRANSFIGURATION_RECIPES;
 
 	/**
-	 * This adds a recipe to the list of crafting recipes.  Since who cares about names, it adds it as recipeX, where X is the current recipe you are adding.
+	 * This adds a recipe to the list of crafting recipes. Since who cares about
+	 * names, it adds it as recipeX, where X is the current recipe you are
+	 * adding.
 	 */
-	public static IRecipe addRecipe(int j, IRecipe rec)
-	{
+	public static IRecipe addRecipe(int j, IRecipe rec) {
 		if (rec.getRegistryName() == null)
 			RECIPES.add(rec.setRegistryName(new ResourceLocation(MODID, "recipe" + j)));
 		else
@@ -52,10 +52,9 @@ public class RecipeHelper
 	}
 
 	/**
-	 * This adds a recipe to the list of crafting recipes.  Cares about names.
+	 * This adds a recipe to the list of crafting recipes. Cares about names.
 	 */
-	public static IRecipe addRecipe(String name, IRecipe rec)
-	{
+	public static IRecipe addRecipe(String name, IRecipe rec) {
 		if (rec.getRegistryName() == null)
 			RECIPES.add(rec.setRegistryName(new ResourceLocation(MODID, name)));
 		else
@@ -66,95 +65,91 @@ public class RecipeHelper
 	/**
 	 * This adds an elemental recipe to the master list.
 	 */
-	public static IArcaneTransfigurationRecipe addArcaneTransfigurationRecipe(IArcaneTransfigurationRecipe rec)
-	{
+	public static IArcaneTransfigurationRecipe addArcaneTransfigurationRecipe(IArcaneTransfigurationRecipe rec) {
 		ELEMENTAL_RECIPES.add(rec);
 		return rec;
 	}
 
 	/**
-	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
+	 * Adds a shapeless recipe with X output using an array of inputs. Use
+	 * Strings for OreDictionary support. This array is not ordered. Can take a
+	 * List in place of inputs.
 	 */
-	public static IRecipe addShapeless(ItemStack output, Object... inputs)
-	{
+	public static IRecipe addShapeless(ItemStack output, Object... inputs) {
 		return addRecipe(j++, new ShapelessRecipes(MODID + ":" + j, output, createInput(inputs)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IRecipe addShapeless(T output, Object... inputs)
-	{
+	public static <T extends IForgeRegistryEntry<?>> IRecipe addShapeless(T output, Object... inputs) {
 		return addShapeless(makeStack(output), inputs);
 	}
 
 	/**
-	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  This has a custom group.
+	 * Adds a shapeless recipe with X output using an array of inputs. Use
+	 * Strings for OreDictionary support. This array is not ordered. This has a
+	 * custom group.
 	 */
-	public static IRecipe addShapeless(String group, ItemStack output, Object... inputs)
-	{
+	public static IRecipe addShapeless(String group, ItemStack output, Object... inputs) {
 		return addRecipe(j++, new ShapelessRecipes(MODID + ":" + group, output, createInput(inputs)));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IRecipe addShapeless(String group, T output, Object... inputs)
-	{
+	public static <T extends IForgeRegistryEntry<?>> IRecipe addShapeless(String group, T output, Object... inputs) {
 		return addShapeless(group, makeStack(output), inputs);
 	}
 
 	/**
-	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
-	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid.
+	 * Adds a shapeless recipe with X output on a crafting grid that is W x H,
+	 * using an array of inputs. Use null for nothing, use Strings for
+	 * OreDictionary support, this array must have a length of width * height.
+	 * This array is ordered, and items must follow from left to right, top to
+	 * bottom of the crafting grid.
 	 */
-	public static IRecipe addShaped(ItemStack output, int width, int height, Object... input)
-	{
+	public static IRecipe addShaped(ItemStack output, int width, int height, Object... input) {
 		return addRecipe(j++, genShaped(output, width, height, input));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IRecipe addShaped(T output, int width, int height, Object... input)
-	{
+	public static <T extends IForgeRegistryEntry<?>> IRecipe addShaped(T output, int width, int height,
+			Object... input) {
 		return addShaped(makeStack(output), width, height, input);
 	}
 
 	/**
-	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
-	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid. This has a custom group.
+	 * Adds a shapeless recipe with X output on a crafting grid that is W x H,
+	 * using an array of inputs. Use null for nothing, use Strings for
+	 * OreDictionary support, this array must have a length of width * height.
+	 * This array is ordered, and items must follow from left to right, top to
+	 * bottom of the crafting grid. This has a custom group.
 	 */
-	public static IRecipe addShaped(String group, ItemStack output, int width, int height, Object... input)
-	{
+	public static IRecipe addShaped(String group, ItemStack output, int width, int height, Object... input) {
 		return addRecipe(j++, genShaped(MODID + ":" + group, output, width, height, input));
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> IRecipe addShaped(String group, T output, int width, int height,
-			Object... input)
-	{
+			Object... input) {
 		return addShaped(group, makeStack(output), width, height, input);
 	}
 
 	/**
-	 * Generates a shaped recipe with a specific width and height. The Object[] is the ingredients, in order from left to right, top to bottom.
+	 * Generates a shaped recipe with a specific width and height. The Object[]
+	 * is the ingredients, in order from left to right, top to bottom.
 	 */
-	private static ShapedRecipes genShaped(ItemStack output, int width, int height, Object[] input)
-	{
+	private static ShapedRecipes genShaped(ItemStack output, int width, int height, Object[] input) {
 		if (input[0] instanceof List)
 			input = ((List<?>) input[0]).toArray();
 		if (width * height != input.length)
 			throw new UnsupportedOperationException(
 					"Attempted to add invalid shaped recipe.  Complain to the author of " + MODNAME);
 		NonNullList<Ingredient> inputL = NonNullList.create();
-		for (int i = 0; i < input.length; i++)
-		{
+		for (int i = 0; i < input.length; i++) {
 			Object k = input[i];
-			if (k instanceof String)
-			{
+			if (k instanceof String) {
 				inputL.add(i, new OreIngredient((String) k));
-			} else if (k instanceof ItemStack && !((ItemStack) k).isEmpty())
-			{
+			} else if (k instanceof ItemStack && !((ItemStack) k).isEmpty()) {
 				inputL.add(i, Ingredient.fromStacks((ItemStack) k));
-			} else if (k instanceof Item)
-			{
+			} else if (k instanceof Item) {
 				inputL.add(i, Ingredient.fromStacks(new ItemStack((Item) k)));
-			} else if (k instanceof Block)
-			{
+			} else if (k instanceof Block) {
 				inputL.add(i, Ingredient.fromStacks(new ItemStack((Block) k)));
-			} else
-			{
+			} else {
 				inputL.add(i, Ingredient.EMPTY);
 			}
 		}
@@ -165,16 +160,14 @@ public class RecipeHelper
 	/**
 	 * Same thing as genShaped above, but uses a specific group.
 	 */
-	private static ShapedRecipes genShaped(String group, ItemStack output, int l, int w, Object[] input)
-	{
+	private static ShapedRecipes genShaped(String group, ItemStack output, int l, int w, Object[] input) {
 		if (input[0] instanceof List)
 			input = ((List<?>) input[0]).toArray();
 		if (l * w != input.length)
 			throw new UnsupportedOperationException(
 					"Attempted to add invalid shaped recipe.  Complain to the author of " + MODNAME);
 		NonNullList<Ingredient> inputL = NonNullList.create();
-		for (int i = 0; i < input.length; i++)
-		{
+		for (int i = 0; i < input.length; i++) {
 			Object k = input[i];
 			if (k instanceof String)
 				inputL.add(i, new OreIngredient((String) k));
@@ -190,18 +183,17 @@ public class RecipeHelper
 	}
 
 	/**
-	 * Creates a list of ingredients based on an Object[].  Valid types are {@link String}, {@link ItemStack}, {@link Item}, and {@link Block}.
-	 * Used for shapeless recipes.
+	 * Creates a list of ingredients based on an Object[]. Valid types are
+	 * {@link String}, {@link ItemStack}, {@link Item}, and {@link Block}. Used
+	 * for shapeless recipes.
 	 */
-	private static NonNullList<Ingredient> createInput(Object[] input)
-	{
+	private static NonNullList<Ingredient> createInput(Object[] input) {
 		if (input[0] instanceof List)
 			input = ((List<?>) input[0]).toArray();
 		else if (input[0] instanceof Object[])
 			input = (Object[]) input[0];
 		NonNullList<Ingredient> inputL = NonNullList.create();
-		for (int i = 0; i < input.length; i++)
-		{
+		for (int i = 0; i < input.length; i++) {
 			Object k = input[i];
 			if (k instanceof String)
 				inputL.add(i, new OreIngredient((String) k));
@@ -217,67 +209,60 @@ public class RecipeHelper
 	}
 
 	/**
-	 * Adds a shapeless recipe with one output and x inputs, all inputs are the same.
+	 * Adds a shapeless recipe with one output and x inputs, all inputs are the
+	 * same.
 	 */
-	public static IRecipe addSimpleShapeless(ItemStack output, ItemStack input, int numInputs)
-	{
+	public static IRecipe addSimpleShapeless(ItemStack output, ItemStack input, int numInputs) {
 		return addShapeless(output, NonNullList.withSize(numInputs, input));
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(T output, T input, int numInputs)
-	{
+	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(T output, T input, int numInputs) {
 		return addSimpleShapeless(makeStack(output), makeStack(input), numInputs);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(T output, ItemStack input,
-			int numInputs)
-	{
+			int numInputs) {
 		return addSimpleShapeless(makeStack(output), input, numInputs);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> IRecipe addSimpleShapeless(ItemStack output, T input,
-			int numInputs)
-	{
+			int numInputs) {
 		return addSimpleShapeless(output, makeStack(input), numInputs);
 	}
 
 	/**
 	 * Helper method to make an {@link ItemStack} from a block or item.
 	 */
-	public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing, int size, int meta)
-	{
+	public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing, int size, int meta) {
 		if (thing instanceof Item)
 			return new ItemStack((Item) thing, size, meta);
 		return new ItemStack((Block) thing, size, meta);
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing, int size)
-	{
+	public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing, int size) {
 		return makeStack(thing, size, 0);
 	}
 
-	public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing)
-	{
+	public static <T extends IForgeRegistryEntry<?>> ItemStack makeStack(T thing) {
 		return makeStack(thing, 1, 0);
 	}
 
 	/**
-	 * Goes through all recipes and replaces anything that matches with just the provided itemstack and replaces it with another {@link Ingredient}.
-	 * @param old The itemstack to replace.
-	 * @param newThing The ingredient to replace the stack with.
+	 * Goes through all recipes and replaces anything that matches with just the
+	 * provided itemstack and replaces it with another {@link Ingredient}.
+	 * 
+	 * @param old
+	 *            The itemstack to replace.
+	 * @param newThing
+	 *            The ingredient to replace the stack with.
 	 */
-	public static void replaceInAllRecipes(ItemStack old, Ingredient newThing)
-	{
-		for (IRecipe rec : ForgeRegistries.RECIPES)
-		{
-			if (rec instanceof IShapedRecipe)
-			{
+	public static void replaceInAllRecipes(ItemStack old, Ingredient newThing) {
+		for (IRecipe rec : ForgeRegistries.RECIPES) {
+			if (rec instanceof IShapedRecipe) {
 				NonNullList<Ingredient> list = NonNullList.create();
-				for (Ingredient ing : rec.getIngredients())
-				{
+				for (Ingredient ing : rec.getIngredients()) {
 					if (ing.getMatchingStacks().length == 1
-							&& OreDictionary.itemMatches(ing.getMatchingStacks()[0], old, false))
-					{
+							&& OreDictionary.itemMatches(ing.getMatchingStacks()[0], old, false)) {
 						list.add(newThing);
 					} else
 						list.add(ing);
@@ -288,14 +273,11 @@ public class RecipeHelper
 				ForgeRegistries.RECIPES
 						.register(new ShapedRecipes(rec.getGroup(), width, height, list, rec.getRecipeOutput())
 								.setRegistryName(regname));
-			} else
-			{
+			} else {
 				NonNullList<Ingredient> list = NonNullList.create();
-				for (Ingredient ing : rec.getIngredients())
-				{
+				for (Ingredient ing : rec.getIngredients()) {
 					if (ing.getMatchingStacks().length == 1
-							&& OreDictionary.itemMatches(ing.getMatchingStacks()[0], old, false))
-					{
+							&& OreDictionary.itemMatches(ing.getMatchingStacks()[0], old, false)) {
 						list.add(newThing);
 					} else
 						list.add(ing);
@@ -309,113 +291,112 @@ public class RecipeHelper
 
 	/**
 	 * Adds a potion recipe
-	 * @param input The ItemStack input, this goes in the potion slot.  Must have a max stack size of 1.
-	 * @param inputPot The PotionType that will go on the input ItemStack.
-	 * @param reagent The ItemStack reagent, this goes in the top slot.
-	 * @param output The ItemStack output, this is what the input transforms into after brewing.
-	 * @param ontputPot The PotionType that will go on the output ItemStack.
+	 * 
+	 * @param input
+	 *            The ItemStack input, this goes in the potion slot. Must have a
+	 *            max stack size of 1.
+	 * @param inputPot
+	 *            The PotionType that will go on the input ItemStack.
+	 * @param reagent
+	 *            The ItemStack reagent, this goes in the top slot.
+	 * @param output
+	 *            The ItemStack output, this is what the input transforms into
+	 *            after brewing.
+	 * @param ontputPot
+	 *            The PotionType that will go on the output ItemStack.
 	 */
 	public static void addPotionRecipe(ItemStack input, PotionType inputPot, ItemStack reagent, ItemStack output,
-			PotionType ontputPot)
-	{
+			PotionType ontputPot) {
 		BrewingRecipeRegistry.addRecipe(PotionUtils.addPotionToItemStack(input, inputPot), reagent,
 				PotionUtils.addPotionToItemStack(output, ontputPot));
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(ItemStack input, PotionType inputPot,
-			ItemStack reagent, T output, PotionType outputPot)
-	{
+			ItemStack reagent, T output, PotionType outputPot) {
 		addPotionRecipe(input, inputPot, reagent, makeStack(output), outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(ItemStack input, PotionType inputPot,
-			T reagent, T output, PotionType outputPot)
-	{
+			T reagent, T output, PotionType outputPot) {
 		addPotionRecipe(input, inputPot, makeStack(reagent), makeStack(output), outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(T input, PotionType inputPot,
-			ItemStack reagent, ItemStack output, PotionType outputPot)
-	{
+			ItemStack reagent, ItemStack output, PotionType outputPot) {
 		addPotionRecipe(makeStack(input), inputPot, reagent, output, outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(T input, PotionType inputPot, T reagent,
-			ItemStack output, PotionType outputPot)
-	{
+			ItemStack output, PotionType outputPot) {
 		addPotionRecipe(makeStack(input), inputPot, makeStack(reagent), output, outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(ItemStack input, PotionType inputPot,
-			T reagent, ItemStack output, PotionType outputPot)
-	{
+			T reagent, ItemStack output, PotionType outputPot) {
 		addPotionRecipe(input, inputPot, makeStack(reagent), output, outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(T input, PotionType inputPot,
-			ItemStack reagent, T output, PotionType outputPot)
-	{
+			ItemStack reagent, T output, PotionType outputPot) {
 		addPotionRecipe(makeStack(input), inputPot, reagent, makeStack(output), outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(PotionType inputPot, ItemStack reagent,
-			PotionType outputPot)
-	{
+			PotionType outputPot) {
 		addPotionRecipe(Items.POTIONITEM, inputPot, reagent, Items.POTIONITEM, outputPot);
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> void addPotionRecipe(PotionType inputPot, T reagent,
-			PotionType outputPot)
-	{
+			PotionType outputPot) {
 		addPotionRecipe(Items.POTIONITEM, inputPot, makeStack(reagent), Items.POTIONITEM, outputPot);
 	}
 
 	/**
-	 * Adds a shapeless recipe with X output using an array of inputs. Use Strings for OreDictionary support. This array is not ordered.  Can take a List in place of inputs.
+	 * Adds a shapeless recipe with X output using an array of inputs. Use
+	 * Strings for OreDictionary support. This array is not ordered. Can take a
+	 * List in place of inputs.
 	 */
 	public static IArcaneTransfigurationRecipe addElementalShapeless(ItemStack output, Anima essence, int reqEssence,
-			Object... inputs)
-	{
+			Object... inputs) {
 		return addArcaneTransfigurationRecipe(new ShapelessArcaneTransfigurationRecipe(output,
 				createElementalInput(inputs), new AnimaStack(essence, reqEssence)));
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShapeless(T output,
-			Anima essence, int reqEssence, Object... inputs)
-	{
+			Anima essence, int reqEssence, Object... inputs) {
 		return addElementalShapeless(makeStack(output), essence, reqEssence, inputs);
 	}
 
 	/**
-	 * Adds a shapeless recipe with X output on a crafting grid that is W x H, using an array of inputs.  Use null for nothing, use Strings for OreDictionary support, this array must have a length of width * height.
-	 * This array is ordered, and items must follow from left to right, top to bottom of the crafting grid.
+	 * Adds a shapeless recipe with X output on a crafting grid that is W x H,
+	 * using an array of inputs. Use null for nothing, use Strings for
+	 * OreDictionary support, this array must have a length of width * height.
+	 * This array is ordered, and items must follow from left to right, top to
+	 * bottom of the crafting grid.
 	 */
 	public static IArcaneTransfigurationRecipe addElementalShaped(ItemStack output, Anima essence, int reqEssence,
-			Object... input)
-	{
+			Object... input) {
 		return addArcaneTransfigurationRecipe(new ShapedArcaneTransfigurationRecipe(output, createElementalInput(input),
 				new AnimaStack(essence, reqEssence)));
 	}
 
 	public static <T extends IForgeRegistryEntry<?>> IArcaneTransfigurationRecipe addElementalShaped(T output,
-			Anima essence, int reqEssence, Object... input)
-	{
+			Anima essence, int reqEssence, Object... input) {
 		return addElementalShaped(makeStack(output), essence, reqEssence, input);
 	}
 
 	/**
-	 * Creates a list of ingredients based on an Object[].  Valid types are {@link String}, {@link ItemStack}, {@link Item}, and {@link Block}.
-	 * Used for elemental recipes.
+	 * Creates a list of ingredients based on an Object[]. Valid types are
+	 * {@link String}, {@link ItemStack}, {@link Item}, and {@link Block}. Used
+	 * for elemental recipes.
 	 */
-	private static NonNullList<Ingredient> createElementalInput(Object[] input)
-	{
+	private static NonNullList<Ingredient> createElementalInput(Object[] input) {
 		if (input[0] instanceof List)
 			input = ((List<?>) input[0]).toArray();
 		else if (input[0] instanceof Object[])
 			input = (Object[]) input[0];
 		NonNullList<Ingredient> inputL = NonNullList.withSize(9, Ingredient.EMPTY);
-		for (int i = 0; i < input.length; i++)
-		{
+		for (int i = 0; i < input.length; i++) {
 			Object k = input[i];
 			if (k instanceof String)
 				inputL.set(i, new OreIngredient((String) k));

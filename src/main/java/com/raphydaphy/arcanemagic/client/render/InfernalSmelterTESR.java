@@ -18,13 +18,11 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 @SideOnly(Side.CLIENT)
-public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInfernalSmelter>
-{
+public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInfernalSmelter> {
 
 	@Override
 	public void render(TileEntityInfernalSmelter te, double x, double y, double z, float partialTicks, int destroyStage,
-			float alpha)
-	{
+			float alpha) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
@@ -32,8 +30,7 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		Vec3d ore = new Vec3d(0, 0.25, 0);
-		switch (te.getWorld().getBlockState(te.getPos()).getValue(BlockInfernalSmelter.FACING).getHorizontalIndex())
-		{
+		switch (te.getWorld().getBlockState(te.getPos()).getValue(BlockInfernalSmelter.FACING).getHorizontalIndex()) {
 		case 0:
 			ore = ore.addVector(0.5, 0, 0.135);
 			break;
@@ -53,15 +50,12 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 		GlStateManager.popMatrix();
 	}
 
-	private void renderItem(TileEntityInfernalSmelter te, ItemStack stack, int offset, boolean rainbowBeams)
-	{
-		if (!stack.isEmpty())
-		{
+	private void renderItem(TileEntityInfernalSmelter te, ItemStack stack, int offset, boolean rainbowBeams) {
+		if (!stack.isEmpty()) {
 
 			Color c = Color.RED;
 
-			if (rainbowBeams)
-			{
+			if (rainbowBeams) {
 				float frequency = 0.1f;
 				double r = Math.sin(frequency * (offset)) * 127 + 128;
 				double g = Math.sin(frequency * (offset) + 2) * 127 + 128;
@@ -75,11 +69,11 @@ public class InfernalSmelterTESR extends TileEntitySpecialRenderer<TileEntityInf
 
 			GlStateManager.scale(.2f, .2f, .2f);
 			GlStateManager.rotate(te.frameAge / 2, 0, 1, 0);
-			//GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frame)) / 3.2 + 0.1, 0);
+			// GlStateManager.translate(0, Math.sin((Math.PI / 180) * (frame)) /
+			// 3.2 + 0.1, 0);
 			if (te.frameAge < 0 || te.frameAge == Integer.MAX_VALUE)
 				te.frameAge = 0;
-			if (rainbowBeams)
-			{
+			if (rainbowBeams) {
 				GLHelper.renderFancyBeams(0, 0, 0, c, Minecraft.getMinecraft().world.getSeed(), offset, 32, 1.4f, 30,
 						10);
 			}

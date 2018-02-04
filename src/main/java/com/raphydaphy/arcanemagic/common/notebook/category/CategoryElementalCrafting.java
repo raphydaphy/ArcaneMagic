@@ -16,10 +16,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryElementalCrafting extends NotebookCategory
-{
-	public CategoryElementalCrafting()
-	{
+public class CategoryElementalCrafting extends NotebookCategory {
+	public CategoryElementalCrafting() {
 		setUnlocalizedName("arcanemagic.notebook.category.elemental_crafting");
 		setRequiredTag("unlockedElementalCrafting");
 		setPrerequisiteTag(NotebookCategories.ESSENCE_MANIPULATION.getRequiredTag());
@@ -27,12 +25,10 @@ public class CategoryElementalCrafting extends NotebookCategory
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info)
-	{
+	public List<NotebookPage> getPages(INotebookInfo info) {
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 2; i++)
-		{
+		for (int i = 0; i < 2; i++) {
 			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page0));

@@ -179,8 +179,7 @@ public class BlockArcaneForge extends BlockBase implements IHasRecipe {
 						if (te.getDepth(0) == 0 && te.getDepth(1) == 0) {
 
 							ItemStack stackToSpawn = te.getWeapon().copy();
-							if (!stackToSpawn.hasTagCompound())
-							{
+							if (!stackToSpawn.hasTagCompound()) {
 								stackToSpawn.setTagCompound(new NBTTagCompound());
 							}
 							stackToSpawn.getTagCompound().setString(EnumForgeGem.HILT_NBT,

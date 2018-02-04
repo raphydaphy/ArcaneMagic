@@ -18,15 +18,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 
-public class GuiProxy implements IGuiHandler
-{
+public class GuiProxy implements IGuiHandler {
 
 	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
+	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
-		switch (ID)
-		{
+		switch (ID) {
 		case BlockAnimusMaterializer.GUI_ID:
 
 			if (te instanceof TileEntityAnimusMaterializer)
@@ -41,29 +38,24 @@ public class GuiProxy implements IGuiHandler
 	}
 
 	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z)
-	{
+	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		BlockPos pos = new BlockPos(x, y, z);
 		TileEntity te = world.getTileEntity(pos);
-		switch (ID)
-		{
+		switch (ID) {
 		case ItemNotebook.GUI_ID:
 			if (player.getHeldItemMainhand().getItem() == ModRegistry.NOTEBOOK
-					|| player.getHeldItemOffhand().getItem() == ModRegistry.NOTEBOOK)
-			{
+					|| player.getHeldItemOffhand().getItem() == ModRegistry.NOTEBOOK) {
 				return new GuiNotebook(player);
 			}
 			break;
 		case BlockAnimusMaterializer.GUI_ID:
-			if (te instanceof TileEntityAnimusMaterializer)
-			{
+			if (te instanceof TileEntityAnimusMaterializer) {
 				return new GuiAnimusMaterializer((TileEntityAnimusMaterializer) te,
 						new ContainerAnimusMaterializer(player.inventory, (TileEntityAnimusMaterializer) te));
 			}
 			break;
 		case BlockAltar.GUI_ID:
-			if (te instanceof TileEntityAltar)
-			{
+			if (te instanceof TileEntityAltar) {
 				return new GuiAltar((TileEntityAltar) te,
 						new ContainerInfusionAltar(player.inventory, (TileEntityAltar) te));
 			}

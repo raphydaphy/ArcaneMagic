@@ -11,15 +11,13 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class ShapedArcaneTransfigurationRecipe implements IArcaneTransfigurationRecipe
-{
+public class ShapedArcaneTransfigurationRecipe implements IArcaneTransfigurationRecipe {
 
 	private final ItemStack output;
 	private final NonNullList<Ingredient> inputs;
 	private final ImmutableAnimaStack anima;
 
-	public ShapedArcaneTransfigurationRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima)
-	{
+	public ShapedArcaneTransfigurationRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima) {
 		Preconditions.checkArgument(inputs.size() == 9,
 				"Attempting to create invalid arcane transfiguration recipe! (Wrong input list size)");
 		this.output = output;
@@ -28,16 +26,13 @@ public class ShapedArcaneTransfigurationRecipe implements IArcaneTransfiguration
 	}
 
 	@Override
-	public AnimaStack getReqAnima()
-	{
+	public AnimaStack getReqAnima() {
 		return anima;
 	}
 
 	@Override
-	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world)
-	{
-		for (int i = 0; i < 9; i++)
-		{
+	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world) {
+		for (int i = 0; i < 9; i++) {
 			if (this.inputs.get(i) == Ingredient.EMPTY && stacks.get(i).isEmpty())
 				continue;
 			if (!this.inputs.get(i).apply(stacks.get(i)))
@@ -52,20 +47,17 @@ public class ShapedArcaneTransfigurationRecipe implements IArcaneTransfiguration
 	}
 
 	@Override
-	public ItemStack getRecipeOutput()
-	{
+	public ItemStack getRecipeOutput() {
 		return output;
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients()
-	{
+	public NonNullList<Ingredient> getIngredients() {
 		return inputs;
 	}
 
 	@Override
-	public boolean isShapeless()
-	{
+	public boolean isShapeless() {
 		return false;
 	}
 

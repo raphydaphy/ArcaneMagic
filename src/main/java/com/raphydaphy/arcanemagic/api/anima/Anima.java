@@ -21,8 +21,7 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public class Anima extends IForgeRegistryEntry.Impl<Anima>
-{
+public class Anima extends IForgeRegistryEntry.Impl<Anima> {
 
 	public static final AnimaRegistry REGISTRY = new AnimaRegistry();
 
@@ -34,12 +33,10 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 	public static final Anima CHAOS = new Anima("chaos", ArcaneMagic.MODID + ".chaos", 0x85, 0xb7, 0x2f);
 	public static final Anima CREATION = new AnimaCreation();
 
-	public static class AnimaSubscriber
-	{
+	public static class AnimaSubscriber {
 
 		@SubscribeEvent
-		public void onAnimaRegister(Register<Anima> event)
-		{
+		public void onAnimaRegister(Register<Anima> event) {
 			event.getRegistry().registerAll(OZONE, DEPTH, INFERNO, HORIZON, PEACE, CHAOS, CREATION);
 			OZONE.setItemForm(new ItemStack(ModRegistry.ANIMA));
 			DEPTH.setItemForm(new ItemStack(ModRegistry.ANIMA, 1, 1));
@@ -56,89 +53,73 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 	private String indexName;
 	protected ItemStack itemForm = ItemStack.EMPTY;
 
-	private Anima(String name, String unlocName, int r, int g, int b)
-	{
+	private Anima(String name, String unlocName, int r, int g, int b) {
 		this(name, unlocName, new Color(r, g, b));
 	}
 
-	private Anima(String name, String unlocName, Color color)
-	{
+	private Anima(String name, String unlocName, Color color) {
 		setRegistryName(ArcaneMagic.MODID, name);
 		setUnlocalizedName(unlocName);
 		this.indexName = name;
 		this.color = color;
 	}
 
-	public Anima(String unlocName, Color color)
-	{
+	public Anima(String unlocName, Color color) {
 		setUnlocalizedName(unlocName);
 		this.color = color;
 		this.indexName = unlocName;
 	}
 
-	public Anima(Color color)
-	{
+	public Anima(Color color) {
 		this.color = color;
 		this.indexName = "unnamed";
 	}
 
-	public Anima setIndexName(String index)
-	{
+	public Anima setIndexName(String index) {
 		this.indexName = index;
 		return this;
 	}
 
-	public Anima setUnlocalizedName(String unloc)
-	{
+	public Anima setUnlocalizedName(String unloc) {
 		this.unlocName = unloc;
 		return this;
 	}
 
-	public Anima setItemForm(ItemStack stack)
-	{
+	public Anima setItemForm(ItemStack stack) {
 		if (itemForm.isEmpty())
 			itemForm = stack;
 		return this;
 	}
 
 	public static boolean sendAnima(World world, AnimaStack stack, Vec3d from, Vec3d to, boolean simulate,
-			boolean spawnParticles)
-	{
+			boolean spawnParticles) {
 		return sendAnima(world, stack, from, to, to, simulate, spawnParticles);
 	}
 
 	public static boolean sendAnima(World world, AnimaStack stack, Vec3d from, Vec3d to, Vec3d toCosmetic,
-			boolean simulate, boolean spawnParticles)
-	{
+			boolean simulate, boolean spawnParticles) {
 		BlockPos fromPos = new BlockPos(Math.floor(from.x), Math.floor(from.y), Math.floor(from.z));
 		BlockPos toPos = new BlockPos(Math.floor(to.x), Math.floor(to.y), Math.floor(to.z));
 
 		TileEntity fromTEUnchecked = world.getTileEntity(fromPos);
 		TileEntity toTEUnchecked = world.getTileEntity(toPos);
 
-		if (toTEUnchecked != null && toTEUnchecked.hasCapability(IAnimaStorage.CAP, null))
-		{
+		if (toTEUnchecked != null && toTEUnchecked.hasCapability(IAnimaStorage.CAP, null)) {
 			IAnimaStorage storage = toTEUnchecked.getCapability(IAnimaStorage.CAP, null);
-			if (storage != null)
-			{
-				if (fromTEUnchecked != null && fromTEUnchecked.hasCapability(IAnimaStorage.CAP, null))
-				{
+			if (storage != null) {
+				if (fromTEUnchecked != null && fromTEUnchecked.hasCapability(IAnimaStorage.CAP, null)) {
 
 					IAnimaStorage storageFrom = fromTEUnchecked.getCapability(IAnimaStorage.CAP, null);
-					// sending from block to block, such as concentrator -> crystallizer
-					if (storageFrom != null)
-					{
+					// sending from block to block, such as concentrator ->
+					// crystallizer
+					if (storageFrom != null) {
 						// sender block has enough anima to transfer it
-						if (storageFrom.take(stack, true) == null)
-						{
+						if (storageFrom.take(stack, true) == null) {
 							// recieving block has enough capacity to accept it
-							if (storage.store(stack, true) == null)
-							{
-								if (!simulate)
-								{
+							if (storage.store(stack, true) == null) {
+								if (!simulate) {
 
-									if (!world.isRemote)
-									{
+									if (!world.isRemote) {
 										// send and recieve anima
 										storage.store(stack, false);
 										storageFrom.take(stack, false);
@@ -148,8 +129,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 
 										ArcaneMagicPacketHandler.INSTANCE.sendToAll(
 												new PacketAnimaTransfer(stack, from, to, toCosmetic, spawnParticles));
-									} else if (spawnParticles)
-									{
+									} else if (spawnParticles) {
 										ArcaneMagic.proxy.spawnAnimaParticles(world, from, new Vec3d(0, 0, 0),
 												stack.getAnima(), toCosmetic, false);
 									}
@@ -160,15 +140,11 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 					}
 				}
 				// sending from bedrock/wand to block
-				else
-				{
+				else {
 					// if the receiving block can accept 100% of the animus
-					if (storage.store(stack, true) == null)
-					{
-						if (!simulate)
-						{
-							if (!world.isRemote)
-							{
+					if (storage.store(stack, true) == null) {
+						if (!simulate) {
+							if (!world.isRemote) {
 								// do the thing!
 								storage.store(stack, false);
 
@@ -176,8 +152,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 
 								ArcaneMagicPacketHandler.INSTANCE.sendToAll(
 										new PacketAnimaTransfer(stack, from, to, toCosmetic, spawnParticles));
-							} else
-							{
+							} else {
 								ArcaneMagic.proxy.spawnAnimaParticles(world, from, new Vec3d(0, 0, 0), stack.getAnima(),
 										toCosmetic, to.equals(toCosmetic) ? false : true);
 
@@ -191,53 +166,43 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 		return false;
 	}
 
-	public ItemStack getItemForm()
-	{
+	public ItemStack getItemForm() {
 		return itemForm.copy();
 	}
 
-	public String getUnlocalizedName()
-	{
+	public String getUnlocalizedName() {
 		return "anima." + unlocName;
 	}
 
-	public String getIndexName()
-	{
+	public String getIndexName() {
 		return this.indexName;
 	}
 
-	public String getTranslationName()
-	{
+	public String getTranslationName() {
 		return getUnlocalizedName() + ".name";
 	}
 
-	public int getColorInt()
-	{
+	public int getColorInt() {
 		return color.getRGB();
 	}
 
-	public Color getColor()
-	{
+	public Color getColor() {
 		return color;
 	}
 
-	public static Anima getAnimaByID(int id)
-	{
-		if (id < Anima.REGISTRY.getValues().size())
-		{
+	public static Anima getAnimaByID(int id) {
+		if (id < Anima.REGISTRY.getValues().size()) {
 			return Anima.REGISTRY.getValues().get(id);
 		}
 		return null;
 	}
 
 	@Override
-	public String toString()
-	{
+	public String toString() {
 		return "Anima: " + getRegistryName().toString();
 	}
 
-	public static Anima getFromBiome(Biome biome)
-	{
+	public static Anima getFromBiome(Biome biome) {
 		if (BiomeDictionary.hasType(biome, Type.WATER))
 			return Anima.DEPTH;
 		else if (BiomeDictionary.hasType(biome, Type.FOREST) || BiomeDictionary.hasType(biome, Type.PLAINS))

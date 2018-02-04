@@ -6,17 +6,14 @@ import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
-public class ItemCreationCrystal extends ItemBase implements IAnimaCrystal
-{
+public class ItemCreationCrystal extends ItemBase implements IAnimaCrystal {
 
-	public ItemCreationCrystal()
-	{
+	public ItemCreationCrystal() {
 		super("anima_creation", TextFormatting.GOLD);
 	}
 
 	@Override
-	public Anima getAnima(ItemStack stack)
-	{
+	public Anima getAnima(ItemStack stack) {
 		return Anima.CREATION;
 	}
 

@@ -20,18 +20,15 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
-{
+public class RenderEntityMagicCircles extends Render<EntityMagicCircles> {
 
-	public RenderEntityMagicCircles(RenderManager renderManager)
-	{
+	public RenderEntityMagicCircles(RenderManager renderManager) {
 		super(renderManager);
 
 	}
 
 	@Override
-	public void doRender(EntityMagicCircles entity, double x, double y, double z, float entityYaw, float partialTicks)
-	{
+	public void doRender(EntityMagicCircles entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 
@@ -130,8 +127,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.translate(0, (entity.edgeRot == 0 ? 0 : (entity.edgeRot / 90)), 0);
-		if (entity.edgeRot >= 89)
-		{
+		if (entity.edgeRot >= 89) {
 			GlStateManager.pushMatrix();
 			GlStateManager.pushAttrib();
 			GLHelper.renderFancyBeams(0, 0 + 0.1, 0,
@@ -149,8 +145,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 
 		GlStateManager.popAttrib();
 		GlStateManager.popMatrix();
-		if (entity.hasBook)
-		{
+		if (entity.hasBook) {
 			// Outer Item #1
 			GlStateManager.pushMatrix();
 			GlStateManager.pushAttrib();
@@ -194,8 +189,7 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 			GlStateManager.popMatrix();
 		}
 
-		if (lighting)
-		{
+		if (lighting) {
 			GL11.glEnable(GL11.GL_LIGHTING);
 		}
 
@@ -215,20 +209,17 @@ public class RenderEntityMagicCircles extends Render<EntityMagicCircles>
 
 	}
 
-	public static class Factory implements IRenderFactory<EntityMagicCircles>
-	{
+	public static class Factory implements IRenderFactory<EntityMagicCircles> {
 
 		@Override
-		public Render<? super EntityMagicCircles> createRenderFor(RenderManager manager)
-		{
+		public Render<? super EntityMagicCircles> createRenderFor(RenderManager manager) {
 			return new RenderEntityMagicCircles(manager);
 		}
 
 	}
 
 	@Override
-	protected ResourceLocation getEntityTexture(EntityMagicCircles entity)
-	{
+	protected ResourceLocation getEntityTexture(EntityMagicCircles entity) {
 		return null;
 	}
 }

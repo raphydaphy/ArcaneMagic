@@ -16,9 +16,10 @@ import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisi
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallization;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryUnknownRealms;
 
-public class NotebookCategories
-{
-	// the player should NOT have this category unlocked ! it is only shown if they open a notebook before obtaining an ancient parchment, which should be impossible!
+public class NotebookCategories {
+	// the player should NOT have this category unlocked ! it is only shown if
+	// they open a notebook before obtaining an ancient parchment, which should
+	// be impossible!
 	public static final NotebookCategory UNKNOWN_REALMS = new CategoryUnknownRealms().setRegistryName(ArcaneMagic.MODID,
 			"unknown_realms");
 
@@ -57,8 +58,7 @@ public class NotebookCategories
 
 	private static boolean done = false;
 
-	public static void register()
-	{
+	public static void register() {
 		if (done)
 			return;
 		done = true;

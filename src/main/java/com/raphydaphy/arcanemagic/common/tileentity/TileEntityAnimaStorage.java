@@ -18,20 +18,16 @@ import net.minecraftforge.common.capabilities.Capability;
  *
  * ok
  */
-public abstract class TileEntityAnimaStorage extends TileEntity
-{
+public abstract class TileEntityAnimaStorage extends TileEntity {
 
 	protected AnimaStorage animaStorage;
 	private static final String ANIMA_KEY = "anima_storage";
 
-	public TileEntityAnimaStorage(int capacity)
-	{
+	public TileEntityAnimaStorage(int capacity) {
 		TileEntityAnimaStorage that = this;
-		animaStorage = new AnimaStorage(() ->
-		{
+		animaStorage = new AnimaStorage(() -> {
 			that.markDirty();
-			if (this.world != null && this.pos != null)
-			{
+			if (this.world != null && this.pos != null) {
 				IBlockState state = this.world.getBlockState(this.pos);
 				this.world.markAndNotifyBlock(this.pos, this.world.getChunkFromBlockCoords(this.pos), state, state,
 						1 | 2);
@@ -40,49 +36,42 @@ public abstract class TileEntityAnimaStorage extends TileEntity
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag()
-	{
+	public NBTTagCompound getUpdateTag() {
 		return this.writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		// shadows told me to put 150 so i did
 		return new SPacketUpdateTileEntity(this.pos, 150, this.getUpdateTag());
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		animaStorage.deserializeNBT(compound.getCompoundTag(ANIMA_KEY));
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag(ANIMA_KEY, animaStorage.serializeNBT());
 		return compound;
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing)
-	{
+	public boolean hasCapability(Capability<?> capability, @Nullable EnumFacing facing) {
 		return capability == IAnimaStorage.CAP || super.hasCapability(capability, facing);
 	}
 
 	@Nullable
 	@Override
-	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing)
-	{
+	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
 		return capability == IAnimaStorage.CAP ? IAnimaStorage.CAP.cast(animaStorage)
 				: super.getCapability(capability, facing);
 	}

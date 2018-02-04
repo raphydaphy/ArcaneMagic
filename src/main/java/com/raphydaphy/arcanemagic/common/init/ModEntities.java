@@ -7,10 +7,8 @@ import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
-public class ModEntities
-{
-	public static void init()
-	{
+public class ModEntities {
+	public static void init() {
 		int entityID = 0;
 
 		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneMagic.MODID, "item_fancy"), EntityItemFancy.class,

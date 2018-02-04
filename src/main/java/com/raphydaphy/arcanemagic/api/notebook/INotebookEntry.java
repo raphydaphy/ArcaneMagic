@@ -5,33 +5,31 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface INotebookEntry
-{
+public interface INotebookEntry {
 	/*
-	 *  The name used to compare the entry types
+	 * The name used to compare the entry types
 	 */
 	public ResourceLocation getRegistryName();
 
 	/*
-	 * Does the entry contain the specified text
-	 * If it does, it will show up when searched for
+	 * Does the entry contain the specified text If it does, it will show up
+	 * when searched for
 	 */
 	@SideOnly(Side.CLIENT)
 	public boolean containsSearchKey(String searchKey);
 
 	/*
-	 *  Should draw the entry onto the screen at the specified coordinates
+	 * Should draw the entry onto the screen at the specified coordinates
 	 */
 	@SideOnly(Side.CLIENT)
 	public void draw(int x, int y, int mouseX, int mouseY, GuiScreen notebook);
 
 	/*
-	 * Anything that needs to be run after all other rendering is done
-	 * ie. tooltips
+	 * Anything that needs to be run after all other rendering is done ie.
+	 * tooltips
 	 */
 	@SideOnly(Side.CLIENT)
-	public default void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook)
-	{
+	public default void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook) {
 
 	}
 

@@ -27,8 +27,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements ITickable
-{
+public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements ITickable {
 	public static int SIZE = 7;
 	public static int ORE = 0;
 	// crystals go in every slot above 0
@@ -36,17 +35,14 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 	private int progress = 0;
 	public int frameAge = 0;
 
-	public TileEntityInfernalSmelter()
-	{
+	public TileEntityInfernalSmelter() {
 		super(10000);
 	}
 
 	@Override
-	public void markDirty()
-	{
+	public void markDirty() {
 		super.markDirty();
-		if (TileEntityInfernalSmelter.this.world != null && TileEntityInfernalSmelter.this.pos != null)
-		{
+		if (TileEntityInfernalSmelter.this.world != null && TileEntityInfernalSmelter.this.pos != null) {
 			IBlockState state = TileEntityInfernalSmelter.this.world.getBlockState(TileEntityInfernalSmelter.this.pos);
 			TileEntityInfernalSmelter.this.world.markAndNotifyBlock(TileEntityInfernalSmelter.this.pos,
 					TileEntityInfernalSmelter.this.world.getChunkFromBlockCoords(TileEntityInfernalSmelter.this.pos),
@@ -55,51 +51,41 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
-	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}
 		return super.getCapability(capability, facing);
 	}
 
-	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
-	{
+	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE) {
 		@Override
-		protected void onContentsChanged(int slot)
-		{
+		protected void onContentsChanged(int slot) {
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
 			TileEntityInfernalSmelter.this.markDirty();
 		}
 
 		@Override
-		protected int getStackLimit(int slot, @Nonnull ItemStack stack)
-		{
+		protected int getStackLimit(int slot, @Nonnull ItemStack stack) {
 			return 1;
 		}
 
 		@Override
 		@Nonnull
-		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
-		{
-			if (slot == ORE && ArcaneMagicAPI.getAnimaFromStack(stack) == null)
-			{
+		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+			if (slot == ORE && ArcaneMagicAPI.getAnimaFromStack(stack) == null) {
 				return stack;
 
-			} else if (slot != ORE && !stack.isEmpty() && !(stack.getItem() instanceof IAnimaCrystal))
-			{
+			} else if (slot != ORE && !stack.isEmpty() && !(stack.getItem() instanceof IAnimaCrystal)) {
 				return stack;
 			}
 
@@ -108,83 +94,64 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 	};
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		if (compound.hasKey("items"))
-		{
+		if (compound.hasKey("items")) {
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
 		return compound;
 	}
 
-	public int getProgress()
-	{
+	public int getProgress() {
 		return progress;
 	}
 
-	public boolean canInteractWith(EntityPlayer playerIn)
-	{
+	public boolean canInteractWith(EntityPlayer playerIn) {
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
 
 	@Override
-	public void update()
-	{
-		if (world.isRemote)
-		{
+	public void update() {
+		if (world.isRemote) {
 			return;
 		}
 
 		IItemHandler cap = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		if (!cap.getStackInSlot(ORE).isEmpty())
-		{
-			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
-			{
-				for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
-				{
-					for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
-					{
-						if (world.rand.nextInt(2000) == 1)
-						{
+		if (!cap.getStackInSlot(ORE).isEmpty()) {
+			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++) {
+				for (int y = pos.getY() - 5; y < pos.getY() + 5; y++) {
+					for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++) {
+						if (world.rand.nextInt(2000) == 1) {
 							BlockPos here = new BlockPos(x, y, z);
-							if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER))
-							{
+							if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER)) {
 
 								TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(here);
 
-								if (te != null)
-								{
+								if (te != null) {
 									Map<Anima, AnimaStack> storedEssenceConcentrator = te
 											.getCapability(IAnimaStorage.CAP, null).getStored();
 
 									Anima useType = null;
-									for (AnimaStack transferStack : storedEssenceConcentrator.values())
-									{
-										if (transferStack.getCount() > 0 && !world.isRemote)
-										{
+									for (AnimaStack transferStack : storedEssenceConcentrator.values()) {
+										if (transferStack.getCount() > 0 && !world.isRemote) {
 											useType = transferStack.getAnima();
 											this.markDirty();
 										}
 									}
-									if (useType != null && world.rand.nextInt(3) == 1)
-									{
-										if (!world.isRemote)
-										{
+									if (useType != null && world.rand.nextInt(3) == 1) {
+										if (!world.isRemote) {
 											if (Anima.sendAnima(world, new AnimaStack(useType, 1),
 													new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 													new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5),
-													false, true))
-											{
+													false, true)) {
 
 											}
 										}
@@ -205,8 +172,7 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
-	{
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox() {
 		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
 	}
 }

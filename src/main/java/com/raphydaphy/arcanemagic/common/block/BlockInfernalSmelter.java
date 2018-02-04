@@ -46,21 +46,18 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 // TODO: a better name goddamit
-public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
-{
+public class BlockInfernalSmelter extends BlockBase implements IHasRecipe {
 	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	public static final PropertyEnum<EnumSmelterHalf> HALF = PropertyEnum.<EnumSmelterHalf>create("piece",
 			EnumSmelterHalf.class);
-	static
-	{
+	static {
 		BOUNDS.add(makeAABB(0, 0, 0, 16, 16, 16));
 	}
 
 	public IRecipe recipe;
 
-	public BlockInfernalSmelter()
-	{
+	public BlockInfernalSmelter() {
 		super("infernal_smelter", Material.ROCK, 4, SoundType.STONE);
 
 		this.setRenderedAABB(makeAABB(0, 0, 0, 16, 16, 16));
@@ -71,36 +68,28 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state)
-	{
-		if (state.getValue(HALF).equals(EnumSmelterHalf.BOTTOM))
-		{
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		if (state.getValue(HALF).equals(EnumSmelterHalf.BOTTOM)) {
 			TileEntityInfernalSmelter te = (TileEntityInfernalSmelter) world.getTileEntity(pos);
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-			for (int i = 0; i < cap.getSlots(); ++i)
-			{
+			for (int i = 0; i < cap.getSlots(); ++i) {
 				ItemStack itemstack = cap.getStackInSlot(i);
 
-				if (!itemstack.isEmpty())
-				{
+				if (!itemstack.isEmpty()) {
 					InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 				}
 			}
 
-			for (Vec3i piece : pieceLocations)
-			{
+			for (Vec3i piece : pieceLocations) {
 				BlockPos blockpos1 = pos.add(piece);
-				if (!blockpos1.equals(pos))
-				{
-					if (world.getBlockState(blockpos1).getBlock().equals(this))
-					{
+				if (!blockpos1.equals(pos)) {
+					if (world.getBlockState(blockpos1).getBlock().equals(this)) {
 						world.setBlockToAir(blockpos1);
 					}
 				}
 			}
-		} else
-		{
-			world.destroyBlock(pos.add(0,-1,0), true);
+		} else {
+			world.destroyBlock(pos.add(0, -1, 0), true);
 
 		}
 
@@ -108,84 +97,67 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
+	public boolean hasTileEntity(IBlockState state) {
 		return state.getValue(HALF) == EnumSmelterHalf.BOTTOM ? true : false;
 	}
 
 	@Override
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
-	{
-		if (pos.getY() >= worldIn.getHeight() - 1)
-		{
+	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+		if (pos.getY() >= worldIn.getHeight() - 1) {
 			return false;
-		} else
-		{
+		} else {
 			return super.canPlaceBlockAt(worldIn, pos) && super.canPlaceBlockAt(worldIn, pos.up());
 		}
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return hasTileEntity(state) ? new TileEntityInfernalSmelter() : null;
 	}
 
-	public EnumBlockRenderType getRenderType(IBlockState state)
-	{
+	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
-	
-	public BlockPos getRoot(BlockPos pos, IBlockState state)
-	{
+
+	public BlockPos getRoot(BlockPos pos, IBlockState state) {
 		return pos.subtract(state.getValue(HALF).getRootPos());
 	}
+
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		if (world.isRemote)
-		{
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (world.isRemote) {
 			return true;
 		}
 		BlockPos root = getRoot(pos, state);
 		TileEntity teUnchecked = world.getTileEntity(root);
-		if (!(teUnchecked instanceof TileEntityInfernalSmelter))
-		{
+		if (!(teUnchecked instanceof TileEntityInfernalSmelter)) {
 			return false;
 		}
 		TileEntityInfernalSmelter te = (TileEntityInfernalSmelter) teUnchecked;
 
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		if (cap != null)
-		{
+		if (cap != null) {
 			ItemStack stack = player.getHeldItem(hand);
-			if (!stack.isEmpty() && !player.isSneaking())
-			{
+			if (!stack.isEmpty() && !player.isSneaking()) {
 				ItemStack insertStack = stack.copy();
 				insertStack.setCount(1);
 
-				if (stack.getItem() instanceof IAnimaCrystal)
-				{
-					for (int slot = TileEntityInfernalSmelter.ORE + 1; slot < TileEntityInfernalSmelter.SIZE; slot++)
-					{
-						if (cap.getStackInSlot(slot).isEmpty())
-						{
-							if (cap.insertItem(slot, insertStack, true).isEmpty())
-							{
+				if (stack.getItem() instanceof IAnimaCrystal) {
+					for (int slot = TileEntityInfernalSmelter.ORE + 1; slot < TileEntityInfernalSmelter.SIZE; slot++) {
+						if (cap.getStackInSlot(slot).isEmpty()) {
+							if (cap.insertItem(slot, insertStack, true).isEmpty()) {
 								cap.insertItem(slot, insertStack, false);
 
 								stack.shrink(1);
@@ -199,10 +171,8 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 							}
 						}
 					}
-				} else if (cap.getStackInSlot(TileEntityInfernalSmelter.ORE).isEmpty())
-				{
-					if (cap.insertItem(TileEntityInfernalSmelter.ORE, insertStack, true).isEmpty())
-					{
+				} else if (cap.getStackInSlot(TileEntityInfernalSmelter.ORE).isEmpty()) {
+					if (cap.insertItem(TileEntityInfernalSmelter.ORE, insertStack, true).isEmpty()) {
 						cap.insertItem(TileEntityInfernalSmelter.ORE, insertStack, false);
 						stack.shrink(1);
 
@@ -215,19 +185,14 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 						return true;
 					}
 				}
-			} else if (player.isSneaking())
-			{
+			} else if (player.isSneaking()) {
 
-				for (int slot = TileEntityInfernalSmelter.SIZE - 1; slot > -1; slot--)
-				{
+				for (int slot = TileEntityInfernalSmelter.SIZE - 1; slot > -1; slot--) {
 					System.out.println(slot);
 					ItemStack toExtract = cap.getStackInSlot(slot).copy();
-					if (!toExtract.isEmpty())
-					{
-						if (cap.extractItem(slot, 1, true).getCount() == toExtract.getCount())
-						{
-							if (player.addItemStackToInventory(toExtract.copy()))
-							{
+					if (!toExtract.isEmpty()) {
+						if (cap.extractItem(slot, 1, true).getCount() == toExtract.getCount()) {
+							if (player.addItemStackToInventory(toExtract.copy())) {
 								cap.extractItem(slot, Math.min(toExtract.getCount(), cap.getSlotLimit(slot)), false);
 								te.markDirty();
 								world.playSound(player, root, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM,
@@ -247,17 +212,14 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public void initRecipes(Register<IRecipe> e)
-	{
+	public void initRecipes(Register<IRecipe> e) {
 		// TODO: recipe
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand)
-	{
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		Vec3d smoke = new Vec3d(pos.getX(), pos.getY() + 1.65, pos.getZ());
-		switch (state.getValue(FACING).getHorizontalIndex())
-		{
+		switch (state.getValue(FACING).getHorizontalIndex()) {
 		case 0:
 			smoke = smoke.addVector(0.5, 0, 0.6);
 			break;
@@ -275,98 +237,80 @@ public class BlockInfernalSmelter extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-	{
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-	{
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate((EnumFacing) state.getValue(FACING)));
 	}
 
 	@Override
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-	{
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing) state.getValue(FACING)));
 	}
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,
-			float hitZ, int meta, EntityLivingBase placer)
-	{
+			float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta)
-	{
+	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(HALF, meta < 4 ? EnumSmelterHalf.BOTTOM : EnumSmelterHalf.TOP)
 				.withProperty(FACING, EnumFacing.getHorizontal(meta % 4));
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state)
-	{
+	public int getMetaFromState(IBlockState state) {
 		return (state.getValue(HALF) == EnumSmelterHalf.BOTTOM ? 0 : 4) + state.getValue(FACING).getHorizontalIndex();
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState()
-	{
+	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] { FACING, HALF });
 	}
-	
+
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack)
-	{
-		for (Vec3i piece : pieceLocations)
-		{
+			ItemStack stack) {
+		for (Vec3i piece : pieceLocations) {
 			worldIn.setBlockState(pos.add(piece), state.withProperty(HALF, EnumSmelterHalf.getFromRootPos(piece)));
 		}
 
 	}
 
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune)
-	{
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		return state.getValue(HALF).equals(EnumSmelterHalf.BOTTOM) ? Item.getItemFromBlock(this) : Items.AIR;
 	}
 
 	private static final Vec3i[] pieceLocations = { new Vec3i(0, 0, 0), new Vec3i(0, 1, 0) };
 
-	public static enum EnumSmelterHalf implements IStringSerializable
-	{
+	public static enum EnumSmelterHalf implements IStringSerializable {
 		TOP, BOTTOM;
 
-		public String getName()
-		{
+		public String getName() {
 			return this.equals(TOP) ? "top" : "bottom";
 		}
 
-		public int getNum()
-		{
+		public int getNum() {
 			return this.equals(BOTTOM) ? 1 : 2;
 		}
 
-		public static EnumSmelterHalf getFromNum(int num)
-		{
+		public static EnumSmelterHalf getFromNum(int num) {
 			return num == 1 ? BOTTOM : TOP;
 		}
 
-		public Vec3i getRootPos()
-		{
+		public Vec3i getRootPos() {
 			return pieceLocations[this.getNum() - 1];
 		}
 
-		public static EnumSmelterHalf getFromRootPos(Vec3i rootPos)
-		{
-			for (EnumSmelterHalf piece : EnumSmelterHalf.values())
-			{
-				if (piece.getRootPos().equals(rootPos))
-				{
+		public static EnumSmelterHalf getFromRootPos(Vec3i rootPos) {
+			for (EnumSmelterHalf piece : EnumSmelterHalf.values()) {
+				if (piece.getRootPos().equals(rootPos)) {
 					return piece;
 				}
 			}

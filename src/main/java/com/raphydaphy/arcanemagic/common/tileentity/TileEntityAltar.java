@@ -10,20 +10,16 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityAltar extends TileEntity
-{
+public class TileEntityAltar extends TileEntity {
 	public static int SIZE = 7;
 
-	public TileEntityAltar()
-	{
+	public TileEntityAltar() {
 
 	}
 
-	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
-	{
+	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE) {
 		@Override
-		protected void onContentsChanged(int slot)
-		{
+		protected void onContentsChanged(int slot) {
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
 			TileEntityAltar.this.markDirty();
@@ -31,64 +27,53 @@ public class TileEntityAltar extends TileEntity
 	};
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound)
-	{
+	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		if (compound.hasKey("items"))
-		{
+		if (compound.hasKey("items")) {
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound)
-	{
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
 		return compound;
 	}
 
-	public boolean canInteractWith(EntityPlayer playerIn)
-	{
+	public boolean canInteractWith(EntityPlayer playerIn) {
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
-	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
-	{
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-		{
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}
 		return super.getCapability(capability, facing);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt)
-	{
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		readFromNBT(pkt.getNbtCompound());
 	}
 
 	@Override
-	public NBTTagCompound getUpdateTag()
-	{
+	public NBTTagCompound getUpdateTag() {
 		return this.writeToNBT(new NBTTagCompound());
 	}
 
 	@Override
-	public SPacketUpdateTileEntity getUpdatePacket()
-	{
+	public SPacketUpdateTileEntity getUpdatePacket() {
 		// shadows told me to put 150 so i did
 		return new SPacketUpdateTileEntity(this.pos, 3, this.getUpdateTag());
 	}

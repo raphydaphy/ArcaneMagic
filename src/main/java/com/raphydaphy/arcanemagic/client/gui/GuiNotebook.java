@@ -22,8 +22,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiNotebook extends GuiScreen
-{
+public class GuiNotebook extends GuiScreen {
 	// width and height of the texture, and of just the book area
 	public static final int NOTEBOOK_WIDTH = 232;
 	public static final int NOTEBOOK_HEIGHT = 180;
@@ -32,7 +31,8 @@ public class GuiNotebook extends GuiScreen
 	// Scale up the notebook so it isn't so tiny
 	final double scale = 1.5;
 
-	// Because for some reason the mouse information provided in onMouseClick is wrong
+	// Because for some reason the mouse information provided in onMouseClick is
+	// wrong
 	public int relMouseX = 0;
 	public int relMouseY = 0;
 
@@ -44,29 +44,25 @@ public class GuiNotebook extends GuiScreen
 
 	private GuiTextFieldNoShadow searchField;
 
-	public GuiNotebook(EntityPlayer player)
-	{
+	public GuiNotebook(EntityPlayer player) {
 		this.player = player;
 		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
 		// player opened it for the first time!
-		if (cap != null && !cap.getUsed())
-		{
+		if (cap != null && !cap.getUsed()) {
 			cap.setUsed(true);
 			ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 		}
 	}
 
 	@Override
-	public void initGui()
-	{
+	public void initGui() {
 		super.initGui();
 		this.setGuiSize(mc.displayWidth, mc.displayHeight);
 
 		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
-		if (cap != null)
-		{
+		if (cap != null) {
 			// MC Screen resolution based on GUI scale
 			ScaledResolution res = new ScaledResolution(mc);
 
@@ -88,13 +84,11 @@ public class GuiNotebook extends GuiScreen
 		}
 	}
 
-	private void drawArrow(boolean isLeft, int x, int y, int mouseX, int mouseY, int screenX, int screenY)
-	{
+	private void drawArrow(boolean isLeft, int x, int y, int mouseX, int mouseY, int screenX, int screenY) {
 		int offset = isLeft ? 2 : 22;
 
 		if (mouseX >= screenX + x && mouseY >= screenY + y && mouseX <= screenX + x + (18 * scale)
-				&& mouseY <= screenY + y + (10 * scale))
-		{
+				&& mouseY <= screenY + y + (10 * scale)) {
 			offset += 40;
 		}
 		drawScaledCustomSizeModalRect(screenX + x, screenY + y, offset, 182, 18, 10, (int) (18 * scale),
@@ -102,32 +96,26 @@ public class GuiNotebook extends GuiScreen
 	}
 
 	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException
-	{
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
 		super.keyTyped(typedChar, keyCode);
 
 		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
-		if (cap != null)
-		{
-			if (this.searchField.textboxKeyTyped(typedChar, keyCode))
-			{
+		if (cap != null) {
+			if (this.searchField.textboxKeyTyped(typedChar, keyCode)) {
 				cap.setSearchKey(this.searchField.getText());
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
-			} else
-			{
+			} else {
 				super.keyTyped(typedChar, keyCode);
 			}
 		}
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
-		if (cap != null)
-		{
+		if (cap != null) {
 			// Save the real mouse coordinates for access in onMouseClick
 			relMouseX = mouseX;
 			relMouseY = mouseY;
@@ -164,62 +152,53 @@ public class GuiNotebook extends GuiScreen
 			int curPage = cap.getPage();
 			int renderCurCategory = 0;
 
-			if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(curCategory)))
-			{
-				for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++)
-				{
-					if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(category)))
-					{
-						if (category < curCategory)
-						{
+			if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(curCategory))) {
+				for (int category = 0; category < ArcaneMagicAPI.getCategoryCount(); category++) {
+					if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(category))) {
+						if (category < curCategory) {
 							renderCurCategory++;
-						} else
-						{
+						} else {
 							break;
 						}
 					}
 				}
-			} else
-			{
+			} else {
 				renderCurCategory = -1;
 			}
-			// if they haven't unlocked the current category, or it dosen't exist
+			// if they haven't unlocked the current category, or it dosen't
+			// exist
 			if (curCategory > ArcaneMagicAPI.getNotebookCategories().size()
-					|| !cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(curCategory)))
-			{
+					|| !cap.isVisible(ArcaneMagicAPI.getNotebookCategories().get(curCategory))) {
 				cap.setCategory(1);
 				curCategory = 1;
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 			}
 
 			// if they haven't unlocked the current page, or it dosen't exist
-			if (curPage >= ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).size())
-			{
+			if (curPage >= ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).size()) {
 				cap.setPage(0);
 				curPage = 0;
 				ArcaneMagicPacketHandler.INSTANCE.sendToServer(new PacketNotebookChanged(cap));
 			}
 
-			// If there are more than 1 pages in this category, draw arrows to navitage!
-			if (ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).size() > 1)
-			{
+			// If there are more than 1 pages in this category, draw arrows to
+			// navitage!
+			if (ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).size() > 1) {
 				// if they are past the first page, draw an arrow to go back
-				if (curPage > 0)
-				{
+				if (curPage > 0) {
 					drawArrow(true, 144, 238, mouseX, mouseY, screenX, screenY);
 				}
 
-				// If they are before the last page, draw an arrow to go forwards
-				if (curPage < ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).size() - 1)
-				{
+				// If they are before the last page, draw an arrow to go
+				// forwards
+				if (curPage < ArcaneMagicAPI.getNotebookCategories().get(curCategory).getPages(cap).size() - 1) {
 					drawArrow(false, 285, 238, mouseX, mouseY, screenX, screenY);
 				}
 			}
 			mc.getTextureManager().bindTexture(notebook);
 
 			// selected category background bar
-			if (renderCurCategory >= 0)
-			{
+			if (renderCurCategory >= 0) {
 				drawScaledCustomSizeModalRect((int) ((screenX + 13) + (1 * scale)),
 						(int) ((screenY + 40 + (renderCurCategory * 20)) + (1 * scale)), 86, 182, 70, 16,
 						(int) (70 * scale), (int) (16 * scale), NOTEBOOK_WIDTH, NOTEBOOK_TEX_HEIGHT);
@@ -244,12 +223,13 @@ public class GuiNotebook extends GuiScreen
 			// Current Category Name
 			double largeText = 1.4;
 			GlStateManager.scale(largeText, largeText, largeText);
-			if (shouldDrawTitle)
-			{
+			if (shouldDrawTitle) {
 				ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(
 						I18n.format(ArcaneMagicAPI.getNotebookCategories().get(curCategory).getUnlocalizedTitle(cap,
 								curPage)),
-						(int) ((screenX + 145) / largeText), (int) ((screenY + 20) / largeText), 0x000000); // satan is coming
+						(int) ((screenX + 145) / largeText), (int) ((screenY + 20) / largeText), 0x000000); // satan
+																											// is
+																											// coming
 			}
 			// Category List
 			double categoryNameSize = 0.8;
@@ -257,11 +237,9 @@ public class GuiNotebook extends GuiScreen
 					(1 / largeText) * categoryNameSize);
 
 			int cat = 0;
-			for (NotebookCategory category : ArcaneMagicAPI.getNotebookCategories())
-			{
+			for (NotebookCategory category : ArcaneMagicAPI.getNotebookCategories()) {
 				// if the category is visible in the book
-				if (cap.matchesSearchKey(category))
-				{
+				if (cap.matchesSearchKey(category)) {
 					// Draw the category!
 					ArcaneMagicAPI.getNotebookCategories().get(curCategory).getFontRenderer(this).drawString(
 							I18n.format(category.getUnlocalizedName()),
@@ -287,23 +265,20 @@ public class GuiNotebook extends GuiScreen
 	}
 
 	@Override
-	public boolean doesGuiPauseGame()
-	{
+	public boolean doesGuiPauseGame() {
 		return false;
 	}
 
 	@Override
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException
-	{
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 
-		if (mouseButton == 0)
-		{
+		if (mouseButton == 0) {
 			INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
 
-			if (cap != null)
-			{
-				// Things from drawScreen to calculate positions based on GUI Scale
+			if (cap != null) {
+				// Things from drawScreen to calculate positions based on GUI
+				// Scale
 				ScaledResolution res = new ScaledResolution(mc);
 
 				final int SCALED_NOTEBOOK_WIDTH = (int) (NOTEBOOK_WIDTH * scale);
@@ -313,16 +288,13 @@ public class GuiNotebook extends GuiScreen
 				int screenY = (res.getScaledHeight() / 2) - (SCALED_NOTEBOOK_HEIGHT / 2);
 
 				// if there are arrows to click on
-				if (ArcaneMagicAPI.getNotebookCategories().get(cap.getCategory()).getPages(cap).size() > 1)
-				{
+				if (ArcaneMagicAPI.getNotebookCategories().get(cap.getCategory()).getPages(cap).size() > 1) {
 					// if there if a backwards arrow
-					if (cap.getPage() > 0)
-					{
+					if (cap.getPage() > 0) {
 						// .. and if the mouse is over it
 						if (relMouseX >= screenX + 144 && relMouseY >= screenY + 238
 								&& relMouseX <= screenX + 144 + (18 * scale)
-								&& relMouseY <= screenY + 238 + (10 * scale))
-						{
+								&& relMouseY <= screenY + 238 + (10 * scale)) {
 							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
 									ArcaneMagicSoundHandler.randomPageSound(), SoundCategory.MASTER, 1f, 1f, false);
 							cap.setPage(cap.getPage() - 1);
@@ -332,13 +304,11 @@ public class GuiNotebook extends GuiScreen
 
 					// if there if a forwards arrow
 					if (cap.getPage() < ArcaneMagicAPI.getNotebookCategories().get(cap.getCategory()).getPages(cap)
-							.size() - 1)
-					{
+							.size() - 1) {
 						// .. and if the mouse is over it
 						if (relMouseX >= screenX + 285 && relMouseY >= screenY + 238
 								&& relMouseX <= screenX + 285 + (18 * scale)
-								&& relMouseY <= screenY + 238 + (10 * scale))
-						{
+								&& relMouseY <= screenY + 238 + (10 * scale)) {
 							player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
 									ArcaneMagicSoundHandler.randomPageSound(), SoundCategory.MASTER, 1f, 1f, false);
 							cap.setPage(cap.getPage() + 1);
@@ -347,19 +317,14 @@ public class GuiNotebook extends GuiScreen
 					}
 				}
 
-				if (relMouseX >= screenX + 10 && relMouseX <= screenX + 118)
-				{
+				if (relMouseX >= screenX + 10 && relMouseX <= screenX + 118) {
 					int tab = 0;
 
-					for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++)
-					{
+					for (int unRealTab = 0; unRealTab < ArcaneMagicAPI.getNotebookCategories().size(); unRealTab++) {
 						// if they have unlocked this category
-						if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(unRealTab)))
-						{
-							if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 60)
-							{
-								if (cap.getCategory() != unRealTab)
-								{
+						if (cap.matchesSearchKey(ArcaneMagicAPI.getNotebookCategories().get(unRealTab))) {
+							if (relMouseY >= screenY + (tab * 23) && relMouseY <= screenY + (tab * 20) + 60) {
+								if (cap.getCategory() != unRealTab) {
 									player.getEntityWorld().playSound(player.posX, player.posY, player.posZ,
 											ArcaneMagicSoundHandler.clack, SoundCategory.MASTER, 1f, 1f, false);
 									cap.setCategory(unRealTab);

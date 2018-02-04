@@ -1,15 +1,17 @@
 package com.raphydaphy.arcanemagic.client;
 
+import java.awt.Color;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
-import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
+import com.raphydaphy.arcanemagic.client.proxy.ClientProxy;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
@@ -58,7 +60,17 @@ public class ClientEvents {
 
 			if (player != null) {
 				ParticleQueue.getInstance().updateQueue(world, player);
+
+				ClientProxy.particleRenderer.updateParticles();
+
+				BlockPos pos = new BlockPos(0, 5, 0);
+				Color color = Color.orange;
+				ParticleUtil.spawnParticleGlowTest(world, pos.getX(), pos.getY(), pos.getZ(), 0, (float) .25, 0,
+						color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, 1f,
+						Math.min(world.rand.nextFloat() * 5, 2), 1000);
+
 			}
+
 		}
 	}
 
@@ -110,7 +122,6 @@ public class ClientEvents {
 
 	}
 
-	
 	@SubscribeEvent
 	public static void renderWorldLastEvent(RenderWorldLastEvent ev) {
 		World world = Minecraft.getMinecraft().world;
@@ -119,23 +130,7 @@ public class ClientEvents {
 		if (world != null && player != null) {
 
 			GlStateManager.pushMatrix();
-			GlStateManager.pushAttrib();
-			GlStateManager.translate(-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).x,
-					-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).y,
-					-player.getPositionEyes(Minecraft.getMinecraft().getRenderPartialTicks()).z);
-
-			GlStateManager.disableTexture2D();
-			GlStateManager.shadeModel(GL11.GL_SMOOTH);
-			GlStateManager.enableBlend();
-			GlStateManager.disableAlpha();
-			GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-			GlStateManager.depthMask(false);
-			GlStateManager.disableCull();
-			
-			// TODO: PARTICLE
-
-			GlStateManager.popAttrib();
+			ClientProxy.particleRenderer.renderParticles(Minecraft.getMinecraft().player, ev.getPartialTicks());
 			GlStateManager.popMatrix();
 
 			if (world.getTotalWorldTime() % 38 == 0) {
@@ -219,6 +214,7 @@ public class ClientEvents {
 	@SubscribeEvent
 	public static void onTextureStitch(TextureStitchEvent.Pre event) {
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball"));
+		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/plus"));
 		ArcaneMagic.LOGGER.info("Stiched textures!");
 	}
 }

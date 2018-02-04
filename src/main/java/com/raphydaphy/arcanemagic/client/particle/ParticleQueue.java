@@ -11,39 +11,30 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ParticleQueue
-{
+public class ParticleQueue {
 	private Map<ParticlePos, Integer> particles = new HashMap<ParticlePos, Integer>();
 
 	public static final ParticleQueue INSTANCE = new ParticleQueue();
 
-	public ParticleQueue()
-	{
+	public ParticleQueue() {
 
 	}
 
-	public static ParticleQueue getInstance()
-	{
+	public static ParticleQueue getInstance() {
 		return INSTANCE;
 	}
 
-	public void addParticle(World world, ParticlePos pos)
-	{
-		if (world.isRemote)
-		{
+	public void addParticle(World world, ParticlePos pos) {
+		if (world.isRemote) {
 			particles.put(pos, 50);
 		}
 	}
 
-	private void doParticle(World world, ParticlePos ppos)
-	{
-		if (world.rand.nextInt(3) == 1)
-		{
+	private void doParticle(World world, ParticlePos ppos) {
+		if (world.rand.nextInt(3) == 1) {
 			BlockPos pos = ppos.getPos();
-			for (int x = 0; x < 1; x++)
-			{
-				switch (ppos.getFacing())
-				{
+			for (int x = 0; x < 1; x++) {
+				switch (ppos.getFacing()) {
 				case UP:
 					world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 4),
 							pos.getY() + 0.4 + (world.rand.nextFloat() / 4),
@@ -76,16 +67,12 @@ public class ParticleQueue
 		}
 	}
 
-	public void updateQueue(World world, EntityPlayer player)
-	{
-		if (world.isRemote)
-		{
+	public void updateQueue(World world, EntityPlayer player) {
+		if (world.isRemote) {
 			Map<ParticlePos, Integer> newParticles = new HashMap<ParticlePos, Integer>();
-			for (ParticlePos p : particles.keySet())
-			{
+			for (ParticlePos p : particles.keySet()) {
 
-				if (particles.get(p) > 0)
-				{
+				if (particles.get(p) > 0) {
 
 					doParticle(world, p);
 					newParticles.put(p, particles.get(p) - 1);

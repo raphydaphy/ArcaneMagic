@@ -14,12 +14,10 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import net.minecraft.item.ItemStack;
 
 @JEIPlugin
-public class ArcaneMagicJEIPlugin implements IModPlugin
-{
+public class ArcaneMagicJEIPlugin implements IModPlugin {
 	public static final String ARCANE_TRANSFIGURATION_UID = "arcanemagic.arcane_transfiguration";
 
-	public void register(IModRegistry registry)
-	{
+	public void register(IModRegistry registry) {
 		registry.addRecipes(RecipeHelper.ELEMENTAL_RECIPES, ARCANE_TRANSFIGURATION_UID);
 		registry.handleRecipes(IArcaneTransfigurationRecipe.class, WrapperArcaneTransfiguration::new,
 				ARCANE_TRANSFIGURATION_UID);
@@ -29,8 +27,7 @@ public class ArcaneMagicJEIPlugin implements IModPlugin
 	}
 
 	@Override
-	public void registerCategories(IRecipeCategoryRegistration registry)
-	{
+	public void registerCategories(IRecipeCategoryRegistration registry) {
 		final IGuiHelper guiHelper = registry.getJeiHelpers().getGuiHelper();
 		registry.addRecipeCategories(new CategoryArcaneTransfiguration(guiHelper));
 	}

@@ -23,26 +23,22 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBase extends Block implements IBaseBlock
-{
+public class BlockBase extends Block implements IBaseBlock {
 	private AxisAlignedBB RENDER_AABB = FULL_BLOCK_AABB;
 	private List<AxisAlignedBB> COLLISION_AABB_LIST = new ArrayList<>();
 
-	public BlockBase(String name, Material material, float hardness, float resist, SoundType sound)
-	{
+	public BlockBase(String name, Material material, float hardness, float resist, SoundType sound) {
 		super(material);
 		setup(name, hardness, resist, sound);
 		init();
 	}
 
-	public BlockBase(String name, Material material, float hardness, SoundType sound)
-	{
+	public BlockBase(String name, Material material, float hardness, SoundType sound) {
 		this(name, material, hardness, hardness * (5 / 3), sound);
 	}
 
 	@Override
-	public void setup(String name, float hardness, float resist, SoundType sound)
-	{
+	public void setup(String name, float hardness, float resist, SoundType sound) {
 		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
 		setRegistryName(name);
 		setCreativeTab(ArcaneMagic.creativeTab);
@@ -52,33 +48,28 @@ public class BlockBase extends Block implements IBaseBlock
 	}
 
 	@Override
-	public void init()
-	{
+	public void init() {
 		ModRegistry.BLOCKS.add(this);
 		ModRegistry.ITEMS.add(createItemBlock());
 	}
 
 	@Override
-	public ItemBlock createItemBlock()
-	{
+	public ItemBlock createItemBlock() {
 		return (ItemBlock) new ItemBlock(this).setRegistryName(getRegistryName());
 	}
 
-	public BlockBase setRenderedAABB(AxisAlignedBB aabb)
-	{
+	public BlockBase setRenderedAABB(AxisAlignedBB aabb) {
 		RENDER_AABB = aabb;
 		return this;
 	}
 
-	public BlockBase setCollisionAABBList(List<AxisAlignedBB> aabbList)
-	{
+	public BlockBase setCollisionAABBList(List<AxisAlignedBB> aabbList) {
 		COLLISION_AABB_LIST = aabbList;
 		return this;
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-	{
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return RENDER_AABB;
 	}
 
@@ -86,42 +77,33 @@ public class BlockBase extends Block implements IBaseBlock
 	@Nullable
 	@Override
 	public RayTraceResult collisionRayTrace(IBlockState blockState, @Nonnull World worldIn, @Nonnull BlockPos pos,
-			@Nonnull Vec3d start, @Nonnull Vec3d end)
-	{
-		if (COLLISION_AABB_LIST.isEmpty())
-		{
+			@Nonnull Vec3d start, @Nonnull Vec3d end) {
+		if (COLLISION_AABB_LIST.isEmpty()) {
 			return super.collisionRayTrace(blockState, worldIn, pos, start, end);
 		}
 		return COLLISION_AABB_LIST.stream().map(bb -> rayTrace(pos, start, end, bb)).anyMatch(Objects::nonNull)
-				? super.collisionRayTrace(blockState, worldIn, pos, start, end)
-				: null;
+				? super.collisionRayTrace(blockState, worldIn, pos, start, end) : null;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
-			List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState)
-	{
-		if (COLLISION_AABB_LIST.isEmpty())
-		{
+			List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
+		if (COLLISION_AABB_LIST.isEmpty()) {
 			super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, isActualState);
-		} else
-		{
-			if (!isActualState)
-			{
+		} else {
+			if (!isActualState) {
 				state = this.getActualState(state, worldIn, pos);
 			}
 
-			for (AxisAlignedBB aabb : COLLISION_AABB_LIST)
-			{
+			for (AxisAlignedBB aabb : COLLISION_AABB_LIST) {
 				addCollisionBoxToList(pos, entityBox, collidingBoxes, aabb);
 			}
 		}
 
 	}
 
-	public static AxisAlignedBB makeAABB(double x1, double y1, double z1, double x2, double y2, double z2)
-	{
+	public static AxisAlignedBB makeAABB(double x1, double y1, double z1, double x2, double y2, double z2) {
 		return new AxisAlignedBB(x1 * (1d / 16d), y1 * (1d / 16d), z1 * (1d / 16d), x2 * (1d / 16d), y2 * (1d / 16d),
 				z2 * (1d / 16d));
 	}

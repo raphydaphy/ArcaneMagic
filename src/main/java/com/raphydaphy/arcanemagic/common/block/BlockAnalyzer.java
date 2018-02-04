@@ -37,13 +37,11 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
 
-public class BlockAnalyzer extends BlockBase implements IHasRecipe
-{
+public class BlockAnalyzer extends BlockBase implements IHasRecipe {
 	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-	static
-	{
+	static {
 		BOUNDS.add(makeAABB(2, 0, 7, 4, 2, 9));
 		BOUNDS.add(makeAABB(7, 0, 2, 9, 2, 4));
 		BOUNDS.add(makeAABB(7, 0, 12, 9, 2, 14));
@@ -54,8 +52,7 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 
 	public IRecipe recipe;
 
-	public BlockAnalyzer()
-	{
+	public BlockAnalyzer() {
 		super("analyzer", Material.WOOD, 2.5f, SoundType.WOOD);
 
 		this.setRenderedAABB(makeAABB(2, 0, 2, 14, 8, 14));
@@ -63,89 +60,73 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state)
-	{
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
 		TileEntityAnalyzer te = (TileEntityAnalyzer) world.getTileEntity(pos);
 
-		if (!te.getStack(0).isEmpty())
-		{
+		if (!te.getStack(0).isEmpty()) {
 			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStack(0).copy());
 		}
 
-		if (!te.getStack(1).isEmpty())
-		{
+		if (!te.getStack(1).isEmpty()) {
 			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), te.getStack(1).copy());
 		}
 		super.breakBlock(world, pos, state);
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-	{
+	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state)
-	{
+	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state)
-	{
+	public boolean hasTileEntity(IBlockState state) {
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state)
-	{
+	public TileEntity createTileEntity(World world, IBlockState state) {
 		return new TileEntityAnalyzer();
 	}
 
-	public EnumBlockRenderType getRenderType(IBlockState state)
-	{
+	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
 	}
 
 	@Override
-	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer)
-	{
+	public boolean canRenderInLayer(IBlockState state, BlockRenderLayer layer) {
 		return layer == BlockRenderLayer.SOLID || layer == BlockRenderLayer.TRANSLUCENT;
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		if (world.isRemote)
-		{
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (world.isRemote) {
 			return true;
 		}
 		TileEntity teUnchecked = world.getTileEntity(pos);
-		if (!(teUnchecked instanceof TileEntityAnalyzer))
-		{
+		if (!(teUnchecked instanceof TileEntityAnalyzer)) {
 			return false;
 		}
 		TileEntityAnalyzer te = (TileEntityAnalyzer) teUnchecked;
 		ItemStack stack = player.getHeldItem(hand);
 
-		if (!stack.isEmpty() && !player.isSneaking())
-		{
+		if (!stack.isEmpty() && !player.isSneaking()) {
 			ItemStack insertStack = stack.copy();
-			if (stack.getItem().equals(ModRegistry.BLANK_PARCHMENT))
-			{
+			if (stack.getItem().equals(ModRegistry.BLANK_PARCHMENT)) {
 				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
 						.getAnalysisResults(te.getStack(0).copy());
 
-				if (!te.getStack(0).isEmpty() && unlockable.size() > 0 && te.getStack(1).isEmpty())
-				{
+				if (!te.getStack(0).isEmpty() && unlockable.size() > 0 && te.getStack(1).isEmpty()) {
 
 					stack.shrink(1);
 					te.setStack(1, new ItemStack(ModRegistry.BLANK_PARCHMENT));
 				}
-			} else if (te.getStack(0).isEmpty())
-			{
+			} else if (te.getStack(0).isEmpty()) {
 				stack.shrink(1);
 				insertStack.setCount(1);
 				player.setHeldItem(hand, stack);
@@ -156,20 +137,15 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 				world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 
 			}
-		} else if (player.isSneaking())
-		{
+		} else if (player.isSneaking()) {
 			ItemStack toExtract = te.getStack(0).copy();
-			if (!toExtract.isEmpty())
-			{
-				if (!world.isRemote)
-				{
-					if (player.addItemStackToInventory(toExtract.copy()))
-					{
+			if (!toExtract.isEmpty()) {
+				if (!world.isRemote) {
+					if (player.addItemStackToInventory(toExtract.copy())) {
 						te.setStack(0, ItemStack.EMPTY);
 						te.markDirty();
 					}
-				} else
-				{
+				} else {
 					world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1, 1);
 				}
 			}
@@ -179,52 +155,44 @@ public class BlockAnalyzer extends BlockBase implements IHasRecipe
 	}
 
 	@Override
-	public void initRecipes(Register<IRecipe> e)
-	{
+	public void initRecipes(Register<IRecipe> e) {
 		recipe = RecipeHelper.addShaped(this, 3, 3, null, "enderpearl", null, "plankWood", "blockGlass", "plankWood",
 				"plankWood", null, "plankWood");
 	}
 
 	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-	{
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-	{
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate((EnumFacing) state.getValue(FACING)));
 	}
 
 	@Override
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-	{
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing) state.getValue(FACING)));
 	}
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY,
-			float hitZ, int meta, EntityLivingBase placer)
-	{
+			float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta)
-	{
+	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state)
-	{
+	public int getMetaFromState(IBlockState state) {
 		return ((EnumFacing) state.getValue(FACING)).getHorizontalIndex();
 	}
 
 	@Override
-	protected BlockStateContainer createBlockState()
-	{
+	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] { FACING });
 	}
 }

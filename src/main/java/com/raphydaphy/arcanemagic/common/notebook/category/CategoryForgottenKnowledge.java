@@ -16,10 +16,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryForgottenKnowledge extends NotebookCategory
-{
-	public CategoryForgottenKnowledge()
-	{
+public class CategoryForgottenKnowledge extends NotebookCategory {
+	public CategoryForgottenKnowledge() {
 		setUnlocalizedName("arcanemagic.notebook.category.forgotten_knowledge");
 		setRequiredTag("unlockedForgottenKnowledge");
 		setPrerequisiteTag(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
@@ -27,8 +25,7 @@ public class CategoryForgottenKnowledge extends NotebookCategory
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info)
-	{
+	public List<NotebookPage> getPages(INotebookInfo info) {
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> entries = new ArrayList<INotebookEntry>();
 		entries.add(new NotebookEntryText(getUnlocalizedName() + "." + 0, 0x000000));

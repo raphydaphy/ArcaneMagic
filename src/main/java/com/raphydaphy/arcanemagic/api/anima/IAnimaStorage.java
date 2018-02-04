@@ -10,8 +10,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 /**
  * TODO more operations
  */
-public interface IAnimaStorage extends INBTSerializable<NBTTagCompound>
-{
+public interface IAnimaStorage extends INBTSerializable<NBTTagCompound> {
 
 	/* NB: do NOT use this field UNLESS you have a hard dep on this mod */
 	@CapabilityInject(IAnimaStorage.class)
@@ -34,7 +33,8 @@ public interface IAnimaStorage extends INBTSerializable<NBTTagCompound>
 	 *            stack to store
 	 * @param simulate
 	 *            actually do the thing?
-	 * @return the amount that couldn't be stored, or null if everything got stored
+	 * @return the amount that couldn't be stored, or null if everything got
+	 *         stored
 	 */
 	AnimaStack store(AnimaStack in, boolean simulate);
 
@@ -42,10 +42,11 @@ public interface IAnimaStorage extends INBTSerializable<NBTTagCompound>
 	 * Take the stack out of the storage
 	 * 
 	 * @param out
-	 * 				stack to remove
+	 *            stack to remove
 	 * @param simulate
-	 * 				actually do the thing?
-	 * @return the amount that couldn't be taken, or null if the entire request was taken
+	 *            actually do the thing?
+	 * @return the amount that couldn't be taken, or null if the entire request
+	 *         was taken
 	 */
 	AnimaStack take(AnimaStack out, boolean simulate);
 
@@ -53,7 +54,7 @@ public interface IAnimaStorage extends INBTSerializable<NBTTagCompound>
 	 * @return the amount of anima that can be stored
 	 * 
 	 * @param type
-	 * 				the type of anima of which the capacity should be checked
+	 *            the type of anima of which the capacity should be checked
 	 */
 	int getCapacity(Anima type);
 }

@@ -10,48 +10,40 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 
-public class ItemEnum<E extends Enum<E> & IPropertyEnum> extends ItemBase
-{
+public class ItemEnum<E extends Enum<E> & IPropertyEnum> extends ItemBase {
 
 	protected final E[] values;
 
-	public ItemEnum(String name, E[] values)
-	{
+	public ItemEnum(String name, E[] values) {
 		this(name, values, TextFormatting.WHITE);
 	}
 
-	public ItemEnum(String name, E[] values, TextFormatting color)
-	{
+	public ItemEnum(String name, E[] values, TextFormatting color) {
 		super(name, values.length, color);
 		this.values = values;
 	}
 
 	@Override
-	public void initModels(ModelRegistryEvent ev)
-	{
+	public void initModels(ModelRegistryEvent ev) {
 		for (E e : values)
 			IHasModel.sMRL("items", this, e.ordinal(), "item=" + e.getName());
 	}
 
 	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items)
-	{
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		if (isInCreativeTab(tab))
-			for (E e : values)
-			{
+			for (E e : values) {
 				items.add(new ItemStack(this, 1, e.ordinal()));
 			}
 	}
 
 	@Override
-	public int getMetadata(int damage)
-	{
+	public int getMetadata(int damage) {
 		return MathHelper.clamp(damage, 0, values.length - 1);
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack)
-	{
+	public String getUnlocalizedName(ItemStack stack) {
 		return "item.arcanemagic." + values[stack.getMetadata()].getName();
 	}
 

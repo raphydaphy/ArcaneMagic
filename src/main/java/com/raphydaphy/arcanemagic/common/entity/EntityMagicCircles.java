@@ -12,21 +12,18 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class EntityMagicCircles extends Entity
-{
+public class EntityMagicCircles extends Entity {
 	public double constantRot = 0;
 	public double edgeRot = 0;
 	public Vec3d circlePos;
 	public boolean hasBook = true;
 
-	public EntityMagicCircles(World worldIn)
-	{
+	public EntityMagicCircles(World worldIn) {
 		super(worldIn);
 		circlePos = new Vec3d(this.posX + 0.5, this.posY, this.posZ + 0.5);
 	}
 
-	public EntityMagicCircles(World worldIn, double x, double y, double z)
-	{
+	public EntityMagicCircles(World worldIn, double x, double y, double z) {
 		super(worldIn);
 		this.posX = x;
 		this.posY = y;
@@ -35,15 +32,12 @@ public class EntityMagicCircles extends Entity
 	}
 
 	@Override
-	public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
-	{
-		if (!this.world.isRemote)
-		{
+	public boolean processInitialInteract(EntityPlayer player, EnumHand hand) {
+		if (!this.world.isRemote) {
 			ItemStack stack = player.getHeldItem(hand);
 
 			System.out.println("interaction");
-			if (stack.getItem().equals(Items.BOOK))
-			{
+			if (stack.getItem().equals(Items.BOOK)) {
 				this.hasBook = true;
 				stack.shrink(1);
 
@@ -54,39 +48,32 @@ public class EntityMagicCircles extends Entity
 	}
 
 	@Override
-	public SoundCategory getSoundCategory()
-	{
+	public SoundCategory getSoundCategory() {
 		return SoundCategory.BLOCKS;
 	}
 
 	@Override
-	public void onUpdate()
-	{
+	public void onUpdate() {
 		super.onUpdate();
 
 		motionX = 0;
 		motionY = 0;
 		motionZ = 0;
 
-		if (rand.nextInt(30) == 1)
-		{
-			//this.playSound(ArcaneMagicSoundHandler.reconstruct, 1f, 1f);
+		if (rand.nextInt(30) == 1) {
+			// this.playSound(ArcaneMagicSoundHandler.reconstruct, 1f, 1f);
 		}
 		this.constantRot += 1;
 
-		//System.out.println(world.isRemote);
-		if (constantRot >= 360)
-		{
-			if (edgeRot < 90)
-			{
+		// System.out.println(world.isRemote);
+		if (constantRot >= 360) {
+			if (edgeRot < 90) {
 				this.edgeRot += 0.5;
 			}
 		}
 
-		if (this.ticksExisted >= 800)
-		{
-			if (!world.isRemote)
-			{
+		if (this.ticksExisted >= 800) {
+			if (!world.isRemote) {
 				world.spawnEntity(
 						new EntityItemFancy(world, circlePos.x, circlePos.y + 0.9 + (edgeRot == 0 ? 0 : (edgeRot / 90)),
 								circlePos.z, new ItemStack(ModRegistry.NOTEBOOK)));
@@ -97,8 +84,7 @@ public class EntityMagicCircles extends Entity
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
-	{
+	public void writeEntityToNBT(NBTTagCompound compound) {
 		compound.setDouble("constantRot", constantRot);
 		compound.setDouble("edgeRot", edgeRot);
 		compound.setDouble("circleX", circlePos.x);
@@ -108,8 +94,7 @@ public class EntityMagicCircles extends Entity
 	}
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
-	{
+	public void readEntityFromNBT(NBTTagCompound compound) {
 		constantRot = compound.getDouble("constantRot");
 		edgeRot = compound.getDouble("edgeRot");
 		circlePos = new Vec3d(compound.getDouble("circleX"), compound.getDouble("circleY"),
@@ -118,8 +103,7 @@ public class EntityMagicCircles extends Entity
 	}
 
 	@Override
-	protected void entityInit()
-	{
+	protected void entityInit() {
 
 	}
 }

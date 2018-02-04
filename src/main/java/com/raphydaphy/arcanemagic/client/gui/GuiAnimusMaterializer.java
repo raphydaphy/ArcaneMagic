@@ -18,16 +18,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class GuiAnimusMaterializer extends GuiContainer
-{
+public class GuiAnimusMaterializer extends GuiContainer {
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 181;
 	private TileEntityAnimusMaterializer te;
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/animus_materializer.png");
 
-	public GuiAnimusMaterializer(TileEntityAnimusMaterializer tileEntity, ContainerAnimusMaterializer container)
-	{
+	public GuiAnimusMaterializer(TileEntityAnimusMaterializer tileEntity, ContainerAnimusMaterializer container) {
 		super(container);
 		te = tileEntity;
 		xSize = WIDTH;
@@ -35,8 +33,7 @@ public class GuiAnimusMaterializer extends GuiContainer
 	}
 
 	@SideOnly(Side.CLIENT)
-	private void drawBar(int x, int y, float r, float g, float b, int essence, float rotation)
-	{
+	private void drawBar(int x, int y, float r, float g, float b, int essence, float rotation) {
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
 		GlStateManager.disableLighting();
@@ -66,22 +63,18 @@ public class GuiAnimusMaterializer extends GuiContainer
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
-	{
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
-	{
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 196, 181);
-		for (int x = 0; x < 2; x++)
-		{
-			for (int y = 0; y < 3; y++)
-			{
+		for (int x = 0; x < 2; x++) {
+			for (int y = 0; y < 3; y++) {
 				drawModalRectWithCustomSizedTexture(guiLeft + 13 + (x * 20), guiTop + 20 + (y * 20), 176, 113, 18, 18,
 						196, 181);
 			}
@@ -89,8 +82,7 @@ public class GuiAnimusMaterializer extends GuiContainer
 
 		Map<Anima, AnimaStack> essenceStored = te.getCapability(IAnimaStorage.CAP, null).getStored();
 		int i = 0;
-		for (EnumBasicAnimus e : EnumBasicAnimus.values())
-		{
+		for (EnumBasicAnimus e : EnumBasicAnimus.values()) {
 			Anima essence = e.getAnima();
 			i++;
 			AnimaStack stack = essenceStored.containsKey(essence) ? essenceStored.get(essence)

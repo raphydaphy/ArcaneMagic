@@ -16,47 +16,40 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class CategoryArcaneTransfiguration implements IRecipeCategory<WrapperArcaneTransfiguration>
-{
+public class CategoryArcaneTransfiguration implements IRecipeCategory<WrapperArcaneTransfiguration> {
 
 	public static final int width = 116;
 	public static final int height = 54;
 
 	private final IDrawable background;
 
-	public CategoryArcaneTransfiguration(IGuiHelper guiHelper)
-	{
+	public CategoryArcaneTransfiguration(IGuiHelper guiHelper) {
 		ResourceLocation location = Constants.RECIPE_GUI_VANILLA;
 		background = guiHelper.createDrawable(location, 0, 60, width, height);
 	}
 
 	@Override
-	public String getUid()
-	{
+	public String getUid() {
 		return ArcaneMagicJEIPlugin.ARCANE_TRANSFIGURATION_UID;
 	}
 
 	@Override
-	public String getTitle()
-	{
+	public String getTitle() {
 		return I18n.format("gui.arcanemagic.arcane_transfiguration");
 	}
 
 	@Override
-	public String getModName()
-	{
+	public String getModName() {
 		return I18n.format("itemGroup.arcanemagic");
 	}
 
 	@Override
-	public IDrawable getBackground()
-	{
+	public IDrawable getBackground() {
 		return background;
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout layout, WrapperArcaneTransfiguration wrapper, IIngredients ingredients)
-	{
+	public void setRecipe(IRecipeLayout layout, WrapperArcaneTransfiguration wrapper, IIngredients ingredients) {
 		IGuiIngredientGroup<ItemStack> stacks = layout.getIngredientsGroup(ItemStack.class);
 		wrapper.setRecipe(layout, ingredients);
 		stacks.init(0, false, 94, 18);
@@ -64,8 +57,7 @@ public class CategoryArcaneTransfiguration implements IRecipeCategory<WrapperArc
 		stacks.set(0, output);
 
 		List<List<ItemStack>> inputs = ingredients.getInputs(ItemStack.class);
-		for (int i = 0; i < 9; i++)
-		{
+		for (int i = 0; i < 9; i++) {
 			stacks.init(i + 1, true, (i % 3) * 18, (i / 3) * 18);
 			stacks.set(i + 1, inputs.get(i));
 		}
