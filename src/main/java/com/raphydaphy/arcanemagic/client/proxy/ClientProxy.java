@@ -99,17 +99,21 @@ public class ClientProxy extends CommonProxy {
 		if (world != null) {
 
 			float magic = 0.01625f;
-			float height = 0.053f;
 
 			float distX = from.getX() - to.getX();
 			float vx = magic * distX;
 
 			float distZ = from.getZ() - to.getZ();
 			float vz = magic * distZ;
+			
+			float distY = from.getY() - to.getY();
+			float vy = 0.053f + 0.017f * distY;
+			
+			int life = 111 + (0 * (int)Math.abs(distY));
 
 			float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
 
-			int dist = Math.abs((int) distX) + Math.abs((int) distZ);
+			int dist = Math.abs((int) distX) + Math.abs((int) distZ) + Math.abs((int)distZ);
 			float size;
 
 			if (dist < 4) {
@@ -120,9 +124,9 @@ public class ClientProxy extends CommonProxy {
 				size = Math.min(Math.max(world.rand.nextFloat() * 14, 3f), 3.5f);
 			}
 
-			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 0.5f, vx, height,
+			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 0.5f, vx, vy,
 					vz, color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha, size,
-					(int) (111), 0.1f);
+					(int) (life), 0.1f);
 
 		}
 	}
