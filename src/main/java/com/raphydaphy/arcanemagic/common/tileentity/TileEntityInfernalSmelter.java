@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
+import java.awt.Color;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -9,6 +10,7 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
@@ -119,23 +121,27 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 
 	@Override
 	public void update() {
-		if (world.isRemote) {
-			return;
-		}
 
 		IItemHandler cap = this.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
 		if (!cap.getStackInSlot(ORE).isEmpty()) {
-			for (int x = pos.getX() - 10; x < pos.getX() + 10; x++) {
-				for (int y = pos.getY() - 5; y < pos.getY() + 5; y++) {
-					for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++) {
-						if (world.rand.nextInt(2000) == 1) {
-							BlockPos here = new BlockPos(x, y, z);
-							if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER)) {
+			for (int x = this.pos.getX() - 8; x < this.pos.getX() + 8; x++) {
+				for (int y = this.pos.getY() - 3; y < this.pos.getY() + 3; y++) {
+					for (int z = this.pos.getZ() - 8; z < this.pos.getZ() + 8; z++) {
+						BlockPos here = new BlockPos(x, y, z);
+						if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER)) {
 
-								TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(here);
+							TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(here);
 
-								if (te != null) {
+							if (te != null) {
+								if (world.isRemote) {
+
+									Color color = Anima.getFromBiome(world.getBiome(
+											new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
+											.getColor();
+									color = Color.ORANGE;
+									ArcaneMagic.proxy.magicParticle(color, this.getPos().add(0,1,0), here);
+								} else {
 									Map<Anima, AnimaStack> storedEssenceConcentrator = te
 											.getCapability(IAnimaStorage.CAP, null).getStored();
 
@@ -147,27 +153,27 @@ public class TileEntityInfernalSmelter extends TileEntityAnimaStorage implements
 										}
 									}
 									if (useType != null && world.rand.nextInt(3) == 1) {
-										if (!world.isRemote) {
-											if (Anima.sendAnima(world, new AnimaStack(useType, 1),
-													new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-													new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5),
-													false, true)) {
 
-											}
+										if (Anima.sendAnima(world, new AnimaStack(useType, 1),
+												new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false,
+												true)) {
+
 										}
-
 									}
-								}
 
+								}
 							}
+
 						}
 					}
 				}
 
 			}
 		}
-
-		markDirty();
+		if (!world.isRemote) {
+			markDirty();
+		}
 	}
 
 	@Override

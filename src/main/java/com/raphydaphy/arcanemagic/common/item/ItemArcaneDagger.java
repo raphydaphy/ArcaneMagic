@@ -62,6 +62,7 @@ public class ItemArcaneDagger extends ItemBase implements IHasRecipe {
 		return true;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public void initModels(ModelRegistryEvent e) {
 		super.initModels(e);
