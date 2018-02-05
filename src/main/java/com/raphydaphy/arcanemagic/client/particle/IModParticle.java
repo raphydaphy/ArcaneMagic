@@ -4,8 +4,5 @@ public interface IModParticle {
 	boolean alive();
 
 	boolean isAdditive();
-	
-	boolean shouldRemove();
-	
-	void setToRemove();
+
 }

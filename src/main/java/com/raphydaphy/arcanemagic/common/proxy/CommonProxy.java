@@ -1,5 +1,7 @@
 package com.raphydaphy.arcanemagic.common.proxy;
 
+import java.awt.Color;
+
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
@@ -43,7 +45,7 @@ public abstract class CommonProxy {
 
 	public abstract String translate(String key, Object... args);
 	
-	public void magicParticle(BlockPos from, BlockPos to)
+	public void magicParticle(Color color, BlockPos from, BlockPos to)
 	{
 		
 	}

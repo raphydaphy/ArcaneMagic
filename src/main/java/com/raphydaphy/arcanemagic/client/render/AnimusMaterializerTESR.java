@@ -1,18 +1,11 @@
 package com.raphydaphy.arcanemagic.client.render;
 
-import java.awt.Color;
-
 import org.lwjgl.opengl.GL11;
 
-import com.raphydaphy.arcanemagic.api.anima.Anima;
-import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,30 +29,7 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 		GlStateManager.depthMask(false);
 
 		GlStateManager.pushMatrix();
-		World world = Minecraft.getMinecraft().world;
-		for (int x2 = -10; x2 < 10; x2++) {
-			for (int y2 = -10; y2 < 10; y2++) {
-				for (int z2 = -10; z2 < 10; z2++) {
-					if (world.getBlockState(
-							new BlockPos(te.getPos().getX() + x2, te.getPos().getY() + y2, te.getPos().getZ() + z2))
-							.getBlock() == ModRegistry.ANIMA_CONJURER) {
-
-
-						Color color = Anima
-								.getFromBiome(world.getBiome(
-										new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
-								.getColor();
-
-						float distX = x2 - (float)x;
-						float vx = 0.01625f * distX;
-						
-						float distY = y2 - (float)(y);
-						float vy = 0.01625f * distY;
-
-					}
-				}
-			}
-		}
+		
 		GlStateManager.popMatrix();
 		if (lighting)
 

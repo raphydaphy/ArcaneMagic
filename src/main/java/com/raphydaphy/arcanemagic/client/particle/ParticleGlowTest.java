@@ -12,11 +12,10 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	public float colorB = 0;
 	public float initScale = 0;
 	public float initAlpha = 0;
-	private boolean shouldRemove = false;
 	public ResourceLocation texture = new ResourceLocation("arcanemagic:misc/plus");
 
 	public ParticleGlowTest(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
-			float g, float b, float a, float scale, int lifetime) {
+			float g, float b, float a, float scale, int lifetime, float gravity) {
 		super(worldIn, x, y, z, 0, 0, 0);
 		this.colorR = r;
 		this.colorG = g;
@@ -39,7 +38,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 		this.motionZ = vz * 2.0f;
 		this.initAlpha = a;
 		this.particleAngle = 2.0f * (float) Math.PI;
-		this.particleGravity = 0.1f;
+		this.particleGravity = gravity;
 		this.particleAlpha = initAlpha;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
 		this.setParticleTexture(sprite);
@@ -63,6 +62,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	@Override
 	public void onUpdate() 
 	{
+		
 		this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -77,7 +77,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
         this.motionX *= 0.9800000190734863D;
         this.motionY *= 0.9800000190734863D;
         this.motionZ *= 0.9800000190734863D;
-
+        
         if (this.onGround)
         {
             this.motionX *= 0.699999988079071D;
@@ -87,7 +87,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 			this.particleAge++;
 		}
 		this.prevParticleAngle = particleAngle;
-		particleAngle += 1.0f;
+		particleAngle += 1f;
 	}
 
 	@Override
@@ -98,17 +98,5 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	@Override
 	public boolean isAdditive() {
 		return false;
-	}
-
-	@Override
-	public boolean shouldRemove()
-	{
-		return shouldRemove;
-	}
-
-	@Override
-	public void setToRemove()
-	{
-		shouldRemove = true;
 	}
 }

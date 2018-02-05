@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.lwjgl.opengl.GL11;
 
@@ -22,7 +21,7 @@ public class ParticleRenderer
 	public void updateParticles()
 	{
 
-		
+		ArrayList<Particle> newParticles = new ArrayList<Particle>();
 		for (int i = 0; i < particles.size(); i++)
 		{
 			if (particles.size() > i)
@@ -33,24 +32,13 @@ public class ParticleRenderer
 					if (p.isAlive())
 					{
 						p.onUpdate();
-					} else
-					{
-						((IModParticle)p).setToRemove();
+						newParticles.add(p);
 					}
 
 				}
 			}
 		}
-		Iterator<Particle> iter = particles.iterator();
-		while (iter.hasNext())
-		{
-			Particle p = iter.next();
-			
-			if (p != null && ((IModParticle)p).shouldRemove())
-			{
-				iter.remove();
-			}
-		}
+		particles = newParticles;
 		
 	}
 

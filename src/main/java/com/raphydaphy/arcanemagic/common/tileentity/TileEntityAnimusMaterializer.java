@@ -9,7 +9,6 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
-import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -171,8 +170,8 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 									.getFromBiome(world.getBiome(
 											new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
 									.getColor();
-
-							ArcaneMagic.proxy.magicParticle(this.getPos(), here);
+							color = Color.GREEN;
+							ArcaneMagic.proxy.magicParticle(color, this.getPos(), here);
 
 							Map<Anima, AnimaStack> storedEssenceConcentrator = te.getCapability(IAnimaStorage.CAP, null)
 									.getStored();

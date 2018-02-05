@@ -44,6 +44,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -54,15 +55,15 @@ public class ClientEvents {
 		World world = Minecraft.getMinecraft().world;
 
 		if (world != null) {
+			if (ev.side == Side.CLIENT && ev.phase == TickEvent.Phase.START
+					&& !Minecraft.getMinecraft().isGamePaused()) {
+				ClientProxy.particleRenderer.updateParticles();
+			}
+
 			EntityPlayer player = Minecraft.getMinecraft().player;
 
 			if (player != null) {
 				ParticleQueue.getInstance().updateQueue(world, player);
-
-				ClientProxy.particleRenderer.updateParticles();
-				
-				
-				
 
 			}
 
