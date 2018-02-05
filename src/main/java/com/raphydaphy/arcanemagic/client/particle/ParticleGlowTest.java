@@ -12,6 +12,7 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	public float colorB = 0;
 	public float initScale = 0;
 	public float initAlpha = 0;
+	private boolean shouldRemove = false;
 	public ResourceLocation texture = new ResourceLocation("arcanemagic:misc/plus");
 
 	public ParticleGlowTest(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
@@ -97,5 +98,17 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	@Override
 	public boolean isAdditive() {
 		return false;
+	}
+
+	@Override
+	public boolean shouldRemove()
+	{
+		return shouldRemove;
+	}
+
+	@Override
+	public void setToRemove()
+	{
+		shouldRemove = true;
 	}
 }

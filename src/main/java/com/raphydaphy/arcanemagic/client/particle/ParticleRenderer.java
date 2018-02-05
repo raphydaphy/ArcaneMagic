@@ -22,25 +22,36 @@ public class ParticleRenderer
 	public void updateParticles()
 	{
 
-		Iterator<Particle> iter = particles.iterator();
-		System.out.println("thread");
-		while (iter.hasNext())
+		
+		for (int i = 0; i < particles.size(); i++)
 		{
-			Particle i = iter.next();
-			if (i != null)
+			if (particles.size() > i)
 			{
-				if (i instanceof IModParticle)
+				Particle p = particles.get(i);
+				if (p != null)
 				{
-					if (i.isAlive())
+					if (p.isAlive())
 					{
-						i.onUpdate();
+						p.onUpdate();
 					} else
 					{
-						iter.remove();
+						((IModParticle)p).setToRemove();
 					}
+
 				}
 			}
 		}
+		Iterator<Particle> iter = particles.iterator();
+		while (iter.hasNext())
+		{
+			Particle p = iter.next();
+			
+			if (p != null && ((IModParticle)p).shouldRemove())
+			{
+				iter.remove();
+			}
+		}
+		
 	}
 
 	public void renderParticles(EntityPlayer dumbplayer, float partialTicks)
@@ -72,27 +83,35 @@ public class ParticleRenderer
 					GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
 
-			Iterator<Particle> iter = particles.iterator();
-			System.out.println("thread");
-			while (iter.hasNext())
+			for (int i = 0; i < particles.size(); i++)
 			{
-				Particle p = iter.next();
-
-				if (!((IModParticle) p).isAdditive())
+				if (i < particles.size())
 				{
-					p.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+					Particle p = particles.get(i);
+
+					if (p != null)
+					{
+						if (!((IModParticle) p).isAdditive())
+						{
+							p.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+						}
+					}
 				}
 			}
 			tess.draw();
 
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
 			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-			while (iter.hasNext())
+
+			for (int i = 0; i < particles.size(); i++)
 			{
-				Particle p = iter.next();
-				if (((IModParticle) p).isAdditive())
+				if (i < particles.size())
 				{
-					p.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+					Particle p = particles.get(i);
+					if (((IModParticle) p).isAdditive())
+					{
+						p.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
+					}
 				}
 			}
 			tess.draw();

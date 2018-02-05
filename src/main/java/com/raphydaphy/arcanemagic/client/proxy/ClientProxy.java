@@ -114,11 +114,11 @@ public class ClientProxy extends CommonProxy
 			float distX = from.getX() - to.getX();
 			float vx = 0.01625f * distX;
 
-			float distY = from.getY() - to.getY();
-			float vy = 0.01625f * distY;
+			float distZ = from.getZ() - to.getZ();
+			float vz = 0.01625f * distZ;
 
 			float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
-			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 5.5f, vx, .053f, vy,
+			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 0.5f, vx, .053f, vz,
 					color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
 					Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int) (111));
 		}
