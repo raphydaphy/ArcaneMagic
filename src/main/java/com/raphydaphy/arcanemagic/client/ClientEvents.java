@@ -1,17 +1,14 @@
 package com.raphydaphy.arcanemagic.client;
 
-import java.awt.Color;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
 
 import com.raphydaphy.arcanemagic.api.ArcaneMagicAPI;
-import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
-import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.client.proxy.ClientProxy;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
@@ -63,60 +60,7 @@ public class ClientEvents {
 				ParticleQueue.getInstance().updateQueue(world, player);
 
 				ClientProxy.particleRenderer.updateParticles();
-
-				// Distance: 2, 0, -4
-				// Velocity: 0.0325, 0.053, -0.065
-				// Time: 111
 				
-				// Distance: -2, 0, 4
-				// Velocity: -0.0325, .053, 0.065
-				// Time: 111
-				
-				// Distance: 2, 0, 0
-				// Velocity: .0325f, .053f, 0
-				// Time: 111
-				
-				if (world.getTotalWorldTime() % 1 == 0) {
-					Color color = Anima.INFERNO.getColor();
-					float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
-					ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, .0325f, .053f, -.065f,
-							color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-							Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
-//					
-//					color = Color.RED;
-//					ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, .0325f, .053f, -.065f,
-//							color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-//							Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
-					
-					
-					
-					
-					color = Anima.DEPTH.getColor();
-					alpha = Math.min(Math.max(world.rand.nextFloat(), 0.1f), 0.20f);
-					ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, -.0325f, .053f, .065f,
-							color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-							Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
-					
-					
-					
-					
-					color = Anima.HORIZON.getColor();
-					alpha = Math.min(Math.max(world.rand.nextFloat(), 0.1f), 0.20f);
-					ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, .0325f, .053f, 0,
-							color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-							Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
-					
-					float distX = -3;
-					float vx = 0.01625f * distX;
-					
-					float distY = 4;
-					float vy = 0.01625f * distY;
-					
-					color = Anima.HORIZON.getColor();
-					ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, vx, .053f, vy,
-							color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-							Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
-				}
 			}
 
 		}

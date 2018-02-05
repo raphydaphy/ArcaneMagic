@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
+import java.awt.Color;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -8,6 +9,7 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
@@ -25,33 +27,41 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage implements ITickable {
+public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage implements ITickable
+{
 	public static int SIZE = 6;
 
 	private Anima curForming = null;
 	private int curFormingTimer = 0;
 
-	public TileEntityAnimusMaterializer() {
+	public TileEntityAnimusMaterializer()
+	{
 		super(1000);
 
 	}
 
-	private boolean canForm(AnimaStack formStack) {
+	private boolean canForm(AnimaStack formStack)
+	{
 
 		boolean shouldContinue = false;
-		for (int curItemStack = 0; curItemStack < SIZE; curItemStack++) {
-			if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty()) {
+		for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
+		{
+			if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
+			{
 				shouldContinue = true;
 				break;
-			} else if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty()) {
+			} else if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
+			{
 				shouldContinue = true;
 				break;
 			}
 		}
 
-		if (shouldContinue) {
+		if (shouldContinue)
+		{
 			AnimaStack couldTakeThis = animaStorage.take(new AnimaStack(formStack.getAnima(), 10), false);
-			if (couldTakeThis != null && !couldTakeThis.isEmpty()) {
+			if (couldTakeThis != null && !couldTakeThis.isEmpty())
+			{
 				shouldContinue = false;
 			}
 		}
@@ -59,49 +69,64 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 	}
 
 	@Override
-	public void update() {
-		if (world.isRemote) {
+	public void update()
+	{
+		if (world.isRemote)
+		{
 			return;
 		}
-		for (AnimaStack formStack : this.animaStorage.getStored().values()) {
-			if (formStack != null && !formStack.isEmpty()) {
-				if (this.curForming != null) {
+		for (AnimaStack formStack : this.animaStorage.getStored().values())
+		{
+			if (formStack != null && !formStack.isEmpty())
+			{
+				if (this.curForming != null)
+				{
 					// we are already forming this essence
-					if (formStack.getAnima().equals(this.curForming)) {
+					if (formStack.getAnima().equals(this.curForming))
+					{
 						// keep on going! u can get ther ;-)
-						if (this.curFormingTimer <= 100) {
+						if (this.curFormingTimer <= 100)
+						{
 							curFormingTimer++;
-							if (!canForm(formStack)) {
+							if (!canForm(formStack))
+							{
 								curForming = null;
 								curFormingTimer = 0;
 								this.markDirty();
 							}
 						}
 						// i said u could :D
-						else {
-							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++) {
+						else
+						{
+							for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
+							{
 								boolean doTheThing = false;
 
-								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty()) {
+								if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
+								{
 									AnimaStack couldTake = animaStorage.take(new AnimaStack(formStack.getAnima(), 100),
 											false);
 									couldTake = null;
-									if (couldTake == null || couldTake.isEmpty()) {
+									if (couldTake == null || couldTake.isEmpty())
+									{
 										this.itemStackHandler.setStackInSlot(curItemStack, curForming.getItemForm());
 										doTheThing = true;
 									}
 								} else if (this.itemStackHandler
-										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty()) {
+										.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
+								{
 									AnimaStack couldTake = animaStorage.take(new AnimaStack(formStack.getAnima(), 100),
 											false);
 									couldTake = null;
-									if (couldTake == null || couldTake.isEmpty()) {
+									if (couldTake == null || couldTake.isEmpty())
+									{
 										this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), false);
 										doTheThing = true;
 									}
 								}
 
-								if (doTheThing) {
+								if (doTheThing)
+								{
 									world.playSound(pos.getX(), pos.getY(), pos.getZ(),
 											ArcaneMagicSoundHandler.randomMagicSound(), SoundCategory.BLOCKS, 1.0F,
 											1.0F, false);
@@ -118,40 +143,68 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 						break;
 					}
-				} else if (formStack.getCount() >= 1000) {
+				} else if (formStack.getCount() >= 1000)
+				{
 					this.curForming = formStack.getAnima();
 					this.curFormingTimer = 0;
 					break;
 				}
 			}
 		}
-		for (int x = this.pos.getX() - 8; x < this.pos.getX() + 8; x++) {
-			for (int y = this.pos.getY() - 3; y < this.pos.getY() + 3; y++) {
-				for (int z = this.pos.getZ() - 8; z < this.pos.getZ() + 8; z++) {
+		for (int x = this.pos.getX() - 8; x < this.pos.getX() + 8; x++)
+		{
+			for (int y = this.pos.getY() - 3; y < this.pos.getY() + 3; y++)
+			{
+				for (int z = this.pos.getZ() - 8; z < this.pos.getZ() + 8; z++)
+				{
 					BlockPos here = new BlockPos(x, y, z);
 
-					if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER)) {
+					if (world.getBlockState(here).getBlock().equals(ModRegistry.ANIMA_CONJURER))
+					{
 						TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(here);
 
-						if (te != null) {
+						if (te != null)
+						{
+
+							Color color = Anima
+									.getFromBiome(world.getBiome(
+											new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
+									.getColor();
+
+							float distX = x - pos.getX();
+							float vx = 0.01625f * distX;
+
+							float distY = y - pos.getY();
+							float vy = 0.01625f * distY;
+							
+							float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
+							ParticleUtil.spawnParticleGlowTest(world, here.getX() + .5f, here.getY() + .8f, here.getZ() + 5.5f, vx, .053f, vy,
+									color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
+									Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int) (111));
+
 							Map<Anima, AnimaStack> storedEssenceConcentrator = te.getCapability(IAnimaStorage.CAP, null)
 									.getStored();
 
 							Anima useType = null;
-							for (AnimaStack transferStack : storedEssenceConcentrator.values()) {
-								if (transferStack.getCount() > 0 && !world.isRemote) {
+							for (AnimaStack transferStack : storedEssenceConcentrator.values())
+							{
+								if (transferStack.getCount() > 0 && !world.isRemote)
+								{
 									useType = transferStack.getAnima();
 									this.markDirty();
 								}
 							}
-							if (useType != null && world.rand.nextInt(3) == 1) {
-								if (!world.isRemote) {
+							if (useType != null && world.rand.nextInt(3) == 1)
+							{
+								if (!world.isRemote)
+								{
 									// actually send essence, not just particles
 									if (Anima.sendAnima(world,
 											new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 											new Vec3d(x + 0.5, y + 0.6, z + 0.5),
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), false,
-											false)) {
+											false))
+									{
 
 									}
 								}
@@ -164,17 +217,21 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 		}
 	}
 
-	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE) {
+	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
+	{
 		@Override
-		public void onContentsChanged(int slot) {
+		public void onContentsChanged(int slot)
+		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
 			TileEntityAnimusMaterializer.this.markDirty();
 		}
 
 		@Override
-		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (!(stack.getItem() instanceof IAnimaCrystal)) {
+		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
+		{
+			if (!(stack.getItem() instanceof IAnimaCrystal))
+			{
 				return stack;
 			}
 			return super.insertItem(slot, stack, simulate);
@@ -182,44 +239,54 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 	};
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT(NBTTagCompound compound)
+	{
 		super.readFromNBT(compound);
-		if (compound.hasKey("items")) {
+		if (compound.hasKey("items"))
+		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
-		if (compound.hasKey("curForming")) {
+		if (compound.hasKey("curForming"))
+		{
 			curForming = Anima.getAnimaByID(compound.getInteger("curForming"));
 		}
 		curFormingTimer = compound.getInteger("curFormingTimer");
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	{
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
-		if (curForming != null) {
+		if (curForming != null)
+		{
 			compound.setInteger("curForming", Anima.REGISTRY.getValues().indexOf(this.curForming));
 		}
 		compound.setInteger("curFormingTimer", this.curFormingTimer);
 		return compound;
 	}
 
-	public boolean canInteractWith(EntityPlayer playerIn) {
+	public boolean canInteractWith(EntityPlayer playerIn)
+	{
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+	{
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
 			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+	{
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}
 		return super.getCapability(capability, facing);
@@ -227,7 +294,8 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox() {
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
 		return INFINITE_EXTENT_AABB;
 	}
 }
