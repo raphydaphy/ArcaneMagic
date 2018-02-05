@@ -10,6 +10,7 @@ import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
@@ -171,16 +172,7 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 											new BlockPos(te.getPos().getX(), te.getPos().getY(), te.getPos().getZ())))
 									.getColor();
 
-							float distX = x - pos.getX();
-							float vx = 0.01625f * distX;
-
-							float distY = y - pos.getY();
-							float vy = 0.01625f * distY;
-							
-							float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
-							ParticleUtil.spawnParticleGlowTest(world, here.getX() + .5f, here.getY() + .8f, here.getZ() + 5.5f, vx, .053f, vy,
-									color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-									Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int) (111));
+							ArcaneMagic.proxy.magicParticle(this.getPos(), here);
 
 							Map<Anima, AnimaStack> storedEssenceConcentrator = te.getCapability(IAnimaStorage.CAP, null)
 									.getStored();

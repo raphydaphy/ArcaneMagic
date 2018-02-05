@@ -5,7 +5,6 @@ import java.awt.Color;
 import org.lwjgl.opengl.GL11;
 
 import com.raphydaphy.arcanemagic.api.anima.Anima;
-import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 
@@ -56,10 +55,6 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 						
 						float distY = y2 - (float)(y);
 						float vy = 0.01625f * distY;
-						
-						ParticleUtil.spawnParticleGlowTest(world, -1.5f, 4.8f, 5.5f, vx, .053f, vy,
-								color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha,
-								Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2), (int)(111));
 
 					}
 				}

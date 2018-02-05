@@ -42,4 +42,9 @@ public abstract class CommonProxy {
 	}
 
 	public abstract String translate(String key, Object... args);
+	
+	public void magicParticle(BlockPos from, BlockPos to)
+	{
+		
+	}
 }

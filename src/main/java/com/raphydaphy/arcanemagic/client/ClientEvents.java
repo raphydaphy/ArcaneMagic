@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.client;
 
+import java.awt.Color;
 import java.util.List;
 
 import org.apache.logging.log4j.Level;
@@ -9,6 +10,7 @@ import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.client.proxy.ClientProxy;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
@@ -61,6 +63,9 @@ public class ClientEvents {
 
 				ClientProxy.particleRenderer.updateParticles();
 				
+				
+				
+
 			}
 
 		}
