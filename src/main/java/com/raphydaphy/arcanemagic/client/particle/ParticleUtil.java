@@ -21,10 +21,6 @@ public class ParticleUtil {
 				ClientProxy.particleRenderer
 						.addParticle(new ParticleGlowTest(world, x, y, z, vx, vy, vz, r, g, b, a, scale, lifetime, gravity));
 			}
-			else
-			{
-				System.out.println("you shall not pass");
-			}
 		}
 	}
 }
