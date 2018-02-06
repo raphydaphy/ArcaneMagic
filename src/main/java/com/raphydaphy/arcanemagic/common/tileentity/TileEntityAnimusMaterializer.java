@@ -23,7 +23,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
@@ -181,43 +180,32 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 						if (te != null)
 						{
-							if (world.isRemote)
+							Map<Anima, AnimaStack> storedEssenceConcentrator = te
+									.getCapability(IAnimaStorage.CAP, null).getStored();
+							Anima useType = null;
+							for (AnimaStack transferStack : storedEssenceConcentrator.values())
 							{
-								ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
-							} else
-							{
-
-								streamPoints.add(new AnimaStreamPoint(world,
-										new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1), here,
-										this.getPos()));
-
-								Map<Anima, AnimaStack> storedEssenceConcentrator = te
-										.getCapability(IAnimaStorage.CAP, null).getStored();
-
-								Anima useType = null;
-								for (AnimaStack transferStack : storedEssenceConcentrator.values())
+								if (transferStack.getCount() > 0)
 								{
-									if (transferStack.getCount() > 0 && !world.isRemote)
-									{
-										useType = transferStack.getAnima();
-										this.markDirty();
-									}
+									
+									useType = transferStack.getAnima();
 								}
-								if (useType != null && world.rand.nextInt(3) == 1)
+							}
+							
+							if (useType != null && te.getCapability(IAnimaStorage.CAP,null).take(new AnimaStack(useType, 1), true) == null)
+							{
+								
+								if (world.isRemote)
 								{
-									if (!world.isRemote)
-									{
-										// actually send essence, not just
-										// particles
-										if (Anima.sendAnima(world,
-												new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
-												new Vec3d(x + 0.5, y + 0.6, z + 0.5),
-												new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5), false,
-												false))
-										{
+									ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
+								} else
+								{
+									streamPoints.add(new AnimaStreamPoint(world,
+											new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1), here,
+											this.getPos()));
 
-										}
-									}
+									te.getCapability(IAnimaStorage.CAP,null).take(new AnimaStack(useType, 1), false);
+									te.markDirty();
 								}
 							}
 						}

@@ -89,14 +89,15 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 			{
 				for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
 				{
-					if (world.rand.nextInt(2000) == 1)
+					if (world.rand.nextInt(1200) == 1)
 					{
 						BlockPos here = new BlockPos(x, y, z);
 						if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 						{
 							Anima.sendAnima(world, new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
 									new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-									new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, true);
+									new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, false);
+							this.markDirty();
 
 						}
 					}
