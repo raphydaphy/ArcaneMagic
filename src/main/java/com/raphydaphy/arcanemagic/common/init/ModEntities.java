@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.common.init;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.entity.EntityAnimaStream;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 
@@ -16,5 +17,8 @@ public class ModEntities {
 
 		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneMagic.MODID, "entity_magic_circles"),
 				EntityMagicCircles.class, "magic_circles", entityID++, ArcaneMagic.instance, 64, 20, true);
+		
+		EntityRegistry.registerModEntity(new ResourceLocation(ArcaneMagic.MODID, "entity_anima_stream"),
+				EntityAnimaStream.class, "anima_stream", entityID++, ArcaneMagic.instance, 64, 20, true);
 	}
 }

@@ -19,7 +19,7 @@ public class ParticleUtil {
 			if (counter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
 					: 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0) {
 				ClientProxy.particleRenderer
-						.addParticle(new ParticleGlowTest(world, x, y, z, vx, vy, vz, r, g, b, a, scale, lifetime, gravity));
+						.addParticle(new ParticleAnimaTransfer(world, x, y, z, vx, vy, vz, r, g, b, a, scale, lifetime, gravity));
 			}
 		}
 	}

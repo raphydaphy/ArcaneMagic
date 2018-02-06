@@ -11,9 +11,11 @@ import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.proxy.ClientProxy;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
+import com.raphydaphy.arcanemagic.client.render.RenderEntityAnimaStream;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.entity.EntityAnimaStream;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -109,6 +111,8 @@ public class ClientEvents {
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMagicCircles.class,
 				new RenderEntityMagicCircles.Factory());
+		RenderingRegistry.registerEntityRenderingHandler(EntityAnimaStream.class,
+				new RenderEntityAnimaStream.Factory());
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasModel)
 				((IHasModel) i).initModels(event);

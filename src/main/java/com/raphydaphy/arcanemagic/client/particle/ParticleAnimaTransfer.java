@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class ParticleGlowTest extends Particle implements IModParticle {
+public class ParticleAnimaTransfer extends Particle implements IModParticle {
 	public float colorR = 0;
 	public float colorG = 0;
 	public float colorB = 0;
@@ -14,9 +14,11 @@ public class ParticleGlowTest extends Particle implements IModParticle {
 	public float initAlpha = 0;
 	public ResourceLocation texture = new ResourceLocation("arcanemagic:misc/plus");
 
-	public ParticleGlowTest(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
+	public ParticleAnimaTransfer(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
 			float g, float b, float a, float scale, int lifetime, float gravity) {
 		super(worldIn, x, y, z, 0, 0, 0);
+		
+		System.out.println("kms");
 		this.colorR = r;
 		this.colorG = g;
 		this.colorB = b;
