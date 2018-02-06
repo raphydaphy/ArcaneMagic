@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class ParticleAnimaTransfer extends Particle implements IModParticle {
+public class ParticleAnimaStill extends Particle implements IModParticle {
 	public float colorR = 0;
 	public float colorG = 0;
 	public float colorB = 0;
@@ -14,8 +14,8 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle {
 	public float initAlpha = 0;
 	public ResourceLocation texture = new ResourceLocation("arcanemagic:misc/plus");
 
-	public ParticleAnimaTransfer(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
-			float g, float b, float a, float scale, int lifetime, float gravity) {
+	public ParticleAnimaStill(World worldIn, double x, double y, double z,float r,
+			float g, float b, float a, float scale) {
 		super(worldIn, x, y, z, 0, 0, 0);
 		
 		this.colorR = r;
@@ -31,16 +31,13 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle {
 			this.colorB = this.colorB / 255.0f;
 		}
 		this.setRBGColorF(colorR, colorG, colorB);
-		this.particleMaxAge = (int) ((float) lifetime * 0.5f);
 		this.particleScale = scale;
 		this.initScale = scale;
-		this.motionX = vx * 2.0f;
-		this.motionY = vy * 2.0f;
-		this.motionZ = vz * 2.0f;
 		this.initAlpha = a;
 		this.particleAngle = 2.0f * (float) Math.PI;
-		this.particleGravity = gravity;
 		this.particleAlpha = initAlpha;
+		this.particleAge = 0;
+		this.particleMaxAge = 1;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
 		this.setParticleTexture(sprite);
 	}
@@ -63,7 +60,13 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle {
 	@Override
 	public void onUpdate() 
 	{
+		if (this.particleAge > this.particleMaxAge)
+		{
+			this.setExpired();
+		}
+		particleAge++;
 		
+		/*
 		this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
@@ -88,7 +91,7 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle {
 			this.particleAge++;
 		}
 		this.prevParticleAngle = particleAngle;
-		particleAngle += 1f;
+		particleAngle += 1f;*/
 	}
 
 	@Override

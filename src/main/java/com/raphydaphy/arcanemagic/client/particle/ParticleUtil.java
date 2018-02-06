@@ -23,4 +23,16 @@ public class ParticleUtil {
 			}
 		}
 	}
+	
+	public static void spawnParticleAnimaStill(World world, float x, float y, float z,
+			float r, float g, float b, float a, float scale) {
+		if (ArcaneMagic.proxy instanceof ClientProxy) {
+			counter += random.nextInt(3);
+			if (counter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
+					: 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0) {
+				ClientProxy.particleRenderer
+						.addParticle(new ParticleAnimaStill(world, x, y, z, r, g, b, a, scale));
+			}
+		}
+	}
 }

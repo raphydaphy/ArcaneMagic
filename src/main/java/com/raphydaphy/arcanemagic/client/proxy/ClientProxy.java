@@ -130,4 +130,11 @@ public class ClientProxy extends CommonProxy {
 
 		}
 	}
+	
+	@Override
+	public void animaParticle(World world, double x, double y, double z, float r,
+			float g, float b, float a, float scale)
+	{
+		ParticleUtil.spawnParticleAnimaStill(world, (float)x,  (float)y,  (float)z, r, g, b, a, scale);
+	}
 }

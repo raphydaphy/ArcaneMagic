@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.common.tileentity;
 
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
-import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

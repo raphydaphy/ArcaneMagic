@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaCrystal;
 import com.raphydaphy.arcanemagic.api.anima.IAnimaStorage;
+import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.entity.EntityAnimaStream;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -166,11 +167,13 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 						if (te != null)
 						{
-
-							//ArcaneMagic.proxy.magicParticle(color, this.getPos(), here);
-
-							if (!world.isRemote)
+							if (world.isRemote)
 							{
+								ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
+							}
+							else
+							{
+								
 								// this.getPos = from, here = to
 								float magic = 0.01625f;
 

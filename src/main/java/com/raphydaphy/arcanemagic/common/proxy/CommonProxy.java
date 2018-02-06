@@ -49,4 +49,10 @@ public abstract class CommonProxy {
 	{
 		
 	}
+	
+	public void animaParticle(World worldIn, double x, double y, double z, float r,
+			float g, float b, float a, float scale)
+	{
+		
+	}
 }
