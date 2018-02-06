@@ -169,7 +169,7 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 						{
 							if (world.isRemote)
 							{
-								ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
+								//ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
 							}
 							else
 							{
@@ -209,12 +209,10 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 										.getColor();
 								color = Color.GREEN;
 
-								//					world.spawnEntity(new EntityAnimaStream(world, here.getX() + .5f, here.getY() + 0.8f,
-								//						here.getZ() + 0.5f, vx, vy, vz, color.getRed() / 256f, color.getGreen() / 256f,
-								//					color.getBlue() / 256f, alpha, size, life, 0.1f));
+													world.spawnEntity(new EntityAnimaStream(world, here.getX() + .5f, here.getY() + 0.8f,
+														here.getZ() + 0.5f, vx, vy, vz, color.getRed(), color.getGreen(),
+													color.getBlue(), alpha, size, life, 0.1f));
 
-								world.spawnEntity(new EntityAnimaStream(world, 0, 10, 0, 0, 0, 0, color.getRed() / 256f, color.getGreen() / 256f,
-										color.getBlue() / 256f, alpha, size, life, 1f));
 								Map<Anima, AnimaStack> storedEssenceConcentrator = te
 										.getCapability(IAnimaStorage.CAP, null).getStored();
 

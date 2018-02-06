@@ -36,8 +36,6 @@ public class ParticleAnimaStill extends Particle implements IModParticle {
 		this.initAlpha = a;
 		this.particleAngle = 2.0f * (float) Math.PI;
 		this.particleAlpha = initAlpha;
-		this.particleAge = 0;
-		this.particleMaxAge = 1;
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
 		this.setParticleTexture(sprite);
 	}
@@ -60,38 +58,7 @@ public class ParticleAnimaStill extends Particle implements IModParticle {
 	@Override
 	public void onUpdate() 
 	{
-		if (this.particleAge > this.particleMaxAge)
-		{
-			this.setExpired();
-		}
-		particleAge++;
-		
-		/*
-		this.prevPosX = this.posX;
-        this.prevPosY = this.posY;
-        this.prevPosZ = this.posZ;
-
-        if (this.particleAge++ >= this.particleMaxAge)
-        {
-            this.setExpired();
-        }
-
-        this.motionY -= 0.04D * (double)this.particleGravity;
-        this.move(this.motionX, this.motionY, this.motionZ);
-        this.motionX *= 0.9800000190734863D;
-        this.motionY *= 0.9800000190734863D;
-        this.motionZ *= 0.9800000190734863D;
-        
-        if (this.onGround)
-        {
-            this.motionX *= 0.699999988079071D;
-            this.motionZ *= 0.699999988079071D;
-        }
-		if (rand.nextInt(6) == 0) {
-			this.particleAge++;
-		}
-		this.prevParticleAngle = particleAngle;
-		particleAngle += 1f;*/
+		this.setExpired();
 	}
 
 	@Override

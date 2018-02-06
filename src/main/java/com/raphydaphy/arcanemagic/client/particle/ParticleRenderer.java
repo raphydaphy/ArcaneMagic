@@ -20,7 +20,6 @@ public class ParticleRenderer
 
 	public void updateParticles()
 	{
-		System.out.println(particles.size());
 		ArrayList<Particle> newParticles = new ArrayList<Particle>();
 		for (int i = 0; i < particles.size(); i++)
 		{
