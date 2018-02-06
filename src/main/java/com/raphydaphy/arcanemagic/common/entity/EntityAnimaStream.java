@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.entity;
 
+import java.awt.Color;
 import java.util.List;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
@@ -183,25 +184,52 @@ public class EntityAnimaStream extends EntityThrowable {
 	public boolean alive() {
 		return dataManager.get(AGE) < dataManager.get(MAXAGE);
 	}
-/*
- private static final DataParameter<Integer> RED = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> GREEN = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> BLUE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.VARINT);
 	
-	private static final DataParameter<Float> GRAVITY = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
-
-	private static final DataParameter<Float> INITSCALE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
-	private static final DataParameter<Float> SCALE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
+	public Color getColor()
+	{
+		return new Color(dataManager.get(RED), dataManager.get(GREEN), dataManager.get(BLUE));
+	}
 	
-	private static final DataParameter<Float> INITALPHA = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
-	private static final DataParameter<Float> ALPHA = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
+	public float getColorR()
+	{
+		return getColor().getRed() / 255.0f;
+	}
 	
-	private static final DataParameter<Float> ANGLE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
-	private static final DataParameter<Float> PREVANGLE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.FLOAT);
+	public float getColorG()
+	{
+		return getColor().getGreen() / 255.0f;
+	}
 	
-	private static final DataParameter<Integer> AGE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.VARINT);
-	private static final DataParameter<Integer> MAXAGE = EntityDataManager.createKey(EntityAnimaStream.class, DataSerializers.VARINT);
- */
+	public float getColorB()
+	{
+		return getColor().getBlue() / 255.0f;
+	}
+	
+	public float getScale()
+	{
+		return dataManager.get(SCALE);
+	}
+	
+	public float getAlpha()
+	{
+		return dataManager.get(ALPHA);
+	}
+	
+	public int getAge()
+	{
+		return dataManager.get(AGE);
+	}
+	
+	public float getAngle()
+	{
+		return dataManager.get(ANGLE);
+	}
+	
+	public float getPrevAngle()
+	{
+		return dataManager.get(PREVANGLE);
+	}
+	
 	@Override
 	protected void entityInit() {
 		super.entityInit();
