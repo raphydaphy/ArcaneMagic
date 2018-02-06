@@ -171,8 +171,6 @@ public class EntityAnimaStream extends EntityThrowable
 			this.motionZ *= 0.699999988079071D;
 		}
 
-		float f2 = getGravityVelocity();
-
 		if (isInWater())
 		{
 			for (int j = 0; j < 4; ++j)
