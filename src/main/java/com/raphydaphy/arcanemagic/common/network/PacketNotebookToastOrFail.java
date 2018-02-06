@@ -15,37 +15,47 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class PacketNotebookToastOrFail implements IMessage {
+public class PacketNotebookToastOrFail implements IMessage
+{
 	private NotebookCategory cat;
 	private boolean showIfFail;
 
-	public PacketNotebookToastOrFail() {
+	public PacketNotebookToastOrFail()
+	{
 	}
 
-	public PacketNotebookToastOrFail(NotebookCategory cat, boolean showIfFail) {
+	public PacketNotebookToastOrFail(NotebookCategory cat, boolean showIfFail)
+	{
 		this.cat = cat;
 		this.showIfFail = showIfFail;
 
-		if (cat != null && cat.equals(NotebookCategories.UNKNOWN_REALMS)) {
+		if (cat != null && cat.equals(NotebookCategories.UNKNOWN_REALMS))
+		{
 			cat = null;
 		}
 	}
 
-	public static class Handler implements IMessageHandler<PacketNotebookToastOrFail, IMessage> {
+	public static class Handler implements IMessageHandler<PacketNotebookToastOrFail, IMessage>
+	{
 		@Override
-		public IMessage onMessage(PacketNotebookToastOrFail message, MessageContext ctx) {
+		public IMessage onMessage(PacketNotebookToastOrFail message, MessageContext ctx)
+		{
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler).addScheduledTask(() -> handle(message, ctx));
 			return null;
 		}
 
-		private void handle(PacketNotebookToastOrFail message, MessageContext ctx) {
+		private void handle(PacketNotebookToastOrFail message, MessageContext ctx)
+		{
 			INotebookInfo cap = Minecraft.getMinecraft().player.getCapability(INotebookInfo.CAP, null);
 
-			if (cap != null) {
-				if (message.cat != null && !cap.isUnlocked(message.cat.getRequiredTag())) {
+			if (cap != null)
+			{
+				if (message.cat != null && !cap.isUnlocked(message.cat.getRequiredTag()))
+				{
 					cap.setUnlocked(message.cat.getRequiredTag());
 					ArcaneMagic.proxy.addCategoryUnlockToast(message.cat, false);
-				} else if (message.showIfFail) {
+				} else if (message.showIfFail)
+				{
 					Minecraft.getMinecraft().ingameGUI.setOverlayMessage(
 							TextFormatting.RED + I18n.format("arcanemagic.message.cantlearn"), false);
 				}
@@ -54,21 +64,27 @@ public class PacketNotebookToastOrFail implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBytes(ByteBuf buf)
+	{
 		int id = buf.readInt();
-		if (id != -1) {
+		if (id != -1)
+		{
 			cat = ArcaneMagicAPI.getNotebookCategories().get(id);
-		} else {
+		} else
+		{
 			cat = null;
 		}
 		showIfFail = buf.readBoolean();
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
-		if (cat != null) {
+	public void toBytes(ByteBuf buf)
+	{
+		if (cat != null)
+		{
 			buf.writeInt(ArcaneMagicAPI.getNotebookCategories().indexOf(cat));
-		} else {
+		} else
+		{
 			buf.writeInt(-1);
 		}
 		buf.writeBoolean(showIfFail);

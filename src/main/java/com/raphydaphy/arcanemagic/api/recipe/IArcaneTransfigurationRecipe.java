@@ -11,7 +11,8 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public interface IArcaneTransfigurationRecipe {
+public interface IArcaneTransfigurationRecipe
+{
 
 	/**
 	 * @return The required anima for this recipe, may be empty.
@@ -27,7 +28,8 @@ public interface IArcaneTransfigurationRecipe {
 	/**
 	 * @return The recipe output stack, with access to the input.
 	 */
-	public default ItemStack getCraftingResult(NonNullList<ItemStack> stacks) {
+	public default ItemStack getCraftingResult(NonNullList<ItemStack> stacks)
+	{
 		return getRecipeOutput();
 	}
 
@@ -37,7 +39,8 @@ public interface IArcaneTransfigurationRecipe {
 	 * @param inputs
 	 *            The current crafting grid.
 	 */
-	public default void craft(ItemStack wand, NonNullList<ItemStack> stacks) {
+	public default void craft(ItemStack wand, NonNullList<ItemStack> stacks)
+	{
 		for (ItemStack s : stacks)
 			s.shrink(1);
 		if (!getReqAnima().isEmpty())

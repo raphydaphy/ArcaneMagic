@@ -30,7 +30,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = ArcaneMagic.MODID, name = ArcaneMagic.MODNAME, version = ArcaneMagic.VERSION, useMetadata = true)
-public class ArcaneMagic {
+public class ArcaneMagic
+{
 	public static final String MODID = "arcanemagic";
 	public static final String MODNAME = "Arcane Magic";
 	public static final String VERSION = "0.1";
@@ -46,7 +47,8 @@ public class ArcaneMagic {
 	public static final ArcaneMagicCreativeTab creativeTab = new ArcaneMagicCreativeTab();
 
 	@Mod.EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		LOGGER = event.getModLog();
 		ModEntities.init();
 		ArcaneMagicPacketHandler.registerMessages(ArcaneMagic.MODID);
@@ -58,7 +60,8 @@ public class ArcaneMagic {
 	}
 
 	@Mod.EventHandler
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event)
+	{
 		MinecraftForge.EVENT_BUS
 				.post(new Register<Anima>(new ResourceLocation(ArcaneMagic.MODID, "essence_registry"), Anima.REGISTRY));
 		NetworkRegistry.INSTANCE.registerGuiHandler(ArcaneMagic.instance, new GuiProxy());
@@ -66,7 +69,8 @@ public class ArcaneMagic {
 	}
 
 	@Mod.EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event)
+	{
 		NotebookCategories.register();
 
 		// TODO: a class for this
@@ -126,7 +130,8 @@ public class ArcaneMagic {
 	}
 
 	@Mod.EventHandler
-	public void complete(FMLLoadCompleteEvent e) {
+	public void complete(FMLLoadCompleteEvent e)
+	{
 		CategoryRegistry.sortCategories();
 	}
 }

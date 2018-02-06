@@ -11,22 +11,26 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public class NotebookEntryCraftingRecipe implements INotebookEntry {
+public class NotebookEntryCraftingRecipe implements INotebookEntry
+{
 	private ItemStack[][] recipeIn;
 	private ItemStack recipeOut;
 
-	public NotebookEntryCraftingRecipe(ItemStack[][] recipeIn, ItemStack recipeOut) {
+	public NotebookEntryCraftingRecipe(ItemStack[][] recipeIn, ItemStack recipeOut)
+	{
 		this.recipeIn = recipeIn;
 		this.recipeOut = recipeOut;
 	}
 
 	@Override
-	public ResourceLocation getRegistryName() {
+	public ResourceLocation getRegistryName()
+	{
 		return new ResourceLocation(ArcaneMagic.MODID, "notebook_entry_crafting_recipe");
 	}
 
 	@Override
-	public void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook) {
+	public void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook)
+	{
 		// New matrix!
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
@@ -36,9 +40,12 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry {
 		y += 3;
 
 		// Render the tooltips for the recipe matrix
-		for (int inputX = 0; inputX < 3; inputX++) {
-			for (int inputY = 0; inputY < 3; inputY++) {
-				if (recipeIn[inputY][inputX] != ItemStack.EMPTY) {
+		for (int inputX = 0; inputX < 3; inputX++)
+		{
+			for (int inputY = 0; inputY < 3; inputY++)
+			{
+				if (recipeIn[inputY][inputX] != ItemStack.EMPTY)
+				{
 					// Render the tooltip if the mouse is over the item
 					drawItemstackTooltip(recipeIn[inputY][inputX], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY,
 							notebook);
@@ -55,7 +62,8 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry {
 	}
 
 	@Override
-	public void draw(int x, int y, int mouseX, int mouseY, GuiScreen notebook) {
+	public void draw(int x, int y, int mouseX, int mouseY, GuiScreen notebook)
+	{
 		// Make an embedded matrix for rendering crafting recipes
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
@@ -96,9 +104,12 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry {
 		RenderHelper.enableGUIStandardItemLighting();
 
 		// Render the crafting recipe
-		for (int inputX = 0; inputX < 3; inputX++) {
-			for (int inputY = 0; inputY < 3; inputY++) {
-				if (recipeIn[inputY][inputX] != ItemStack.EMPTY) {
+		for (int inputX = 0; inputX < 3; inputX++)
+		{
+			for (int inputY = 0; inputY < 3; inputY++)
+			{
+				if (recipeIn[inputY][inputX] != ItemStack.EMPTY)
+				{
 					// Render the recipe component
 					notebook.mc.getRenderItem().renderItemAndEffectIntoGUI(recipeIn[inputY][inputX], x + (inputX * 25),
 							y + (inputY * 25));
@@ -123,9 +134,12 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry {
 		GlStateManager.popMatrix();
 	}
 
-	private void drawItemstackTooltip(ItemStack stack, int x, int y, int mouseX, int mouseY, GuiScreen notebook) {
-		if (mouseX >= x && mouseY >= y && mouseX <= x + 16 && mouseY <= y + 16) {
-			if (stack != null && !stack.isEmpty()) {
+	private void drawItemstackTooltip(ItemStack stack, int x, int y, int mouseX, int mouseY, GuiScreen notebook)
+	{
+		if (mouseX >= x && mouseY >= y && mouseX <= x + 16 && mouseY <= y + 16)
+		{
+			if (stack != null && !stack.isEmpty())
+			{
 				// A seperate matrix because tooltip rendering changes a bunch
 				// of things that we don't want
 				GlStateManager.pushMatrix();
@@ -148,18 +162,24 @@ public class NotebookEntryCraftingRecipe implements INotebookEntry {
 	}
 
 	@Override
-	public int getHeight(GuiScreen notebook) {
+	public int getHeight(GuiScreen notebook)
+	{
 		return 74;
 	}
 
 	@Override
-	public boolean containsSearchKey(String searchKey) {
-		if (recipeOut.getDisplayName().toLowerCase().contains(searchKey)) {
+	public boolean containsSearchKey(String searchKey)
+	{
+		if (recipeOut.getDisplayName().toLowerCase().contains(searchKey))
+		{
 			return true;
 		}
-		for (int x = 0; x < 3; x++) {
-			for (ItemStack input : recipeIn[x]) {
-				if (input.getDisplayName().toLowerCase().contains(searchKey)) {
+		for (int x = 0; x < 3; x++)
+		{
+			for (ItemStack input : recipeIn[x])
+			{
+				if (input.getDisplayName().toLowerCase().contains(searchKey))
+				{
 					return true;
 				}
 			}

@@ -19,7 +19,8 @@ import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAncientClothArmor extends ItemArmor implements IHasModel {
+public class ItemAncientClothArmor extends ItemArmor implements IHasModel
+{
 	public static final ArmorMaterial ArmorMaterialAncientCloth = EnumHelper.addArmorMaterial(
 			(ArcaneMagic.MODID + "_armorAncientCloth").toUpperCase(Locale.ROOT),
 			ArcaneMagic.MODID + ":armor_ancient_cloth", /* durability */ 60,
@@ -28,7 +29,8 @@ public class ItemAncientClothArmor extends ItemArmor implements IHasModel {
 	public static final EntityEquipmentSlot[] VALID_EQUIPMENT_SLOTS = new EntityEquipmentSlot[] {
 			EntityEquipmentSlot.HEAD, EntityEquipmentSlot.CHEST, EntityEquipmentSlot.LEGS, EntityEquipmentSlot.FEET };
 
-	public ItemAncientClothArmor(String name, int armorType) {
+	public ItemAncientClothArmor(String name, int armorType)
+	{
 		super(ArmorMaterialAncientCloth, armorType, VALID_EQUIPMENT_SLOTS[armorType]);
 		setRegistryName(name);
 		setUnlocalizedName(ArcaneMagic.MODID + "." + name);
@@ -38,17 +40,20 @@ public class ItemAncientClothArmor extends ItemArmor implements IHasModel {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public String getItemStackDisplayName(ItemStack stack) {
+	public String getItemStackDisplayName(ItemStack stack)
+	{
 		return TextFormatting.DARK_GRAY + I18n.format(this.getUnlocalizedName(stack) + ".name").trim();
 	}
 
 	@Override
-	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack) {
+	public boolean getIsRepairable(ItemStack itemToRepair, ItemStack stack)
+	{
 		return itemToRepair.getItem().equals((Items.LEATHER));
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type)
+	{
 		if (stack.getItem() == ModRegistry.ANCIENT_CLOTH_LEGGINGS)
 			return ArcaneMagic.MODID + ":textures/misc/ancient_cloth_2.png";
 
@@ -56,9 +61,11 @@ public class ItemAncientClothArmor extends ItemArmor implements IHasModel {
 	}
 
 	@Override
-	public void initModels(ModelRegistryEvent e) {
+	public void initModels(ModelRegistryEvent e)
+	{
 		int variants = 0;
-		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++) {
+		for (int i = 0; variants > 0 ? i < variants : i <= 0; i++)
+		{
 			IHasModel.sMRL("items", this, i, "item=" + getRegistryName().getResourcePath() + (i == 0 ? "" : i));
 		}
 	}

@@ -14,8 +14,10 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 import akka.japi.Pair;
 import net.minecraft.item.ItemStack;
 
-public class CategoryNaturalDivisions extends NotebookCategory {
-	public CategoryNaturalDivisions() {
+public class CategoryNaturalDivisions extends NotebookCategory
+{
+	public CategoryNaturalDivisions()
+	{
 		setUnlocalizedName("arcanemagic.notebook.category.natural_divisions");
 		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.natural_divisions", 2));
 		setRequiredTag("unlockedNaturalDisvisions");
@@ -24,15 +26,19 @@ public class CategoryNaturalDivisions extends NotebookCategory {
 	}
 
 	@Override
-	public String getUnlocalizedTitle(INotebookInfo info, int page) {
+	public String getUnlocalizedTitle(INotebookInfo info, int page)
+	{
 		int fakePage = page;
-		for (int potPage = 0; potPage < 7; potPage++) {
-			if (potPage > fakePage) {
+		for (int potPage = 0; potPage < 7; potPage++)
+		{
+			if (potPage > fakePage)
+			{
 				break;
 			}
 			// this page is not visible yet to the player!
 			if (potPage > 0
-					&& !info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[potPage - 1].getRequiredTag())) {
+					&& !info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[potPage - 1].getRequiredTag()))
+			{
 				fakePage++;
 			}
 		}
@@ -40,16 +46,21 @@ public class CategoryNaturalDivisions extends NotebookCategory {
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info) {
+	public List<NotebookPage> getPages(INotebookInfo info)
+	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
-		for (int curPage = 0; curPage < 7; curPage++) {
-			if (curPage < 1) {
+		for (int curPage = 0; curPage < 7; curPage++)
+		{
+			if (curPage < 1)
+			{
 				List<INotebookEntry> page = new ArrayList<INotebookEntry>();
-				for (int i = 0; i < 3; i++) {
+				for (int i = 0; i < 3; i++)
+				{
 					page.add(new NotebookEntryText(getUnlocalizedName() + "." + curPage + "." + i, 0x000000));
 				}
 				pages.add(new NotebookPage(page));
-			} else if (info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[curPage - 1].getRequiredTag())) {
+			} else if (info.isUnlocked(NotebookCategories.NATURAL_DIVISION_PAGES[curPage - 1].getRequiredTag()))
+			{
 				pages.addAll(NotebookCategories.NATURAL_DIVISION_PAGES[curPage - 1].getPages(info));
 			}
 		}

@@ -18,7 +18,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
+public class NotebookInfo implements INotebookInfo, ICapabilityProvider
+{
 	// Current category selected
 	public static final String tagCategory = "notebookCategory";
 
@@ -41,7 +42,8 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 	private boolean usedNotebook;
 	private String notebookSearchKey;
 
-	public NotebookInfo() {
+	public NotebookInfo()
+	{
 		curCategory = 0;
 		curPage = 0;
 		curIndexPage = 0;
@@ -49,45 +51,54 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 		usedNotebook = false;
 	}
 
-	public static class DefaultInfo implements Capability.IStorage<INotebookInfo> {
+	public static class DefaultInfo implements Capability.IStorage<INotebookInfo>
+	{
 
 		@Nullable
 		@Override
-		public NBTBase writeNBT(Capability<INotebookInfo> capability, INotebookInfo instance, EnumFacing side) {
+		public NBTBase writeNBT(Capability<INotebookInfo> capability, INotebookInfo instance, EnumFacing side)
+		{
 			return instance.serializeNBT();
 		}
 
 		@Override
-		public void readNBT(Capability<INotebookInfo> capability, INotebookInfo instance, EnumFacing side,
-				NBTBase nbt) {
+		public void readNBT(Capability<INotebookInfo> capability, INotebookInfo instance, EnumFacing side, NBTBase nbt)
+		{
 			instance.deserializeNBT((NBTTagCompound) nbt);
 		}
 	}
 
 	@Override
-	public void setUsed(boolean used) {
+	public void setUsed(boolean used)
+	{
 		this.usedNotebook = true;
 	}
 
 	@Override
-	public void setPage(int page) {
+	public void setPage(int page)
+	{
 		this.curPage = page;
 	}
 
 	@Override
-	public void setIndexPage(int indexPage) {
+	public void setIndexPage(int indexPage)
+	{
 		this.curIndexPage = indexPage;
 	}
 
 	@Override
-	public void setCategory(int category) {
+	public void setCategory(int category)
+	{
 		this.curCategory = category;
 	}
 
 	@Override
-	public void setUnlocked(String tag) {
-		if (unlockedCategories.containsKey(tag)) {
-			if (!unlockedCategories.get(tag)) {
+	public void setUnlocked(String tag)
+	{
+		if (unlockedCategories.containsKey(tag))
+		{
+			if (!unlockedCategories.get(tag))
+			{
 				unlockedCategories.remove(tag);
 			}
 		}
@@ -95,46 +106,58 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 	}
 
 	@Override
-	public void setSearchKey(String notebookSearchKey) {
-		if (notebookSearchKey.length() >= 1024) {
+	public void setSearchKey(String notebookSearchKey)
+	{
+		if (notebookSearchKey.length() >= 1024)
+		{
 			notebookSearchKey = notebookSearchKey.substring(0, 1024);
 		}
 		this.notebookSearchKey = notebookSearchKey;
 	}
 
 	@Override
-	public boolean getUsed() {
+	public boolean getUsed()
+	{
 		return this.usedNotebook;
 	}
 
 	@Override
-	public int getPage() {
+	public int getPage()
+	{
 		return this.curPage;
 	}
 
 	@Override
-	public int getIndexPage() {
+	public int getIndexPage()
+	{
 		return this.curIndexPage;
 	}
 
 	@Override
-	public int getCategory() {
+	public int getCategory()
+	{
 		return this.curCategory;
 	}
 
 	@Override
-	public String getSearchKey() {
+	public String getSearchKey()
+	{
 		return notebookSearchKey == null ? "" : notebookSearchKey;
 	}
 
 	@Override
-	public boolean isUnlocked(String tag) {
-		if (tag != null) {
-			if (tag.equals(tagUsedNotebook)) {
+	public boolean isUnlocked(String tag)
+	{
+		if (tag != null)
+		{
+			if (tag.equals(tagUsedNotebook))
+			{
 				return true;
 			}
-			for (String unlocked : unlockedCategories.keySet()) {
-				if (tag.equals(unlocked) && unlockedCategories.get(unlocked)) {
+			for (String unlocked : unlockedCategories.keySet())
+			{
+				if (tag.equals(unlocked) && unlockedCategories.get(unlocked))
+				{
 					return unlockedCategories.get(unlocked);
 				}
 			}
@@ -144,9 +167,11 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 	}
 
 	@Override
-	public boolean isVisible(NotebookCategory cat) {
+	public boolean isVisible(NotebookCategory cat)
+	{
 		if (!isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag())
-				&& cat.equals(NotebookCategories.UNKNOWN_REALMS)) {
+				&& cat.equals(NotebookCategories.UNKNOWN_REALMS))
+		{
 			return true;
 		}
 		return (isUnlocked(cat.getRequiredTag()) && isUnlocked(cat.getPrerequisiteTag()));
@@ -154,22 +179,29 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean matchesSearchKey(NotebookCategory cat) {
-		if (isVisible(cat)) {
-			if (getSearchKey() == null || getSearchKey().isEmpty()) {
+	public boolean matchesSearchKey(NotebookCategory cat)
+	{
+		if (isVisible(cat))
+		{
+			if (getSearchKey() == null || getSearchKey().isEmpty())
+			{
 				return true;
 			}
 
 			String[] terms = getSearchKey().toLowerCase().split("\\|");
-			for (String term : terms) {
+			for (String term : terms)
+			{
 				boolean matchesTerm = true;
 				String[] words = term.split(" ");
-				for (String word : words) {
-					if (!cat.matchesSearchKey(word, this)) {
+				for (String word : words)
+				{
+					if (!cat.matchesSearchKey(word, this))
+					{
 						matchesTerm = false;
 					}
 				}
-				if (matchesTerm) {
+				if (matchesTerm)
+				{
 					return true;
 				}
 			}
@@ -180,9 +212,11 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 	}
 
 	@Override
-	public NBTTagCompound serializeNBT() {
+	public NBTTagCompound serializeNBT()
+	{
 		NBTTagCompound tag = new NBTTagCompound();
-		for (String cat : unlockedCategories.keySet()) {
+		for (String cat : unlockedCategories.keySet())
+		{
 			tag.setBoolean("notebook_info_" + cat, unlockedCategories.get(cat));
 		}
 
@@ -196,10 +230,13 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 	}
 
 	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
+	public void deserializeNBT(NBTTagCompound nbt)
+	{
 
-		for (String key : nbt.getKeySet()) {
-			if (key.length() > 14 && key.substring(0, 14).equals("notebook_info_")) {
+		for (String key : nbt.getKeySet())
+		{
+			if (key.length() > 14 && key.substring(0, 14).equals("notebook_info_"))
+			{
 				unlockedCategories.put(key.substring(14), nbt.getBoolean(key));
 			}
 		}
@@ -212,13 +249,15 @@ public class NotebookInfo implements INotebookInfo, ICapabilityProvider {
 	}
 
 	@Override
-	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing)
+	{
 		return capability == INotebookInfo.CAP;
 	}
 
 	@Nullable
 	@Override
-	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing)
+	{
 		return capability == INotebookInfo.CAP ? INotebookInfo.CAP.cast(this) : null;
 	}
 }

@@ -37,26 +37,31 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-public class ClientProxy extends CommonProxy {
+public class ClientProxy extends CommonProxy
+{
 	public static ParticleRenderer particleRenderer = new ParticleRenderer();
 
 	@Override
-	public void sendAnimaSafe(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles) {
+	public void sendAnimaSafe(AnimaStack anima, Vec3d from, Vec3d to, Vec3d toCosmetic, boolean spawnParticles)
+	{
 		Anima.sendAnima(Minecraft.getMinecraft().world, anima, from, to, toCosmetic, false, spawnParticles);
 	}
 
 	@Override
-	public void addCategoryUnlockToast(NotebookCategory category, boolean expanded) {
+	public void addCategoryUnlockToast(NotebookCategory category, boolean expanded)
+	{
 		Minecraft.getMinecraft().getToastGui().add(new CategoryUnlockedToast(category, expanded));
 	}
 
 	@Override
-	public void preInit(FMLPreInitializationEvent event) {
+	public void preInit(FMLPreInitializationEvent event)
+	{
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event)
+	{
 		registerColors();
 
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnimaConjurer.class, new AnimaConjurerTESR());
@@ -68,12 +73,14 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityArcaneForge.class, new ArcaneForgeTESR());
 	}
 
-	public static void registerColors() {
+	public static void registerColors()
+	{
 	}
 
 	@Override
 	public void spawnAnimaParticles(World world, Vec3d pos, Vec3d speed, Anima anima, Vec3d travelPos,
-			boolean isCosmetic) {
+			boolean isCosmetic)
+	{
 
 		Minecraft.getMinecraft().effectRenderer.addEffect(
 				new ParticleAnima(world, pos.x, pos.y, pos.z, speed.x, speed.y, speed.z, anima, travelPos, isCosmetic));
@@ -81,22 +88,27 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void addIlluminatorParticle(ItemIlluminator item, World world, BlockPos pos, EnumFacing facing, float hitX,
-			float hitY, float hitZ) {
-		if (world.isRemote) {
+			float hitY, float hitZ)
+	{
+		if (world.isRemote)
+		{
 			ParticleQueue.getInstance().addParticle(world, new ParticlePos(pos, facing, hitX, hitY, hitZ));
 		}
 	}
 
 	@Override
-	public String translate(String key, Object... args) {
+	public String translate(String key, Object... args)
+	{
 		return I18n.format(key, args);
 	}
 
 	@Override
-	public void magicParticle(Color color, BlockPos from, BlockPos to) {
+	public void magicParticle(Color color, BlockPos from, BlockPos to)
+	{
 		World world = Minecraft.getMinecraft().world;
 
-		if (world != null) {
+		if (world != null)
+		{
 
 			float magic = 0.01625f;
 
@@ -105,36 +117,32 @@ public class ClientProxy extends CommonProxy {
 
 			float distZ = from.getZ() - to.getZ();
 			float vz = magic * distZ;
-			
+
 			float distY = from.getY() - to.getY();
 			float vy = 0.053f + 0.017f * distY;
-			
-			int life = 111 + (0 * (int)Math.abs(distY));
+
+			int life = 111 + (0 * (int) Math.abs(distY));
 
 			float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
 
-			int dist = Math.abs((int) distX) + Math.abs((int) distZ) + Math.abs((int)distZ);
+			int dist = Math.abs((int) distX) + Math.abs((int) distZ) + Math.abs((int) distZ);
 			float size;
 
-			if (dist < 4) {
+			if (dist < 4)
+			{
 				size = Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2);
-			} else if (dist < 6) {
+			} else if (dist < 6)
+			{
 				size = Math.min(Math.max(world.rand.nextFloat() * 10, 2.5f), 3);
-			} else {
+			} else
+			{
 				size = Math.min(Math.max(world.rand.nextFloat() * 14, 3f), 3.5f);
 			}
 
-			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 0.5f, vx, vy,
-					vz, color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha, size,
-					(int) (life), 0.1f);
+			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 0.5f, vx, vy, vz,
+					color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha, size, (int) (life),
+					0.1f);
 
 		}
-	}
-	
-	@Override
-	public void animaParticle(World world, double x, double y, double z, float r,
-			float g, float b, float a, float scale)
-	{
-		ParticleUtil.spawnParticleAnimaStill(world, (float)x,  (float)y,  (float)z, r, g, b, a, scale);
 	}
 }

@@ -14,8 +14,10 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 import akka.japi.Pair;
 import net.minecraft.item.ItemStack;
 
-public class CategoryFoundationsOfMagic extends NotebookCategory {
-	public CategoryFoundationsOfMagic() {
+public class CategoryFoundationsOfMagic extends NotebookCategory
+{
+	public CategoryFoundationsOfMagic()
+	{
 		setUnlocalizedName("arcanemagic.notebook.category.foundations_of_magic");
 		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.plants", 2));
 		setRequiredTag("unlockedFoundationsOfMagic");
@@ -24,15 +26,18 @@ public class CategoryFoundationsOfMagic extends NotebookCategory {
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info) {
+	public List<NotebookPage> getPages(INotebookInfo info)
+	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page0));
 		List<INotebookEntry> page1 = new ArrayList<INotebookEntry>();
-		for (int i = 3; i < 6; i++) {
+		for (int i = 3; i < 6; i++)
+		{
 			page1.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page1));

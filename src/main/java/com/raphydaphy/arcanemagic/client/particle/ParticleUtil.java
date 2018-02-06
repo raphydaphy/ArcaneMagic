@@ -8,30 +8,22 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.World;
 
-public class ParticleUtil {
+public class ParticleUtil
+{
 	public static Random random = new Random();
 	public static int counter = 0;
 
 	public static void spawnParticleGlowTest(World world, float x, float y, float z, float vx, float vy, float vz,
-			float r, float g, float b, float a, float scale, int lifetime, float gravity) {
-		if (ArcaneMagic.proxy instanceof ClientProxy) {
+			float r, float g, float b, float a, float scale, int lifetime, float gravity)
+	{
+		if (ArcaneMagic.proxy instanceof ClientProxy)
+		{
 			counter += random.nextInt(3);
 			if (counter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
-					: 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0) {
-				ClientProxy.particleRenderer
-						.addParticle(new ParticleAnimaTransfer(world, x, y, z, vx, vy, vz, r, g, b, a, scale, lifetime, gravity));
-			}
-		}
-	}
-	
-	public static void spawnParticleAnimaStill(World world, float x, float y, float z,
-			float r, float g, float b, float a, float scale) {
-		if (ArcaneMagic.proxy instanceof ClientProxy) {
-			counter += random.nextInt(3);
-			if (counter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
-					: 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0) {
-				ClientProxy.particleRenderer
-						.addParticle(new ParticleAnimaStill(world, x, y, z, r, g, b, a, scale));
+					: 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0)
+			{
+				ClientProxy.particleRenderer.addParticle(
+						new ParticleAnimaTransfer(world, x, y, z, vx, vy, vz, r, g, b, a, scale, lifetime, gravity));
 			}
 		}
 	}

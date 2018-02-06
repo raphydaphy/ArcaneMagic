@@ -10,10 +10,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntityAnimusMaterializer> {
+public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntityAnimusMaterializer>
+{
 	@Override
 	public void render(TileEntityAnimusMaterializer te, double x, double y, double z, float partialTicks,
-			int destroyStage, float alpha) {
+			int destroyStage, float alpha)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.color(1, 1, 1, 1);
@@ -29,7 +31,7 @@ public class AnimusMaterializerTESR extends TileEntitySpecialRenderer<TileEntity
 		GlStateManager.depthMask(false);
 
 		GlStateManager.pushMatrix();
-		
+
 		GlStateManager.popMatrix();
 		if (lighting)
 

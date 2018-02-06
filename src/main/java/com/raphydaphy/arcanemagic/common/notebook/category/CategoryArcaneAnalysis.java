@@ -13,8 +13,10 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import net.minecraft.item.ItemStack;
 
-public class CategoryArcaneAnalysis extends NotebookCategory {
-	public CategoryArcaneAnalysis() {
+public class CategoryArcaneAnalysis extends NotebookCategory
+{
+	public CategoryArcaneAnalysis()
+	{
 		setUnlocalizedName("arcanemagic.notebook.category.arcane_analysis");
 		setRequiredTag("unlockedArcaneAnalysis");
 		setPrerequisiteTag(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
@@ -22,15 +24,18 @@ public class CategoryArcaneAnalysis extends NotebookCategory {
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info) {
+	public List<NotebookPage> getPages(INotebookInfo info)
+	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++)
+		{
 			page0.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page0));
 		List<INotebookEntry> page1 = new ArrayList<INotebookEntry>();
-		for (int i = 2; i < 4; i++) {
+		for (int i = 2; i < 4; i++)
+		{
 			page1.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page1));

@@ -10,7 +10,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 /**
  * TODO more operations
  */
-public interface IAnimaStorage extends INBTSerializable<NBTTagCompound> {
+public interface IAnimaStorage extends INBTSerializable<NBTTagCompound>
+{
 
 	/* NB: do NOT use this field UNLESS you have a hard dep on this mod */
 	@CapabilityInject(IAnimaStorage.class)

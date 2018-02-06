@@ -25,34 +25,41 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
 
-public class BlockAnimaConjurer extends BlockBase implements IHasRecipe {
+public class BlockAnimaConjurer extends BlockBase implements IHasRecipe
+{
 	public static final int GUI_ID = 3;
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 6d * (1d / 16d), 1.0D);
 
-	public BlockAnimaConjurer() {
+	public BlockAnimaConjurer()
+	{
 		super("anima_conjurer", Material.ROCK, 2.5f, SoundType.STONE);
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
 		return AABB;
 	}
 
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	{
 		return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
 	}
 
-	public EnumBlockRenderType getRenderType(IBlockState state) {
+	public EnumBlockRenderType getRenderType(IBlockState state)
+	{
 		return EnumBlockRenderType.MODEL;
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
 		TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(pos);
 
 		ItemStack itemstack = te.getStack();
 
-		if (!itemstack.isEmpty()) {
+		if (!itemstack.isEmpty())
+		{
 			InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 		}
 
@@ -60,52 +67,66 @@ public class BlockAnimaConjurer extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity(IBlockState state)
+	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
 		return new TileEntityAnimaConjurer();
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!player.isSneaking()) {
-			if (!world.isRemote) {
+			EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (!player.isSneaking())
+		{
+			if (!world.isRemote)
+			{
 				TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(pos);
-				if (te.getStack().isEmpty()) {
-					if (!player.getHeldItem(hand).isEmpty()) {
+				if (te.getStack().isEmpty())
+				{
+					if (!player.getHeldItem(hand).isEmpty())
+					{
 						ItemStack heldItemClone = player.getHeldItem(hand).copy();
 						heldItemClone.setCount(1);
 
-						if (player.getHeldItem(hand).getCount() > 1) {
+						if (player.getHeldItem(hand).getCount() > 1)
+						{
 							player.getHeldItem(hand).shrink(1);
-						} else {
+						} else
+						{
 							player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
 						}
 						te.setStack(heldItemClone);
 
 						player.openContainer.detectAndSendChanges();
 					}
-				} else {
+				} else
+				{
 					ItemStack stack = te.getStack();
 					te.setStack(ItemStack.EMPTY);
-					if (!player.inventory.addItemStackToInventory(stack)) {
+					if (!player.inventory.addItemStackToInventory(stack))
+					{
 						EntityItem entityItem = new EntityItem(world, pos.getX(), pos.getY() + 1, pos.getZ(), stack);
 						world.spawnEntity(entityItem);
-					} else {
+					} else
+					{
 						player.openContainer.detectAndSendChanges();
 					}
 				}
@@ -117,7 +138,8 @@ public class BlockAnimaConjurer extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public void initRecipes(Register<IRecipe> e) {
+	public void initRecipes(Register<IRecipe> e)
+	{
 		RecipeHelper.addElementalShaped(this, null, 0, null, Items.REDSTONE, null, Items.GLOWSTONE_DUST,
 				Blocks.IRON_BLOCK, Items.GLOWSTONE_DUST, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK);
 	}

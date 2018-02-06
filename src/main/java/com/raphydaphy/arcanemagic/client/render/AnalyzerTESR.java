@@ -16,12 +16,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer> {
+public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer>
+{
 	private int frame = 0;
 
 	@Override
 	public void render(TileEntityAnalyzer te, double x, double y, double z, float partialTicks, int destroyStage,
-			float alpha) {
+			float alpha)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
@@ -37,17 +39,21 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer> 
 		GlStateManager.popMatrix();
 	}
 
-	private void renderItem(int slot, TileEntityAnalyzer te) {
+	private void renderItem(int slot, TileEntityAnalyzer te)
+	{
 		ItemStack stack = te.getStack(slot);
-		if (stack != null && !stack.isEmpty()) {
-			if (slot == 1) {
+		if (stack != null && !stack.isEmpty())
+		{
+			if (slot == 1)
+			{
 				GlStateManager.pushMatrix();
 				GlStateManager.pushAttrib();
 
 				Color c = Color.RED;
 
 				IAnimaStorage e = te.getCapability(IAnimaStorage.CAP, null);
-				if (e != null && e.getTotalStored() > 0) {
+				if (e != null && e.getTotalStored() > 0)
+				{
 					float frequency = 0.1f;
 					double r = Math.sin(frequency * (frame)) * 127 + 128;
 					double g = Math.sin(frequency * (frame) + 2) * 127 + 128;
@@ -69,22 +75,26 @@ public class AnalyzerTESR extends TileEntitySpecialRenderer<TileEntityAnalyzer> 
 			GlStateManager.translate(0.5, .48, 0.5);
 			GlStateManager.scale(.18f, .18f, .18f);
 
-			if (!(stack.getItem() instanceof ItemBlock) && slot == 0) {
+			if (!(stack.getItem() instanceof ItemBlock) && slot == 0)
+			{
 				GlStateManager.scale(1.2f, 1.2f, 1.2f);
 			}
 			float age = frame * 1.3f;
-			if (slot == 1) {
+			if (slot == 1)
+			{
 				age = -age;
 				age += 138;
 			}
 			GlStateManager.rotate(age, 0, 1, 0);
 
-			if (slot == 1) {
+			if (slot == 1)
+			{
 				GlStateManager.scale(3.5, 3.5, 3.5);
 				GlStateManager.translate(0, -0.1, 0);
 				GlStateManager.translate(0, Math.sin(0.2 * (frame / 2)) / 10, 0);
 				GLHelper.renderItemWithTransform(te.getWorld(), stack, ItemCameraTransforms.TransformType.GROUND);
-			} else {
+			} else
+			{
 				Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);
 			}
 

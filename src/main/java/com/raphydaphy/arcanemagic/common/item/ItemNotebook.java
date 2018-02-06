@@ -16,27 +16,34 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class ItemNotebook extends ItemBase {
+public class ItemNotebook extends ItemBase
+{
 	public static final int GUI_ID = 1;
 
-	public ItemNotebook(String name) {
+	public ItemNotebook(String name)
+	{
 		super(name, TextFormatting.DARK_PURPLE);
 		maxStackSize = 1;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+	{
 		INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
-		if (cap != null) {
-			if (world.isRemote) {
+		if (cap != null)
+		{
+			if (world.isRemote)
+			{
 				world.playSound(player.posX, player.posY, player.posZ, ArcaneMagicSoundHandler.randomPageSound(),
 						SoundCategory.MASTER, 1f, 1f, false);
-			} else {
+			} else
+			{
 				ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookOpened(cap), (EntityPlayerMP) player);
 			}
 			player.openGui(ArcaneMagic.instance, GUI_ID, world, (int) player.posX, (int) player.posY,
 					(int) player.posZ);
-		} else {
+		} else
+		{
 			System.out.println("NULL NOTEBOOK CAPABILITY FOUND FOR PLAYER WITH UUID " + player.getUniqueID().toString()
 					+ "! THIS IS BAD!");
 		}

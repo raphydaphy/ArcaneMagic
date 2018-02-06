@@ -14,13 +14,15 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
-public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurationRecipe {
+public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurationRecipe
+{
 
 	private final ItemStack output;
 	private final NonNullList<Ingredient> inputs;
 	private final ImmutableAnimaStack anima;
 
-	public ShapelessArcaneTransfigurationRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima) {
+	public ShapelessArcaneTransfigurationRecipe(ItemStack output, NonNullList<Ingredient> inputs, AnimaStack reqAnima)
+	{
 		Preconditions.checkArgument(inputs.size() == 9,
 				"Attempting to create invalid arcane transfiguration recipe! (Wrong input list size)");
 		this.output = output;
@@ -29,7 +31,8 @@ public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurat
 	}
 
 	@Override
-	public AnimaStack getReqAnima() {
+	public AnimaStack getReqAnima()
+	{
 		return anima;
 	}
 
@@ -39,11 +42,15 @@ public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurat
 	 */
 
 	@Override
-	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world) {
+	public boolean matches(EntityPlayer player, ItemStack wand, NonNullList<ItemStack> stacks, World world)
+	{
 		List<ItemStack> toCheck = Lists.newArrayList(stacks);
-		for (Ingredient i : this.inputs) {
-			for (int ix = 0; ix < toCheck.size(); ix++) {
-				if (i.apply(toCheck.get(ix))) {
+		for (Ingredient i : this.inputs)
+		{
+			for (int ix = 0; ix < toCheck.size(); ix++)
+			{
+				if (i.apply(toCheck.get(ix)))
+				{
 					toCheck.remove(ix);
 					break;
 				} else if (i == Ingredient.EMPTY && toCheck.get(ix).isEmpty())
@@ -59,17 +66,20 @@ public class ShapelessArcaneTransfigurationRecipe implements IArcaneTransfigurat
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getRecipeOutput()
+	{
 		return output;
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
+	public NonNullList<Ingredient> getIngredients()
+	{
 		return inputs;
 	}
 
 	@Override
-	public boolean isShapeless() {
+	public boolean isShapeless()
+	{
 		return true;
 	}
 

@@ -11,11 +11,9 @@ import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.proxy.ClientProxy;
 import com.raphydaphy.arcanemagic.client.render.GLHelper;
-import com.raphydaphy.arcanemagic.client.render.RenderEntityAnimaStream;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityItemFancy;
 import com.raphydaphy.arcanemagic.client.render.RenderEntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.entity.EntityAnimaStream;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.entity.EntityMagicCircles;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
@@ -51,20 +49,24 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
-public class ClientEvents {
+public class ClientEvents
+{
 	@SubscribeEvent
-	public static void onClientTick(ClientTickEvent ev) {
+	public static void onClientTick(ClientTickEvent ev)
+	{
 		World world = Minecraft.getMinecraft().world;
 
-		if (world != null) {
-			if (ev.side == Side.CLIENT && ev.phase == TickEvent.Phase.START
-					&& !Minecraft.getMinecraft().isGamePaused()) {
+		if (world != null)
+		{
+			if (ev.side == Side.CLIENT && ev.phase == TickEvent.Phase.START && !Minecraft.getMinecraft().isGamePaused())
+			{
 				ClientProxy.particleRenderer.updateParticles();
 			}
 
 			EntityPlayer player = Minecraft.getMinecraft().player;
 
-			if (player != null) {
+			if (player != null)
+			{
 				ParticleQueue.getInstance().updateQueue(world, player);
 
 			}
@@ -73,9 +75,11 @@ public class ClientEvents {
 	}
 
 	@SubscribeEvent
-	public static void onRenderHand(RenderSpecificHandEvent ev) {
+	public static void onRenderHand(RenderSpecificHandEvent ev)
+	{
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if (!player.isSneaking() && ev.getItemStack().getItem() instanceof ItemParchment) {
+		if (!player.isSneaking() && ev.getItemStack().getItem() instanceof ItemParchment)
+		{
 
 			float f = player.getSwingProgress(ev.getPartialTicks());
 			float f1 = player.prevRotationPitch
@@ -92,9 +96,11 @@ public class ClientEvents {
 			GlStateManager.pushMatrix();
 			GlStateManager.pushAttrib();
 
-			if (ev.getHand() == EnumHand.MAIN_HAND && player.getHeldItemOffhand().isEmpty()) {
+			if (ev.getHand() == EnumHand.MAIN_HAND && player.getHeldItemOffhand().isEmpty())
+			{
 				GLHelper.renderParchmentFirstPerson(f1, f5, f, ev.getItemStack());
-			} else {
+			} else
+			{
 				EnumHandSide enumhandside = ev.getHand() == EnumHand.MAIN_HAND ? player.getPrimaryHand()
 						: player.getPrimaryHand().opposite();
 				GLHelper.renderParchmentFirstPersonSide(f5, enumhandside, f, ev.getItemStack());
@@ -107,12 +113,11 @@ public class ClientEvents {
 	}
 
 	@SubscribeEvent
-	public static void registerModels(ModelRegistryEvent event) {
+	public static void registerModels(ModelRegistryEvent event)
+	{
 		RenderingRegistry.registerEntityRenderingHandler(EntityItemFancy.class, new RenderEntityItemFancy.Factory());
 		RenderingRegistry.registerEntityRenderingHandler(EntityMagicCircles.class,
 				new RenderEntityMagicCircles.Factory());
-		RenderingRegistry.registerEntityRenderingHandler(EntityAnimaStream.class,
-				new RenderEntityAnimaStream.Factory());
 		for (Item i : ModRegistry.ITEMS)
 			if (i instanceof IHasModel)
 				((IHasModel) i).initModels(event);
@@ -123,24 +128,29 @@ public class ClientEvents {
 	}
 
 	@SubscribeEvent
-	public static void renderWorldLastEvent(RenderWorldLastEvent ev) {
+	public static void renderWorldLastEvent(RenderWorldLastEvent ev)
+	{
 		World world = Minecraft.getMinecraft().world;
 		EntityPlayer player = Minecraft.getMinecraft().player;
 
-		if (world != null && player != null) {
+		if (world != null && player != null)
+		{
 
 			GlStateManager.pushMatrix();
 			ClientProxy.particleRenderer.renderParticles(Minecraft.getMinecraft().player, ev.getPartialTicks());
 			GlStateManager.popMatrix();
 
-			if (world.getTotalWorldTime() % 38 == 0) {
+			if (world.getTotalWorldTime() % 38 == 0)
+			{
 				long oldNano = System.nanoTime();
 				INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
 
-				if (info != null) {
+				if (info != null)
+				{
 					int range = 20;
 					if (player.getHeldItemMainhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)
-							|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR)) {
+							|| player.getHeldItemOffhand().getItem().equals(ModRegistry.MYSTICAL_ILLUMINATOR))
+					{
 						float partialTicks = Minecraft.getMinecraft().getRenderPartialTicks();
 
 						double posX = player.posX;
@@ -152,31 +162,42 @@ public class ClientEvents {
 						double cy = entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * (double) partialTicks;
 						double cz = entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * (double) partialTicks;
 
-						for (int x = -range; x < range; x++) {
-							for (int y = -range; y < range; y++) {
-								if (posY + y > 0 && posY + y < 256) {
-									for (int z = -range; z < range; z++) {
+						for (int x = -range; x < range; x++)
+						{
+							for (int y = -range; y < range; y++)
+							{
+								if (posY + y > 0 && posY + y < 256)
+								{
+									for (int z = -range; z < range; z++)
+									{
 										BlockPos first = new BlockPos(posX + x, posY + y, posZ + z);
-										if (world.isBlockLoaded(first)) {
+										if (world.isBlockLoaded(first))
+										{
 											IBlockState state = player.world.getBlockState(first);
-											if (state.getBlock() != Blocks.AIR) {
+											if (state.getBlock() != Blocks.AIR)
+											{
 
 												if (ClippingHelperImpl.getInstance().isBoxInFrustum(first.getX() - cx,
 														first.getY() - cy, first.getZ() - cz, first.getX() + 1 - cx,
-														first.getY() + 1 - cy, first.getZ() + 1 - cz)) {
+														first.getY() + 1 - cy, first.getZ() + 1 - cz))
+												{
 													List<NotebookCategory> obtainable = ArcaneMagicAPI.getAnalyzer()
 															.getAnalysisResults(state);
 
-													if (!obtainable.isEmpty()) {
+													if (!obtainable.isEmpty())
+													{
 
 														boolean add = false;
-														for (NotebookCategory couldGet : obtainable) {
+														for (NotebookCategory couldGet : obtainable)
+														{
 															if (!info.isUnlocked(couldGet.getRequiredTag())
-																	&& info.isUnlocked(couldGet.getPrerequisiteTag())) {
+																	&& info.isUnlocked(couldGet.getPrerequisiteTag()))
+															{
 																add = true;
 															}
 														}
-														if (add) {
+														if (add)
+														{
 															ParticleQueue.getInstance().addParticle(world,
 																	new ParticlePos(first, EnumFacing.UP, 0, 0, 0));
 														}
@@ -201,10 +222,12 @@ public class ClientEvents {
 
 	@SuppressWarnings("unused")
 	@SubscribeEvent
-	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event) {
+	public static void onDrawScreenPost(RenderGameOverlayEvent.Post event)
+	{
 
 		Minecraft mc = Minecraft.getMinecraft();
-		if (event.getType() == ElementType.ALL) {
+		if (event.getType() == ElementType.ALL)
+		{
 			EntityPlayer player = net.minecraft.client.Minecraft.getMinecraft().player;
 
 			// a chance to do great things in the realm of huds
@@ -212,7 +235,8 @@ public class ClientEvents {
 	}
 
 	@SubscribeEvent
-	public static void onTextureStitch(TextureStitchEvent.Pre event) {
+	public static void onTextureStitch(TextureStitchEvent.Pre event)
+	{
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/ball"));
 		event.getMap().registerSprite(new ResourceLocation(ArcaneMagic.MODID, "misc/plus"));
 		ArcaneMagic.LOGGER.info("Stiched textures!");

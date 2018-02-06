@@ -29,11 +29,13 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe {
+public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe
+{
 	public static final int GUI_ID = 2;
 	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
 
-	static {
+	static
+	{
 		BOUNDS.add(makeAABB(2, 0, 2, 4, 2, 4));
 		BOUNDS.add(makeAABB(12, 0, 12, 14, 2, 14));
 		BOUNDS.add(makeAABB(2, 0, 12, 4, 2, 14));
@@ -42,7 +44,8 @@ public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe {
 		BOUNDS.add(makeAABB(4, 8, 4, 12, 10, 12));
 	}
 
-	public BlockAnimusMaterializer() {
+	public BlockAnimusMaterializer()
+	{
 		super("animus_materializer", Material.ROCK, 2.5f, SoundType.STONE);
 
 		this.setRenderedAABB(makeAABB(2, 0, 2, 14, 10, 14));
@@ -50,14 +53,17 @@ public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
 		TileEntityAnimusMaterializer te = (TileEntityAnimusMaterializer) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		for (int i = 0; i < cap.getSlots(); ++i) {
+		for (int i = 0; i < cap.getSlots(); ++i)
+		{
 			ItemStack itemstack = cap.getStackInSlot(i);
 
-			if (!itemstack.isEmpty()) {
+			if (!itemstack.isEmpty())
+			{
 				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 			}
 		}
@@ -66,45 +72,54 @@ public class BlockAnimusMaterializer extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity(IBlockState state)
+	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
 		return new TileEntityAnimusMaterializer();
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (world.isRemote) {
+			EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (world.isRemote)
+		{
 			return true;
 		}
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityAnimusMaterializer)) {
+		if (!(te instanceof TileEntityAnimusMaterializer))
+		{
 			return false;
 		}
 		player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	{
 		return face == EnumFacing.DOWN ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
 	}
 
 	@Override
-	public void initRecipes(Register<IRecipe> e) {
+	public void initRecipes(Register<IRecipe> e)
+	{
 		RecipeHelper.addElementalShaped(this, null, 0, null, Items.BLAZE_ROD, null, Items.BLAZE_ROD,
 				Items.PRISMARINE_CRYSTALS, Items.BLAZE_ROD, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK, Blocks.IRON_BLOCK);
 	}

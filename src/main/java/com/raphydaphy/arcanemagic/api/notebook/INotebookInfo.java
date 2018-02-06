@@ -7,7 +7,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface INotebookInfo extends INBTSerializable<NBTTagCompound> {
+public interface INotebookInfo extends INBTSerializable<NBTTagCompound>
+{
 	/* PSA: this field will be null UNLESS you have a hard dep on the mod */
 	@CapabilityInject(INotebookInfo.class)
 	static Capability<INotebookInfo> CAP = null;

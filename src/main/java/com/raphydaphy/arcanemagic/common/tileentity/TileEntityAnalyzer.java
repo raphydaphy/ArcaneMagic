@@ -28,7 +28,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITickable {
+public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITickable
+{
 	// TODO: make this a nonnulllist
 	private ItemStack[] stacks = { ItemStack.EMPTY, ItemStack.EMPTY };
 
@@ -37,33 +38,42 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 
 	private UUID stackOwner = null;
 
-	public TileEntityAnalyzer() {
+	public TileEntityAnalyzer()
+	{
 		super(200);
 	}
 
-	public ItemStack getStack(int stack) {
-		if (stacks[stack] == null) {
+	public ItemStack getStack(int stack)
+	{
+		if (stacks[stack] == null)
+		{
 			return ItemStack.EMPTY;
 		}
 		return stacks[stack];
 	}
 
-	public void setPlayer(EntityPlayer player) {
-		if (player != null) {
+	public void setPlayer(EntityPlayer player)
+	{
+		if (player != null)
+		{
 			this.stackOwner = player.getUniqueID();
-		} else {
+		} else
+		{
 			this.stackOwner = null;
 		}
 		markDirty();
 	}
 
-	public void setStack(int stack, ItemStack item) {
-		if (item == null) {
+	public void setStack(int stack, ItemStack item)
+	{
+		if (item == null)
+		{
 			item = ItemStack.EMPTY;
 		}
 		this.stacks[stack] = item;
 
-		if (stack == 0) {
+		if (stack == 0)
+		{
 			this.progress = 0;
 
 			evaulateStack();
@@ -71,16 +81,19 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 
 		markDirty();
 
-		if (world != null) {
+		if (world != null)
+		{
 			IBlockState state = world.getBlockState(this.pos);
 			world.notifyBlockUpdate(pos, state, state, 3);
 		}
 	}
 
 	@Override
-	public void markDirty() {
+	public void markDirty()
+	{
 		super.markDirty();
-		if (TileEntityAnalyzer.this.world != null && TileEntityAnalyzer.this.pos != null) {
+		if (TileEntityAnalyzer.this.world != null && TileEntityAnalyzer.this.pos != null)
+		{
 			IBlockState state = TileEntityAnalyzer.this.world.getBlockState(TileEntityAnalyzer.this.pos);
 			TileEntityAnalyzer.this.world.markAndNotifyBlock(TileEntityAnalyzer.this.pos,
 					TileEntityAnalyzer.this.world.getChunkFromBlockCoords(TileEntityAnalyzer.this.pos), state, state,
@@ -89,36 +102,47 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT(NBTTagCompound compound)
+	{
 		super.readFromNBT(compound);
 		stacks = new ItemStack[2];
-		if (compound.hasKey("analyzingStack")) {
+		if (compound.hasKey("analyzingStack"))
+		{
 			setStack(0, new ItemStack(compound.getCompoundTag("analyzingStack")));
 		}
-		if (compound.hasKey("parchmentStack")) {
+		if (compound.hasKey("parchmentStack"))
+		{
 			setStack(1, new ItemStack(compound.getCompoundTag("parchmentStack")));
 		}
 		progress = compound.getInteger("age");
 
-		if (compound.hasKey("stackOwner")) {
+		if (compound.hasKey("stackOwner"))
+		{
 			stackOwner = compound.getUniqueId("stackOwner");
 		}
 
 		hasValidStack = compound.getBoolean("hasValidStack");
 	}
 
-	public void evaulateStack() {
+	public void evaulateStack()
+	{
 		hasValidStack = false;
 
-		if (stackOwner != null) {
+		if (stackOwner != null)
+		{
 			EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
-			if (player != null) {
+			if (player != null)
+			{
 				List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer().getAnalysisResults(getStack(0));
-				if (getStack(0) != null && !getStack(0).isEmpty() && unlockable.size() > 0) {
+				if (getStack(0) != null && !getStack(0).isEmpty() && unlockable.size() > 0)
+				{
 					INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
-					if (info != null) {
-						for (NotebookCategory c : unlockable) {
-							if (info.isUnlocked(c.getPrerequisiteTag()) && !info.isUnlocked(c.getRequiredTag())) {
+					if (info != null)
+					{
+						for (NotebookCategory c : unlockable)
+						{
+							if (info.isUnlocked(c.getPrerequisiteTag()) && !info.isUnlocked(c.getRequiredTag()))
+							{
 								hasValidStack = true;
 								break;
 							}
@@ -131,20 +155,24 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	{
 		super.writeToNBT(compound);
-		if (!getStack(0).isEmpty()) {
+		if (!getStack(0).isEmpty())
+		{
 			NBTTagCompound tagCompound = new NBTTagCompound();
 			getStack(0).writeToNBT(tagCompound);
 			compound.setTag("analyzingStack", tagCompound);
 		}
-		if (!getStack(1).isEmpty()) {
+		if (!getStack(1).isEmpty())
+		{
 			NBTTagCompound tagCompound = new NBTTagCompound();
 			getStack(1).writeToNBT(tagCompound);
 			compound.setTag("parchmentStack", tagCompound);
 		}
 		compound.setInteger("progress", progress);
-		if (stackOwner != null) {
+		if (stackOwner != null)
+		{
 			compound.setUniqueId("stackOwner", stackOwner);
 		}
 
@@ -152,42 +180,57 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 		return compound;
 	}
 
-	public int getProgress() {
+	public int getProgress()
+	{
 		return progress;
 	}
 
-	public boolean canInteractWith(EntityPlayer playerIn) {
+	public boolean canInteractWith(EntityPlayer playerIn)
+	{
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
 
 	@Override
-	public void update() {
+	public void update()
+	{
 		progress++;
 
-		if (hasValidStack) {
-			if (!getStack(1).isEmpty() && !world.isRemote) {
-				if ((animaStorage.getTotalStored() >= 200) && stackOwner != null) {
+		if (hasValidStack)
+		{
+			if (!getStack(1).isEmpty() && !world.isRemote)
+			{
+				if ((animaStorage.getTotalStored() >= 200) && stackOwner != null)
+				{
 
 					// just reached 200
-					if (progress > 0) {
+					if (progress > 0)
+					{
 						progress = -200;
 					}
-					if (progress == -10) {
+					if (progress == -10)
+					{
 						List<NotebookCategory> unlockable = ArcaneMagicAPI.getAnalyzer()
 								.getAnalysisResults(getStack(0));
-						if (!unlockable.isEmpty()) {
-							if (stackOwner != null) {
+						if (!unlockable.isEmpty())
+						{
+							if (stackOwner != null)
+							{
 								EntityPlayer player = world.getPlayerEntityByUUID(stackOwner);
-								if (player != null) {
+								if (player != null)
+								{
 									INotebookInfo info = player.getCapability(INotebookInfo.CAP, null);
-									if (info != null) {
-										for (NotebookCategory cat : unlockable) {
+									if (info != null)
+									{
+										for (NotebookCategory cat : unlockable)
+										{
 											if (info.isUnlocked(cat.getPrerequisiteTag())
-													&& !info.isUnlocked(cat.getRequiredTag())) {
+													&& !info.isUnlocked(cat.getRequiredTag()))
+											{
 												ItemStack writtenParchment = new ItemStack(
 														ModRegistry.WRITTEN_PARCHMENT, 1);
-												if (!writtenParchment.hasTagCompound()) {
+												if (!writtenParchment.hasTagCompound())
+												{
 													writtenParchment.setTagCompound(new NBTTagCompound());
 												}
 
@@ -223,12 +266,17 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 						}
 					}
 				}
-				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++) {
-					for (int y = pos.getY() - 5; y < pos.getY() + 5; y++) {
-						for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++) {
-							if (world.rand.nextInt(2000) == 1) {
+				for (int x = pos.getX() - 10; x < pos.getX() + 10; x++)
+				{
+					for (int y = pos.getY() - 5; y < pos.getY() + 5; y++)
+					{
+						for (int z = pos.getZ() - 10; z < pos.getZ() + 10; z++)
+						{
+							if (world.rand.nextInt(2000) == 1)
+							{
 								BlockPos here = new BlockPos(x, y, z);
-								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK)) {
+								if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+								{
 									// Send some essence to the parchment for
 									// ink
 									Anima.sendAnima(world, new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
@@ -242,16 +290,19 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 						}
 					}
 				}
-			} else if (world.isRemote && world.rand.nextInt(3) == 1) {
+			} else if (world.isRemote && world.rand.nextInt(3) == 1)
+			{
 				world.spawnParticle(EnumParticleTypes.PORTAL, pos.getX() + 0.4 + (world.rand.nextFloat() / 5),
 						pos.getY() + 0.5, pos.getZ() + 0.4 + (world.rand.nextFloat() / 5), 0, -0.5, 0);
 			}
 
-			if (world.getTotalWorldTime() % 50 == 0) {
+			if (world.getTotalWorldTime() % 50 == 0)
+			{
 				evaulateStack();
 			}
 
-		} else if (!getStack(1).isEmpty() && !world.isRemote) {
+		} else if (!getStack(1).isEmpty() && !world.isRemote)
+		{
 			EntityItem blankParchment = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5,
 					getStack(1).copy());
 			blankParchment.motionX = 0;
@@ -260,7 +311,8 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 			world.spawnEntity(blankParchment);
 			setStack(1, ItemStack.EMPTY);
 
-			for (AnimaStack e : animaStorage.getStored().values()) {
+			for (AnimaStack e : animaStorage.getStored().values())
+			{
 				animaStorage.take(e, false);
 			}
 
@@ -270,7 +322,8 @@ public class TileEntityAnalyzer extends TileEntityAnimaStorage implements ITicka
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox() {
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
 		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
 	}
 }

@@ -31,16 +31,19 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GLHelper {
+public class GLHelper
+{
 	// [VanillaCopy]
 	public static void renderParchmentFirstPersonSide(float p_187465_1_, EnumHandSide hand, float p_187465_3_,
-			ItemStack stack) {
+			ItemStack stack)
+	{
 		Minecraft mc = Minecraft.getMinecraft();
 
 		float f = hand == EnumHandSide.RIGHT ? 1.0F : -1.0F;
 		GlStateManager.translate(f * 0.125F, -0.125F, 0.0F);
 
-		if (!mc.player.isInvisible()) {
+		if (!mc.player.isInvisible())
+		{
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(f * 10.0F, 0.0F, 0.0F, 1.0F);
 			mc.getItemRenderer().renderArmFirstPerson(p_187465_1_, p_187465_3_, hand);
@@ -63,7 +66,8 @@ public class GLHelper {
 
 	// [VanillaCopy]
 	public static void renderParchmentFirstPerson(float pitch, float p_187463_2_, float p_187463_3_,
-			ItemStack parchment) {
+			ItemStack parchment)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 
@@ -85,7 +89,8 @@ public class GLHelper {
 	}
 
 	// [VanillaCopy]
-	public static void renderParchmentFirstPerson(ItemStack stack) {
+	public static void renderParchmentFirstPerson(ItemStack stack)
+	{
 		Minecraft mc = Minecraft.getMinecraft();
 		GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
@@ -118,22 +123,26 @@ public class GLHelper {
 	}
 
 	public static void drawCenteredSplitString(FontRenderer fontRenderer, String text, float x, float y, int wrap,
-			int color) {
+			int color)
+	{
 		List<String> strings = fontRenderer.listFormattedStringToWidth(text, wrap);
 
-		for (String s : strings) {
+		for (String s : strings)
+		{
 			fontRenderer.drawString(s, (float) (x - fontRenderer.getStringWidth(s) / 2), y, color, false);
 			y += fontRenderer.FONT_HEIGHT;
 		}
 
 	}
 
-	public static void drawCircle(double radius, double innerWidth, double x, double y, double z, Color color) {
+	public static void drawCircle(double radius, double innerWidth, double x, double y, double z, Color color)
+	{
 		drawCircle(radius, innerWidth, x, y, z, color, 360);
 	}
 
 	public static void renderItemWithTransform(World world, ItemStack stack,
-			ItemCameraTransforms.TransformType transform) {
+			ItemCameraTransforms.TransformType transform)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.enableCull();
@@ -162,7 +171,8 @@ public class GLHelper {
 		GlStateManager.popMatrix();
 	}
 
-	public static void drawCircle2D(double radius, double x, double y, Color color, int accuracy, int lineWidth) {
+	public static void drawCircle2D(double radius, double x, double y, Color color, int accuracy, int lineWidth)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 
@@ -179,7 +189,8 @@ public class GLHelper {
 		BufferBuilder vb = tes.getBuffer();
 		vb.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION_COLOR);
 
-		for (int seg = 0; seg < (360 / accuracy); seg++) {
+		for (int seg = 0; seg < (360 / accuracy); seg++)
+		{
 			vb.pos(x + (Math.cos(Math.toRadians(seg * accuracy)) * radius),
 					y + (Math.sin(Math.toRadians(seg * accuracy)) * radius), 0)
 					.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
@@ -196,7 +207,8 @@ public class GLHelper {
 		GlStateManager.popMatrix();
 	}
 
-	public static void drawTriangle2D(double width, float rotation, double x, double y, Color color, int lineWidth) {
+	public static void drawTriangle2D(double width, float rotation, double x, double y, Color color, int lineWidth)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 
@@ -257,12 +269,14 @@ public class GLHelper {
 	}
 
 	public static void drawCircle(double radius, double innerWidth, double x, double y, double z, Color color,
-			int segments) {
+			int segments)
+	{
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder vb = tes.getBuffer();
 		GlStateManager.disableCull();
 		vb.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR);
-		for (int deg = 0; deg <= segments; deg++) {
+		for (int deg = 0; deg <= segments; deg++)
+		{
 			double radius1 = deg % 2 == 0 ? radius : innerWidth;
 			vb.pos(x + Math.cos(Math.toRadians(deg)) * (radius1), y, z + Math.sin(Math.toRadians(deg)) * radius1)
 					.color(color.getRed(), color.getGreen(), color.getBlue(), 1).endVertex();
@@ -276,7 +290,8 @@ public class GLHelper {
 		tes.draw();
 	}
 
-	public static void drawTriangle(double width, double x, double y, double z, Color color) {
+	public static void drawTriangle(double width, double x, double y, double z, Color color)
+	{
 		Tessellator tes = Tessellator.getInstance();
 		BufferBuilder vb = tes.getBuffer();
 		GlStateManager.disableCull();
@@ -329,7 +344,8 @@ public class GLHelper {
 	}
 
 	public static void renderFancyBeams2D(double x, double y, Color color, long seed, long continuousTick, float scale,
-			int countFancy, int countNormal) {
+			int countFancy, int countNormal)
+	{
 		int dstJump = 16;
 		Random rand = new Random(seed);
 		GlStateManager.pushMatrix();
@@ -351,7 +367,8 @@ public class GLHelper {
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		GlStateManager.depthMask(false);
 		GlStateManager.pushMatrix();
-		for (int i = 0; i < fancy_count; i++) {
+		for (int i = 0; i < fancy_count; i++)
+		{
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
 
@@ -392,7 +409,8 @@ public class GLHelper {
 	}
 
 	public static void renderFancyBeam2D(double x, double y, float rot, Color color, long seed, long continuousTick,
-			float scale) {
+			float scale)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 		GlStateManager.translate(x, y, 0);
@@ -444,12 +462,14 @@ public class GLHelper {
 	}
 
 	public static void renderFancyBeams(double x, double y, double z, Color color, long seed, long continuousTick,
-			float scale) {
+			float scale)
+	{
 		GLHelper.renderFancyBeams(x, y, z, color, seed, continuousTick, 16, scale, 30, 10);
 	}
 
 	public static void renderFancyBeams(double x, double y, double z, Color color, long seed, long continuousTick,
-			int dstJump, float scale, int countFancy, int countNormal) {
+			int dstJump, float scale, int countFancy, int countNormal)
+	{
 		Random rand = new Random(seed);
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
@@ -470,7 +490,8 @@ public class GLHelper {
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		GlStateManager.depthMask(false);
 		GlStateManager.pushMatrix();
-		for (int i = 0; i < fancy_count; i++) {
+		for (int i = 0; i < fancy_count; i++)
+		{
 			// rotate the current beam so it isn't 2D
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(rand.nextFloat() * 360.0F, 0.0F, 1.0F, 0.0F);
@@ -517,11 +538,13 @@ public class GLHelper {
 	}
 
 	public static void renderItemStackFancy(ItemStack stack, Vec3d pos, boolean useRainbow, Color defaultColor,
-			int continuousTick, long seed) {
+			int continuousTick, long seed)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.pushAttrib();
 
-		if (useRainbow) {
+		if (useRainbow)
+		{
 			float frequency = 0.1f;
 			double r = Math.sin(frequency * (continuousTick)) * 127 + 128;
 			double g = Math.sin(frequency * (continuousTick) + 2) * 127 + 128;

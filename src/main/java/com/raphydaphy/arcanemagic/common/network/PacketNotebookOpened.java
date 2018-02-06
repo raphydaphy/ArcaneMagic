@@ -16,51 +16,63 @@ import net.minecraftforge.fml.relauncher.Side;
 
 // TO CLIENT PACKET SENT WHEN THE NOTEBOOK IS OPENED
 // USED TO SYNC THE SERVER INFO TO THE CLIENT
-public class PacketNotebookOpened implements IMessage {
+public class PacketNotebookOpened implements IMessage
+{
 	private NBTTagCompound notebookInfo;
 
-	public PacketNotebookOpened() {
+	public PacketNotebookOpened()
+	{
 	}
 
-	public PacketNotebookOpened(INotebookInfo cap) {
+	public PacketNotebookOpened(INotebookInfo cap)
+	{
 		this.notebookInfo = cap.serializeNBT();
 	}
 
-	public static class Handler implements IMessageHandler<PacketNotebookOpened, IMessage> {
+	public static class Handler implements IMessageHandler<PacketNotebookOpened, IMessage>
+	{
 		@Override
-		public IMessage onMessage(PacketNotebookOpened message, MessageContext ctx) {
+		public IMessage onMessage(PacketNotebookOpened message, MessageContext ctx)
+		{
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler)
 					.addScheduledTask(() -> handleNotebookInfo(message, ctx, ctx.side));
 			return null;
 		}
 
-		public void handleNotebookInfo(PacketNotebookOpened message, MessageContext ctx, Side side) {
+		public void handleNotebookInfo(PacketNotebookOpened message, MessageContext ctx, Side side)
+		{
 			INotebookInfo cap = Minecraft.getMinecraft().player.getCapability(INotebookInfo.CAP, null);
-			if (cap != null) {
+			if (cap != null)
+			{
 				cap.deserializeNBT(message.getCompound());
 			}
 		}
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBytes(ByteBuf buf)
+	{
 		PacketBuffer pbuf = new PacketBuffer(buf);
 
-		try {
+		try
+		{
 			notebookInfo = pbuf.readCompoundTag();
-		} catch (IOException e) {
+		} catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBytes(ByteBuf buf)
+	{
 		PacketBuffer pbuf = new PacketBuffer(buf);
 
 		pbuf.writeCompoundTag(notebookInfo);
 	}
 
-	public NBTTagCompound getCompound() {
+	public NBTTagCompound getCompound()
+	{
 		return notebookInfo;
 	}
 }

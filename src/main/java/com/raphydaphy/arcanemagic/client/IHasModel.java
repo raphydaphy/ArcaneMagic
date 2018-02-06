@@ -11,10 +11,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public interface IHasModel {
+public interface IHasModel
+{
 
 	@SideOnly(Side.CLIENT)
-	default public void initModels(ModelRegistryEvent e) {
+	default public void initModels(ModelRegistryEvent e)
+	{
 		if (this instanceof Item)
 			sMRL("items", (Item) this, 0, "item=" + ((Item) this).getRegistryName().getResourcePath());
 		else if (this instanceof Block)
@@ -24,11 +26,13 @@ public interface IHasModel {
 			throw new IllegalStateException("wat are u doin");
 	}
 
-	public static void sMRL(Item k, int meta, String variant) {
+	public static void sMRL(Item k, int meta, String variant)
+	{
 		ModelLoader.setCustomModelResourceLocation(k, meta, new ModelResourceLocation(k.getRegistryName(), variant));
 	}
 
-	public static void sMRL(String statePath, Item k, int meta, String variant) {
+	public static void sMRL(String statePath, Item k, int meta, String variant)
+	{
 		ModelLoader.setCustomModelResourceLocation(k, meta,
 				new ModelResourceLocation(ArcaneMagic.MODID + ":" + statePath, variant));
 	}

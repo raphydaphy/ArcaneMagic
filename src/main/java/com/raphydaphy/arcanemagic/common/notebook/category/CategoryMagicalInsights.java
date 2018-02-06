@@ -16,8 +16,10 @@ import akka.japi.Pair;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
-public class CategoryMagicalInsights extends NotebookCategory {
-	public CategoryMagicalInsights() {
+public class CategoryMagicalInsights extends NotebookCategory
+{
+	public CategoryMagicalInsights()
+	{
 		setUnlocalizedName("arcanemagic.notebook.category.magical_insights");
 		setUnlocParchmentInfo(new Pair<String, Integer>("arcanemagic.message.parchment.redstone", 2));
 		setRequiredTag("unlockedMagicalInsights");
@@ -26,7 +28,8 @@ public class CategoryMagicalInsights extends NotebookCategory {
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info) {
+	public List<NotebookPage> getPages(INotebookInfo info)
+	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page0 = new ArrayList<INotebookEntry>();
 		page0.add(new NotebookEntryText(getUnlocalizedName() + ".0", 0x000000));
@@ -37,7 +40,8 @@ public class CategoryMagicalInsights extends NotebookCategory {
 		page0.add(new NotebookEntryText(getUnlocalizedName() + ".1", 0x000000));
 		pages.add(new NotebookPage(page0));
 		List<INotebookEntry> page1 = new ArrayList<INotebookEntry>();
-		for (int i = 2; i < 3; i++) {
+		for (int i = 2; i < 3; i++)
+		{
 			page1.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page1));

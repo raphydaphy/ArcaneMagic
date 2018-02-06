@@ -32,44 +32,57 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 @Mod.EventBusSubscriber
-public class ModEvents {
+public class ModEvents
+{
 	@SubscribeEvent
-	public static void onAttachCapability(AttachCapabilitiesEvent<Entity> ev) {
-		if (ev.getObject() instanceof EntityPlayer) {
+	public static void onAttachCapability(AttachCapabilitiesEvent<Entity> ev)
+	{
+		if (ev.getObject() instanceof EntityPlayer)
+		{
 			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"), new NotebookInfo());
 		}
 	}
 
 	@SubscribeEvent
-	public static void onPlayerClone(PlayerEvent.Clone ev) {
+	public static void onPlayerClone(PlayerEvent.Clone ev)
+	{
 		INotebookInfo oldCap = ev.getOriginal().getCapability(INotebookInfo.CAP, null);
-		if (oldCap != null) {
+		if (oldCap != null)
+		{
 			ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null).deserializeNBT(oldCap.serializeNBT());
 		}
 	}
 
 	@SubscribeEvent
-	public static void onItemPickup(ItemPickupEvent ev) {
-		if (ev.pickedUp instanceof EntityItemFancy) {
-			if (ev.pickedUp.world.getBlockState(ev.pickedUp.getPosition()).getBlock() == ModRegistry.FANCY_LIGHT) {
+	public static void onItemPickup(ItemPickupEvent ev)
+	{
+		if (ev.pickedUp instanceof EntityItemFancy)
+		{
+			if (ev.pickedUp.world.getBlockState(ev.pickedUp.getPosition()).getBlock() == ModRegistry.FANCY_LIGHT)
+			{
 				ev.pickedUp.world.setBlockToAir(ev.pickedUp.getPosition());
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public static void playerTick(TickEvent.PlayerTickEvent ev) {
-		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote) {
+	public static void playerTick(TickEvent.PlayerTickEvent ev)
+	{
+		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
+		{
 			INotebookInfo info = ev.player.getCapability(INotebookInfo.CAP, null);
 
-			if (info != null) {
-				for (int i = 0; i < ev.player.inventory.getSizeInventory(); i++) {
+			if (info != null)
+			{
+				for (int i = 0; i < ev.player.inventory.getSizeInventory(); i++)
+				{
 					Item item = ev.player.inventory.getStackInSlot(i).getItem();
 
 					// Check for all item-based notebook category unlocks here
 
 					if (item.equals(ModRegistry.ANCIENT_PARCHMENT)
-							&& !info.isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag())) {
+							&& !info.isUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag()))
+					{
 						info.setUnlocked(NotebookCategories.ANCIENT_RELICS.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
@@ -78,7 +91,8 @@ public class ModEvents {
 					}
 
 					if (item.equals(ModRegistry.NOTEBOOK)
-							&& !info.isUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag())) {
+							&& !info.isUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag()))
+					{
 						info.setUnlocked(NotebookCategories.FORGOTTEN_KNOWLEDGE.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
@@ -87,7 +101,8 @@ public class ModEvents {
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ANALYZER))
-							&& !info.isUnlocked(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag())) {
+							&& !info.isUnlocked(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag()))
+					{
 						info.setUnlocked(NotebookCategories.ARCANE_ANALYSIS.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
@@ -96,7 +111,8 @@ public class ModEvents {
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ARCANE_TRANSFIGURATION_TABLE))
-							&& !info.isUnlocked(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag())) {
+							&& !info.isUnlocked(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag()))
+					{
 						info.setUnlocked(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
@@ -105,7 +121,8 @@ public class ModEvents {
 					}
 
 					if (item.equals(Item.getItemFromBlock(ModRegistry.ANIMUS_MATERIALIZER))
-							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag())) {
+							&& !info.isUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag()))
+					{
 						info.setUnlocked(NotebookCategories.CRYSTALLIZATION.getRequiredTag());
 
 						ArcaneMagicPacketHandler.INSTANCE.sendTo(
@@ -118,17 +135,25 @@ public class ModEvents {
 		}
 
 		Random rand = ev.player.world.rand;
-		if (ev.phase == TickEvent.Phase.START) {
+		if (ev.phase == TickEvent.Phase.START)
+		{
 			if (ev.player.getHeldItemMainhand().getItem() == ModRegistry.ANCIENT_PARCHMENT
-					|| ev.player.getHeldItemOffhand().getItem() == ModRegistry.ANCIENT_PARCHMENT) {
+					|| ev.player.getHeldItemOffhand().getItem() == ModRegistry.ANCIENT_PARCHMENT)
+			{
 				World world = ev.player.world;
-				if (world.isRemote) {
-					for (int x = (int) ev.player.posX - 10; x < (int) ev.player.posX + 10; x++) {
-						for (int y = (int) ev.player.posY - 5; y < (int) ev.player.posY + 5; y++) {
-							for (int z = (int) ev.player.posZ - 10; z < (int) ev.player.posZ + 10; z++) {
-								if (rand.nextInt(600) == 1) {
+				if (world.isRemote)
+				{
+					for (int x = (int) ev.player.posX - 10; x < (int) ev.player.posX + 10; x++)
+					{
+						for (int y = (int) ev.player.posY - 5; y < (int) ev.player.posY + 5; y++)
+						{
+							for (int z = (int) ev.player.posZ - 10; z < (int) ev.player.posZ + 10; z++)
+							{
+								if (rand.nextInt(600) == 1)
+								{
 									BlockPos here = new BlockPos(x, y, z);
-									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK)) {
+									if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+									{
 										// client side only, these particles are
 										// just for looks!
 										ArcaneMagic.proxy.spawnAnimaParticles(world,
@@ -145,14 +170,17 @@ public class ModEvents {
 
 			}
 
-			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty()) {
+			if (ev.player.isHandActive() && !ev.player.activeItemStack.isEmpty())
+			{
 				ItemStack held = ev.player.getHeldItem(ev.player.getActiveHand());
 				if (ev.player.activeItemStack.getItem() == ModRegistry.ESSENCE_CHANNELING_ROD
-						&& held.getItem() == ModRegistry.ESSENCE_CHANNELING_ROD) {
-					if (ev.player.activeItemStack != held) {// TODO please check
-															// proper (anything
-															// that won't
-															// change)
+						&& held.getItem() == ModRegistry.ESSENCE_CHANNELING_ROD)
+				{
+					if (ev.player.activeItemStack != held)
+					{// TODO please check
+							// proper (anything
+						// that won't
+						// change)
 						ev.player.activeItemStack = held;
 					}
 				}
@@ -161,11 +189,14 @@ public class ModEvents {
 	}
 
 	@SubscribeEvent
-	public static void onLivingDrops(LivingDropsEvent event) {
-		if (event.getEntity() != null && event.getEntity() instanceof EntityWitch) {
+	public static void onLivingDrops(LivingDropsEvent event)
+	{
+		if (event.getEntity() != null && event.getEntity() instanceof EntityWitch)
+		{
 			// NotebookInfo info =
 			// ev.getEntityPlayer().getCapability(NotebookInfo.CAP, null);
-			if (event.getEntity().world.rand.nextInt(2) == 1) {
+			if (event.getEntity().world.rand.nextInt(2) == 1)
+			{
 				event.getDrops().add(new EntityItemFancy(event.getEntity().world, event.getEntity().posX,
 						event.getEntity().posY, event.getEntity().posZ, new ItemStack(ModRegistry.ANCIENT_PARCHMENT)));
 			}
@@ -173,18 +204,22 @@ public class ModEvents {
 	}
 
 	@SubscribeEvent
-	public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event) {
-		if (!event.getEntityLiving().world.isRemote) {
+	public static void onLivingEquipmentChange(LivingEquipmentChangeEvent event)
+	{
+		if (!event.getEntityLiving().world.isRemote)
+		{
 
 			// decrease reach
 			if (event.getTo().getItem().equals(ModRegistry.ARCANE_DAGGER)
-					&& !event.getFrom().getItem().equals(ModRegistry.ARCANE_DAGGER)) {
+					&& !event.getFrom().getItem().equals(ModRegistry.ARCANE_DAGGER))
+			{
 				event.getEntityLiving().getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(3);
 			}
 
 			// reset reach
 			else if (event.getFrom().getItem().equals(ModRegistry.ARCANE_DAGGER)
-					&& !event.getTo().getItem().equals(ModRegistry.ARCANE_DAGGER)) {
+					&& !event.getTo().getItem().equals(ModRegistry.ARCANE_DAGGER))
+			{
 				event.getEntityLiving().getEntityAttribute(EntityPlayer.REACH_DISTANCE).setBaseValue(5);
 			}
 		}

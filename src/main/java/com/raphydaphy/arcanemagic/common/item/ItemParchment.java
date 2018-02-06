@@ -35,28 +35,36 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemParchment extends ItemBase {
+public class ItemParchment extends ItemBase
+{
 	public static final String TITLE = "unlocTitle";
 	public static final String CATEGORY = "unlocCategory";
 	public static final String PARAGRAPHS = "numParagraphs";
 
-	public ItemParchment(String name) {
+	public ItemParchment(String name)
+	{
 		super(name, TextFormatting.YELLOW);
 		setMaxStackSize(1);
 	}
 
 	@Override
-	public boolean onEntityItemUpdate(net.minecraft.entity.item.EntityItem entityItem) {
+	public boolean onEntityItemUpdate(net.minecraft.entity.item.EntityItem entityItem)
+	{
 		super.onEntityItemUpdate(entityItem);
 
 		World world = entityItem.world;
 
-		for (int x = (int) entityItem.posX - 5; x < (int) entityItem.posX + 5; x++) {
-			for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++) {
-				for (int z = (int) entityItem.posZ - 5; z < (int) entityItem.posZ + 5; z++) {
+		for (int x = (int) entityItem.posX - 5; x < (int) entityItem.posX + 5; x++)
+		{
+			for (int y = (int) entityItem.posY - 5; y < (int) entityItem.posY + 5; y++)
+			{
+				for (int z = (int) entityItem.posZ - 5; z < (int) entityItem.posZ + 5; z++)
+				{
 					BlockPos here = new BlockPos(x, y, z);
-					if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK)) {
-						if (itemRand.nextInt(2000) == 1) {
+					if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
+					{
+						if (itemRand.nextInt(2000) == 1)
+						{
 							// just for looks..
 							ArcaneMagic.proxy.spawnAnimaParticles(world, new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 									new Vec3d(0, 0, 0), Anima.getFromBiome(world.getBiome(here)),
@@ -70,12 +78,16 @@ public class ItemParchment extends ItemBase {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public FontRenderer getParchmentRenderer(ItemStack stack) {
-		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT)) {
+	public FontRenderer getParchmentRenderer(ItemStack stack)
+	{
+		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		{
 			return Minecraft.getMinecraft().fontRenderer;
-		} else {
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE) && !stack.getTagCompound()
-					.getString(TITLE).equals("arcanemagic.notebook.category.unknown_realms")) {
+		} else
+		{
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE)
+					&& !stack.getTagCompound().getString(TITLE).equals("arcanemagic.notebook.category.unknown_realms"))
+			{
 				return Minecraft.getMinecraft().fontRenderer;
 			}
 
@@ -84,11 +96,15 @@ public class ItemParchment extends ItemBase {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static String getLocalizedTitle(ItemStack stack) {
-		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT)) {
+	public static String getLocalizedTitle(ItemStack stack)
+	{
+		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		{
 			return I18n.format("arcanemagic.message.ancient_parchment");
-		} else {
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE)) {
+		} else
+		{
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE))
+			{
 				return I18n.format(stack.getTagCompound().getString(TITLE));
 			}
 
@@ -97,14 +113,19 @@ public class ItemParchment extends ItemBase {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static String getLocalizedDesc(ItemStack stack) {
-		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT)) {
+	public static String getLocalizedDesc(ItemStack stack)
+	{
+		if (stack.getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		{
 			return I18n.format("arcanemagic.message.ancient_parchment.0") + "\n\n"
 					+ I18n.format("arcanemagic.message.ancient_parchment.1");
-		} else {
-			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE)) {
+		} else
+		{
+			if (stack.hasTagCompound() && stack.getTagCompound().hasKey(TITLE))
+			{
 				String formattedDesc = "";
-				for (int p = 0; p < stack.getTagCompound().getInteger(PARAGRAPHS); p++) {
+				for (int p = 0; p < stack.getTagCompound().getInteger(PARAGRAPHS); p++)
+				{
 					formattedDesc += I18n.format(stack.getTagCompound().getString(TITLE) + "." + p) + "\n\n";
 				}
 				return formattedDesc;
@@ -116,16 +137,22 @@ public class ItemParchment extends ItemBase {
 	}
 
 	@Nullable
-	public static Pair<NotebookCategory, Boolean> getToUnlock(ItemStack stack) {
-		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(CATEGORY)) {
-			for (NotebookCategory potentialCat : NotebookCategory.REGISTRY) {
-				if (potentialCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY))) {
+	public static Pair<NotebookCategory, Boolean> getToUnlock(ItemStack stack)
+	{
+		if (stack.hasTagCompound() && stack.getTagCompound().hasKey(CATEGORY))
+		{
+			for (NotebookCategory potentialCat : NotebookCategory.REGISTRY)
+			{
+				if (potentialCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY)))
+				{
 					return new Pair<NotebookCategory, Boolean>(potentialCat, false);
 				}
 			}
 
-			for (NotebookCategory subCat : NotebookCategory.SUB_REGISTRY) {
-				if (subCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY))) {
+			for (NotebookCategory subCat : NotebookCategory.SUB_REGISTRY)
+			{
+				if (subCat.getUnlocalizedName().equals(stack.getTagCompound().getString(CATEGORY)))
+				{
 					return new Pair<NotebookCategory, Boolean>(subCat, true);
 				}
 			}
@@ -133,37 +160,50 @@ public class ItemParchment extends ItemBase {
 		return null;
 	}
 
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand)
+	{
 		ItemStack stack = player.getHeldItem(hand);
-		if (stack.getItem().equals(ModRegistry.WRITTEN_PARCHMENT)) {
+		if (stack.getItem().equals(ModRegistry.WRITTEN_PARCHMENT))
+		{
 			Pair<NotebookCategory, Boolean> catInfo = getToUnlock(stack);
-			if (catInfo != null) {
-				if (!world.isRemote) {
+			if (catInfo != null)
+			{
+				if (!world.isRemote)
+				{
 					INotebookInfo cap = player.getCapability(INotebookInfo.CAP, null);
-					if (cap != null) {
+					if (cap != null)
+					{
 						NotebookCategory cat = catInfo.first();
-						if (cat != null) {
+						if (cat != null)
+						{
 							if (!cat.equals(NotebookCategories.UNKNOWN_REALMS)
 									&& cap.isUnlocked(cat.getPrerequisiteTag())
-									&& !cap.isUnlocked(cat.getRequiredTag())) {
+									&& !cap.isUnlocked(cat.getRequiredTag()))
+							{
 								cap.setUnlocked(cat.getRequiredTag());
 							}
-							if (catInfo.second()) {
-								for (NotebookCategory mightBeParent : NotebookCategory.REGISTRY.getValues()) {
-									if (mightBeParent != null && mightBeParent.getRequiredTag() != null) {
-										if (mightBeParent.getRequiredTag().equals(cat.getPrerequisiteTag())) {
+							if (catInfo.second())
+							{
+								for (NotebookCategory mightBeParent : NotebookCategory.REGISTRY.getValues())
+								{
+									if (mightBeParent != null && mightBeParent.getRequiredTag() != null)
+									{
+										if (mightBeParent.getRequiredTag().equals(cat.getPrerequisiteTag()))
+										{
 											ArcaneMagicPacketHandler.INSTANCE
 													.sendTo(new PacketNotebookToastExpanded(mightBeParent,
 															cat.getRequiredTag(), true), (EntityPlayerMP) player);
 										}
 									}
 								}
-							} else {
+							} else
+							{
 								ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true),
 										(EntityPlayerMP) player);
 							}
 
-						} else {
+						} else
+						{
 							ArcaneMagicPacketHandler.INSTANCE.sendTo(new PacketNotebookToastOrFail(cat, true),
 									(EntityPlayerMP) player);
 						}
@@ -175,7 +215,8 @@ public class ItemParchment extends ItemBase {
 					SoundCategory.PLAYERS, 1, 1);
 			player.setHeldItem(hand, ItemStack.EMPTY);
 			player.swingArm(hand);
-			if (!world.isRemote) {
+			if (!world.isRemote)
+			{
 				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 			}
 		}
@@ -184,14 +225,18 @@ public class ItemParchment extends ItemBase {
 
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing,
-			float hitX, float hitY, float hitZ) {
-		if (player.getHeldItem(hand).getItem().equals(ModRegistry.ANCIENT_PARCHMENT)) {
-			if (world.isRemote) {
+			float hitX, float hitY, float hitZ)
+	{
+		if (player.getHeldItem(hand).getItem().equals(ModRegistry.ANCIENT_PARCHMENT))
+		{
+			if (world.isRemote)
+			{
 				return EnumActionResult.PASS;
 			}
 			Block block = world.getBlockState(pos).getBlock();
 
-			if (player.isSneaking() && block == Blocks.BEDROCK) {
+			if (player.isSneaking() && block == Blocks.BEDROCK)
+			{
 				player.getCooldownTracker().setCooldown(player.getHeldItem(hand).getItem(), 150);
 
 				player.getHeldItem(hand).shrink(1);

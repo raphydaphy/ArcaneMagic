@@ -38,7 +38,7 @@ public class ParticleRenderer
 			}
 		}
 		particles = newParticles;
-		
+
 	}
 
 	public void renderParticles(EntityPlayer dumbplayer, float partialTicks)

@@ -36,17 +36,20 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRecipe {
+public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRecipe
+{
 	public static final int GUI_ID = 2;
 	protected static final List<AxisAlignedBB> BOUNDS = new ArrayList<>();
 
-	static {
+	static
+	{
 		BOUNDS.add(makeAABB(2, 0, 2, 14, 4, 14));
 		BOUNDS.add(makeAABB(0, 4, 0, 16, 8, 16));
 		BOUNDS.add(makeAABB(3, 8, 3, 13, 10, 13));
 	}
 
-	public BlockArcaneTransfigurationTable() {
+	public BlockArcaneTransfigurationTable()
+	{
 		super("arcane_transfiguration_table", Material.WOOD, 2.5f, SoundType.WOOD);
 
 		this.setLightLevel(1f);
@@ -55,34 +58,41 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 	}
 
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
+	public EnumBlockRenderType getRenderType(IBlockState state)
+	{
 		return EnumBlockRenderType.MODEL;
 	}
 
 	@Override
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	{
 		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
 		TileEntityArcaneTransfigurationTable te = (TileEntityArcaneTransfigurationTable) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		for (int i = 0; i < cap.getSlots(); ++i) {
+		for (int i = 0; i < cap.getSlots(); ++i)
+		{
 			ItemStack itemstack = cap.getStackInSlot(i);
 
-			if (!itemstack.isEmpty()) {
+			if (!itemstack.isEmpty())
+			{
 				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 			}
 		}
@@ -91,25 +101,30 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity(IBlockState state)
+	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
 		return new TileEntityArcaneTransfigurationTable();
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
+			EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
 		TileEntity te = world.getTileEntity(pos);
-		if (!(te instanceof TileEntityArcaneTransfigurationTable)) {
+		if (!(te instanceof TileEntityArcaneTransfigurationTable))
+		{
 			return false;
 		}
 		ItemStack stack = player.getHeldItem(hand);
 		boolean ret = false;
-		if (stack.getItem() instanceof ItemEssenceChannelingRod) {
+		if (stack.getItem() instanceof ItemEssenceChannelingRod)
+		{
 			ret = true;
 
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
@@ -120,8 +135,10 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 
 			IArcaneTransfigurationRecipe foundRecipe = ArcaneMagicAPI.getArcaneTransfigurationRecipe(player, stack,
 					recipeInputs, world);
-			if (foundRecipe != null) {
-				if (!world.isRemote) {
+			if (foundRecipe != null)
+			{
+				if (!world.isRemote)
+				{
 					foundRecipe.craft(stack, recipeInputs);
 					te.markDirty();
 					EntityItemFancy craftResult = new EntityItemFancy(world, pos.getX() + 0.5,
@@ -138,7 +155,8 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 					 * stack), stack), (EntityPlayerMP) player);
 					 */
 					return ret;
-				} else {
+				} else
+				{
 					world.spawnParticle(EnumParticleTypes.CRIT_MAGIC, pos.getX() + 0.5, pos.getY() + (12d * (1d / 16d)),
 							pos.getZ() + 0.5, 0f, 0.1f, 0f);
 					world.playSound(player, pos, ArcaneMagicSoundHandler.arcane_transfiguration_success,
@@ -149,7 +167,8 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 			return ret;
 		}
 
-		else if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801) {
+		else if (hitX >= 0.203 && hitX <= 0.801 && hitY >= 0.5625 && hitZ >= 0.203 && hitZ <= 0.801)
+		{
 			ret = true;
 
 			float divX = (hitX - 0.203f);
@@ -157,57 +176,72 @@ public class BlockArcaneTransfigurationTable extends BlockBase implements IHasRe
 			int slotX = 2;
 			int slotZ = 2;
 
-			if (divX <= 0.2152) {
+			if (divX <= 0.2152)
+			{
 				slotX = 0;
-			} else if (divX <= 0.4084) {
+			} else if (divX <= 0.4084)
+			{
 				slotX = 1;
 			}
 
-			if (divZ <= 0.2152) {
+			if (divZ <= 0.2152)
+			{
 				slotZ = 0;
-			} else if (divZ <= 0.4084) {
+			} else if (divZ <= 0.4084)
+			{
 				slotZ = 1;
 			}
 
 			int slot = slotX + (slotZ * 3);
 			IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-			if (stack != null && !stack.isEmpty() && !player.isSneaking()) {
+			if (stack != null && !stack.isEmpty() && !player.isSneaking())
+			{
 				ItemStack insertStack = stack.copy();
 				ItemStack remain = cap.insertItem(slot, insertStack, false);
-				if (remain.getCount() != insertStack.getCount()) {
-					if (!world.isRemote) {
+				if (remain.getCount() != insertStack.getCount())
+				{
+					if (!world.isRemote)
+					{
 						player.setHeldItem(hand, remain);
 						te.markDirty();
-					} else {
+					} else
+					{
 						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 					}
 				}
 
-			} else {
+			} else
+			{
 				ItemStack toExtract = cap.getStackInSlot(slot);
-				if (toExtract != null && !toExtract.isEmpty()) {
+				if (toExtract != null && !toExtract.isEmpty())
+				{
 					ret = true;
-					if (!world.isRemote) {
-						if (player.addItemStackToInventory(toExtract.copy())) {
+					if (!world.isRemote)
+					{
+						if (player.addItemStackToInventory(toExtract.copy()))
+						{
 							cap.getStackInSlot(slot).setCount(0);
 							te.markDirty();
 						}
-					} else {
+					} else
+					{
 						world.playSound(player, pos, SoundEvents.ENTITY_ITEMFRAME_REMOVE_ITEM, SoundCategory.BLOCKS, 1,
 								1);
 					}
 				}
 			}
 		}
-		if (player.isSneaking() && !ret) {
+		if (player.isSneaking() && !ret)
+		{
 			return false;
 		}
 		return true;
 	}
 
 	@Override
-	public void initRecipes(Register<IRecipe> e) {
+	public void initRecipes(Register<IRecipe> e)
+	{
 		RecipeHelper.addShaped(this, 3, 3, null, "dustGlowstone", null, "plankWood", "workbench", "plankWood",
 				"plankWood", null, "plankWood");
 	}

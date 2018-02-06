@@ -5,7 +5,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface INotebookEntry {
+public interface INotebookEntry
+{
 	/*
 	 * The name used to compare the entry types
 	 */
@@ -29,7 +30,8 @@ public interface INotebookEntry {
 	 * tooltips
 	 */
 	@SideOnly(Side.CLIENT)
-	public default void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook) {
+	public default void drawPost(int x, int y, int mouseX, int mouseY, GuiScreen notebook)
+	{
 
 	}
 

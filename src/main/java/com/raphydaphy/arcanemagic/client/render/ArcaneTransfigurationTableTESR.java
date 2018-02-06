@@ -24,17 +24,20 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 @SideOnly(Side.CLIENT)
-public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<TileEntityArcaneTransfigurationTable> {
+public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<TileEntityArcaneTransfigurationTable>
+{
 	@Override
 	public void render(TileEntityArcaneTransfigurationTable te, double x, double y, double z, float partialTicks,
-			int destroyStage, float alpha) {
+			int destroyStage, float alpha)
+	{
 		te.frameAge++;
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		for (int i = 0; i < cap.getSlots(); i++) {
+		for (int i = 0; i < cap.getSlots(); i++)
+		{
 			renderItem(cap.getStackInSlot(i), i);
 		}
 
@@ -43,21 +46,25 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 
 		ItemStack held = player.getHeldItemMainhand();
 
-		if (held.isEmpty() || !(held.getItem() instanceof IArcaneTransfigurationItem)) {
+		if (held.isEmpty() || !(held.getItem() instanceof IArcaneTransfigurationItem))
+		{
 			held = player.getHeldItemOffhand();
 		}
 
-		if (!held.isEmpty() && held.getItem() instanceof IArcaneTransfigurationItem) {
+		if (!held.isEmpty() && held.getItem() instanceof IArcaneTransfigurationItem)
+		{
 			NonNullList<ItemStack> recipeInputs = NonNullList.withSize(9, ItemStack.EMPTY);
 
-			for (int i = 0; i < 9; i++) {
+			for (int i = 0; i < 9; i++)
+			{
 				recipeInputs.set(i, cap.getStackInSlot(i));
 			}
 
 			IArcaneTransfigurationRecipe foundRecipe = ArcaneMagicAPI.getArcaneTransfigurationRecipe(player, held,
 					recipeInputs, world);
 
-			if (foundRecipe != null) {
+			if (foundRecipe != null)
+			{
 				GLHelper.renderItemStackFancy(foundRecipe.getRecipeOutput(), new Vec3d(0, 1.5, 0), true, Color.RED,
 						te.frameAge / 4, te.getWorld().getSeed());
 			}
@@ -66,16 +73,20 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 		GlStateManager.popMatrix();
 	}
 
-	private void renderItem(ItemStack stack, int slot) {
+	private void renderItem(ItemStack stack, int slot)
+	{
 
-		if (stack != null && !stack.isEmpty()) {
+		if (stack != null && !stack.isEmpty())
+		{
 			int slotX = slot;
 			int slotY = 0;
 
-			if (slot >= 6) {
+			if (slot >= 6)
+			{
 				slotX = slot - 6;
 				slotY = 2;
-			} else if (slot >= 3) {
+			} else if (slot >= 3)
+			{
 				slotX = slot - 3;
 				slotY = 1;
 			}
@@ -84,7 +95,8 @@ public class ArcaneTransfigurationTableTESR extends TileEntitySpecialRenderer<Ti
 			GlStateManager.pushMatrix();
 			GlStateManager.translate((slotX / 5.35d) + 0.315, .675, (slotY / 5.35d) + 0.315);
 			GlStateManager.scale(.1f, .1f, .1f);
-			if (!(stack.getItem() instanceof ItemBlock)) {
+			if (!(stack.getItem() instanceof ItemBlock))
+			{
 				GlStateManager.rotate(-90, 1, 0, 0);
 				GlStateManager.translate(0, 0, -0.5);
 			}

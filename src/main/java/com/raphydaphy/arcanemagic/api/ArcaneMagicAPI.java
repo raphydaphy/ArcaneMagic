@@ -22,7 +22,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-public class ArcaneMagicAPI {
+public class ArcaneMagicAPI
+{
 	public static final String VERSION = "0.1";
 
 	private static final AnalysisManager MANAGER = new AnalysisManager();
@@ -37,52 +38,64 @@ public class ArcaneMagicAPI {
 	// in an infernal furnace
 	public static Map<Integer, Anima> ANIMA_ORE_REGISTRY = new HashMap<Integer, Anima>();
 
-	public static void registerCategory(NotebookCategory category) {
+	public static void registerCategory(NotebookCategory category)
+	{
 		NotebookCategory.REGISTRY.register(category);
 	}
 
-	public static void registerSubCategories(NotebookCategory... sub) {
+	public static void registerSubCategories(NotebookCategory... sub)
+	{
 		NotebookCategory.SUB_REGISTRY.registerAll(sub);
 	}
 
-	public static void registerOre(String oreDict, Anima anima) {
+	public static void registerOre(String oreDict, Anima anima)
+	{
 		ANIMA_ORE_REGISTRY.put(OreDictionary.getOreID(oreDict), anima);
 	}
 
-	public static Anima getAnimaFromStack(ItemStack stack) {
-		for (int id : OreDictionary.getOreIDs(stack)) {
-			if (ANIMA_ORE_REGISTRY.containsKey(id)) {
+	public static Anima getAnimaFromStack(ItemStack stack)
+	{
+		for (int id : OreDictionary.getOreIDs(stack))
+		{
+			if (ANIMA_ORE_REGISTRY.containsKey(id))
+			{
 				return ANIMA_ORE_REGISTRY.get(id);
 			}
 		}
 		return null;
 	}
 
-	public static void registerAnima(Anima e) {
+	public static void registerAnima(Anima e)
+	{
 		Anima.REGISTRY.register(e);
 	}
 
-	public static void registerAllCategories(NotebookCategory... category) {
+	public static void registerAllCategories(NotebookCategory... category)
+	{
 		NotebookCategory.REGISTRY.registerAll(category);
 	}
 
-	public static void registerAllAnimus(Anima... e) {
+	public static void registerAllAnimus(Anima... e)
+	{
 		Anima.REGISTRY.registerAll(e);
 	}
 
-	public static int getCategoryCount() {
+	public static int getCategoryCount()
+	{
 		if (sorted_categories == null)
 			throw new UnsupportedOperationException("Categories not yet sorted!");
 		return sorted_categories.size();
 	}
 
-	public static ImmutableList<NotebookCategory> getNotebookCategories() {
+	public static ImmutableList<NotebookCategory> getNotebookCategories()
+	{
 		if (sorted_categories == null)
 			throw new UnsupportedOperationException("Categories not yet sorted!");
 		return sorted_categories;
 	}
 
-	public static void setCategoryList(ImmutableList<NotebookCategory> list) {
+	public static void setCategoryList(ImmutableList<NotebookCategory> list)
+	{
 		if (sorted_categories == null)
 			sorted_categories = list;
 		else
@@ -92,7 +105,8 @@ public class ArcaneMagicAPI {
 	}
 
 	public static IArcaneTransfigurationRecipe getArcaneTransfigurationRecipe(EntityPlayer player, ItemStack wand,
-			NonNullList<ItemStack> inputs, World world) {
+			NonNullList<ItemStack> inputs, World world)
+	{
 		Preconditions.checkArgument(inputs.size() == 9,
 				"[Arcane Magic]: Attempting to retrieve an arcane transfiguration recipe with an invalid input list size!");
 		Preconditions.checkArgument(wand.getItem() instanceof IArcaneTransfigurationItem,
@@ -104,7 +118,8 @@ public class ArcaneMagicAPI {
 		return null;
 	}
 
-	public static AnalysisManager getAnalyzer() {
+	public static AnalysisManager getAnalyzer()
+	{
 		return MANAGER;
 	}
 }

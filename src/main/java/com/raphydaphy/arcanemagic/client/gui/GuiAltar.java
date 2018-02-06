@@ -17,7 +17,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
-public class GuiAltar extends GuiContainer {
+public class GuiAltar extends GuiContainer
+{
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 203;
 	private TileEntityAltar te;
@@ -26,7 +27,8 @@ public class GuiAltar extends GuiContainer {
 	private static final ResourceLocation background = new ResourceLocation(ArcaneMagic.MODID,
 			"textures/gui/writing_desk.png");
 
-	public GuiAltar(TileEntityAltar tileEntity, ContainerInfusionAltar container) {
+	public GuiAltar(TileEntityAltar tileEntity, ContainerInfusionAltar container)
+	{
 		super(container);
 		te = tileEntity;
 		xSize = WIDTH;
@@ -36,14 +38,16 @@ public class GuiAltar extends GuiContainer {
 	}
 
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+	public void drawScreen(int mouseX, int mouseY, float partialTicks)
+	{
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		super.renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	@Override
-	public void updateScreen() {
+	public void updateScreen()
+	{
 		super.updateScreen();
 
 		age += 1;
@@ -56,7 +60,8 @@ public class GuiAltar extends GuiContainer {
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY)
+	{
 		ScaledResolution res = new ScaledResolution(mc);
 		mc.getTextureManager().bindTexture(background);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 250, 203);
@@ -66,24 +71,29 @@ public class GuiAltar extends GuiContainer {
 		this.fontRenderer.drawString(I18n.format("container.inventory"), guiLeft + 8, guiTop + 106, 4210752);
 
 		IItemHandler handler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		if (handler != null) {
+		if (handler != null)
+		{
 			ItemStack book = handler.getStackInSlot(0);
 			ItemStack paper = handler.getStackInSlot(1);
 
 			boolean drawWarning = false;
 			String text = "";
 
-			if (book.isEmpty()) {
+			if (book.isEmpty())
+			{
 				text = I18n.format("gui.arcanemagic.altar.nobook");
 				drawWarning = true;
-			} else if (paper.isEmpty()) {
+			} else if (paper.isEmpty())
+			{
 				text = I18n.format("gui.arcanemagic.altar.nopaper");
 				drawWarning = true;
 			}
 
-			if (drawWarning) {
+			if (drawWarning)
+			{
 				this.drawHoveringText(text, (guiLeft + 92 - fontRenderer.getStringWidth(text) / 2), guiTop + 68);
-			} else {
+			} else
+			{
 				GLHelper.drawCircle2D(34, guiLeft + 102, guiTop + 60, Color.black, 1, res.getScaleFactor() * 1);
 
 				// GLHelper.drawTriangle2D(59, 45, guiLeft + 126, guiTop + 36,

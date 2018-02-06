@@ -12,10 +12,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnimaConjurer> {
+public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnimaConjurer>
+{
 	@Override
 	public void render(TileEntityAnimaConjurer te, double x, double y, double z, float partialTicks, int destroyStage,
-			float alpha) {
+			float alpha)
+	{
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		GlStateManager.disableRescaleNormal();
@@ -25,9 +27,11 @@ public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnima
 		GlStateManager.popMatrix();
 	}
 
-	private void renderItem(TileEntityAnimaConjurer te) {
+	private void renderItem(TileEntityAnimaConjurer te)
+	{
 		ItemStack stack = te.getStack();
-		if (!stack.isEmpty()) {
+		if (!stack.isEmpty())
+		{
 			RenderHelper.enableStandardItemLighting();
 			GlStateManager.enableLighting();
 			GlStateManager.pushMatrix();
@@ -35,7 +39,8 @@ public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnima
 			GlStateManager.scale(.2f, .2f, .2f);
 			GlStateManager.rotate(te.getFrameAge(), 0, 1, 0);
 			GlStateManager.translate(0, Math.sin((Math.PI / 180) * (te.increaseFrameAge())) / 3.2 + 0.1, 0);
-			if (te.getFrameAge() < 0 || te.getFrameAge() == Integer.MAX_VALUE) {
+			if (te.getFrameAge() < 0 || te.getFrameAge() == Integer.MAX_VALUE)
+			{
 				te.setFrameAge(0);
 			}
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.NONE);

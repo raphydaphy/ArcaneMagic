@@ -26,32 +26,39 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 
 // TODO: RENAME ME!!!
-public class BlockAltar extends BlockBase implements IHasRecipe {
+public class BlockAltar extends BlockBase implements IHasRecipe
+{
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10d * (1d / 16d), 1.0D);
 	public static final int GUI_ID = 3;
 
-	public BlockAltar() {
+	public BlockAltar()
+	{
 		super("altar", Material.ROCK, 5.5f, SoundType.STONE);
 	}
 
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	{
 		return AABB;
 	}
 
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
+	{
 		return BlockFaceShape.UNDEFINED;
 	}
 
 	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+	public void breakBlock(World world, BlockPos pos, IBlockState state)
+	{
 		TileEntityAltar te = (TileEntityAltar) world.getTileEntity(pos);
 		IItemHandler cap = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 
-		for (int i = 0; i < cap.getSlots(); ++i) {
+		for (int i = 0; i < cap.getSlots(); ++i)
+		{
 			ItemStack itemstack = cap.getStackInSlot(i);
 
-			if (!itemstack.isEmpty()) {
+			if (!itemstack.isEmpty())
+			{
 				InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), itemstack);
 			}
 		}
@@ -60,34 +67,42 @@ public class BlockAltar extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public boolean isOpaqueCube(IBlockState state) {
+	public boolean isOpaqueCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube(IBlockState state) {
+	public boolean isFullCube(IBlockState state)
+	{
 		return false;
 	}
 
 	@Override
-	public boolean hasTileEntity(IBlockState state) {
+	public boolean hasTileEntity(IBlockState state)
+	{
 		return true;
 	}
 
 	@Override
-	public TileEntity createTileEntity(World world, IBlockState state) {
+	public TileEntity createTileEntity(World world, IBlockState state)
+	{
 		return new TileEntityAltar();
 	}
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
-			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!player.isSneaking()) {
-			if (world.isRemote) {
+			EnumFacing facing, float hitX, float hitY, float hitZ)
+	{
+		if (!player.isSneaking())
+		{
+			if (world.isRemote)
+			{
 				return true;
 			}
 			TileEntity te = world.getTileEntity(pos);
-			if (!(te instanceof TileEntityAltar)) {
+			if (!(te instanceof TileEntityAltar))
+			{
 				return false;
 			}
 			player.openGui(ArcaneMagic.instance, GUI_ID, world, pos.getX(), pos.getY(), pos.getZ());
@@ -97,7 +112,8 @@ public class BlockAltar extends BlockBase implements IHasRecipe {
 	}
 
 	@Override
-	public void initRecipes(Register<IRecipe> e) {
+	public void initRecipes(Register<IRecipe> e)
+	{
 		RecipeHelper.addElementalShaped(this, Anima.CREATION, 30, null, "formationEssence", null, "obsidian",
 				"obsidian", "obsidian", "obsidian", null, "obsidian");
 	}

@@ -10,7 +10,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry.ObjectHolder;
 import net.minecraftforge.registries.IForgeRegistry;
 
 @ObjectHolder(ArcaneMagic.MODID)
-public final class ArcaneMagicSoundHandler {
+public final class ArcaneMagicSoundHandler
+{
 	private static Random rand = new Random();
 
 	public static final SoundEvent spell = null;
@@ -34,16 +35,19 @@ public final class ArcaneMagicSoundHandler {
 
 	public static final SoundEvent clack = null;
 
-	public static SoundEvent register(String name, IForgeRegistry<SoundEvent> registry) {
+	public static SoundEvent register(String name, IForgeRegistry<SoundEvent> registry)
+	{
 		ResourceLocation loc = new ResourceLocation(ArcaneMagic.MODID + ":" + name);
 		SoundEvent e = new SoundEvent(loc).setRegistryName(name);
 		registry.register(e);
 		return e;
 	}
 
-	public static SoundEvent randomMagicSound() {
+	public static SoundEvent randomMagicSound()
+	{
 		int sound = rand.nextInt(3) + 1;
-		switch (sound) {
+		switch (sound)
+		{
 		case 1:
 			return magic_1;
 		case 2:
@@ -55,15 +59,18 @@ public final class ArcaneMagicSoundHandler {
 		return magic_1;
 	}
 
-	public static SoundEvent randomPageSound() {
+	public static SoundEvent randomPageSound()
+	{
 		return rand.nextInt(2) + 1 == 1 ? page_1 : page_2;
 	}
 
-	public static SoundEvent randomLearnSound() {
+	public static SoundEvent randomLearnSound()
+	{
 		return rand.nextInt(2) + 1 == 1 ? learn_1 : learn_2;
 	}
 
-	public static SoundEvent randomWriteSound() {
+	public static SoundEvent randomWriteSound()
+	{
 		return rand.nextInt(2) + 1 == 1 ? write_1 : write_2;
 	}
 

@@ -31,7 +31,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage implements ITickable {
+public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage implements ITickable
+{
 	public static int SIZE = 6;
 
 	private Anima curForming = null;
@@ -39,27 +40,34 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 	public List<AnimaStreamPoint> streamPoints = new ArrayList<AnimaStreamPoint>();
 
-	public TileEntityAnimusMaterializer() {
+	public TileEntityAnimusMaterializer()
+	{
 		super(1000);
 
 	}
 
-	private boolean canForm(AnimaStack formStack) {
+	private boolean canForm(AnimaStack formStack)
+	{
 
 		boolean shouldContinue = false;
-		for (int curItemStack = 0; curItemStack < SIZE; curItemStack++) {
-			if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty()) {
+		for (int curItemStack = 0; curItemStack < SIZE; curItemStack++)
+		{
+			if (this.itemStackHandler.getStackInSlot(curItemStack).isEmpty())
+			{
 				shouldContinue = true;
 				break;
-			} else if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty()) {
+			} else if (this.itemStackHandler.insertItem(curItemStack, curForming.getItemForm(), true).isEmpty())
+			{
 				shouldContinue = true;
 				break;
 			}
 		}
 
-		if (shouldContinue) {
+		if (shouldContinue)
+		{
 			AnimaStack couldTakeThis = animaStorage.take(new AnimaStack(formStack.getAnima(), 10), false);
-			if (couldTakeThis != null && !couldTakeThis.isEmpty()) {
+			if (couldTakeThis != null && !couldTakeThis.isEmpty())
+			{
 				shouldContinue = false;
 			}
 		}
@@ -176,11 +184,12 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 							if (world.isRemote)
 							{
 								ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
-							}
-							else
+							} else
 							{
-								
-								streamPoints.add(new AnimaStreamPoint(world, new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1), here, this.getPos()));
+
+								streamPoints.add(new AnimaStreamPoint(world,
+										new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1), here,
+										this.getPos()));
 
 								Map<Anima, AnimaStack> storedEssenceConcentrator = te
 										.getCapability(IAnimaStorage.CAP, null).getStored();
@@ -218,17 +227,21 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 		}
 	}
 
-	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE) {
+	private ItemStackHandler itemStackHandler = new ItemStackHandler(SIZE)
+	{
 		@Override
-		public void onContentsChanged(int slot) {
+		public void onContentsChanged(int slot)
+		{
 			// We need to tell the tile entity that something has changed so
 			// that the chest contents is persisted
 			TileEntityAnimusMaterializer.this.markDirty();
 		}
 
 		@Override
-		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (!(stack.getItem() instanceof IAnimaCrystal)) {
+		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate)
+		{
+			if (!(stack.getItem() instanceof IAnimaCrystal))
+			{
 				return stack;
 			}
 			return super.insertItem(slot, stack, simulate);
@@ -236,44 +249,54 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 	};
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
+	public void readFromNBT(NBTTagCompound compound)
+	{
 		super.readFromNBT(compound);
-		if (compound.hasKey("items")) {
+		if (compound.hasKey("items"))
+		{
 			itemStackHandler.deserializeNBT((NBTTagCompound) compound.getTag("items"));
 		}
-		if (compound.hasKey("curForming")) {
+		if (compound.hasKey("curForming"))
+		{
 			curForming = Anima.getAnimaByID(compound.getInteger("curForming"));
 		}
 		curFormingTimer = compound.getInteger("curFormingTimer");
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+	public NBTTagCompound writeToNBT(NBTTagCompound compound)
+	{
 		super.writeToNBT(compound);
 		compound.setTag("items", itemStackHandler.serializeNBT());
-		if (curForming != null) {
+		if (curForming != null)
+		{
 			compound.setInteger("curForming", Anima.REGISTRY.getValues().indexOf(this.curForming));
 		}
 		compound.setInteger("curFormingTimer", this.curFormingTimer);
 		return compound;
 	}
 
-	public boolean canInteractWith(EntityPlayer playerIn) {
+	public boolean canInteractWith(EntityPlayer playerIn)
+	{
 		// If we are too far away from this tile entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
 
 	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing)
+	{
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
 			return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing)
+	{
+		if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
 			return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemStackHandler);
 		}
 		return super.getCapability(capability, facing);
@@ -281,18 +304,21 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox() {
+	public net.minecraft.util.math.AxisAlignedBB getRenderBoundingBox()
+	{
 		return INFINITE_EXTENT_AABB;
 	}
 
-	public class AnimaStreamPoint {
+	public class AnimaStreamPoint
+	{
 		private final BlockPos source;
 		private final BlockPos destination;
 		private World world;
 		private int ticksExisted;
 		private AnimaStack stack;
 
-		public AnimaStreamPoint(World world, AnimaStack stack, BlockPos source, BlockPos destination) {
+		public AnimaStreamPoint(World world, AnimaStack stack, BlockPos source, BlockPos destination)
+		{
 			ticksExisted = 0;
 			this.source = source;
 			this.destination = destination;
@@ -300,13 +326,16 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 			this.stack = stack;
 		}
 
-		public boolean update() {
+		public boolean update()
+		{
 			ticksExisted++;
 
-			if (ticksExisted >= 111) {
+			if (ticksExisted >= 111)
+			{
 				TileEntity destUnchecked = world.getTileEntity(destination);
 
-				if (destUnchecked != null && destUnchecked instanceof TileEntityAnimaStorage) {
+				if (destUnchecked != null && destUnchecked instanceof TileEntityAnimaStorage)
+				{
 					TileEntityAnimaStorage dest = (TileEntityAnimaStorage) destUnchecked;
 
 					dest.animaStorage.store(stack, false);

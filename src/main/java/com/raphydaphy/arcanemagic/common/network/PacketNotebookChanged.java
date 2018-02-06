@@ -12,17 +12,20 @@ import net.minecraftforge.fml.relauncher.Side;
 
 // FOR WHEN THE CLIENT CLICKS A BUTTON IN THE NOTEBOOK
 // SENT TO THE SERVER
-public class PacketNotebookChanged implements IMessage {
+public class PacketNotebookChanged implements IMessage
+{
 	private int category;
 	private int page;
 	private int indexPage;
 	private boolean usedNotebook;
 	private String searchKey;
 
-	public PacketNotebookChanged() {
+	public PacketNotebookChanged()
+	{
 	}
 
-	public PacketNotebookChanged(INotebookInfo cap) {
+	public PacketNotebookChanged(INotebookInfo cap)
+	{
 		this.category = cap.getCategory();
 		this.page = cap.getPage();
 		this.indexPage = cap.getIndexPage();
@@ -30,18 +33,22 @@ public class PacketNotebookChanged implements IMessage {
 		this.searchKey = cap.getSearchKey();
 	}
 
-	public static class Handler implements IMessageHandler<PacketNotebookChanged, IMessage> {
+	public static class Handler implements IMessageHandler<PacketNotebookChanged, IMessage>
+	{
 		@Override
-		public IMessage onMessage(PacketNotebookChanged message, MessageContext ctx) {
+		public IMessage onMessage(PacketNotebookChanged message, MessageContext ctx)
+		{
 			FMLCommonHandler.instance().getWorldThread(ctx.netHandler)
 					.addScheduledTask(() -> handleNotebookInfo(message, ctx, ctx.side));
 			return null;
 		}
 
-		public void handleNotebookInfo(PacketNotebookChanged message, MessageContext ctx, Side side) {
+		public void handleNotebookInfo(PacketNotebookChanged message, MessageContext ctx, Side side)
+		{
 			INotebookInfo cap = ctx.getServerHandler().player.getCapability(INotebookInfo.CAP, null);
 
-			if (cap != null) {
+			if (cap != null)
+			{
 				cap.setCategory(message.category);
 				cap.setPage(message.page);
 				cap.setIndexPage(message.indexPage);
@@ -52,30 +59,36 @@ public class PacketNotebookChanged implements IMessage {
 	}
 
 	@Override
-	public void fromBytes(ByteBuf buf) {
+	public void fromBytes(ByteBuf buf)
+	{
 		PacketBuffer pbuf = new PacketBuffer(buf);
 		category = pbuf.readInt();
 		page = pbuf.readInt();
 		indexPage = pbuf.readInt();
 		usedNotebook = pbuf.readBoolean();
-		if (pbuf.readBoolean()) {
+		if (pbuf.readBoolean())
+		{
 			searchKey = pbuf.readString(1024);
-		} else {
+		} else
+		{
 			searchKey = "";
 		}
 	}
 
 	@Override
-	public void toBytes(ByteBuf buf) {
+	public void toBytes(ByteBuf buf)
+	{
 		PacketBuffer pbuf = new PacketBuffer(buf);
 		buf.writeInt(category);
 		buf.writeInt(page);
 		buf.writeInt(indexPage);
 		buf.writeBoolean(usedNotebook);
-		if (searchKey != null && !searchKey.isEmpty()) {
+		if (searchKey != null && !searchKey.isEmpty())
+		{
 			pbuf.writeBoolean(true);
 			pbuf.writeString(searchKey);
-		} else {
+		} else
+		{
 			pbuf.writeBoolean(false);
 		}
 	}

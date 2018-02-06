@@ -6,16 +6,19 @@ import java.util.Random;
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
-public final class AnimaCreation extends Anima {
+public final class AnimaCreation extends Anima
+{
 
 	private static final Random RAND = new Random();
 
-	public AnimaCreation() {
+	public AnimaCreation()
+	{
 		super(ArcaneMagic.MODID + ".creation", Color.BLACK);
 		setRegistryName(ArcaneMagic.MODID, "creation");
 	}
 
-	private static int getRandomColor(Random rand) {
+	private static int getRandomColor(Random rand)
+	{
 		int r = rand.nextInt(256);
 		int g = rand.nextInt(256);
 		int b = rand.nextInt(256);
@@ -24,12 +27,14 @@ public final class AnimaCreation extends Anima {
 	}
 
 	@Override
-	public int getColorInt() {
+	public int getColorInt()
+	{
 		return getRandomColor(RAND);
 	}
 
 	@Override
-	public Color getColor() {
+	public Color getColor()
+	{
 		return new Color(getRandomColor(RAND));
 	}
 

@@ -14,10 +14,12 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import akka.japi.Pair;
 
-public class CategoryNaturalDivisionsSub extends NotebookCategory {
+public class CategoryNaturalDivisionsSub extends NotebookCategory
+{
 	public final int pageCount;
 
-	public CategoryNaturalDivisionsSub(Anima categoryEssence, int indexPage, int pageCount) {
+	public CategoryNaturalDivisionsSub(Anima categoryEssence, int indexPage, int pageCount)
+	{
 		this.pageCount = pageCount;
 
 		this.setRegistryName(ArcaneMagic.MODID, "natural_divisions_" + indexPage);
@@ -30,10 +32,12 @@ public class CategoryNaturalDivisionsSub extends NotebookCategory {
 	}
 
 	@Override
-	public List<NotebookPage> getPages(INotebookInfo info) {
+	public List<NotebookPage> getPages(INotebookInfo info)
+	{
 		List<NotebookPage> pages = new ArrayList<NotebookPage>();
 		List<INotebookEntry> page = new ArrayList<INotebookEntry>();
-		for (int i = 0; i < pageCount; i++) {
+		for (int i = 0; i < pageCount; i++)
+		{
 			page.add(new NotebookEntryText(getUnlocalizedName() + "." + i, 0x000000));
 		}
 		pages.add(new NotebookPage(page));
