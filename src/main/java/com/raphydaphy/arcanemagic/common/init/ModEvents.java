@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
+import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.AnimaWorldHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
@@ -95,9 +96,9 @@ public class ModEvents
 	{
 		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
 		{
-			for (Anima anima : Anima.REGISTRY.getValues())
+			for (EnumBasicAnimus anima : EnumBasicAnimus.values())
 			{
-				ArcaneMagic.LOGGER.info(AnimaGenerator.getAnima(ev.player.world, anima, ev.player.world.getSeed(), (int)ev.player.posX, (int)ev.player.posZ));
+				ArcaneMagic.LOGGER.info(AnimaGenerator.getAnima(ev.player.world, anima.getAnima(), ev.player.world.getSeed(), (int)ev.player.posX, (int)ev.player.posZ));
 			}
 			
 			INotebookInfo info = ev.player.getCapability(INotebookInfo.CAP, null);

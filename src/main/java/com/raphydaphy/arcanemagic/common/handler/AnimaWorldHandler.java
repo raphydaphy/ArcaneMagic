@@ -69,22 +69,27 @@ public class AnimaWorldHandler extends WorldSavedData
 				boolean chunkSpecial = anima.equals(special);
 				boolean chunkOpposite = anima.equals(Anima.getOpposite(special));
 
-				int amount = (int) (stability(seed, x, z)
-						* (float) Math.pow((80.0f * getOctave(seed, x + offsetX, z + offsetZ, 112)
-								+ 20.0f * getOctave(seed, x + offsetX, z + offsetZ, 68)
-								+ 6.0f * getOctave(seed, x + offsetX, z + offsetZ, 34)
-								+ 4.0f * getOctave(seed, x + offsetX, z + offsetZ, 21)
-								+ 2.0f * getOctave(seed, x + offsetX, z + offsetZ, 11)
-								+ 1.0f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f)
-						* 10000);
-
+				int amount = 0;
 				if (chunkSpecial)
 				{
-					amount *= 100;
-				}
-				if (chunkOpposite)
+					amount = (int) (((stability(seed * Anima.getNum(anima), x, z) * 10)
+							* (float) Math.pow((80.0f * getOctave(seed, x + offsetX, z + offsetZ, 112)
+									+ 30.1f * getOctave(seed, x + offsetX, z + offsetZ, 68)
+									+ 25.5f * getOctave(seed, x + offsetX, z + offsetZ, 34)
+									+ 20.3f * getOctave(seed, x + offsetX, z + offsetZ, 21)
+									+ 16.8f * getOctave(seed, x + offsetX, z + offsetZ, 11)
+									+ 13.5f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f)
+							)* 10000);
+				} else if (!chunkOpposite)
 				{
-					amount = 0;
+					amount = (int) ((stability(seed * Anima.getNum(anima) + 1, x, z)
+							* (float) Math.pow((80.0f * getOctave(seed, x + offsetX, z + offsetZ, 112)
+									+ 20.8f * getOctave(seed, x + offsetX, z + offsetZ, 68)
+									+ 6.6f * getOctave(seed, x + offsetX, z + offsetZ, 34)
+									+ 4.5f * getOctave(seed, x + offsetX, z + offsetZ, 21)
+									+ 2.4f * getOctave(seed, x + offsetX, z + offsetZ, 11)
+									+ 1.7f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f)
+							)*10000);
 				}
 				return new AnimaStack(anima, amount);
 			}

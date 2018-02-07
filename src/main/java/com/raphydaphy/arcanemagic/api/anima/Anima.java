@@ -125,6 +125,25 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 			return null;
 
 	}
+	
+	public static int getNum(Anima anima)
+	{
+		if (anima.equals(HORIZON))
+			return 0;
+		else if (anima.equals(OZONE))
+			return 1;
+		else if (anima.equals(INFERNO))
+			return 2;
+		else if (anima.equals(DEPTH))
+			return 3;
+		else if (anima.equals(PEACE))
+			return 4;
+		else if (anima.equals(CHAOS))
+			return 5;
+		else
+			return 6;
+
+	}
 
 	public static boolean sendAnima(World world, AnimaStack stack, Vec3d from, Vec3d to, Vec3d toCosmetic,
 			boolean simulate, boolean spawnParticles)
