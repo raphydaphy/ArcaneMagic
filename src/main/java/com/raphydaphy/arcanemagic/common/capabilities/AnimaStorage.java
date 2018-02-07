@@ -36,6 +36,7 @@ public class AnimaStorage implements IAnimaStorage, ICapabilityProvider
 		}, 1000);
 	}
 
+	// Use -1 for infinite capacity
 	public AnimaStorage(@Nonnull Runnable s, @Nonnull int c)
 	{
 		Preconditions.checkNotNull(s);
@@ -72,6 +73,10 @@ public class AnimaStorage implements IAnimaStorage, ICapabilityProvider
 		{
 			int amountToDiscardOnGrow = in.getCount() + storage.get(in.getAnima()).getCount()
 					- getCapacity(in.getAnima());
+			if (getCapacity(in.getAnima()) == -1)
+			{
+				amountToDiscardOnGrow = 0;
+			}
 			if (amountToDiscardOnGrow <= 0)
 			{
 				if (!simulate)

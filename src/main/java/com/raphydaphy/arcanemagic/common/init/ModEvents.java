@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.common.init;
 
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.logging.log4j.Level;
@@ -8,13 +9,10 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
-import com.raphydaphy.arcanemagic.common.anima.AnimaWorldData;
-import com.raphydaphy.arcanemagic.common.anima.AnimaWorldData.AnimaGenerator;
+import com.raphydaphy.arcanemagic.common.capabilities.AnimaStorage;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
-import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.common.network.PacketAnimaGenerated;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastOrFail;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
@@ -28,8 +26,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEquipmentChangeEvent;
@@ -38,38 +36,30 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 @Mod.EventBusSubscriber
 public class ModEvents
 {
-	@SubscribeEvent
-	public void onWorldTick(WorldTickEvent event)
-	{
-		if (event.world.provider.getDimensionType() == DimensionType.OVERWORLD)
-		{
-			if (event.world.rand.nextInt(500) == 0)
-			{
-				AnimaWorldData.AnimaGenerator.offsetX++;
-				AnimaWorldData.get(event.world).markDirty();
-			}
-			if (event.world.rand.nextInt(500) == 0)
-			{
-				AnimaWorldData.AnimaGenerator.offsetZ++;
-				AnimaWorldData.get(event.world).markDirty();
-			}
-			ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketAnimaGenerated(AnimaWorldData.AnimaGenerator.offsetX,
-					AnimaWorldData.AnimaGenerator.offsetZ));
-		}
-	}
 
 	@SubscribeEvent
-	public static void onAttachCapability(AttachCapabilitiesEvent<Entity> ev)
+	public static void onAttachEntityCaps(AttachCapabilitiesEvent<Entity> ev)
 	{
 		if (ev.getObject() instanceof EntityPlayer)
 		{
 			ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "notebook_storage"), new NotebookInfo());
 		}
+	}
+
+	@SubscribeEvent
+	public static void onAttach(AttachCapabilitiesEvent<Chunk> ev)
+	{
+		ev.addCapability(new ResourceLocation(ArcaneMagic.MODID, "chunk_anima_storage"), new AnimaStorage(new Runnable()
+		{
+			public void run()
+			{
+				ev.getObject().markDirty();
+			}
+		}, -1));
 	}
 
 	@SubscribeEvent
@@ -99,15 +89,14 @@ public class ModEvents
 	{
 		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
 		{
-			for (EnumBasicAnimus anima : EnumBasicAnimus.values())
+			Map<Anima, AnimaStack> chunkAnima = Anima.getChunkAnima(ev.player.world, ev.player.world.getSeed(),
+					(int) (ev.player.posX / 16), (int) (ev.player.posZ / 16));
+			for (Map.Entry<Anima, AnimaStack> set : chunkAnima.entrySet())
 			{
-				AnimaStack stack = AnimaGenerator.getAnima(ev.player.world, anima.getAnima(), ev.player.world.getSeed(),
-						(int) (ev.player.posX/16), (int) (ev.player.posZ/16));
-
-				if (stack != null && stack.getCount() > 0)
+				if (set.getValue() != null && set.getValue().getCount() > 0)
 				{
-					ArcaneMagic.LOGGER.log(Level.INFO, "offsetX " + AnimaWorldData.AnimaGenerator.offsetX
-							+ ", offsetZ: " + ", Anima: " + stack.getCount() + " x " + stack.getAnima().getTranslationName());
+					ArcaneMagic.LOGGER.log(Level.INFO,
+							set.getValue().getCount() + " x " + set.getValue().getAnima().getTranslationName());
 				}
 			}
 

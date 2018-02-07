@@ -1,9 +1,14 @@
 package com.raphydaphy.arcanemagic.api.anima;
 
 import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.anima.AnimaCreation;
+import com.raphydaphy.arcanemagic.common.anima.AnimaGenerator;
+import com.raphydaphy.arcanemagic.common.capabilities.AnimaStorage;
+import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.common.init.ModRegistry;
 import com.raphydaphy.arcanemagic.common.network.PacketAnimaTransfer;
@@ -15,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.RegistryEvent.Register;
@@ -55,11 +61,6 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 	private String unlocName;
 	private String indexName;
 	protected ItemStack itemForm = ItemStack.EMPTY;
-
-	private Anima(String name, String unlocName, int r, int g, int b)
-	{
-		this(name, unlocName, new Color(r, g, b));
-	}
 
 	private Anima(String name, String unlocName, Color color)
 	{
@@ -125,7 +126,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 			return null;
 
 	}
-	
+
 	public static int getNum(Anima anima)
 	{
 		if (anima.equals(HORIZON))
@@ -294,5 +295,55 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 		else
 			return Anima.HORIZON;
 	}
+	
+	// Returns true if the stack was successfully removed from the total in the chunk
+	public static boolean removeChunkAnima(World world, long seed, AnimaStack toRemove, int chunkX, int chunkZ)
+	{
+		Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
 
+		if (chunk.hasCapability(AnimaStorage.CAP, null))
+		{
+			IAnimaStorage cap = chunk.getCapability(AnimaStorage.CAP, null);
+			Map<Anima, AnimaStack> chunkList = getChunkAnima(world, seed, chunkX, chunkZ);
+
+			if (chunkList.containsKey(toRemove.getAnima()))
+			{
+				cap.take(toRemove, false);
+				chunk.markDirty();
+				
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static Map<Anima, AnimaStack> getChunkAnima(World world, long seed, int chunkX, int chunkZ)
+	{
+		Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
+
+		if (chunk.hasCapability(AnimaStorage.CAP, null))
+		{
+			
+			IAnimaStorage cap = chunk.getCapability(AnimaStorage.CAP, null);
+
+			if (cap.getStored().size() > 0)
+			{
+				return cap.getStored();
+			} else
+			{
+				Map<Anima, AnimaStack> ret = new HashMap<>();
+				for (EnumBasicAnimus animus : EnumBasicAnimus.values())
+				{
+					AnimaStack stack = AnimaGenerator.getBaseAnima(world, animus.getAnima(), seed, chunkX, chunkZ);
+
+					cap.getStored().put(animus.getAnima(), stack);
+					ret.put(animus.getAnima(), stack);
+				}
+				chunk.markDirty();
+				return ret;
+			}
+			
+		}
+		return new HashMap<Anima, AnimaStack>();
+	}
 }
