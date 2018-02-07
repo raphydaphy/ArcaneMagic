@@ -18,7 +18,7 @@ public class ParticleRenderer
 {
 	private ArrayList<Particle> particles = new ArrayList<Particle>();
 	public static int particleCounter = 0;
-	
+
 	public void updateParticles()
 	{
 		ArrayList<Particle> newParticles = new ArrayList<Particle>();

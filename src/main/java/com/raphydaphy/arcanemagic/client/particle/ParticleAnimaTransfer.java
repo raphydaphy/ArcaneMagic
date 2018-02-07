@@ -45,7 +45,8 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle
 		this.particleAngle = 2.0f * (float) Math.PI;
 		this.particleGravity = gravity;
 		this.particleAlpha = initAlpha;
-		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(new ResourceLocation("arcanemagic:misc/plus").toString());
+		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
+				.getAtlasSprite(new ResourceLocation("arcanemagic:misc/plus").toString());
 		this.setParticleTexture(sprite);
 	}
 

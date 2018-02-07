@@ -203,8 +203,7 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 									ArcaneMagic.proxy.magicParticle(useType.getColor(), this.getPos(), here);
 								} else
 								{
-									streamPoints.add(new AnimaStreamPoint(world,
-											new AnimaStack(useType, 1), here,
+									streamPoints.add(new AnimaStreamPoint(world, new AnimaStack(useType, 1), here,
 											this.getPos()));
 
 									te.getCapability(IAnimaStorage.CAP, null).take(new AnimaStack(useType, 1), false);

@@ -295,7 +295,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 		else
 			return Anima.HORIZON;
 	}
-	
+
 	// Returns true if the stack was successfully removed from the total in the chunk
 	public static boolean removeChunkAnima(World world, long seed, AnimaStack toRemove, int chunkX, int chunkZ)
 	{
@@ -310,7 +310,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 			{
 				cap.take(toRemove, false);
 				chunk.markDirty();
-				
+
 				return true;
 			}
 		}
@@ -323,7 +323,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 
 		if (chunk.hasCapability(AnimaStorage.CAP, null))
 		{
-			
+
 			IAnimaStorage cap = chunk.getCapability(AnimaStorage.CAP, null);
 
 			if (cap.getStored().size() > 0)
@@ -331,7 +331,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 				return cap.getStored();
 			} else
 			{
-				
+
 				Map<Anima, AnimaStack> ret = new HashMap<>();
 				for (EnumBasicAnimus animus : EnumBasicAnimus.values())
 				{
@@ -343,7 +343,7 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 				chunk.markDirty();
 				return ret;
 			}
-			
+
 		}
 		return new HashMap<Anima, AnimaStack>();
 	}

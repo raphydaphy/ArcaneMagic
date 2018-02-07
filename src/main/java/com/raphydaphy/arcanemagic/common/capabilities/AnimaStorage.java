@@ -96,7 +96,7 @@ public class AnimaStorage implements IAnimaStorage, ICapabilityProvider
 		} else
 		{
 			int amountToDiscardOnPut = in.getCount() - getCapacity(in.getAnima());
-			if (getCapacity(in.getAnima())	 == -1)
+			if (getCapacity(in.getAnima()) == -1)
 			{
 				amountToDiscardOnPut = 0;
 			}
