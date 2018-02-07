@@ -12,6 +12,7 @@ import com.raphydaphy.arcanemagic.common.block.BlockArcaneForge;
 import com.raphydaphy.arcanemagic.common.block.BlockArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.block.BlockFancyLight;
 import com.raphydaphy.arcanemagic.common.block.BlockInfernalSmelter;
+import com.raphydaphy.arcanemagic.common.block.BlockPedestal;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicSoundHandler;
 import com.raphydaphy.arcanemagic.common.item.ItemAncientClothArmor;
 import com.raphydaphy.arcanemagic.common.item.ItemAnimaCrystal;
@@ -29,6 +30,7 @@ import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityInfernalSmelter;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityPedestal;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -57,6 +59,7 @@ public class ModRegistry
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
 	public static final BlockArcaneForge ARCANE_FORGE = new BlockArcaneForge();
+	public static final BlockPedestal PEDESTAL = new BlockPedestal();
 
 	public static final ItemNotebook NOTEBOOK = new ItemNotebook("notebook");
 	public static final ItemAnimaCrystal ANIMA = new ItemAnimaCrystal();
@@ -135,5 +138,6 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
 		GameRegistry.registerTileEntity(TileEntityInfernalSmelter.class, ArcaneMagic.MODID + "_infernal_smelter");
 		GameRegistry.registerTileEntity(TileEntityArcaneForge.class, ArcaneMagic.MODID + "_arcane_forge");
+		GameRegistry.registerTileEntity(TileEntityPedestal.class, ArcaneMagic.MODID + "_pedestal");
 	}
 }

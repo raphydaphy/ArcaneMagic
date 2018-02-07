@@ -27,6 +27,7 @@ tile.arcanemagic.altar.name=Altar
 tile.arcanemagic.analyzer.name=Analyzer
 tile.arcanemagic.infernal_smelter.name=Infernal Smelter
 tile.arcanemagic.arcane_forge.name=Arcane Forge
+tile.arcanemagic.pedestal.name=Pedestal
 
 # Sounds
 subtitle.arcanemagic.spell=Spell Cast

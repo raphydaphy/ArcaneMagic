@@ -100,7 +100,7 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 						{
 
 							Map<Anima, AnimaStack> chunkAnima = Anima.getChunkAnima(world, world.getSeed(),
-									(int) (x / 16), (int) (z / 16));
+									(int) (this.getPos().getX() / 16), (int) (this.getPos().getZ() / 16));
 							List<Anima> weightedChunkAnima = new ArrayList<Anima>();
 							for (Map.Entry<Anima, AnimaStack> set : chunkAnima.entrySet())
 							{
@@ -124,7 +124,7 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false,
 											false);
 
-									world.getChunkFromChunkCoords((int) (x / 16), (int) (z / 16)).markDirty();
+									world.getChunkFromChunkCoords((int) (this.getPos().getX() / 16), (int) (this.getPos().getZ() / 16)).markDirty();
 									this.markDirty();
 								}
 							}

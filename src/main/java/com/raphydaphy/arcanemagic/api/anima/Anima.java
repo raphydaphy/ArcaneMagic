@@ -32,12 +32,12 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 
 	public static final AnimaRegistry REGISTRY = new AnimaRegistry();
 
-	public static final Anima OZONE = new Anima("ozone", ArcaneMagic.MODID + ".ozone", Color.WHITE);
+	public static final Anima OZONE = new Anima("ozone", ArcaneMagic.MODID + ".ozone", Color.YELLOW);
 	public static final Anima DEPTH = new Anima("depth", ArcaneMagic.MODID + ".depth", Color.BLUE);
 	public static final Anima INFERNO = new Anima("inferno", ArcaneMagic.MODID + ".inferno", Color.ORANGE);
 	public static final Anima HORIZON = new Anima("horizon", ArcaneMagic.MODID + ".horizon", Color.GREEN);
-	public static final Anima PEACE = new Anima("peace", ArcaneMagic.MODID + ".peace", Color.YELLOW);
-	public static final Anima CHAOS = new Anima("chaos", ArcaneMagic.MODID + ".chaos", Color.MAGENTA);
+	public static final Anima PEACE = new Anima("peace", ArcaneMagic.MODID + ".peace", Color.pink);
+	public static final Anima CHAOS = new Anima("chaos", ArcaneMagic.MODID + ".chaos", Color.magenta);
 	public static final Anima CREATION = new AnimaCreation();
 
 	public static class AnimaSubscriber
