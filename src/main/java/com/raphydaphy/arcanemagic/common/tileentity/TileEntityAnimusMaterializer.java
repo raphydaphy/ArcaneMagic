@@ -180,31 +180,35 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 						if (te != null)
 						{
-							Map<Anima, AnimaStack> storedEssenceConcentrator = te
-									.getCapability(IAnimaStorage.CAP, null).getStored();
+							Map<Anima, AnimaStack> storedEssenceConcentrator = te.getCapability(IAnimaStorage.CAP, null)
+									.getStored();
 							Anima useType = null;
+							List<Anima> possibleTypes = new ArrayList<Anima>();
 							for (AnimaStack transferStack : storedEssenceConcentrator.values())
 							{
 								if (transferStack.getCount() > 0)
 								{
-									
-									useType = transferStack.getAnima();
+									possibleTypes.add(transferStack.getAnima());
 								}
 							}
-							
-							if (useType != null && te.getCapability(IAnimaStorage.CAP,null).take(new AnimaStack(useType, 1), true) == null)
+							if (possibleTypes.size() > 0)
 							{
-								
+								useType = possibleTypes.get(world.rand.nextInt(possibleTypes.size()));
+							}
+							if (useType != null && te.getCapability(IAnimaStorage.CAP, null)
+									.take(new AnimaStack(useType, 1), true) == null)
+							{
+
 								if (world.isRemote)
 								{
-									ArcaneMagic.proxy.magicParticle(Color.GREEN, this.getPos(), here);
+									ArcaneMagic.proxy.magicParticle(useType.getColor(), this.getPos(), here);
 								} else
 								{
 									streamPoints.add(new AnimaStreamPoint(world,
-											new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1), here,
+											new AnimaStack(useType, 1), here,
 											this.getPos()));
 
-									te.getCapability(IAnimaStorage.CAP,null).take(new AnimaStack(useType, 1), false);
+									te.getCapability(IAnimaStorage.CAP, null).take(new AnimaStack(useType, 1), false);
 									te.markDirty();
 								}
 							}

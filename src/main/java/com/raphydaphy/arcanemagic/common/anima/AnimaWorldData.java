@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.common.handler;
+package com.raphydaphy.arcanemagic.common.anima;
 
 import java.util.Random;
 
@@ -9,18 +9,16 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 
-public class AnimaWorldHandler extends WorldSavedData
+public class AnimaWorldData extends WorldSavedData
 {
-	public AnimaWorldHandler(String name)
-	{
-		super(name);
-	}
+	public static final String NAME = ArcaneMagic.MODID + ":ANIMA_DATA";
 
-	public AnimaWorldHandler()
+	public AnimaWorldData()
 	{
-		super(ArcaneMagic.MODID);
+		super(NAME);
 	}
 
 	@Override
@@ -38,21 +36,17 @@ public class AnimaWorldHandler extends WorldSavedData
 		return tag;
 	}
 
-	public static AnimaWorldHandler get(World world)
+	public static AnimaWorldData get(World world)
 	{
-		AnimaWorldHandler data = null;
-		if (world != null)
+		MapStorage storage = world.getPerWorldStorage();
+		AnimaWorldData instance = (AnimaWorldData) storage.getOrLoadData(AnimaWorldData.class, NAME);
+
+		if (instance == null)
 		{
-			if (world.loadData(AnimaWorldHandler.class, ArcaneMagic.MODID) != null)
-			{
-				data = (AnimaWorldHandler) world.loadData(AnimaWorldHandler.class, ArcaneMagic.MODID);
-			}
+			instance = new AnimaWorldData();
+			storage.setData(NAME, instance);
 		}
-		if (data == null && world != null)
-		{
-			data = new AnimaWorldHandler();
-		}
-		return data;
+		return instance;
 	}
 
 	public static class AnimaGenerator
@@ -78,18 +72,21 @@ public class AnimaWorldHandler extends WorldSavedData
 									+ 25.5f * getOctave(seed, x + offsetX, z + offsetZ, 34)
 									+ 20.3f * getOctave(seed, x + offsetX, z + offsetZ, 21)
 									+ 16.8f * getOctave(seed, x + offsetX, z + offsetZ, 11)
-									+ 13.5f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f)
-							)* 10000);
+									+ 13.5f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f))
+							* 10000);
 				} else if (!chunkOpposite)
 				{
-					amount = (int) ((stability(seed * Anima.getNum(anima) + 1, x, z)
+					amount = (int) ((stability(
+							seed * Anima.getNum(anima)
+									+ 1,
+							x, z)
 							* (float) Math.pow((80.0f * getOctave(seed, x + offsetX, z + offsetZ, 112)
 									+ 20.8f * getOctave(seed, x + offsetX, z + offsetZ, 68)
 									+ 6.6f * getOctave(seed, x + offsetX, z + offsetZ, 34)
 									+ 4.5f * getOctave(seed, x + offsetX, z + offsetZ, 21)
 									+ 2.4f * getOctave(seed, x + offsetX, z + offsetZ, 11)
-									+ 1.7f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f)
-							)*10000);
+									+ 1.7f * getOctave(seed, x + offsetX, z + offsetZ, 4)) / 93.0f, 1.6f))
+							* 10000);
 				}
 				return new AnimaStack(anima, amount);
 			}

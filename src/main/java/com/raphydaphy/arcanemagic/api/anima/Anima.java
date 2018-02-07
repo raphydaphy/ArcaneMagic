@@ -26,12 +26,12 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 
 	public static final AnimaRegistry REGISTRY = new AnimaRegistry();
 
-	public static final Anima OZONE = new Anima("ozone", ArcaneMagic.MODID + ".ozone", 0xea, 0xea, 0xea);
-	public static final Anima DEPTH = new Anima("depth", ArcaneMagic.MODID + ".depth", 0x18, 0x7e, 0xa3);
-	public static final Anima INFERNO = new Anima("inferno", ArcaneMagic.MODID + ".inferno", 0xbf, 0x56, 0);
-	public static final Anima HORIZON = new Anima("horizon", ArcaneMagic.MODID + ".horizon", 0x06, 0x60, 0x18);
-	public static final Anima PEACE = new Anima("peace", ArcaneMagic.MODID + ".peace", 0x30, 0x3a, 0x1f);
-	public static final Anima CHAOS = new Anima("chaos", ArcaneMagic.MODID + ".chaos", 0x85, 0xb7, 0x2f);
+	public static final Anima OZONE = new Anima("ozone", ArcaneMagic.MODID + ".ozone", Color.WHITE);
+	public static final Anima DEPTH = new Anima("depth", ArcaneMagic.MODID + ".depth", Color.BLUE);
+	public static final Anima INFERNO = new Anima("inferno", ArcaneMagic.MODID + ".inferno", Color.ORANGE);
+	public static final Anima HORIZON = new Anima("horizon", ArcaneMagic.MODID + ".horizon", Color.GREEN);
+	public static final Anima PEACE = new Anima("peace", ArcaneMagic.MODID + ".peace", Color.YELLOW);
+	public static final Anima CHAOS = new Anima("chaos", ArcaneMagic.MODID + ".chaos", Color.MAGENTA);
 	public static final Anima CREATION = new AnimaCreation();
 
 	public static class AnimaSubscriber

@@ -2,15 +2,18 @@ package com.raphydaphy.arcanemagic.common.init;
 
 import java.util.Random;
 
+import org.apache.logging.log4j.Level;
+
 import com.raphydaphy.arcanemagic.api.anima.Anima;
+import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
+import com.raphydaphy.arcanemagic.common.anima.AnimaWorldData;
+import com.raphydaphy.arcanemagic.common.anima.AnimaWorldData.AnimaGenerator;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
-import com.raphydaphy.arcanemagic.common.handler.AnimaWorldHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.common.handler.AnimaWorldHandler.AnimaGenerator;
 import com.raphydaphy.arcanemagic.common.network.PacketAnimaGenerated;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastOrFail;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
@@ -47,16 +50,16 @@ public class ModEvents
 		{
 			if (event.world.rand.nextInt(500) == 0)
 			{
-				AnimaWorldHandler.AnimaGenerator.offsetX++;
-				AnimaWorldHandler.get(event.world).markDirty();
+				AnimaWorldData.AnimaGenerator.offsetX++;
+				AnimaWorldData.get(event.world).markDirty();
 			}
 			if (event.world.rand.nextInt(500) == 0)
 			{
-				AnimaWorldHandler.AnimaGenerator.offsetZ++;
-				AnimaWorldHandler.get(event.world).markDirty();
+				AnimaWorldData.AnimaGenerator.offsetZ++;
+				AnimaWorldData.get(event.world).markDirty();
 			}
-			ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketAnimaGenerated(
-					AnimaWorldHandler.AnimaGenerator.offsetX, AnimaWorldHandler.AnimaGenerator.offsetZ));
+			ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketAnimaGenerated(AnimaWorldData.AnimaGenerator.offsetX,
+					AnimaWorldData.AnimaGenerator.offsetZ));
 		}
 	}
 
@@ -98,9 +101,16 @@ public class ModEvents
 		{
 			for (EnumBasicAnimus anima : EnumBasicAnimus.values())
 			{
-				ArcaneMagic.LOGGER.info(AnimaGenerator.getAnima(ev.player.world, anima.getAnima(), ev.player.world.getSeed(), (int)ev.player.posX, (int)ev.player.posZ));
+				AnimaStack stack = AnimaGenerator.getAnima(ev.player.world, anima.getAnima(), ev.player.world.getSeed(),
+						(int) (ev.player.posX/16), (int) (ev.player.posZ/16));
+
+				if (stack != null && stack.getCount() > 0)
+				{
+					ArcaneMagic.LOGGER.log(Level.INFO, "offsetX " + AnimaWorldData.AnimaGenerator.offsetX
+							+ ", offsetZ: " + ", Anima: " + stack.getCount() + " x " + stack.getAnima().getTranslationName());
+				}
 			}
-			
+
 			INotebookInfo info = ev.player.getCapability(INotebookInfo.CAP, null);
 
 			if (info != null)
@@ -209,7 +219,7 @@ public class ModEvents
 				{
 					if (ev.player.activeItemStack != held)
 					{// TODO please check
-						// proper (anything
+							// proper (anything
 						// that won't
 						// change)
 						ev.player.activeItemStack = held;

@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.common.network;
 
 import java.util.Random;
 
-import com.raphydaphy.arcanemagic.common.handler.AnimaWorldHandler;
+import com.raphydaphy.arcanemagic.common.anima.AnimaWorldData;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
@@ -56,8 +56,8 @@ public class PacketAnimaGenerated implements IMessage
 
 		private void handle(PacketAnimaGenerated message, MessageContext ctx)
 		{
-			AnimaWorldHandler.AnimaGenerator.offsetX = message.offX;
-			AnimaWorldHandler.AnimaGenerator.offsetZ = message.offZ;
+			AnimaWorldData.AnimaGenerator.offsetX = message.offX;
+			AnimaWorldData.AnimaGenerator.offsetZ = message.offZ;
 		}
 	}
 

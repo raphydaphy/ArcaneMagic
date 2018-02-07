@@ -105,7 +105,7 @@ public class ParticleAnima extends Particle
 		{
 			if (world.getBlockState(pos).getBlock() != Blocks.WATER)
 			{
-				modifiedSpeedDivisor = speedDivisor * 10;
+				//modifiedSpeedDivisor = speedDivisor * 10;
 			}
 		} else if (anima.equals(Anima.CHAOS))
 		{

@@ -1,7 +1,12 @@
 package com.raphydaphy.arcanemagic.common.tileentity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
+import com.raphydaphy.arcanemagic.common.anima.AnimaWorldData;
+import com.raphydaphy.arcanemagic.common.data.EnumBasicAnimus;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -94,7 +99,23 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 						BlockPos here = new BlockPos(x, y, z);
 						if (world.getBlockState(here).getBlock().equals(Blocks.BEDROCK))
 						{
-							Anima.sendAnima(world, new AnimaStack(Anima.getFromBiome(world.getBiome(here)), 1),
+							List<Anima> chunkAnima = new ArrayList<Anima>();
+
+							for (EnumBasicAnimus animus : EnumBasicAnimus.values())
+							{
+								AnimaStack chunk = AnimaWorldData.AnimaGenerator.getAnima(world, animus.getAnima(),
+										world.getSeed(), (int) (x / 16), (int) (z / 16));
+								if (chunk != null && chunk.getCount() > 0)
+								{
+									for (int i = 0; i < chunk.getCount() / 100; i++)
+									{
+										chunkAnima.add(chunk.getAnima());
+									}
+								}
+							}
+							
+							Anima.sendAnima(world,
+									new AnimaStack(chunkAnima.get(world.rand.nextInt(chunkAnima.size())), 1),
 									new Vec3d(x + 0.5, y + 0.5, z + 0.5),
 									new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, false);
 							this.markDirty();
