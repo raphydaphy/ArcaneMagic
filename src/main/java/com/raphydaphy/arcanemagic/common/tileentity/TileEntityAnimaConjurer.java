@@ -113,19 +113,21 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 									}
 								}
 							}
-
-							AnimaStack conjureStack = new AnimaStack(
-									weightedChunkAnima.get(world.rand.nextInt(weightedChunkAnima.size())), 1);
-							if (Anima.removeChunkAnima(world, world.getSeed(), conjureStack, (int) (x / 16),
-									(int) (z / 16)))
+							if (weightedChunkAnima.size() > 0)
 							{
-								Anima.sendAnima(world, conjureStack, new Vec3d(x + 0.5, y + 0.5, z + 0.5),
-										new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false, false);
+								AnimaStack conjureStack = new AnimaStack(
+										weightedChunkAnima.get(world.rand.nextInt(weightedChunkAnima.size())), 1);
+								if (Anima.removeChunkAnima(world, world.getSeed(), conjureStack, (int) (x / 16),
+										(int) (z / 16)))
+								{
+									Anima.sendAnima(world, conjureStack, new Vec3d(x + 0.5, y + 0.5, z + 0.5),
+											new Vec3d(pos.getX() + 0.5, pos.getY() + 0.9, pos.getZ() + 0.5), false,
+											false);
 
-								world.getChunkFromChunkCoords((int) (x / 16), (int) (z / 16)).markDirty();
-								this.markDirty();
+									world.getChunkFromChunkCoords((int) (x / 16), (int) (z / 16)).markDirty();
+									this.markDirty();
+								}
 							}
-
 						}
 					}
 				}

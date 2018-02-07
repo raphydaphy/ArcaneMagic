@@ -331,12 +331,13 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 				return cap.getStored();
 			} else
 			{
+				
 				Map<Anima, AnimaStack> ret = new HashMap<>();
 				for (EnumBasicAnimus animus : EnumBasicAnimus.values())
 				{
 					AnimaStack stack = AnimaGenerator.getBaseAnima(world, animus.getAnima(), seed, chunkX, chunkZ);
 
-					cap.getStored().put(animus.getAnima(), stack);
+					cap.store(stack, false);
 					ret.put(animus.getAnima(), stack);
 				}
 				chunk.markDirty();
