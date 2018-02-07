@@ -16,7 +16,7 @@ public class AnimaGenerator
 	{
 		if (anima != null)
 		{
-			Anima special = Anima.getFromBiome(world.getBiome(new BlockPos(chunkX, 60, chunkZ)));
+			Anima special = Anima.getFromBiome(world.getBiome(new BlockPos(chunkX * 16, 60, chunkZ * 16)));
 			boolean chunkSpecial = anima.equals(special);
 			boolean chunkOpposite = anima.equals(Anima.getOpposite(special));
 
