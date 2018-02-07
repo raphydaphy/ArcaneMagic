@@ -5,9 +5,7 @@ import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -60,12 +58,6 @@ public class ParticleAnima extends Particle
 	{
 		this.setBoundingBox(this.getBoundingBox().offset(x, y, z));
 		this.resetPositionToBB();
-	}
-
-	@Override
-	public int getBrightnessForRender(float p_189214_1_)
-	{
-		return super.getBrightnessForRender(p_189214_1_);
 	}
 
 	@Override
@@ -130,14 +122,6 @@ public class ParticleAnima extends Particle
 		this.motionX = distX / (modifiedSpeedDivisor + rand.nextDouble());
 		this.motionY = distY / (modifiedSpeedDivisor + rand.nextDouble());
 		this.motionZ = distZ / (modifiedSpeedDivisor + rand.nextDouble());
-
-	}
-
-	@Override
-	public void renderParticle(BufferBuilder buffer, Entity entity, float partialTicks, float rotationX,
-			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ)
-	{
-		super.renderParticle(buffer, entity, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
 
 	}
 }

@@ -16,8 +16,9 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class ParticleRenderer
 {
-	ArrayList<Particle> particles = new ArrayList<Particle>();
-
+	private ArrayList<Particle> particles = new ArrayList<Particle>();
+	public static int particleCounter = 0;
+	
 	public void updateParticles()
 	{
 		ArrayList<Particle> newParticles = new ArrayList<Particle>();
@@ -43,11 +44,11 @@ public class ParticleRenderer
 
 	public void renderParticles(EntityPlayer dumbplayer, float partialTicks)
 	{
-		float f = ActiveRenderInfo.getRotationX();
-		float f1 = ActiveRenderInfo.getRotationZ();
-		float f2 = ActiveRenderInfo.getRotationYZ();
-		float f3 = ActiveRenderInfo.getRotationXY();
-		float f4 = ActiveRenderInfo.getRotationXZ();
+		float rotX = ActiveRenderInfo.getRotationX();
+		float rotZ = ActiveRenderInfo.getRotationZ();
+		float rotYZ = ActiveRenderInfo.getRotationYZ();
+		float rotXY = ActiveRenderInfo.getRotationXY();
+		float rotXZ = ActiveRenderInfo.getRotationXZ();
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if (player != null)
 		{
@@ -78,26 +79,8 @@ public class ParticleRenderer
 
 					if (p != null)
 					{
-						if (!((IModParticle) p).isAdditive())
-						{
-							p.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
-						}
-					}
-				}
-			}
-			tess.draw();
+						p.renderParticle(buffer, player, partialTicks, rotX, rotXZ, rotZ, rotYZ, rotXY);
 
-			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-			buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
-
-			for (int i = 0; i < particles.size(); i++)
-			{
-				if (i < particles.size())
-				{
-					Particle p = particles.get(i);
-					if (((IModParticle) p).isAdditive())
-					{
-						p.renderParticle(buffer, player, partialTicks, f, f4, f1, f2, f3);
 					}
 				}
 			}

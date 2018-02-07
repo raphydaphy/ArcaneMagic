@@ -107,6 +107,25 @@ public class Anima extends IForgeRegistryEntry.Impl<Anima>
 		return sendAnima(world, stack, from, to, to, simulate, spawnParticles);
 	}
 
+	public static Anima getOpposite(Anima anima)
+	{
+		if (anima.equals(INFERNO))
+			return DEPTH;
+		else if (anima.equals(DEPTH))
+			return INFERNO;
+		else if (anima.equals(CHAOS))
+			return PEACE;
+		else if (anima.equals(PEACE))
+			return CHAOS;
+		else if (anima.equals(HORIZON))
+			return OZONE;
+		else if (anima.equals(OZONE))
+			return HORIZON;
+		else
+			return null;
+
+	}
+
 	public static boolean sendAnima(World world, AnimaStack stack, Vec3d from, Vec3d to, Vec3d toCosmetic,
 			boolean simulate, boolean spawnParticles)
 	{

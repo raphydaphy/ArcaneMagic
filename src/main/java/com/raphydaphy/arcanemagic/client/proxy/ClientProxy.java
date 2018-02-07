@@ -6,10 +6,10 @@ import com.raphydaphy.arcanemagic.api.anima.Anima;
 import com.raphydaphy.arcanemagic.api.anima.AnimaStack;
 import com.raphydaphy.arcanemagic.api.notebook.NotebookCategory;
 import com.raphydaphy.arcanemagic.client.particle.ParticleAnima;
+import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaTransfer;
 import com.raphydaphy.arcanemagic.client.particle.ParticlePos;
 import com.raphydaphy.arcanemagic.client.particle.ParticleQueue;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
-import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.client.render.AnalyzerTESR;
 import com.raphydaphy.arcanemagic.client.render.AnimaConjurerTESR;
 import com.raphydaphy.arcanemagic.client.render.AnimusMaterializerTESR;
@@ -139,9 +139,14 @@ public class ClientProxy extends CommonProxy
 				size = Math.min(Math.max(world.rand.nextFloat() * 14, 3f), 3.5f);
 			}
 
-			ParticleUtil.spawnParticleGlowTest(world, to.getX() + .5f, to.getY() + .8f, to.getZ() + 0.5f, vx, vy, vz,
-					color.getRed() / 256f, color.getGreen() / 256f, color.getBlue() / 256f, alpha, size, (int) (life),
-					0.1f);
+			ParticleRenderer.particleCounter += world.rand.nextInt(3);
+			if (ParticleRenderer.particleCounter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
+					: 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0)
+			{
+				ClientProxy.particleRenderer.addParticle(new ParticleAnimaTransfer(world, to.getX() + .5f,
+						to.getY() + .8f, to.getZ() + 0.5f, vx, vy, vz, color.getRed() / 256f, color.getGreen() / 256f,
+						color.getBlue() / 256f, alpha, size, (int) (life), 0.1f));
+			}
 
 		}
 	}

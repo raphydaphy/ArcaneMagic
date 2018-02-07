@@ -13,7 +13,6 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle
 	public float colorB = 0;
 	public float initScale = 0;
 	public float initAlpha = 0;
-	public ResourceLocation texture = new ResourceLocation("arcanemagic:misc/plus");
 
 	public ParticleAnimaTransfer(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
 			float g, float b, float a, float scale, int lifetime, float gravity)
@@ -46,7 +45,7 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle
 		this.particleAngle = 2.0f * (float) Math.PI;
 		this.particleGravity = gravity;
 		this.particleAlpha = initAlpha;
-		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(texture.toString());
+		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(new ResourceLocation("arcanemagic:misc/plus").toString());
 		this.setParticleTexture(sprite);
 	}
 
@@ -104,11 +103,5 @@ public class ParticleAnimaTransfer extends Particle implements IModParticle
 	public boolean alive()
 	{
 		return this.particleAge < this.particleMaxAge;
-	}
-
-	@Override
-	public boolean isAdditive()
-	{
-		return false;
 	}
 }

@@ -7,7 +7,10 @@ import com.raphydaphy.arcanemagic.api.notebook.INotebookInfo;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.capabilities.NotebookInfo;
 import com.raphydaphy.arcanemagic.common.entity.EntityItemFancy;
+import com.raphydaphy.arcanemagic.common.handler.AnimaWorldHandler;
 import com.raphydaphy.arcanemagic.common.handler.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.common.handler.AnimaWorldHandler.AnimaGenerator;
+import com.raphydaphy.arcanemagic.common.network.PacketAnimaGenerated;
 import com.raphydaphy.arcanemagic.common.network.PacketNotebookToastOrFail;
 import com.raphydaphy.arcanemagic.common.notebook.NotebookCategories;
 
@@ -21,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -30,10 +34,31 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.ItemPickupEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 @Mod.EventBusSubscriber
 public class ModEvents
 {
+	@SubscribeEvent
+	public void onWorldTick(WorldTickEvent event)
+	{
+		if (event.world.provider.getDimensionType() == DimensionType.OVERWORLD)
+		{
+			if (event.world.rand.nextInt(500) == 0)
+			{
+				AnimaWorldHandler.AnimaGenerator.offsetX++;
+				AnimaWorldHandler.get(event.world).markDirty();
+			}
+			if (event.world.rand.nextInt(500) == 0)
+			{
+				AnimaWorldHandler.AnimaGenerator.offsetZ++;
+				AnimaWorldHandler.get(event.world).markDirty();
+			}
+			ArcaneMagicPacketHandler.INSTANCE.sendToAll(new PacketAnimaGenerated(
+					AnimaWorldHandler.AnimaGenerator.offsetX, AnimaWorldHandler.AnimaGenerator.offsetZ));
+		}
+	}
+
 	@SubscribeEvent
 	public static void onAttachCapability(AttachCapabilitiesEvent<Entity> ev)
 	{
@@ -70,6 +95,11 @@ public class ModEvents
 	{
 		if (ev.player.world.getTotalWorldTime() % 50 == 0 && !ev.player.world.isRemote)
 		{
+			for (Anima anima : Anima.REGISTRY.getValues())
+			{
+				ArcaneMagic.LOGGER.info(AnimaGenerator.getAnima(ev.player.world, anima, ev.player.world.getSeed(), (int)ev.player.posX, (int)ev.player.posZ));
+			}
+			
 			INotebookInfo info = ev.player.getCapability(INotebookInfo.CAP, null);
 
 			if (info != null)
@@ -178,7 +208,7 @@ public class ModEvents
 				{
 					if (ev.player.activeItemStack != held)
 					{// TODO please check
-							// proper (anything
+						// proper (anything
 						// that won't
 						// change)
 						ev.player.activeItemStack = held;
