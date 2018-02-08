@@ -203,8 +203,8 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 									ArcaneMagic.proxy.magicParticle(useType.getColor(), this.getPos(), here);
 								} else
 								{
-									streamPoints.add(new AnimaStreamPoint(world, new AnimaStack(useType, 1), here,
-											this.getPos()));
+									streamPoints.add(
+											new AnimaStreamPoint(world, new AnimaStack(useType, 1), this.getPos()));
 
 									te.getCapability(IAnimaStorage.CAP, null).take(new AnimaStack(useType, 1), false);
 									te.markDirty();
@@ -301,16 +301,14 @@ public class TileEntityAnimusMaterializer extends TileEntityAnimaStorage impleme
 
 	public class AnimaStreamPoint
 	{
-		private final BlockPos source;
 		private final BlockPos destination;
 		private World world;
 		private int ticksExisted;
 		private AnimaStack stack;
 
-		public AnimaStreamPoint(World world, AnimaStack stack, BlockPos source, BlockPos destination)
+		public AnimaStreamPoint(World world, AnimaStack stack, BlockPos destination)
 		{
 			ticksExisted = 0;
-			this.source = source;
 			this.destination = destination;
 			this.world = world;
 			this.stack = stack;

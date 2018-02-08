@@ -13,12 +13,12 @@ import com.raphydaphy.arcanemagic.common.notebook.entry.NotebookEntryText;
 
 import net.minecraft.item.ItemStack;
 
-public class CategoryCrystallization extends NotebookCategory
+public class CategoryMateriallization extends NotebookCategory
 {
-	public CategoryCrystallization()
+	public CategoryMateriallization()
 	{
-		setUnlocalizedName("arcanemagic.notebook.category.crystallization");
-		setRequiredTag("unlockedCrystallization");
+		setUnlocalizedName("arcanemagic.notebook.category.materialization");
+		setRequiredTag("unlockedMaterialization");
 		setPrerequisiteTag(NotebookCategories.ELEMENTAL_CRAFTING.getRequiredTag());
 		setIcon(new ItemStack(ModRegistry.ANIMUS_MATERIALIZER));
 	}

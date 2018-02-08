@@ -13,7 +13,7 @@ import com.raphydaphy.arcanemagic.common.notebook.category.CategoryFoundationsOf
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryMagicalInsights;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisions;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryNaturalDivisionsSub;
-import com.raphydaphy.arcanemagic.common.notebook.category.CategoryCrystallization;
+import com.raphydaphy.arcanemagic.common.notebook.category.CategoryMateriallization;
 import com.raphydaphy.arcanemagic.common.notebook.category.CategoryUnknownRealms;
 
 public class NotebookCategories
@@ -54,7 +54,7 @@ public class NotebookCategories
 			.setRegistryName(ArcaneMagic.MODID, "essence_manipulation");
 	public static final NotebookCategory ELEMENTAL_CRAFTING = new CategoryElementalCrafting()
 			.setRegistryName(ArcaneMagic.MODID, "elemental_crafting");
-	public static final NotebookCategory CRYSTALLIZATION = new CategoryCrystallization()
+	public static final NotebookCategory CRYSTALLIZATION = new CategoryMateriallization()
 			.setRegistryName(ArcaneMagic.MODID, "crystallization");
 
 	private static boolean done = false;
