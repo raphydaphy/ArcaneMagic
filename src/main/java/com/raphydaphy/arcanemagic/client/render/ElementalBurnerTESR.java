@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.client.render;
 
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalBurner;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnimaConjurer>
+public class ElementalBurnerTESR extends TileEntitySpecialRenderer<TileEntityElementalBurner>
 {
 	@Override
-	public void render(TileEntityAnimaConjurer te, double x, double y, double z, float partialTicks, int destroyStage,
+	public void render(TileEntityElementalBurner te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha)
 	{
 		GlStateManager.pushMatrix();
@@ -27,7 +27,7 @@ public class AnimaConjurerTESR extends TileEntitySpecialRenderer<TileEntityAnima
 		GlStateManager.popMatrix();
 	}
 
-	private void renderItem(TileEntityAnimaConjurer te)
+	private void renderItem(TileEntityElementalBurner te)
 	{
 		ItemStack stack = te.getStack();
 		if (!stack.isEmpty())

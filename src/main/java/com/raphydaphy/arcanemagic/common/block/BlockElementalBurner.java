@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.common.block;
 
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalBurner;
 import com.raphydaphy.arcanemagic.common.util.IHasRecipe;
 import com.raphydaphy.arcanemagic.common.util.RecipeHelper;
 
@@ -25,14 +25,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent.Register;
 
-public class BlockAnimaConjurer extends BlockBase implements IHasRecipe
+public class BlockElementalBurner extends BlockBase implements IHasRecipe
 {
 	public static final int GUI_ID = 3;
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 6d * (1d / 16d), 1.0D);
 
-	public BlockAnimaConjurer()
+	public BlockElementalBurner()
 	{
-		super("anima_conjurer", Material.ROCK, 2.5f, SoundType.STONE);
+		super("elemental_burner", Material.ROCK, 2.5f, SoundType.STONE);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class BlockAnimaConjurer extends BlockBase implements IHasRecipe
 	@Override
 	public void breakBlock(World world, BlockPos pos, IBlockState state)
 	{
-		TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(pos);
+		TileEntityElementalBurner te = (TileEntityElementalBurner) world.getTileEntity(pos);
 
 		ItemStack itemstack = te.getStack();
 
@@ -87,7 +87,7 @@ public class BlockAnimaConjurer extends BlockBase implements IHasRecipe
 	@Override
 	public TileEntity createTileEntity(World world, IBlockState state)
 	{
-		return new TileEntityAnimaConjurer();
+		return new TileEntityElementalBurner();
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class BlockAnimaConjurer extends BlockBase implements IHasRecipe
 		{
 			if (!world.isRemote)
 			{
-				TileEntityAnimaConjurer te = (TileEntityAnimaConjurer) world.getTileEntity(pos);
+				TileEntityElementalBurner te = (TileEntityElementalBurner) world.getTileEntity(pos);
 				if (te.getStack().isEmpty())
 				{
 					if (!player.getHeldItem(hand).isEmpty())

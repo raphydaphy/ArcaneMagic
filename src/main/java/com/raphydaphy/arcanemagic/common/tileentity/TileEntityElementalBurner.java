@@ -18,13 +18,13 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
-public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements ITickable
+public class TileEntityElementalBurner extends TileEntityAnimaStorage implements ITickable
 {
 	private ItemStack stack = ItemStack.EMPTY;
 
 	private int frameAge = 0;
 
-	public TileEntityAnimaConjurer()
+	public TileEntityElementalBurner()
 	{
 		super(100);
 	}
@@ -50,11 +50,11 @@ public class TileEntityAnimaConjurer extends TileEntityAnimaStorage implements I
 	public void markDirty()
 	{
 		super.markDirty();
-		if (TileEntityAnimaConjurer.this.world != null && TileEntityAnimaConjurer.this.pos != null)
+		if (TileEntityElementalBurner.this.world != null && TileEntityElementalBurner.this.pos != null)
 		{
-			IBlockState state = TileEntityAnimaConjurer.this.world.getBlockState(TileEntityAnimaConjurer.this.pos);
-			TileEntityAnimaConjurer.this.world.markAndNotifyBlock(TileEntityAnimaConjurer.this.pos,
-					TileEntityAnimaConjurer.this.world.getChunkFromBlockCoords(TileEntityAnimaConjurer.this.pos), state,
+			IBlockState state = TileEntityElementalBurner.this.world.getBlockState(TileEntityElementalBurner.this.pos);
+			TileEntityElementalBurner.this.world.markAndNotifyBlock(TileEntityElementalBurner.this.pos,
+					TileEntityElementalBurner.this.world.getChunkFromBlockCoords(TileEntityElementalBurner.this.pos), state,
 					state, 1 | 2);
 		}
 	}

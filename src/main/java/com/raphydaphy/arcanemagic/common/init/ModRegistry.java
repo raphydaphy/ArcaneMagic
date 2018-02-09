@@ -6,7 +6,7 @@ import java.util.List;
 import com.raphydaphy.arcanemagic.common.ArcaneMagic;
 import com.raphydaphy.arcanemagic.common.block.BlockAltar;
 import com.raphydaphy.arcanemagic.common.block.BlockAnalyzer;
-import com.raphydaphy.arcanemagic.common.block.BlockAnimaConjurer;
+import com.raphydaphy.arcanemagic.common.block.BlockElementalBurner;
 import com.raphydaphy.arcanemagic.common.block.BlockAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.block.BlockArcaneForge;
 import com.raphydaphy.arcanemagic.common.block.BlockArcaneTransfigurationTable;
@@ -25,7 +25,7 @@ import com.raphydaphy.arcanemagic.common.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.common.item.ItemParchment;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnalyzer;
-import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimaConjurer;
+import com.raphydaphy.arcanemagic.common.tileentity.TileEntityElementalBurner;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityAnimusMaterializer;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneForge;
 import com.raphydaphy.arcanemagic.common.tileentity.TileEntityArcaneTransfigurationTable;
@@ -55,7 +55,7 @@ public class ModRegistry
 	public static final BlockAltar ALTAR = new BlockAltar();
 	public static final BlockArcaneTransfigurationTable ARCANE_TRANSFIGURATION_TABLE = new BlockArcaneTransfigurationTable();
 	public static final BlockAnimusMaterializer ANIMUS_MATERIALIZER = new BlockAnimusMaterializer();
-	public static final BlockAnimaConjurer ANIMA_CONJURER = new BlockAnimaConjurer();
+	public static final BlockElementalBurner ELEMENTAL_BURNER = new BlockElementalBurner();
 	public static final BlockFancyLight FANCY_LIGHT = new BlockFancyLight();
 	public static final BlockInfernalSmelter INFERNAL_SMELTER = new BlockInfernalSmelter();
 	public static final BlockArcaneForge ARCANE_FORGE = new BlockArcaneForge();
@@ -133,7 +133,7 @@ public class ModRegistry
 		GameRegistry.registerTileEntity(TileEntityArcaneTransfigurationTable.class,
 				ArcaneMagic.MODID + "_arcane_transfiguration_table");
 		GameRegistry.registerTileEntity(TileEntityAnimusMaterializer.class, ArcaneMagic.MODID + "_animus_materializer");
-		GameRegistry.registerTileEntity(TileEntityAnimaConjurer.class, ArcaneMagic.MODID + "_anima_conjurer");
+		GameRegistry.registerTileEntity(TileEntityElementalBurner.class, ArcaneMagic.MODID + "_anima_conjurer");
 		GameRegistry.registerTileEntity(TileEntityAltar.class, ArcaneMagic.MODID + "_infusion_altar");
 		GameRegistry.registerTileEntity(TileEntityAnalyzer.class, ArcaneMagic.MODID + "_analyzer");
 		GameRegistry.registerTileEntity(TileEntityInfernalSmelter.class, ArcaneMagic.MODID + "_infernal_smelter");

@@ -9,7 +9,7 @@ item.arcanemagic.anima_chaos.name=Formation of Chaos
 item.arcanemagic.anima_creation.name=Embodiment of Creation
 item.arcanemagic.scribing_tools.name=Scribing Tools
 item.arcanemagic.blank_parchment.name=Parchment
-item.arcanemagic.ancient_parchment.name=Ancient Parchment
+item.arcanemagic.ancient_parchment.name=Ancientco Parchment
 item.arcanemagic.written_parchment.name=Written Parchment
 item.arcanemagic.mystical_illuminator.name=Mystical Illuminator
 item.arcanemagic.essence_channeling_rod.name=Essence Channeling Rod
@@ -22,7 +22,7 @@ item.arcanemagic.ancient_cloth_boots.name=Ancient Cloth Boots
 # Blocks
 tile.arcanemagic.arcane_transfiguration_table.name=Arcane Transfiguration Table
 tile.arcanemagic.animus_materializer.name=Animus Materializer
-tile.arcanemagic.anima_conjurer.name=Anima Conjurer
+tile.arcanemagic.elemental_burner.name=Elemental Burner
 tile.arcanemagic.altar.name=Altar
 tile.arcanemagic.analyzer.name=Analyzer
 tile.arcanemagic.infernal_smelter.name=Infernal Smelter
