@@ -1,6 +1,8 @@
 package com.raphydaphy.arcanemagic.block;
 
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.IBucketPickupHandler;
+import net.minecraft.block.ILiquidContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
