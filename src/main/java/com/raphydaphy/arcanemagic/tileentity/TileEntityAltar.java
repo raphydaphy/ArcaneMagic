@@ -14,6 +14,6 @@ public class TileEntityAltar extends TileEntity implements ITickable
     @Override
     public void update()
     {
-        System.out.println("Altar!");
+
     }
 }
