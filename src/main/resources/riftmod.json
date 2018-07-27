@@ -1,0 +1,10 @@
+{
+  "id": "arcanemagic",
+  "name": "Arcane Magic",
+  "authors": [
+    "raphydaphy"
+  ],
+  "listeners": [
+    "com.raphydaphy.arcanemagic.ArcaneMagic"
+  ]
+}
