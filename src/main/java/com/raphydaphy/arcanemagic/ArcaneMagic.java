@@ -3,8 +3,6 @@ package com.raphydaphy.arcanemagic;
 import com.raphydaphy.arcanemagic.block.BlockAltar;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +23,6 @@ public class ArcaneMagic implements BlockAdder, ItemAdder
     @Override
     public void registerItems()
     {
-        Item.registerItemBlock(ALTAR, ItemGroup.BUILDING_BLOCKS);
+       Item.registerItemBlock(ALTAR, ItemGroup.BUILDING_BLOCKS);
     }
 }
