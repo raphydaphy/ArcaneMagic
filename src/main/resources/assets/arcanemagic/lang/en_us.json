@@ -1,3 +1,4 @@
 {
-  "block.arcanemagic.altar" : "Altar"
+  "block.arcanemagic.altar" : "Altar",
+  "itemGroup.arcanemagic.creative_tab" : "Arcane Magic"
 }
