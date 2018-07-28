@@ -5,6 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
@@ -24,23 +25,58 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     public void readFromNBT(NBTTagCompound tag)
     {
         super.readFromNBT(tag);
+
         this.contents = ItemStack.EMPTY;
         if (tag.hasKey("item"))
         {
+            System.out.println("found key");
             this.contents = ItemStack.func_199557_a(tag.getCompoundTag("item"));
         }
-        this.contents = ItemStack.func_199557_a(tag);
+
+        System.out.println("read " + contents.getCount());
+    }
+
+    private void writeContents(NBTTagCompound tag)
+    {
+        if (!contents.isEmpty())
+        {
+            NBTTagCompound itemTag = new NBTTagCompound();
+            contents.writeToNBT(itemTag);
+            tag.setTag("item", itemTag);
+        }
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound tag)
     {
         super.writeToNBT(tag);
-        NBTTagCompound itemTag = new NBTTagCompound();
-        contents.writeToNBT(itemTag);
-        tag.setTag("item", itemTag);
+        writeContents(tag);
+
+        System.out.println("wrote " + contents.getCount());
         return tag;
     }
+
+    @Override
+    public NBTTagCompound getUpdateTag()
+    {
+        // getUpdateTag() is called whenever the chunkdata is sent to the
+        // client. In contrast getUpdatePacket() is called when the tile entity
+        // itself wants to sync to the client. In many cases you want to send
+        // over the same information in getUpdateTag() as in getUpdatePacket().
+        return writeToNBT(new NBTTagCompound());
+    }
+
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket()
+    {
+        // only write the things needed on the client
+        NBTTagCompound nbtTag = new NBTTagCompound();
+        this.writeContents(nbtTag);
+        nbtTag.setString("id", "arcanemagic:altar");
+        return new SPacketUpdateTileEntity(getPos(), -1, nbtTag);
+    }
+
+    // TODO: override onDataPacket to call this.readFromNBT(packet.getNbtCompound());
 
     @Override
     public void update()
@@ -139,7 +175,7 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     @Override
     public boolean isItemValidForSlot(int index, ItemStack stack)
     {
-        if (index == 0)
+        if (index == 0 && contents.isEmpty())
         {
             return true;
         }
