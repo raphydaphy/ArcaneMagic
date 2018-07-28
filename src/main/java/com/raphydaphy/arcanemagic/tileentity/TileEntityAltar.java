@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -56,27 +57,32 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
         return tag;
     }
 
+    public void sync()
+    {
+        markDirty();
+        if (world != null)
+        {
+            IBlockState state = world.getBlockState(getPos());
+            world.notifyBlockUpdate(getPos(), state, state, 3);
+        }
+    }
+
     @Override
     public NBTTagCompound getUpdateTag()
     {
-        // getUpdateTag() is called whenever the chunkdata is sent to the
-        // client. In contrast getUpdatePacket() is called when the tile entity
-        // itself wants to sync to the client. In many cases you want to send
-        // over the same information in getUpdateTag() as in getUpdatePacket().
-        return writeToNBT(new NBTTagCompound());
+        NBTTagCompound tag = new NBTTagCompound();
+        writeContents(tag);
+        return tag;
     }
 
     @Override
     public SPacketUpdateTileEntity getUpdatePacket()
     {
-        // only write the things needed on the client
         NBTTagCompound nbtTag = new NBTTagCompound();
         this.writeContents(nbtTag);
         nbtTag.setString("id", "arcanemagic:altar");
         return new SPacketUpdateTileEntity(getPos(), -1, nbtTag);
     }
-
-    // TODO: override onDataPacket to call this.readFromNBT(packet.getNbtCompound());
 
     @Override
     public void update()

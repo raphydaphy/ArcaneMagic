@@ -8,6 +8,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
@@ -50,6 +53,21 @@ public class BlockAltar extends BlockWaterloggableBase implements ITileEntityPro
         }
         else
         {
+            TileEntity te = world.getTileEntity(pos);
+            if (te instanceof TileEntityAltar)
+            {
+                TileEntityAltar altar = (TileEntityAltar)te;
+                ItemStack held = player.getHeldItem(hand);
+                if (!held.isEmpty() && altar.isItemValidForSlot(0, held))
+                {
+                    ItemStack add = held.copy();
+                    add.setCount(1);
+                    altar.setInventorySlotContents(0, add);
+                    held.shrink(1);
+                    altar.sync();
+                    player.openContainer.detectAndSendChanges();
+                }
+            }
             return true;
         }
     }
@@ -61,14 +79,18 @@ public class BlockAltar extends BlockWaterloggableBase implements ITileEntityPro
     }
 
     @Override
-    public void beforeReplacingBlock(final IBlockState state, final World world, final BlockPos pos, final IBlockState p_196243_4_, final boolean p_196243_5_)
+    public void beforeReplacingBlock(final IBlockState state, final World world, final BlockPos pos, final IBlockState newState, final boolean p_196243_5_)
     {
-        if (state.getBlock() == p_196243_4_.getBlock())
+        if (state.getBlock() != newState.getBlock())
         {
-            return;
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity instanceof IInventory)
+            {
+                InventoryHelper.dropInventoryItems(world, pos, (IInventory) tileEntity);
+            }
+            world.removeTileEntity(pos);
         }
-        super.beforeReplacingBlock(state, world, pos, p_196243_4_, p_196243_5_);
-        world.removeTileEntity(pos);
+        super.beforeReplacingBlock(state, world, pos, newState, p_196243_5_);
     }
 
     @Override

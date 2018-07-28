@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.block.BlockAltar;
 
+import com.raphydaphy.arcanemagic.client.render.AltarRenderer;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -44,6 +45,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void addTileEntityRenderers(Map<Class<? extends TileEntity>, TileEntityRenderer<? extends TileEntity>> renderers)
     {
-
+        System.out.println("hello it is me");
+        renderers.put(TileEntityAltar.class, new AltarRenderer());
     }
 }
