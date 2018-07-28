@@ -58,14 +58,38 @@ public class BlockAltar extends BlockWaterloggableBase implements ITileEntityPro
             {
                 TileEntityAltar altar = (TileEntityAltar)te;
                 ItemStack held = player.getHeldItem(hand);
-                if (!held.isEmpty() && altar.isItemValidForSlot(0, held))
+                if (!held.isEmpty())
                 {
-                    ItemStack add = held.copy();
-                    add.setCount(1);
-                    altar.setInventorySlotContents(0, add);
-                    held.shrink(1);
-                    altar.sync();
-                    player.openContainer.detectAndSendChanges();
+                    if (altar.isItemValidForSlot(0, held))
+                    {
+                        ItemStack add = held.copy();
+                        add.setCount(1);
+                        altar.setInventorySlotContents(0, add);
+                        altar.sync();
+
+                        if (!player.capabilities.isCreativeMode)
+                        {
+                            held.shrink(1);
+                            player.openContainer.detectAndSendChanges();
+                        }
+                    }
+                }
+                else
+                {
+                    ItemStack remove = altar.getStackInSlot(0).copy();
+                    if (!remove.isEmpty())
+                    {
+                        altar.setInventorySlotContents(0, ItemStack.EMPTY);
+                        altar.sync();
+                        if (!player.inventory.addItemStackToInventory(remove))
+                        {
+                            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 1, pos.getZ(), remove);
+                        }
+                        else
+                        {
+                            player.openContainer.detectAndSendChanges();
+                        }
+                    }
                 }
             }
             return true;
