@@ -1,4 +1,8 @@
 {
   "block.arcanemagic.altar" : "Altar",
+  "item.arcanemagic.parchment" : "Parchment",
+  "item.arcanemagic.parchment_written" : "Written Parchment",
+  "item.arcanemagic.parchment_ancient" : "Ancient Parchment",
+  "item.arcanemagic.notebook" : "Lost Notebook",
   "itemGroup.arcanemagic.creative_tab" : "Arcane Magic"
 }

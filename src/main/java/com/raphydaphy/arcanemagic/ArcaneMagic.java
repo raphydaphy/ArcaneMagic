@@ -3,6 +3,8 @@ package com.raphydaphy.arcanemagic;
 import com.raphydaphy.arcanemagic.block.BlockAltar;
 
 import com.raphydaphy.arcanemagic.client.render.AltarRenderer;
+import com.raphydaphy.arcanemagic.item.ItemNotebook;
+import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -22,7 +24,13 @@ import java.util.Map;
 public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder
 {
     public static TileEntityType ALTAR_TE;
-    public static final Block ALTAR = new BlockAltar();
+
+    private static final Block ALTAR = new BlockAltar();
+
+    private static final Item PARCHMENT = new Item(new Item.Builder().group(ItemGroup.MISC));
+    private static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
+    private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
+    private static final Item NOTEBOOK = new ItemNotebook();
 
     @Override
     public void registerBlocks()
@@ -34,6 +42,11 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void registerItems()
     {
        Item.registerItemBlock(ALTAR, ItemGroup.MISC);
+
+       Item.registerItem(new ResourceLocation("arcanemagic", "parchment"), PARCHMENT);
+       Item.registerItem(new ResourceLocation("arcanemagic", "parchment_written"), WRITTEN_PARCHMENT);
+       Item.registerItem(new ResourceLocation("arcanemagic", "parchment_ancient"), ANCIENT_PARCHMENT);
+       Item.registerItem(new ResourceLocation("arcanemagic", "notebook"), NOTEBOOK);
     }
 
     @Override
