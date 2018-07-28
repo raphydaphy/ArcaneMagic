@@ -1,0 +1,59 @@
+package com.raphydaphy.arcanemagic.client.gui;
+
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
+
+public class GUINotebook extends GuiScreen
+{
+    private EntityPlayer player;
+
+    public GUINotebook(EntityPlayer player)
+    {
+        this.player = player;
+    }
+
+    @Override
+    protected void initGui()
+    {
+        super.initGui();
+        System.out.println("init gui");
+    }
+
+    @Override
+    public void drawScreen(int p_drawScreen_1_, int p_drawScreen_2_, float p_drawScreen_3_)
+    {
+
+    }
+
+    @Override
+    public boolean doesGuiPauseGame()
+    {
+        return false;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
+    {
+        if (!super.mouseClicked(mouseX, mouseY, mouseButton))
+        {
+            if (mouseButton == 0)
+            {
+                System.out.println("left click");
+            }
+
+            return true;
+        }
+        return false;
+    }
+    
+    @Override
+    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_)
+    {
+        if (!super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_))
+        {
+            System.out.println("key pressed " + keyCode + ", " + p_keyPressed_2_ + ", " + p_keyPressed_3_);
+            return false;
+        }
+        return true;
+    }
+}

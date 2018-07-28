@@ -32,6 +32,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item NOTEBOOK = new ItemNotebook();
 
+
     @Override
     public void registerBlocks()
     {
@@ -58,7 +59,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void addTileEntityRenderers(Map<Class<? extends TileEntity>, TileEntityRenderer<? extends TileEntity>> renderers)
     {
-        System.out.println("hello it is me");
+        System.out.println("added renderer");
         renderers.put(TileEntityAltar.class, new AltarRenderer());
     }
 }
