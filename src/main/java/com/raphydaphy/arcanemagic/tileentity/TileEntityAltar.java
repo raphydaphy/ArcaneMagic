@@ -27,10 +27,8 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     {
         if (tag.hasKey("x"))
         {
-            System.out.println("breaking the actual soul: " + tag.getInteger("x") + ", " + tag.getInteger("y") + ", " + tag.getInteger("z"));
             super.readFromNBT(tag);
         }
-        this.contents = ItemStack.EMPTY;
         if (tag.hasKey("item"))
         {
             System.out.println("found key");
@@ -55,8 +53,6 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     {
         super.writeToNBT(tag);
         writeContents(tag);
-
-        System.out.println("wrote " + contents.getCount());
         return tag;
     }
 
@@ -83,7 +79,6 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     {
         NBTTagCompound nbtTag = new NBTTagCompound();
         this.writeContents(nbtTag);
-        nbtTag.setBoolean("forRender", true);
         nbtTag.setString("id", "arcanemagic:altar");
         return new SPacketUpdateTileEntity(getPos(), -1, nbtTag);
     }
