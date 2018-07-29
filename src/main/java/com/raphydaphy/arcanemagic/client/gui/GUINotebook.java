@@ -47,11 +47,11 @@ public class GUINotebook extends GuiScreen
     }
     
     @Override
-    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int p_keyPressed_3_)
+    public boolean keyPressed(int keyCode, int p_keyPressed_2_, int modifier)
     {
-        if (!super.keyPressed(keyCode, p_keyPressed_2_, p_keyPressed_3_))
+        if (!super.keyPressed(keyCode, p_keyPressed_2_, modifier))
         {
-            System.out.println("key pressed " + keyCode + ", " + p_keyPressed_2_ + ", " + p_keyPressed_3_);
+            System.out.println("key pressed " + keyCode + ", " + p_keyPressed_2_ + ", " + modifier);
             return false;
         }
         return true;

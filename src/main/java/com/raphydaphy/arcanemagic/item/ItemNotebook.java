@@ -15,7 +15,7 @@ public class ItemNotebook extends Item
 {
     public ItemNotebook()
     {
-        super(new Item.Builder().group(ItemGroup.MISC));
+        super(new Item.Builder().group(ItemGroup.MISC).maxStackSize(1));
     }
 
     @Override
