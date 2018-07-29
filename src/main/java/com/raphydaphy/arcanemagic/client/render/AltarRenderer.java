@@ -11,8 +11,6 @@ import net.minecraft.client.renderer.entity.model.ModelChest;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.util.EnumFacing;
 
 // TODO: sideonly client
 public class AltarRenderer<T extends TileEntityAltar> extends TileEntityRenderer<T>
@@ -20,7 +18,6 @@ public class AltarRenderer<T extends TileEntityAltar> extends TileEntityRenderer
     @Override
     public void func_199341_a(TileEntityAltar altar, double x, double y, double z, float partialTicks, int destroyStage)
     {
-        System.out.println("render render render");
 
         GlStateManager.pushAttrib();
         GlStateManager.pushMatrix();

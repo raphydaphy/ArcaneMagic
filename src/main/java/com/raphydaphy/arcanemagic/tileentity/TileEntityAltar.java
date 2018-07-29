@@ -25,8 +25,11 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     @Override
     public void readFromNBT(NBTTagCompound tag)
     {
-        super.readFromNBT(tag);
-
+        if (tag.hasKey("x"))
+        {
+            System.out.println("breaking the actual soul: " + tag.getInteger("x") + ", " + tag.getInteger("y") + ", " + tag.getInteger("z"));
+            super.readFromNBT(tag);
+        }
         this.contents = ItemStack.EMPTY;
         if (tag.hasKey("item"))
         {
@@ -70,7 +73,7 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     @Override
     public NBTTagCompound getUpdateTag()
     {
-        NBTTagCompound tag = new NBTTagCompound();
+        NBTTagCompound tag = super.getUpdateTag();
         writeContents(tag);
         return tag;
     }
@@ -80,6 +83,7 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     {
         NBTTagCompound nbtTag = new NBTTagCompound();
         this.writeContents(nbtTag);
+        nbtTag.setBoolean("forRender", true);
         nbtTag.setString("id", "arcanemagic:altar");
         return new SPacketUpdateTileEntity(getPos(), -1, nbtTag);
     }
@@ -87,7 +91,7 @@ public class TileEntityAltar extends TileEntity implements ITickable, IInventory
     @Override
     public void update()
     {
-
+        System.out.println(this.pos.getX() + ", " + this.pos.getY() + ", " + this.pos.getZ() + " and also this " + contents.getCount());
     }
 
     @Override
