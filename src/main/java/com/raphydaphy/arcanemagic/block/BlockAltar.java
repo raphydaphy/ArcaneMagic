@@ -81,6 +81,7 @@ public class BlockAltar extends BlockWaterloggableBase implements ITileEntityPro
                     {
                         altar.setInventorySlotContents(0, ItemStack.EMPTY);
                         altar.sync();
+
                         if (!player.inventory.addItemStackToInventory(remove))
                         {
                             InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 1, pos.getZ(), remove);
