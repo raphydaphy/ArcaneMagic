@@ -21,8 +21,6 @@ import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
-import org.dimdev.riftloader.listener.InitializationListener;
-import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.Map;
 
@@ -32,14 +30,13 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
 
     public static TileEntityType PEDESTAL_TE;
 
-    private static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
+    public static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
     private static final Block PEDESTAL = new BlockPedestal(Block.Builder.create(Material.WOOD).hardnessAndResistance(2.0F, 500.0F).soundType(SoundType.WOOD));
 
     private static final Item PARCHMENT = new Item(new Item.Builder().group(ItemGroup.MISC));
     private static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
     private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item NOTEBOOK = new ItemNotebook();
-
 
     @Override
     public void registerBlocks()
