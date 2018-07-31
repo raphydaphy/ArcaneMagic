@@ -21,6 +21,8 @@ import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
+import org.dimdev.riftloader.listener.InitializationListener;
+import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.Map;
 

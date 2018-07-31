@@ -5,6 +5,7 @@
     "raphydaphy"
   ],
   "listeners": [
-    "com.raphydaphy.arcanemagic.ArcaneMagic"
+    "com.raphydaphy.arcanemagic.ArcaneMagic",
+    "com.raphydaphy.arcanemagic.core.ArcaneMagicCore"
   ]
 }

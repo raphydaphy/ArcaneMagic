@@ -3,14 +3,17 @@ buildscript {
         jcenter()
         maven { url 'https://www.dimdev.org/maven/' }
         maven { url 'https://www.dimdev.org/maven/' }
+        maven { url 'http://repo.spongepowered.org/maven' }
     }
     dependencies {
         classpath 'org.dimdev:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'org.spongepowered:mixingradle:0.4-SNAPSHOT'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
+apply plugin: 'org.spongepowered.core'
 
 group 'com.raphydaphy.arcanemagic'
 version '1.0.0'
@@ -33,4 +36,9 @@ minecraft {
     mappings = 'snapshot_3'
     runDir = 'run'
     tweakClass = 'org.dimdev.riftloader.launch.RiftLoaderTweaker'
+}
+
+mixin {
+    defaultObfuscationEnv notch
+    add sourceSets.main, 'mixins.arcanemagic.refmap.json'
 }
