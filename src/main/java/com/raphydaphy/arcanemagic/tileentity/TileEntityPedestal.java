@@ -7,16 +7,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
 
-public class TileEntityAltar extends TileEntityInventory implements ITickable
+public class TileEntityPedestal extends TileEntityInventory implements ITickable
 {
     public static final int SLOT = 0;
 
     private int time = 0;
     private int prevTime = 0;
 
-    public TileEntityAltar()
+    public TileEntityPedestal()
     {
-        super(ArcaneMagic.ALTAR_TE, "container.arcanemagic.altar", 1);
+        super(ArcaneMagic.PEDESTAL_TE, "container.arcanemagic.pedestal", 1);
     }
 
     public void sync()

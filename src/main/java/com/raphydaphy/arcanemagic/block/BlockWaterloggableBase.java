@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.block.ILiquidContainer;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
@@ -10,6 +11,7 @@ import net.minecraft.init.Fluids;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -87,6 +89,23 @@ public class BlockWaterloggableBase extends Block implements IBucketPickupHandle
     protected void addPropertiesToBuilder(net.minecraft.state.StateContainer.Builder<Block, IBlockState> p_addPropertiesToBuilder_1_)
     {
         p_addPropertiesToBuilder_1_.addProperties(WATERLOGGED);
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState p_isFullCube_1_)
+    {
+        return false;
+    }
+
+    @Override
+    public BlockFaceShape getBlockFaceShape(IBlockReader reader, IBlockState blockState, BlockPos pos, EnumFacing facing)
+    {
+        return BlockFaceShape.UNDEFINED;
+    }
+
+    @Override
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
     }
 
     static

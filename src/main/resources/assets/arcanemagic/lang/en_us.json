@@ -1,5 +1,6 @@
 {
   "block.arcanemagic.altar" : "Altar",
+  "block.arcanemagic.pedestal" : "Pedestal",
   "item.arcanemagic.parchment" : "Parchment",
   "item.arcanemagic.parchment_written" : "Written Parchment",
   "item.arcanemagic.parchment_ancient" : "Ancient Parchment",
