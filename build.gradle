@@ -2,7 +2,6 @@ buildscript {
     repositories {
         jcenter()
         maven { url 'https://www.dimdev.org/maven/' }
-        maven { url 'https://www.dimdev.org/maven/' }
         maven { url 'http://repo.spongepowered.org/maven' }
     }
     dependencies {
@@ -13,7 +12,7 @@ buildscript {
 
 apply plugin: 'net.minecraftforge.gradle.tweaker-client'
 apply plugin: 'java'
-apply plugin: 'org.spongepowered.core'
+apply plugin: 'org.spongepowered.mixin'
 
 group 'com.raphydaphy.arcanemagic'
 version '1.0.0'
@@ -28,12 +27,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.dimdev:rift:1.0.2-12:dev'
+    implementation 'org.dimdev:rift:1.0.2-27:dev'
 }
 
 minecraft {
     version = '1.13'
-    mappings = 'snapshot_3'
+    mappings = 'snapshot_5'
     runDir = 'run'
     tweakClass = 'org.dimdev.riftloader.launch.RiftLoaderTweaker'
 }
