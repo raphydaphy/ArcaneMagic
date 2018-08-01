@@ -6,7 +6,7 @@ import com.raphydaphy.arcanemagic.anima.IAnimaInductible;
 import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
 import net.minecraft.util.ITickable;
 
-public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInductible, IAnimaReceiver, ITickable
+public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInductible, IAnimaReceiver
 {
     private static final int CAPACITY = 1000;
 
@@ -40,7 +40,6 @@ public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInd
         {
             if (!world.isRemote)
             {
-                System.out.println("recieving " + anima + " anima");
                 if (getCurrentAnima() + anima <= CAPACITY)
                 {
                     this.anima += anima;
@@ -54,14 +53,5 @@ public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInd
             return true;
         }
         return false;
-    }
-
-    @Override
-    public void update()
-    {
-        if (world.getTotalWorldTime() % 50 == 0)
-        {
-            System.out.println("storing: " + getCurrentAnima());
-        }
     }
 }

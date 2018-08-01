@@ -14,6 +14,8 @@ import net.minecraft.world.World;
 
 public class ItemWrittenParchment extends Item
 {
+    public static final String DESC_KEY = "parchmentDescription";
+
     private final boolean ancient;
 
     public ItemWrittenParchment(boolean ancient)

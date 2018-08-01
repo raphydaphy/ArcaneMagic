@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.core;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
-import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaDeath;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import net.minecraft.client.Minecraft;
@@ -10,16 +9,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityDrowned;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(EntityDrowned.class)
-public abstract class MixinEntityLivingBase extends EntityLivingBase
+public abstract class MixinEntityDrowned extends EntityLivingBase
 {
-    protected MixinEntityLivingBase(EntityType<?> type, World world)
+    protected MixinEntityDrowned(EntityType<?> type, World world)
     {
         super(type, world);
     }

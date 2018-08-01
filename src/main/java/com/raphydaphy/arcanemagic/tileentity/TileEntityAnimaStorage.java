@@ -25,7 +25,6 @@ public class TileEntityAnimaStorage extends TileEntity implements IAnimaBlock
         }
         else
         {
-            System.out.println("lol it dosent have the key");
             anima = 0;
         }
     }
