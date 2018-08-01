@@ -68,10 +68,9 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
 
             if (!world.isRemote)
             {
+                deathPacket(altar);
                 if (altar != null)
                 {
-                    // TODO: this is VERY BAD
-                    Minecraft.getMinecraft().getConnection().sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar.toLong()));
                     TileEntity te = world.getTileEntity(altar);
                     if (te instanceof TileEntityAltar)
                     {
@@ -82,5 +81,12 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
 
             this.setDead();
         }
+    }
+
+    private void deathPacket(BlockPos altar)
+    {
+        // TODO: this is VERY BAD
+
+        Minecraft.getMinecraft().getConnection().sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar));
     }
 }

@@ -16,11 +16,11 @@ public class PacketDeathParticles implements Packet<INetHandlerPlayServer>
     private double z;
     private float width;
     private float height;
-    private long altar;
+    private BlockPos altar;
 
     public PacketDeathParticles() { }
 
-    public PacketDeathParticles(double x, double y, double z, float width, float height, long pos)
+    public PacketDeathParticles(double x, double y, double z, float width, float height, BlockPos pos)
     {
         this.x = x;
         this.y = y;
@@ -38,7 +38,10 @@ public class PacketDeathParticles implements Packet<INetHandlerPlayServer>
         z = buf.readDouble();
         width = buf.readFloat();
         height = buf.readFloat();
-        altar = buf.readLong();
+        if (buf.readBoolean())
+        {
+            altar = BlockPos.fromLong(buf.readLong());
+        }
     }
 
     @Override
@@ -49,7 +52,11 @@ public class PacketDeathParticles implements Packet<INetHandlerPlayServer>
         buf.writeDouble(z);
         buf.writeFloat(width);
         buf.writeFloat(height);
-        buf.writeLong(altar);
+        buf.writeBoolean(altar != null);
+        if (altar != null)
+        {
+            buf.writeLong(altar.toLong());
+        }
     }
 
     @Override
@@ -61,7 +68,6 @@ public class PacketDeathParticles implements Packet<INetHandlerPlayServer>
 
     private void particles()
     {
-        BlockPos altar = BlockPos.fromLong(this.altar);
         Random rand = Minecraft.getMinecraft().world.rand;
         for(int i = 0; i < 20; i++)
         {

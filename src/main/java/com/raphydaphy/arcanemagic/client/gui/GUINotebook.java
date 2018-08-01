@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.client.gui;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 
+// TODO: sideonly client
 public class GUINotebook extends GuiScreen
 {
     private EntityPlayer player;
