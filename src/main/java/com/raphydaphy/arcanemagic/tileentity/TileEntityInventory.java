@@ -176,7 +176,7 @@ public class TileEntityInventory extends TileEntity implements IInventory
     @Override
     public ITextComponent getName()
     {
-        return new TextComponentTranslation("name");
+        return new TextComponentTranslation(name);
     }
 
     @Override

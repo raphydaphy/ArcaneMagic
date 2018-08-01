@@ -8,4 +8,6 @@ public class ArcaneMagicResources
 
     public static final ResourceLocation PARTICLES = new ResourceLocation(MOD_ID, "textures/particle/particles.png");
     public static final ResourceLocation PARCHMENT = new ResourceLocation(MOD_ID, "textures/gui/parchment.png");
+
+    public static final String DROWNED_DISCOVERY = "progression.arcanemagic.drowned_discovery";
 }

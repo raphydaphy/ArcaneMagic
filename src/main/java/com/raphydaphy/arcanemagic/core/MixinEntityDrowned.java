@@ -5,11 +5,14 @@ import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityDrowned;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -41,6 +44,22 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         }
 
         return null;
+    }
+
+    @Override
+    protected void dropLoot(boolean recentlyHit, int lootingModifier, DamageSource source)
+    {
+        super.dropFewItems(recentlyHit, lootingModifier);
+
+        if (!world.isRemote)
+        {
+            Entity trueSource = source.getTrueSource();
+            if (trueSource instanceof EntityPlayer)
+            {
+                EntityPlayer player = (EntityPlayer)trueSource;
+
+            }
+        }
     }
 
     @Override

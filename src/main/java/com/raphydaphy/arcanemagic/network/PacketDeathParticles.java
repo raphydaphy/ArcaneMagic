@@ -4,12 +4,12 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaDeath;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.INetHandlerPlayServer;
+import net.minecraft.network.play.INetHandlerPlayClient;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
 
-public class PacketDeathParticles implements Packet<INetHandlerPlayServer>
+public class PacketDeathParticles implements Packet<INetHandlerPlayClient>
 {
     private double x;
     private double y;
@@ -60,7 +60,7 @@ public class PacketDeathParticles implements Packet<INetHandlerPlayServer>
     }
 
     @Override
-    public void processPacket(INetHandlerPlayServer iNetHandlerPlayServer)
+    public void processPacket(INetHandlerPlayClient iNetHandlerPlayServer)
     {
         System.out.println(x + ", " + y + ", " + z + ", " + width + ", " + height + ", " + altar);
         particles();
