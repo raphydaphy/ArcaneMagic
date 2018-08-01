@@ -7,8 +7,8 @@ import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
-import com.raphydaphy.arcanemagic.tileentity.TileEntityAnimaStorage;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityPedestal;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -22,11 +22,15 @@ import net.minecraft.util.ResourceLocation;
 import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
+import org.dimdev.rift.listener.client.TextureAdder;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
-public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder
+public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, TextureAdder
 {
     public static final String MOD_ID = "arcanemagic";
 
@@ -71,5 +75,13 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void addTileEntityRenderers(Map<Class<? extends TileEntity>, TileEntityRenderer<? extends TileEntity>> renderers)
     {
         renderers.put(TileEntityPedestal.class, new PedestalRenderer());
+    }
+
+    @Override
+    public Collection<? extends ResourceLocation> getBuiltinTextures()
+    {
+        List<ResourceLocation> textures = new ArrayList<>();
+        textures.add(ArcaneMagicResources.DEATH_PARTICLES);
+        return textures;
     }
 }

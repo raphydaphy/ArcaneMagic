@@ -2,9 +2,12 @@ package com.raphydaphy.arcanemagic.core;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaDeath;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityDrowned;
 import net.minecraft.entity.monster.EntityEnderman;
@@ -26,6 +29,7 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
     @Override
     public void onDeath(DamageSource src)
     {
+        super.onDeath(src);
         if (!world.isRemote)
         {
             BlockPos altar = findAltar();
@@ -59,5 +63,45 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
         }
 
         return null;
+    }
+
+    @Override
+    protected void onDeathUpdate()
+    {
+        ++this.deathTime;
+        if (this.deathTime == 20)
+        {
+            int count;
+            if (!this.world.isRemote && (this.isPlayer() || this.recentlyHit > 0 && this.canDropLoot() && this.world.getGameRules().getBoolean("doMobLoot")))
+            {
+                count = this.getExperiencePoints(this.attackingPlayer);
+
+                while(count > 0)
+                {
+                    int lvt_2_1_ = EntityXPOrb.getXPSplit(count);
+                    count -= lvt_2_1_;
+                    this.world.spawnEntity(new EntityXPOrb(this.world, this.posX, this.posY, this.posZ, lvt_2_1_));
+                }
+            }
+
+            this.setDead();
+
+            if (world.isRemote)
+            {
+                for(count = 0; count < 40; ++count)
+                {
+                    double speedX = -this.rand.nextGaussian() * 0.02D;
+                    double speedY = -this.rand.nextGaussian() * 0.02D;
+                    double speedZ = -this.rand.nextGaussian() * 0.02D;
+                    deathParticles(this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, speedX, speedY, speedZ);
+                }
+            }
+        }
+
+    }
+
+    private void deathParticles(double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
+    {
+        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleAnimaDeath(world, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn));
     }
 }
