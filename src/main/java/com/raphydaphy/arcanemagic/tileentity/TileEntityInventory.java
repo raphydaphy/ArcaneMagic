@@ -52,6 +52,11 @@ public class TileEntityInventory extends TileEntity implements IInventory
         return tag;
     }
 
+    public void contentsChanged()
+    {
+        markDirty();
+    }
+
     @Override
     public boolean isEmpty()
     {
@@ -84,7 +89,7 @@ public class TileEntityInventory extends TileEntity implements IInventory
 
         if (!stack.isEmpty())
         {
-            this.markDirty();
+            contentsChanged();
         }
 
         return stack;
@@ -105,7 +110,7 @@ public class TileEntityInventory extends TileEntity implements IInventory
             stack.setCount(this.getInventoryStackLimit());
         }
 
-        this.markDirty();
+        contentsChanged();
     }
 
     @Override

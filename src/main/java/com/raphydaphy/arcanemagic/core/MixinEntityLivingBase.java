@@ -1,12 +1,15 @@
 package com.raphydaphy.arcanemagic.core;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityDrowned;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityPhantom;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,11 +26,18 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
     @Override
     public void onDeath(DamageSource src)
     {
-        BlockPos altar = findAltar();
-
-        if (altar != null)
+        if (!world.isRemote)
         {
-            System.out.println("soul dust go");
+            BlockPos altar = findAltar();
+
+            if (altar != null)
+            {
+                TileEntity te = world.getTileEntity(altar);
+                if (te instanceof TileEntityAltar)
+                {
+                    ((TileEntityAltar)te).receiveAnima(world.rand.nextInt(100) + 150, AnimaReceiveMethod.SPECIAL);
+                }
+            }
         }
     }
 

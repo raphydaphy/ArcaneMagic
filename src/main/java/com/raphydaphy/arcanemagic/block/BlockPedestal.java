@@ -56,7 +56,7 @@ public class BlockPedestal extends BlockWaterloggableBase implements ITileEntity
                         ItemStack add = held.copy();
                         add.setCount(1);
                         pedestal.setInventorySlotContents(0, add);
-                        pedestal.sync();
+                        pedestal.contentsChanged();
 
                         if (!player.capabilities.isCreativeMode)
                         {
@@ -71,7 +71,7 @@ public class BlockPedestal extends BlockWaterloggableBase implements ITileEntity
                     if (!remove.isEmpty())
                     {
                         pedestal.setInventorySlotContents(0, ItemStack.EMPTY);
-                        pedestal.sync();
+                        pedestal.contentsChanged();
 
                         if (!player.inventory.addItemStackToInventory(remove))
                         {

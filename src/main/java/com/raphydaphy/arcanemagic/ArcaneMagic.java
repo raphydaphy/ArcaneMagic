@@ -6,6 +6,8 @@ import com.raphydaphy.arcanemagic.block.BlockPedestal;
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityAnimaStorage;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityPedestal;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -28,6 +30,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
 {
     public static final String MOD_ID = "arcanemagic";
 
+    public static TileEntityType ALTAR_TE;
     public static TileEntityType PEDESTAL_TE;
 
     public static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
@@ -60,6 +63,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void registerTileEntityTypes()
     {
+        ALTAR_TE = TileEntityType.registerTileEntityType("arcanemagic:altar", TileEntityType.Builder.create(TileEntityAltar::new));
         PEDESTAL_TE = TileEntityType.registerTileEntityType("arcanemagic:pedestal", TileEntityType.Builder.create(TileEntityPedestal::new));
     }
 

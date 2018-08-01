@@ -19,7 +19,8 @@ public class TileEntityPedestal extends TileEntityInventory implements ITickable
         super(ArcaneMagic.PEDESTAL_TE, "container.arcanemagic.pedestal", 1);
     }
 
-    public void sync()
+    @Override
+    public void contentsChanged()
     {
         markDirty();
         if (world != null)
