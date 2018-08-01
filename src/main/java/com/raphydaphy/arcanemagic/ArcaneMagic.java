@@ -22,15 +22,11 @@ import net.minecraft.util.ResourceLocation;
 import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
-import org.dimdev.rift.listener.client.TextureAdder;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, TextureAdder
+public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder
 {
     public static TileEntityType ALTAR_TE;
     public static TileEntityType PEDESTAL_TE;
@@ -73,13 +69,5 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void addTileEntityRenderers(Map<Class<? extends TileEntity>, TileEntityRenderer<? extends TileEntity>> renderers)
     {
         renderers.put(TileEntityPedestal.class, new PedestalRenderer());
-    }
-
-    @Override
-    public Collection<? extends ResourceLocation> getBuiltinTextures()
-    {
-        List<ResourceLocation> textures = new ArrayList<>();
-        textures.add(ArcaneMagicResources.PARTICLES);
-        return textures;
     }
 }
