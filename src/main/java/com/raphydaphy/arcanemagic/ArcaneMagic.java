@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.block.BlockPedestal;
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
+import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityPedestal;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
@@ -15,18 +16,20 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.network.EnumPacketDirection;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 
 import org.dimdev.rift.listener.BlockAdder;
 import org.dimdev.rift.listener.ItemAdder;
+import org.dimdev.rift.listener.PacketAdder;
 import org.dimdev.rift.listener.TileEntityTypeAdder;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
 import java.util.Map;
 
-public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder
+public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder
 {
     public static TileEntityType ALTAR_TE;
     public static TileEntityType PEDESTAL_TE;
@@ -69,5 +72,29 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void addTileEntityRenderers(Map<Class<? extends TileEntity>, TileEntityRenderer<? extends TileEntity>> renderers)
     {
         renderers.put(TileEntityPedestal.class, new PedestalRenderer());
+    }
+
+    @Override
+    public void registerHandshakingPackets(PacketRegistrationReceiver receiver)
+    {
+
+    }
+
+    @Override
+    public void registerPlayPackets(PacketRegistrationReceiver receiver)
+    {
+        receiver.registerPacket(EnumPacketDirection.CLIENTBOUND, PacketDeathParticles.class);
+    }
+
+    @Override
+    public void registerStatusPackets(PacketRegistrationReceiver receiver)
+    {
+
+    }
+
+    @Override
+    public void registerLoginPackets(PacketRegistrationReceiver receiver)
+    {
+
     }
 }

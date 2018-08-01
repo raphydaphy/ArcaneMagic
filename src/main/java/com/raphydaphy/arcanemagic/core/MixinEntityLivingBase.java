@@ -3,46 +3,25 @@ package com.raphydaphy.arcanemagic.core;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaDeath;
+import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityDrowned;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityPhantom;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin({EntityDrowned.class, EntityEnderman.class, EntityBlaze.class, EntityPhantom.class})
+@Mixin(EntityDrowned.class)
 public abstract class MixinEntityLivingBase extends EntityLivingBase
 {
     protected MixinEntityLivingBase(EntityType<?> type, World world)
     {
         super(type, world);
-    }
-
-    @Override
-    public void onDeath(DamageSource src)
-    {
-        super.onDeath(src);
-        if (!world.isRemote)
-        {
-            BlockPos altar = findAltar();
-
-            if (altar != null)
-            {
-                TileEntity te = world.getTileEntity(altar);
-                if (te instanceof TileEntityAltar)
-                {
-                    ((TileEntityAltar)te).receiveAnima(world.rand.nextInt(100) + 150, AnimaReceiveMethod.SPECIAL);
-                }
-            }
-        }
     }
 
     private BlockPos findAltar()
@@ -56,6 +35,7 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
                     BlockPos pos = new BlockPos(x, y, z);
                     if (world.getBlockState(pos).getBlock() == ArcaneMagic.ALTAR)
                     {
+                        System.out.println("hooray we fouhnd a rare edvicdence of human life it is known as the sacrificial altar!!1");
                         return pos;
                     }
                 }
@@ -84,24 +64,23 @@ public abstract class MixinEntityLivingBase extends EntityLivingBase
                 }
             }
 
-            this.setDead();
+            BlockPos altar = findAltar();
 
-            if (world.isRemote)
+            if (!world.isRemote)
             {
-                for(count = 0; count < 40; ++count)
+                if (altar != null)
                 {
-                    double speedX = -this.rand.nextGaussian() * 0.02D;
-                    double speedY = -this.rand.nextGaussian() * 0.02D;
-                    double speedZ = -this.rand.nextGaussian() * 0.02D;
-                    deathParticles(this.posX + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, this.posY + (double)(this.rand.nextFloat() * this.height), this.posZ + (double)(this.rand.nextFloat() * this.width * 2.0F) - (double)this.width, speedX, speedY, speedZ);
+                    // TODO: this is VERY BAD
+                    Minecraft.getMinecraft().getConnection().sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar.toLong()));
+                    TileEntity te = world.getTileEntity(altar);
+                    if (te instanceof TileEntityAltar)
+                    {
+                        ((TileEntityAltar)te).receiveAnima(world.rand.nextInt(100) + 150, AnimaReceiveMethod.SPECIAL);
+                    }
                 }
             }
+
+            this.setDead();
         }
-
-    }
-
-    private void deathParticles(double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
-    {
-        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleAnimaDeath(world, xCoordIn, yCoordIn, zCoordIn, xSpeedIn, ySpeedIn, zSpeedIn));
     }
 }
