@@ -15,7 +15,12 @@ public class GUIParchment extends GuiScreen
 {
     // x and y size of the parchment texture
     private static final int DIMENSIONS = 64;
-    private static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * 3);
+    private static final int TEX_HEIGHT = 69;
+
+    private static final int PROGRESS_BAR_LENGTH = 48;
+
+    private static final float scale = 3;
+    private static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * scale);
 
     private EntityPlayer player;
     private ItemStack stack;
@@ -48,9 +53,17 @@ public class GUIParchment extends GuiScreen
 
         mc.getTextureManager().bindTexture(ArcaneMagicResources.PARCHMENT);
         drawScaledCustomSizeModalRect(screenX, screenY, 0, 0, DIMENSIONS, DIMENSIONS,
-                SCALED_DIMENSIONS, SCALED_DIMENSIONS, DIMENSIONS, DIMENSIONS);
+                SCALED_DIMENSIONS, SCALED_DIMENSIONS, DIMENSIONS, TEX_HEIGHT);
 
-        ArcaneMagicUtils.drawCenteredSplitString(mc.fontRenderer, I18n.format("parchment.arcanemagic.drowned_discovery"), mc.mainWindow.getScaledWidth() / 2, mc.mainWindow.getScaledHeight() / 2, 160,0);
+        drawScaledCustomSizeModalRect(
+                (int)(screenX + 8 * scale), (int)(screenY + 54 * scale), 0, DIMENSIONS,
+                PROGRESS_BAR_LENGTH, 5, (int)(PROGRESS_BAR_LENGTH * scale), (int)((5) * scale), DIMENSIONS, TEX_HEIGHT);
+
+        drawScaledCustomSizeModalRect(
+                (int)(screenX + 9 * scale), (int)(screenY + 55 * scale), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
+                1, 3, (int)(15 * scale), (int)((3) * scale), DIMENSIONS, TEX_HEIGHT);
+
+        ArcaneMagicUtils.drawCenteredSplitString(mc.fontRenderer, I18n.format("parchment.arcanemagic.drowned_discovery"), mc.mainWindow.getScaledWidth() / 2, (int)(screenY + 28 * scale), 160,0);
 
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
