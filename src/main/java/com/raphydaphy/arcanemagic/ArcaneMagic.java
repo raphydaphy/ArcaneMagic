@@ -32,8 +32,6 @@ import java.util.Map;
 
 public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, TextureAdder
 {
-    public static final String MOD_ID = "arcanemagic";
-
     public static TileEntityType ALTAR_TE;
     public static TileEntityType PEDESTAL_TE;
 
@@ -48,8 +46,8 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void registerBlocks()
     {
-        Block.registerBlock(new ResourceLocation(MOD_ID, "altar"), ALTAR);
-        Block.registerBlock(new ResourceLocation(MOD_ID, "pedestal"), PEDESTAL);
+        Block.registerBlock(new ResourceLocation(ArcaneMagicResources.MOD_ID, "altar"), ALTAR);
+        Block.registerBlock(new ResourceLocation(ArcaneMagicResources.MOD_ID, "pedestal"), PEDESTAL);
     }
 
     @Override
@@ -58,10 +56,10 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
         Item.registerItemBlock(ALTAR, ItemGroup.MISC);
         Item.registerItemBlock(PEDESTAL, ItemGroup.MISC);
 
-        Item.registerItem(new ResourceLocation(MOD_ID, "parchment"), PARCHMENT);
-        Item.registerItem(new ResourceLocation(MOD_ID, "parchment_written"), WRITTEN_PARCHMENT);
-        Item.registerItem(new ResourceLocation(MOD_ID, "parchment_ancient"), ANCIENT_PARCHMENT);
-        Item.registerItem(new ResourceLocation(MOD_ID, "notebook"), NOTEBOOK);
+        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment"), PARCHMENT);
+        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_written"), WRITTEN_PARCHMENT);
+        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_ancient"), ANCIENT_PARCHMENT);
+        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "notebook"), NOTEBOOK);
     }
 
     @Override
@@ -81,7 +79,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public Collection<? extends ResourceLocation> getBuiltinTextures()
     {
         List<ResourceLocation> textures = new ArrayList<>();
-        textures.add(ArcaneMagicResources.DEATH_PARTICLES);
+        textures.add(ArcaneMagicResources.PARTICLES);
         return textures;
     }
 }
