@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityDrowned;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -104,6 +105,12 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
     {
         // TODO: this is VERY BAD
 
-        Minecraft.getMinecraft().getConnection().sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar));
+        if (getServer() != null)
+        {
+            for (EntityPlayerMP player : getServer().getPlayerList().getPlayers())
+            {
+               player.connection.sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar));
+            }
+        }
     }
 }
