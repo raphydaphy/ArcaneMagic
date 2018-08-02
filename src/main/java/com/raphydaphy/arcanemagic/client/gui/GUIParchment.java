@@ -1,26 +1,23 @@
 package com.raphydaphy.arcanemagic.client.gui;
 
-import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import net.minecraft.client.Minecraft;
+import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.glfw.GLFWGamepadState;
 
 // TODO: sideonly client
 public class GUIParchment extends GuiScreen
 {
     // x and y size of the parchment texture
-    private static final int DIMENSIONS = 64;
-    private static final int TEX_HEIGHT = 69;
+    public static final int DIMENSIONS = 64;
+    public static final int TEX_HEIGHT = 69;
 
-    private static final int PROGRESS_BAR_LENGTH = 48;
+    public static final int PROGRESS_BAR_LENGTH = 48;
+    public static final int FULL_PROGRESS = PROGRESS_BAR_LENGTH - 2;
 
-    private static final float scale = 3;
-    private static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * scale);
+    public static final float SCALE = 3;
+    public static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * SCALE);
 
     private EntityPlayer player;
     private ItemStack stack;
@@ -51,19 +48,9 @@ public class GUIParchment extends GuiScreen
         int screenX = (mc.mainWindow.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
         int screenY = (mc.mainWindow.getScaledHeight() / 2) - (SCALED_DIMENSIONS / 2);
 
-        mc.getTextureManager().bindTexture(ArcaneMagicResources.PARCHMENT);
-        drawScaledCustomSizeModalRect(screenX, screenY, 0, 0, DIMENSIONS, DIMENSIONS,
-                SCALED_DIMENSIONS, SCALED_DIMENSIONS, DIMENSIONS, TEX_HEIGHT);
+        ParchmentDrownedDiscovery parchment = new ParchmentDrownedDiscovery();
 
-        drawScaledCustomSizeModalRect(
-                (int)(screenX + 8 * scale), (int)(screenY + 54 * scale), 0, DIMENSIONS,
-                PROGRESS_BAR_LENGTH, 5, (int)(PROGRESS_BAR_LENGTH * scale), (int)((5) * scale), DIMENSIONS, TEX_HEIGHT);
-
-        drawScaledCustomSizeModalRect(
-                (int)(screenX + 9 * scale), (int)(screenY + 55 * scale), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
-                1, 3, (int)(15 * scale), (int)((3) * scale), DIMENSIONS, TEX_HEIGHT);
-
-        ArcaneMagicUtils.drawCenteredSplitString(mc.fontRenderer, I18n.format("parchment.arcanemagic.drowned_discovery"), mc.mainWindow.getScaledWidth() / 2, (int)(screenY + 28 * scale), 160,0);
+        parchment.drawParchment(mc, screenX, screenY);
 
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
