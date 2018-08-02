@@ -4,7 +4,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
-import net.minecraft.client.Minecraft;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
@@ -12,9 +12,12 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityDrowned;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 
@@ -48,19 +51,34 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
     }
 
     @Override
-    protected void dropLoot(boolean recentlyHit, int lootingModifier, DamageSource source)
+    public void onDeath(DamageSource source)
     {
-        super.dropFewItems(recentlyHit, lootingModifier);
-
+        super.onDeath(source);
         if (!world.isRemote)
         {
             Entity trueSource = source.getTrueSource();
             if (trueSource instanceof EntityPlayer)
             {
-                EntityPlayer player = (EntityPlayer)trueSource;
-
+                onDeathServer((EntityPlayer)trueSource);
             }
         }
+    }
+
+    private void onDeathServer(EntityPlayer killer)
+    {
+        int killed = ((EntityPlayerMP)killer).getStatFile().readStat(StatList.KILLED.addStat(EntityType.DROWNED));
+        if (killed == 1)
+        {
+            killer.sendMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_FIRST_KILL).setStyle(new Style().setItalic(true)));
+        }
+    }
+
+    @Override
+    protected void dropLoot(boolean recentlyHit, int lootingModifier, DamageSource source)
+    {
+        super.dropFewItems(recentlyHit, lootingModifier);
+
+
     }
 
     @Override
@@ -109,7 +127,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         {
             for (EntityPlayerMP player : getServer().getPlayerList().getPlayers())
             {
-               player.connection.sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar));
+                player.connection.sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar));
             }
         }
     }
