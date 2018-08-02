@@ -6,5 +6,7 @@
   "item.arcanemagic.parchment_ancient": "Ancient Parchment",
   "item.arcanemagic.notebook": "Lost Notebook",
   "chat.arcanemagic.drowned_first_kill": "I've never seen a zombie which looked like that before. I should get some paper to write about my findings.",
-  "parchment.arcanemagic.drowned_discovery": "I am writing this to record an unusual species which I discovered whilst swimming today. It featured many of the same properties as the Zombies I have seen countless times before, but it was blue and thrived underwater. When I killed it, the particles released looked very different to anything I am used to. In order to study this further I will need to kill more of them and document my findings once I reach a conclusion."
+  "chat.arcanemagic.drowned_quest_complete": "You have learned more about the Drowned",
+  "parchment.arcanemagic.drowned_discovery_1": "I am writing this to record an unusual species which I discovered whilst swimming today. It featured many of the same properties as the Zombies I have seen countless times before, but it was blue and thrived underwater. When I killed it, the particles released looked very different to anything I am used to. In order to study this further I will need to kill more of them and document my findings once I reach a conclusion.",
+  "parchment.arcanemagic.drowned_discovery_2": "In order to learn more about the drowned zombies which I discovered, I killed several to study the particles released when they died. Unfortunately, I have not been able to come to a conclusion as the particles dispersed into the atmosphere too quickly. To solve this problem, I have drawn up simple plans for an Altar which may be capable of concentrating these particles if I kill the zombies near it."
 }

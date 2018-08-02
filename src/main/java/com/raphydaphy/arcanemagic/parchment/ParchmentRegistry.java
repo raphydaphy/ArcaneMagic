@@ -23,18 +23,14 @@ public class ParchmentRegistry
     {
         if (from.getItem() instanceof ItemWrittenParchment)
         {
-            System.out.println("1");
             NBTTagCompound tag = from.getTagCompound();
             if (tag != null && tag.hasKey(ArcaneMagicResources.PARCHMENT_KEY))
             {
-                System.out.println("2");
                 String key = tag.getString(ArcaneMagicResources.PARCHMENT_KEY);
                 for (IParchment parchment : REGISTRY)
                 {
-                    System.out.println("3");
                     if (parchment.getName().equals(key))
                     {
-                        System.out.println("4");
                         return parchment;
                     }
                 }

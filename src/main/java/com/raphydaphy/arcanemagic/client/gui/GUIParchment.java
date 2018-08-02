@@ -19,12 +19,10 @@ public class GUIParchment extends GuiScreen
     public static final float SCALE = 3;
     public static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * SCALE);
 
-    private EntityPlayer player;
     private ItemStack stack;
 
-    public GUIParchment(EntityPlayer player, ItemStack stack)
+    public GUIParchment(ItemStack stack)
     {
-        this.player = player;
         this.stack = stack;
     }
 
@@ -32,7 +30,6 @@ public class GUIParchment extends GuiScreen
     protected void initGui()
     {
         super.initGui();
-        System.out.println("init gui");
     }
 
     @Override
@@ -50,7 +47,7 @@ public class GUIParchment extends GuiScreen
 
         ParchmentDrownedDiscovery parchment = new ParchmentDrownedDiscovery();
 
-        parchment.drawParchment(mc, screenX, screenY);
+        parchment.drawParchment(stack, mc, screenX, screenY);
 
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();

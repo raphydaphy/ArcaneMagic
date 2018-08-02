@@ -6,10 +6,11 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 
 public interface IParchment
 {
-    void drawParchment(Minecraft mc, int screenX, int screenY);
+    void drawParchment(ItemStack parchment, Minecraft mc, int screenX, int screenY);
     String getName();
 
     default void bindTexture(Minecraft mc)

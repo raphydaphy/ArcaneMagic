@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.gui.GUINotebook;
 import com.raphydaphy.arcanemagic.client.gui.GUIParchment;
 import com.raphydaphy.arcanemagic.parchment.IParchment;
+import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.client.Minecraft;
@@ -28,7 +29,7 @@ public class ItemWrittenParchment extends Item
 
     public ItemWrittenParchment(boolean ancient)
     {
-        super(new Item.Builder().group(ItemGroup.MISC));
+        super(new Item.Builder().group(ItemGroup.MISC).maxStackSize(1));
         this.ancient = ancient;
     }
 
@@ -62,6 +63,6 @@ public class ItemWrittenParchment extends Item
 
     private void openGUI(EntityPlayer player, ItemStack stack)
     {
-        Minecraft.getMinecraft().displayGuiScreen(new GUIParchment(player, stack));
+        Minecraft.getMinecraft().displayGuiScreen(new GUIParchment(stack));
     }
 }

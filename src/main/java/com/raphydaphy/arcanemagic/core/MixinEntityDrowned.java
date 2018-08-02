@@ -2,7 +2,11 @@ package com.raphydaphy.arcanemagic.core;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
+import com.raphydaphy.arcanemagic.parchment.IParchment;
+import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
+import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.entity.Entity;
@@ -12,6 +16,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityDrowned;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -40,7 +45,6 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
                     BlockPos pos = new BlockPos(x, y, z);
                     if (world.getBlockState(pos).getBlock() == ArcaneMagic.ALTAR)
                     {
-                        System.out.println("hooray we fouhnd a rare edvicdence of human life it is known as the sacrificial altar!!1");
                         return pos;
                     }
                 }
@@ -50,7 +54,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         return null;
     }
 
-    @Override
+    @Override // TODO: move to forge death event
     public void onDeath(DamageSource source)
     {
         super.onDeath(source);
@@ -60,6 +64,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
             if (trueSource instanceof EntityPlayer)
             {
                 onDeathServer((EntityPlayer)trueSource);
+                updateParchment((EntityPlayer)trueSource);
             }
         }
     }
@@ -73,12 +78,30 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         }
     }
 
-    @Override
-    protected void dropLoot(boolean recentlyHit, int lootingModifier, DamageSource source)
+    private void updateParchment(EntityPlayer player)
     {
-        super.dropFewItems(recentlyHit, lootingModifier);
+        for (ItemStack stack : player.inventoryContainer.getInventory())
+        {
+            if (stack.getItem() instanceof ItemWrittenParchment && stack.getTagCompound() != null)
+            {
+                IParchment parchment = ParchmentRegistry.getParchment(stack);
+                if (parchment instanceof ParchmentDrownedDiscovery)
+                {
+                    int kills = stack.getTagCompound().getInteger(ParchmentDrownedDiscovery.DROWNED_KILLS);
+                    if (kills < 4)
+                    {
+                        stack.getTagCompound().setInteger(ParchmentDrownedDiscovery.DROWNED_KILLS, kills + 1);
+                        player.openContainer.detectAndSendChanges();
 
-
+                        if (kills == 3)
+                        {
+                            player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_DISCOVERY_COMPLETE).setStyle(new Style().setItalic(true)), true);
+                        }
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     @Override
