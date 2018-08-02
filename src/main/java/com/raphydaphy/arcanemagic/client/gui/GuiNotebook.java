@@ -4,11 +4,11 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 
 // TODO: sideonly client
-public class GUINotebook extends GuiScreen
+public class GuiNotebook extends GuiScreen
 {
     private EntityPlayer player;
 
-    public GUINotebook(EntityPlayer player)
+    public GuiNotebook(EntityPlayer player)
     {
         this.player = player;
     }

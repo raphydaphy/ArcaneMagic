@@ -1,13 +1,15 @@
 package com.raphydaphy.arcanemagic.client.gui;
 
+import com.raphydaphy.arcanemagic.parchment.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
+import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 // TODO: sideonly client
-public class GUIParchment extends GuiScreen
+public class GuiParchment extends GuiScreen
 {
     // x and y size of the parchment texture
     public static final int DIMENSIONS = 64;
@@ -20,10 +22,12 @@ public class GUIParchment extends GuiScreen
     public static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * SCALE);
 
     private ItemStack stack;
+    private IParchment parchment;
 
-    public GUIParchment(ItemStack stack)
+    public GuiParchment(ItemStack stack, IParchment parchment)
     {
         this.stack = stack;
+        this.parchment = parchment;
     }
 
     @Override
@@ -45,9 +49,7 @@ public class GUIParchment extends GuiScreen
         int screenX = (mc.mainWindow.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
         int screenY = (mc.mainWindow.getScaledHeight() / 2) - (SCALED_DIMENSIONS / 2);
 
-        ParchmentDrownedDiscovery parchment = new ParchmentDrownedDiscovery();
-
-        parchment.drawParchment(stack, mc, screenX, screenY);
+        parchment.drawParchment(stack,this, mc, screenX, screenY, mouseX, mouseY);
 
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();

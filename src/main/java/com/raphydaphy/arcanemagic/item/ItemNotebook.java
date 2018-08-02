@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.item;
 
-import com.raphydaphy.arcanemagic.client.gui.GUINotebook;
+import com.raphydaphy.arcanemagic.client.gui.GuiNotebook;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -30,6 +30,6 @@ public class ItemNotebook extends Item
 
     void openGUI(EntityPlayer player)
     {
-        Minecraft.getMinecraft().displayGuiScreen(new GUINotebook(player));
+        Minecraft.getMinecraft().displayGuiScreen(new GuiNotebook(player));
     }
 }
