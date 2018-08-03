@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaDeath;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
