@@ -1,10 +1,12 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSimpleAnimated;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -25,9 +27,17 @@ public class ParticleAnimaDeath extends Particle
     public ParticleAnimaDeath(World world, BlockPos destination, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
     {
         super(world, xCoordIn, yCoordIn, zCoordIn);
-        this.motionX = xSpeedIn;
-        this.motionY = ySpeedIn;
-        this.motionZ = zSpeedIn;
+        if (destination == null)
+		{
+			this.motionX = xSpeedIn;
+			this.motionY = ySpeedIn;
+			this.motionZ = zSpeedIn;
+		}
+		else {
+			this.motionX = 0;
+			this.motionY = 0;
+			this.motionZ = 0;
+		}
         this.particleScale *= 0.5F;
         this.particleMaxAge = 60 + this.rand.nextInt(12);
         this.destination = destination;
@@ -97,39 +107,31 @@ public class ParticleAnimaDeath extends Particle
         }
 
         this.setParticleTextureIndex(this.textureIdx + this.numAgingFrames - 1 - this.particleAge * this.numAgingFrames / this.particleMaxAge);
-        this.motionY += (double) this.yAccel;
+        if (destination == null)
+        {
+            this.motionY += (double) this.yAccel;
+        }
         this.move(this.motionX, this.motionY, this.motionZ);
-        this.motionX *= (double) this.baseAirFriction;
-        this.motionY *= (double) this.baseAirFriction;
-        this.motionZ *= (double) this.baseAirFriction;
-
-        if (destination != null)
+        if (destination == null)
         {
-            System.out.println(destination);
-            if (posX > destination.getX())
-            {
-                motionX /= 3;
-            }
-            else if (posX < destination.getX())
-            {
-                motionX *= 3;
-            }
+            this.motionX *= (double) this.baseAirFriction;
+            this.motionY *= (double) this.baseAirFriction;
+            this.motionZ *= (double) this.baseAirFriction;
 
-            if (posZ > destination.getZ())
+            System.out.println(motionX);
+
+            if (this.onGround)
             {
-                motionZ /= 3;
-            }
-            else if (posZ < destination.getZ())
-            {
-                motionZ *= 3;
+                this.motionX *= 0.699999988079071D;
+                this.motionZ *= 0.699999988079071D;
             }
         }
-
-        if (this.onGround)
-        {
-            this.motionX *= 0.699999988079071D;
-            this.motionZ *= 0.699999988079071D;
-        }
-
+        else
+		{
+			Vector3f motion = ArcaneMagicUtils.lerp((float)posX, (float)posY, (float)posZ, destination.getX() + 0.5f, destination.getY() + 0.6f, destination.getZ() + 0.5f, (float)particleAge / particleMaxAge);
+			motionX = motion.func_195899_a() - posX;
+			motionY = motion.func_195900_b() - posY;
+			motionZ = motion.func_195902_c() - posZ;
+		}
     }
 }
