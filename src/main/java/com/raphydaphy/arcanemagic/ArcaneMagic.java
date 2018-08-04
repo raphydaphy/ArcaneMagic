@@ -39,7 +39,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     private static final Block PEDESTAL = new BlockPedestal(Block.Builder.create(Material.WOOD).hardnessAndResistance(2.0F, 500.0F).soundType(SoundType.WOOD));
 
     public static final Item PARCHMENT = new Item(new Item.Builder().group(ItemGroup.MISC));
-    private static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
+    public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
     private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item NOTEBOOK = new ItemNotebook();
 

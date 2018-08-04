@@ -118,8 +118,6 @@ public class ParticleAnimaDeath extends Particle
             this.motionY *= (double) this.baseAirFriction;
             this.motionZ *= (double) this.baseAirFriction;
 
-            System.out.println(motionX);
-
             if (this.onGround)
             {
                 this.motionX *= 0.699999988079071D;

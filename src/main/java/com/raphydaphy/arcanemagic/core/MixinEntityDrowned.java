@@ -16,7 +16,10 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.monster.EntityDrowned;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -36,11 +39,11 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
 
     private BlockPos findAltar()
     {
-        for (int x = (int)this.posX - 1; x <= (int)this.posX + 1; x++)
+        for (int x = (int)this.posX - 2; x <= (int)this.posX + 2; x++)
         {
             for (int y = (int)this.posY - 2; y <= (int)this.posY; y++)
             {
-                for (int z = (int)this.posZ - 1; z <= (int)this.posZ + 1; z++)
+                for (int z = (int)this.posZ - 2; z <= (int)this.posZ + 2; z++)
                 {
                     BlockPos pos = new BlockPos(x, y, z);
                     if (world.getBlockState(pos).getBlock() == ArcaneMagic.ALTAR)
@@ -75,6 +78,47 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         if (killed == 1)
         {
             killer.sendMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_FIRST_KILL).setStyle(new Style().setItalic(true)));
+            return;
+        }
+        ItemStack paper = ItemStack.EMPTY;
+        ItemStack parchment = ItemStack.EMPTY;
+        for (ItemStack stack : killer.inventoryContainer.getInventory())
+        {
+            if (stack.getItem() == Items.PAPER)
+            {
+               paper = stack;
+            }
+            else if (stack.getItem() instanceof ItemWrittenParchment || stack.getItem() == ArcaneMagic.PARCHMENT)
+            {
+                parchment = stack;
+                if (parchment.getItem() == ArcaneMagic.WRITTEN_PARCHMENT)
+                {
+                    break;
+                }
+            }
+        }
+        // TODO: use entitydata to check if they have killed drowned with paper already
+        if (!paper.isEmpty() && parchment.isEmpty())
+        {
+            killer.sendMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_PAPER_KILL).setStyle(new Style().setItalic(true)));
+            paper.shrink(1);
+            killer.openContainer.detectAndSendChanges();
+        }
+        else if (parchment.getItem() == ArcaneMagic.PARCHMENT)
+        {
+            killer.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_PARCHMENT_KILL).setStyle(new Style().setItalic(true)), true);
+            parchment.shrink(1);
+            ItemStack written_parchment = new ItemStack(ArcaneMagic.WRITTEN_PARCHMENT);
+            written_parchment.setTagCompound(new NBTTagCompound());
+            if (written_parchment.getTagCompound() != null)
+            {
+                written_parchment.getTagCompound().setString(ArcaneMagicResources.PARCHMENT_KEY, ArcaneMagicResources.DROWNED_DISCOVERY);
+            }
+            if (!killer.inventory.addItemStackToInventory(written_parchment))
+            {
+                InventoryHelper.spawnItemStack(world, killer.posX, killer.posY, killer.posZ, written_parchment);
+            }
+            killer.openContainer.detectAndSendChanges();
         }
     }
 
