@@ -1,7 +1,13 @@
 package com.raphydaphy.arcanemagic.util;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.List;
 
@@ -30,5 +36,18 @@ public class ArcaneMagicUtils
             y += fontRenderer.FONT_HEIGHT;
         }
 
+    }
+
+    public static void beforeReplacingTileEntity(final IBlockState state, final World world, final BlockPos pos, final IBlockState newState)
+    {
+        if (state.getBlock() != newState.getBlock())
+        {
+            TileEntity tileEntity = world.getTileEntity(pos);
+            if (tileEntity instanceof IInventory)
+            {
+                InventoryHelper.dropInventoryItems(world, pos, (IInventory) tileEntity);
+            }
+            world.removeTileEntity(pos);
+        }
     }
 }

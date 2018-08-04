@@ -5,6 +5,8 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ShapeUtils;
@@ -14,11 +16,11 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class BlockAltar extends BlockWaterloggableBase implements ITileEntityProvider
+public class BlockInductor extends BlockWaterloggableBase implements ITileEntityProvider
 {
     private static final VoxelShape shape;
 
-    public BlockAltar(Builder builder)
+    public BlockInductor(Builder builder)
     {
         super(builder);
     }
@@ -31,10 +33,7 @@ public class BlockAltar extends BlockWaterloggableBase implements ITileEntityPro
 
     static
     {
-        VoxelShape bottom = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 4.0D, 14.0D);
-        VoxelShape middle = Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 6.0D, 12.0D);
-        VoxelShape top = Block.makeCuboidShape(0.0D, 6.0D, 0.0D, 16.0D, 12.0D, 16.0D);
-        shape = ShapeUtils.func_197872_a(ShapeUtils.func_197872_a(bottom, middle), top);
+        shape = Block.makeCuboidShape(4.0D, 4.0D, 4.0D, 12.0D, 12.0D, 12.0D);
     }
 
     @Override

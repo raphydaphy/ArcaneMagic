@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.tileentity.TileEntityPedestal;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -97,15 +98,7 @@ public class BlockPedestal extends BlockWaterloggableBase implements ITileEntity
     @Override
     public void beforeReplacingBlock(final IBlockState state, final World world, final BlockPos pos, final IBlockState newState, final boolean p_196243_5_)
     {
-        if (state.getBlock() != newState.getBlock())
-        {
-            TileEntity tileEntity = world.getTileEntity(pos);
-            if (tileEntity instanceof IInventory)
-            {
-                InventoryHelper.dropInventoryItems(world, pos, (IInventory) tileEntity);
-            }
-            world.removeTileEntity(pos);
-        }
+        ArcaneMagicUtils.beforeReplacingTileEntity(state, world, pos, newState);
         super.beforeReplacingBlock(state, world, pos, newState, p_196243_5_);
     }
 

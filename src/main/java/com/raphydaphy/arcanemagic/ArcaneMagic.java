@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.block.BlockAltar;
+import com.raphydaphy.arcanemagic.block.BlockInductor;
 import com.raphydaphy.arcanemagic.block.BlockPedestal;
 
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
@@ -37,6 +38,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public static TileEntityType PEDESTAL_TE;
 
     public static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
+    private static final Block INDUCTOR = new BlockInductor(Block.Builder.create(Material.WOOD).hardnessAndResistance(2, 500).soundType(SoundType.STONE));
     private static final Block PEDESTAL = new BlockPedestal(Block.Builder.create(Material.WOOD).hardnessAndResistance(2.0F, 500.0F).soundType(SoundType.WOOD));
 
     public static final Item PARCHMENT = new ItemParchment();
@@ -48,6 +50,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void registerBlocks()
     {
         Block.registerBlock(new ResourceLocation(ArcaneMagicResources.MOD_ID, "altar"), ALTAR);
+        Block.registerBlock(new ResourceLocation(ArcaneMagicResources.MOD_ID, "inductor"), INDUCTOR);
         Block.registerBlock(new ResourceLocation(ArcaneMagicResources.MOD_ID, "pedestal"), PEDESTAL);
     }
 
@@ -55,6 +58,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void registerItems()
     {
         Item.registerItemBlock(ALTAR, ItemGroup.MISC);
+        Item.registerItemBlock(INDUCTOR, ItemGroup.MISC);
         Item.registerItemBlock(PEDESTAL, ItemGroup.MISC);
 
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment"), PARCHMENT);
