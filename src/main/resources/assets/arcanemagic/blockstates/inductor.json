@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "arcanemagic:block/inductor" }
+    "block_mode=false": { "model": "arcanemagic:block/inductor_air" },
+    "block_mode=true": { "model": "arcanemagic:block/inductor_block" }
   }
 }

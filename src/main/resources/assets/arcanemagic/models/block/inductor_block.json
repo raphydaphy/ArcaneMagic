@@ -1,0 +1,21 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"1": "arcanemagic:block/altar_top",
+		"particle": "arcanemagic:block/altar_top"
+	},
+	"elements": [
+		{
+			"from": [4, 4, 4],
+			"to": [12, 12, 12],
+			"faces": {
+				"north": {"uv": [4, 4, 12, 12], "texture": "#1"},
+				"east": {"uv": [4, 4, 12, 12], "texture": "#1"},
+				"south": {"uv": [4, 4, 12, 12], "texture": "#1"},
+				"west": {"uv": [4, 4, 12, 12], "texture": "#1"},
+				"up": {"uv": [4, 4, 12, 12], "texture": "#1"},
+				"down": {"uv": [4, 4, 12, 12], "texture": "#1"}
+			}
+		}
+	]
+}

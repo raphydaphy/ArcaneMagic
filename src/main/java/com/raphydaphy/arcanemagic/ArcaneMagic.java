@@ -11,6 +11,7 @@ import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
+import com.raphydaphy.arcanemagic.tileentity.TileEntityInductor;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityPedestal;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.block.Block;
@@ -35,6 +36,7 @@ import java.util.Map;
 public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder
 {
     public static TileEntityType ALTAR_TE;
+    public static TileEntityType INDUCTOR_TE;
     public static TileEntityType PEDESTAL_TE;
 
     public static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
@@ -71,6 +73,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void registerTileEntityTypes()
     {
         ALTAR_TE = TileEntityType.registerTileEntityType("arcanemagic:altar", TileEntityType.Builder.create(TileEntityAltar::new));
+        INDUCTOR_TE = TileEntityType.registerTileEntityType("arcanemagic:inductor", TileEntityType.Builder.create(TileEntityInductor::new));
         PEDESTAL_TE = TileEntityType.registerTileEntityType("arcanemagic:pedestal", TileEntityType.Builder.create(TileEntityPedestal::new));
     }
 

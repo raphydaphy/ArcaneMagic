@@ -86,9 +86,9 @@ public class BlockWaterloggableBase extends Block implements IBucketPickupHandle
     }
 
     @Override
-    protected void addPropertiesToBuilder(net.minecraft.state.StateContainer.Builder<Block, IBlockState> p_addPropertiesToBuilder_1_)
+    protected void addPropertiesToBuilder(net.minecraft.state.StateContainer.Builder<Block, IBlockState> map)
     {
-        p_addPropertiesToBuilder_1_.addProperties(WATERLOGGED);
+        map.addProperties(WATERLOGGED);
     }
 
     @Override

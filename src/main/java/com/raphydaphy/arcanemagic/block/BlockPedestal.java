@@ -43,50 +43,47 @@ public class BlockPedestal extends BlockWaterloggableBase implements ITileEntity
         {
             return true;
         }
-        else
+        TileEntity te = world.getTileEntity(pos);
+        if (te instanceof TileEntityPedestal)
         {
-            TileEntity te = world.getTileEntity(pos);
-            if (te instanceof TileEntityPedestal)
+            TileEntityPedestal pedestal = (TileEntityPedestal)te;
+            ItemStack held = player.getHeldItem(hand);
+            if (!held.isEmpty())
             {
-                TileEntityPedestal pedestal = (TileEntityPedestal)te;
-                ItemStack held = player.getHeldItem(hand);
-                if (!held.isEmpty())
+                if (pedestal.isItemValidForSlot(0, held))
                 {
-                    if (pedestal.isItemValidForSlot(0, held))
-                    {
-                        ItemStack add = held.copy();
-                        add.setCount(1);
-                        pedestal.setInventorySlotContents(0, add);
-                        pedestal.contentsChanged();
+                    ItemStack add = held.copy();
+                    add.setCount(1);
+                    pedestal.setInventorySlotContents(0, add);
+                    pedestal.contentsChanged();
 
-                        if (!player.capabilities.isCreativeMode)
-                        {
-                            held.shrink(1);
-                            player.openContainer.detectAndSendChanges();
-                        }
-                    }
-                }
-                else
-                {
-                    ItemStack remove = pedestal.getStackInSlot(0).copy();
-                    if (!remove.isEmpty())
+                    if (!player.capabilities.isCreativeMode)
                     {
-                        pedestal.setInventorySlotContents(0, ItemStack.EMPTY);
-                        pedestal.contentsChanged();
-
-                        if (!player.inventory.addItemStackToInventory(remove))
-                        {
-                            InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 1, pos.getZ(), remove);
-                        }
-                        else
-                        {
-                            player.openContainer.detectAndSendChanges();
-                        }
+                        held.shrink(1);
+                        player.openContainer.detectAndSendChanges();
                     }
                 }
             }
-            return true;
+            else
+            {
+                ItemStack remove = pedestal.getStackInSlot(0).copy();
+                if (!remove.isEmpty())
+                {
+                    pedestal.setInventorySlotContents(0, ItemStack.EMPTY);
+                    pedestal.contentsChanged();
+
+                    if (!player.inventory.addItemStackToInventory(remove))
+                    {
+                        InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY() + 1, pos.getZ(), remove);
+                    }
+                    else
+                    {
+                        player.openContainer.detectAndSendChanges();
+                    }
+                }
+            }
         }
+        return true;
     }
 
     @Override
