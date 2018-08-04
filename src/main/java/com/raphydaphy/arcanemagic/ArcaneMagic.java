@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.block.BlockInductor;
 import com.raphydaphy.arcanemagic.block.BlockPedestal;
 
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
+import com.raphydaphy.arcanemagic.item.ItemLinkingRod;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
@@ -46,6 +47,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public static final Item PARCHMENT = new ItemParchment();
     public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
     private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
+    private static final Item LINKING_ROD = new ItemLinkingRod();
     private static final Item NOTEBOOK = new ItemNotebook();
 
     @Override
@@ -66,6 +68,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment"), PARCHMENT);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_written"), WRITTEN_PARCHMENT);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_ancient"), ANCIENT_PARCHMENT);
+        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "linking_rod"), LINKING_ROD);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "notebook"), NOTEBOOK);
     }
 

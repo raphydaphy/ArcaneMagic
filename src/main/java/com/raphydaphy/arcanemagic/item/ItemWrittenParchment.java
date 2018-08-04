@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 
 public class ItemWrittenParchment extends Item
 {
+    public static final String PARCHMENT_KEY = "key.arcanemagic.parchment_type";
     private final boolean ancient;
 
     public ItemWrittenParchment(boolean ancient)

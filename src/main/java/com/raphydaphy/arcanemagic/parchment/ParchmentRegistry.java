@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.parchment;
 
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -24,9 +23,9 @@ public class ParchmentRegistry
         if (from.getItem() instanceof ItemWrittenParchment)
         {
             NBTTagCompound tag = from.getTagCompound();
-            if (tag != null && tag.hasKey(ArcaneMagicResources.PARCHMENT_KEY))
+            if (tag != null && tag.hasKey(ItemWrittenParchment.PARCHMENT_KEY))
             {
-                String key = tag.getString(ArcaneMagicResources.PARCHMENT_KEY);
+                String key = tag.getString(ItemWrittenParchment.PARCHMENT_KEY);
                 for (IParchment parchment : REGISTRY)
                 {
                     if (parchment.getName().equals(key))

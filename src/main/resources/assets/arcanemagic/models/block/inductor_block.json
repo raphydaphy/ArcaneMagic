@@ -1,5 +1,7 @@
 {
 	"credit": "Made with Blockbench",
+	"parent": "block/block",
+	"comment:": "This dosen't represent anything close to what the anima inductor should look like. It's just so that I don't have to stare at missing textures",
 	"textures": {
 		"1": "arcanemagic:block/altar_top",
 		"particle": "arcanemagic:block/altar_top"

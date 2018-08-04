@@ -8,11 +8,15 @@ import net.minecraft.client.particle.ParticleSimpleAnimated;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class ParticleAnimaDeath extends Particle
 {
+    public static final ResourceLocation PARTICLES = new ResourceLocation(ArcaneMagicResources.MOD_ID, "textures/particle/particles.png");
+
+    // ParticleSimpleAnimated
     protected final int textureIdx;
     protected final int numAgingFrames;
     private final float yAccel;
@@ -22,6 +26,7 @@ public class ParticleAnimaDeath extends Particle
     private float fadeTargetBlue;
     private boolean fadingColor;
 
+    // Custom
     private final BlockPos destination;
 
     public ParticleAnimaDeath(World world, BlockPos destination, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
@@ -80,7 +85,7 @@ public class ParticleAnimaDeath extends Particle
     @Override
     public void renderParticle(BufferBuilder builder, Entity entity, float p_renderParticle_3_, float p_renderParticle_4_, float p_renderParticle_5_, float p_renderParticle_6_, float p_renderParticle_7_, float p_renderParticle_8_)
     {
-        Minecraft.getMinecraft().getTextureManager().bindTexture(ArcaneMagicResources.PARTICLES);
+        Minecraft.getMinecraft().getTextureManager().bindTexture(PARTICLES);
         super.renderParticle(builder, entity, p_renderParticle_3_, p_renderParticle_4_, p_renderParticle_5_, p_renderParticle_6_, p_renderParticle_7_, p_renderParticle_8_);
     }
 

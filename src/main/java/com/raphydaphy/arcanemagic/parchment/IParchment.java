@@ -9,9 +9,12 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 public interface IParchment
 {
+    ResourceLocation PARCHMENT = new ResourceLocation(ArcaneMagicResources.MOD_ID, "textures/gui/parchment.png");
+
     String getName();
 
     // TODO: sideonly client
@@ -20,7 +23,7 @@ public interface IParchment
     // TODO: sideonly client
     default void bindTexture(Minecraft mc)
     {
-        mc.getTextureManager().bindTexture(ArcaneMagicResources.PARCHMENT);
+        mc.getTextureManager().bindTexture(PARCHMENT);
     }
 
     // TODO: sideonly client
