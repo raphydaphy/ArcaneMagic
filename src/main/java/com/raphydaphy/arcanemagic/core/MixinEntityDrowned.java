@@ -82,6 +82,8 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         }
         ItemStack paper = ItemStack.EMPTY;
         ItemStack parchment = ItemStack.EMPTY;
+
+        int parchmentsMade = ((EntityPlayerMP)killer).getStatFile().readStat(StatList.CRAFTS_STATS.addStat(ArcaneMagic.PARCHMENT));
         for (ItemStack stack : killer.inventoryContainer.getInventory())
         {
             if (stack.getItem() == Items.PAPER)
@@ -98,7 +100,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
             }
         }
         // TODO: use entitydata to check if they have killed drowned with paper already
-        if (!paper.isEmpty() && parchment.isEmpty())
+        if (!paper.isEmpty() && parchment.isEmpty() && parchmentsMade == 0)
         {
             killer.sendMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_PAPER_KILL).setStyle(new Style().setItalic(true)));
             paper.shrink(1);

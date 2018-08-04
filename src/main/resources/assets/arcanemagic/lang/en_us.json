@@ -7,6 +7,7 @@
   "item.arcanemagic.notebook": "Lost Notebook",
   "chat.arcanemagic.drowned_first_kill": "I've never seen a zombie which looked like that before. I should get some paper to write about my findings before I kill another.",
   "chat.arcanemagic.drowned_paper_kill": "The paper dissolves too easily in the water. Perhaps combining two pieces with some string would strengthen it further.",
+  "chat.arcanemagic.parchment_first_craft": "This should resist the water for long enough to write some notes. Now I am ready to kill another drowned zombie.",
   "chat.arcanemagic.drowned_parchment_kill": "You use the parchment to write about your discovery",
   "chat.arcanemagic.drowned_quest_complete": "You have learned more about the Drowned",
   "parchment.arcanemagic.drowned_discovery_1": "I am writing this to record an unusual species which I discovered whilst swimming today. It featured many of the same properties as the Zombies I have seen countless times before, but it was blue and thrived underwater. When I killed it, the particles released looked very different to anything I am used to. In order to study this further I will need to kill more of them and document my findings once I reach a conclusion.",

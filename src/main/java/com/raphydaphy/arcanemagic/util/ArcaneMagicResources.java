@@ -13,6 +13,7 @@ public class ArcaneMagicResources
 
     public static final String DROWNED_FIRST_KILL = "chat.arcanemagic.drowned_first_kill";
     public static final String DROWNED_PAPER_KILL = "chat.arcanemagic.drowned_paper_kill";
+    public static final String PARCHMENT_FIRST_CRAFT = "chat.arcanemagic.parchment_first_craft";
     public static final String DROWNED_PARCHMENT_KILL = "chat.arcanemagic.drowned_parchment_kill";
     public static final String DROWNED_DISCOVERY_COMPLETE = "chat.arcanemagic.drowned_quest_complete";
 

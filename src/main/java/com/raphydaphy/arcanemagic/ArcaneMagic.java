@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.block.BlockPedestal;
 
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
+import com.raphydaphy.arcanemagic.item.ItemParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
@@ -38,7 +39,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
     private static final Block PEDESTAL = new BlockPedestal(Block.Builder.create(Material.WOOD).hardnessAndResistance(2.0F, 500.0F).soundType(SoundType.WOOD));
 
-    public static final Item PARCHMENT = new Item(new Item.Builder().group(ItemGroup.MISC));
+    public static final Item PARCHMENT = new ItemParchment();
     public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
     private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item NOTEBOOK = new ItemNotebook();
