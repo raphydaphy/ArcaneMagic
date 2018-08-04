@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntityType;
 public class TileEntityAnimaStorage extends TileEntity implements IAnimaBlock
 {
     private static final String ANIMA_KEY = "anima";
-    int anima = 0;
+    protected int anima = 0;
 
     public TileEntityAnimaStorage(TileEntityType type)
     {

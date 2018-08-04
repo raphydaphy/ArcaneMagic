@@ -32,7 +32,7 @@ public class BlockInductor extends BlockWaterloggableBase implements ITileEntity
     public BlockInductor(Builder builder)
     {
         super(builder);
-        this.setDefaultState(this.getDefaultState().withProperty(BLOCK_MODE, true));
+        this.setDefaultState(this.getDefaultState().withProperty(BLOCK_MODE, false));
     }
 
     @Override

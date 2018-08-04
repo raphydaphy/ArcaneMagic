@@ -27,7 +27,10 @@ public class ParticleAnimaDeath extends Particle
     private boolean fadingColor;
 
     // Custom
-    private final BlockPos destination;
+    private final boolean hasDestination;
+    private final float destX;
+    private final float destY;
+    private final float destZ;
 
     public ParticleAnimaDeath(World world, BlockPos destination, double xCoordIn, double yCoordIn, double zCoordIn, double xSpeedIn, double ySpeedIn, double zSpeedIn)
     {
@@ -37,15 +40,33 @@ public class ParticleAnimaDeath extends Particle
 			this.motionX = xSpeedIn;
 			this.motionY = ySpeedIn;
 			this.motionZ = zSpeedIn;
+
+			hasDestination = false;
+
+			destX = 0;
+			destY = 0;
+			destZ = 0;
 		}
 		else {
 			this.motionX = 0;
 			this.motionY = 0;
 			this.motionZ = 0;
+
+			hasDestination = true;
+
+			destX = destination.getX() - (float)rand.nextGaussian() * 0.08F;
+            destY = destination.getY();
+            destZ = destination.getZ() - (float)rand.nextGaussian() * 0.08F;
 		}
         this.particleScale *= 0.5F;
-        this.particleMaxAge = 60 + this.rand.nextInt(12);
-        this.destination = destination;
+        if (destination != null)
+        {
+            this.particleMaxAge = rand.nextInt(50) + (int)(Math.sqrt(Math.pow(destination.getX() - xCoordIn, 2) + Math.pow(destination.getY() - yCoordIn, 2) + Math.pow(destination.getZ() - zCoordIn, 2)) * 70);
+        }
+        else
+        {
+            this.particleMaxAge = 60 + this.rand.nextInt(12);
+        }
         setColor(0x6e009f);
         setColorFade(0x8c3baf);
         this.textureIdx = 0;
@@ -112,12 +133,12 @@ public class ParticleAnimaDeath extends Particle
         }
 
         this.setParticleTextureIndex(this.textureIdx + this.numAgingFrames - 1 - this.particleAge * this.numAgingFrames / this.particleMaxAge);
-        if (destination == null)
+        if (!hasDestination)
         {
             this.motionY += (double) this.yAccel;
         }
         this.move(this.motionX, this.motionY, this.motionZ);
-        if (destination == null)
+        if (!hasDestination)
         {
             this.motionX *= (double) this.baseAirFriction;
             this.motionY *= (double) this.baseAirFriction;
@@ -131,7 +152,7 @@ public class ParticleAnimaDeath extends Particle
         }
         else
 		{
-			Vector3f motion = ArcaneMagicUtils.lerp((float)posX, (float)posY, (float)posZ, destination.getX() + 0.5f, destination.getY() + 0.6f, destination.getZ() + 0.5f, (float)particleAge / particleMaxAge);
+			Vector3f motion = ArcaneMagicUtils.lerp((float)posX, (float)posY, (float)posZ, destX + 0.5f, destY + 0.6f, destZ + 0.5f, (float)particleAge / particleMaxAge);
 			motionX = motion.func_195899_a() - posX;
 			motionY = motion.func_195900_b() - posY;
 			motionZ = motion.func_195902_c() - posZ;
