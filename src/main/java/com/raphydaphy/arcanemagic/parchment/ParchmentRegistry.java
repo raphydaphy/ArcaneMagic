@@ -16,6 +16,7 @@ public class ParchmentRegistry
     static
     {
         REGISTRY.add(new ParchmentDrownedDiscovery());
+        REGISTRY.add(new ParchmentWizardHut());
     }
 
     public static IParchment getParchment(ItemStack from)

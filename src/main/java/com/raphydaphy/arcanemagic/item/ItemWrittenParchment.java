@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
 import com.raphydaphy.arcanemagic.parchment.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
+import com.raphydaphy.arcanemagic.parchment.ParchmentWizardHut;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,18 +18,16 @@ import net.minecraft.world.World;
 public class ItemWrittenParchment extends Item
 {
     public static final String PARCHMENT_KEY = "key.arcanemagic.parchment_type";
-    private final boolean ancient;
 
-    public ItemWrittenParchment(boolean ancient)
+    public ItemWrittenParchment()
     {
         super(new Item.Builder().group(ItemGroup.MISC).maxStackSize(1));
-        this.ancient = ancient;
     }
 
     @Override
     public boolean hasEffect(ItemStack stack)
     {
-        return ancient;
+        return ParchmentRegistry.getParchment(stack) instanceof ParchmentWizardHut;
     }
 
     @Override

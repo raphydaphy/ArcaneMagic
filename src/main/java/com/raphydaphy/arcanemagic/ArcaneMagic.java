@@ -11,6 +11,8 @@ import com.raphydaphy.arcanemagic.item.ItemParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
+import com.raphydaphy.arcanemagic.structure.WizardHutConfig;
+import com.raphydaphy.arcanemagic.structure.WizardHutStructure;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityInductor;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityPedestal;
@@ -19,6 +21,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.network.EnumPacketDirection;
@@ -26,15 +29,13 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 
-import org.dimdev.rift.listener.BlockAdder;
-import org.dimdev.rift.listener.ItemAdder;
-import org.dimdev.rift.listener.PacketAdder;
-import org.dimdev.rift.listener.TileEntityTypeAdder;
+import net.minecraft.world.biome.Biome;
+import org.dimdev.rift.listener.*;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
 import java.util.Map;
 
-public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder
+public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder, WorldChanger
 {
     public static TileEntityType ALTAR_TE;
     public static TileEntityType INDUCTOR_TE;
@@ -45,8 +46,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     private static final Block PEDESTAL = new BlockPedestal(Block.Builder.create(Material.WOOD).hardnessAndResistance(2.0F, 500.0F).soundType(SoundType.WOOD));
 
     public static final Item PARCHMENT = new ItemParchment();
-    public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
-    private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
+    public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment();
     private static final Item LINKING_ROD = new ItemLinkingRod();
     private static final Item NOTEBOOK = new ItemNotebook();
 
@@ -67,7 +67,6 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
 
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment"), PARCHMENT);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_written"), WRITTEN_PARCHMENT);
-        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_ancient"), ANCIENT_PARCHMENT);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "linking_rod"), LINKING_ROD);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "notebook"), NOTEBOOK);
     }
@@ -108,5 +107,11 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void registerLoginPackets(PacketRegistrationReceiver receiver)
     {
 
+    }
+
+    @Override
+    public void modifyBiome(int biomeId, String biomeName, Biome biome)
+    {
+        biome.addStructure(new WizardHutStructure(), new WizardHutConfig());
     }
 }

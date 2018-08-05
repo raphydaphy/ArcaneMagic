@@ -17,4 +17,5 @@ public class ArcaneMagicResources
     public static final String DROWNED_DISCOVERY_COMPLETE = "chat.arcanemagic.drowned_quest_complete";
 
     public static final String DROWNED_DISCOVERY = "progression.arcanemagic.drowned_discovery";
+    public static final String WIZARD_HUT = "progression.arcanemagic.wizard_hut";
 }

@@ -20,6 +20,11 @@ public interface IParchment
     // TODO: sideonly client
     void drawParchment(ItemStack parchment, GuiParchment gui, Minecraft mc, int screenX, int screenY, int mouseX, int mouseY);
 
+    default boolean isAncient()
+    {
+        return false;
+    }
+
     // TODO: sideonly client
     default void bindTexture(Minecraft mc)
     {
