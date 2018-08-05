@@ -50,6 +50,6 @@ public class ParchmentDrownedDiscovery implements IParchment
     @Override
     public String getName()
     {
-        return ArcaneMagicResources.DROWNED_DISCOVERY;
+        return ArcaneMagicResources.DROWNED_DISCOVERY_PARCHMENT;
     }
 }

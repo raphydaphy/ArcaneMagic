@@ -4,6 +4,8 @@ public class ArcaneMagicResources
 {
     public static final String MOD_ID = "arcanemagic";
 
+    public static final String WIZARD_HUT_NAME = "Abandoned Wizard Hut";
+
     public static final String LINKING_SUCCESS = "chat.arcanemagic.linking_success";
     public static final String LINKING_SELECTED = "chat.arcanemagic.linking_selected";
     public static final String LINKING_INVALID_SRC = "chat.arcanemagic.linking_invalid_src";
@@ -16,6 +18,6 @@ public class ArcaneMagicResources
     public static final String DROWNED_PARCHMENT_KILL = "chat.arcanemagic.drowned_parchment_kill";
     public static final String DROWNED_DISCOVERY_COMPLETE = "chat.arcanemagic.drowned_quest_complete";
 
-    public static final String DROWNED_DISCOVERY = "progression.arcanemagic.drowned_discovery";
-    public static final String WIZARD_HUT = "progression.arcanemagic.wizard_hut";
+    public static final String DROWNED_DISCOVERY_PARCHMENT = "progression.arcanemagic.drowned_discovery";
+    public static final String WIZARD_HUT_PARCHMENT = "progression.arcanemagic.wizard_hut";
 }

@@ -12,6 +12,7 @@ import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.structure.WizardHutConfig;
+import com.raphydaphy.arcanemagic.structure.WizardHutPieces;
 import com.raphydaphy.arcanemagic.structure.WizardHutStructure;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityInductor;
@@ -30,12 +31,15 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.feature.structure.IglooPieces;
+import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.gen.feature.structure.StructureIO;
 import org.dimdev.rift.listener.*;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
 import java.util.Map;
 
-public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder, WorldChanger
+public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder, WorldChanger, StructureAdder
 {
     public static TileEntityType ALTAR_TE;
     public static TileEntityType INDUCTOR_TE;
@@ -50,6 +54,8 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item LINKING_ROD = new ItemLinkingRod();
     private static final Item NOTEBOOK = new ItemNotebook();
+
+    private static final Structure<WizardHutConfig> WIZARD_HUT = new WizardHutStructure();
 
     @Override
     public void registerBlocks()
@@ -114,6 +120,19 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void modifyBiome(int biomeId, String biomeName, Biome biome)
     {
-        biome.addStructure(new WizardHutStructure(), new WizardHutConfig());
+        biome.addStructure(WIZARD_HUT, new WizardHutConfig());
+    }
+
+    @Override
+    public void registerStructureNames()
+    {
+        StructureIO.registerStructure(WizardHutStructure.Start.class, ArcaneMagicResources.WIZARD_HUT_NAME);
+        StructureIO.registerStructureComponent(WizardHutPieces.Piece.class, ArcaneMagicResources.WIZARD_HUT_NAME);
+    }
+
+    @Override
+    public void addStructuresToMap(Map<String, Structure<?>> map)
+    {
+        map.put(ArcaneMagicResources.WIZARD_HUT_NAME.toLowerCase(), WIZARD_HUT);
     }
 }

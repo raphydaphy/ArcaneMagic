@@ -114,7 +114,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
             written_parchment.setTagCompound(new NBTTagCompound());
             if (written_parchment.getTagCompound() != null)
             {
-                written_parchment.getTagCompound().setString(ItemWrittenParchment.PARCHMENT_KEY, ArcaneMagicResources.DROWNED_DISCOVERY);
+                written_parchment.getTagCompound().setString(ItemWrittenParchment.PARCHMENT_KEY, ArcaneMagicResources.DROWNED_DISCOVERY_PARCHMENT);
             }
             if (!killer.inventory.addItemStackToInventory(written_parchment))
             {

@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.structure;
 
+import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.BlockPos;
@@ -28,19 +29,19 @@ public class WizardHutStructure extends ScatteredStructure<WizardHutConfig>
     @Override
     protected String getStructureName()
     {
-        return "Abandoned Wizard Hut";
+        return ArcaneMagicResources.WIZARD_HUT_NAME;
     }
 
     @Override
     public int func_202367_b()
     {
-        return 3;
+        return 100;
     }
 
     @Override
     protected int func_202382_c()
     {
-        return 14357618;
+        return 84739471;
     }
 
     public static class Start extends StructureStart

@@ -18,7 +18,7 @@ public class ParchmentWizardHut implements IParchment
     @Override
     public String getName()
     {
-        return ArcaneMagicResources.WIZARD_HUT;
+        return ArcaneMagicResources.WIZARD_HUT_PARCHMENT;
     }
 
     @Override
