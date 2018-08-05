@@ -31,9 +31,13 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.structure.IglooConfig;
 import net.minecraft.world.gen.feature.structure.IglooPieces;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureIO;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import org.dimdev.rift.listener.*;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
@@ -121,6 +125,8 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void modifyBiome(int biomeId, String biomeName, Biome biome)
     {
         biome.addStructure(WIZARD_HUT, new WizardHutConfig());
+        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createCompositeFeature(WIZARD_HUT, new WizardHutConfig(), Biome.PASSTHROUGH, IPlacementConfig.NO_PLACEMENT_CONFIG));
+
     }
 
     @Override

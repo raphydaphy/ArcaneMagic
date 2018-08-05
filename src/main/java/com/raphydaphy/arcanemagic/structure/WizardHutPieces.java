@@ -5,6 +5,7 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
@@ -18,21 +19,21 @@ import java.util.Random;
 
 public class WizardHutPieces
 {
-    private static final ResourceLocation WIZARD_HUT = new ResourceLocation(ArcaneMagicResources.MOD_ID,"wizard_hut");
+    private static final ResourceLocation WIZARD_HUT = new ResourceLocation(ArcaneMagicResources.MOD_ID, "wizard_hut");
 
 
-    public static void addPieces (List<StructurePiece> pieces, TemplateManager manager, BlockPos pos)
+    public static void addPieces(List<StructurePiece> pieces, IWorld world, TemplateManager manager, BlockPos pos)
     {
-        System.out.println("GENERATING A NEW WIZARD HUT AT " + pos);
-        pieces.add(new WizardHutPieces.Piece(manager, pos));
+        pieces.add(new WizardHutPieces.Piece(world, manager, pos));
     }
+
 
     public static class Piece extends TemplateStructurePiece
     {
-        public Piece(TemplateManager manager, BlockPos pos)
+        public Piece(IWorld world, TemplateManager manager, BlockPos pos)
         {
             this.templatePosition = pos;
-            initPiece(manager);
+            initPiece(world, manager);
         }
 
         @Override
@@ -41,11 +42,56 @@ public class WizardHutPieces
 
         }
 
-        private void initPiece(TemplateManager manager)
+        private void initPiece(IWorld world, TemplateManager manager)
         {
+            System.out.println("Wizard hut at " + templatePosition);
             Template template = manager.func_200220_a(WIZARD_HUT);
+
             PlacementSettings settings = (new PlacementSettings()).setRotation(Rotation.NONE).setMirror(Mirror.NONE).func_207665_a(new BlockPos(0, 0, 0));
             this.setup(template, this.templatePosition, settings);
+        }
+
+        @Override
+        public boolean addComponentParts(IWorld world, Random rand, MutableBoundingBox bounds, ChunkPos pos)
+
+        {
+            // Copied from VillagePieces.Village
+            int averageGroundLvl = this.getAverageGroundLevel(world, bounds);
+            if (averageGroundLvl < 0)
+            {
+                return true;
+            }
+            this.templatePosition.add(0, averageGroundLvl, 0);
+            return super.addComponentParts(world, rand, bounds, pos);
+        }
+
+        // Copied from VillagePieces.Village
+        private int getAverageGroundLevel(IWorld world, MutableBoundingBox bounds)
+        {
+            int lvt_3_1_ = 0;
+            int lvt_4_1_ = 0;
+            BlockPos.MutableBlockPos lvt_5_1_ = new BlockPos.MutableBlockPos();
+
+            for (int lvt_6_1_ = this.boundingBox.minZ; lvt_6_1_ <= this.boundingBox.maxZ; ++lvt_6_1_)
+            {
+                for (int lvt_7_1_ = this.boundingBox.minX; lvt_7_1_ <= this.boundingBox.maxX; ++lvt_7_1_)
+                {
+                    lvt_5_1_.setPos(lvt_7_1_, 64, lvt_6_1_);
+                    if (bounds.isVecInside(lvt_5_1_))
+                    {
+                        lvt_3_1_ += world.getTopBlock(net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, lvt_5_1_).getY();
+                        ++lvt_4_1_;
+                    }
+                }
+            }
+
+            if (lvt_4_1_ == 0)
+            {
+                return -1;
+            } else
+            {
+                return lvt_3_1_ / lvt_4_1_;
+            }
         }
     }
 }
