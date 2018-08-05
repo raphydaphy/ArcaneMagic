@@ -7,9 +7,11 @@ import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
 import com.raphydaphy.arcanemagic.block.BlockInductor;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
+import it.unimi.dsi.fastutil.ints.IntIndirectHeaps;
 import jdk.nashorn.internal.ir.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
@@ -98,35 +100,60 @@ public class TileEntityInductor extends TileEntityAnimaStorage implements IAnima
     @Override
     public void update()
     {
-        if (!world.isRemote)
+        // TODO: frequency based on anima in chunk
+        if (!world.isRemote && world.getTotalWorldTime() % 50 == 0)
         {
+            System.out.println("Pos: " + link + " Anima: " + anima);
             if (blockMode)
             {
                 if (link != null)
                 {
-
+                    TileEntity at = world.getTileEntity(link);
+                    if (at instanceof IAnimaInductible)
+                    {
+                        IAnimaInductible inductible = (IAnimaInductible) at;
+                        if (inductible.takeAnima(10))
+                        {
+                            extractAnimaBlock();
+                            if (this.anima + 10 <= CAPACITY)
+                            {
+                                this.anima += 10;
+                            }
+                            else
+                            {
+                                this.anima = CAPACITY;
+                            }
+                            markDirty();
+                        }
+                    }
+                    else
+                    {
+                        setBlockMode(false);
+                    }
                 } else
                 {
-                    blockMode = false;
-                    world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInductor.BLOCK_MODE, false));
-                    markDirty();
+                    setBlockMode(false);
                     System.err.println("[Inductor] Block mode was enabled but no block was linked");
                 }
             } else
             {
                 if (anima < CAPACITY)
                 {
-                    // TODO: frequency based on anima in chunk
-                    if (world.getTotalWorldTime() % 50 == 0)
-                    {
-                        extractAnimaAir();
-                    }
+                    extractAnimaAir();
+                    this.anima += 1;
+                    markDirty();
                 }
             }
-            if (world.getTotalWorldTime() % 50 == 0)
-            {
-                System.out.println("Pos: " + link);
-            }
+        }
+    }
+
+    private void setBlockMode(boolean blockMode)
+    {
+        if (!world.isRemote && this.blockMode != blockMode)
+        {
+            this.blockMode = blockMode;
+            world.setBlockState(pos, world.getBlockState(pos).withProperty(BlockInductor.BLOCK_MODE, blockMode));
+            markDirty();
         }
     }
 
@@ -136,8 +163,18 @@ public class TileEntityInductor extends TileEntityAnimaStorage implements IAnima
         {
             for (EntityPlayerMP player : world.getMinecraftServer().getPlayerList().getPlayers())
             {
-                System.out.println("player ");
                 player.connection.sendPacket(new PacketDeathParticles(pos.getX() + 0.5f, pos.getY() - 1.5f, pos.getZ() + 0.5f, 5, 5, pos));
+            }
+        }
+    }
+
+    private void extractAnimaBlock()
+    {
+        if (world.getMinecraftServer() != null)
+        {
+            for (EntityPlayerMP player : world.getMinecraftServer().getPlayerList().getPlayers())
+            {
+                player.connection.sendPacket(new PacketDeathParticles(link.getX() + 0.5f, link.getY() + 0.5f, link.getZ() + 0.5f, 0.5f, 0.5f, pos));
             }
         }
     }
