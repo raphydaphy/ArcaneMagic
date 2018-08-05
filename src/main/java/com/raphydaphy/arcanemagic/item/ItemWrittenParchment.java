@@ -19,15 +19,18 @@ public class ItemWrittenParchment extends Item
 {
     public static final String PARCHMENT_KEY = "key.arcanemagic.parchment_type";
 
-    public ItemWrittenParchment()
+    private final boolean ancient;
+
+    public ItemWrittenParchment(boolean ancient)
     {
         super(new Item.Builder().group(ItemGroup.MISC).maxStackSize(1));
+        this.ancient = ancient;
     }
 
     @Override
     public boolean hasEffect(ItemStack stack)
     {
-        return ParchmentRegistry.getParchment(stack) instanceof ParchmentWizardHut;
+        return ancient;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class ItemWrittenParchment extends Item
         {
 
             IParchment parchment = ParchmentRegistry.getParchment(stack);
-            if (parchment != null)
+            if (parchment != null && parchment.isAncient() == ancient)
             {
                 if (world.isRemote)
                 {

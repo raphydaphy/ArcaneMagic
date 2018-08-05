@@ -90,7 +90,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
             {
                paper = stack;
             }
-            else if (stack.getItem() instanceof ItemWrittenParchment || stack.getItem() == ArcaneMagic.PARCHMENT)
+            else if (stack.getItem() == ArcaneMagic.WRITTEN_PARCHMENT || stack.getItem() == ArcaneMagic.PARCHMENT)
             {
                 parchment = stack;
                 if (parchment.getItem() == ArcaneMagic.WRITTEN_PARCHMENT)
