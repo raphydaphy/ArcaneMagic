@@ -10,7 +10,6 @@ import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
-import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.structure.WizardHutConfig;
 import com.raphydaphy.arcanemagic.structure.WizardHutPieces;
 import com.raphydaphy.arcanemagic.structure.WizardHutStructure;
@@ -22,7 +21,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.init.Biomes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.network.EnumPacketDirection;
@@ -33,11 +31,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.structure.IglooConfig;
-import net.minecraft.world.gen.feature.structure.IglooPieces;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureIO;
 import net.minecraft.world.gen.placement.IPlacementConfig;
+import net.minecraft.world.storage.loot.LootTableList;
 import org.dimdev.rift.listener.*;
 import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
@@ -59,7 +56,8 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     private static final Item LINKING_ROD = new ItemLinkingRod();
     private static final Item NOTEBOOK = new ItemNotebook();
 
-    private static final Structure<WizardHutConfig> WIZARD_HUT = new WizardHutStructure();
+    private static final ResourceLocation WIZARD_HUT_CHEST = LootTableList.register(new ResourceLocation(ArcaneMagicResources.MOD_ID, "wizard_hut"));
+    private static final Structure<WizardHutConfig> WIZARD_HUT_STRUCTURE = new WizardHutStructure();
 
     @Override
     public void registerBlocks()
@@ -124,8 +122,11 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void modifyBiome(int biomeId, String biomeName, Biome biome)
     {
-        biome.addStructure(WIZARD_HUT, new WizardHutConfig());
-        biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createCompositeFeature(WIZARD_HUT, new WizardHutConfig(), Biome.PASSTHROUGH, IPlacementConfig.NO_PLACEMENT_CONFIG));
+        if (biome.hasStructure(Feature.VILLAGE))
+        {
+            biome.addStructure(WIZARD_HUT_STRUCTURE, new WizardHutConfig());
+            biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createCompositeFeature(WIZARD_HUT_STRUCTURE, new WizardHutConfig(), Biome.PASSTHROUGH, IPlacementConfig.NO_PLACEMENT_CONFIG));
+        }
     }
 
     @Override
@@ -138,6 +139,6 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     @Override
     public void addStructuresToMap(Map<String, Structure<?>> map)
     {
-        map.put(ArcaneMagicResources.WIZARD_HUT_NAME.toLowerCase(), WIZARD_HUT);
+        map.put(ArcaneMagicResources.WIZARD_HUT_NAME.toLowerCase(), WIZARD_HUT_STRUCTURE);
     }
 }

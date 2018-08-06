@@ -63,7 +63,6 @@ public class PacketDeathParticles implements Packet<INetHandlerPlayClient>
     @Override
     public void processPacket(INetHandlerPlayClient iNetHandlerPlayServer)
     {
-        System.out.println(x + ", " + y + ", " + z + ", " + width + ", " + height + ", " + altar);
         particles();
     }
 

@@ -22,7 +22,6 @@ import java.util.Random;
 public class WizardHutPieces
 {
 	private static final ResourceLocation WIZARD_HUT_STRUCTURE = new ResourceLocation(ArcaneMagicResources.MOD_ID, "wizard_hut");
-	private static final ResourceLocation WIZARD_HUT_CHEST = LootTableList.register(new ResourceLocation(ArcaneMagicResources.MOD_ID, "wizard_hut"));
 
 	public static void addPieces(List<StructurePiece> pieces, IWorld world, TemplateManager manager, BlockPos pos)
 	{
@@ -34,7 +33,6 @@ public class WizardHutPieces
 	{
 		public Piece()
 		{
-			System.out.println("HELLO IT IS ME I AM A EMPT PIECE I HAVE NO FEELINGS SO FEEL FREE TO INSULT ME");
 		}
 
 		public Piece(IWorld world, TemplateManager manager, BlockPos pos)
@@ -51,7 +49,6 @@ public class WizardHutPieces
 
 		private void initPiece(IWorld world, TemplateManager manager)
 		{
-			System.out.println("Wizard hut at " + templatePosition);
 			Template template = manager.func_200220_a(WIZARD_HUT_STRUCTURE);
 
 			PlacementSettings settings = (new PlacementSettings());
@@ -62,6 +59,10 @@ public class WizardHutPieces
 		public boolean addComponentParts(IWorld world, Random rand, MutableBoundingBox bounds, ChunkPos chunkPos)
 		{
 			int worldSurface = getAverageGroundLevel(world, bounds) + 1;
+			if (worldSurface == -1)
+			{
+				return false;
+			}
 			BlockPos tempPosition = this.templatePosition;
 			this.templatePosition = this.templatePosition.add(0, worldSurface - 90 - 1, 0);
 			boolean superAddParts = super.addComponentParts(world, rand, bounds, chunkPos);
@@ -85,7 +86,7 @@ public class WizardHutPieces
 			}
 
 			if (lvt_4_1_ == 0) {
-				return -1;
+				return -2;
 			} else {
 				return lvt_3_1_ / lvt_4_1_;
 			}

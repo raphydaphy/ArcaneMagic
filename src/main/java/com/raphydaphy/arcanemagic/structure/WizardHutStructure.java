@@ -63,7 +63,7 @@ public class WizardHutStructure extends ScatteredStructure<WizardHutConfig>
 	@Override
 	public int func_202367_b()
 	{
-		return 4;
+		return 100;
 	}
 
 	public static class Start extends StructureStart
