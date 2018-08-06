@@ -63,12 +63,35 @@ public class WizardHutPieces
 		@Override
 		public boolean addComponentParts(IWorld world, Random rand, MutableBoundingBox bounds, ChunkPos chunkPos)
 		{
-			int worldSurface = world.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, templatePosition.getX(), templatePosition.getZ());
+			int worldSurface = getAverageGroundLevel(world, bounds) + 1;
+			//int worldSurface = world.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, templatePosition.getX(), templatePosition.getZ());
 			BlockPos tempPosition = this.templatePosition;
 			this.templatePosition = this.templatePosition.add(0, worldSurface - 90 - 1, 0);
 			boolean superAddParts = super.addComponentParts(world, rand, bounds, chunkPos);
 			this.templatePosition = tempPosition;
 			return superAddParts;
+		}
+
+		protected int getAverageGroundLevel(IWorld p_getAverageGroundLevel_1_, MutableBoundingBox p_getAverageGroundLevel_2_) {
+			int lvt_3_1_ = 0;
+			int lvt_4_1_ = 0;
+			BlockPos.MutableBlockPos lvt_5_1_ = new BlockPos.MutableBlockPos();
+
+			for(int lvt_6_1_ = this.boundingBox.minZ; lvt_6_1_ <= this.boundingBox.maxZ; ++lvt_6_1_) {
+				for(int lvt_7_1_ = this.boundingBox.minX; lvt_7_1_ <= this.boundingBox.maxX; ++lvt_7_1_) {
+					lvt_5_1_.setPos(lvt_7_1_, 64, lvt_6_1_);
+					if (p_getAverageGroundLevel_2_.isVecInside(lvt_5_1_)) {
+						lvt_3_1_ += p_getAverageGroundLevel_1_.getTopBlock(net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, lvt_5_1_).getY();
+						++lvt_4_1_;
+					}
+				}
+			}
+
+			if (lvt_4_1_ == 0) {
+				return -1;
+			} else {
+				return lvt_3_1_ / lvt_4_1_;
+			}
 		}
 	}
 }
