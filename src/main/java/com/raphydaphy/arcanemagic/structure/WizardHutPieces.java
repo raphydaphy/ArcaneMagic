@@ -63,6 +63,7 @@ public class WizardHutPieces
 			{
 				return false;
 			}
+			System.out.println("New wizard hut at " + templatePosition);
 			BlockPos tempPosition = this.templatePosition;
 			this.templatePosition = this.templatePosition.add(0, worldSurface - 90 - 1, 0);
 			boolean superAddParts = super.addComponentParts(world, rand, bounds, chunkPos);

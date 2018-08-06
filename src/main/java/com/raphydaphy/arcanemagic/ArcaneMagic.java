@@ -124,6 +124,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     {
         if (biome.hasStructure(Feature.VILLAGE))
         {
+            System.out.println("registered wizard hut");
             biome.addStructure(WIZARD_HUT_STRUCTURE, new WizardHutConfig());
             biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createCompositeFeature(WIZARD_HUT_STRUCTURE, new WizardHutConfig(), Biome.PASSTHROUGH, IPlacementConfig.NO_PLACEMENT_CONFIG));
         }
