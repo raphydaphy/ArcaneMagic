@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.item.ItemLinkingRod;
 import com.raphydaphy.arcanemagic.item.ItemNotebook;
 import com.raphydaphy.arcanemagic.item.ItemParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
+import com.raphydaphy.arcanemagic.network.PacketAncientParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.structure.WizardHutConfig;
 import com.raphydaphy.arcanemagic.structure.WizardHutPieces;
@@ -52,7 +53,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
 
     public static final Item PARCHMENT = new ItemParchment();
     public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
-    private static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
+    public static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item LINKING_ROD = new ItemLinkingRod();
     private static final Item NOTEBOOK = new ItemNotebook();
 
@@ -96,27 +97,19 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     }
 
     @Override
-    public void registerHandshakingPackets(PacketRegistrationReceiver receiver)
-    {
+    public void registerHandshakingPackets(PacketRegistrationReceiver receiver) { }
 
-    }
+    @Override
+    public void registerStatusPackets(PacketRegistrationReceiver receiver) { }
+
+    @Override
+    public void registerLoginPackets(PacketRegistrationReceiver receiver) { }
 
     @Override
     public void registerPlayPackets(PacketRegistrationReceiver receiver)
     {
         receiver.registerPacket(EnumPacketDirection.CLIENTBOUND, PacketDeathParticles.class);
-    }
-
-    @Override
-    public void registerStatusPackets(PacketRegistrationReceiver receiver)
-    {
-
-    }
-
-    @Override
-    public void registerLoginPackets(PacketRegistrationReceiver receiver)
-    {
-
+        receiver.registerPacket(EnumPacketDirection.SERVERBOUND, PacketAncientParchment.class);
     }
 
     @Override

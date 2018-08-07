@@ -7,9 +7,12 @@ import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.parchment.ParchmentWizardHut;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatList;
+import net.minecraft.stats.StatisticsManagerServer;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -47,6 +50,10 @@ public class ItemWrittenParchment extends Item
                 {
                     openGUI(stack, parchment);
                 }
+                else
+                {
+                    addUsage(player, stack);
+                }
                 return new ActionResult<>(EnumActionResult.SUCCESS, stack);
             }
             player.setHeldItem(hand, new ItemStack(ArcaneMagic.PARCHMENT, stack.getCount()));
@@ -58,5 +65,12 @@ public class ItemWrittenParchment extends Item
     private void openGUI(ItemStack stack, IParchment parchment)
     {
         Minecraft.getMinecraft().displayGuiScreen(new GuiParchment(stack, parchment));
+    }
+
+    private void addUsage(EntityPlayer player, ItemStack stack)
+    {
+        StatisticsManagerServer stats = ((EntityPlayerMP)player).getStatFile();
+        stats.increaseStat(player, StatList.OBJECT_USE_STATS.addStat(stack.getItem()), 1);
+        stats.sendStats((EntityPlayerMP)player);
     }
 }

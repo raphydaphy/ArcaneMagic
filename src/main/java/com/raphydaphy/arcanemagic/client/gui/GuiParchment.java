@@ -1,12 +1,18 @@
 package com.raphydaphy.arcanemagic.client.gui;
 
+import com.raphydaphy.arcanemagic.network.PacketAncientParchment;
 import com.raphydaphy.arcanemagic.parchment.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
 
 // TODO: sideonly client
 public class GuiParchment extends GuiScreen
@@ -62,17 +68,16 @@ public class GuiParchment extends GuiScreen
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
+    public void onGuiClosed()
     {
-        if (!super.mouseClicked(mouseX, mouseY, mouseButton))
+        super.onGuiClosed();
+        if (parchment.isAncient())
         {
-            if (mouseButton == 0)
-            {
-                System.out.println("left click");
-            }
-
-            return true;
+           NetHandlerPlayClient connection = Minecraft.getMinecraft().getConnection();
+           if (connection != null)
+           {
+               connection.sendPacket(new PacketAncientParchment());
+           }
         }
-        return false;
     }
 }
