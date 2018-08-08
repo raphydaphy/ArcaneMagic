@@ -14,7 +14,10 @@ public class ParchmentDrownedDiscovery implements IParchment
 {
     public static final String DROWNED_KILLS = "key.arcanemagic.drowned_discovery_kills";
     public static final String ALTAR_USED = "key.arcanemagic.altar_used";
+    public static final String EARLY_WIZARD_HUT = "key.arcanemagic.early_wizard_hut";
     public static final String FOUND_WIZARD_HUT = "key.arcanemagic.found_wizard_hut";
+    public static final String PREV_ANCIENT_PARCHMENT_USAGES = "key.arcanemagic.prev_ancient_parchment_usages";
+    public static final String REOPENED_ANCIENT_PARCHMENT = "key.arcanemagic.reopened_ancient_parchment";
 
     private static final ItemStack[][] altar =
             {
@@ -57,8 +60,16 @@ public class ParchmentDrownedDiscovery implements IParchment
             drawText(mc, "parchment.arcanemagic.drowned_discovery_find_a_hut", screenY + 32 * GuiParchment.SCALE);
         } else
         {
-            drawText(mc, "parchment.arcanemagic.drowned_discovery_inductor", screenY + 60);
-            drawCraftingRecipe(gui, mc, inductor, new ItemStack(ArcaneMagic.INDUCTOR), screenX + 31, (int) (screenY + 37 * GuiParchment.SCALE), mouseX, mouseY);
+            // They found an ancient parchment earlier on but they haven't reopened it
+            if (Objects.requireNonNull(parchment.getTagCompound()).getBoolean(EARLY_WIZARD_HUT) && !Objects.requireNonNull(parchment.getTagCompound()).getBoolean(REOPENED_ANCIENT_PARCHMENT))
+            {
+                drawText(mc, "parchment.arcanemagic.drowned_discovery_already_found_hut", screenY + 32 * GuiParchment.SCALE);
+            }
+            else
+            {
+                drawText(mc, "parchment.arcanemagic.drowned_discovery_inductor_recent_hut", screenY + 60);
+                drawCraftingRecipe(gui, mc, inductor, new ItemStack(ArcaneMagic.INDUCTOR), screenX + 31, (int) (screenY + 37 * GuiParchment.SCALE), mouseX, mouseY);
+            }
         }
     }
 

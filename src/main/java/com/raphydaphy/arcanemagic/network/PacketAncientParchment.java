@@ -60,5 +60,12 @@ public class PacketAncientParchment implements Packet<INetHandlerPlayServer>
                 player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ANCIENT_PARCHMENT_START).setStyle(new Style().setItalic(true)), false);
             }
         }
+        // They needed to re-read the parchment to progress in drowned discovery TODO: use entitydata for this
+        else if (player.getStatFile().readStat(StatList.BROKEN.addStat(ArcaneMagic.ANCIENT_PARCHMENT)) == 1)
+        {
+            player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ANCIENT_PARCHMENT_LATER).setStyle(new Style().setItalic(true)), true);
+            // unlockAchievement = set statistic to a number
+            player.getStatFile().unlockAchievement(player, StatList.BROKEN.addStat(ArcaneMagic.ANCIENT_PARCHMENT), 2);
+        }
     }
 }

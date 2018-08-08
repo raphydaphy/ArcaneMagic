@@ -54,7 +54,7 @@ public class ItemWrittenParchment extends Item
                     openGUI(stack, parchment);
                 } else
                 {
-                    addUsage(player, stack);
+                    addUsage(parchment, player, stack);
                 }
                 return new ActionResult<>(EnumActionResult.SUCCESS, stack);
             }
@@ -97,10 +97,40 @@ public class ItemWrittenParchment extends Item
         Minecraft.getMinecraft().displayGuiScreen(new GuiParchment(stack, parchment));
     }
 
-    private void addUsage(EntityPlayer player, ItemStack stack)
+    private void addUsage(IParchment parchment, EntityPlayer player, ItemStack stack)
     {
         StatisticsManagerServer stats = ((EntityPlayerMP) player).getStatFile();
         stats.increaseStat(player, StatList.OBJECT_USE_STATS.addStat(stack.getItem()), 1);
+
+        if (parchment instanceof ParchmentDrownedDiscovery)
+        {
+            if (!Objects.requireNonNull(stack.getTagCompound()).getBoolean(ParchmentDrownedDiscovery.ALTAR_USED) && stats.readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.ANCIENT_PARCHMENT)) > 0)
+            {
+                Objects.requireNonNull(stack.getTagCompound()).setBoolean(ParchmentDrownedDiscovery.EARLY_WIZARD_HUT, true);
+                player.openContainer.detectAndSendChanges();
+            }
+
+            if (Objects.requireNonNull(stack.getTagCompound()).getBoolean(ParchmentDrownedDiscovery.ALTAR_USED) && Objects.requireNonNull(stack.getTagCompound()).getBoolean(ParchmentDrownedDiscovery.EARLY_WIZARD_HUT))
+            {
+                int prevUses = Objects.requireNonNull(stack.getTagCompound()).getInteger(ParchmentDrownedDiscovery.PREV_ANCIENT_PARCHMENT_USAGES);
+                int realUses = stats.readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.ANCIENT_PARCHMENT));
+
+                if (prevUses == 0)
+                {
+                    // this will cause the ancient parchment to print a message to chat when it is next closed. TODO: use entitydata instead
+                    stats.unlockAchievement(player, StatList.BROKEN.addStat(ArcaneMagic.ANCIENT_PARCHMENT), 1);
+                    Objects.requireNonNull(stack.getTagCompound()).setInteger(ParchmentDrownedDiscovery.PREV_ANCIENT_PARCHMENT_USAGES, realUses);
+                    player.openContainer.detectAndSendChanges();
+                }
+                else if (prevUses < realUses || stats.readStat(StatList.BROKEN.addStat(ArcaneMagic.ANCIENT_PARCHMENT)) == 2)
+                {
+                    stats.unlockAchievement(player, StatList.BROKEN.addStat(ArcaneMagic.ANCIENT_PARCHMENT), 3);
+                    Objects.requireNonNull(stack.getTagCompound()).setBoolean(ParchmentDrownedDiscovery.REOPENED_ANCIENT_PARCHMENT, true);
+                    player.openContainer.detectAndSendChanges();
+                }
+            }
+        }
+
         stats.sendStats((EntityPlayerMP) player);
     }
 }
