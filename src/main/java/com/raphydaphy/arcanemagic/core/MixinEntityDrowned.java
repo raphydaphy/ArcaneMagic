@@ -21,6 +21,7 @@ import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
+import net.minecraft.stats.StatisticsManagerServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -83,7 +84,13 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
         ItemStack paper = ItemStack.EMPTY;
         ItemStack parchment = ItemStack.EMPTY;
 
+        StatisticsManagerServer stats = ((EntityPlayerMP)killer).getStatFile();
+
+        int ancient_uses = stats.readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.ANCIENT_PARCHMENT));
+        int written_uses = stats.readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.WRITTEN_PARCHMENT));
+
         int parchmentsMade = ((EntityPlayerMP)killer).getStatFile().readStat(StatList.CRAFTS_STATS.addStat(ArcaneMagic.PARCHMENT));
+
         for (ItemStack stack : killer.inventoryContainer.getInventory())
         {
             if (stack.getItem() == Items.PAPER)
@@ -99,14 +106,14 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
                 }
             }
         }
-        // TODO: use entitydata to check if they have killed drowned with paper already
-        if (!paper.isEmpty() && parchment.isEmpty() && parchmentsMade == 0)
+
+        if (!paper.isEmpty() && parchment.isEmpty() && parchmentsMade == 0 && written_uses == 0)
         {
             killer.sendMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_PAPER_KILL).setStyle(new Style().setItalic(true)));
             paper.shrink(1);
             killer.openContainer.detectAndSendChanges();
         }
-        else if (parchment.getItem() == ArcaneMagic.PARCHMENT)
+        else if (parchment.getItem() == ArcaneMagic.PARCHMENT && written_uses == 0)
         {
             killer.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_PARCHMENT_KILL).setStyle(new Style().setItalic(true)), true);
             parchment.shrink(1);
@@ -141,9 +148,15 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
 
                         if (kills == 3)
                         {
-                            player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_DISCOVERY_COMPLETE).setStyle(new Style().setItalic(true)), true);
+                            player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.DROWNED_QUEST_COMPLETE).setStyle(new Style().setItalic(true)), true);
                         }
                         return;
+                    }
+                    else if (findAltar() != null)
+                    {
+                        stack.getTagCompound().setBoolean(ParchmentDrownedDiscovery.ALTAR_USED, true);
+                        player.openContainer.detectAndSendChanges();
+                        player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ALTAR_FIRST_KILL).setStyle(new Style().setItalic(true)), true);
                     }
                 }
             }
@@ -169,34 +182,33 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
                 }
             }
 
-            BlockPos altar = findAltar();
-
             if (!world.isRemote)
             {
-                deathPacket(altar);
-                if (altar != null)
-                {
-                    TileEntity te = world.getTileEntity(altar);
-                    if (te instanceof TileEntityAltar)
-                    {
-                        ((TileEntityAltar)te).receiveAnima(world.rand.nextInt(100) + 150, AnimaReceiveMethod.SPECIAL);
-                    }
-                }
+                deathUpdateServer();
             }
 
             this.setDead();
         }
     }
 
-    private void deathPacket(BlockPos altar)
+    private void deathUpdateServer()
     {
-        // TODO: this is VERY BAD
+        BlockPos altar = findAltar();
 
         if (getServer() != null)
         {
             for (EntityPlayerMP player : getServer().getPlayerList().getPlayers())
             {
                 player.connection.sendPacket(new PacketDeathParticles(posX, posY, posZ, width, height, altar));
+            }
+        }
+
+        if (altar != null)
+        {
+            TileEntity te = world.getTileEntity(altar);
+            if (te instanceof TileEntityAltar)
+            {
+                ((TileEntityAltar)te).receiveAnima(world.rand.nextInt(100) + 150, AnimaReceiveMethod.SPECIAL);
             }
         }
     }

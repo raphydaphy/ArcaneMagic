@@ -12,12 +12,14 @@ public class ArcaneMagicResources
     public static final String LINKING_INVALID_DEST = "chat.arcanemagic.linking_invalid_dest";
     public static final String LINKING_SAME_BLOCK = "chat.arcanemagic.linking_same_block";
 
+    public static final String ANCIENT_PARCHMENT_START = "chat.arcanemagic.ancient_parchment_start";
     public static final String DROWNED_FIRST_KILL = "chat.arcanemagic.drowned_first_kill";
     public static final String DROWNED_PAPER_KILL = "chat.arcanemagic.drowned_paper_kill";
     public static final String PARCHMENT_FIRST_CRAFT = "chat.arcanemagic.parchment_first_craft";
     public static final String DROWNED_PARCHMENT_KILL = "chat.arcanemagic.drowned_parchment_kill";
-    public static final String DROWNED_DISCOVERY_COMPLETE = "chat.arcanemagic.drowned_quest_complete";
-    public static final String ANCIENT_PARCHMENT_LEARNED = "chat.arcanemagic.ancient_parchment_learned";
+    public static final String DROWNED_QUEST_COMPLETE = "chat.arcanemagic.drowned_quest_complete";
+    public static final String ALTAR_FIRST_KILL = "chat.arcanemagic.altar_first_kill";
+    public static final String ANCIENT_PARCHMENT_LATER = "chat.arcanemagic.ancient_parchment_later";
 
     public static final String DROWNED_DISCOVERY_PARCHMENT = "progression.arcanemagic.drowned_discovery";
     public static final String WIZARD_HUT_PARCHMENT = "progression.arcanemagic.wizard_hut";

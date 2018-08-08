@@ -25,9 +25,20 @@ public class PacketAncientParchment implements Packet<INetHandlerPlayServer>
     public void processPacket(INetHandlerPlayServer server)
     {
         EntityPlayerMP player = ((NetHandlerPlayServer)server).player;
+
+        // First time reading ancient parchment
         if (player.getStatFile().readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.ANCIENT_PARCHMENT)) == 1)
         {
-            player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ANCIENT_PARCHMENT_LEARNED).setStyle(new Style().setItalic(true)), false);
+            // Already read a written parchment
+            if (player.getStatFile().readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.WRITTEN_PARCHMENT)) > 0)
+            {
+                player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ANCIENT_PARCHMENT_LATER).setStyle(new Style().setItalic(true)), true);
+            }
+            // Opened ancient parchment before written
+            else
+            {
+                player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ANCIENT_PARCHMENT_START).setStyle(new Style().setItalic(true)), false);
+            }
         }
     }
 }
