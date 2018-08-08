@@ -67,7 +67,12 @@ public class ParchmentDrownedDiscovery implements IParchment
             }
             else
             {
-                drawText(mc, "parchment.arcanemagic.drowned_discovery_inductor_recent_hut", screenY + 60);
+                String unlocName = "parchment.arcanemagic.drowned_discovery_inductor_recent_hut";
+                if (Objects.requireNonNull(parchment.getTagCompound()).getBoolean(EARLY_WIZARD_HUT))
+                {
+                    unlocName = "parchment.arcanemagic.drowned_discovery_inductor_old_hut";
+                }
+                drawText(mc, unlocName, screenY + 59);
                 drawCraftingRecipe(gui, mc, inductor, new ItemStack(ArcaneMagic.INDUCTOR), screenX + 31, (int) (screenY + 37 * GuiParchment.SCALE), mouseX, mouseY);
             }
         }
