@@ -3,9 +3,10 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
 import com.raphydaphy.arcanemagic.parchment.IParchment;
+import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
-import com.raphydaphy.arcanemagic.parchment.ParchmentWizardHut;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -17,6 +18,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+
+import java.util.Objects;
 
 public class ItemWrittenParchment extends Item
 {
@@ -49,8 +52,7 @@ public class ItemWrittenParchment extends Item
                 if (world.isRemote)
                 {
                     openGUI(stack, parchment);
-                }
-                else
+                } else
                 {
                     addUsage(player, stack);
                 }
@@ -62,6 +64,34 @@ public class ItemWrittenParchment extends Item
         return new ActionResult<>(EnumActionResult.PASS, stack);
     }
 
+    @Override
+    public void onUpdate(ItemStack stack, World world, Entity holder, int p_onUpdate_4_, boolean p_onUpdate_5_)
+    {
+        if (world.getTotalWorldTime() % 50 == 0 && !world.isRemote && holder instanceof EntityPlayer)
+        {
+            onUpdateServer(stack, world, (EntityPlayer) holder);
+        }
+    }
+
+    private void onUpdateServer(ItemStack stack, World world, EntityPlayer player)
+    {
+        IParchment parchment = ParchmentRegistry.getParchment(stack);
+        if (parchment instanceof ParchmentDrownedDiscovery)
+        {
+            // Used altar but haven't found wizard hut
+            if (!Objects.requireNonNull(stack.getTagCompound()).getBoolean(ParchmentDrownedDiscovery.FOUND_WIZARD_HUT) && Objects.requireNonNull(stack.getTagCompound()).getBoolean(ParchmentDrownedDiscovery.ALTAR_USED))
+            {
+                // They have opened an ancient parchment
+                if (((EntityPlayerMP) player).getStatFile().readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.ANCIENT_PARCHMENT)) > 0)
+                {
+                    // Add found wizard hut tag
+                    Objects.requireNonNull(stack.getTagCompound()).setBoolean(ParchmentDrownedDiscovery.FOUND_WIZARD_HUT, true);
+                    player.openContainer.detectAndSendChanges();
+                }
+            }
+        }
+    }
+
     private void openGUI(ItemStack stack, IParchment parchment)
     {
         Minecraft.getMinecraft().displayGuiScreen(new GuiParchment(stack, parchment));
@@ -69,8 +99,8 @@ public class ItemWrittenParchment extends Item
 
     private void addUsage(EntityPlayer player, ItemStack stack)
     {
-        StatisticsManagerServer stats = ((EntityPlayerMP)player).getStatFile();
+        StatisticsManagerServer stats = ((EntityPlayerMP) player).getStatFile();
         stats.increaseStat(player, StatList.OBJECT_USE_STATS.addStat(stack.getItem()), 1);
-        stats.sendStats((EntityPlayerMP)player);
+        stats.sendStats((EntityPlayerMP) player);
     }
 }

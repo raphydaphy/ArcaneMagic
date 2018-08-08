@@ -48,7 +48,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public static TileEntityType PEDESTAL_TE;
 
     public static final Block ALTAR = new BlockAltar(Block.Builder.create(Material.ROCK).hardnessAndResistance(5, 1200).soundType(SoundType.STONE));
-    private static final Block INDUCTOR = new BlockInductor(Block.Builder.create(Material.WOOD).hardnessAndResistance(2, 500).soundType(SoundType.STONE));
+    public static final Block INDUCTOR = new BlockInductor(Block.Builder.create(Material.WOOD).hardnessAndResistance(2, 500).soundType(SoundType.STONE));
     private static final Block PEDESTAL = new BlockPedestal(Block.Builder.create(Material.WOOD).hardnessAndResistance(2.0F, 500.0F).soundType(SoundType.WOOD));
 
     public static final Item PARCHMENT = new ItemParchment();

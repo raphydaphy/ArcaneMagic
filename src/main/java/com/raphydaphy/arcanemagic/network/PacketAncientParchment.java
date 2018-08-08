@@ -1,8 +1,13 @@
 package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.parchment.IParchment;
+import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
+import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
@@ -10,6 +15,8 @@ import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
+
+import java.util.Objects;
 
 public class PacketAncientParchment implements Packet<INetHandlerPlayServer>
 {
@@ -33,6 +40,19 @@ public class PacketAncientParchment implements Packet<INetHandlerPlayServer>
             if (player.getStatFile().readStat(StatList.OBJECT_USE_STATS.addStat(ArcaneMagic.WRITTEN_PARCHMENT)) > 0)
             {
                 player.sendStatusMessage(new TextComponentTranslation(ArcaneMagicResources.ANCIENT_PARCHMENT_LATER).setStyle(new Style().setItalic(true)), true);
+                for (ItemStack stack : player.inventoryContainer.getInventory())
+                {
+                    if (stack.getItem() == ArcaneMagic.WRITTEN_PARCHMENT)
+                    {
+                        IParchment parchment = ParchmentRegistry.getParchment(stack);
+                        if (parchment instanceof ParchmentDrownedDiscovery)
+                        {
+                            Objects.requireNonNull(stack.getTagCompound()).setBoolean(ParchmentDrownedDiscovery.FOUND_WIZARD_HUT, true);
+                            player.openContainer.detectAndSendChanges();
+                            return;
+                        }
+                    }
+                }
             }
             // Opened ancient parchment before written
             else
