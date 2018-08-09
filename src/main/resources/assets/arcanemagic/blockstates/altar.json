@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "arcanemagic:block/altar" }
+    "has_transformer=false": { "model": "arcanemagic:block/altar" },
+    "has_transformer=true": { "model": "arcanemagic:block/altar_transformer" }
   }
 }

@@ -5,10 +5,7 @@ import com.raphydaphy.arcanemagic.block.BlockInductor;
 import com.raphydaphy.arcanemagic.block.BlockPedestal;
 
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
-import com.raphydaphy.arcanemagic.item.ItemLinkingRod;
-import com.raphydaphy.arcanemagic.item.ItemNotebook;
-import com.raphydaphy.arcanemagic.item.ItemParchment;
-import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
+import com.raphydaphy.arcanemagic.item.*;
 import com.raphydaphy.arcanemagic.network.PacketAncientParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.structure.WizardHutConfig;
@@ -55,6 +52,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public static final Item WRITTEN_PARCHMENT = new ItemWrittenParchment(false);
     public static final Item ANCIENT_PARCHMENT = new ItemWrittenParchment(true);
     private static final Item LINKING_ROD = new ItemLinkingRod();
+    public static final Item TRANSFORMER = new ItemTransformer();
     private static final Item NOTEBOOK = new ItemNotebook();
 
     private static final ResourceLocation WIZARD_HUT_CHEST = LootTableList.register(new ResourceLocation(ArcaneMagicResources.MOD_ID, "wizard_hut"));
@@ -79,6 +77,7 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_written"), WRITTEN_PARCHMENT);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "parchment_ancient"), ANCIENT_PARCHMENT);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "linking_rod"), LINKING_ROD);
+        Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "transformer"), TRANSFORMER);
         Item.registerItem(new ResourceLocation(ArcaneMagicResources.MOD_ID, "notebook"), NOTEBOOK);
     }
 
