@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.dimdev:rift:1.0.3-36:dev'
+    implementation 'org.dimdev:rift:1.0.3-39:dev'
 }
 
 minecraft {

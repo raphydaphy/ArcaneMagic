@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.block.BlockInductor;
 import com.raphydaphy.arcanemagic.block.BlockPedestal;
 
 import com.raphydaphy.arcanemagic.client.render.PedestalRenderer;
+import com.raphydaphy.arcanemagic.entity.EntityAnima;
 import com.raphydaphy.arcanemagic.item.*;
 import com.raphydaphy.arcanemagic.network.PacketAncientParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
@@ -19,6 +20,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.network.EnumPacketDirection;
@@ -38,7 +40,7 @@ import org.dimdev.rift.listener.client.TileEntityRendererAdder;
 
 import java.util.Map;
 
-public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder, WorldChanger, StructureAdder
+public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, TileEntityRendererAdder, PacketAdder, WorldChanger, StructureAdder, EntityTypeAdder
 {
     public static TileEntityType ALTAR_TE;
     public static TileEntityType INDUCTOR_TE;
@@ -54,6 +56,8 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     private static final Item LINKING_ROD = new ItemLinkingRod();
     public static final Item TRANSFORMER = new ItemTransformer();
     private static final Item NOTEBOOK = new ItemNotebook();
+
+    public static EntityType ANIMA_ENTITY;
 
     private static final ResourceLocation WIZARD_HUT_CHEST = LootTableList.register(new ResourceLocation(ArcaneMagicResources.MOD_ID, "wizard_hut"));
     private static final Structure<WizardHutConfig> WIZARD_HUT_STRUCTURE = new WizardHutStructure();
@@ -132,5 +136,11 @@ public class ArcaneMagic implements BlockAdder, ItemAdder, TileEntityTypeAdder, 
     public void addStructuresToMap(Map<String, Structure<?>> map)
     {
         map.put(ArcaneMagicResources.WIZARD_HUT_NAME.toLowerCase(), WIZARD_HUT_STRUCTURE);
+    }
+
+    @Override
+    public void registerEntityTypes()
+    {
+        EntityType.registerEntityType(ArcaneMagicResources.MOD_ID + ":anima_entity", EntityType.Builder.create(EntityAnima.class, EntityAnima::new));
     }
 }
