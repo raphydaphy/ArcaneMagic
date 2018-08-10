@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
-import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -15,7 +14,8 @@ public class ParticleAnimaEntity extends Particle
     public float initScale = 0;
     public float initAlpha = 0;
 
-    public ParticleAnimaEntity(World worldIn, double x, double y, double z, float r, float g, float b, float a, float scale, int lifetime)
+    public ParticleAnimaEntity(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r,
+                                 float g, float b, float a, float scale, int lifetime, float gravity)
     {
         super(worldIn, x, y, z, 0, 0, 0);
 
@@ -38,15 +38,15 @@ public class ParticleAnimaEntity extends Particle
         this.particleMaxAge = (int) ((float) lifetime * 0.5f);
         this.particleScale = scale;
         this.initScale = scale;
-        this.motionX = 0;
-        this.motionY = 0;
-        this.motionZ = 0;
+        this.motionX = vx * 2.0f;
+        this.motionY = vy * 2.0f;
+        this.motionZ = vz * 2.0f;
         this.initAlpha = a;
         this.particleAngle = 2.0f * (float) Math.PI;
-        this.particleGravity = 0;
+        this.particleGravity = gravity;
         this.particleAlpha = initAlpha;
         TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
-                .getAtlasSprite(new ResourceLocation(ArcaneMagicResources.MOD_ID, "particle/plus").toString());
+                .getAtlasSprite(new ResourceLocation("arcanemagic:misc/plus").toString());
         this.setParticleTexture(sprite);
     }
 
@@ -71,11 +71,27 @@ public class ParticleAnimaEntity extends Particle
     @Override
     public void onUpdate()
     {
+
+        this.prevPosX = this.posX;
+        this.prevPosY = this.posY;
+        this.prevPosZ = this.posZ;
+
         if (this.particleAge++ >= this.particleMaxAge)
         {
             this.setExpired();
         }
 
+        this.motionY -= 0.04D * (double) this.particleGravity;
+        this.move(this.motionX, this.motionY, this.motionZ);
+        this.motionX *= 0.9800000190734863D;
+        this.motionY *= 0.9800000190734863D;
+        this.motionZ *= 0.9800000190734863D;
+
+        if (this.onGround)
+        {
+            this.motionX *= 0.699999988079071D;
+            this.motionZ *= 0.699999988079071D;
+        }
         if (rand.nextInt(6) == 0)
         {
             this.particleAge++;

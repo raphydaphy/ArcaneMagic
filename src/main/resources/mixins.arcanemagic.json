@@ -6,7 +6,8 @@
   "package": "com.raphydaphy.arcanemagic.core",
   "refmap": "mixins.arcanemagic.refmap.json",
   "mixins": [
-    "MixinEntityDrowned"
+    "MixinEntityDrowned",
+    "MixinEntityRenderer"
   ],
   "client": []
 }

@@ -6,6 +6,7 @@
   ],
   "listeners": [
     "com.raphydaphy.arcanemagic.ArcaneMagic",
+    "com.raphydaphy.arcanemagic.client.ClientEvents",
     "com.raphydaphy.arcanemagic.core.ArcaneMagicCore"
   ]
 }

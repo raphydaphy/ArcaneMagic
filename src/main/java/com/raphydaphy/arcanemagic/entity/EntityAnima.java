@@ -184,7 +184,7 @@ public class EntityAnima extends EntityThrowable
 
     private void particles()
     {
-        Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleAnimaEntity(world, posX, posY, posZ, 1, 0, 0, 1, 1, 10));
+       // Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleAnimaEntity(world, posX, posY, posZ, 1, 0, 0, 1, 1, 10));
         System.out.println("doing my part");
     }
 
