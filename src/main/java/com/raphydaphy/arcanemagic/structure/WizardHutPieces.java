@@ -58,6 +58,10 @@ public class WizardHutPieces
 		@Override
 		public boolean addComponentParts(IWorld world, Random rand, MutableBoundingBox bounds, ChunkPos chunkPos)
 		{
+			if (template == null)
+			{
+				initPiece(world, world.getSaveHandler().getStructureTemplateManager());
+			}
 			int worldSurface = getAverageGroundLevel(world, bounds) + 1;
 			if (worldSurface == -1)
 			{

@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.anima.IAnimaInductible;
 import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
 import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
+import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaDeath;
 import com.raphydaphy.arcanemagic.client.particle.ParticleAnimaEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.entity.EntityAnima;
@@ -13,6 +14,8 @@ import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityInductor;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEndRod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -88,9 +91,11 @@ public class ItemLinkingRod extends Item
             if (ParticleRenderer.particleCounter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
                     : 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0)
             {
-                ParticleRenderer.getInstance().addParticle(new ParticleAnimaEntity(world, to.getX() + .5f,
+                Particle p = new ParticleAnimaEntity(world, to.getX() + .5f,
                         to.getY() + .8f, to.getZ() + 0.5f, vx, vy, vz, color.getRed() / 256f, color.getGreen() / 256f,
-                        color.getBlue() / 256f, alpha, size, (int) (life), 0.1f));
+                        color.getBlue() / 256f, alpha, size, life, 0.1f);
+                //Minecraft.getMinecraft().effectRenderer.addEffect(p);
+                ParticleRenderer.getInstance().addParticle(p);
             }
 
         }
@@ -107,7 +112,7 @@ public class ItemLinkingRod extends Item
         {
             if (world.isRemote)
             {
-                magicParticle(Color.MAGENTA, pos.up(), pos.add(3, 3, 3));
+                magicParticle(Color.GREEN, pos.up(), pos.add(3, 3, 3));
                 return EnumActionResult.SUCCESS;
             }
             if (stack.getTagCompound() == null)

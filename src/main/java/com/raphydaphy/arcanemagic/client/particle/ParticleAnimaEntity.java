@@ -1,8 +1,12 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
+import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
@@ -46,8 +50,14 @@ public class ParticleAnimaEntity extends Particle
         this.particleGravity = gravity;
         this.particleAlpha = initAlpha;
         TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks()
-                .getAtlasSprite(new ResourceLocation("arcanemagic:misc/plus").toString());
+                .getAtlasSprite(new ResourceLocation(ArcaneMagicResources.MOD_ID, "particle/plus").toString());
         this.setParticleTexture(sprite);
+    }
+
+    @Override
+    public void renderParticle(BufferBuilder p_renderParticle_1_, Entity p_renderParticle_2_, float p_renderParticle_3_, float p_renderParticle_4_, float p_renderParticle_5_, float p_renderParticle_6_, float p_renderParticle_7_, float p_renderParticle_8_)
+    {
+        super.renderParticle(p_renderParticle_1_, p_renderParticle_2_, p_renderParticle_3_, p_renderParticle_4_, p_renderParticle_5_, p_renderParticle_6_, p_renderParticle_7_, p_renderParticle_8_);
     }
 
     @Override
@@ -71,7 +81,7 @@ public class ParticleAnimaEntity extends Particle
     @Override
     public void onUpdate()
     {
-
+        System.out.println("update");
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
         this.prevPosZ = this.posZ;
