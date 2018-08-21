@@ -4,6 +4,8 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.anima.IAnimaInductible;
 import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
+import com.raphydaphy.arcanemagic.block.BlockAltar;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.ITickable;
 
 public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInductible, IAnimaReceiver
@@ -20,9 +22,13 @@ public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInd
     {
         if (getCurrentAnima() >= anima)
         {
-            this.anima -= anima;
-            this.markDirty();
-            return true;
+            IBlockState state = world.getBlockState(pos);
+            if (state.getBlock() == ArcaneMagic.ALTAR && state.getValue(BlockAltar.HAS_TRANSFORMER))
+            {
+                this.anima -= anima;
+                this.markDirty();
+                return true;
+            }
         }
         return false;
     }

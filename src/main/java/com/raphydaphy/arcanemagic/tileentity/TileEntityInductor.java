@@ -5,8 +5,10 @@ import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.anima.IAnimaInductible;
 import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
 import com.raphydaphy.arcanemagic.block.BlockInductor;
+import com.raphydaphy.arcanemagic.network.PacketAnimaParticles;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import it.unimi.dsi.fastutil.ints.IntIndirectHeaps;
 import jdk.nashorn.internal.ir.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,6 +16,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+
+import java.awt.*;
 
 public class TileEntityInductor extends TileEntityAnimaStorage implements IAnimaInductible, ITickable
 {
@@ -118,15 +122,13 @@ public class TileEntityInductor extends TileEntityAnimaStorage implements IAnima
                             if (this.anima + 10 <= CAPACITY)
                             {
                                 this.anima += 10;
-                            }
-                            else
+                            } else
                             {
                                 this.anima = CAPACITY;
                             }
                             markDirty();
                         }
-                    }
-                    else
+                    } else
                     {
                         setBlockMode(false);
                     }
@@ -143,6 +145,17 @@ public class TileEntityInductor extends TileEntityAnimaStorage implements IAnima
                     this.anima += 1;
                     markDirty();
                 }
+            }
+        } else if (world.isRemote && clientParticleTick > 0)
+        {
+            clientParticleTick--;
+
+            ArcaneMagicUtils.magicParticle(new Color(world.getBiome(pos).getWaterColor()), pos, clientParticleLink);
+
+
+            if (clientParticleTick == 0)
+            {
+                clientParticleLink = null;
             }
         }
     }
@@ -168,13 +181,22 @@ public class TileEntityInductor extends TileEntityAnimaStorage implements IAnima
         }
     }
 
+    private BlockPos clientParticleLink;
+    private int clientParticleTick = 0;
+
+    public void animaParticlePacket(BlockPos link)
+    {
+        this.clientParticleLink = link;
+        this.clientParticleTick = 50;
+    }
+
     private void extractAnimaBlock()
     {
         if (world.getMinecraftServer() != null)
         {
             for (EntityPlayerMP player : world.getMinecraftServer().getPlayerList().getPlayers())
             {
-                player.connection.sendPacket(new PacketDeathParticles(link.getX() + 0.5f, link.getY() + 0.5f, link.getZ() + 0.5f, 0.5f, 0.5f, pos));
+                player.connection.sendPacket(new PacketAnimaParticles(link, pos));
             }
         }
     }
