@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.core;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.api.AnimaReceiveMethod;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
 import com.raphydaphy.arcanemagic.parchment.IParchment;

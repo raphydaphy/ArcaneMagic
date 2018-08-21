@@ -1,10 +1,9 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
-import com.raphydaphy.arcanemagic.anima.IAnimaInductible;
-import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
-import net.minecraft.util.ITickable;
+import com.raphydaphy.arcanemagic.api.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.api.IAnimaInductible;
+import com.raphydaphy.arcanemagic.api.IAnimaReceiver;
 
 public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInductible, IAnimaReceiver
 {

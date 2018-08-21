@@ -1,14 +1,9 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
-import com.raphydaphy.arcanemagic.anima.IAnimaInductible;
-import com.raphydaphy.arcanemagic.anima.IAnimaReceiver;
+import com.raphydaphy.arcanemagic.api.IAnimaInductible;
 import com.raphydaphy.arcanemagic.block.BlockInductor;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
-import it.unimi.dsi.fastutil.ints.IntIndirectHeaps;
-import jdk.nashorn.internal.ir.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
