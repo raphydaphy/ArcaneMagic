@@ -89,6 +89,11 @@ public class GuiParchment extends GuiScreen
 
     private void drawProgressBar(int progress, int screenX, int screenY)
     {
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+
+        mc.getTextureManager().bindTexture(PARCHMENT);
+
         GuiScreen.drawScaledCustomSizeModalRect(
                 (int) (screenX + 8 * SCALE), (int) (screenY + 54 * SCALE), 0, DIMENSIONS,
                 PROGRESS_BAR_LENGTH, 5, (int) (PROGRESS_BAR_LENGTH * SCALE), (int) ((5) * SCALE), DIMENSIONS, TEX_HEIGHT);
@@ -97,8 +102,12 @@ public class GuiParchment extends GuiScreen
         {
             GuiScreen.drawScaledCustomSizeModalRect(
                     (int) (screenX + 9 * SCALE), (int) (screenY + 55 * SCALE), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
-                    1, 3, (int) (progress * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
+                    1, 3, (int) (((progress / 100d) * PROGRESS_BAR_LENGTH) * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
         }
+
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
+
     }
 
     private void drawRecipe(IRecipe recipe, int screenX, int screenY)
@@ -178,8 +187,6 @@ public class GuiParchment extends GuiScreen
         RenderHelper.enableGUIStandardItemLighting();
         mc.getRenderItem().renderItemAndEffectIntoGUI(output, x + 113, y + 26);
         RenderHelper.disableStandardItemLighting();
-
-
     }
 
     private RecipeType getRecipeType(IRecipe recipe) {
