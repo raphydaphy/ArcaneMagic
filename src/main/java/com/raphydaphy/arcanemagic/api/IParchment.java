@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.api;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 
 import javax.annotation.Nullable;
@@ -37,5 +38,7 @@ public interface IParchment
      */
     @Nullable
     IRecipe getRecipe();
+
+    void setParchmentStack(ItemStack stack);
 
 }

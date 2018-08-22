@@ -38,6 +38,7 @@ public class GuiParchment extends GuiScreen
     {
         this.stack = stack;
         this.parchment = parchment;
+        parchment.setParchmentStack(stack);
     }
 
     @Override
