@@ -18,9 +18,9 @@ public interface IParchment
     String getText();
 
     /**
-     * @return the current percentage of progress for the parchment, from 0 to 100
+     * @return the current percentage of progress for the parchment, from 0 to 1
      */
-    int getPercent();
+    double getPercent();
 
     /**
      * @return true if the parchment should be an Ancient Parchment item

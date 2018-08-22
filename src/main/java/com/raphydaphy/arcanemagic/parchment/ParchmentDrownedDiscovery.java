@@ -60,10 +60,10 @@ public class ParchmentDrownedDiscovery implements IParchment
     }
 
     @Override
-    public int getPercent() {
+    public double getPercent() {
         drowned_kills = parchment.getTagCompound().getInteger(DROWNED_KILLS);
         drowned_kills = drowned_kills > 4 ? 4 : drowned_kills;
-        return drowned_kills == 0 ? 0 : (int) ((drowned_kills / 4.0f) * 100);
+        return drowned_kills == 0 ? 0 : (int) (drowned_kills / 4.0d);
     }
 
     @Override

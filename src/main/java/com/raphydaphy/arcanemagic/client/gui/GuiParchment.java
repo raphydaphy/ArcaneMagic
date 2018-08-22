@@ -64,7 +64,7 @@ public class GuiParchment extends GuiScreen
         
         drawBackground(screenX, screenY);
         
-        drawText(mc, parchment.getText(), screenY + 32 * SCALE);
+        drawText(mc, parchment.getText(), screenY + 24 * SCALE);
 
         int percent = (int)((FULL_PROGRESS / 4.0f) * parchment.getPercent());
 
@@ -100,9 +100,10 @@ public class GuiParchment extends GuiScreen
 
         if (progress > 0)
         {
+            System.out.println(progress);
             GuiScreen.drawScaledCustomSizeModalRect(
                     (int) (screenX + 9 * SCALE), (int) (screenY + 55 * SCALE), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
-                    1, 3, (int) (((progress / 100d) * PROGRESS_BAR_LENGTH) * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
+                    1, 3, (int) (progress * PROGRESS_BAR_LENGTH * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
         }
 
         GlStateManager.popAttrib();
