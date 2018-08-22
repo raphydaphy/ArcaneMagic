@@ -8,9 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipe;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 // TODO: sideonly client
 public class GuiParchment extends GuiScreen
@@ -50,6 +54,8 @@ public class GuiParchment extends GuiScreen
 
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
+
+        mc.getTextureManager().bindTexture(PARCHMENT);
 
         // The start x and y coords of the notebook on the screen
         int screenX = (mc.mainWindow.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
@@ -96,6 +102,95 @@ public class GuiParchment extends GuiScreen
 
     private void drawRecipe(IRecipe recipe, int screenX, int screenY)
     {
+
+        int x = screenX + 31;
+        int y = (int) (screenY + 37 * SCALE);
+        
+        NonNullList<Ingredient> ingredients = recipe.getIngredients();
+        ItemStack output = recipe.getRecipeOutput();
+
+        RecipeType type = getRecipeType(recipe);
+
+        GlStateManager.pushMatrix();
+        GlStateManager.pushAttrib();
+
+        mc.getTextureManager().bindTexture(PARCHMENT);
+
+        //draw the input
+        switch(type) {
+            case LARGE_CRAFTING:
+                GuiScreen.drawScaledCustomSizeModalRect(x + 20, y - 3, 0, DIMENSIONS, 1, 1, 2, 73, DIMENSIONS,
+                        TEX_HEIGHT);
+                GuiScreen.drawScaledCustomSizeModalRect(x - 3, y + 20, 0, DIMENSIONS, 1, 1, 73, 2, DIMENSIONS,
+                        TEX_HEIGHT);
+                GuiScreen.drawScaledCustomSizeModalRect(x + 45, y - 3, 0, DIMENSIONS, 1, 1, 2, 73, DIMENSIONS,
+                        TEX_HEIGHT);
+                GuiScreen.drawScaledCustomSizeModalRect(x - 3, y + 45, 0, DIMENSIONS, 1, 1, 73, 2, DIMENSIONS,
+                        TEX_HEIGHT);
+
+                GlStateManager.pushMatrix();
+                GlStateManager.pushAttrib();
+
+                RenderHelper.enableGUIStandardItemLighting();
+
+                for (int inputX = 0; inputX < 3; inputX++)
+                {
+                    for (int inputY = 0; inputY < 3; inputY++)
+                    {
+                        ItemStack[] ingredient = ingredients.get((3*inputX)+(inputY+1)).getMatchingStacks();
+                        if (!ingredient[0].equals(ItemStack.EMPTY))
+                        {
+                            // Render the recipe component
+                            mc.getRenderItem().renderItemAndEffectIntoGUI(ingredient[0], x + (inputX * 25),
+                                    y + (inputY * 25));
+
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
+        RenderHelper.disableStandardItemLighting();
+
+        GlStateManager.popAttrib();
+        GlStateManager.popMatrix();
+
+        mc.getTextureManager().bindTexture(PARCHMENT);
+
+        // Draw the crafting arrow
+        GuiScreen.drawScaledCustomSizeModalRect(x + 78, y + 26, 49,64, 7, 5, (22), (15), DIMENSIONS,
+                TEX_HEIGHT);
+
+        // Draw the crafting output box
+        GuiScreen.drawScaledCustomSizeModalRect(x + 108, y + 21, 0, DIMENSIONS, 1, 1, 26, 2, DIMENSIONS,
+                TEX_HEIGHT);
+        GuiScreen.drawScaledCustomSizeModalRect(x + 108, y + 45, 0, DIMENSIONS, 1, 1, 26, 2, DIMENSIONS,
+                TEX_HEIGHT);
+        GuiScreen.drawScaledCustomSizeModalRect(x + 108, y + 21, 0, DIMENSIONS, 1, 1, 2, 25, DIMENSIONS,
+                TEX_HEIGHT);
+        GuiScreen.drawScaledCustomSizeModalRect(x + 132, y + 21, 0, DIMENSIONS, 1, 1, 2, 25, DIMENSIONS,
+                TEX_HEIGHT);
+
+        // Draw the output item
+        RenderHelper.enableGUIStandardItemLighting();
+        mc.getRenderItem().renderItemAndEffectIntoGUI(output, x + 113, y + 26);
+        RenderHelper.disableStandardItemLighting();
+
+
+    }
+
+    private RecipeType getRecipeType(IRecipe recipe) {
+        if (recipe instanceof FurnaceRecipe) return RecipeType.FURNACE;
+
+//        if (recipe instanceof AnimaRecipe) return RecipeType.ANIMA;
+
+        if (recipe.canFit(2, 2)) return RecipeType.SMALL_CRAFTING;
+
+        if (recipe.canFit(3, 3)) return RecipeType.LARGE_CRAFTING;
+
+        else return RecipeType.UNSUPPORTED;
     }
     
     @Override
