@@ -1,12 +1,11 @@
 package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.parchment.IParchment;
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.Packet;

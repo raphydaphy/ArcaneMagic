@@ -1,8 +1,8 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
-import com.raphydaphy.arcanemagic.parchment.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import net.minecraft.client.Minecraft;

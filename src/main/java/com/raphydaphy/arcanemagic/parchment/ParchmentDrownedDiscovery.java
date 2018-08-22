@@ -1,15 +1,10 @@
 package com.raphydaphy.arcanemagic.parchment;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.IParchment
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
-import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
 
@@ -71,15 +66,23 @@ public class ParchmentDrownedDiscovery implements IParchment
         return drowned_kills == 0 ? 0 : (int) ((GuiParchment.FULL_PROGRESS / 4.0f) * 100);
     }
 
+    @Override
+    public boolean showProgressBar() {
+        return drowned_kills <= 3;
+    }
+
     @Nullable
     @Override
     public IRecipe getRecipe() {
         if (drowned_kills <= 3) return null;
         else {
             RecipeManager manager = new RecipeManager();
-            return manager.getRecipe(new ResourceLocation("arcanemagic:altar"));;
+            return manager.getRecipe(new ResourceLocation("arcanemagic:altar"));
         }
     }
 
-
+    @Override
+    public boolean isAncient() {
+        return false;
+    }
 }

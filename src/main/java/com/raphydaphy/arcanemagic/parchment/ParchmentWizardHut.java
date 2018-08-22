@@ -5,7 +5,7 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
-public class ParchmentWizardHut implements IParchment
+public class ParchmentWizardHut implements IParchmentOld
 {
     @Override
     public void drawParchment(ItemStack parchment, GuiParchment gui, Minecraft mc, int screenX, int screenY, int mouseX, int mouseY)

@@ -11,7 +11,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
-public interface IParchment
+public interface IParchmentOld
 {
     ResourceLocation PARCHMENT = new ResourceLocation(ArcaneMagicResources.MOD_ID, "textures/gui/parchment.png");
 
