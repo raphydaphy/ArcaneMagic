@@ -59,35 +59,35 @@ public class GuiParchment extends GuiScreen
         mc.getTextureManager().bindTexture(PARCHMENT);
 
         // The start x and y coords of the notebook on the screen
-        int screenX = (mc.mainWindow.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
-        int screenY = (mc.mainWindow.getScaledHeight() / 2) - (SCALED_DIMENSIONS / 2);
+        int screenCenterX = (mc.mainWindow.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
+        int screenCenterY = (mc.mainWindow.getScaledHeight() / 2) - (SCALED_DIMENSIONS / 2);
         
-        drawBackground(screenX, screenY);
+        drawBackground(screenCenterX, screenCenterY);
         
-        drawText(mc, parchment.getText(), screenY + 24 * SCALE);
+        drawText(mc, parchment.getText(), screenCenterY + 4 * SCALE);
 
-        int percent = (int)((FULL_PROGRESS / 4.0f) * parchment.getPercent());
+        int percent = (int)(parchment.getPercent() * FULL_PROGRESS);
 
-        if (parchment.getRecipe() != null) drawRecipe(parchment.getRecipe(), screenX, screenY);
+        if (parchment.getRecipe() != null) drawRecipe(parchment.getRecipe(), screenCenterX, screenCenterY, mouseX, mouseY);
 
-        if (parchment.showProgressBar()) drawProgressBar(percent, screenX, screenY);
+        if (parchment.showProgressBar()) drawProgressBar(percent, screenCenterX, screenCenterY);
 
         GlStateManager.popAttrib();
         GlStateManager.popMatrix();
     }
     
-    private void drawBackground(int screenX, int screenY)
+    private void drawBackground(int screenCenterX, int screenCenterY)
     {
-        GuiScreen.drawScaledCustomSizeModalRect(screenX, screenY, 0, 0, DIMENSIONS, DIMENSIONS,
+        GuiScreen.drawScaledCustomSizeModalRect(screenCenterX, screenCenterY, 0, 0, DIMENSIONS, DIMENSIONS,
                 SCALED_DIMENSIONS, SCALED_DIMENSIONS, DIMENSIONS, TEX_HEIGHT);
     }
 
-    private void drawText(Minecraft mc, String unlocalizedText, float center)
+    private void drawText(Minecraft mc, String unlocalizedText, float top)
     {
-        ArcaneMagicUtils.drawCenteredSplitString(mc.fontRenderer, I18n.format(unlocalizedText), mc.mainWindow.getScaledWidth() / 2f, (int)(center), 160,0);
+        ArcaneMagicUtils.drawSplitString(mc.fontRenderer, I18n.format(unlocalizedText), mc.mainWindow.getScaledWidth() / 2f, (int)(top), 160,0);
     }
 
-    private void drawProgressBar(int progress, int screenX, int screenY)
+    private void drawProgressBar(int progress, int screenCenterX, int screenCenterY)
     {
         GlStateManager.pushMatrix();
         GlStateManager.pushAttrib();
@@ -95,15 +95,15 @@ public class GuiParchment extends GuiScreen
         mc.getTextureManager().bindTexture(PARCHMENT);
 
         GuiScreen.drawScaledCustomSizeModalRect(
-                (int) (screenX + 8 * SCALE), (int) (screenY + 54 * SCALE), 0, DIMENSIONS,
+                (int) (screenCenterX + 8 * SCALE), (int) (screenCenterY + 54 * SCALE), 0, DIMENSIONS,
                 PROGRESS_BAR_LENGTH, 5, (int) (PROGRESS_BAR_LENGTH * SCALE), (int) ((5) * SCALE), DIMENSIONS, TEX_HEIGHT);
 
         if (progress > 0)
         {
             System.out.println(progress);
             GuiScreen.drawScaledCustomSizeModalRect(
-                    (int) (screenX + 9 * SCALE), (int) (screenY + 55 * SCALE), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
-                    1, 3, (int) (progress * PROGRESS_BAR_LENGTH * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
+                    (int) (screenCenterX + 9 * SCALE), (int) (screenCenterY + 55 * SCALE), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
+                    1, 3, (int) (progress * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
         }
 
         GlStateManager.popAttrib();
@@ -111,11 +111,11 @@ public class GuiParchment extends GuiScreen
 
     }
 
-    private void drawRecipe(IRecipe recipe, int screenX, int screenY)
+    private void drawRecipe(IRecipe recipe, int screenCenterX, int screenCenterY, int mouseX, int mouseY)
     {
 
-        int x = screenX + 31;
-        int y = (int) (screenY + 37 * SCALE);
+        int x = screenCenterX + 31;
+        int y = (int) (screenCenterY + 37 * SCALE);
         
         NonNullList<Ingredient> ingredients = recipe.getIngredients();
         ItemStack output = recipe.getRecipeOutput();
@@ -128,7 +128,8 @@ public class GuiParchment extends GuiScreen
         mc.getTextureManager().bindTexture(PARCHMENT);
 
         //draw the input
-        switch(type) {
+        switch(type)
+        {
             case LARGE_CRAFTING:
                 GuiScreen.drawScaledCustomSizeModalRect(x + 20, y - 3, 0, DIMENSIONS, 1, 1, 2, 73, DIMENSIONS,
                         TEX_HEIGHT);
@@ -148,13 +149,15 @@ public class GuiParchment extends GuiScreen
                 {
                     for (int inputY = 0; inputY < 3; inputY++)
                     {
-                        ItemStack[] ingredient = ingredients.get((3*inputX)+(inputY+1)).getMatchingStacks();
-                        if (!ingredient[0].equals(ItemStack.EMPTY))
+                        ItemStack[] ingredient = ingredients.get((inputX)+(3 * inputY)).getMatchingStacks();
+                        if (ingredient.length != 0)
                         {
-                            // Render the recipe component
-                            mc.getRenderItem().renderItemAndEffectIntoGUI(ingredient[0], x + (inputX * 25),
-                                    y + (inputY * 25));
+                            if (ingredient[0] != null || !ingredient[0].equals(ItemStack.EMPTY)) {
+                                // Render the recipe component
+                                mc.getRenderItem().renderItemAndEffectIntoGUI(ingredient[0], x + (inputX * 25),
+                                        y + (inputY * 25));
 
+                            }
                         }
                     }
                 }
@@ -188,6 +191,26 @@ public class GuiParchment extends GuiScreen
         RenderHelper.enableGUIStandardItemLighting();
         mc.getRenderItem().renderItemAndEffectIntoGUI(output, x + 113, y + 26);
         RenderHelper.disableStandardItemLighting();
+
+        // Render the tooltips for the recipe matrix
+        for (int inputX = 0; inputX < 3; inputX++)
+        {
+            for (int inputY = 0; inputY < 3; inputY++)
+            {
+                ItemStack[] ingredient = ingredients.get((inputX)+(3 * inputY)).getMatchingStacks();
+                if (ingredient.length != 0)
+                {
+                    if (ingredient[0] != null || !ingredient[0].equals(ItemStack.EMPTY)) {
+                        // Render the recipe component
+                        drawItemstackTooltip(ingredient[0], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
+
+                    }
+                }
+            }
+        }
+
+        // Draw the tooltip for the output item
+        drawItemstackTooltip(output, x + 113, y + 25, mouseX, mouseY);
     }
 
     private RecipeType getRecipeType(IRecipe recipe) {
@@ -200,6 +223,30 @@ public class GuiParchment extends GuiScreen
         if (recipe.canFit(3, 3)) return RecipeType.LARGE_CRAFTING;
 
         else return RecipeType.UNSUPPORTED;
+    }
+
+    private void drawItemstackTooltip(ItemStack stack, int x, int y, int mouseX, int mouseY)
+    {
+        if (mouseX >= x && mouseY >= y && mouseX <= x + 16 && mouseY <= y + 16)
+        {
+            if (stack != null && !stack.isEmpty())
+            {
+                GlStateManager.pushMatrix();
+                GlStateManager.pushAttrib();
+
+                // TODO: callforge hook
+                //net.minecraftforge.fml.client.config.GuiUtils.preItemToolTip(stack);
+
+                // Actually draw the tooltip
+                drawHoveringText(getItemToolTip(stack), mouseX, mouseY);
+
+                // TODO: call forge hook
+                //net.minecraftforge.fml.client.config.GuiUtils.postItemToolTip();
+
+                GlStateManager.popAttrib();
+                GlStateManager.popMatrix();
+            }
+        }
     }
     
     @Override

@@ -71,7 +71,7 @@ public class ItemWrittenParchment extends Item
         {
             onUpdateServer(stack, world, (EntityPlayer) holder);
         }
-    }
+}
 
     private void onUpdateServer(ItemStack stack, World world, EntityPlayer player)
     {

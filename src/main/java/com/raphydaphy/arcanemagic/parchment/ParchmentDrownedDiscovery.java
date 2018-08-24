@@ -1,8 +1,8 @@
 package com.raphydaphy.arcanemagic.parchment;
 
 import com.raphydaphy.arcanemagic.api.IParchment;
-import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
@@ -63,7 +63,7 @@ public class ParchmentDrownedDiscovery implements IParchment
     public double getPercent() {
         drowned_kills = parchment.getTagCompound().getInteger(DROWNED_KILLS);
         drowned_kills = drowned_kills > 4 ? 4 : drowned_kills;
-        return drowned_kills == 0 ? 0 : (int) (drowned_kills / 4.0d);
+        return drowned_kills == 0 ? 0 : (drowned_kills / 4.0d);
     }
 
     @Override
@@ -74,10 +74,15 @@ public class ParchmentDrownedDiscovery implements IParchment
     @Nullable
     @Override
     public IRecipe getRecipe() {
-        if (drowned_kills <= 3) return null;
-        else {
-            RecipeManager manager = new RecipeManager();
-            return manager.getRecipe(new ResourceLocation("arcanemagic:altar"));
+        RecipeManager manager = Minecraft.getMinecraft().world.getRecipeManager();
+        switch (getText()) {
+            case "parchment.arcanemagic.drowned_discovery_altar":
+                return manager.getRecipe(new ResourceLocation("arcanemagic:altar"));
+            case "parchment.arcanemagic.drowned_discovery_inductor_old_hut":
+            case "parchment.arcanemagic.drowned_discovery_inductor_recent_hut":
+                return manager.getRecipe(new ResourceLocation("arcanemagic:inductor"));
+            default:
+                return null;
         }
     }
 
