@@ -1,8 +1,8 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
-import com.raphydaphy.arcanemagic.parchment.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import net.minecraft.client.Minecraft;
@@ -71,7 +71,7 @@ public class ItemWrittenParchment extends Item
         {
             onUpdateServer(stack, world, (EntityPlayer) holder);
         }
-    }
+}
 
     private void onUpdateServer(ItemStack stack, World world, EntityPlayer player)
     {

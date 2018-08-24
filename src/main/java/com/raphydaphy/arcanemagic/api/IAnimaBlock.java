@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.anima;
+package com.raphydaphy.arcanemagic.api;
 
 public interface IAnimaBlock
 {

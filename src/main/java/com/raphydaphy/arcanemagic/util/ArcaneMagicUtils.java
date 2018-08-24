@@ -28,6 +28,17 @@ public class ArcaneMagicUtils
         return new Vector3f(lerp(x1, x2, alpha), lerp(y1, y2, alpha), lerp(z1, z2, alpha));
     }
 
+    public static void drawSplitString(FontRenderer fontRenderer, String text, float x, float y, int wrap, int color)
+    {
+        List<String> strings = fontRenderer.listFormattedStringToWidth(text, wrap);
+
+        for (String s : strings)
+        {
+            fontRenderer.func_211126_b(s, (x - fontRenderer.getStringWidth(s) / 2f), y, color);
+            y += fontRenderer.FONT_HEIGHT;
+        }
+    }
+
     public static void drawCenteredSplitString(FontRenderer fontRenderer, String text, float x, float y, int wrap,
                                                int color)
     {
@@ -37,7 +48,7 @@ public class ArcaneMagicUtils
 
         for (String s : strings)
         {
-            fontRenderer.func_211126_b(s, (x - fontRenderer.getStringWidth(s) / 2), y, color);
+            fontRenderer.func_211126_b(s, (x - fontRenderer.getStringWidth(s) / 2f), y, color);
             y += fontRenderer.FONT_HEIGHT;
         }
 

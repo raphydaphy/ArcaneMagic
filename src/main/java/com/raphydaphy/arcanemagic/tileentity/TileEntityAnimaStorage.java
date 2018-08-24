@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.tileentity;
 
-import com.raphydaphy.arcanemagic.anima.IAnimaBlock;
+import com.raphydaphy.arcanemagic.api.IAnimaBlock;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;

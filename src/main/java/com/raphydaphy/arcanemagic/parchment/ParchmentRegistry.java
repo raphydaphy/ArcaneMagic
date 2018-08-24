@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.parchment;
 
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

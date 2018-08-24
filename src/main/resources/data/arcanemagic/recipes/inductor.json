@@ -1,0 +1,23 @@
+{
+  "type": "crafting_shaped",
+  "group": "arcanemagic",
+  "pattern": [
+    " C ",
+    "OGO",
+    " C "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:coal_block"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "G": {
+      "item": "minecraft:gold_block"
+    }
+  },
+  "result": {
+    "item": "arcanemagic:inductor"
+  }
+}

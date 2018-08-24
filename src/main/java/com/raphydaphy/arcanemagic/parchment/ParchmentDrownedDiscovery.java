@@ -1,13 +1,14 @@
 package com.raphydaphy.arcanemagic.parchment;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.client.gui.GuiParchment;
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicResources;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.Objects;
 
 public class ParchmentDrownedDiscovery implements IParchment
@@ -19,68 +20,74 @@ public class ParchmentDrownedDiscovery implements IParchment
     public static final String PREV_ANCIENT_PARCHMENT_USAGES = "key.arcanemagic.prev_ancient_parchment_usages";
     public static final String REOPENED_ANCIENT_PARCHMENT = "key.arcanemagic.reopened_ancient_parchment";
 
-    private static final ItemStack[][] altar =
-            {
-                    {ItemStack.EMPTY, new ItemStack(Items.GOLD_INGOT), ItemStack.EMPTY},
-                    {new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.COAL_BLOCK)},
-                    {new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.OBSIDIAN), new ItemStack(Blocks.COAL_BLOCK)}
-            };
-
-    private static final ItemStack[][] inductor =
-            {
-                    {ItemStack.EMPTY, new ItemStack(Blocks.OBSIDIAN), ItemStack.EMPTY},
-                    {new ItemStack(Blocks.COAL_BLOCK), new ItemStack(Blocks.GOLD_BLOCK), new ItemStack(Blocks.COAL_BLOCK)},
-                    {ItemStack.EMPTY, new ItemStack(Blocks.OBSIDIAN), ItemStack.EMPTY}
-            };
+    private int drowned_kills;
+    private ItemStack parchment;
 
     @Override
-    public void drawParchment(ItemStack parchment, GuiParchment gui, Minecraft mc, int screenX, int screenY, int mouseX, int mouseY)
-    {
-        bindTexture(mc);
-        drawBackground(screenX, screenY);
-
-        if (!Objects.requireNonNull(parchment.getTagCompound()).getBoolean(ALTAR_USED))
-        {
-            int drowned_kills = parchment.getTagCompound().getInteger(DROWNED_KILLS);
-            drowned_kills = drowned_kills > 4 ? 4 : drowned_kills;
-            int quest_progression = drowned_kills == 0 ? 0 : (int) ((GuiParchment.FULL_PROGRESS / 4.0f) * drowned_kills);
-
-            if (drowned_kills <= 3)
-            {
-                drawProgressBar(screenX, screenY, quest_progression);
-                drawText(mc, "parchment.arcanemagic.drowned_discovery_quest", screenY + 28 * GuiParchment.SCALE);
-            } else
-            {
-                drawText(mc, "parchment.arcanemagic.drowned_discovery_altar", screenY + 60);
-                drawCraftingRecipe(gui, mc, altar, new ItemStack(ArcaneMagic.ALTAR), screenX + 31, (int) (screenY + 37 * GuiParchment.SCALE), mouseX, mouseY);
-            }
-        }
-        else if (!Objects.requireNonNull(parchment.getTagCompound()).getBoolean(FOUND_WIZARD_HUT))
-        {
-            drawText(mc, "parchment.arcanemagic.drowned_discovery_find_a_hut", screenY + 32 * GuiParchment.SCALE);
-        } else
-        {
-            // They found an ancient parchment earlier on but they haven't reopened it
-            if (Objects.requireNonNull(parchment.getTagCompound()).getBoolean(EARLY_WIZARD_HUT) && !Objects.requireNonNull(parchment.getTagCompound()).getBoolean(REOPENED_ANCIENT_PARCHMENT))
-            {
-                drawText(mc, "parchment.arcanemagic.drowned_discovery_already_found_hut", screenY + 32 * GuiParchment.SCALE);
-            }
-            else
-            {
-                String unlocName = "parchment.arcanemagic.drowned_discovery_inductor_recent_hut";
-                if (Objects.requireNonNull(parchment.getTagCompound()).getBoolean(EARLY_WIZARD_HUT))
-                {
-                    unlocName = "parchment.arcanemagic.drowned_discovery_inductor_old_hut";
-                }
-                drawText(mc, unlocName, screenY + 59);
-                drawCraftingRecipe(gui, mc, inductor, new ItemStack(ArcaneMagic.INDUCTOR), screenX + 31, (int) (screenY + 37 * GuiParchment.SCALE), mouseX, mouseY);
-            }
-        }
+    public void setParchmentStack(ItemStack stack) {
+        this.parchment = stack;
     }
 
     @Override
     public String getName()
     {
         return ArcaneMagicResources.DROWNED_DISCOVERY_PARCHMENT;
+    }
+
+    @Override
+    public String getText() {
+        if (!Objects.requireNonNull(parchment.getTagCompound()).getBoolean(ALTAR_USED)) {
+            if (drowned_kills <= 3) return "parchment.arcanemagic.drowned_discovery_quest";
+            else return "parchment.arcanemagic.drowned_discovery_altar";
+        } else if (!Objects.requireNonNull(parchment.getTagCompound()).getBoolean(FOUND_WIZARD_HUT))
+        {
+            return "parchment.arcanemagic.drowned_discovery_find_a_hut";
+        } else
+            {
+            if (Objects.requireNonNull(parchment.getTagCompound()).getBoolean(EARLY_WIZARD_HUT) && !Objects.requireNonNull(parchment.getTagCompound()).getBoolean(REOPENED_ANCIENT_PARCHMENT))
+            {
+                return "parchment.arcanemagic.drowned_discovery_already_found_hut";
+            } else
+                {
+                if (Objects.requireNonNull(parchment.getTagCompound()).getBoolean(EARLY_WIZARD_HUT)) {
+                    return "parchment.arcanemagic.drowned_discovery_inductor_old_hut";
+                } else
+                    {
+                    return "parchment.arcanemagic.drowned_discovery_inductor_recent_hut";
+                }
+            }
+        }
+    }
+
+    @Override
+    public double getPercent() {
+        drowned_kills = parchment.getTagCompound().getInteger(DROWNED_KILLS);
+        drowned_kills = drowned_kills > 4 ? 4 : drowned_kills;
+        return drowned_kills == 0 ? 0 : (drowned_kills / 4.0d);
+    }
+
+    @Override
+    public boolean showProgressBar() {
+        return drowned_kills <= 3;
+    }
+
+    @Nullable
+    @Override
+    public IRecipe getRecipe() {
+        RecipeManager manager = Minecraft.getMinecraft().world.getRecipeManager();
+        switch (getText()) {
+            case "parchment.arcanemagic.drowned_discovery_altar":
+                return manager.getRecipe(new ResourceLocation("arcanemagic:altar"));
+            case "parchment.arcanemagic.drowned_discovery_inductor_old_hut":
+            case "parchment.arcanemagic.drowned_discovery_inductor_recent_hut":
+                return manager.getRecipe(new ResourceLocation("arcanemagic:inductor"));
+            default:
+                return null;
+        }
+    }
+
+    @Override
+    public boolean isAncient() {
+        return false;
     }
 }

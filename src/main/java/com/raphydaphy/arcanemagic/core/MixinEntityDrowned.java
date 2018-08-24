@@ -1,10 +1,10 @@
 package com.raphydaphy.arcanemagic.core;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.anima.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.api.AnimaReceiveMethod;
+import com.raphydaphy.arcanemagic.api.IParchment;
 import com.raphydaphy.arcanemagic.item.ItemWrittenParchment;
 import com.raphydaphy.arcanemagic.network.PacketDeathParticles;
-import com.raphydaphy.arcanemagic.parchment.IParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentDrownedDiscovery;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.tileentity.TileEntityAltar;
