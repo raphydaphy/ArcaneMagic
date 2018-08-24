@@ -7,8 +7,6 @@ import com.raphydaphy.arcanemagic.api.IAnimaInductible;
 import com.raphydaphy.arcanemagic.api.IAnimaReceiver;
 import com.raphydaphy.arcanemagic.block.BlockAltar;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.ITickable;
-
 
 public class TileEntityAltar extends TileEntityAnimaStorage implements IAnimaInductible, IAnimaReceiver
 {
