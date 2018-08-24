@@ -152,7 +152,7 @@ public abstract class MixinEntityDrowned extends EntityLivingBase
                         }
                         return;
                     }
-                    else if (findAltar() != null)
+                    else if (findAltar() != null && !stack.getTagCompound().getBoolean(ParchmentDrownedDiscovery.ALTAR_USED))
                     {
                         stack.getTagCompound().setBoolean(ParchmentDrownedDiscovery.ALTAR_USED, true);
                         player.openContainer.detectAndSendChanges();

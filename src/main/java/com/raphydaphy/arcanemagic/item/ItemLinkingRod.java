@@ -39,56 +39,6 @@ public class ItemLinkingRod extends Item
         return stack.hasTagCompound() && Objects.requireNonNull(stack.getTagCompound()).getBoolean(LINKING_TAG);
     }
 
-    public void magicParticle(Color color, BlockPos from, BlockPos to)
-    {
-        World world = Minecraft.getMinecraft().world;
-
-        if (world != null)
-        {
-
-            float magic = 0.01625f;
-
-            float distX = from.getX() - to.getX();
-            float vx = magic * distX;
-
-            float distZ = from.getZ() - to.getZ();
-            float vz = magic * distZ;
-
-            float distY = from.getY() - to.getY();
-            float vy = 0.053f + 0.017f * distY;
-
-            int life = 111 + (0 * (int) Math.abs(distY));
-
-            float alpha = Math.min(Math.max(world.rand.nextFloat(), 0.25f), 0.30f);
-
-            int dist = Math.abs((int) distX) + Math.abs((int) distZ) + Math.abs((int) distZ);
-            float size;
-
-            if (dist < 4)
-            {
-                size = Math.min(Math.max(world.rand.nextFloat() * 6, 1.5f), 2);
-            } else if (dist < 6)
-            {
-                size = Math.min(Math.max(world.rand.nextFloat() * 10, 2.5f), 3);
-            } else
-            {
-                size = Math.min(Math.max(world.rand.nextFloat() * 14, 3f), 3.5f);
-            }
-
-            ParticleRenderer.particleCounter += world.rand.nextInt(3);
-            if (ParticleRenderer.particleCounter % (Minecraft.getMinecraft().gameSettings.particleSetting == 0 ? 1
-                    : 2 * Minecraft.getMinecraft().gameSettings.particleSetting) == 0)
-            {
-                Particle p = new ParticleAnimaEntity(world, to.getX() + .5f,
-                        to.getY() + .8f, to.getZ() + 0.5f, vx, vy, vz, color.getRed() / 256f, color.getGreen() / 256f,
-                        color.getBlue() / 256f, alpha, size, life, 0.1f);
-                //Minecraft.getMinecraft().effectRenderer.addEffect(p);
-                ParticleRenderer.getInstance().addParticle(p);
-            }
-
-        }
-    }
-
     @Override
     public EnumActionResult func_195939_a(ItemUseContext context)
     {
@@ -100,7 +50,6 @@ public class ItemLinkingRod extends Item
         {
             if (world.isRemote)
             {
-                magicParticle(Color.GREEN, pos.up(), pos.add(3, 3, 3));
                 return EnumActionResult.SUCCESS;
             }
             if (stack.getTagCompound() == null)
