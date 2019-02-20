@@ -1,0 +1,17 @@
+{
+	"id": "empowered",
+	"name": "Empowered",
+	"description": "A small mod about big things",
+	"version": "${version}",
+	"side": "universal",
+	"initializers": [
+		"com.raphydaphy.empowered.Empowered"
+	],
+	"requires": {
+		"fabric": "*"
+	},
+	"mixins": {
+		"client": "empowered.client.json",
+		"common": "empowered.common.json"
+	}
+}
