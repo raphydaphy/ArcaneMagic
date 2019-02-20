@@ -8,17 +8,17 @@ import net.minecraft.world.World;
 public class DrainParticle extends class_4003
 {
 	protected final class_4002 field_17866;
-	private final float field_3881;
+	private final float ySpeed;
 	private float field_3879 = 0.91F;
 	private float targetColorRed;
 	private float targetColorGreen;
 	private float targetColorBlue;
 	private boolean changesColor;
 
-	protected DrainParticle(World world_1, double double_1, double double_2, double double_3, class_4002 class_4002_1, float float_1) {
-		super(world_1, double_1, double_2, double_3);
+	protected DrainParticle(World world, double xCoord, double yCoord, double zCoord, class_4002 class_4002_1, float ySpeed) {
+		super(world, xCoord, yCoord, zCoord);
 		this.field_17866 = class_4002_1;
-		this.field_3881 = float_1;
+		this.ySpeed = ySpeed;
 	}
 
 	// AnimatedParticle
@@ -52,7 +52,7 @@ public class DrainParticle extends class_4003
 		if (this.age++ >= this.maxAge) {
 			this.markDead();
 		} else {
-			this.method_18142(this.field_17866);
+			this.method_18142(this.field_17866); // change texture
 			if (this.age > this.maxAge / 2) {
 				this.setColorAlpha(1.0F - ((float)this.age - (float)(this.maxAge / 2)) / (float)this.maxAge);
 				if (this.changesColor) {
@@ -62,7 +62,7 @@ public class DrainParticle extends class_4003
 				}
 			}
 
-			this.velocityY += (double)this.field_3881;
+			this.velocityY += (double)this.ySpeed;
 			this.move(this.velocityX, this.velocityY, this.velocityZ);
 			this.velocityX *= (double)this.field_3879;
 			this.velocityY *= (double)this.field_3879;
