@@ -8,13 +8,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.passive.CowEntity;
-import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -23,12 +19,12 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class ItemChannelingRod extends Item
+public class ChannelingRodItem extends Item
 {
 	private static final String DRAIN_TARGET = "drain_target";
 	public static final String SOUL_KEY = "soul_stored";
 
-	public ItemChannelingRod()
+	public ChannelingRodItem()
 	{
 		super(new Item.Settings().itemGroup(Empowered.GROUP));
 	}

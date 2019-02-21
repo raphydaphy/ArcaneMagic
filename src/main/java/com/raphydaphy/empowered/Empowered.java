@@ -1,6 +1,6 @@
 package com.raphydaphy.empowered;
 
-import com.raphydaphy.empowered.init.ModItems;
+import com.raphydaphy.empowered.init.ModRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 public class Empowered implements ModInitializer
 {
 	public static final String DOMAIN = "empowered";
+	public static final String PREFIX = DOMAIN + ":";
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	public static ItemGroup GROUP;
@@ -24,7 +25,7 @@ public class Empowered implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		GROUP = FabricItemGroupBuilder.create(new Identifier(DOMAIN, "items")).icon(() -> new ItemStack(ModItems.CHANNELING_ROD)).build();
-		ModItems.init();
+		GROUP = FabricItemGroupBuilder.create(new Identifier(Empowered.DOMAIN, "items")).icon(() -> new ItemStack(ModRegistry.CHANNELING_ROD)).build();
+		ModRegistry.init();
 	}
 }

@@ -1,4 +1,5 @@
 {
-	"itemGroup.empowered.items": "Empowered Items",
-	"item.empowered.channeling_rod": "Channeling Rod"
+	"itemGroup.empowered.items": "Empowered",
+  	"block.empowered.transfiguration_table": "Arcane Transfiguration Table",
+	"item.empowered.channeling_rod": "Elemental Channeling Rod"
 }

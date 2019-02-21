@@ -2,8 +2,8 @@ package com.raphydaphy.empowered.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.empowered.Empowered;
-import com.raphydaphy.empowered.init.ModItems;
-import com.raphydaphy.empowered.item.ItemChannelingRod;
+import com.raphydaphy.empowered.init.ModRegistry;
+import com.raphydaphy.empowered.item.ChannelingRodItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -27,7 +27,7 @@ public class ClientEvents
 			if (player.isUsingItem())
 			{
 				ItemStack held = player.getStackInHand(player.getActiveHand());
-				if (held.getItem() == ModItems.CHANNELING_ROD)
+				if (held.getItem() == ModRegistry.CHANNELING_ROD)
 				{
 					usingWand = true;
 					if (!prevUsingWand)
@@ -85,7 +85,7 @@ public class ClientEvents
 			held = mc.player.getOffHandStack();
 		}
 
-		if (held.getItem() == ModItems.CHANNELING_ROD)
+		if (held.getItem() == ModRegistry.CHANNELING_ROD)
 		{
 			if (wandSelectedTicks < 0)
 			{
@@ -95,7 +95,7 @@ public class ClientEvents
 
 			if (held.getTag() != null)
 			{
-				currentSoul = held.getTag().getInt(ItemChannelingRod.SOUL_KEY);
+				currentSoul = held.getTag().getInt(ChannelingRodItem.SOUL_KEY);
 			}
 
 			if (mc.world.getTime() != wandHudLastIncrementTick && currentSoul != wandPreviousSoul)
