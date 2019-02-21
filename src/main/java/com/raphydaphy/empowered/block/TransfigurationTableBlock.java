@@ -16,7 +16,7 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 
 	public TransfigurationTableBlock()
 	{
-		super(Block.Settings.of(Material.WOOD).strength(5, 10));
+		super(Block.Settings.copy(Blocks.OAK_PLANKS));
 	}
 
 	@Override

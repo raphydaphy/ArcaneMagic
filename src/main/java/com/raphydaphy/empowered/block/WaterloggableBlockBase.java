@@ -15,8 +15,9 @@ import net.minecraft.world.IWorld;
 
 public class WaterloggableBlockBase extends Block implements Waterloggable
 {
-	public static final BooleanProperty WATERLOGGED;
-	public WaterloggableBlockBase(Settings settings)
+	private static final BooleanProperty WATERLOGGED;
+
+	WaterloggableBlockBase(Settings settings)
 	{
 		super(settings);
 		this.setDefaultState((this.stateFactory.getDefaultState()).with(WATERLOGGED, false));
