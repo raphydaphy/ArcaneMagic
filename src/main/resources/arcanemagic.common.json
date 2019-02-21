@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "com.raphydaphy.arcanemagic.core",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+	  	"LivingEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

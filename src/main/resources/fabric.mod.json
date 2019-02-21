@@ -1,17 +1,17 @@
 {
-	"id": "empowered",
-	"name": "Empowered",
-	"description": "A small mod about big things",
+	"id": "arcanemagic",
+	"name": "Arcane Magic",
+	"description": "Bend the souls of others to your will",
 	"version": "${version}",
 	"side": "universal",
 	"initializers": [
-		"com.raphydaphy.empowered.Empowered"
+		"com.raphydaphy.arcanemagic.ArcaneMagic"
 	],
 	"requires": {
 		"fabric": "*"
 	},
 	"mixins": {
-		"client": "empowered.client.json",
-		"common": "empowered.common.json"
+		"client": "arcanemagic.client.json",
+		"common": "arcanemagic.common.json"
 	}
 }
