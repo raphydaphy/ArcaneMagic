@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:channeling_rod"
+  },
+  "group": "arcanemagic:magic",
+  "pattern": [
+	"gr ",
+	"rs ",
+	"  s"
+  ],
+  "type": "crafting_shaped",
+  "key": {
+	"g": {
+	  "item": "minecraft:gold_ingot"
+	},
+	"r": {
+	  "item": "minecraft:redstone"
+	},
+	"s": {
+	  "item": "minecraft:stick"
+	}
+  }
+}

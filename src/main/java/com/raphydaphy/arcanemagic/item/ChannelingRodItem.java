@@ -11,6 +11,9 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleParameters;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -103,6 +106,10 @@ public class ChannelingRodItem extends Item
 					Random rand = new Random(System.nanoTime());
 					if (rand.nextInt(10) == 1)
 					{
+						if (!world.isClient)
+						{
+							((ServerWorld)world).method_14199(ParticleTypes.DAMAGE_INDICATOR, drainTarget.x, drainTarget.y + (double)(drainTarget.getHeight() * 0.5F), drainTarget.z, 0, 0.1D, 0.0D, 0.1D, 0.2D);
+						}
 						((LivingEntityMixin)drainTarget).playHurtSound(DamageSource.MAGIC);
 					}
 				}

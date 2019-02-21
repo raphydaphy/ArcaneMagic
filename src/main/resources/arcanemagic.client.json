@@ -3,8 +3,8 @@
 	"package": "com.raphydaphy.arcanemagic.core",
   	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"MinecraftClientMixin",
-	  	"InGameHudMixin"
+	  "MinecraftClientMixin",
+	  "InGameHudMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
