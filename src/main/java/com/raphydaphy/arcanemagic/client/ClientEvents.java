@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ChannelingRodItem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.Drawable;
+import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -64,10 +65,10 @@ public class ClientEvents
 		GlStateManager.scaled(1.5, 1.5, 1.5);
 		GlStateManager.translated(8, 8, 0);
 		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/item/channeling_rod.png"));
-		Drawable.drawTexturedRect(10, 10, 0, 0, 16, 16, 16, 16);
+		DrawableHelper.drawTexturedRect(10, 10, 0, 0, 16, 16, 16, 16);
 
 		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul-meter.png"));
-		Drawable.drawTexturedRect(/* x */ 0, /* y */ 0,
+		DrawableHelper.drawTexturedRect(/* x */ 0, /* y */ 0,
 				/* min-u */ 36 * col, /* min-v */ 36 * row,
 				/* max-u */ 36, /* max-v */ 36,
 				/* width */ 360, /* height */ 324);

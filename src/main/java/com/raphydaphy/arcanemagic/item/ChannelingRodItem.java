@@ -44,7 +44,7 @@ public class ChannelingRodItem extends Item
 	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
-		return new TypedActionResult<>(ActionResult.FAILURE, player.getStackInHand(hand));
+		return new TypedActionResult<>(ActionResult.FAIL, player.getStackInHand(hand));
 	}
 
 	@Override

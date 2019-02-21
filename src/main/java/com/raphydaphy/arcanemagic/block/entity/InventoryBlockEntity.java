@@ -107,7 +107,7 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	}
 
 	@Override
-	public void method_5448() // clear inventory
+	public void clear()
 	{
 		contents.clear();
 		markDirty();
