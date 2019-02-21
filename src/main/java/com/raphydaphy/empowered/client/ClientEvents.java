@@ -3,6 +3,7 @@ package com.raphydaphy.empowered.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.empowered.Empowered;
 import com.raphydaphy.empowered.init.ModItems;
+import com.raphydaphy.empowered.item.ItemChannelingRod;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -47,7 +48,34 @@ public class ClientEvents
 	private static final int SOUL_HUD_ALPHA_TIME = 15;
 	private static int wandPreviousSoul = 0;
 	private static long wandHudLastIncrementTick = 0;
-	private static int wandSelectedTicks = 0;
+	private static int wandSelectedTicks = -SOUL_HUD_ALPHA_TIME;
+
+	private static void drawWandHud(float alpha)
+	{
+		MinecraftClient mc = MinecraftClient.getInstance();
+
+		GlStateManager.pushMatrix();
+
+		GlStateManager.enableBlend();
+		GlStateManager.color4f(1, 1, 1, alpha);
+		GlStateManager.scaled(0.1, 0.1, 0.1);
+		GlStateManager.translated(350, 350, 0);
+
+		mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/item/channeling_rod.png"));
+		mc.inGameHud.drawTexturedRect(0, 0, 0, 0, 255, 255);
+
+		GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+
+		GlStateManager.enableBlend();
+		GlStateManager.color4f(1, 1, 1, alpha);
+		GlStateManager.scaled(0.25, 0.25, 0.25);
+
+		mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter-individual/soul-meter-" + wandPreviousSoul + ".png"));
+		mc.inGameHud.drawTexturedRect(64, 64, 0, 0, 255, 255);
+
+		GlStateManager.popMatrix();
+	}
 
 	public static void onDrawScreenPost(float partialTicks)
 	{
@@ -69,7 +97,7 @@ public class ClientEvents
 
 			if (held.getTag() != null)
 			{
-				currentSoul = held.getTag().getInt("soul");
+				currentSoul = held.getTag().getInt(ItemChannelingRod.SOUL_KEY);
 			}
 
 			if (mc.world.getTime() != wandHudLastIncrementTick && currentSoul != wandPreviousSoul)
@@ -107,28 +135,7 @@ public class ClientEvents
 			{
 				wandSelectedTicks++;
 			}
-
-			float alpha = wandSelectedTicks > SOUL_HUD_ALPHA_TIME ? 1 : wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME;
-
-			GlStateManager.pushMatrix();
-			GlStateManager.pushMatrix();
-
-			GlStateManager.color4f(1, 1, 1, alpha);
-			GlStateManager.scaled(0.1, 0.1, 0.1);
-			GlStateManager.translated(350, 350, 0);
-			mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/item/channeling_rod.png"));
-			mc.inGameHud.drawTexturedRect(0, 0, 0, 0, 255, 255);
-
-			GlStateManager.popMatrix();
-			GlStateManager.pushMatrix();
-
-			GlStateManager.color4f(1, 1, 1, alpha);
-			GlStateManager.scaled(0.25, 0.25, 0.25);
-			mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter-individual/soul-meter-" + wandPreviousSoul + ".png"));
-			mc.inGameHud.drawTexturedRect(64, 64, 0, 0, 255, 255);
-
-			GlStateManager.popMatrix();
-			GlStateManager.popMatrix();
+			drawWandHud(wandSelectedTicks > SOUL_HUD_ALPHA_TIME ? 1 : wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME);
 		}
 		else
 		{
@@ -143,15 +150,12 @@ public class ClientEvents
 			}
 			else
 			{
-				GlStateManager.pushMatrix();
-
-				GlStateManager.color4f(1, 1, 1, 1 - (-wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME));
-				GlStateManager.scaled(0.25, 0.25, 0.25);
-				mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter-individual/soul-meter-" + wandPreviousSoul + ".png"));
-				mc.inGameHud.drawTexturedRect(64, 64, 0, 0, 255, 255);
-
-				GlStateManager.popMatrix();
-				wandSelectedTicks--;
+				drawWandHud(1f - (-wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME));
+				if (mc.world.getTime() != wandHudLastIncrementTick)
+				{
+					wandSelectedTicks--;
+					wandHudLastIncrementTick = mc.world.getTime();
+				}
 			}
 		}
 

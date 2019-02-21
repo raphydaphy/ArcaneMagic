@@ -25,6 +25,9 @@ import java.util.Random;
 
 public class ItemChannelingRod extends Item
 {
+	private static final String DRAIN_TARGET = "drain_target";
+	public static final String SOUL_KEY = "soul_stored";
+
 	public ItemChannelingRod()
 	{
 		super(new Item.Settings().itemGroup(Empowered.GROUP));
@@ -59,7 +62,7 @@ public class ItemChannelingRod extends Item
 			}
 
 			player.setCurrentHand(hand);
-			player.getStackInHand(hand).getOrCreateTag().putInt("drain_target", target.getEntityId());
+			player.getStackInHand(hand).getOrCreateTag().putInt(DRAIN_TARGET, target.getEntityId());
 
 			if (!player.world.isClient)
 			{
@@ -77,12 +80,12 @@ public class ItemChannelingRod extends Item
 	{
 		if (!world.isClient && stack.getTag() != null)
 		{
-			Entity drainTarget = player.world.getEntityById(stack.getTag().getInt("drain_target"));
+			Entity drainTarget = player.world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
 			if (drainTarget instanceof LivingEntity)
 			{
 				((LivingEntity) drainTarget).clearPotionEffects();
 			}
-			stack.getTag().remove("drain_target");
+			stack.getTag().remove(DRAIN_TARGET);
 		}
 
 		if (player instanceof  PlayerEntity)
@@ -98,7 +101,7 @@ public class ItemChannelingRod extends Item
 		{
 			if (stack.getTag() != null)
 			{
-				Entity drainTarget = player.world.getEntityById(stack.getTag().getInt("drain_target"));
+				Entity drainTarget = player.world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
 				if (drainTarget instanceof LivingEntity)
 				{
 					Random rand = new Random(System.nanoTime());
@@ -116,17 +119,17 @@ public class ItemChannelingRod extends Item
 	{
 		if (!world.isClient && stack.getTag() != null)
 		{
-			Entity mousedEntity = world.getEntityById(stack.getTag().getInt("drain_target"));
+			Entity mousedEntity = world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
 			if (mousedEntity != null)
 			{
 				mousedEntity.kill();
 			}
-			stack.getTag().remove("drain_target");
+			stack.getTag().remove(DRAIN_TARGET);
 			Random rand = new Random(System.nanoTime());
-			stack.getTag().putInt("soul",  stack.getTag().getInt("soul") + rand.nextInt(10) + 10);
-			if (stack.getTag().getInt("soul") > EmpoweredConstants.SOUL_METER_MAX)
+			stack.getTag().putInt(SOUL_KEY,  stack.getTag().getInt(SOUL_KEY) + rand.nextInt(10) + 10);
+			if (stack.getTag().getInt(SOUL_KEY) > EmpoweredConstants.SOUL_METER_MAX)
 			{
-				stack.getTag().putInt("soul", EmpoweredConstants.SOUL_METER_MAX);
+				stack.getTag().putInt(SOUL_KEY, EmpoweredConstants.SOUL_METER_MAX);
 			}
 		}
 
