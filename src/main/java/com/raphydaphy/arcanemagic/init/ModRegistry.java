@@ -12,7 +12,6 @@ import net.minecraft.util.registry.Registry;
 
 public class ModRegistry
 {
-
 	public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new).build(null));
 
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
@@ -25,6 +24,5 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "channeling_rod"), CHANNELING_ROD);
-
 	}
 }

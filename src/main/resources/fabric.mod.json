@@ -5,7 +5,8 @@
 	"version": "${version}",
 	"side": "universal",
 	"initializers": [
-		"com.raphydaphy.arcanemagic.ArcaneMagic"
+		"com.raphydaphy.arcanemagic.ArcaneMagic",
+	  	"com.raphydaphy.arcanemagic.ArcaneMagicClient"
 	],
 	"requires": {
 		"fabric": "*"
