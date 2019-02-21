@@ -10,6 +10,8 @@ import net.minecraft.util.Identifier;
 
 public class ClientEvents
 {
+	// Lock camera during drain
+
 	private static boolean prevUsingWand = false;
 	private static float wandRotationYaw = 0;
 	private static float wandRotationPitch = 0;
@@ -40,6 +42,13 @@ public class ClientEvents
 		prevUsingWand = usingWand;
 	}
 
+	// Soul meter HUD
+
+	private static final int SOUL_HUD_ALPHA_TIME = 15;
+	private static int wandPreviousSoul = 0;
+	private static long wandHudLastIncrementTick = 0;
+	private static int wandSelectedTicks = 0;
+
 	public static void onDrawScreenPost(float partialTicks)
 	{
 
@@ -52,20 +61,98 @@ public class ClientEvents
 
 		if (held.getItem() == ModItems.CHANNELING_ROD)
 		{
-			GlStateManager.pushMatrix();
+			if (wandSelectedTicks < 0)
+			{
+				wandSelectedTicks = 0;
+			}
+			int currentSoul = 0;
+
+			if (held.getTag() != null)
+			{
+				currentSoul = held.getTag().getInt("soul");
+			}
+
+			if (mc.world.getTime() != wandHudLastIncrementTick && currentSoul != wandPreviousSoul)
+			{
+				wandSelectedTicks++;
+
+				if (wandSelectedTicks > SOUL_HUD_ALPHA_TIME)
+				{
+					if (currentSoul < wandPreviousSoul)
+					{
+						int distance = wandPreviousSoul - currentSoul;
+						int change = (Math.round(distance / 3));
+						wandPreviousSoul -= change < 1 ? 1 : change > 8 ? 8 : change;
+					} else
+					{
+						int distance = currentSoul - wandPreviousSoul;
+						int change = (Math.round(distance / 3));
+						wandPreviousSoul += change < 1 ? 1 : change > 8 ? 8 : change;
+					}
+				}
+				else if (wandSelectedTicks > 3)
+				{
+					int ticksLeft = SOUL_HUD_ALPHA_TIME - wandSelectedTicks;
+
+					if (currentSoul > wandPreviousSoul)
+					{
+						int distanceLeft = currentSoul - wandPreviousSoul;
+						int change = Math.round(distanceLeft / ticksLeft);
+						wandPreviousSoul += change < 1 ? 1 : change;
+					}
+				}
+				wandHudLastIncrementTick = mc.world.getTime();
+			}
+			else if (currentSoul == wandPreviousSoul && wandSelectedTicks <= SOUL_HUD_ALPHA_TIME + 1)
+			{
+				wandSelectedTicks++;
+			}
+
+			float alpha = wandSelectedTicks > SOUL_HUD_ALPHA_TIME ? 1 : wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME;
 
 			GlStateManager.pushMatrix();
+			GlStateManager.pushMatrix();
 
-			GlStateManager.scaled(1.6, 1.6, 1.6);
-			GlStateManager.translated(-28, -18, 0);
-			mc.getItemRenderer().renderGuiItem(held, 50, 40);
+			GlStateManager.color4f(1, 1, 1, alpha);
+			GlStateManager.scaled(0.1, 0.1, 0.1);
+			GlStateManager.translated(350, 350, 0);
+			mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/item/channeling_rod.png"));
+			mc.inGameHud.drawTexturedRect(0, 0, 0, 0, 255, 255);
+
 			GlStateManager.popMatrix();
+			GlStateManager.pushMatrix();
 
+			GlStateManager.color4f(1, 1, 1, alpha);
 			GlStateManager.scaled(0.25, 0.25, 0.25);
-			mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter.png"));
+			mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter-individual/soul-meter-" + wandPreviousSoul + ".png"));
 			mc.inGameHud.drawTexturedRect(64, 64, 0, 0, 255, 255);
 
 			GlStateManager.popMatrix();
+			GlStateManager.popMatrix();
+		}
+		else
+		{
+			if (wandSelectedTicks > 0)
+			{
+				wandSelectedTicks = 0;
+			}
+
+			if (wandSelectedTicks < -SOUL_HUD_ALPHA_TIME)
+			{
+				wandPreviousSoul = 0;
+			}
+			else
+			{
+				GlStateManager.pushMatrix();
+
+				GlStateManager.color4f(1, 1, 1, 1 - (-wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME));
+				GlStateManager.scaled(0.25, 0.25, 0.25);
+				mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter-individual/soul-meter-" + wandPreviousSoul + ".png"));
+				mc.inGameHud.drawTexturedRect(64, 64, 0, 0, 255, 255);
+
+				GlStateManager.popMatrix();
+				wandSelectedTicks--;
+			}
 		}
 
 

@@ -1,8 +1,11 @@
 package com.raphydaphy.empowered.item;
 
 import com.raphydaphy.empowered.Empowered;
+import com.raphydaphy.empowered.core.LivingEntityMixin;
+import com.raphydaphy.empowered.init.EmpoweredConstants;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.passive.CowEntity;
@@ -89,7 +92,7 @@ public class ItemChannelingRod extends Item
 	}
 
 	@Override
-	public void method_7852(World world, LivingEntity player, ItemStack stack, int timeLeft)
+	public void method_7852(World world, LivingEntity player, ItemStack stack, int timeLeft) // usingUpdate
 	{
 		if (player instanceof PlayerEntity)
 		{
@@ -101,17 +104,7 @@ public class ItemChannelingRod extends Item
 					Random rand = new Random(System.nanoTime());
 					if (rand.nextInt(10) == 1)
 					{
-						SoundEvent sound = SoundEvents.ENTITY_PIG_HURT;
-						if (drainTarget instanceof CowEntity)
-						{
-							sound = SoundEvents.ENTITY_COW_HURT;
-						}
-						else if (drainTarget instanceof RabbitEntity)
-						{
-							sound = SoundEvents.ENTITY_RABBIT_HURT;
-						}
-
-						drainTarget.playSound(sound, rand.nextFloat() *2, 1);
+						((LivingEntityMixin)drainTarget).playHurtSound(DamageSource.MAGIC);
 					}
 				}
 			}
@@ -129,6 +122,12 @@ public class ItemChannelingRod extends Item
 				mousedEntity.kill();
 			}
 			stack.getTag().remove("drain_target");
+			Random rand = new Random(System.nanoTime());
+			stack.getTag().putInt("soul",  stack.getTag().getInt("soul") + rand.nextInt(10) + 10);
+			if (stack.getTag().getInt("soul") > EmpoweredConstants.SOUL_METER_MAX)
+			{
+				stack.getTag().putInt("soul", EmpoweredConstants.SOUL_METER_MAX);
+			}
 		}
 
 		if (livingEntity instanceof PlayerEntity)

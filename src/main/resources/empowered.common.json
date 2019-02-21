@@ -3,6 +3,7 @@
 	"package": "com.raphydaphy.empowered.core",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
+	  	"LivingEntityMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
