@@ -5,6 +5,7 @@ import com.raphydaphy.empowered.Empowered;
 import com.raphydaphy.empowered.init.ModItems;
 import com.raphydaphy.empowered.item.ItemChannelingRod;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
@@ -52,27 +53,24 @@ public class ClientEvents
 
 	private static void drawWandHud(float alpha)
 	{
+		int row = wandPreviousSoul / 10;
+		int col = wandPreviousSoul % 10;
 		MinecraftClient mc = MinecraftClient.getInstance();
 
 		GlStateManager.pushMatrix();
 
 		GlStateManager.enableBlend();
 		GlStateManager.color4f(1, 1, 1, alpha);
-		GlStateManager.scaled(0.1, 0.1, 0.1);
-		GlStateManager.translated(350, 350, 0);
-
+		GlStateManager.scaled(1.5, 1.5, 1.5);
+		GlStateManager.translated(8, 8, 0);
 		mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/item/channeling_rod.png"));
-		mc.inGameHud.drawTexturedRect(0, 0, 0, 0, 255, 255);
+		Drawable.drawTexturedRect(10, 10, 0, 0, 16, 16, 16, 16);
 
-		GlStateManager.popMatrix();
-		GlStateManager.pushMatrix();
-
-		GlStateManager.enableBlend();
-		GlStateManager.color4f(1, 1, 1, alpha);
-		GlStateManager.scaled(0.25, 0.25, 0.25);
-
-		mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter-individual/soul-meter-" + wandPreviousSoul + ".png"));
-		mc.inGameHud.drawTexturedRect(64, 64, 0, 0, 255, 255);
+		mc.getTextureManager().bindTexture(new Identifier(Empowered.DOMAIN, "textures/misc/soul-meter.png"));
+		Drawable.drawTexturedRect(/* x */ 0, /* y */ 0,
+				/* min-u */ 36 * col, /* min-v */ 36 * row,
+				/* max-u */ 36, /* max-v */ 36,
+				/* width */ 360, /* height */ 324);
 
 		GlStateManager.popMatrix();
 	}
