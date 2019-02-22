@@ -2,8 +2,10 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.entity.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.item.ScepterItem;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -42,6 +44,34 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 		}
 
 		ItemStack held = player.getStackInHand(hand);
+
+		if (!held.isEmpty() && held.getItem() instanceof ScepterItem)
+		{
+			if (held.getTag() != null)
+			{
+				int soul = held.getTag().getInt(ScepterItem.SOUL_KEY);
+
+				if (soul >= 10)
+				{
+					if (!world.isClient)
+					{
+						held.getTag().putInt(ScepterItem.SOUL_KEY, soul - 10);
+						((Inventory)blockEntity).clear();
+						ItemEntity result = new ItemEntity(world,pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, new ItemStack(Blocks.STONE));
+						result.setVelocity(0, 0, 0);
+						world.spawnEntity(result);
+					}
+					else
+					{
+						player.swingHand(hand);
+					}
+
+					return true;
+				}
+			}
+			return false;
+		}
+
 		Vec3d hit = new Vec3d(hitResult.getPos().x - pos.getX(), hitResult.getPos().y - pos.getY(), hitResult.getPos().z - pos.getZ());
 
 
@@ -102,7 +132,9 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 					{
 						if (!player.method_7270(stackInTable.copy())) // addItemStackToInventory
 						{
-							ItemScatterer.spawn(world, hitResult.getPos().x, hitResult.getPos().y + 0.5, hitResult.getPos().z, stackInTable.copy());
+							ItemEntity result = new ItemEntity(world,pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, stackInTable.copy());
+							result.setVelocity(0, 0, 0);
+							world.spawnEntity(result);
 						}
 						((Inventory)blockEntity).setInvStack(slot, ItemStack.EMPTY);
 					} else
