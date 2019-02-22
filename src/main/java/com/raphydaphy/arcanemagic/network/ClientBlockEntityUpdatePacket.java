@@ -17,9 +17,7 @@ public class ClientBlockEntityUpdatePacket implements IPacket
 
 	private CompoundTag tag;
 
-	public ClientBlockEntityUpdatePacket()
-	{
-	}
+	public ClientBlockEntityUpdatePacket() { }
 
 	public ClientBlockEntityUpdatePacket(CompoundTag tag)
 	{

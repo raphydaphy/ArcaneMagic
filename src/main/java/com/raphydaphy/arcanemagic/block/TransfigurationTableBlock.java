@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.block;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -10,6 +11,8 @@ import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +31,35 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 		super(Block.Settings.copy(Blocks.OAK_PLANKS));
 	}
 
+	public boolean useScepter(World world, BlockEntity blockEntity, ItemStack scepter, @Nullable PlayerEntity player, @Nullable Hand hand)
+	{
+		if (scepter.getTag() != null)
+		{
+			int soul = scepter.getTag().getInt(ScepterItem.SOUL_KEY);
+
+			if (soul >= 10)
+			{
+				if (!world.isClient)
+				{
+					scepter.getTag().putInt(ScepterItem.SOUL_KEY, soul - 10);
+					((Inventory)blockEntity).clear();
+					ItemEntity result = new ItemEntity(world,blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, new ItemStack(Blocks.STONE));
+					result.setVelocity(0, 0, 0);
+					world.spawnEntity(result);
+				}
+				if (player != null)
+				{
+					player.swingHand(hand);
+				}
+
+				world.playSound(player, blockEntity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult)
 	{
@@ -42,29 +74,7 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 
 		if (!held.isEmpty() && held.getItem() instanceof ScepterItem)
 		{
-			if (held.getTag() != null)
-			{
-				int soul = held.getTag().getInt(ScepterItem.SOUL_KEY);
-
-				if (soul >= 10)
-				{
-					if (!world.isClient)
-					{
-						held.getTag().putInt(ScepterItem.SOUL_KEY, soul - 10);
-						((Inventory)blockEntity).clear();
-						ItemEntity result = new ItemEntity(world,pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, new ItemStack(Blocks.STONE));
-						result.setVelocity(0, 0, 0);
-						world.spawnEntity(result);
-					}
-					else
-					{
-						player.swingHand(hand);
-					}
-
-					return true;
-				}
-			}
-			return false;
+			return useScepter(world, blockEntity, held, player, hand);
 		}
 
 		Vec3d hit = new Vec3d(hitResult.getPos().x - pos.getX(), hitResult.getPos().y - pos.getY(), hitResult.getPos().z - pos.getZ());

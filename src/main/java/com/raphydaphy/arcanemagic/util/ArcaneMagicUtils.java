@@ -54,10 +54,10 @@ public class ArcaneMagicUtils
 				if (!world.isClient)
 				{
 					((Inventory) container).setInvStack(slot, insertStack);
-				} else
-				{
-					world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
 				}
+
+				world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+				player.swingHand(hand);
 
 				return true;
 			}
@@ -74,10 +74,11 @@ public class ArcaneMagicUtils
 						world.spawnEntity(result);
 					}
 					((Inventory)container).setInvStack(slot, ItemStack.EMPTY);
-				} else
-				{
-					world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
 				}
+
+				world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+				player.swingHand(hand);
+
 				return true;
 			}
 		}
