@@ -25,7 +25,7 @@ public class ArcaneMagic implements ModInitializer
 	@Override
 	public void onInitialize()
 	{
-		GROUP = FabricItemGroupBuilder.create(new Identifier(ArcaneMagic.DOMAIN, "items")).icon(() -> new ItemStack(ModRegistry.CHANNELING_ROD)).build();
+		GROUP = FabricItemGroupBuilder.create(new Identifier(ArcaneMagic.DOMAIN, "items")).icon(() -> new ItemStack(ModRegistry.GOLDEN_SCEPTER)).build();
 		ModRegistry.init();
 	}
 }

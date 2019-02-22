@@ -1,5 +1,5 @@
 {
 	"itemGroup.arcanemagic.items": "Arcane Magic",
-  	"block.arcanemagic.transfiguration_table": "Arcane Transfiguration Table",
-	"item.arcanemagic.channeling_rod": "Elemental Channeling Rod"
+  	"block.arcanemagic.transfiguration_table": "Transfiguration Table",
+	"item.arcanemagic.golden_scepter": "Golden Scepter"
 }

@@ -3,9 +3,8 @@ package com.raphydaphy.arcanemagic.client;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.item.ChannelingRodItem;
+import com.raphydaphy.arcanemagic.item.ScepterItem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -28,7 +27,7 @@ public class ClientEvents
 			if (player.isUsingItem())
 			{
 				ItemStack held = player.getStackInHand(player.getActiveHand());
-				if (held.getItem() == ModRegistry.CHANNELING_ROD)
+				if (held.getItem() == ModRegistry.GOLDEN_SCEPTER)
 				{
 					usingWand = true;
 					if (!prevUsingWand)
@@ -64,7 +63,7 @@ public class ClientEvents
 		GlStateManager.color4f(1, 1, 1, alpha);
 		GlStateManager.scaled(1.5, 1.5, 1.5);
 		GlStateManager.translated(8, 8, 0);
-		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/item/channeling_rod.png"));
+		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/item/golden_scepter.png"));
 		DrawableHelper.drawTexturedRect(10, 10, 0, 0, 16, 16, 16, 16);
 
 		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul-meter.png"));
@@ -86,7 +85,7 @@ public class ClientEvents
 			held = mc.player.getOffHandStack();
 		}
 
-		if (held.getItem() == ModRegistry.CHANNELING_ROD)
+		if (held.getItem() == ModRegistry.GOLDEN_SCEPTER)
 		{
 			if (wandSelectedTicks < 0)
 			{
@@ -96,7 +95,7 @@ public class ClientEvents
 
 			if (held.getTag() != null)
 			{
-				currentSoul = held.getTag().getInt(ChannelingRodItem.SOUL_KEY);
+				currentSoul = held.getTag().getInt(ScepterItem.SOUL_KEY);
 			}
 
 			if (mc.world.getTime() != wandHudLastIncrementTick && currentSoul != wandPreviousSoul)

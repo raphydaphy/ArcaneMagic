@@ -1,6 +1,6 @@
 {
 	"parent": "item/generated",
 	"textures": {
-		"layer0": "arcanemagic:item/channeling_rod"
+		"layer0": "arcanemagic:item/golden_scepter"
 	}
 }

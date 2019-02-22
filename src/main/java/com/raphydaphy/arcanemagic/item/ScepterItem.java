@@ -22,12 +22,12 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
-public class ChannelingRodItem extends Item
+public class ScepterItem extends Item
 {
 	private static final String DRAIN_TARGET = "drain_target";
 	public static final String SOUL_KEY = "soul_stored";
 
-	public ChannelingRodItem()
+	public ScepterItem()
 	{
 		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 	}
