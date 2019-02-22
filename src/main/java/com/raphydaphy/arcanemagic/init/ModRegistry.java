@@ -21,6 +21,12 @@ public class ModRegistry
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem();
+	public static Item EMERALD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static Item DIAMOND_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static Item GOLD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static Item LAPIS_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static Item REDSTONE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static Item COAL_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 
 	public static void init()
 	{
@@ -34,5 +40,11 @@ public class ModRegistry
 
 		// Item Registration
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "golden_scepter"), GOLDEN_SCEPTER);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal"), EMERALD_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "diamond_crystal"), DIAMOND_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "gold_crystal"), GOLD_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "lapis_crystal"), LAPIS_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal"), REDSTONE_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "coal_crystal"), COAL_CRYSTAL);
 	}
 }

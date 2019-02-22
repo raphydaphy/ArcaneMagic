@@ -2,5 +2,11 @@
 	"itemGroup.arcanemagic.items": "Arcane Magic",
   	"block.arcanemagic.altar": "Altar",
   	"block.arcanemagic.transfiguration_table": "Transfiguration Table",
-	"item.arcanemagic.golden_scepter": "Golden Scepter"
+	"item.arcanemagic.golden_scepter": "Golden Scepter",
+  	"item.arcanemagic.emerald_crystal": "Emerald Infused Crystal",
+	"item.arcanemagic.diamond_crystal": "Diamond Infused Crystal",
+	"item.arcanemagic.gold_crystal": "Gold Infused Crystal",
+	"item.arcanemagic.lapis_crystal": "Lapis Infused Crystal",
+	"item.arcanemagic.redstone_crystal": "Redstone Infused Crystal",
+	"item.arcanemagic.coal_crystal": "Coal Infused Crystal"
 }
