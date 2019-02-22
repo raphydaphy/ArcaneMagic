@@ -3,49 +3,47 @@
 	"ambientocclusion": true,
 	"parent": "block/block",
 	"textures": {
-		"particle": "arcanemagic:block/material_wood",
 		"texture": "arcanemagic:block/transfiguration_table_top",
 		"texture1": "arcanemagic:block/transfiguration_table_side",
-		"texture2": "arcanemagic:block/transfiguration_table_bottom"
+		"texture2": "arcanemagic:block/transfiguration_table_bottom",
+	  	"particle": "arcanemagic:block/material_wood"
 	},
-	"elements": [ 	 
+	"elements": [
 		{
-			"__comment": "Box2",
-			"from": [ 0, 4, 0 ],
-			"to": [ 16, 8, 16 ],
+			"name": "Middle",
+			"from": [0, 4, 0],
+			"to": [16, 8, 16],
 			"faces": {
-				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture2" },
-				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#texture" },
-				"north": { "uv": [ 0, 8, 16, 12 ], "texture": "#texture1" },
-				"south": { "uv": [ 0, 8, 16, 12 ], "texture": "#texture1" },
-				"west": { "uv": [ 0, 8, 16, 12 ], "texture": "#texture1" },
-				"east": { "uv": [ 0, 8, 16, 12 ], "texture": "#texture1" }
+				"north": {"uv": [0, 8, 16, 12], "texture": "#texture1"},
+				"east": {"uv": [0, 8, 16, 12], "texture": "#texture1"},
+				"south": {"uv": [0, 8, 16, 12], "texture": "#texture1"},
+				"west": {"uv": [0, 8, 16, 12], "texture": "#texture1"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#texture2"}
 			}
 		},
 		{
-			"__comment": "Box2",
-			"from": [ 2, 0, 2 ],
-			"to": [ 14, 4, 14 ],
+			"name": "Bottom",
+			"from": [2, 0, 2],
+			"to": [14, 4, 14],
 			"faces": {
-				"down": { "uv": [ 2, 2, 14, 14 ], "texture": "#texture2" },
-				"up": { "uv": [ 2, 2, 14, 14 ], "texture": "#texture" },
-				"north": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" },
-				"south": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" },
-				"west": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" },
-				"east": { "uv": [ 2, 12, 14, 16 ], "texture": "#texture1" }
+				"north": {"uv": [2, 12, 14, 16], "texture": "#texture1"},
+				"east": {"uv": [2, 12, 14, 16], "texture": "#texture1"},
+				"south": {"uv": [2, 12, 14, 16], "texture": "#texture1"},
+				"west": {"uv": [2, 12, 14, 16], "texture": "#texture1"},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#texture2"}
 			}
 		},
 		{
-			"__comment": "Box2",
-			"from": [ 3, 8, 3 ],
-			"to": [ 13, 10, 13 ],
+			"name": "Top",
+			"from": [3, 8, 3],
+			"to": [13, 10, 13],
 			"faces": {
-				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#texture2" },
-				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#texture" },
-				"north": { "uv": [ 3, 6, 13, 8 ], "texture": "#texture1" },
-				"south": { "uv": [ 3, 6, 13, 8 ], "texture": "#texture1" },
-				"west": { "uv": [ 3, 6, 13, 8 ], "texture": "#texture1" },
-				"east": { "uv": [ 3, 6, 13, 8 ], "texture": "#texture1" }
+				"north": {"uv": [3, 6, 13, 8], "texture": "#texture1"},
+				"east": {"uv": [3, 6, 13, 8], "texture": "#texture1"},
+				"south": {"uv": [3, 6, 13, 8], "texture": "#texture1"},
+				"west": {"uv": [3, 6, 13, 8], "texture": "#texture1"},
+				"up": {"uv": [3, 3, 13, 13], "texture": "#texture"}
 			}
 		}
 	]

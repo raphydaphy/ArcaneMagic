@@ -1,14 +1,22 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.block.entity.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.block.BlockItem;
 import net.minecraft.sortme.ItemScatterer;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -21,6 +29,92 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 	public TransfigurationTableBlock()
 	{
 		super(Block.Settings.copy(Blocks.OAK_PLANKS));
+	}
+
+	@Override
+	public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hitResult)
+	{
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+
+		if (!(blockEntity instanceof TransfigurationTableBlockEntity))
+		{
+			return false;
+		}
+
+		ItemStack held = player.getStackInHand(hand);
+		Vec3d hit = new Vec3d(hitResult.getPos().x - pos.getX(), hitResult.getPos().y - pos.getY(), hitResult.getPos().z - pos.getZ());
+
+
+
+		if (hit.x >= 0.203 && hit.x <= 0.801 && hit.y >= 0.5625 && hit.z >= 0.203 && hit.z <= 0.801)
+		{
+			double divX = (hit.x - 0.203f);
+			double divZ = (hit.z - 0.203f);
+
+			int slot = (divX <= 0.2152 ? 2 : divX <= 0.4084 ? 1 : 0) + (divZ <= 0.2152 ? 6 : divZ <= 0.4084 ? 3 : 0);
+
+			ItemStack stackInTable = ((Inventory)blockEntity).getInvStack(slot);
+
+			// Try to insert stack
+			if (!player.isSneaking())
+			{
+				if (held.isEmpty())
+				{
+					return false;
+				}
+				if (stackInTable.isEmpty())
+				{
+					ItemStack insertStack = held.copy();
+
+					if (held.getAmount() > 1)
+					{
+						if (!world.isClient)
+						{
+							if (!player.isCreative())
+							{
+								held.subtractAmount(1);
+							}
+							insertStack.setAmount(1);
+						}
+					} else if (!world.isClient && !player.isCreative())
+					{
+						player.setStackInHand(hand, ItemStack.EMPTY);
+					}
+
+					// insertStack = 1 item to insert
+					// held = remaining items
+
+					if (!world.isClient)
+					{
+						((Inventory) blockEntity).setInvStack(slot, insertStack);
+					} else
+					{
+						world.playSound(player, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+					}
+
+					return true;
+				}
+			} else
+			{
+				if (!stackInTable.isEmpty())
+				{
+					if (!world.isClient)
+					{
+						if (!player.method_7270(stackInTable.copy())) // addItemStackToInventory
+						{
+							ItemScatterer.spawn(world, hitResult.getPos().x, hitResult.getPos().y + 0.5, hitResult.getPos().z, stackInTable.copy());
+						}
+						((Inventory)blockEntity).setInvStack(slot, ItemStack.EMPTY);
+					} else
+					{
+						world.playSound(player, pos, SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+					}
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	@Override
@@ -54,28 +148,7 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 	@Override // Copied from net.minecraft.container.Container#calculateComparatorOutput
 	public int getComparatorOutput(BlockState state, World world, BlockPos pos)
 	{
-		BlockEntity entity = world.getBlockEntity(pos);
-
-		if (entity instanceof Inventory)
-		{
-			Inventory inventory = (Inventory) entity;
-			int count = 0;
-			float percent = 0.0F;
-
-			for (int slot = 0; slot < inventory.getInvSize(); ++slot)
-			{
-				ItemStack stack = inventory.getInvStack(slot);
-				if (!stack.isEmpty())
-				{
-					percent += (float) stack.getAmount() / (float) Math.min(inventory.getInvMaxStackAmount(), stack.getMaxAmount());
-					++count;
-				}
-			}
-
-			percent /= (float) inventory.getInvSize();
-			return MathHelper.floor(percent * 14.0F) + (count > 0 ? 1 : 0);
-		}
-		return 0;
+		return InventoryBlockEntity.getComparatorOutput(world, pos);
 	}
 
 	@Override

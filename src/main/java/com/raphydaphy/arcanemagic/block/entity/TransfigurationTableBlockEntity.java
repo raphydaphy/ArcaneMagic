@@ -1,11 +1,15 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.TransfigurationTableContentsPacket;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.dedicated.MinecraftDedicatedServer;
 import net.minecraft.util.math.Direction;
 
 public class TransfigurationTableBlockEntity extends InventoryBlockEntity implements SidedInventory
@@ -27,11 +31,7 @@ public class TransfigurationTableBlockEntity extends InventoryBlockEntity implem
 	public void markDirty()
 	{
 		super.markDirty();
-		if (world != null)
-		{
-			BlockState state = world.getBlockState(getPos());
-			world.updateListeners(getPos(), state, state, 3);
-		}
+		ArcaneMagicPacketHandler.sendToAllAround(new TransfigurationTableContentsPacket(toInitialChunkDataTag()), world, getPos(), 300);
 	}
 
 	@Override

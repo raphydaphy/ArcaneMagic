@@ -29,7 +29,7 @@ public class ChannelingRodItem extends Item
 
 	public ChannelingRodItem()
 	{
-		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 	}
 
 	@Override

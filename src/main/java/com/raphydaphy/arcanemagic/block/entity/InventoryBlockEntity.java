@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,6 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.InventoryUtil;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 
 public class InventoryBlockEntity extends BlockEntity implements Inventory
 {
@@ -71,11 +75,7 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	public ItemStack takeInvStack(int slot, int count)
 	{
 		ItemStack stack = InventoryUtil.splitStack(contents, slot, count);
-
-		if (!stack.isEmpty())
-		{
-			markDirty();
-		}
+		markDirty();
 
 		return stack;
 	}
@@ -83,20 +83,15 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	@Override
 	public ItemStack removeInvStack(int slot)
 	{
-		return InventoryUtil.removeStack(contents, slot);
+		ItemStack ret = InventoryUtil.removeStack(contents, slot);
+		markDirty();
+		return ret;
 	}
 
 	@Override
 	public void setInvStack(int slot, ItemStack stack)
 	{
 		contents.set(slot, stack);
-
-		// TODO: ensure this won't delete overflow items
-		if (stack.getAmount() > this.getInvMaxStackAmount())
-		{
-			stack.setAmount(this.getInvMaxStackAmount());
-		}
-
 		markDirty();
 	}
 
@@ -111,5 +106,31 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	{
 		contents.clear();
 		markDirty();
+	}
+
+	public static int getComparatorOutput(World world, BlockPos pos)
+	{
+		BlockEntity entity = world.getBlockEntity(pos);
+
+		if (entity instanceof Inventory)
+		{
+			Inventory inventory = (Inventory) entity;
+			int count = 0;
+			float percent = 0.0F;
+
+			for (int slot = 0; slot < inventory.getInvSize(); ++slot)
+			{
+				ItemStack stack = inventory.getInvStack(slot);
+				if (!stack.isEmpty())
+				{
+					percent += (float) stack.getAmount() / (float) Math.min(inventory.getInvMaxStackAmount(), stack.getMaxAmount());
+					++count;
+				}
+			}
+
+			percent /= (float) inventory.getInvSize();
+			return MathHelper.floor(percent * 14.0F) + (count > 0 ? 1 : 0);
+		}
+		return 0;
 	}
 }
