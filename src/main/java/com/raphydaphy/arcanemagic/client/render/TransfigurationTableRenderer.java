@@ -33,9 +33,9 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 					int row = slot % 3;
 					int col = slot / 3;
 
+					GlStateManager.pushMatrix();
 					GuiLighting.enable();
 					GlStateManager.enableLighting();
-					GlStateManager.pushMatrix();
 					GlStateManager.translated(.69 - .19 * row, 0.695, .69 - .19 * col);
 					if (!(stack.getItem() instanceof BlockItem))
 					{
@@ -44,7 +44,6 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 					}
 					GlStateManager.scaled(.14, .14, .14);
 					MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.NONE);
-					//MinecraftClient.getInstance().getItemRenderer().renderItem(new ItemStack(Items.REDSTONE), ModelTransformation.Type.NONE);
 					GlStateManager.popMatrix();
 				}
 			}

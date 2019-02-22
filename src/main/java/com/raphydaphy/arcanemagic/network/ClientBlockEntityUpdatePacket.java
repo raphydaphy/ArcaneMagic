@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.InventoryBlockEntity;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
@@ -11,17 +11,17 @@ import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class TransfigurationTableContentsPacket implements IPacket
+public class ClientBlockEntityUpdatePacket implements IPacket
 {
-	public static final Identifier ID = new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table_contents");
+	public static final Identifier ID = new Identifier(ArcaneMagic.DOMAIN, "client_block_entity_update");
 
 	private CompoundTag tag;
 
-	public TransfigurationTableContentsPacket()
+	public ClientBlockEntityUpdatePacket()
 	{
 	}
 
-	public TransfigurationTableContentsPacket(CompoundTag tag)
+	public ClientBlockEntityUpdatePacket(CompoundTag tag)
 	{
 		this.tag = tag;
 	}
@@ -44,16 +44,16 @@ public class TransfigurationTableContentsPacket implements IPacket
 		return ID;
 	}
 
-	public static class Handler extends MessageHandler<TransfigurationTableContentsPacket>
+	public static class Handler extends MessageHandler<ClientBlockEntityUpdatePacket>
 	{
 		@Override
-		protected TransfigurationTableContentsPacket create()
+		protected ClientBlockEntityUpdatePacket create()
 		{
-			return new TransfigurationTableContentsPacket();
+			return new ClientBlockEntityUpdatePacket();
 		}
 
 		@Override
-		public void handle(PacketContext ctx, TransfigurationTableContentsPacket message)
+		public void handle(PacketContext ctx, ClientBlockEntityUpdatePacket message)
 		{
 			BlockPos pos = new BlockPos(message.tag.getInt("x"), message.tag.getInt("y"), message.tag.getInt("z"));
 			World world = MinecraftClient.getInstance().player.world;
@@ -62,7 +62,7 @@ public class TransfigurationTableContentsPacket implements IPacket
 			{
 				BlockEntity blockEntity = world.getBlockEntity(pos);
 
-				if (blockEntity instanceof TransfigurationTableBlockEntity)
+				if (blockEntity instanceof InventoryBlockEntity)
 				{
 					blockEntity.fromTag(message.tag);
 				}

@@ -1,5 +1,6 @@
 {
 	"itemGroup.arcanemagic.items": "Arcane Magic",
+  	"block.arcanemagic.altar": "Altar",
   	"block.arcanemagic.transfiguration_table": "Transfiguration Table",
 	"item.arcanemagic.golden_scepter": "Golden Scepter"
 }

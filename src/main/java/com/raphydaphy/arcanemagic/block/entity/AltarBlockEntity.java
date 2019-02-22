@@ -7,20 +7,26 @@ import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
-public class TransfigurationTableBlockEntity extends InventoryBlockEntity implements SidedInventory
+public class AltarBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
-	private final int[] slots;
+	public long ticks = 0;
 
-	public TransfigurationTableBlockEntity()
+	private final int[] slots = { 0 };
+
+	public AltarBlockEntity()
 	{
-		super(ModRegistry.TRANSFIGURATION_TABLE_TE, 9);
-		slots = new int[getInvSize()];
+		super(ModRegistry.ALTAR_TE, 1);
+	}
 
-		for (int i = 0; i < getInvSize(); i++)
+	@Override
+	public void tick()
+	{
+		if (world.isClient)
 		{
-			slots[i] = i;
+			ticks++;
 		}
 	}
 
@@ -74,6 +80,6 @@ public class TransfigurationTableBlockEntity extends InventoryBlockEntity implem
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return false;
+		return true;
 	}
 }

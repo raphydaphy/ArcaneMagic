@@ -107,30 +107,4 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 		contents.clear();
 		markDirty();
 	}
-
-	public static int getComparatorOutput(World world, BlockPos pos)
-	{
-		BlockEntity entity = world.getBlockEntity(pos);
-
-		if (entity instanceof Inventory)
-		{
-			Inventory inventory = (Inventory) entity;
-			int count = 0;
-			float percent = 0.0F;
-
-			for (int slot = 0; slot < inventory.getInvSize(); ++slot)
-			{
-				ItemStack stack = inventory.getInvStack(slot);
-				if (!stack.isEmpty())
-				{
-					percent += (float) stack.getAmount() / (float) Math.min(inventory.getInvMaxStackAmount(), stack.getMaxAmount());
-					++count;
-				}
-			}
-
-			percent /= (float) inventory.getInvSize();
-			return MathHelper.floor(percent * 14.0F) + (count > 0 ? 1 : 0);
-		}
-		return 0;
-	}
 }
