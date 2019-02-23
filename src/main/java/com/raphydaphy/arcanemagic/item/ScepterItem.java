@@ -48,37 +48,31 @@ public class ScepterItem extends Item
 	@Override
 	public void onEntityTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected)
 	{
-		/*if (world.getTime() % 20 == 0 && !world.isClient && selected && scepter.getTag() != null && holder instanceof PlayerEntity)
+		if (world.getTime() % 20 == 0 && !world.isClient && selected && holder instanceof PlayerEntity)
 		{
-			int scepterSoul = scepter.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-
-			if (scepterSoul > 0)
+			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+			if (scepterSoul < this.maxSoul && scepter.getTag() != null)
 			{
-				for (int searchSlot = 0; searchSlot < ((PlayerEntity) holder).inventory.getInvSize(); searchSlot++)
+				int pendantSlot = ArcaneMagicUtils.findPendant((PlayerEntity)holder);
+				if (pendantSlot != -1)
 				{
-					ItemStack stackInSlot = ((PlayerEntity) holder).inventory.getInvStack(searchSlot);
-					if (!stackInSlot.isEmpty() && stackInSlot.getItem() == ModRegistry.SOUL_PENDANT)
+					ItemStack pendant = ((PlayerEntity)holder).inventory.getInvStack(pendantSlot);
+					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+
+					if (scepterSoul + pendantSlot <= this.maxSoul)
 					{
-						int pendantSoul = stackInSlot.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-
-						if (pendantSoul < ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
-						{
-							int pendantAvailable = ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL - pendantSoul;
-
-							if (pendantAvailable >= scepterSoul)
-							{
-								Objects.requireNonNull(stackInSlot.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul + scepterSoul);
-								scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, 0);
-							} else
-							{
-								Objects.requireNonNull(stackInSlot.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
-								scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - pendantAvailable);
-							}
-						}
+						// Transfer all soul from the pendant into the scepter
+						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul);
+						Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, 0);
+					} else
+					{
+						// Fill the scepter and leave the remaining soul in the pendant
+						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
+						Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul - this.maxSoul);
 					}
 				}
 			}
-		}*/
+		}
 	}
 
 	@Override

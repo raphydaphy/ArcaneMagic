@@ -81,8 +81,8 @@ public class ClientEvents
 	// Texture with all the soul meter levels, centers and outlines
 	private static Identifier SOUL_METER_LEVELS = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul-meter.png");
 
-	// Active soul pendant, if any
-	private static ItemStack pendant = ItemStack.EMPTY;
+	// Active soul pendant slot, if any
+	private static int pendant = -1;
 
 	private static void drawWandHud(float alpha)
 	{
@@ -145,27 +145,39 @@ public class ClientEvents
 				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
 			}
 
-			if (!pendant.isEmpty() && pendant.getTag() != null)
-			{
-				currentSoul = currentSoul + pendant.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
-			} else
-			{
-				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
-			}
 
 
 			// Runs every second to check for a soul pendant in the players inventory
 			if (mc.world.getTime() != soulMeterLastIncrementTick && mc.world.getTime() % 20 == 0)
 			{
 				pendant = ArcaneMagicUtils.findPendant(mc.player);
-				if (!pendant.isEmpty())
+				if (pendant != -1)
 				{
 					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
 				} else
 				{
 					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
 				}
+			}
+			boolean validPendant = false;
+
+			if (pendant != -1)
+			{
+				ItemStack pendantItem = mc.player.inventory.getInvStack(pendant);
+				if (!pendantItem.isEmpty() && pendantItem.getItem() == ModRegistry.SOUL_PENDANT)
+				{
+					if (pendantItem.getTag() != null)
+					{
+						currentSoul = currentSoul + pendantItem.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+					}
+					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+					validPendant = true;
+				}
+			}
+
+			if (!validPendant)
+			{
+				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
 			}
 
 			if (mc.world.getTime() != soulMeterLastIncrementTick && currentSoul != soulMeterAmount)

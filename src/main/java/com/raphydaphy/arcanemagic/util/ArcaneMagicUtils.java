@@ -33,7 +33,12 @@ public class ArcaneMagicUtils
 	{
 		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
 		{
-			ItemStack pendant = findPendant(user);
+			ItemStack pendant = ItemStack.EMPTY;
+			int pendantSlot = findPendant(user);
+			if (pendantSlot != -1)
+			{
+				pendant = user.inventory.getInvStack(pendantSlot);
+			}
 			int pendantSoul = 0;
 			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 
@@ -72,7 +77,12 @@ public class ArcaneMagicUtils
 	{
 		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
 		{
-			ItemStack pendant = findPendant(user);
+			ItemStack pendant = ItemStack.EMPTY;
+			int pendantSlot = findPendant(user);
+			if (pendantSlot != -1)
+			{
+				pendant = user.inventory.getInvStack(pendantSlot);
+			}
 			int scepterMax = ((ScepterItem) scepter.getItem()).maxSoul;
 			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 
@@ -109,7 +119,7 @@ public class ArcaneMagicUtils
 		return false;
 	}
 
-	public static ItemStack findPendant(PlayerEntity player)
+	public static int findPendant(PlayerEntity player)
 	{
 		if (player != null)
 		{
@@ -118,11 +128,11 @@ public class ArcaneMagicUtils
 				ItemStack stackInSlot = player.inventory.getInvStack(searchSlot);
 				if (!stackInSlot.isEmpty() && stackInSlot.getItem() == ModRegistry.SOUL_PENDANT)
 				{
-					return stackInSlot;
+					return searchSlot;
 				}
 			}
 		}
-		return ItemStack.EMPTY;
+		return -1;
 	}
 
 	/**
