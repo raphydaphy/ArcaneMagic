@@ -1,0 +1,6 @@
+[
+  {
+	"id": "addons_plugin",
+	"initializer": "com.raphydaphy.arcanemagic.intergration.REIPlugin"
+  }
+]

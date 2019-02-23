@@ -5,7 +5,7 @@ import com.raphydaphy.arcanemagic.block.AltarBlock;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
-import com.raphydaphy.arcanemagic.item.PendantItem;
+import com.raphydaphy.arcanemagic.item.SoulStorageItem;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import net.minecraft.block.Blocks;
@@ -31,7 +31,7 @@ public class ModRegistry
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
-	public static PendantItem SOUL_PENDANT = new PendantItem();
+	public static SoulStorageItem SOUL_PENDANT = new SoulStorageItem(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 	public static Item EMERALD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item DIAMOND_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item GOLD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
@@ -70,22 +70,22 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
 
 		// Transfiguration Recipes
-		new TransfigurationRecipe(new ItemStack(SOUL_PENDANT), 10,
+		new TransfigurationRecipe(new ItemStack(SOUL_PENDANT), 20,
 				ItemStack.EMPTY, new ItemStack(Blocks.STONE), ItemStack.EMPTY,
 				new ItemStack(Blocks.STONE), new ItemStack(GOLD_CRYSTAL), new ItemStack(Blocks.STONE),
 				ItemStack.EMPTY, new ItemStack(Blocks.STONE), ItemStack.EMPTY);
-		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_HELMET), 10,
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_HELMET), 34,
 				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));
-		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_CHESTPLATE), 14,
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_CHESTPLATE), 38,
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL));
-		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_LEGGINGS), 12,
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_LEGGINGS), 36,
 				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));
-		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_BOOTS), 8,
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_BOOTS), 32,
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));
 	}

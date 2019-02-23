@@ -79,7 +79,7 @@ public class ClientEvents
 	private static SoulMeterMode lastSoulMeterMode = SoulMeterMode.EMPTY;
 
 	// Texture with all the soul meter levels, centers and outlines
-	private static Identifier SOUL_METER_LEVELS = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul-meter.png");
+	private static Identifier SOUL_METER_LEVELS = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_meter.png");
 
 	// Active soul pendant slot, if any
 	private static int pendant = -1;

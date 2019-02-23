@@ -1,5 +1,7 @@
 {
 	"itemGroup.arcanemagic.items": "Arcane Magic",
+  	"category.arcanemagic.infusion": "Infusion",
+  	"category.arcanemagic.transfiguration": "Transfiguration",
   	"block.arcanemagic.altar": "Altar",
   	"block.arcanemagic.transfiguration_table": "Transfiguration Table",
 	"item.arcanemagic.golden_scepter": "Golden Scepter",

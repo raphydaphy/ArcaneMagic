@@ -40,7 +40,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
-public class ScepterItem extends Item
+public class ScepterItem extends SoulStorageItem
 {
 	private static final String DRAIN_TARGET = "drain_target";
 	public final int maxSoul;
@@ -50,18 +50,6 @@ public class ScepterItem extends Item
 		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 		this.maxSoul = maxSoul;
 		DispenserBlock.registerBehavior(this, new ScepterDispenserBehavior());
-	}
-
-	@Override
-	@Environment(EnvType.CLIENT)
-	public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> tooltip, TooltipContext ctx)
-	{
-		int soul = 0;
-		if (stack.getTag() != null)
-		{
-			soul = stack.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-		}
-		tooltip.add(new StringTextComponent("Storing " + soul + " Soul"));
 	}
 
 	@Override

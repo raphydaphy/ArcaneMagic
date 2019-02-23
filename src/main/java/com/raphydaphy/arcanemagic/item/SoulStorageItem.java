@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class PendantItem extends Item
+public class SoulStorageItem extends Item
 {
-	public PendantItem()
+	public SoulStorageItem(Item.Settings settings)
 	{
-		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+		super(settings);
 	}
 
 	@Override
@@ -30,6 +30,7 @@ public class PendantItem extends Item
 		{
 			soul = stack.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 		}
-		tooltip.add(new StringTextComponent("Storing " + soul + " Soul"));
+		// TODO: render soul graphic on mouseover
+		//tooltip.add(new StringTextComponent("Storing " + soul + " Soul"));
 	}
 }

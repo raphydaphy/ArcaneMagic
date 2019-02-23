@@ -66,4 +66,6 @@ public class TransfigurationRecipe
 	{
 		return output.copy();
 	}
+
+	public ItemStack[] getInputs() { return recipe.clone(); }
 }
