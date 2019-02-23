@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
@@ -29,6 +30,7 @@ public class ModRegistry
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem();
+	public static Item SOUL_PENDANT = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item EMERALD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item DIAMOND_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item GOLD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
@@ -54,6 +56,7 @@ public class ModRegistry
 
 		// Item Registration
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "golden_scepter"), GOLDEN_SCEPTER);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "soul_pendant"), SOUL_PENDANT);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal"), EMERALD_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "diamond_crystal"), DIAMOND_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "gold_crystal"), GOLD_CRYSTAL);
@@ -66,6 +69,10 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
 
 		// Transfiguration Recipes
+		new TransfigurationRecipe(new ItemStack(SOUL_PENDANT), 50,
+				ItemStack.EMPTY, new ItemStack(Blocks.STONE), ItemStack.EMPTY,
+				new ItemStack(Blocks.STONE), new ItemStack(GOLD_CRYSTAL), new ItemStack(Blocks.STONE),
+				ItemStack.EMPTY, new ItemStack(Blocks.STONE), ItemStack.EMPTY);
 		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_HELMET), 10,
 				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
 				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));

@@ -5,10 +5,8 @@ import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.core.LivingEntityMixin;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.block.TntBlock;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
+import net.minecraft.block.*;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.class_2969;
@@ -18,9 +16,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.particle.ParticleParameters;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -48,6 +44,34 @@ public class ScepterItem extends Item
 	{
 		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 		DispenserBlock.registerBehavior(this, new ScepterDispenserBehavior());
+	}
+
+	@Override
+	public ActionResult useOnBlock(ItemUsageContext ctx)
+	{
+		if (ctx.getItemStack().getTag() != null && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == Blocks.CRAFTING_TABLE)
+		{
+			int soul = ctx.getItemStack().getTag().getInt(SOUL_KEY);
+
+			if (soul > 25)
+			{
+				if (!ctx.getWorld().isClient)
+				{
+					ctx.getWorld().setBlockState(ctx.getBlockPos(), ModRegistry.TRANSFIGURATION_TABLE.getPlacementState(new ItemPlacementContext(ctx)));
+					ctx.getItemStack().getTag().putInt(SOUL_KEY, soul - 25);
+				} else
+				{
+					Random rand = new Random(System.currentTimeMillis());
+					for (int i = 0; i < 30; i++)
+					{
+						ctx.getWorld().addParticle(ParticleTypes.PORTAL, ctx.getBlockPos().getX() + rand.nextFloat(), ctx.getBlockPos().getY() + rand.nextFloat() / 2d, ctx.getBlockPos().getZ() + rand.nextFloat(), 0, 0, 0);
+					}
+				}
+				ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+				return ActionResult.SUCCESS;
+			}
+		}
+		return ActionResult.PASS;
 	}
 
 	@Override
