@@ -1,14 +1,19 @@
 package com.raphydaphy.arcanemagic.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.block.BlockItem;
+import net.minecraft.util.math.Direction;
 
 public class TransfigurationTableRenderer extends BlockEntityRenderer<TransfigurationTableBlockEntity>
 {
@@ -22,29 +27,66 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 
 
 
-		if (entity != null)
+		if (entity != null && entity.getWorld() != null)
 		{
-			for (int slot = 0; slot < 9; slot++)
+			BlockState state = entity.getWorld().getBlockState(entity.getPos());
+
+			if (state.getBlock() instanceof TransfigurationTableBlock)
 			{
-				ItemStack stack = entity.getInvStack(slot);
+				Direction facing = state.get(TransfigurationTableBlock.FACING);
 
-				if (!stack.isEmpty())
+				for (int slot = 0; slot < 9; slot++)
 				{
-					int row = slot % 3;
-					int col = slot / 3;
+					ItemStack stack = entity.getInvStack(slot);
 
-					GlStateManager.pushMatrix();
-					GuiLighting.enable();
-					GlStateManager.enableLighting();
-					GlStateManager.translated(.69 - .19 * row, 0.695, .69 - .19 * col);
-					if (!(stack.getItem() instanceof BlockItem))
+					if (!stack.isEmpty())
 					{
-						GlStateManager.translated(0, -0.05, 0);
-						GlStateManager.rotated(90, 1, 0, 0);
+						int row = slot % 3;
+						int col = slot / 3;
+
+						GlStateManager.pushMatrix();
+						GuiLighting.enable();
+						GlStateManager.enableLighting();
+						GlStateManager.translated(.69 - .19 * row, 0.695, .69 - .19 * col);
+						if (!MinecraftClient.getInstance().getItemRenderer().getModel(stack).hasDepthInGui())
+						{
+							GlStateManager.translated(0, -0.064, 0);
+							GlStateManager.rotated(90, 1, 0, 0);
+							GlStateManager.rotated(180, 0, 1, 0);
+							if (facing == Direction.EAST)
+							{
+								GlStateManager.rotated(-90, 0, 0, 1);
+							}
+							else if (facing == Direction.SOUTH)
+							{
+								GlStateManager.rotated(-180, 0, 0, 1);
+							}
+							else if (facing == Direction.WEST)
+							{
+								GlStateManager.rotated(-270, 0, 0, 1);
+							}
+						}
+						else
+						{
+							GlStateManager.rotated(-90, 0, 1, 0);
+							if (facing == Direction.EAST)
+							{
+								GlStateManager.rotated(-90, 0, 1, 0);
+							}
+							else if (facing == Direction.SOUTH)
+							{
+								GlStateManager.rotated(-180, 0, 1, 0);
+							}
+							else if (facing == Direction.WEST)
+							{
+								GlStateManager.rotated(-270, 0, 1, 0);
+							}
+						}
+
+						GlStateManager.scaled(.14, .14, .14);
+						MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.NONE);
+						GlStateManager.popMatrix();
 					}
-					GlStateManager.scaled(.14, .14, .14);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.NONE);
-					GlStateManager.popMatrix();
 				}
 			}
 		}
