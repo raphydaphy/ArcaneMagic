@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.block.AltarBlock;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.item.PendantItem;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import net.minecraft.block.Blocks;
@@ -30,7 +31,7 @@ public class ModRegistry
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
-	public static Item SOUL_PENDANT = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+	public static PendantItem SOUL_PENDANT = new PendantItem();
 	public static Item EMERALD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item DIAMOND_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item GOLD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));

@@ -7,9 +7,13 @@ import com.raphydaphy.arcanemagic.core.LivingEntityMixin;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.sun.istack.internal.Nullable;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -21,6 +25,8 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TextComponent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -30,6 +36,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -46,6 +53,18 @@ public class ScepterItem extends Item
 	}
 
 	@Override
+	@Environment(EnvType.CLIENT)
+	public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> tooltip, TooltipContext ctx)
+	{
+		int soul = 0;
+		if (stack.getTag() != null)
+		{
+			soul = stack.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+		}
+		tooltip.add(new StringTextComponent("Storing " + soul + " Soul"));
+	}
+
+	@Override
 	public void onEntityTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected)
 	{
 		if (world.getTime() % 20 == 0 && !world.isClient && selected && holder instanceof PlayerEntity)
@@ -53,13 +72,13 @@ public class ScepterItem extends Item
 			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 			if (scepterSoul < this.maxSoul && scepter.getTag() != null)
 			{
-				int pendantSlot = ArcaneMagicUtils.findPendant((PlayerEntity)holder);
+				int pendantSlot = ArcaneMagicUtils.findPendant((PlayerEntity) holder);
 				if (pendantSlot != -1)
 				{
-					ItemStack pendant = ((PlayerEntity)holder).inventory.getInvStack(pendantSlot);
+					ItemStack pendant = ((PlayerEntity) holder).inventory.getInvStack(pendantSlot);
 					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 
-					if (scepterSoul + pendantSlot <= this.maxSoul)
+					if (scepterSoul + pendantSoul <= this.maxSoul)
 					{
 						// Transfer all soul from the pendant into the scepter
 						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul);
@@ -67,7 +86,7 @@ public class ScepterItem extends Item
 					} else
 					{
 						// Fill the scepter and leave the remaining soul in the pendant
-						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
+						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, maxSoul);
 						Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul - this.maxSoul);
 					}
 				}
@@ -198,7 +217,7 @@ public class ScepterItem extends Item
 			stack.getTag().remove(DRAIN_TARGET);
 			Random rand = new Random(System.nanoTime());
 
-			ArcaneMagicUtils.addSoul(world, stack, livingEntity instanceof PlayerEntity ? (PlayerEntity)livingEntity : null, rand.nextInt(3) + 4);
+			ArcaneMagicUtils.addSoul(world, stack, livingEntity instanceof PlayerEntity ? (PlayerEntity) livingEntity : null, rand.nextInt(3) + 4);
 		}
 
 		if (livingEntity instanceof PlayerEntity)
@@ -222,7 +241,7 @@ public class ScepterItem extends Item
 				BlockEntity blockEntity = world.getBlockEntity(facingPos);
 				if (blockEntity instanceof TransfigurationTableBlockEntity)
 				{
-					((TransfigurationTableBlock)facingBlock.getBlock()).useScepter(world, blockEntity, stack, null, null);
+					((TransfigurationTableBlock) facingBlock.getBlock()).useScepter(world, blockEntity, stack, null, null);
 				}
 			}
 
@@ -230,7 +249,9 @@ public class ScepterItem extends Item
 		}
 
 		@Override
-		protected void playSound(BlockPointer pointer) { }
+		protected void playSound(BlockPointer pointer)
+		{
+		}
 
 		@Override
 		protected void spawnParticles(BlockPointer pointer, Direction dir)
