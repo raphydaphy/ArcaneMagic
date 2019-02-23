@@ -1,5 +1,9 @@
 package com.raphydaphy.arcanemagic.util;
 
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.item.ScepterItem;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,12 +19,123 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.Objects;
+
 public class ArcaneMagicUtils
 {
+	/***
+	 * Tries to use the specified amount of soul
+	 * Automatically refills the scepter from any available pendant if successful
+	 * @param user The player using the soul, if there is one
+	 * @return True if the soul was consumed
+	 ***/
+	public static boolean useSoul(World world, ItemStack scepter, @Nullable PlayerEntity user, int amount)
+	{
+		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
+		{
+			ItemStack pendant = findPendant(user);
+			int pendantSoul = 0;
+			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+
+			if (!pendant.isEmpty())
+			{
+				pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+			}
+
+			if (amount <= ((ScepterItem) scepter.getItem()).maxSoul && amount <= scepterSoul + pendantSoul)
+			{
+				if (!world.isClient)
+				{
+					if (!pendant.isEmpty() && pendant.getTag() != null)
+					{
+						if (pendantSoul >= amount)
+						{
+							pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - amount);
+						} else
+						{
+							amount -= pendantSoul;
+							pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, 0);
+							Objects.requireNonNull(scepter.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - amount);
+						}
+					} else
+					{
+						Objects.requireNonNull(scepter.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - amount);
+					}
+				}
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static boolean addSoul(World world, ItemStack scepter, @Nullable PlayerEntity user, int amount)
+	{
+		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
+		{
+			ItemStack pendant = findPendant(user);
+			int scepterMax = ((ScepterItem) scepter.getItem()).maxSoul;
+			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+
+			if (amount > scepterMax)
+			{
+				amount = scepterMax;
+			}
+
+			if (!world.isClient && scepter.getTag() != null)
+			{
+				// All the new soul can fit into the scepter
+				if (scepterMax - scepterSoul >= amount)
+				{
+					scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + amount);
+					return true;
+				} else
+				{
+					amount -= (scepterMax - scepterSoul);
+					scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterMax);
+				}
+
+				if (amount > 0 && !pendant.isEmpty())
+				{
+					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+					if (pendantSoul + amount > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+					{
+						amount = ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL - pendantSoul;
+					}
+					Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul + amount);
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+
+	public static ItemStack findPendant(PlayerEntity player)
+	{
+		if (player != null)
+		{
+			for (int searchSlot = 0; searchSlot < player.inventory.getInvSize(); searchSlot++)
+			{
+				ItemStack stackInSlot = player.inventory.getInvStack(searchSlot);
+				if (!stackInSlot.isEmpty() && stackInSlot.getItem() == ModRegistry.SOUL_PENDANT)
+				{
+					return stackInSlot;
+				}
+			}
+		}
+		return ItemStack.EMPTY;
+	}
+
+	/**
+	 * Tries to insert or extract an item from a BlockEntity
+	 * Items are only extracted if the player is holding shift with an empty hand
+	 *
+	 * @param slot The container slot to try and interact with
+	 * @return True if an item was either inserted or extracted
+	 */
 	public static boolean pedestalInteraction(World world, PlayerEntity player, BlockEntity container, Hand hand, int slot)
 	{
 		ItemStack held = player.getStackInHand(hand);
-		ItemStack stackInTable = ((Inventory)container).getInvStack(slot);
+		ItemStack stackInTable = ((Inventory) container).getInvStack(slot);
 
 		// Try to insert stack
 		if (!player.isSneaking())
@@ -69,11 +184,11 @@ public class ArcaneMagicUtils
 				{
 					if (!player.method_7270(stackInTable.copy())) // addItemStackToInventory
 					{
-						ItemEntity result = new ItemEntity(world,container.getPos().getX() + 0.5, container.getPos().getY() + 1, container.getPos().getZ() + 0.5, stackInTable.copy());
+						ItemEntity result = new ItemEntity(world, container.getPos().getX() + 0.5, container.getPos().getY() + 1, container.getPos().getZ() + 0.5, stackInTable.copy());
 						result.setVelocity(0, 0, 0);
 						world.spawnEntity(result);
 					}
-					((Inventory)container).setInvStack(slot, ItemStack.EMPTY);
+					((Inventory) container).setInvStack(slot, ItemStack.EMPTY);
 				}
 
 				world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);

@@ -50,7 +50,6 @@ public class TransfigurationRecipe
 				{
 					continue;
 				}
-				System.out.println(table.get(item).toString() + " does not match " + recipe[item].toString());
 				return false;
 			}
 		}

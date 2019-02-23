@@ -29,8 +29,8 @@ public class ModRegistry
 	public static AltarBlock ALTAR = new AltarBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
-	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem();
-	public static Item SOUL_PENDANT = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
+	public static Item SOUL_PENDANT = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 	public static Item EMERALD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item DIAMOND_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item GOLD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
@@ -69,7 +69,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
 
 		// Transfiguration Recipes
-		new TransfigurationRecipe(new ItemStack(SOUL_PENDANT), 50,
+		new TransfigurationRecipe(new ItemStack(SOUL_PENDANT), 10,
 				ItemStack.EMPTY, new ItemStack(Blocks.STONE), ItemStack.EMPTY,
 				new ItemStack(Blocks.STONE), new ItemStack(GOLD_CRYSTAL), new ItemStack(Blocks.STONE),
 				ItemStack.EMPTY, new ItemStack(Blocks.STONE), ItemStack.EMPTY);

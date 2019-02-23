@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
@@ -51,7 +52,7 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 	{
 		if (scepter.getTag() != null)
 		{
-			int soul = scepter.getTag().getInt(ScepterItem.SOUL_KEY);
+			int soul = scepter.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 
 			DefaultedList<ItemStack> inv = ((TransfigurationTableBlockEntity)blockEntity).getInventory();
 			TransfigurationRecipe match = null;
@@ -61,19 +62,18 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 				if (recipe.matches(inv))
 				{
 					match = recipe;
-					System.out.println("found a match!");
 					break;
 				}
 			}
 
 			if (match != null)
 			{
-				if (soul >= match.getSoul())
+				if (ArcaneMagicUtils.useSoul(world, scepter, player, match.getSoul()))
 				{
 					if (!world.isClient)
 					{
-						scepter.getTag().putInt(ScepterItem.SOUL_KEY, soul - match.getSoul());
-						((Inventory) blockEntity).clear();
+						// TODO: keepPlaceholders based on redstone signal
+						((TransfigurationTableBlockEntity) blockEntity).clearRecipe(false);
 						ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, match.getOutput());
 						result.setVelocity(0, 0, 0);
 						world.spawnEntity(result);

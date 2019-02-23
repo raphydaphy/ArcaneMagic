@@ -2,8 +2,9 @@ package com.raphydaphy.arcanemagic.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.item.ScepterItem;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -12,7 +13,9 @@ import net.minecraft.util.Identifier;
 
 public class ClientEvents
 {
-	// Lock camera during drain
+	/********************************
+	     Lock camera during drain
+	 ********************************/
 
 	private static boolean prevUsingWand = false;
 	private static float wandRotationYaw = 0;
@@ -44,18 +47,51 @@ public class ClientEvents
 		prevUsingWand = usingWand;
 	}
 
-	// Soul meter HUD
+	/**********************
+	     Soul meter HUD
+	 **********************/
 
+	private enum SoulMeterMode
+	{
+		EMPTY(0), GOLDEN_SCEPTER(1), GOLDEN_SCEPTER_WITH_PENDANT(2);
+
+		public final int id;
+		SoulMeterMode(int id)
+		{
+			this.id = id;
+		}
+	}
+
+	// How long the soul meter takes to fade in and out
 	private static final int SOUL_HUD_ALPHA_TIME = 15;
-	private static int wandPreviousSoul = 0;
-	private static long wandHudLastIncrementTick = 0;
-	private static int wandSelectedTicks = -SOUL_HUD_ALPHA_TIME;
+
+	// The amount of soul currently visible in the soul meter
+	private static int soulMeterAmount = 0;
+
+	// The world time when the soul meter last changed
+	private static long soulMeterLastIncrementTick = 0;
+
+	// How long has the meter been displayed for?
+	// Caps at SOUL_HUD_ALPHA_TIME + 1 and goes down to -SOUL_HUD_ALPHA_TIME - 1 when deselected
+	private static int soulMeterActiveTicks = -SOUL_HUD_ALPHA_TIME;
+
+	// The mode the soul meter was in last frame
+	private static SoulMeterMode lastSoulMeterMode = SoulMeterMode.EMPTY;
+
+	// Texture with all the soul meter levels, centers and outlines
+	private static Identifier SOUL_METER_LEVELS = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul-meter.png");
+
+	// Active soul pendant, if any
+	private static ItemStack pendant = ItemStack.EMPTY;
 
 	private static void drawWandHud(float alpha)
 	{
-		int row = wandPreviousSoul / 10;
-		int col = wandPreviousSoul % 10;
+		float percent = ((float)soulMeterAmount / (ArcaneMagicConstants.SOUL_METER_MAX));
+		int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);
 		MinecraftClient mc = MinecraftClient.getInstance();
+
+		int row = stage / 10;
+		int col = stage % 10;
 
 		GlStateManager.pushMatrix();
 
@@ -63,23 +99,29 @@ public class ClientEvents
 		GlStateManager.color4f(1, 1, 1, alpha);
 		GlStateManager.scaled(1.5, 1.5, 1.5);
 		GlStateManager.translated(8, 8, 0);
-		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/item/golden_scepter.png"));
-		DrawableHelper.drawTexturedRect(10, 10, 0, 0, 16, 16, 16, 16);
 
-		mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul-meter.png"));
+		mc.getTextureManager().bindTexture(SOUL_METER_LEVELS);
+
+		// Outline & Center
 		DrawableHelper.drawTexturedRect(/* x */ 0, /* y */ 0,
-				/* min-u */ 36 * col, /* min-v */ 36 * row,
+				/* min-u */ 36 * lastSoulMeterMode.id, /* min-v */ 0,
 				/* max-u */ 36, /* max-v */ 36,
-				/* width */ 360, /* height */ 324);
+				/* width */ 360, /* height */ 360);
+
+		// Filled area
+		DrawableHelper.drawTexturedRect(/* x */ 0, /* y */ 0,
+				/* min-u */ 36 * col, /* min-v */ 36 + 36 * row,
+				/* max-u */ 36, /* max-v */ 36,
+				/* width */ 360, /* height */ 360);
 
 		GlStateManager.popMatrix();
 	}
 
 	public static void onDrawScreenPost(float partialTicks)
 	{
-
 		MinecraftClient mc = MinecraftClient.getInstance();
 		ItemStack held = mc.player.getMainHandStack();
+
 		if (held.isEmpty())
 		{
 			held = mc.player.getOffHandStack();
@@ -87,72 +129,109 @@ public class ClientEvents
 
 		if (held.getItem() == ModRegistry.GOLDEN_SCEPTER)
 		{
-			if (wandSelectedTicks < 0)
+			if (soulMeterActiveTicks < 0)
 			{
-				wandSelectedTicks = 0;
+				soulMeterActiveTicks = 0;
 			}
 			int currentSoul = 0;
 
 			if (held.getTag() != null)
 			{
-				currentSoul = held.getTag().getInt(ScepterItem.SOUL_KEY);
+				currentSoul = held.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 			}
 
-			if (mc.world.getTime() != wandHudLastIncrementTick && currentSoul != wandPreviousSoul)
+			if (lastSoulMeterMode == SoulMeterMode.EMPTY)
 			{
-				wandSelectedTicks++;
+				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+			}
 
-				if (wandSelectedTicks > SOUL_HUD_ALPHA_TIME)
+			if (!pendant.isEmpty() && pendant.getTag() != null)
+			{
+				currentSoul = currentSoul + pendant.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+			} else
+			{
+				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+			}
+
+
+			// Runs every second to check for a soul pendant in the players inventory
+			if (mc.world.getTime() != soulMeterLastIncrementTick && mc.world.getTime() % 20 == 0)
+			{
+				pendant = ArcaneMagicUtils.findPendant(mc.player);
+				if (!pendant.isEmpty())
 				{
-					if (currentSoul < wandPreviousSoul)
+					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+				} else
+				{
+					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+				}
+			}
+
+			if (mc.world.getTime() != soulMeterLastIncrementTick && currentSoul != soulMeterAmount)
+			{
+				soulMeterActiveTicks++;
+
+				if (soulMeterActiveTicks > SOUL_HUD_ALPHA_TIME)
+				{
+					if (currentSoul < soulMeterAmount)
 					{
-						int distance = wandPreviousSoul - currentSoul;
+						int distance = soulMeterAmount - currentSoul;
 						int change = (Math.round(distance / 3));
-						wandPreviousSoul -= change < 1 ? 1 : change > 8 ? 8 : change;
+						soulMeterAmount -= change < 1 ? 1 : change > 8 ? 8 : change;
 					} else
 					{
-						int distance = currentSoul - wandPreviousSoul;
+						int distance = currentSoul - soulMeterAmount;
 						int change = (Math.round(distance / 3));
-						wandPreviousSoul += change < 1 ? 1 : change > 8 ? 8 : change;
+						soulMeterAmount += change < 1 ? 1 : change > 8 ? 8 : change;
 					}
 				}
-				else if (wandSelectedTicks > 3)
+				else if (soulMeterActiveTicks > 3)
 				{
-					int ticksLeft = SOUL_HUD_ALPHA_TIME - wandSelectedTicks;
+					int ticksLeft = SOUL_HUD_ALPHA_TIME - soulMeterActiveTicks;
 
-					if (currentSoul > wandPreviousSoul)
+					if (currentSoul > soulMeterAmount)
 					{
-						int distanceLeft = currentSoul - wandPreviousSoul;
+						int distanceLeft = currentSoul - soulMeterAmount;
 						int change = Math.round(distanceLeft / ticksLeft);
-						wandPreviousSoul += change < 1 ? 1 : change;
+						soulMeterAmount += change < 1 ? 1 : change;
 					}
 				}
-				wandHudLastIncrementTick = mc.world.getTime();
+				soulMeterLastIncrementTick = mc.world.getTime();
 			}
-			else if (currentSoul == wandPreviousSoul && wandSelectedTicks <= SOUL_HUD_ALPHA_TIME + 1)
+			else if (mc.world.getTime() != soulMeterLastIncrementTick)
 			{
-				wandSelectedTicks++;
+				soulMeterActiveTicks++;
+				soulMeterLastIncrementTick = mc.world.getTime();
 			}
-			drawWandHud(wandSelectedTicks > SOUL_HUD_ALPHA_TIME ? 1 : wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME);
+
+			float alpha = 1;
+			if (soulMeterActiveTicks <= SOUL_HUD_ALPHA_TIME)
+			{
+				float interpolatedTicks = ArcaneMagicUtils.lerp(soulMeterActiveTicks - 1, soulMeterActiveTicks, partialTicks);
+				alpha = interpolatedTicks / (float)SOUL_HUD_ALPHA_TIME;
+			}
+			drawWandHud(alpha);
 		}
 		else
 		{
-			if (wandSelectedTicks > 0)
+			if (soulMeterActiveTicks > 0)
 			{
-				wandSelectedTicks = 0;
+				soulMeterActiveTicks = 0;
 			}
 
-			if (wandSelectedTicks < -SOUL_HUD_ALPHA_TIME)
+			if (soulMeterActiveTicks < -SOUL_HUD_ALPHA_TIME)
 			{
-				wandPreviousSoul = 0;
+				soulMeterAmount = 0;
 			}
 			else
 			{
-				drawWandHud(1f - (-wandSelectedTicks / (float)SOUL_HUD_ALPHA_TIME));
-				if (mc.world.getTime() != wandHudLastIncrementTick)
+				float activeTicksInterpolated = ArcaneMagicUtils.lerp(-soulMeterActiveTicks + 1, -soulMeterActiveTicks, partialTicks);
+				drawWandHud(1f - (activeTicksInterpolated / (float)SOUL_HUD_ALPHA_TIME));
+				if (mc.world.getTime() != soulMeterLastIncrementTick)
 				{
-					wandSelectedTicks--;
-					wandHudLastIncrementTick = mc.world.getTime();
+					soulMeterActiveTicks--;
+					soulMeterLastIncrementTick = mc.world.getTime();
 				}
 			}
 		}

@@ -6,10 +6,10 @@ import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.core.LivingEntityMixin;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.class_2969;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
@@ -17,33 +17,68 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
-import net.minecraft.particle.ParticleParameters;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import java.util.Objects;
 import java.util.Random;
 
 public class ScepterItem extends Item
 {
 	private static final String DRAIN_TARGET = "drain_target";
-	public static final String SOUL_KEY = "soul_stored";
+	public final int maxSoul;
 
-	public ScepterItem()
+	public ScepterItem(int maxSoul)
 	{
 		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+		this.maxSoul = maxSoul;
 		DispenserBlock.registerBehavior(this, new ScepterDispenserBehavior());
+	}
+
+	@Override
+	public void onEntityTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected)
+	{
+		/*if (world.getTime() % 20 == 0 && !world.isClient && selected && scepter.getTag() != null && holder instanceof PlayerEntity)
+		{
+			int scepterSoul = scepter.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+
+			if (scepterSoul > 0)
+			{
+				for (int searchSlot = 0; searchSlot < ((PlayerEntity) holder).inventory.getInvSize(); searchSlot++)
+				{
+					ItemStack stackInSlot = ((PlayerEntity) holder).inventory.getInvStack(searchSlot);
+					if (!stackInSlot.isEmpty() && stackInSlot.getItem() == ModRegistry.SOUL_PENDANT)
+					{
+						int pendantSoul = stackInSlot.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+
+						if (pendantSoul < ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+						{
+							int pendantAvailable = ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL - pendantSoul;
+
+							if (pendantAvailable >= scepterSoul)
+							{
+								Objects.requireNonNull(stackInSlot.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul + scepterSoul);
+								scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, 0);
+							} else
+							{
+								Objects.requireNonNull(stackInSlot.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
+								scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - pendantAvailable);
+							}
+						}
+					}
+				}
+			}
+		}*/
 	}
 
 	@Override
@@ -51,14 +86,11 @@ public class ScepterItem extends Item
 	{
 		if (ctx.getItemStack().getTag() != null && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == Blocks.CRAFTING_TABLE)
 		{
-			int soul = ctx.getItemStack().getTag().getInt(SOUL_KEY);
-
-			if (soul > 25)
+			if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 15))
 			{
 				if (!ctx.getWorld().isClient)
 				{
 					ctx.getWorld().setBlockState(ctx.getBlockPos(), ModRegistry.TRANSFIGURATION_TABLE.getPlacementState(new ItemPlacementContext(ctx)));
-					ctx.getItemStack().getTag().putInt(SOUL_KEY, soul - 25);
 				} else
 				{
 					Random rand = new Random(System.currentTimeMillis());
@@ -171,11 +203,8 @@ public class ScepterItem extends Item
 			}
 			stack.getTag().remove(DRAIN_TARGET);
 			Random rand = new Random(System.nanoTime());
-			stack.getTag().putInt(SOUL_KEY, stack.getTag().getInt(SOUL_KEY) + rand.nextInt(10) + 10);
-			if (stack.getTag().getInt(SOUL_KEY) > ArcaneMagicConstants.SOUL_METER_MAX)
-			{
-				stack.getTag().putInt(SOUL_KEY, ArcaneMagicConstants.SOUL_METER_MAX);
-			}
+
+			ArcaneMagicUtils.addSoul(world, stack, livingEntity instanceof PlayerEntity ? (PlayerEntity)livingEntity : null, rand.nextInt(3) + 4);
 		}
 
 		if (livingEntity instanceof PlayerEntity)
