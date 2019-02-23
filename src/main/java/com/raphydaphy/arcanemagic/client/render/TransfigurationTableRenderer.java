@@ -31,10 +31,27 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 		{
 			BlockState state = entity.getWorld().getBlockState(entity.getPos());
 
+
+
 			if (state.getBlock() instanceof TransfigurationTableBlock)
 			{
 				Direction facing = state.get(TransfigurationTableBlock.FACING);
 
+				if (facing == Direction.EAST)
+				{
+					GlStateManager.rotated(-90, 0, 1, 0);
+					GlStateManager.translated(0, 0, -1);
+				}
+				else if (facing == Direction.SOUTH)
+				{
+					GlStateManager.rotated(-180, 0, 1, 0);
+					GlStateManager.translated(-1, 0, -1);
+				}
+				else if (facing == Direction.WEST)
+				{
+					GlStateManager.rotated(-270, 0, 1, 0);
+					GlStateManager.translated(-1, 0, 0);
+				}
 				for (int slot = 0; slot < 9; slot++)
 				{
 					ItemStack stack = entity.getInvStack(slot);
@@ -53,34 +70,10 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 							GlStateManager.translated(0, -0.064, 0);
 							GlStateManager.rotated(90, 1, 0, 0);
 							GlStateManager.rotated(180, 0, 1, 0);
-							if (facing == Direction.EAST)
-							{
-								GlStateManager.rotated(-90, 0, 0, 1);
-							}
-							else if (facing == Direction.SOUTH)
-							{
-								GlStateManager.rotated(-180, 0, 0, 1);
-							}
-							else if (facing == Direction.WEST)
-							{
-								GlStateManager.rotated(-270, 0, 0, 1);
-							}
 						}
 						else
 						{
 							GlStateManager.rotated(-90, 0, 1, 0);
-							if (facing == Direction.EAST)
-							{
-								GlStateManager.rotated(-90, 0, 1, 0);
-							}
-							else if (facing == Direction.SOUTH)
-							{
-								GlStateManager.rotated(-180, 0, 1, 0);
-							}
-							else if (facing == Direction.WEST)
-							{
-								GlStateManager.rotated(-270, 0, 1, 0);
-							}
 						}
 
 						GlStateManager.scaled(.14, .14, .14);

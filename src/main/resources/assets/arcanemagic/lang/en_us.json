@@ -8,5 +8,9 @@
 	"item.arcanemagic.gold_crystal": "Gold Infused Crystal",
 	"item.arcanemagic.lapis_crystal": "Lapis Infused Crystal",
 	"item.arcanemagic.redstone_crystal": "Redstone Infused Crystal",
-	"item.arcanemagic.coal_crystal": "Coal Infused Crystal"
+	"item.arcanemagic.coal_crystal": "Coal Infused Crystal",
+  	"item.arcanemagic.emerald_crystal_helmet": "Emerald Infused Crystal Helmet",
+	"item.arcanemagic.emerald_crystal_chestplate": "Emerald Infused Crystal Chestplate",
+	"item.arcanemagic.emerald_crystal_leggings": "Emerald Infused Crystal Leggings",
+	"item.arcanemagic.emerald_crystal_boots": "Emerald Infused Crystal Boots"
 }

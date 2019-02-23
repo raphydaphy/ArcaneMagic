@@ -1,7 +1,9 @@
 package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
+import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.sun.istack.internal.Nullable;
 import net.minecraft.block.*;
@@ -19,6 +21,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.DirectionProperty;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -50,24 +53,40 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 		{
 			int soul = scepter.getTag().getInt(ScepterItem.SOUL_KEY);
 
-			if (soul >= 10)
+			DefaultedList<ItemStack> inv = ((TransfigurationTableBlockEntity)blockEntity).getInventory();
+			TransfigurationRecipe match = null;
+
+			for (TransfigurationRecipe recipe : ModRegistry.TRANSFIGURATION_RECIPES)
 			{
-				if (!world.isClient)
+				if (recipe.matches(inv))
 				{
-					scepter.getTag().putInt(ScepterItem.SOUL_KEY, soul - 10);
-					((Inventory) blockEntity).clear();
-					ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, new ItemStack(Blocks.STONE));
-					result.setVelocity(0, 0, 0);
-					world.spawnEntity(result);
+					match = recipe;
+					System.out.println("found a match!");
+					break;
 				}
-				if (player != null)
+			}
+
+			if (match != null)
+			{
+				if (soul >= match.getSoul())
 				{
-					player.swingHand(hand);
+					if (!world.isClient)
+					{
+						scepter.getTag().putInt(ScepterItem.SOUL_KEY, soul - match.getSoul());
+						((Inventory) blockEntity).clear();
+						ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, match.getOutput());
+						result.setVelocity(0, 0, 0);
+						world.spawnEntity(result);
+					}
+					if (player != null)
+					{
+						player.swingHand(hand);
+					}
+
+					world.playSound(player, blockEntity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+
+					return true;
 				}
-
-				world.playSound(player, blockEntity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
-
-				return true;
 			}
 		}
 		return false;
@@ -94,10 +113,30 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 
 		if (hit.x >= 0.203 && hit.x <= 0.801 && hit.y >= 0.5625 && hit.z >= 0.203 && hit.z <= 0.801)
 		{
+			Direction facing = state.get(FACING);
+
 			double divX = (hit.x - 0.203f);
 			double divZ = (hit.z - 0.203f);
 
-			int slot = (divX <= 0.2152 ? 2 : divX <= 0.4084 ? 1 : 0) + (divZ <= 0.2152 ? 6 : divZ <= 0.4084 ? 3 : 0);
+			int row = (divX <= 0.2152 ? 2 : divX <= 0.4084 ? 1 : 0);
+			int col = (divZ <= 0.2152 ? 2 : divZ <= 0.4084 ? 1 : 0);
+
+			int slot = row + col * 3;
+
+			if (facing == Direction.EAST)
+			{
+				row = 2 - row;
+				slot = row * 3 + col;
+			}
+			else if (facing == Direction.SOUTH)
+			{
+				slot = 8 - slot;
+			}
+			else if (facing == Direction.WEST)
+			{
+				col = 2 - col;
+				slot = row * 3 + col;
+			}
 
 			return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, slot);
 		}

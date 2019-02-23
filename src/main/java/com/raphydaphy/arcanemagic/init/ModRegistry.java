@@ -6,12 +6,20 @@ import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
+import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.block.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@SuppressWarnings("WeakerAccess")
 public class ModRegistry
 {
 	public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new).build(null));
@@ -27,6 +35,12 @@ public class ModRegistry
 	public static Item LAPIS_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item REDSTONE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static Item COAL_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static ArmorItem EMERALD_CRYSTAL_HELMET = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.HEAD, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static ArmorItem EMERALD_CRYSTAL_CHESTPLATE = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.CHEST, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static ArmorItem EMERALD_CRYSTAL_LEGGINGS = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.LEGS, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static ArmorItem EMERALD_CRYSTAL_BOOTS = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.FEET, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+
+	public static final List<TransfigurationRecipe> TRANSFIGURATION_RECIPES = new ArrayList<>();
 
 	public static void init()
 	{
@@ -46,5 +60,25 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "lapis_crystal"), LAPIS_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal"), REDSTONE_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "coal_crystal"), COAL_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_helmet"), EMERALD_CRYSTAL_HELMET);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_chestplate"), EMERALD_CRYSTAL_CHESTPLATE);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_leggings"), EMERALD_CRYSTAL_LEGGINGS);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
+
+		// Transfiguration Recipes
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_HELMET), 10,
+				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
+				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_CHESTPLATE), 14,
+				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL),
+				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
+				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL));
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_LEGGINGS), 12,
+				new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL), new ItemStack(EMERALD_CRYSTAL),
+				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL),
+				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));
+		new TransfigurationRecipe(new ItemStack(EMERALD_CRYSTAL_BOOTS), 8,
+				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL),
+				new ItemStack(EMERALD_CRYSTAL), ItemStack.EMPTY, new ItemStack(EMERALD_CRYSTAL));
 	}
 }

@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class InventoryBlockEntity extends BlockEntity implements Inventory
 {
-	private DefaultedList<ItemStack> contents;
+	protected DefaultedList<ItemStack> contents;
 	private final int size;
 
 	public InventoryBlockEntity(BlockEntityType<?> type, int size)

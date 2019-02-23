@@ -7,6 +7,7 @@ import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.Direction;
 
 public class TransfigurationTableBlockEntity extends InventoryBlockEntity implements SidedInventory
@@ -22,6 +23,11 @@ public class TransfigurationTableBlockEntity extends InventoryBlockEntity implem
 		{
 			slots[i] = i;
 		}
+	}
+
+	public DefaultedList<ItemStack> getInventory()
+	{
+		return contents;
 	}
 
 	@Override
