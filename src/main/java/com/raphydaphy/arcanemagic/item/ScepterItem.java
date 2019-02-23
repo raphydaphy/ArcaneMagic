@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
-import com.raphydaphy.arcanemagic.core.LivingEntityMixin;
+import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
@@ -197,7 +197,7 @@ public class ScepterItem extends Item
 						{
 							((ServerWorld) world).method_14199(ParticleTypes.DAMAGE_INDICATOR, drainTarget.x, drainTarget.y + (double) (drainTarget.getHeight() * 0.5F), drainTarget.z, 0, 0.1D, 0.0D, 0.1D, 0.2D);
 						}
-						((LivingEntityMixin) drainTarget).playHurtSound(DamageSource.MAGIC);
+						((LivingEntityHooks) drainTarget).playHurtSound(DamageSource.MAGIC);
 					}
 				}
 			}

@@ -205,7 +205,11 @@ public class ClientEvents
 					if (currentSoul > soulMeterAmount)
 					{
 						int distanceLeft = currentSoul - soulMeterAmount;
-						int change = Math.round(distanceLeft / ticksLeft);
+						int change = distanceLeft;
+						if (ticksLeft > 0)
+						{
+							change = Math.round(distanceLeft / ticksLeft);
+						}
 						soulMeterAmount += change < 1 ? 1 : change;
 					}
 				}

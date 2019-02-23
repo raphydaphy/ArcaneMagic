@@ -3,7 +3,8 @@
 	"package": "com.raphydaphy.arcanemagic.core",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-	  	"LivingEntityMixin"
+	  	"LivingEntityMixin",
+	  	"LivingEntityHooks"
 	],
 	"injectors": {
 		"defaultRequire": 1
