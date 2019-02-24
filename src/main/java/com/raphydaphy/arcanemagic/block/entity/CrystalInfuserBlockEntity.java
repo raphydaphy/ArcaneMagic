@@ -15,9 +15,16 @@ import net.minecraft.util.math.Direction;
 
 public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
-	public long ticks = 0;
+	private static final String ACTIVE_KEY = "active_crafting";
+	private static final String CRAFTING_TIME_KEY = "crafting_time";
+	private static final int[] slots = { 0, 1, 2 };
 
-	private final int[] slots = { 0, 1, 2 };
+	// Updated client-side for rendering
+	public long ticksExisted = 0;
+	// Updated on both sides and synced every second while crafting
+	private long craftingTime = 0;
+
+	private boolean active = false;
 
 	public CrystalInfuserBlockEntity()
 	{
@@ -29,7 +36,14 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	{
 		if (world.isClient)
 		{
-			ticks++;
+			ticksExisted++;
+		} else if (world.getTime() % 20 == 0 && active)
+		{
+			markDirty();
+		}
+		if (active)
+		{
+			craftingTime++;
 		}
 	}
 
@@ -56,6 +70,22 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		return tag;
 	}
 
+	@Override
+	public void fromTag(CompoundTag tag)
+	{
+		super.fromTag(tag);
+		active = tag.getBoolean(ACTIVE_KEY);
+		craftingTime = tag.getLong(CRAFTING_TIME_KEY);
+	}
+
+	@Override
+	public void writeContents(CompoundTag tag)
+	{
+		super.writeContents(tag);
+		tag.putBoolean(ACTIVE_KEY, active);
+		tag.putLong(CRAFTING_TIME_KEY, craftingTime);
+	}
+
 	public int getSlotForItem(ItemStack stack)
 	{
 		if (stack.isEmpty())
@@ -72,6 +102,34 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 			return 2;
 		}
 		return -1;
+	}
+
+	public void setActive(boolean active)
+	{
+		if (!world.isClient)
+		{
+			this.active = active;
+			markDirty();
+		}
+	}
+
+	public void resetCraftingTime()
+	{
+		if (!world.isClient)
+		{
+			craftingTime = 0;
+			markDirty();
+		}
+	}
+
+	public boolean isActive()
+	{
+		return active;
+	}
+
+	public long getCraftingTime()
+	{
+		return craftingTime;
 	}
 
 	@Override

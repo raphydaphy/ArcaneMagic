@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
+import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -20,6 +21,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -85,23 +87,44 @@ public class ScepterItem extends SoulStorageItem
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext ctx)
 	{
-		if (ctx.getItemStack().getTag() != null && ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock() == Blocks.CRAFTING_TABLE)
+		if (ctx.getItemStack().getTag() != null)
 		{
-			if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 15))
+			Block block = ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock();
+			if (block == Blocks.CRAFTING_TABLE)
 			{
-				if (!ctx.getWorld().isClient)
+				if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 15))
 				{
-					ctx.getWorld().setBlockState(ctx.getBlockPos(), ModRegistry.TRANSFIGURATION_TABLE.getPlacementState(new ItemPlacementContext(ctx)));
-				} else
-				{
-					Random rand = new Random(System.currentTimeMillis());
-					for (int i = 0; i < 30; i++)
+					if (!ctx.getWorld().isClient)
 					{
-						ctx.getWorld().addParticle(ParticleTypes.PORTAL, ctx.getBlockPos().getX() + rand.nextFloat(), ctx.getBlockPos().getY() + rand.nextFloat() / 2d, ctx.getBlockPos().getZ() + rand.nextFloat(), 0, 0, 0);
+						ctx.getWorld().setBlockState(ctx.getBlockPos(), ModRegistry.TRANSFIGURATION_TABLE.getPlacementState(new ItemPlacementContext(ctx)));
+					} else
+					{
+						Random rand = new Random(System.currentTimeMillis());
+						for (int i = 0; i < 30; i++)
+						{
+							ctx.getWorld().addParticle(ParticleTypes.PORTAL, ctx.getBlockPos().getX() + rand.nextFloat(), ctx.getBlockPos().getY() + rand.nextFloat() / 2d, ctx.getBlockPos().getZ() + rand.nextFloat(), 0, 0, 0);
+						}
+					}
+					ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+					return ActionResult.SUCCESS;
+				}
+			} else if(block == ModRegistry.CRYSTAL_INFUSER)
+			{
+				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
+				if (blockEntity instanceof CrystalInfuserBlockEntity)
+				{
+					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity)blockEntity;
+					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty())
+					{
+						if (!ctx.getWorld().isClient)
+						{
+							((CrystalInfuserBlockEntity)blockEntity).resetCraftingTime();
+							((CrystalInfuserBlockEntity)blockEntity).setActive(true);
+						}
+						ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+						return ActionResult.SUCCESS;
 					}
 				}
-				ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
-				return ActionResult.SUCCESS;
 			}
 		}
 		return ActionResult.PASS;
