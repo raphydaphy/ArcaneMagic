@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.util;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
@@ -10,16 +11,18 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sortme.ItemScatterer;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.Objects;
+import java.util.*;
 
 public class ArcaneMagicUtils
 {
@@ -261,5 +264,43 @@ public class ArcaneMagicUtils
 	public static float lerp(float a, float b, float t)
 	{
 		return (1 - t) * a + t * b;
+	}
+
+	public enum ForgeCrystal
+	{
+		EMERALD(), DIAMOND(), GOLD(), REDSTONE(), LAPIS(), COAL();
+
+		public static final String HILT_KEY = "hilt_crystal";
+		public static final String POMMEL_KEY = "pommel_crystal";
+
+		public final String id;
+		public final Identifier hilt;
+		public final Identifier pommel;
+
+		ForgeCrystal()
+		{
+			this.id = this.toString().toLowerCase();
+			this.hilt = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_hilt");
+			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_pommel");
+		}
+
+		@Nullable
+		public static ForgeCrystal getFromID(String id)
+		{
+			for (ForgeCrystal crystal : values())
+			{
+				if (crystal.id.equals(id))
+				{
+					return crystal;
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public String toString()
+		{
+			return id;
+		}
 	}
 }
