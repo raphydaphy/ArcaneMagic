@@ -1,4 +1,6 @@
 {
 	"parent": "item/handheld",
-	"model": "arcanemagic:generated_model_iron_dagger"
+	"textures": {
+	  "layer0": "arcanemagic:item/iron_dagger"
+	}
 }

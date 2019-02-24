@@ -4,7 +4,8 @@
   	"compatibilityLevel": "JAVA_8",
 	"mixins": [
 	  "MinecraftClientMixin",
-	  "InGameHudMixin"
+	  "InGameHudMixin",
+	  "GameRendererMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

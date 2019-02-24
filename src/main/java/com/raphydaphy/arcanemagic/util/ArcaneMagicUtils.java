@@ -20,6 +20,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.*;
@@ -266,9 +267,32 @@ public class ArcaneMagicUtils
 		return (1 - t) * a + t * b;
 	}
 
+	public static Vec3d interpPlayerLook(PlayerEntity player, float partialTicks)
+	{
+		if (partialTicks == 1.0F)
+		{
+			return getVectorForRotation(player.pitch, player.headYaw);
+		}
+		else
+		{
+			float f = player.prevPitch + (player.pitch - player.prevPitch) * partialTicks;
+			float f1 = player.prevHeadYaw + (player.headYaw - player.prevHeadYaw) * partialTicks;
+			return getVectorForRotation(f, f1);
+		}
+	}
+
+	private static Vec3d getVectorForRotation(float pitch, float yaw)
+	{
+		float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
+		float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+		float f2 = -MathHelper.cos(-pitch * 0.017453292F);
+		float f3 = MathHelper.sin(-pitch * 0.017453292F);
+		return new Vec3d((double)(f1 * f2), (double)f3, (double)(f * f2));
+	}
+
 	public enum ForgeCrystal
 	{
-		EMERALD(), DIAMOND(), GOLD(), REDSTONE(), LAPIS(), COAL();
+		EMERALD("emerald"), DIAMOND("diamond"), GOLD("gold"), REDSTONE("redstone"), LAPIS("lapis"), COAL("coal");
 
 		public static final String HILT_KEY = "hilt_crystal";
 		public static final String POMMEL_KEY = "pommel_crystal";
@@ -277,9 +301,9 @@ public class ArcaneMagicUtils
 		public final Identifier hilt;
 		public final Identifier pommel;
 
-		ForgeCrystal()
+		ForgeCrystal(String id)
 		{
-			this.id = this.toString().toLowerCase();
+			this.id = id;
 			this.hilt = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_hilt");
 			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_pommel");
 		}

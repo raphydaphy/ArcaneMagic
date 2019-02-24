@@ -17,12 +17,12 @@ import java.util.function.Supplier;
 
 public class CrystalArmorItem extends ArmorItem implements ICrystalEquipment
 {
-	public CrystalArmorItem(EquipmentSlot slot)
+	public CrystalArmorItem(ArmorMaterial material, EquipmentSlot slot)
 	{
-		super(ModArmorMaterials.EMERALD_CRYSTAL, slot, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+		super(material, slot, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	}
 
-	private enum ModArmorMaterials implements ArmorMaterial
+	public enum ModArmorMaterials implements ArmorMaterial
 	{
 		EMERALD_CRYSTAL("emerald_crystal", 20, new int[]{2, 5, 7, 2}, 15, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1F, () ->
 		{

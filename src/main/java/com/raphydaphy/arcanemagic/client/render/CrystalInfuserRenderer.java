@@ -2,6 +2,8 @@ package com.raphydaphy.arcanemagic.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
+import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
@@ -28,6 +30,8 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 			GlStateManager.enableLighting();
 			GlStateManager.disableRescaleNormal();
 
+
+
 			// Render Equipment
 			if (!equipment.isEmpty())
 			{
@@ -51,6 +55,14 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 				GlStateManager.scaled(0.6, 0.6, 0.6);
 				MinecraftClient.getInstance().getItemRenderer().renderItem(binder, ModelTransformation.Type.GROUND);
 				GlStateManager.popMatrix();
+
+				ticks -= 3;
+				ParticleUtil.spawnGlowParticle(entity.getWorld(),
+						(float)(entity.getPos().getX() + .5 + Math.cos((Math.PI/180) * (ticks * 2)) / 3),
+						(float)(entity.getPos().getY() + 1 - Math.sin((Math.PI / 180) * (ticks* 4)) / 8),
+						(float)(entity.getPos().getZ() + .5 + Math.sin((Math.PI/180) * (ticks * 2)) / 3),
+						0, 0, 0, 1, 0, 0, 0.1f, 0.1f, 150);
+				ticks += 3;
 			}
 
 			ticks += 90;
@@ -59,11 +71,18 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 			if (!crystal.isEmpty())
 			{
 				GlStateManager.pushMatrix();
-				GlStateManager.translated(renderX + .5 + Math.cos((Math.PI/180) * (ticks * 2)) / 3, renderY + 1 - Math.sin((Math.PI / 180) * (ticks* 4)) / 8, renderZ + .5 + Math.sin((Math.PI/180) * (ticks * 2)) / 3);
+				GlStateManager.translated(renderX + .5 + Math.cos((Math.PI/180) * (ticks * 2)) / 3, renderY + 1 - Math.sin((Math.PI / 180) * ((ticks + 45)* 4)) / 8, renderZ + .5 + Math.sin((Math.PI/180) * (ticks * 2)) / 3);
 				GlStateManager.rotated(2 * ticks, 0, 1, 0);
 				GlStateManager.scaled(0.6, 0.6, 0.6);
 				MinecraftClient.getInstance().getItemRenderer().renderItem(crystal, ModelTransformation.Type.GROUND);
 				GlStateManager.popMatrix();
+
+				ticks -= 3;
+				ParticleUtil.spawnGlowParticle(entity.getWorld(),
+						(float)(entity.getPos().getX()  + .5 + Math.cos((Math.PI/180) * (ticks * 2)) / 3),
+						(float)(entity.getPos().getY() + 1 - Math.sin((Math.PI / 180) * ((ticks + 45)* 4)) / 8),
+						(float)(entity.getPos().getZ() + .5 + Math.sin((Math.PI/180) * (ticks * 2)) / 3),
+						0, 0, 0, 1, 0.5f, 0, 0.1f, 0.1f, 150);
 			}
 
 			GlStateManager.popMatrix();
