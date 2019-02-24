@@ -2,9 +2,13 @@ package com.raphydaphy.arcanemagic.init;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.AltarBlock;
+import com.raphydaphy.arcanemagic.block.CrystalInfuserBlock;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.item.CrystalArmorItem;
+import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.SoulStorageItem;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
@@ -25,23 +29,25 @@ import java.util.List;
 public class ModRegistry
 {
 	public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new).build(null));
+	public static BlockEntityType<CrystalInfuserBlockEntity> CRYSTAL_INFUSER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "crystal_infuser", BlockEntityType.Builder.create(CrystalInfuserBlockEntity::new).build(null));
 	public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new).build(null));
 
 	public static AltarBlock ALTAR = new AltarBlock();
+	public static CrystalInfuserBlock CRYSTAL_INFUSER = new CrystalInfuserBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
 	public static SoulStorageItem SOUL_PENDANT = new SoulStorageItem(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
-	public static Item EMERALD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static Item DIAMOND_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static Item GOLD_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static Item LAPIS_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static Item REDSTONE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static Item COAL_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static ArmorItem EMERALD_CRYSTAL_HELMET = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.HEAD, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static ArmorItem EMERALD_CRYSTAL_CHESTPLATE = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.CHEST, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static ArmorItem EMERALD_CRYSTAL_LEGGINGS = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.LEGS, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static ArmorItem EMERALD_CRYSTAL_BOOTS = new ArmorItem(ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.FEET, new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+	public static CrystalItem EMERALD_CRYSTAL = new CrystalItem();
+	public static CrystalItem DIAMOND_CRYSTAL = new CrystalItem();
+	public static CrystalItem GOLD_CRYSTAL = new CrystalItem();
+	public static CrystalItem LAPIS_CRYSTAL = new CrystalItem();
+	public static CrystalItem REDSTONE_CRYSTAL = new CrystalItem();
+	public static CrystalItem COAL_CRYSTAL = new CrystalItem();
+	public static CrystalArmorItem EMERALD_CRYSTAL_HELMET = new CrystalArmorItem(EquipmentSlot.HEAD);
+	public static CrystalArmorItem EMERALD_CRYSTAL_CHESTPLATE = new CrystalArmorItem(EquipmentSlot.CHEST);
+	public static CrystalArmorItem EMERALD_CRYSTAL_LEGGINGS = new CrystalArmorItem(EquipmentSlot.LEGS);
+	public static CrystalArmorItem EMERALD_CRYSTAL_BOOTS = new CrystalArmorItem(EquipmentSlot.FEET);
 
 	public static final List<TransfigurationRecipe> TRANSFIGURATION_RECIPES = new ArrayList<>();
 
@@ -49,10 +55,12 @@ public class ModRegistry
 	{
 		// Block Registration
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "altar"), ALTAR);
+		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "crystal_infuser"), CRYSTAL_INFUSER);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table"), TRANSFIGURATION_TABLE);
 
 		// Item Block Registration
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "altar", new BlockItem(ALTAR, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
+		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "crystal_infuser", new BlockItem(CRYSTAL_INFUSER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 
 		// Item Registration

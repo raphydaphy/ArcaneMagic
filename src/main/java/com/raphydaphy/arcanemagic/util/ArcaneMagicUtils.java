@@ -176,15 +176,21 @@ public class ArcaneMagicUtils
 				// insertStack = 1 item to insert
 				// held = remaining items
 
-				if (!world.isClient)
+				if (((Inventory)container).isValidInvStack(slot, insertStack))
 				{
-					((Inventory) container).setInvStack(slot, insertStack);
+
+					if (!world.isClient)
+					{
+						((Inventory) container).setInvStack(slot, insertStack);
+					}
+
+					world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+					player.swingHand(hand);
+
+					return true;
 				}
 
-				world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
-				player.swingHand(hand);
-
-				return true;
+				return false;
 			}
 		} else
 		{
