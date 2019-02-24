@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import me.shedaniel.rei.api.IDisplaySettings;
 import me.shedaniel.rei.api.IRecipeCategory;
 import me.shedaniel.rei.gui.widget.IWidget;
 import me.shedaniel.rei.gui.widget.ItemSlotWidget;
@@ -98,5 +99,30 @@ public class InfusionCategory implements IRecipeCategory<InfusionDisplay>
 			}
 		});
 		return widgets;
+	}
+
+	@Override
+	public IDisplaySettings getDisplaySettings()
+	{
+		return new IDisplaySettings<InfusionDisplay>()
+		{
+			@Override
+			public int getDisplayHeight(IRecipeCategory category)
+			{
+				return 66;
+			}
+
+			@Override
+			public int getDisplayWidth(IRecipeCategory category, InfusionDisplay display)
+			{
+				return 159;
+			}
+
+			@Override
+			public int getMaximumRecipePerPage(IRecipeCategory category)
+			{
+				return 99;
+			}
+		};
 	}
 }

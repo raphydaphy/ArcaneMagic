@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import me.shedaniel.rei.api.IDisplaySettings;
 import me.shedaniel.rei.api.IRecipeCategory;
 import me.shedaniel.rei.gui.widget.IWidget;
 import me.shedaniel.rei.gui.widget.ItemSlotWidget;
@@ -60,7 +61,7 @@ public class TransfigurationCategory implements IRecipeCategory<TransfigurationD
 				drawTexturedRect(startPoint.x, startPoint.y, 0, 0, 124, 54);
 				MinecraftClient.getInstance().getTextureManager().bindTexture(SOUL_METER_TEXTURE);
 
-				float percent = ((float)recipeDisplaySupplier.get().getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
+				float percent = ((float) recipeDisplaySupplier.get().getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
 				int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);
 				int row = stage / 10;
 				int col = stage % 10;
@@ -102,5 +103,30 @@ public class TransfigurationCategory implements IRecipeCategory<TransfigurationD
 			}
 		});
 		return widgets;
+	}
+
+	@Override
+	public IDisplaySettings getDisplaySettings()
+	{
+		return new IDisplaySettings<TransfigurationDisplay>()
+		{
+			@Override
+			public int getDisplayHeight(IRecipeCategory category)
+			{
+				return 66;
+			}
+
+			@Override
+			public int getDisplayWidth(IRecipeCategory category, TransfigurationDisplay display)
+			{
+				return 158;
+			}
+
+			@Override
+			public int getMaximumRecipePerPage(IRecipeCategory category)
+			{
+				return 99;
+			}
+		};
 	}
 }
