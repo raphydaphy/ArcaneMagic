@@ -33,7 +33,7 @@ public class CrystalInfuserBlock extends WaterloggableBlockBase implements Block
 			return false;
 		}
 
-		if (((CrystalInfuserBlockEntity)blockEntity).getStage() == CrystalInfuserBlockEntity.CraftingStage.IDLE)
+		if (!((CrystalInfuserBlockEntity)blockEntity).isActive())
 		{
 			if (player.isSneaking())
 			{

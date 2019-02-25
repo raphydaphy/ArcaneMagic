@@ -106,12 +106,12 @@ public class ScepterItem extends SoulStorageItem
 				if (blockEntity instanceof CrystalInfuserBlockEntity)
 				{
 					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity)blockEntity;
-					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && ((CrystalInfuserBlockEntity)blockEntity).getStage() == CrystalInfuserBlockEntity.CraftingStage.IDLE)
+					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && !((CrystalInfuserBlockEntity)blockEntity).isActive())
 					{
 						if (!ctx.getWorld().isClient)
 						{
 							((CrystalInfuserBlockEntity)blockEntity).resetCraftingTime();
-							((CrystalInfuserBlockEntity)blockEntity).setStage(CrystalInfuserBlockEntity.CraftingStage.INFUSING);
+							((CrystalInfuserBlockEntity)blockEntity).setActive(true);
 						}
 						ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
 						return ActionResult.SUCCESS;

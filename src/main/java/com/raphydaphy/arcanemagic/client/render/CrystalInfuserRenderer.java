@@ -28,34 +28,34 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 			ItemStack binder = entity.getInvStack(1);
 			ItemStack crystal = entity.getInvStack(2);
 
+			boolean active = entity.isActive();
+			float craftingTime = entity.getCraftingTime();
 
-			CrystalInfuserBlockEntity.CraftingStage stage = entity.getStage();
-			long craftingTime = entity.getCraftingTime();
-
-			if (stage == CrystalInfuserBlockEntity.CraftingStage.INFUSING && craftingTime > 4000)
+			if (active && craftingTime > 8000 && craftingTime > 8150)
 			{
-				ParticleUtil.spawnGlowParticle(entity.getWorld(),entity.getPos().getX() + .5f, entity.getPos().getY() + 1.1f, entity.getPos().getZ() + .5f,
-						0, 0, 0, 1, 1, 1, 0.1f, 0.5f, 100);
+				//ParticleUtil.spawnGlowParticle(entity.getWorld(),entity.getPos().getX() + .5f, entity.getPos().getY() + 1.1f, entity.getPos().getZ() + .5f,0, 0, 0, 1, 1, 1, 0.1f, 0,0.5f, 100);
 			} else
 			{
-				if (stage == CrystalInfuserBlockEntity.CraftingStage.INFUSING && craftingTime > 3500)
-				{
-					float size = (craftingTime - 3500) / 1000f;
-					System.out.println(craftingTime + " : "+ size);
-					ParticleUtil.spawnGlowParticle(entity.getWorld(),entity.getPos().getX() + .5f, entity.getPos().getY() + 1.1f, entity.getPos().getZ() + .5f,
-							0, 0, 0, 1, 1, 1, 0.1f, size, 100);
-				}
+
 				GlStateManager.pushMatrix();
 				GuiLighting.enable();
 				GlStateManager.enableLighting();
 				GlStateManager.disableRescaleNormal();
+
+				craftingTime /= 2f;
+
+				float scale = 0.5f;
+				if (active && craftingTime > 7500)
+				{
+					scale = scale - ((craftingTime - 7500) / 500f) * scale;
+				}
 
 				// Render Equipment
 				if (!equipment.isEmpty())
 				{
 					GlStateManager.pushMatrix();
 
-					if (stage == CrystalInfuserBlockEntity.CraftingStage.INFUSING)
+					if (active)
 					{
 						GlStateManager.translated(renderX + .5, renderY + 1 + Math.sin((Math.PI / 180) * (ticks * 4)) / 15, renderZ + .5);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
@@ -78,14 +78,20 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 					GlStateManager.popMatrix();
 				}
 
-				ticks += 3941;
+				ticks += 400;
+
+				scale = 0.6f;
+				if (active && craftingTime > 3750)
+				{
+					scale = scale - ((craftingTime - 3750) / 500f) * scale;
+				}
 
 				// Render Binder
 				if (!binder.isEmpty())
 				{
 					GlStateManager.pushMatrix();
 
-					if (stage == CrystalInfuserBlockEntity.CraftingStage.INFUSING)
+					if (active)
 					{
 						float inverseRadius = (craftingTime) / 1000f + 3;
 						Vec3f pos = new Vec3f(
@@ -95,8 +101,6 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 						);
 						GlStateManager.translated(renderX + pos.x, renderY + pos.y, renderZ + pos.z);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
-						ParticleUtil.spawnGlowParticle(entity.getWorld(), entity.getPos().getX() + pos.x, entity.getPos().getY() + pos.y, entity.getPos().getZ() + pos.z,
-								0, 0, 0, 1, 0, 0, 0.1f, 0.1f, 150);
 					} else
 					{
 						GlStateManager.translated(renderX + .35, renderY + .635, renderZ + .3);
@@ -122,7 +126,8 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 
 						}
 					}
-					GlStateManager.scaled(0.6, 0.6, 0.6);
+
+					GlStateManager.scaled(scale, scale, scale);
 					MinecraftClient.getInstance().getItemRenderer().renderItem(binder, ModelTransformation.Type.GROUND);
 					GlStateManager.popMatrix();
 
@@ -136,7 +141,7 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 				{
 					GlStateManager.pushMatrix();
 
-					if (stage == CrystalInfuserBlockEntity.CraftingStage.INFUSING)
+					if (active)
 					{
 						float inverseRadius = (craftingTime) / 1000f + 3;
 						Vec3f pos = new Vec3f(
@@ -145,8 +150,6 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 								(float) (0.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius));
 						GlStateManager.translated(renderX + pos.x, renderY + pos.y, renderZ + pos.z);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
-						ParticleUtil.spawnGlowParticle(entity.getWorld(), entity.getPos().getX() + pos.x, entity.getPos().getY() + pos.y, entity.getPos().getZ() + pos.z,
-								0, 0, 0, 1, 0.5f, 0, 0.1f, 0.1f, 150);
 					} else
 					{
 						GlStateManager.translated(renderX + .69, renderY + .635, renderZ + .6);
@@ -160,7 +163,7 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 						}
 					}
 
-					GlStateManager.scaled(0.6, 0.6, 0.6);
+					GlStateManager.scaled(scale, scale, scale);
 					MinecraftClient.getInstance().getItemRenderer().renderItem(crystal, ModelTransformation.Type.GROUND);
 					GlStateManager.popMatrix();
 				}

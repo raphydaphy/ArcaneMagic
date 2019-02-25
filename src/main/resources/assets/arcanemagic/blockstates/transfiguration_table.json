@@ -1,6 +1,6 @@
 {
     "variants": {
-        "facing=north,waterlogged=true": { "model": "arcanemagic:block/transfiguration_table" },
+        "facing=north,waterlogged=true": { "model": "arcanemagic:block/transfiguration_table"},
 	  	"facing=north,waterlogged=false": { "model": "arcanemagic:block/transfiguration_table" },
         "facing=east,waterlogged=true":  { "model": "arcanemagic:block/transfiguration_table", "y": 90 },
 	  	"facing=east,waterlogged=false":  { "model": "arcanemagic:block/transfiguration_table", "y": 90 },

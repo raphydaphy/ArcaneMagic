@@ -19,12 +19,12 @@ public class GlowParticle extends class_4003 implements ArcaneMagicParticle
 	private float initScale = 0;
 	private float initAlpha = 0;
 
-	public GlowParticle(World worldIn, double x, double y, double z, double vx, double vy, double vz, float r, float g, float b, float a, float scale, int lifetime)
+	public GlowParticle(World worldIn, double xPos, double yPos, double zPos, double velocityX, double velocityY, double velocityZ, float red, float green, float blue, float alpha, float scale, int lifetime)
 	{
-		super(worldIn, x, y, z, 0, 0, 0);
-		this.colorR = r;
-		this.colorG = g;
-		this.colorB = b;
+		super(worldIn, xPos, yPos, zPos, 0, 0, 0);
+		this.colorR = red;
+		this.colorG = green;
+		this.colorB = blue;
 		if (this.colorR > 1.0)
 		{
 			this.colorR = this.colorR / 255.0f;
@@ -41,10 +41,10 @@ public class GlowParticle extends class_4003 implements ArcaneMagicParticle
 		this.maxAge = (int) ((float) lifetime * 0.5f);
 		this.field_17867 = scale; // particleScale
 		this.initScale = scale;
-		this.velocityX = vx * 2.0f;
-		this.velocityY = vy * 2.0f;
-		this.velocityZ = vz * 2.0f;
-		this.initAlpha = a;
+		this.velocityX = velocityX * 2.0f;
+		this.velocityY = velocityY * 2.0f;
+		this.velocityZ = velocityZ * 2.0f;
+		this.initAlpha = alpha;
 		this.field_3839 = 2.0f * (float) Math.PI; // particleAngle
 		Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas().getSprite(texture.toString());
 		this.method_18141(sprite); // setParticleTexture

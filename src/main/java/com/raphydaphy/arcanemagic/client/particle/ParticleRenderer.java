@@ -27,24 +27,27 @@ public class ParticleRenderer
 
 	public void update()
 	{
-		boolean doRemove;
-		for (int i = 0; i < particles.size(); i++)
+		if (!MinecraftClient.getInstance().isPaused())
 		{
-			doRemove = true;
-			if (particles.get(i) != null)
+			boolean doRemove;
+			for (int i = 0; i < particles.size(); i++)
 			{
-				if (particles.get(i) instanceof ArcaneMagicParticle)
+				doRemove = true;
+				if (particles.get(i) != null)
 				{
-					if (((ArcaneMagicParticle) particles.get(i)).alive())
+					if (particles.get(i) instanceof ArcaneMagicParticle)
 					{
-						particles.get(i).update();
-						doRemove = false;
+						if (((ArcaneMagicParticle) particles.get(i)).alive())
+						{
+							particles.get(i).update();
+							doRemove = false;
+						}
 					}
 				}
-			}
-			if (doRemove)
-			{
-				particles.remove(i);
+				if (doRemove)
+				{
+					particles.remove(i);
+				}
 			}
 		}
 	}
@@ -147,6 +150,9 @@ public class ParticleRenderer
 
 	public void add(Particle particle)
 	{
-		particles.add(particle);
+		if (!MinecraftClient.getInstance().isPaused())
+		{
+			particles.add(particle);
+		}
 	}
 }

@@ -1,14 +1,11 @@
 package com.raphydaphy.arcanemagic.item;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.sun.istack.internal.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TextComponent;
 import net.minecraft.world.World;
 
@@ -23,7 +20,7 @@ public class SoulStorageItem extends Item
 
 	@Override
 	@Environment(EnvType.CLIENT)
-	public void buildTooltip(ItemStack stack, @Nullable World world, List<TextComponent> tooltip, TooltipContext ctx)
+	public void buildTooltip(ItemStack stack, World world, List<TextComponent> tooltip, TooltipContext ctx)
 	{
 		int soul = 0;
 		if (stack.getTag() != null)

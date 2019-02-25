@@ -5,7 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.sun.istack.internal.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -117,7 +116,7 @@ public class IronDaggerModel implements UnbakedModel
 		}
 
 		@Override
-		public BakedModel apply(BakedModel originalModel, ItemStack stack, @Nullable World world, @Nullable LivingEntity entity)
+		public BakedModel apply(BakedModel originalModel, ItemStack stack, World world, LivingEntity entity)
 		{
 			ArcaneMagicUtils.ForgeCrystal hilt = null;
 			ArcaneMagicUtils.ForgeCrystal pommel = null;

@@ -20,7 +20,7 @@ public class AltarBlock extends WaterloggableBlockBase implements BlockEntityPro
 
 	public AltarBlock()
 	{
-		super(Settings.copy(Blocks.STONE));
+		super(Settings.copy(Blocks.FURNACE));
 	}
 
 	@Override

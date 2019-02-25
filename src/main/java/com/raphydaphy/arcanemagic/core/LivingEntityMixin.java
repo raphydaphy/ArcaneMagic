@@ -23,5 +23,6 @@ public abstract class LivingEntityMixin extends Entity
 	private void onDeath(DamageSource source, CallbackInfo info)
 	{
 		ModEvents.onLivingEntityDeath(this, source);
+
 	}
 }

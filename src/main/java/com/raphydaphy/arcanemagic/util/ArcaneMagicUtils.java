@@ -4,7 +4,6 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
-import com.sun.istack.internal.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -33,7 +32,7 @@ public class ArcaneMagicUtils
 	 * @param user The player using the soul, if there is one
 	 * @return True if the soul was consumed
 	 ***/
-	public static boolean useSoul(World world, ItemStack scepter, @Nullable PlayerEntity user, int amount)
+	public static boolean useSoul(World world, ItemStack scepter, PlayerEntity user, int amount)
 	{
 		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
 		{
@@ -77,7 +76,7 @@ public class ArcaneMagicUtils
 		return false;
 	}
 
-	public static boolean addSoul(World world, ItemStack scepter, @Nullable PlayerEntity user, int amount)
+	public static boolean addSoul(World world, ItemStack scepter, PlayerEntity user, int amount)
 	{
 		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
 		{
@@ -308,7 +307,6 @@ public class ArcaneMagicUtils
 			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_pommel");
 		}
 
-		@Nullable
 		public static ForgeCrystal getFromID(String id)
 		{
 			for (ForgeCrystal crystal : values())

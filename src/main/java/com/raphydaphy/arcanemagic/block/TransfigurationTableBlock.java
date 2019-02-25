@@ -6,16 +6,11 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.sun.istack.internal.Nullable;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.enums.ChestType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -48,7 +43,7 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 		this.setDefaultState((this.getDefaultState()).with(FACING, Direction.NORTH));
 	}
 
-	public boolean useScepter(World world, BlockEntity blockEntity, ItemStack scepter, @Nullable PlayerEntity player, @Nullable Hand hand)
+	public boolean useScepter(World world, BlockEntity blockEntity, ItemStack scepter, PlayerEntity player, Hand hand)
 	{
 		if (scepter.getTag() != null)
 		{

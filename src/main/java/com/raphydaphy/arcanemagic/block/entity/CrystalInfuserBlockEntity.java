@@ -1,11 +1,13 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.sun.istack.internal.Nullable;
+import com.sun.javafx.geom.Vec3f;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.SidedInventory;
@@ -17,7 +19,7 @@ import net.minecraft.util.math.Direction;
 
 public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
-	private static final String STAGE_KEY = "crafting_stage";
+	private static final String ACTIVE_KEY = "active";
 	private static final String CRAFTING_TIME_KEY = "crafting_time";
 	private static final int[] slots = { 0, 1, 2 };
 
@@ -26,7 +28,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	// Updated on both sides and synced every second while crafting
 	private long craftingTime = 0;
 
-	private CraftingStage stage = CraftingStage.IDLE;
+	private boolean active = false;
 
 	public CrystalInfuserBlockEntity()
 	{
@@ -39,23 +41,68 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		if (world.isClient)
 		{
 			ticksExisted++;
-		} else
-		{
-			if (craftingTime >= 4500 && stage == CraftingStage.INFUSING)
+
+			if (active && craftingTime > 8000 && craftingTime > 8150)
+			{
+				ParticleUtil.spawnGlowParticle(world, pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
+						0, 0, 0, 1, 1, 1, 0.1f, 0.5f, 100);
+
+			} else
+			{
+				if (active && craftingTime > 7500)
+				{
+					float size = (craftingTime - 7500) / 1000f;
+					ParticleUtil.spawnGlowParticle(world,pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
+							0, 0, 0, 1, 1, 1, 0.1f, size, 100);
+				}
+
+				if (active)
+				{
+					float inverseRadius = (craftingTime / 2f) / 1000f + 3;
+					long renderTicks = ticksExisted + 400;
+					float alpha = 0.2f;
+					float scale = 0.1f;
+
+					if (!getInvStack(1).isEmpty())
+					{
+						Vec3f particlePos = new Vec3f(
+								(float) (.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius),
+								(float) (1 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8),
+								(float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius)
+						);
+						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePos.x, pos.getY() + particlePos.y, pos.getZ() + particlePos.z,
+								0, 0, 0, 1, 0, 0, alpha, scale, 150);
+					}
+
+					renderTicks += 90;
+
+					if (!getInvStack(2).isEmpty())
+					{
+						Vec3f particlePos = new Vec3f(
+								(float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius),
+								(float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8),
+								(float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius));
+						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePos.x, pos.getY() + particlePos.y, pos.getZ() + particlePos.z,
+								0, 0, 0, 1, 0.5f, 0, alpha, scale, 150);
+					}
+				}
+			}
+		} else {
+			if (craftingTime >= 8250 && active)
 			{
 				craftingTime = 0;
-				stage = CraftingStage.IDLE;
-				ItemEntity result = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, getInvStack(1));
+				active = false;
+				ItemEntity result = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, getInvStack(0));
 				result.setVelocity(0, 0, 0);
 				world.spawnEntity(result);
 				clear();
 				markDirty();
-			} else if (world.getTime() % 20 == 0 && stage != CraftingStage.IDLE)
+			} else if (world.getTime() % 20 == 0 && active)
 			{
 				markDirty();
 			}
 		}
-		if (stage != CraftingStage.IDLE)
+		if (active)
 		{
 			craftingTime++;
 		}
@@ -88,11 +135,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		stage = CraftingStage.getFromID(tag.getInt(STAGE_KEY));
-		if (stage == null)
-		{
-			stage = CraftingStage.IDLE;
-		}
+		active = tag.getBoolean(ACTIVE_KEY);
 		craftingTime = tag.getLong(CRAFTING_TIME_KEY);
 	}
 
@@ -100,7 +143,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public void writeContents(CompoundTag tag)
 	{
 		super.writeContents(tag);
-		tag.putInt(STAGE_KEY, stage.id);
+		tag.putBoolean(ACTIVE_KEY, active);
 		tag.putLong(CRAFTING_TIME_KEY, craftingTime);
 	}
 
@@ -122,11 +165,11 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		return -1;
 	}
 
-	public void setStage(CraftingStage stage)
+	public void setActive(boolean active)
 	{
 		if (!world.isClient)
 		{
-			this.stage = stage;
+			this.active = active;
 			markDirty();
 		}
 	}
@@ -140,9 +183,9 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		}
 	}
 
-	public CraftingStage getStage()
+	public boolean isActive()
 	{
-		return stage;
+		return active;
 	}
 
 	public long getCraftingTime()
@@ -182,30 +225,5 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
 		return true;
-	}
-
-	public enum CraftingStage
-	{
-		IDLE(0), INFUSING(1), FINISHING(2);
-
-		public final int id;
-
-		CraftingStage(int id)
-		{
-			this.id = id;
-		}
-
-		@Nullable
-		public static CraftingStage getFromID(int id)
-		{
-			for (CraftingStage stage : CraftingStage.values())
-			{
-				if (stage.id == id)
-				{
-					return stage;
-				}
-			}
-			return null;
-		}
 	}
 }
