@@ -20,46 +20,89 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 
 		if (entity != null && entity.bottom)
 		{
-			ItemStack stack = entity.getInvStack(0);
-			float ticks = ArcaneMagicUtils.lerp(entity.ticks - 1, entity.ticks, partialTicks);
+			ItemStack input = entity.getInvStack(0);
+			ItemStack output1 = entity.getInvStack(1);
+			ItemStack output2 = entity.getInvStack(2);
 
-			if (!stack.isEmpty())
+			GlStateManager.pushMatrix();
+			GlStateManager.translated(renderX, renderY, renderZ);
+			BlockState state = getWorld().getBlockState(entity.getPos());
+
+			if (state.getBlock() instanceof SmelterBlock)
 			{
-				GlStateManager.pushMatrix();
-				BlockState state = getWorld().getBlockState(entity.getPos());
-
-				if (state.getBlock() instanceof SmelterBlock)
+				if (!output1.isEmpty())
 				{
-					Direction facing = state.get(SmelterBlock.FACING);
-					GlStateManager.translated(renderX, renderY, renderZ);
-					if (facing == Direction.EAST)
+					if (!output2.isEmpty())
 					{
-						GlStateManager.rotated(-90, 0, 1, 0);
-						GlStateManager.translated(0, 0, -1);
-					} else if (facing == Direction.SOUTH)
-					{
-						GlStateManager.rotated(-180, 0, 1, 0);
-						GlStateManager.translated(-1, 0, -1);
-					} else if (facing == Direction.WEST)
-					{
-						GlStateManager.rotated(-270, 0, 1, 0);
-						GlStateManager.translated(-1, 0, 0);
-					}
+						boolean depth = MinecraftClient.getInstance().getItemRenderer().getModel(output1).hasDepthInGui() || MinecraftClient.getInstance().getItemRenderer().getModel(output2).hasDepthInGui();
+						GlStateManager.pushMatrix();
+						renderItemPre(state);
+						if (depth)
+						{
+							GlStateManager.translated(.125, 0, 0);
+						}
+						renderItem(output1);
+						GlStateManager.popMatrix();
 
-					GuiLighting.enable();
-					GlStateManager.enableLighting();
-					GlStateManager.disableRescaleNormal();
-					GlStateManager.translated(0.5, 0.065, 0.12);
-					if (!MinecraftClient.getInstance().getItemRenderer().getModel(stack).hasDepthInGui())
+						GlStateManager.pushMatrix();
+						renderItemPre(state);
+						if (depth)
+						{
+							GlStateManager.translated(-.125, 0, 0);
+						} else
+						{
+							GlStateManager.translated(0, .02, 0);
+						}
+						renderItem(output2);
+						GlStateManager.popMatrix();
+
+					} else
 					{
-						GlStateManager.translated(0, .068, -0.06);
-						GlStateManager.rotated(90, 1, 0, 0);
-						GlStateManager.scaled(0.5, 0.5, 0.5);
+						renderItemPre(state);
+						renderItem(output1);
 					}
-					MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.GROUND);
+				} else if (!input.isEmpty())
+				{
+					renderItemPre(state);
+					renderItem(input);
 				}
-				GlStateManager.popMatrix();
 			}
+			GlStateManager.popMatrix();
 		}
+	}
+
+	private void renderItemPre(BlockState state)
+	{
+		Direction facing = state.get(SmelterBlock.FACING);
+		if (facing == Direction.EAST)
+		{
+			GlStateManager.rotated(-90, 0, 1, 0);
+			GlStateManager.translated(0, 0, -1);
+		} else if (facing == Direction.SOUTH)
+		{
+			GlStateManager.rotated(-180, 0, 1, 0);
+			GlStateManager.translated(-1, 0, -1);
+		} else if (facing == Direction.WEST)
+		{
+			GlStateManager.rotated(-270, 0, 1, 0);
+			GlStateManager.translated(-1, 0, 0);
+		}
+
+		GuiLighting.enable();
+		GlStateManager.enableLighting();
+		GlStateManager.disableRescaleNormal();
+		GlStateManager.translated(0.5, 0.065, 0.12);
+
+	}
+
+	private void renderItem(ItemStack stack)
+	{
+		if (!MinecraftClient.getInstance().getItemRenderer().getModel(stack).hasDepthInGui())
+		{
+			GlStateManager.translated(0, .068, -0.06);
+			GlStateManager.rotated(90, 1, 0, 0);
+			GlStateManager.scaled(0.5, 0.5, 0.5);
+		}
+		MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.GROUND);
 	}
 }

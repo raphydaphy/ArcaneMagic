@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -108,13 +109,32 @@ public class ScepterItem extends SoulStorageItem
 					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity)blockEntity;
 					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && !((CrystalInfuserBlockEntity)blockEntity).isActive())
 					{
-						if (!ctx.getWorld().isClient)
+						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 20))
 						{
-							((CrystalInfuserBlockEntity)blockEntity).resetCraftingTime();
-							((CrystalInfuserBlockEntity)blockEntity).setActive(true);
+							if (!ctx.getWorld().isClient)
+							{
+								((CrystalInfuserBlockEntity) blockEntity).resetCraftingTime();
+								((CrystalInfuserBlockEntity) blockEntity).setActive(true);
+							}
+							ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+							return ActionResult.SUCCESS;
 						}
-						ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
-						return ActionResult.SUCCESS;
+					}
+				}
+			} else if(block == ModRegistry.SMELTER)
+			{
+				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
+				if (blockEntity instanceof SmelterBlockEntity)
+				{
+					SmelterBlockEntity smelter = (SmelterBlockEntity)blockEntity;
+					if (smelter.startSmelting(true))
+					{
+						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 2))
+						{
+							smelter.startSmelting(false);
+							ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+							return ActionResult.SUCCESS;
+						}
 					}
 				}
 			}

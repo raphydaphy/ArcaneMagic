@@ -21,16 +21,18 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3i;
 
+import java.util.Optional;
+
 public class SmelterBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
 	public long ticks = 0;
-	private final int[] slots = { 0 };
+	private final int[] slots = {0, 1, 2};
 	public boolean bottom;
 	private boolean setBottom = false;
 
 	public SmelterBlockEntity()
 	{
-		super(ModRegistry.SMELTER_TE, 1);
+		super(ModRegistry.SMELTER_TE, 3);
 	}
 
 	@Override
@@ -109,6 +111,13 @@ public class SmelterBlockEntity extends InventoryBlockEntity implements SidedInv
 	{
 		if (bottom)
 		{
+			if (slot == 9)
+			{
+				if (!getInvStack(1).isEmpty() || !getInvStack(2).isEmpty())
+				{
+					return false;
+				}
+			}
 			return getInvStack(slot).isEmpty() && this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(item), this.world).isPresent();
 		} else
 		{
@@ -116,6 +125,29 @@ public class SmelterBlockEntity extends InventoryBlockEntity implements SidedInv
 			if (bottomBlockEntity != null)
 			{
 				return bottomBlockEntity.isValidInvStack(slot, item);
+			}
+		}
+		return false;
+	}
+
+	public boolean startSmelting(boolean simulate)
+	{
+		if (!getInvStack(0).isEmpty() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty())
+		{
+			Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
+			if (optionalRecipe.isPresent())
+			{
+				if (!simulate)
+				{
+					BlastingRecipe recipe = optionalRecipe.get();
+					if (!world.isClient)
+					{
+						setInvStack(0, ItemStack.EMPTY);
+						setInvStack(1, recipe.getOutput().copy());
+						setInvStack(2, recipe.getOutput().copy());
+					}
+				}
+				return true;
 			}
 		}
 		return false;
@@ -130,13 +162,13 @@ public class SmelterBlockEntity extends InventoryBlockEntity implements SidedInv
 	@Override
 	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return bottom && isValidInvStack(slot, stack);
+		return bottom && getInvStack(1).isEmpty() && getInvStack(2).isEmpty() && slot == 0 && isValidInvStack(slot, stack);
 	}
 
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return bottom;
+		return bottom && slot != 0;
 	}
 
 	private SmelterBlockEntity getBottom()

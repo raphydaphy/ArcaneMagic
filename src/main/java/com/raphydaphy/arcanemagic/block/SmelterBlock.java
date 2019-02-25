@@ -57,6 +57,19 @@ public class SmelterBlock extends WaterloggableBlockBase implements BlockEntityP
 			return false;
 		}
 
+		if (player.isSneaking())
+		{
+			for (int slot = 2; slot >= 1; slot--)
+			{
+				boolean extracted = ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, slot);
+				if (extracted)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
 		return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, 0);
 	}
 
