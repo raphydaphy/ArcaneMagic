@@ -5,7 +5,9 @@ import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.sun.istack.internal.Nullable;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,7 +17,7 @@ import net.minecraft.util.math.Direction;
 
 public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
-	private static final String ACTIVE_KEY = "active_crafting";
+	private static final String STAGE_KEY = "crafting_stage";
 	private static final String CRAFTING_TIME_KEY = "crafting_time";
 	private static final int[] slots = { 0, 1, 2 };
 
@@ -24,7 +26,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	// Updated on both sides and synced every second while crafting
 	private long craftingTime = 0;
 
-	private boolean active = false;
+	private CraftingStage stage = CraftingStage.IDLE;
 
 	public CrystalInfuserBlockEntity()
 	{
@@ -37,11 +39,23 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		if (world.isClient)
 		{
 			ticksExisted++;
-		} else if (world.getTime() % 20 == 0 && active)
+		} else
 		{
-			markDirty();
+			if (craftingTime >= 4500 && stage == CraftingStage.INFUSING)
+			{
+				craftingTime = 0;
+				stage = CraftingStage.IDLE;
+				ItemEntity result = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, getInvStack(1));
+				result.setVelocity(0, 0, 0);
+				world.spawnEntity(result);
+				clear();
+				markDirty();
+			} else if (world.getTime() % 20 == 0 && stage != CraftingStage.IDLE)
+			{
+				markDirty();
+			}
 		}
-		if (active)
+		if (stage != CraftingStage.IDLE)
 		{
 			craftingTime++;
 		}
@@ -74,7 +88,11 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		active = tag.getBoolean(ACTIVE_KEY);
+		stage = CraftingStage.getFromID(tag.getInt(STAGE_KEY));
+		if (stage == null)
+		{
+			stage = CraftingStage.IDLE;
+		}
 		craftingTime = tag.getLong(CRAFTING_TIME_KEY);
 	}
 
@@ -82,7 +100,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public void writeContents(CompoundTag tag)
 	{
 		super.writeContents(tag);
-		tag.putBoolean(ACTIVE_KEY, active);
+		tag.putInt(STAGE_KEY, stage.id);
 		tag.putLong(CRAFTING_TIME_KEY, craftingTime);
 	}
 
@@ -104,11 +122,11 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		return -1;
 	}
 
-	public void setActive(boolean active)
+	public void setStage(CraftingStage stage)
 	{
 		if (!world.isClient)
 		{
-			this.active = active;
+			this.stage = stage;
 			markDirty();
 		}
 	}
@@ -122,9 +140,9 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		}
 	}
 
-	public boolean isActive()
+	public CraftingStage getStage()
 	{
-		return active;
+		return stage;
 	}
 
 	public long getCraftingTime()
@@ -164,5 +182,30 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
 		return true;
+	}
+
+	public enum CraftingStage
+	{
+		IDLE(0), INFUSING(1), FINISHING(2);
+
+		public final int id;
+
+		CraftingStage(int id)
+		{
+			this.id = id;
+		}
+
+		@Nullable
+		public static CraftingStage getFromID(int id)
+		{
+			for (CraftingStage stage : CraftingStage.values())
+			{
+				if (stage.id == id)
+				{
+					return stage;
+				}
+			}
+			return null;
+		}
 	}
 }

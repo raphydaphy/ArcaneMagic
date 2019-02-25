@@ -32,24 +32,28 @@ public class CrystalInfuserBlock extends WaterloggableBlockBase implements Block
 		{
 			return false;
 		}
-		if (player.isSneaking())
+
+		if (((CrystalInfuserBlockEntity)blockEntity).getStage() == CrystalInfuserBlockEntity.CraftingStage.IDLE)
 		{
-			// Try to extract from any slot
-			for (int i = 2; i >= 0; i--)
+			if (player.isSneaking())
 			{
-				boolean success = ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, i);
-				if (success)
+				// Try to extract from any slot
+				for (int i = 2; i >= 0; i--)
 				{
-					return true;
+					boolean success = ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, i);
+					if (success)
+					{
+						return true;
+					}
 				}
-			}
-		} else
-		{
-			// Try to insert to the right slot
-			int slot = ((CrystalInfuserBlockEntity) blockEntity).getSlotForItem(player.getStackInHand(hand));
-			if (slot != -1)
+			} else
 			{
-				return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, slot);
+				// Try to insert to the right slot
+				int slot = ((CrystalInfuserBlockEntity) blockEntity).getSlotForItem(player.getStackInHand(hand));
+				if (slot != -1)
+				{
+					return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, slot);
+				}
 			}
 		}
 		return false;

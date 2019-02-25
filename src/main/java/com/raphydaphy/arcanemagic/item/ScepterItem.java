@@ -8,27 +8,20 @@ import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.sun.istack.internal.Nullable;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.TextComponent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -38,7 +31,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -114,12 +106,12 @@ public class ScepterItem extends SoulStorageItem
 				if (blockEntity instanceof CrystalInfuserBlockEntity)
 				{
 					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity)blockEntity;
-					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty())
+					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && ((CrystalInfuserBlockEntity)blockEntity).getStage() == CrystalInfuserBlockEntity.CraftingStage.IDLE)
 					{
 						if (!ctx.getWorld().isClient)
 						{
 							((CrystalInfuserBlockEntity)blockEntity).resetCraftingTime();
-							((CrystalInfuserBlockEntity)blockEntity).setActive(true);
+							((CrystalInfuserBlockEntity)blockEntity).setStage(CrystalInfuserBlockEntity.CraftingStage.INFUSING);
 						}
 						ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
 						return ActionResult.SUCCESS;
