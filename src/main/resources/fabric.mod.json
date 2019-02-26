@@ -9,7 +9,8 @@
 	  	"com.raphydaphy.arcanemagic.ArcaneMagicClient"
 	],
 	"requires": {
-		"fabric": "*"
+		"fabric": "*",
+	  	"silk": "*"
 	},
 	"mixins": {
 		"client": "arcanemagic.client.json",

@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.entity.PumpBlockEntity;
+import io.github.prospector.silk.fluid.FluidContainer;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.VerticalEntityPosition;

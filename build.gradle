@@ -27,11 +27,14 @@ dependencies {
 	// Fabric API
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
 
-	// Roughly Enough Items - Disabled until updated
+	// Roughly Enough Items
 	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 
 	// Plugin Loader
 	modCompile "info.tehnut.pluginloader:plugin-loader:${project.pluginloader_version}"
+
+	// Silk
+	modCompile "com.github.prospector:Silk:${project.silk_version}"
 }
 
 processResources {
