@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.client.render;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -35,23 +36,7 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 
 			if (state.getBlock() instanceof TransfigurationTableBlock)
 			{
-				Direction facing = state.get(TransfigurationTableBlock.FACING);
-
-				if (facing == Direction.EAST)
-				{
-					GlStateManager.rotated(-90, 0, 1, 0);
-					GlStateManager.translated(0, 0, -1);
-				}
-				else if (facing == Direction.SOUTH)
-				{
-					GlStateManager.rotated(-180, 0, 1, 0);
-					GlStateManager.translated(-1, 0, -1);
-				}
-				else if (facing == Direction.WEST)
-				{
-					GlStateManager.rotated(-270, 0, 1, 0);
-					GlStateManager.translated(-1, 0, 0);
-				}
+				ArcaneMagicUtils.rotateTo(state.get(TransfigurationTableBlock.FACING));
 				for (int slot = 0; slot < 9; slot++)
 				{
 					ItemStack stack = entity.getInvStack(slot);

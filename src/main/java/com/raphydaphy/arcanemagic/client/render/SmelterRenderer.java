@@ -73,20 +73,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 
 	private void renderItemPre(BlockState state)
 	{
-		Direction facing = state.get(SmelterBlock.FACING);
-		if (facing == Direction.EAST)
-		{
-			GlStateManager.rotated(-90, 0, 1, 0);
-			GlStateManager.translated(0, 0, -1);
-		} else if (facing == Direction.SOUTH)
-		{
-			GlStateManager.rotated(-180, 0, 1, 0);
-			GlStateManager.translated(-1, 0, -1);
-		} else if (facing == Direction.WEST)
-		{
-			GlStateManager.rotated(-270, 0, 1, 0);
-			GlStateManager.translated(-1, 0, 0);
-		}
+		ArcaneMagicUtils.rotateTo(state.get(SmelterBlock.FACING));
 
 		GuiLighting.enable();
 		GlStateManager.enableLighting();

@@ -1,9 +1,12 @@
 package com.raphydaphy.arcanemagic.util;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -18,6 +21,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -323,6 +327,26 @@ public class ArcaneMagicUtils
 		public String toString()
 		{
 			return id;
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void rotateTo(Direction dir)
+	{
+		if (dir == Direction.EAST)
+		{
+			GlStateManager.rotated(-90, 0, 1, 0);
+			GlStateManager.translated(0, 0, -1);
+		}
+		else if (dir == Direction.SOUTH)
+		{
+			GlStateManager.rotated(-180, 0, 1, 0);
+			GlStateManager.translated(-1, 0, -1);
+		}
+		else if (dir == Direction.WEST)
+		{
+			GlStateManager.rotated(-270, 0, 1, 0);
+			GlStateManager.translated(-1, 0, 0);
 		}
 	}
 }

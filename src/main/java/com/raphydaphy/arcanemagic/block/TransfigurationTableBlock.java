@@ -11,16 +11,11 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.StateFactory;
-import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -30,17 +25,13 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-import java.util.Objects;
-
-public class TransfigurationTableBlock extends WaterloggableBlockBase implements BlockEntityProvider
+public class TransfigurationTableBlock extends OrientableBlockBase implements BlockEntityProvider
 {
-	public static final DirectionProperty FACING;
 	private static final VoxelShape shape;
 
 	public TransfigurationTableBlock()
 	{
 		super(Block.Settings.copy(Blocks.OAK_PLANKS));
-		this.setDefaultState((this.getDefaultState()).with(FACING, Direction.NORTH));
 	}
 
 	public boolean useScepter(World world, BlockEntity blockEntity, ItemStack scepter, PlayerEntity player, Hand hand)
@@ -140,32 +131,6 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 	}
 
 	@Override
-	public BlockState getPlacementState(ItemPlacementContext ctx)
-	{
-		Direction facing = ctx.getPlayerHorizontalFacing().getOpposite();
-		return Objects.requireNonNull(super.getPlacementState(ctx)).with(FACING, facing);
-	}
-
-	@Override
-	public BlockState rotate(BlockState state, Rotation rotation)
-	{
-		return state.with(FACING, rotation.rotate(state.get(FACING)));
-	}
-
-	@Override
-	public BlockState mirror(BlockState state, Mirror mirror)
-	{
-		return state.rotate(mirror.getRotation(state.get(FACING)));
-	}
-
-	@Override
-	protected void appendProperties(StateFactory.Builder<Block, BlockState> map)
-	{
-		super.appendProperties(map);
-		map.with(FACING);
-	}
-
-	@Override
 	public void onBlockRemoved(BlockState oldState, World world, BlockPos pos, BlockState newState, boolean boolean_1)
 	{
 		if (ArcaneMagicUtils.handleTileEntityBroken(this, oldState, world, pos, newState))
@@ -211,7 +176,5 @@ public class TransfigurationTableBlock extends WaterloggableBlockBase implements
 		VoxelShape top = Block.createCuboidShape(3, 8, 3, 13, 10, 13);
 
 		shape = VoxelShapes.union(VoxelShapes.union(bottom, middle), top);
-
-		FACING = HorizontalFacingBlock.field_11177;
 	}
 }

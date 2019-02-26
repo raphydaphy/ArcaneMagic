@@ -33,9 +33,8 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SmelterBlock extends WaterloggableBlockBase implements BlockEntityProvider
+public class SmelterBlock extends OrientableBlockBase implements BlockEntityProvider
 {
-	public static final DirectionProperty FACING;
 	public static final EnumProperty<DoubleBlockHalf> HALF;
 
 	private static final Map<Direction, VoxelShape> bottom = new HashMap<>();
@@ -44,7 +43,7 @@ public class SmelterBlock extends WaterloggableBlockBase implements BlockEntityP
 	public SmelterBlock()
 	{
 		super(Settings.copy(Blocks.FURNACE));
-		this.setDefaultState((this.getDefaultState()).with(HALF, DoubleBlockHalf.LOWER).with(FACING, Direction.NORTH));
+		this.setDefaultState((this.getDefaultState()).with(HALF, DoubleBlockHalf.LOWER));
 	}
 
 	@Override
@@ -148,18 +147,6 @@ public class SmelterBlock extends WaterloggableBlockBase implements BlockEntityP
 	}
 
 	@Override
-	public BlockState rotate(BlockState state, Rotation rotation)
-	{
-		return state.with(FACING, rotation.rotate(state.get(FACING)));
-	}
-
-	@Override
-	public BlockState mirror(BlockState state, Mirror mirror)
-	{
-		return state.rotate(mirror.getRotation(state.get(FACING)));
-	}
-
-	@Override
 	@Environment(EnvType.CLIENT)
 	public long getRenderingSeed(BlockState blockState_1, BlockPos blockPos_1)
 	{
@@ -170,7 +157,7 @@ public class SmelterBlock extends WaterloggableBlockBase implements BlockEntityP
 	protected void appendProperties(StateFactory.Builder<Block, BlockState> map)
 	{
 		super.appendProperties(map);
-		map.with(HALF, FACING);
+		map.with(HALF);
 	}
 
 
@@ -245,7 +232,6 @@ public class SmelterBlock extends WaterloggableBlockBase implements BlockEntityP
 		top.put(Direction.SOUTH, topSouth);
 		top.put(Direction.WEST, topWest);
 
-		FACING = HorizontalFacingBlock.field_11177;
 		HALF = Properties.DOUBLE_BLOCK_HALF;
 	}
 }
