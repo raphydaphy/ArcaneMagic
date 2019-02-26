@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.block.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
@@ -10,6 +11,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.font.FontManager;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -290,6 +292,21 @@ public class ArcaneMagicUtils
 		float f2 = -MathHelper.cos(-pitch * 0.017453292F);
 		float f3 = MathHelper.sin(-pitch * 0.017453292F);
 		return new Vec3d((double)(f1 * f2), (double)f3, (double)(f * f2));
+	}
+
+	/**
+	 * Used by children of DoubleBlockBase to check if their BlockEntity is on the bottom or top
+	 */
+	public static boolean isBottomBlock(World world, BlockPos pos, Block match)
+	{
+		BlockState state = world.getBlockState(pos);
+		if (state.getBlock() == match)
+		{
+			return state.get(DoubleBlockBase.HALF) == DoubleBlockHalf.LOWER;
+		} else
+		{
+			return false;
+		}
 	}
 
 	public enum ForgeCrystal

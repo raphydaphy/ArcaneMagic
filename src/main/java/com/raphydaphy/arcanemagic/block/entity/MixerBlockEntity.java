@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.block.DoubleBlockBase;
-import com.raphydaphy.arcanemagic.block.SmelterBlock;
+import com.raphydaphy.arcanemagic.block.MixerBlock;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
@@ -9,24 +9,21 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
-import net.minecraft.inventory.BasicInventory;
+import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.cooking.BlastingRecipe;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
-import java.util.Optional;
-
-public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
+public class MixerBlockEntity extends DoubleBlockEntity implements SidedInventory, Tickable
 {
 	public long ticks = 0;
-	private final int[] slots = {0, 1, 2};
 
-	public SmelterBlockEntity()
+	private final int[] slots = { 0 };
+
+	public MixerBlockEntity()
 	{
-		super(ModRegistry.SMELTER_TE, 3);
+		super(ModRegistry.MIXER_TE, 1);
 	}
 
 	@Override
@@ -38,7 +35,7 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 		}
 		if (!setBottom)
 		{
-			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.SMELTER);
+			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.MIXER);
 			setBottom = true;
 		}
 	}
@@ -75,37 +72,7 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 	@Override
 	public boolean isValidInvStackBottom(int slot, ItemStack item)
 	{
-		if (slot == 9)
-		{
-			if (!getInvStack(1).isEmpty() || !getInvStack(2).isEmpty())
-			{
-				return false;
-			}
-		}
-		return getInvStack(slot).isEmpty() && this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(item), this.world).isPresent();
-	}
-
-	public boolean startSmelting(boolean simulate)
-	{
-		if (!getInvStack(0).isEmpty() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty())
-		{
-			Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
-			if (optionalRecipe.isPresent())
-			{
-				if (!simulate)
-				{
-					BlastingRecipe recipe = optionalRecipe.get();
-					if (!world.isClient)
-					{
-						setInvStack(0, ItemStack.EMPTY);
-						setInvStack(1, recipe.getOutput().copy());
-						setInvStack(2, recipe.getOutput().copy());
-					}
-				}
-				return true;
-			}
-		}
-		return false;
+		return getInvStack(slot).isEmpty() && !item.isEmpty() && item.getItem() == ModRegistry.SOUL_PENDANT;
 	}
 
 	@Override
@@ -117,12 +84,12 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 	@Override
 	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return bottom && getInvStack(1).isEmpty() && getInvStack(2).isEmpty() && slot == 0 && isValidInvStack(slot, stack);
+		return isValidInvStack(slot, stack);
 	}
 
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return bottom && slot != 0;
+		return true;
 	}
 }
