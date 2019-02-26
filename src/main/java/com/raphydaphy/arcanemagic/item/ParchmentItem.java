@@ -52,6 +52,7 @@ public class ParchmentItem extends Item
 			}
 		} else
 		{
+			// TODO: remove this once real parchments are added
 			if (!world.isClient)
 			{
 				stack.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, TestParchment.NAME);

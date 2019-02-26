@@ -27,5 +27,6 @@
 	"item.arcanemagic.emerald_crystal_leggings": "Emerald Infused Crystal Leggings",
 	"item.arcanemagic.emerald_crystal_boots": "Emerald Infused Crystal Boots",
   	"item.arcanemagic.iron_dagger": "Iron Dagger",
+  	"item.arcanemagic.liquified_soul_bucket": "Liquified Soul Bucket",
   	"parchment.arcanemagic.test": "This is a test parchment for the mod Arcane Magic! In theory, any mod can add their own parchments to the game to intergrate with the Arcane Magic lore system. Adding a parchment is easy - all you have to do is implement IParchment and register your class to the parchment registry. Send your thanks to B0undaryBreaker for making this system for the Rift version of the mod."
 }

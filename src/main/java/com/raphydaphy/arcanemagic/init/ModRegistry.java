@@ -3,16 +3,16 @@ package com.raphydaphy.arcanemagic.init;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.*;
 import com.raphydaphy.arcanemagic.block.entity.*;
+import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolMaterial;
-import net.minecraft.item.ToolMaterials;
+import net.minecraft.item.*;
 import net.minecraft.item.block.BlockItem;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -41,6 +41,11 @@ public class ModRegistry
 	public static SmelterBlock SMELTER = new SmelterBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
+	public static final LiquifiedSoulFluid FLOWING_LIQUIFIED_SOUL = new LiquifiedSoulFluid.Flowing();
+	public static final LiquifiedSoulFluid LIQUIFIED_SOUL = new LiquifiedSoulFluid.Still();
+
+	public static final ModFluidBlock LIQUIFIED_SOUL_BLOCK = new ModFluidBlock(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
+
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
 	public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);
 	public static ParchmentItem WRITTEN_PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.WRITTEN);
@@ -58,6 +63,7 @@ public class ModRegistry
 	public static CrystalArmorItem EMERALD_CRYSTAL_LEGGINGS = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.LEGS);
 	public static CrystalArmorItem EMERALD_CRYSTAL_BOOTS = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.FEET);
 	public static DaggerItem IRON_DAGGER = new DaggerItem(ToolMaterials.IRON, 3, -2.4f);
+	public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
 
 	public static final List<TransfigurationRecipe> TRANSFIGURATION_RECIPES = new ArrayList<>();
 
@@ -83,6 +89,13 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "smelter", new BlockItem(SMELTER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 
+		// Fluid Registration
+		Registry.register(Registry.FLUID,"liquified_soul", LIQUIFIED_SOUL);
+		Registry.register(Registry.FLUID,"flowing_liquified_soul", FLOWING_LIQUIFIED_SOUL);
+
+		// Fluid Block Registration
+		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul"), LIQUIFIED_SOUL_BLOCK);
+
 		// Item Registration
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "golden_scepter"), GOLDEN_SCEPTER);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "parchment"), PARCHMENT);
@@ -101,6 +114,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_leggings"), EMERALD_CRYSTAL_LEGGINGS);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "iron_dagger"), IRON_DAGGER);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
 
 		// Transfiguration Recipes
 		new TransfigurationRecipe(new ItemStack(SOUL_PENDANT), 20,
