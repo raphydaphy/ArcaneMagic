@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
@@ -73,7 +74,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 
 	private void renderItemPre(BlockState state)
 	{
-		ArcaneMagicUtils.rotateTo(state.get(SmelterBlock.FACING));
+		RenderUtils.rotateTo(state.get(SmelterBlock.FACING));
 
 		GuiLighting.enable();
 		GlStateManager.enableLighting();

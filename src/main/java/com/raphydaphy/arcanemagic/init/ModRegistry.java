@@ -36,6 +36,10 @@ public class ModRegistry
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
+	public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);
+	public static ParchmentItem WRITTEN_PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.WRITTEN);
+	public static ParchmentItem ANCIENT_PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.ANCIENT);
+	public static NotebookItem NOTEBOOK = new NotebookItem();
 	public static SoulStorageItem SOUL_PENDANT = new SoulStorageItem(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 	public static CrystalItem EMERALD_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.EMERALD);
 	public static CrystalItem DIAMOND_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.DIAMOND);
@@ -69,6 +73,10 @@ public class ModRegistry
 
 		// Item Registration
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "golden_scepter"), GOLDEN_SCEPTER);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "parchment"), PARCHMENT);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "written_parchment"), WRITTEN_PARCHMENT);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "ancient_parchment"), ANCIENT_PARCHMENT);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "notebook"), NOTEBOOK);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "soul_pendant"), SOUL_PENDANT);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal"), EMERALD_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "diamond_crystal"), DIAMOND_CRYSTAL);

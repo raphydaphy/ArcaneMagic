@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -36,7 +37,7 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 
 			if (state.getBlock() instanceof TransfigurationTableBlock)
 			{
-				ArcaneMagicUtils.rotateTo(state.get(TransfigurationTableBlock.FACING));
+				RenderUtils.rotateTo(state.get(TransfigurationTableBlock.FACING));
 				for (int slot = 0; slot < 9; slot++)
 				{
 					ItemStack stack = entity.getInvStack(slot);

@@ -6,4 +6,6 @@ public class ArcaneMagicConstants
 	public static final String SOUL_KEY = "soul_stored";
 	public static final int SOUL_PENDANT_MAX_SOUL = 200;
 	public static final int SOUL_METER_MAX = SOUL_PENDANT_MAX_SOUL + 20;
+
+	public static final String PARCHMENT_TYPE_KEY = "key.arcanemagic.parchment_type";
 }

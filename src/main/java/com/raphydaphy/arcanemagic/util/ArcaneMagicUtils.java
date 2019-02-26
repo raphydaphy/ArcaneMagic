@@ -10,10 +10,10 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.client.font.FontManager;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sortme.ItemScatterer;
 import net.minecraft.sound.SoundCategory;
@@ -25,7 +25,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
 import java.util.*;
 
 public class ArcaneMagicUtils
@@ -327,26 +326,6 @@ public class ArcaneMagicUtils
 		public String toString()
 		{
 			return id;
-		}
-	}
-
-	@Environment(EnvType.CLIENT)
-	public static void rotateTo(Direction dir)
-	{
-		if (dir == Direction.EAST)
-		{
-			GlStateManager.rotated(-90, 0, 1, 0);
-			GlStateManager.translated(0, 0, -1);
-		}
-		else if (dir == Direction.SOUTH)
-		{
-			GlStateManager.rotated(-180, 0, 1, 0);
-			GlStateManager.translated(-1, 0, -1);
-		}
-		else if (dir == Direction.WEST)
-		{
-			GlStateManager.rotated(-270, 0, 1, 0);
-			GlStateManager.translated(-1, 0, 0);
 		}
 	}
 }

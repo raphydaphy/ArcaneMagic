@@ -8,6 +8,10 @@
   	"block.arcanemagic.smelter": "Infernal Smelter",
   	"block.arcanemagic.transfiguration_table": "Transfiguration Table",
 	"item.arcanemagic.golden_scepter": "Golden Scepter",
+  	"item.arcanemagic.parchment": "Parchment",
+  	"item.arcanemagic.written_parchment": "Written Parchment",
+  	"item.arcanemagic.ancient_parchment": "Ancient Parchment",
+  	"item.arcanemagic.notebook": "Notebook",
   	"item.arcanemagic.soul_pendant": "Soul Pendant",
   	"item.arcanemagic.emerald_crystal": "Emerald Infused Crystal",
 	"item.arcanemagic.diamond_crystal": "Diamond Infused Crystal",
@@ -19,5 +23,6 @@
 	"item.arcanemagic.emerald_crystal_chestplate": "Emerald Infused Crystal Chestplate",
 	"item.arcanemagic.emerald_crystal_leggings": "Emerald Infused Crystal Leggings",
 	"item.arcanemagic.emerald_crystal_boots": "Emerald Infused Crystal Boots",
-  	"item.arcanemagic.iron_dagger": "Iron Dagger"
+  	"item.arcanemagic.iron_dagger": "Iron Dagger",
+  	"parchment.arcanemagic.test": "This is a test parchment for the mod Arcane Magic! In theory, any mod can add their own parchments to the game to intergrate with the Arcane Magic lore system. Adding a parchment is easy - all you have to do is implement IParchment and register your class to the parchment registry. Send your thanks to B0undaryBreaker for making this system for the Rift version of the mod."
 }
