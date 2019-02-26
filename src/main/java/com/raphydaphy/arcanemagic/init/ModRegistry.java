@@ -27,6 +27,7 @@ public class ModRegistry
 	public static BlockEntityType<AnalyzerBlockEntity> ANALYZER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "analyzer", BlockEntityType.Builder.create(AnalyzerBlockEntity::new).build(null));
 	public static BlockEntityType<CrystalInfuserBlockEntity> CRYSTAL_INFUSER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "crystal_infuser", BlockEntityType.Builder.create(CrystalInfuserBlockEntity::new).build(null));
 	public static BlockEntityType<MixerBlockEntity> MIXER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "mixer", BlockEntityType.Builder.create(MixerBlockEntity::new).build(null));
+	public static BlockEntityType<PipeBlockEntity> PIPE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pipe", BlockEntityType.Builder.create(PipeBlockEntity::new).build(null));
 	public static BlockEntityType<SmelterBlockEntity> SMELTER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "smelter", BlockEntityType.Builder.create(SmelterBlockEntity::new).build(null));
 	public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new).build(null));
 
@@ -34,6 +35,7 @@ public class ModRegistry
 	public static AnalyzerBlock ANALYZER = new AnalyzerBlock();
 	public static CrystalInfuserBlock CRYSTAL_INFUSER = new CrystalInfuserBlock();
 	public static MixerBlock MIXER = new MixerBlock();
+	public static PipeBlock PIPE = new PipeBlock();
 	public static SmelterBlock SMELTER = new SmelterBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 
@@ -64,6 +66,7 @@ public class ModRegistry
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "analyzer"), ANALYZER);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "crystal_infuser"), CRYSTAL_INFUSER);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "mixer"), MIXER);
+		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "pipe"), PIPE);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "smelter"), SMELTER);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table"), TRANSFIGURATION_TABLE);
 
@@ -72,6 +75,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "analyzer", new BlockItem(ANALYZER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "crystal_infuser", new BlockItem(CRYSTAL_INFUSER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "mixer", new BlockItem(MIXER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
+		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "pipe", new BlockItem(PIPE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "smelter", new BlockItem(SMELTER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 
