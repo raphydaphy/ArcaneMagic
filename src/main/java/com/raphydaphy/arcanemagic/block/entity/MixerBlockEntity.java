@@ -1,5 +1,7 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
@@ -13,17 +15,19 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.InventoryUtil;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.registry.Registry;
 
-public class MixerBlockEntity extends DoubleBlockEntity implements SidedInventory, Tickable, FluidContainer
+public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInventory, Tickable, FluidContainer
 {
 	private static final String WATER_KEY = "Water";
 	private static final String LIQUIFIED_SOUL_KEY = "LiquifiedSoul";
 	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
 
-	private FluidInstance water = FluidInstance.EMPTY;
-	private FluidInstance liquified_soul = FluidInstance.EMPTY;
+	private FluidInstance water = FluidInstance.EMPTY.copy();
+	private FluidInstance liquified_soul = FluidInstance.EMPTY.copy();
 	public long ticks = 0;
 
 	private final int[] slots = { 0 };
@@ -56,34 +60,40 @@ public class MixerBlockEntity extends DoubleBlockEntity implements SidedInventor
 			water = new FluidInstance((CompoundTag)tag.getTag(WATER_KEY));
 		} else
 		{
-			water = FluidInstance.EMPTY;
+			System.out.println("No tag found... setting water to empty");
+			water = FluidInstance.EMPTY.copy();
 		}
 		if (tag.containsKey(LIQUIFIED_SOUL_KEY))
 		{
 			liquified_soul = new FluidInstance((CompoundTag)tag.getTag(LIQUIFIED_SOUL_KEY));
 		} else
 		{
-			liquified_soul = FluidInstance.EMPTY;
+			System.out.println("No tag found... setting liquified soul to empty");
+			liquified_soul = FluidInstance.EMPTY.copy();
 		}
 	}
 
 	@Override
-	public CompoundTag toTag(CompoundTag tag)
+	public void writeContents(CompoundTag tag)
 	{
-		super.toTag(tag);
-		if (!water.isEmpty())
+		if (bottom)
 		{
-			CompoundTag waterTag = new CompoundTag();
-			water.toTag(waterTag);
-			tag.put(WATER_KEY, waterTag);
+			InventoryUtil.serialize(tag, contents);
+			if (!water.isEmpty())
+			{
+				CompoundTag waterTag = new CompoundTag();
+				waterTag.putString(FluidInstance.FLUID_KEY, Registry.FLUID.getId(water.getFluid()).toString());
+				waterTag.putInt(FluidInstance.AMOUNT_KEY, water.getAmount());
+				tag.put(WATER_KEY, waterTag);
+			}
+			if (!liquified_soul.isEmpty())
+			{
+				CompoundTag liquifiedSoulTag = new CompoundTag();
+				liquifiedSoulTag.putString(FluidInstance.FLUID_KEY, Registry.FLUID.getId(liquified_soul.getFluid()).toString());
+				liquifiedSoulTag.putInt(FluidInstance.AMOUNT_KEY, liquified_soul.getAmount());
+				tag.put(LIQUIFIED_SOUL_KEY, liquifiedSoulTag);
+			}
 		}
-		if (!liquified_soul.isEmpty())
-		{
-			CompoundTag liquifiedSoulTag = new CompoundTag();
-			liquified_soul.toTag(liquifiedSoulTag);
-			tag.put(LIQUIFIED_SOUL_KEY, liquifiedSoulTag);
-		}
-		return tag;
 	}
 
 	@Override
@@ -92,66 +102,75 @@ public class MixerBlockEntity extends DoubleBlockEntity implements SidedInventor
 		return MAX_FLUID;
 	}
 
-	public boolean canInsertFluidBottom(boolean bottom, Direction fromSide, Fluid fluid, int amount)
+	@Override
+	protected boolean canInsertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
-		return fluid == Fluids.WATER && !bottom && water.getAmount() + amount <= MAX_FLUID;
+		System.out.println(this.water.getAmount() + " droplets" );
+		return !bottom && fluid == Fluids.WATER && this.water.getAmount() + amount <= MAX_FLUID;
 	}
 
 	@Override
-	public boolean canInsertFluid(Direction fromSide, Fluid fluid, int amount)
-	{
-		if (!bottom)
-		{
-			DoubleBlockEntity bottomBlockEntity = getBottom();
-			if (bottomBlockEntity instanceof MixerBlockEntity)
-			{
-				return ((MixerBlockEntity) bottomBlockEntity).canInsertFluidBottom(bottom, fromSide, fluid, amount);
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public boolean canExtractFluid(Direction fromSide, Fluid fluid, int amount)
+	protected boolean canExtractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
 		return bottom && fluid == ModRegistry.LIQUIFIED_SOUL && this.liquified_soul.getAmount() + amount <= MAX_FLUID;
 	}
 
 	@Override
-	public void insertFluid(Direction fromSide, Fluid fluid, int amount)
+	protected void insertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
-
-	}
-
-	@Override
-	public void extractFluid(Direction fromSide, Fluid fluid, int amount)
-	{
-		if (!world.isClient && this.liquified_soul.getFluid() == fluid)
+		if (!world.isClient && fluid == Fluids.WATER && this.water.getAmount() + amount <= MAX_FLUID)
 		{
-			this.liquified_soul.subtractAmount(amount);
+			this.water.addAmount(amount);
 
-			if (this.liquified_soul.getAmount() == 0)
+			if (this.water.getFluid() != fluid)
 			{
-				this.liquified_soul = FluidInstance.EMPTY;
+				this.water.setFluid(fluid);
 			}
 			markDirty();
 		}
 	}
 
 	@Override
-	public void setFluid(Direction fromSide, FluidInstance instance)
+	protected void extractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
-		if (!world.isClient)
+		if (!world.isClient && this.liquified_soul.getFluid() == fluid && this.liquified_soul.getAmount() - amount >= 0)
 		{
-			this.liquified_soul = instance;
+			this.liquified_soul.subtractAmount(amount);
+
+			if (this.liquified_soul.getAmount() == 0)
+			{
+				this.liquified_soul = FluidInstance.EMPTY.copy();
+			}
 			markDirty();
 		}
 	}
 
 	@Override
-	public FluidInstance[] getFluids(Direction fromSide)
+	protected void setFluidImpl(boolean bottom, Direction fromSide, FluidInstance instance)
 	{
-		return new FluidInstance[]{liquified_soul};
+		if (!world.isClient)
+		{
+			if (bottom)
+			{
+				this.liquified_soul = instance;
+			} else
+			{
+				this.water = instance;
+			}
+			markDirty();
+		}
+	}
+
+	@Override
+	protected FluidInstance[] getFluidsImpl(boolean bottom, Direction fromSide)
+	{
+		if (bottom)
+		{
+			return new FluidInstance[] {liquified_soul};
+		} else
+		{
+			return new FluidInstance[] {water};
+		}
 	}
 
 	@Override

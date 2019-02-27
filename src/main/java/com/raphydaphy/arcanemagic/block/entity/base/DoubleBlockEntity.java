@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.block.entity;
+package com.raphydaphy.arcanemagic.block.entity.base;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
@@ -17,14 +17,14 @@ import net.minecraft.util.InventoryUtil;
 public abstract class DoubleBlockEntity extends InventoryBlockEntity implements SidedInventory
 {
 	public boolean bottom;
-	boolean setBottom = false;
+	protected boolean setBottom = false;
 
-	DoubleBlockEntity(BlockEntityType<?> type, int size)
+	protected DoubleBlockEntity(BlockEntityType<?> type, int size)
 	{
 		super(type, size);
 	}
 
-	DoubleBlockEntity getBottom()
+	protected DoubleBlockEntity getBottom()
 	{
 		if (bottom)
 		{

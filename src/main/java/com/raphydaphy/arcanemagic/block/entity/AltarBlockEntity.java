@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;

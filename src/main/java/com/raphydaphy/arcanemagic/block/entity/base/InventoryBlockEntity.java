@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.block.entity;
+package com.raphydaphy.arcanemagic.block.entity.base;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

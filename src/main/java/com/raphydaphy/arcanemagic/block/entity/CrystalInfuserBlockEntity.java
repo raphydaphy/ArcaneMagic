@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.CrystalItem;

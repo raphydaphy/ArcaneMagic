@@ -1,13 +1,10 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
-import com.raphydaphy.arcanemagic.block.DoubleBlockBase;
-import com.raphydaphy.arcanemagic.block.SmelterBlock;
+import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;

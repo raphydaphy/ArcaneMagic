@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.block.entity.InventoryBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.MinecraftClient;
