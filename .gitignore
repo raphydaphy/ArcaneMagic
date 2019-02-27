@@ -20,7 +20,7 @@ bin/
 .classpath
 .project
 
-# fabric
+# run directories
 
 run/
 run-server/
