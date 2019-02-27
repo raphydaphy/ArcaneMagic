@@ -1,7 +1,15 @@
-plugins {
-	id 'fabric-loom' version '0.2.0-SNAPSHOT'
-	id 'maven-publish'
+buildscript {
+	repositories {
+		jcenter()
+		maven { url = 'http://maven.modmuss50.me' }
+		gradlePluginPortal()
+	}
+	dependencies {
+		classpath 'net.fabricmc:fabric-loom:0.2.0-SNAPSHOT'
+	}
 }
+
+apply plugin: 'fabric-loom'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -14,8 +22,8 @@ minecraft {
 }
 
 repositories {
-    maven { url 'https://jitpack.io' }
-    maven { url "https://tehnut.info/maven/" }
+	maven { url 'https://jitpack.io' }
+	maven { url "https://tehnut.info/maven/" }
 }
 
 dependencies {
@@ -72,25 +80,4 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 jar {
 	from "LICENSE"
-}
-
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			// add all the jars that should be included when publishing to maven
-			artifact(jar) {
-				builtBy remapJar
-			}
-			artifact(sourcesJar) {
-				builtBy remapSourcesJar
-			}
-		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
-	}
 }
