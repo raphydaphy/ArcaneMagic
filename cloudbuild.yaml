@@ -4,5 +4,5 @@ steps:
   args: ['build']
 artifacts:
   objects:
-    location: "gs://arcane-magic"
+    location: "gs://arcane-magic/${COMMIT_SHA}"
     paths: [ 'build/libs/arcanemagic-1.0.0.jar', 'build/libs/arcanemagic-1.0.0-dev.jar', 'build/libs/arcanemagic-1.0.0-sources.jar', 'build/libs/arcanemagic-1.0.0-sources-dev.jar']
