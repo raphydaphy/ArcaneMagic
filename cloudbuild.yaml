@@ -1,10 +1,7 @@
 steps:
 - name: 'gcr.io/cloud-builders/gradle'
   env: ['GRADLE_USER_HOME=cache']
-  args: ['buildDependents', '--stacktrace']
-- name: 'gcr.io/cloud-builders/gradle'
-  env: ['GRADLE_USER_HOME=cache']
-  args: ['build', '--stacktrace']
+  args: ['build']
 artifacts:
   objects:
     location: "gs://arcane-magic"
