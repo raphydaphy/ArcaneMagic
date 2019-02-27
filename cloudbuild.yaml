@@ -2,6 +2,10 @@ steps:
 - name: 'java:8'
   env: ['GRADLE_USER_HOME=cache']
   entrypoint: 'bash'
+  args: ['-c', 'chmod +x gradlew']
+- name: 'java:8'
+  env: ['GRADLE_USER_HOME=cache']
+  entrypoint: 'bash'
   args: ['-c', './gradlew genSources']
 - name: 'gcr.io/cloud-builders/gradle'
   args: ['build', '--stacktrace']
