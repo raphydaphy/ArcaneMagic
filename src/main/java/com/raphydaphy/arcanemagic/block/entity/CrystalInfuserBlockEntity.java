@@ -7,7 +7,6 @@ import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.sun.javafx.geom.Vec3f;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.SidedInventory;
@@ -65,12 +64,10 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 
 					if (!getInvStack(1).isEmpty())
 					{
-						Vec3f particlePos = new Vec3f(
-								(float) (.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius),
-								(float) (1 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8),
-								(float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius)
-						);
-						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePos.x, pos.getY() + particlePos.y, pos.getZ() + particlePos.z,
+						float particlePosX = (float) (.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+						float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8);
+						float particlePosZ = (float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
 								0, 0, 0, 1, 0, 0, alpha, scale, 150);
 					}
 
@@ -78,11 +75,10 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 
 					if (!getInvStack(2).isEmpty())
 					{
-						Vec3f particlePos = new Vec3f(
-								(float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius),
-								(float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8),
-								(float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius));
-						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePos.x, pos.getY() + particlePos.y, pos.getZ() + particlePos.z,
+						float particlePosX = (float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+						float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8);
+						float particlePosZ = (float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
 								0, 0, 0, 1, 0.5f, 0, alpha, scale, 150);
 					}
 				}

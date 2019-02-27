@@ -2,9 +2,7 @@ package com.raphydaphy.arcanemagic.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
-import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.sun.javafx.geom.Vec3f;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -94,12 +92,10 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 					if (active)
 					{
 						float inverseRadius = (craftingTime) / 1000f + 3;
-						Vec3f pos = new Vec3f(
-								(float) (.5 + Math.cos((Math.PI / 180) * (ticks * 2)) / inverseRadius),
-								(float) (1 - Math.sin((Math.PI / 180) * (ticks * 4)) / 8),
-								(float) (.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius)
-						);
-						GlStateManager.translated(renderX + pos.x, renderY + pos.y, renderZ + pos.z);
+						float posX = (float) (.5 + Math.cos((Math.PI / 180) * (ticks * 2)) / inverseRadius);
+						float posY = (float) (1 - Math.sin((Math.PI / 180) * (ticks * 4)) / 8);
+						float posZ = (float) (.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius);
+						GlStateManager.translated(renderX + posX, renderY + posY, renderZ + posZ);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
 					} else
 					{
@@ -144,11 +140,10 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 					if (active)
 					{
 						float inverseRadius = (craftingTime) / 1000f + 3;
-						Vec3f pos = new Vec3f(
-								(float) (0.5 + Math.cos((Math.PI / 180) * (ticks * 2)) / inverseRadius),
-								(float) (1 - Math.sin((Math.PI / 180) * ((ticks + 45) * 4)) / 8),
-								(float) (0.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius));
-						GlStateManager.translated(renderX + pos.x, renderY + pos.y, renderZ + pos.z);
+						float posX = (float) (0.5 + Math.cos((Math.PI / 180) * (ticks * 2)) / inverseRadius);
+						float posY = (float) (1 - Math.sin((Math.PI / 180) * ((ticks + 45) * 4)) / 8);
+						float posZ = (float) (0.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius);
+						GlStateManager.translated(renderX + posX, renderY + posY, renderZ + posZ);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
 					} else
 					{
