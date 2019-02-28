@@ -16,9 +16,9 @@ import java.util.Random;
 
 public class ModEvents
 {
-	public static void onLivingEntityDeath(Entity entity, DamageSource src)
+	public static boolean shouldLivingEntityDropLoot(Entity entity, DamageSource src)
 	{
-		if (!entity.world.isClient && entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity)entity).getHealthMaximum() < 20)
+		if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity)entity).getHealthMaximum() < 20)
 		{
 			BlockPos pos = entity.getPos();
 			for (int x = -2; x < 2; x++)
@@ -34,19 +34,24 @@ public class ModEvents
 							ItemStack stack = ((AltarBlockEntity)blockEntity).getInvStack(0);
 							if (!stack.isEmpty() && stack.getItem() == ModRegistry.SOUL_PENDANT)
 							{
-								Random rand = new Random(System.currentTimeMillis());
-								stack.getOrCreateTag().putInt(ArcaneMagicConstants.SOUL_KEY, stack.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY) + rand.nextInt(3) + 4);
-								if (Objects.requireNonNull(stack.getTag()).getInt(ArcaneMagicConstants.SOUL_KEY) > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+								if (!entity.world.isClient)
 								{
-									stack.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
+									Random rand = new Random(System.currentTimeMillis());
+									stack.getOrCreateTag().putInt(ArcaneMagicConstants.SOUL_KEY, stack.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY) + rand.nextInt(3) + 4);
+									if (Objects.requireNonNull(stack.getTag()).getInt(ArcaneMagicConstants.SOUL_KEY) > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+									{
+										stack.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
+									}
+									entity.world.playSound(null, curPos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
 								}
-								entity.world.playSound(null, curPos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+								return true;
 							}
-							return;
+							return false;
 						}
 					}
 				}
 			}
 		}
+		return false;
 	}
 }
