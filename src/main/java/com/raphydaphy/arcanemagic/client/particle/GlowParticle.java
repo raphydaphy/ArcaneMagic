@@ -1,15 +1,15 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
-import net.minecraft.class_3999;
-import net.minecraft.class_4003;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.particle.ParticleTextureSheet;
+import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
 // Derived from Elucent's particle system in Embers
 // Source (no longer available)
-public class GlowParticle extends class_4003 implements ArcaneMagicParticle
+public class GlowParticle extends SpriteBillboardParticle implements ArcaneMagicParticle
 {
 	private static Identifier texture = new Identifier("arcanemagic:misc/glow_particle");
 
@@ -47,7 +47,7 @@ public class GlowParticle extends class_4003 implements ArcaneMagicParticle
 		this.initAlpha = alpha;
 		this.field_3839 = 2.0f * (float) Math.PI; // particleAngle
 		Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas().getSprite(texture.toString());
-		this.method_18141(sprite); // setParticleTexture
+		this.setSprite(sprite);
 	}
     /*
 	@Override
@@ -91,10 +91,10 @@ public class GlowParticle extends class_4003 implements ArcaneMagicParticle
 	}
 
 	@Override
-	public class_3999 method_18122()
+	public ParticleTextureSheet getTextureSheet()
 	{
 		// Similar to getFXLayer
 		// CUSTOM
-		return class_3999.field_17831;
+		return ParticleTextureSheet.CUSTOM;
 	}
 }

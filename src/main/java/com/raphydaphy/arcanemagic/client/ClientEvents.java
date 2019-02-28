@@ -2,16 +2,12 @@ package com.raphydaphy.arcanemagic.client;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -57,7 +53,7 @@ public class ClientEvents
 
 	private enum SoulMeterMode
 	{
-		EMPTY(0), GOLDEN_SCEPTER(1), GOLDEN_SCEPTER_WITH_PENDANT(2);
+		EMPTY(0), GOLDEN_SCEPTER(1), GOLDEN_SCEPTER_WITH_PENDANT(2), PURE_SCEPTER(3), PURE_SCEPTER_WITH_PENDANT(4);
 
 		public final int id;
 		SoulMeterMode(int id)
@@ -131,7 +127,10 @@ public class ClientEvents
 			held = mc.player.getOffHandStack();
 		}
 
-		if (held.getItem() == ModRegistry.GOLDEN_SCEPTER)
+		boolean goldenScepter = held.getItem() == ModRegistry.GOLDEN_SCEPTER;
+		boolean pureScepter = held.getItem() == ModRegistry.PURE_SCEPTER;
+
+		if (goldenScepter || pureScepter)
 		{
 			if (soulMeterActiveTicks < 0)
 			{
@@ -146,7 +145,13 @@ public class ClientEvents
 
 			if (lastSoulMeterMode == SoulMeterMode.EMPTY)
 			{
-				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+				if (pureScepter)
+				{
+					lastSoulMeterMode = SoulMeterMode.PURE_SCEPTER;
+				} else
+				{
+					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+				}
 			}
 
 
@@ -157,10 +162,22 @@ public class ClientEvents
 				pendant = ArcaneMagicUtils.findPendant(mc.player);
 				if (pendant != -1)
 				{
-					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+					if (pureScepter)
+					{
+						lastSoulMeterMode = SoulMeterMode.PURE_SCEPTER_WITH_PENDANT;
+					} else
+					{
+						lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+					}
 				} else
 				{
-					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+					if (pureScepter)
+					{
+						lastSoulMeterMode = SoulMeterMode.PURE_SCEPTER;
+					} else
+					{
+						lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+					}
 				}
 			}
 			boolean validPendant = false;
@@ -174,14 +191,26 @@ public class ClientEvents
 					{
 						currentSoul = currentSoul + pendantItem.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 					}
-					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+					if (pureScepter)
+					{
+						lastSoulMeterMode = SoulMeterMode.PURE_SCEPTER_WITH_PENDANT;
+					} else
+					{
+						lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER_WITH_PENDANT;
+					}
 					validPendant = true;
 				}
 			}
 
 			if (!validPendant)
 			{
-				lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+				if (pureScepter)
+				{
+					lastSoulMeterMode = SoulMeterMode.PURE_SCEPTER;
+				} else
+				{
+					lastSoulMeterMode = SoulMeterMode.GOLDEN_SCEPTER;
+				}
 			}
 
 			if (mc.world.getTime() != soulMeterLastIncrementTick && currentSoul != soulMeterAmount)

@@ -49,6 +49,7 @@ public class ModRegistry
 	public static final FluidBlockBase LIQUIFIED_SOUL_BLOCK = new FluidBlockBase(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
+	public static ScepterItem PURE_SCEPTER = new ScepterItem(50);
 	public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);
 	public static ParchmentItem WRITTEN_PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.WRITTEN);
 	public static ParchmentItem ANCIENT_PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.ANCIENT);
@@ -102,6 +103,7 @@ public class ModRegistry
 
 		// Item Registration
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "golden_scepter"), GOLDEN_SCEPTER);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "pure_scepter"), PURE_SCEPTER);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "parchment"), PARCHMENT);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "written_parchment"), WRITTEN_PARCHMENT);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "ancient_parchment"), ANCIENT_PARCHMENT);

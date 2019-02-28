@@ -3,9 +3,9 @@ package com.raphydaphy.arcanemagic.intergration;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
-import me.shedaniel.rei.api.IItemRegisterer;
-import me.shedaniel.rei.api.IRecipeHelper;
 import me.shedaniel.rei.api.IRecipePlugin;
+import me.shedaniel.rei.api.ItemRegisterer;
+import me.shedaniel.rei.api.RecipeHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -17,20 +17,20 @@ public class REIPlugin implements IRecipePlugin
 	static final Identifier TRANSFIGURATION = new Identifier(ArcaneMagic.DOMAIN, "plugins/transfiguration");
 
 	@Override
-	public void registerItems(IItemRegisterer itemRegisterer)
+	public void registerItems(ItemRegisterer itemRegisterer)
 	{
 
 	}
 
 	@Override
-	public void registerPluginCategories(IRecipeHelper recipeHelper)
+	public void registerPluginCategories(RecipeHelper recipeHelper)
 	{
 		recipeHelper.registerCategory(new InfusionCategory());
 		recipeHelper.registerCategory(new TransfigurationCategory());
 	}
 
 	@Override
-	public void registerRecipeDisplays(IRecipeHelper recipeHelper)
+	public void registerRecipeDisplays(RecipeHelper recipeHelper)
 	{
 		recipeHelper.registerDisplay(INFUSION, new InfusionDisplay(new ItemStack(Blocks.BOOKSHELF), new ItemStack(ModRegistry.TRANSFIGURATION_TABLE), 15));
 		recipeHelper.registerDisplay(INFUSION, new InfusionDisplay(new ItemStack(Items.EMERALD), new ItemStack(ModRegistry.EMERALD_CRYSTAL), 8));
@@ -47,7 +47,7 @@ public class REIPlugin implements IRecipePlugin
 	}
 
 	@Override
-	public void registerSpeedCraft(IRecipeHelper recipeHelper)
+	public void registerSpeedCraft(RecipeHelper recipeHelper)
 	{
 		recipeHelper.registerSpeedCraftButtonArea(INFUSION, null);
 		recipeHelper.registerSpeedCraftButtonArea(TRANSFIGURATION, null);

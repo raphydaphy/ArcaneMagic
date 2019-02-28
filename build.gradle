@@ -36,7 +36,7 @@ dependencies {
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
 
 	// Roughly Enough Items
-	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	modCompile "com.github.raphydaphy:RoughlyEnoughItems:${project.rei_version}"
 
 	// Plugin Loader
 	modCompile "info.tehnut.pluginloader:plugin-loader:${project.pluginloader_version}"

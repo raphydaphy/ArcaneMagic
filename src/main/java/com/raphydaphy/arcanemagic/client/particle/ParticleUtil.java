@@ -18,7 +18,7 @@ public class ParticleUtil
 	public static void spawnGlowParticle(World world, float posX, float posY, float posZ, float velocityX, float velocityY, float velocityZ, float red, float green, float blue, float alpha, float scale, int lifetime)
 	{
 		counter += random.nextInt(3);
-		if (counter % (MinecraftClient.getInstance().options.particles.method_18609() == 0 ? 1 : 2 * MinecraftClient.getInstance().options.particles.method_18609()) == 0)
+		if (counter % (MinecraftClient.getInstance().options.particles.getId() == 0 ? 1 : 2 * MinecraftClient.getInstance().options.particles.getId()) == 0)
 		{
 			ParticleRenderer.INSTANCE.add(new GlowParticle(world, posX, posY, posZ, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, lifetime));
 		}
