@@ -1,11 +1,8 @@
 steps:
 - name: 'gcr.io/cloud-builders/gradle'
   env: ['GRADLE_USER_HOME=cache']
-  args: ['buildDependents', '--stacktrace']
-- name: 'gcr.io/cloud-builders/gradle'
-  env: ['GRADLE_USER_HOME=cache']
-  args: ['build', '--stacktrace']
+  args: ['build']
 artifacts:
   objects:
-    location: "gs://mybucket"
+    location: "gs://arcane-magic/${COMMIT_SHA}"
     paths: [ 'build/libs/arcanemagic-1.0.0.jar', 'build/libs/arcanemagic-1.0.0-dev.jar', 'build/libs/arcanemagic-1.0.0-sources.jar', 'build/libs/arcanemagic-1.0.0-sources-dev.jar']
