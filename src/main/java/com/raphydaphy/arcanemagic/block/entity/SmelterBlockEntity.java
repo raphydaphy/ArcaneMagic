@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.cooking.BlastingRecipe;
+import net.minecraft.util.DefaultedList;
+import net.minecraft.util.InventoryUtil;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
@@ -18,8 +20,12 @@ import java.util.Optional;
 
 public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 {
-	public long ticks = 0;
+	private static final int TOTAL_SMELTING_TIME = 150;
+	private static final String SMELT_TIME_KEY = "SmeltTime";
 	private final int[] slots = {0, 1, 2};
+
+	public long ticks = 0;
+	private int smeltTime = 0;
 
 	public SmelterBlockEntity()
 	{
@@ -37,6 +43,32 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 		{
 			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.SMELTER);
 			setBottom = true;
+		}
+
+		if (smeltTime > 0)
+		{
+			smeltTime++;
+
+			if (!world.isClient && smeltTime % 10 == 0)
+			{
+				markDirty();
+			}
+
+			if (!world.isClient && smeltTime >= TOTAL_SMELTING_TIME)
+			{
+				Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
+
+				if (optionalRecipe.isPresent())
+				{
+					BlastingRecipe recipe = optionalRecipe.get();
+					setInvStack(0, ItemStack.EMPTY);
+					setInvStack(1, recipe.getOutput().copy());
+					setInvStack(2, recipe.getOutput().copy());
+				}
+
+				smeltTime = 0;
+				markDirty();
+			}
 		}
 	}
 
@@ -64,6 +96,31 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 	}
 
 	@Override
+	public void writeContents(CompoundTag tag)
+	{
+		super.writeContents(tag);
+		if (bottom)
+		{
+			tag.putInt(SMELT_TIME_KEY, smeltTime);
+		}
+	}
+
+	@Override
+	public void fromTag(CompoundTag tag)
+	{
+		super.fromTag(tag);
+		if (bottom)
+		{
+			smeltTime = tag.getInt(SMELT_TIME_KEY);
+		}
+	}
+
+	public int getSmeltTime()
+	{
+		return smeltTime;
+	}
+
+	@Override
 	public int getInvMaxStackAmount()
 	{
 		return 1;
@@ -84,19 +141,17 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 
 	public boolean startSmelting(boolean simulate)
 	{
-		if (!getInvStack(0).isEmpty() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty())
+		if (smeltTime <= 0 && !getInvStack(0).isEmpty() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty())
 		{
 			Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
 			if (optionalRecipe.isPresent())
 			{
 				if (!simulate)
 				{
-					BlastingRecipe recipe = optionalRecipe.get();
 					if (!world.isClient)
 					{
-						setInvStack(0, ItemStack.EMPTY);
-						setInvStack(1, recipe.getOutput().copy());
-						setInvStack(2, recipe.getOutput().copy());
+						smeltTime = 1;
+						markDirty();
 					}
 				}
 				return true;
