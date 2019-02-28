@@ -77,6 +77,7 @@ public class ParticleRenderer
 			GlStateManager.depthMask(false);
 
 			MinecraftClient.getInstance().getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX); // LOCATION_BLOCKS_TEXTURE
+
 			Tessellator tess = Tessellator.getInstance();
 			BufferBuilder buffer = tess.getBufferBuilder();
 

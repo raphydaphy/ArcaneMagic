@@ -40,49 +40,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		if (world.isClient)
 		{
 			ticksExisted++;
-
-			if (active && craftingTime > 8000 && craftingTime > 8150)
-			{
-				ParticleUtil.spawnGlowParticle(world, pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
-						0, 0, 0, 1, 1, 1, 0.1f, 0.5f, 100);
-
-			} else
-			{
-				if (active && craftingTime > 7500)
-				{
-					float size = (craftingTime - 7500) / 1000f;
-					ParticleUtil.spawnGlowParticle(world,pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
-							0, 0, 0, 1, 1, 1, 0.1f, size, 100);
-				}
-
-				if (active)
-				{
-					float inverseRadius = (craftingTime / 2f) / 1000f + 3;
-					long renderTicks = ticksExisted + 400;
-					float alpha = 0.2f;
-					float scale = 0.1f;
-
-					if (!getInvStack(1).isEmpty())
-					{
-						float particlePosX = (float) (.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
-						float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8);
-						float particlePosZ = (float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
-						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
-								0, 0, 0, 1, 0, 0, alpha, scale, 150);
-					}
-
-					renderTicks += 90;
-
-					if (!getInvStack(2).isEmpty())
-					{
-						float particlePosX = (float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
-						float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8);
-						float particlePosZ = (float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
-						ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
-								0, 0, 0, 1, 0.5f, 0, alpha, scale, 150);
-					}
-				}
-			}
+			doParticles();
 		} else {
 			if (craftingTime >= 8250 && active)
 			{
@@ -101,6 +59,52 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		if (active)
 		{
 			craftingTime++;
+		}
+	}
+
+	private void doParticles()
+	{
+		if (active && craftingTime > 8000 && craftingTime > 8150)
+		{
+			ParticleUtil.spawnGlowParticle(world, pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
+					0, 0, 0, 1, 1, 1, 0.1f, 0.5f, 100);
+
+		} else
+		{
+			if (active && craftingTime > 7500)
+			{
+				float size = (craftingTime - 7500) / 1000f;
+				ParticleUtil.spawnGlowParticle(world,pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
+						0, 0, 0, 1, 1, 1, 0.1f, size, 100);
+			}
+
+			if (active)
+			{
+				float inverseRadius = (craftingTime / 2f) / 1000f + 3;
+				long renderTicks = ticksExisted + 400;
+				float alpha = 0.2f;
+				float scale = 0.1f;
+
+				if (!getInvStack(1).isEmpty())
+				{
+					float particlePosX = (float) (.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+					float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8);
+					float particlePosZ = (float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+					ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
+							0, 0, 0, 1, 0, 0, alpha, scale, 150);
+				}
+
+				renderTicks += 90;
+
+				if (!getInvStack(2).isEmpty())
+				{
+					float particlePosX = (float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+					float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8);
+					float particlePosZ = (float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
+					ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
+							0, 0, 0, 1, 0.5f, 0, alpha, scale, 150);
+				}
+			}
 		}
 	}
 

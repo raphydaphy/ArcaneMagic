@@ -17,6 +17,9 @@ import net.minecraft.util.Identifier;
 
 public class ArcaneMagicClient implements ClientModInitializer
 {
+	public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
+	public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
+
 	@Override
 	public void onInitializeClient()
 	{
@@ -31,7 +34,8 @@ public class ArcaneMagicClient implements ClientModInitializer
 		ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
 
 		ClientSpriteRegistryCallback.EVENT.register((atlaxTexture, registry) -> {
-			registry.register(new Identifier(ArcaneMagic.DOMAIN, "misc/glow_particle"));
+			registry.register(GLOW_PARTICLE_TEXTURE);
+			registry.register(SMOKE_PARTICLE_TEXTURE);
 		});
 
 		ClientTickCallback.EVENT.register((client) -> {

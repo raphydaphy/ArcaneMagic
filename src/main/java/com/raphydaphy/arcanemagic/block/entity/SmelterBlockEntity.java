@@ -1,11 +1,14 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
+import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
+import net.minecraft.client.particle.Particle;
 import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -45,30 +48,50 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 			setBottom = true;
 		}
 
-		if (smeltTime > 0)
+		if (world.isClient && bottom)
+		{
+			doParticles();
+		}
+		if (bottom && smeltTime > 0)
 		{
 			smeltTime++;
 
-			if (!world.isClient && smeltTime % 10 == 0)
+			if (world.isClient)
 			{
-				markDirty();
-			}
-
-			if (!world.isClient && smeltTime >= TOTAL_SMELTING_TIME)
+			} else
 			{
-				Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
-
-				if (optionalRecipe.isPresent())
+				if (smeltTime % 10 == 0)
 				{
-					BlastingRecipe recipe = optionalRecipe.get();
-					setInvStack(0, ItemStack.EMPTY);
-					setInvStack(1, recipe.getOutput().copy());
-					setInvStack(2, recipe.getOutput().copy());
+					markDirty();
 				}
 
-				smeltTime = 0;
-				markDirty();
+				if (smeltTime >= TOTAL_SMELTING_TIME)
+				{
+					Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
+
+					if (optionalRecipe.isPresent())
+					{
+						BlastingRecipe recipe = optionalRecipe.get();
+						setInvStack(0, ItemStack.EMPTY);
+						setInvStack(1, recipe.getOutput().copy());
+						setInvStack(2, recipe.getOutput().copy());
+					}
+
+					smeltTime = 0;
+					markDirty();
+				}
 			}
+		}
+	}
+
+	private void doParticles()
+	{
+		float inverseSpread = 100;
+		for (int i = 0; i < 2; i++)
+		{
+			ParticleUtil.spawnSmokeParticle(world, pos.getX() + 0.4f + ParticleUtil.random.nextFloat() / 5f, pos.getY() + 1.6f, pos.getZ() + 0.55f + ParticleUtil.random.nextFloat() / 5f,
+					(float) ParticleUtil.random.nextGaussian() / inverseSpread, 0.05f + ParticleUtil.random.nextFloat() * 0 / 20f, (float) ParticleUtil.random.nextGaussian() / inverseSpread,
+					1, 1, 1, 1,0.3f, 250);
 		}
 	}
 
