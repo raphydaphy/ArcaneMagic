@@ -233,9 +233,9 @@ public class ScepterItem extends SoulStorageItem
 		if (!world.isClient && stack.getTag() != null)
 		{
 			Entity mousedEntity = world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
-			if (mousedEntity != null)
+			if (mousedEntity instanceof LivingEntity)
 			{
-				mousedEntity.kill();
+				mousedEntity.damage(ModRegistry.DRAINED_DAMAGE, ((LivingEntity)mousedEntity).getHealthMaximum());
 			}
 			stack.getTag().remove(DRAIN_TARGET);
 			Random rand = new Random(System.nanoTime());

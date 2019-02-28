@@ -18,7 +18,7 @@ public class ModEvents
 {
 	public static void onLivingEntityDeath(Entity entity, DamageSource src)
 	{
-		if (!entity.world.isClient && entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity)entity).getHealth() < 20)
+		if (!entity.world.isClient && entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity)entity).getHealthMaximum() < 20)
 		{
 			BlockPos pos = entity.getPos();
 			for (int x = -2; x < 2; x++)
