@@ -61,6 +61,7 @@ public class ModRegistry
 	public static CrystalItem LAPIS_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.LAPIS);
 	public static CrystalItem REDSTONE_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.REDSTONE);
 	public static CrystalItem COAL_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.COAL);
+	public static Item PURE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static CrystalArmorItem EMERALD_CRYSTAL_HELMET = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.HEAD);
 	public static CrystalArmorItem EMERALD_CRYSTAL_CHESTPLATE = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.CHEST);
 	public static CrystalArmorItem EMERALD_CRYSTAL_LEGGINGS = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.LEGS);
@@ -115,6 +116,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "lapis_crystal"), LAPIS_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal"), REDSTONE_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "coal_crystal"), COAL_CRYSTAL);
+		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "pure_crystal"), PURE_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_helmet"), EMERALD_CRYSTAL_HELMET);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_chestplate"), EMERALD_CRYSTAL_CHESTPLATE);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_leggings"), EMERALD_CRYSTAL_LEGGINGS);
