@@ -51,9 +51,7 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 		if (world.isClient)
 		{
 			ticks++;
-		}
-
-		if (!world.isClient && bottom && world.getTime() % 10 == 0)
+		} else if (bottom && world.getTime() % 10 == 0 && (world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.add(0, 1, 0))))
 		{
 			ItemStack pendant = getInvStack(0);
 			if (!pendant.isEmpty() && pendant.getItem() == ModRegistry.SOUL_PENDANT)
@@ -65,7 +63,6 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 					{
 						water.subtractAmount(WATER_USE);
 						liquified_soul.addAmount(LIQUIFIED_SOUL_PRODUCTION);
-						System.out.println("added some liquid soul to have " + liquified_soul.getAmount());
 						pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - 1);
 						markDirty();
 					}

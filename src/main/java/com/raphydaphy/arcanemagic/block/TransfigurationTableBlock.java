@@ -58,8 +58,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 				{
 					if (!world.isClient)
 					{
-						// TODO: keepPlaceholders based on redstone signal
-						((TransfigurationTableBlockEntity) blockEntity).clearRecipe(false);
+						((TransfigurationTableBlockEntity) blockEntity).clearRecipe(world.isReceivingRedstonePower(blockEntity.getPos()));
 						ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, match.getOutput());
 						result.setVelocity(0, 0, 0);
 						world.spawnEntity(result);
