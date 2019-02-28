@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
@@ -24,10 +25,12 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 {
 	private static final String WATER_KEY = "Water";
 	private static final String LIQUIFIED_SOUL_KEY = "LiquifiedSoul";
+	private static final int WATER_USE = DropletValues.NUGGET;
+	private static final int LIQUIFIED_SOUL_PRODUCTION = DropletValues.NUGGET + 5;
 	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
 
-	private FluidInstance water = FluidInstance.EMPTY.copy();
-	private FluidInstance liquified_soul = FluidInstance.EMPTY.copy();
+	private FluidInstance water = new FluidInstance(Fluids.WATER);
+	private FluidInstance liquified_soul = new FluidInstance(ModRegistry.LIQUIFIED_SOUL);
 	public long ticks = 0;
 
 	private final int[] slots = { 0 };
@@ -40,14 +43,34 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	@Override
 	public void tick()
 	{
-		if (world.isClient)
-		{
-			ticks++;
-		}
 		if (!setBottom)
 		{
 			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.MIXER);
 			setBottom = true;
+		}
+		if (world.isClient)
+		{
+			ticks++;
+		}
+
+		if (!world.isClient && bottom && world.getTime() % 10 == 0)
+		{
+			ItemStack pendant = getInvStack(0);
+			if (!pendant.isEmpty() && pendant.getItem() == ModRegistry.SOUL_PENDANT)
+			{
+				if (liquified_soul.getAmount() + LIQUIFIED_SOUL_PRODUCTION <= MAX_FLUID && water.getAmount() >= WATER_USE && pendant.getTag() != null )
+				{
+					int pendantSoul = pendant.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+					if (pendantSoul >= 1)
+					{
+						water.subtractAmount(WATER_USE);
+						liquified_soul.addAmount(LIQUIFIED_SOUL_PRODUCTION);
+						System.out.println("added some liquid soul to have " + liquified_soul.getAmount());
+						pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - 1);
+						markDirty();
+					}
+				}
+			}
 		}
 	}
 
@@ -60,16 +83,14 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 			water = new FluidInstance((CompoundTag)tag.getTag(WATER_KEY));
 		} else
 		{
-			System.out.println("No tag found... setting water to empty");
-			water = FluidInstance.EMPTY.copy();
+			water = new FluidInstance(Fluids.WATER);
 		}
 		if (tag.containsKey(LIQUIFIED_SOUL_KEY))
 		{
 			liquified_soul = new FluidInstance((CompoundTag)tag.getTag(LIQUIFIED_SOUL_KEY));
 		} else
 		{
-			System.out.println("No tag found... setting liquified soul to empty");
-			liquified_soul = FluidInstance.EMPTY.copy();
+			liquified_soul = new FluidInstance(ModRegistry.LIQUIFIED_SOUL);
 		}
 	}
 
@@ -105,14 +126,13 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	@Override
 	protected boolean canInsertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
-		System.out.println(this.water.getAmount() + " droplets" );
 		return !bottom && fluid == Fluids.WATER && this.water.getAmount() + amount <= MAX_FLUID;
 	}
 
 	@Override
 	protected boolean canExtractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
-		return bottom && fluid == ModRegistry.LIQUIFIED_SOUL && this.liquified_soul.getAmount() + amount <= MAX_FLUID;
+		return bottom && fluid == ModRegistry.LIQUIFIED_SOUL && this.liquified_soul.getAmount() - amount >= 0;
 	}
 
 	@Override
@@ -136,11 +156,6 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 		if (!world.isClient && this.liquified_soul.getFluid() == fluid && this.liquified_soul.getAmount() - amount >= 0)
 		{
 			this.liquified_soul.subtractAmount(amount);
-
-			if (this.liquified_soul.getAmount() == 0)
-			{
-				this.liquified_soul = FluidInstance.EMPTY.copy();
-			}
 			markDirty();
 		}
 	}
