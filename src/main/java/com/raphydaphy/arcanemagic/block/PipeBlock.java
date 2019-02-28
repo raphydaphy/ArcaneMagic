@@ -1,6 +1,8 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.PipeBlockEntity;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.VerticalEntityPosition;
@@ -14,7 +16,7 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 
 	public PipeBlock()
 	{
-		super(Settings.copy(Blocks.STONE));
+		super(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6f).build());
 	}
 
 	@Override

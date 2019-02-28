@@ -1,19 +1,19 @@
 {
-	"id": "arcanemagic",
-	"name": "Arcane Magic",
-	"description": "Bend the souls of others to your will",
-	"version": "${version}",
-	"side": "universal",
-	"initializers": [
-		"com.raphydaphy.arcanemagic.ArcaneMagic",
-	  	"com.raphydaphy.arcanemagic.ArcaneMagicClient"
-	],
-	"requires": {
-		"fabric": "*",
-	  	"silk": "*"
-	},
-	"mixins": {
-		"client": "arcanemagic.client.json",
-		"common": "arcanemagic.common.json"
-	}
+  "id": "arcanemagic",
+  "name": "Arcane Magic",
+  "description": "Bend the souls of others to your will",
+  "version": "${version}",
+  "side": "universal",
+  "initializers": [
+	"com.raphydaphy.arcanemagic.ArcaneMagic",
+	"com.raphydaphy.arcanemagic.ArcaneMagicClient"
+  ],
+  "requires": {
+	"fabric": "*",
+	"silk": "*"
+  },
+  "mixins": {
+	"client": "arcanemagic.client.json",
+	"common": "arcanemagic.common.json"
+  }
 }

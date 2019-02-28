@@ -1,7 +1,9 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.VerticalEntityPosition;
@@ -20,7 +22,7 @@ public class AltarBlock extends WaterloggableBlockBase implements BlockEntityPro
 
 	public AltarBlock()
 	{
-		super(Settings.copy(Blocks.FURNACE));
+		super(FabricBlockSettings.of(Material.STONE).strength(3.5f, 3.5f).build());
 	}
 
 	@Override

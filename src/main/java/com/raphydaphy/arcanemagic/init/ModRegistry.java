@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.init;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.*;
+import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
@@ -45,7 +46,7 @@ public class ModRegistry
 	public static final LiquifiedSoulFluid FLOWING_LIQUIFIED_SOUL = new LiquifiedSoulFluid.Flowing();
 	public static final LiquifiedSoulFluid LIQUIFIED_SOUL = new LiquifiedSoulFluid.Still();
 
-	public static final ModFluidBlock LIQUIFIED_SOUL_BLOCK = new ModFluidBlock(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
+	public static final FluidBlockBase LIQUIFIED_SOUL_BLOCK = new FluidBlockBase(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
 	public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);

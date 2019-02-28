@@ -1,11 +1,14 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -20,7 +23,7 @@ public class CrystalInfuserBlock extends WaterloggableBlockBase implements Block
 
 	public CrystalInfuserBlock()
 	{
-		super(Settings.copy(Blocks.OAK_PLANKS));
+		super(FabricBlockSettings.of(Material.WOOD).strength(2f, 3f).sounds(BlockSoundGroup.WOOD).build());
 	}
 
 	@Override

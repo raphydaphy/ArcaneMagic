@@ -1,17 +1,20 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.DefaultedList;
@@ -31,7 +34,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 
 	public TransfigurationTableBlock()
 	{
-		super(Block.Settings.copy(Blocks.OAK_PLANKS));
+		super(FabricBlockSettings.of(Material.WOOD).strength(2f, 3f).sounds(BlockSoundGroup.WOOD).build());
 	}
 
 	public boolean useScepter(World world, BlockEntity blockEntity, ItemStack scepter, PlayerEntity player, Hand hand)

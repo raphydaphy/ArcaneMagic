@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.block;
+package com.raphydaphy.arcanemagic.block.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -16,15 +16,10 @@ public class OrientableBlockBase extends WaterloggableBlockBase
 {
 	public static final DirectionProperty FACING;
 
-	OrientableBlockBase(Settings settings)
+	protected OrientableBlockBase(Settings settings)
 	{
 		super(settings);
 		this.setDefaultState((this.getDefaultState()).with(FACING, Direction.NORTH));
-	}
-
-	static
-	{
-		FACING = HorizontalFacingBlock.field_11177;
 	}
 
 	@Override
@@ -51,5 +46,10 @@ public class OrientableBlockBase extends WaterloggableBlockBase
 	{
 		super.appendProperties(map);
 		map.with(FACING);
+	}
+
+	static
+	{
+		FACING = HorizontalFacingBlock.field_11177;
 	}
 }

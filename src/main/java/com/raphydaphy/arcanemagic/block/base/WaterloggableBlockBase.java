@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.block;
+package com.raphydaphy.arcanemagic.block.base;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,9 +15,9 @@ import net.minecraft.world.IWorld;
 
 public class WaterloggableBlockBase extends Block implements Waterloggable
 {
-	private static final BooleanProperty WATERLOGGED;
+	public static final BooleanProperty WATERLOGGED;
 
-	WaterloggableBlockBase(Settings settings)
+	protected WaterloggableBlockBase(Settings settings)
 	{
 		super(settings);
 		this.setDefaultState((this.stateFactory.getDefaultState()).with(WATERLOGGED, false));

@@ -1,12 +1,12 @@
-package com.raphydaphy.arcanemagic.block;
+package com.raphydaphy.arcanemagic.block.base;
 
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.FluidBlock;
 import net.minecraft.fluid.BaseFluid;
 
-public class ModFluidBlock extends FluidBlock
+public class FluidBlockBase extends FluidBlock
 {
-	public ModFluidBlock(BaseFluid fluid, FabricBlockSettings settings)
+	public FluidBlockBase(BaseFluid fluid, FabricBlockSettings settings)
 	{
 		super(fluid, settings.build());
 	}

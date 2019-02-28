@@ -1,12 +1,14 @@
 {
-	"required": true,
-	"package": "com.raphydaphy.arcanemagic.core",
-	"compatibilityLevel": "JAVA_8",
-	"mixins": [
-	  	"LivingEntityMixin",
-	  	"LivingEntityHooks"
-	],
-	"injectors": {
-		"defaultRequire": 1
-	}
+  "required": true,
+  "package": "com.raphydaphy.arcanemagic.core",
+  "compatibilityLevel": "JAVA_8",
+  "minVersion": "0.7.11-SNAPSHOT",
+  "mixins": [
+	"LivingEntityMixin",
+	"LivingEntityHooks",
+	"BucketItemMixin"
+  ],
+  "injectors": {
+	"defaultRequire": 1
+  }
 }

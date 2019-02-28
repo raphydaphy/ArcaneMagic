@@ -1,23 +1,23 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.MixerBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.util.ActionType;
+import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -32,14 +32,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 
 	public MixerBlock()
 	{
-		super(Settings.copy(Blocks.FURNACE));
-	}
-
-	// Waterlogging interferes with normal bucket interaction
-	@Override
-	public boolean canFillWithFluid(BlockView view, BlockPos pos, BlockState state, Fluid fluid)
-	{
-		return false;
+		super(FabricBlockSettings.of(Material.STONE).strength(3.5f, 3.5f).build());
 	}
 
 	@Override

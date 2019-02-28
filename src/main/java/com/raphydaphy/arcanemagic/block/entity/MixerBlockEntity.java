@@ -21,7 +21,7 @@ import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.registry.Registry;
 
-public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInventory, Tickable, FluidContainer
+public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInventory, Tickable
 {
 	private static final String WATER_KEY = "Water";
 	private static final String LIQUIFIED_SOUL_KEY = "LiquifiedSoul";

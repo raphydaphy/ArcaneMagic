@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.block;
+package com.raphydaphy.arcanemagic.block.base;
 
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.api.EnvType;
@@ -26,7 +26,7 @@ public class DoubleBlockBase extends OrientableBlockBase
 {
 	public static final EnumProperty<DoubleBlockHalf> HALF;
 
-	DoubleBlockBase(Settings settings)
+	protected DoubleBlockBase(Settings settings)
 	{
 		super(settings);
 		this.setDefaultState((this.getDefaultState()).with(HALF, DoubleBlockHalf.LOWER));
