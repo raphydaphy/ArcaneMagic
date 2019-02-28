@@ -100,15 +100,13 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 			if (!water.isEmpty())
 			{
 				CompoundTag waterTag = new CompoundTag();
-				waterTag.putString(FluidInstance.FLUID_KEY, Registry.FLUID.getId(water.getFluid()).toString());
-				waterTag.putInt(FluidInstance.AMOUNT_KEY, water.getAmount());
+				water.toTag(waterTag);
 				tag.put(WATER_KEY, waterTag);
 			}
 			if (!liquified_soul.isEmpty())
 			{
 				CompoundTag liquifiedSoulTag = new CompoundTag();
-				liquifiedSoulTag.putString(FluidInstance.FLUID_KEY, Registry.FLUID.getId(liquified_soul.getFluid()).toString());
-				liquifiedSoulTag.putInt(FluidInstance.AMOUNT_KEY, liquified_soul.getAmount());
+				liquified_soul.toTag(liquifiedSoulTag);
 				tag.put(LIQUIFIED_SOUL_KEY, liquifiedSoulTag);
 			}
 		}

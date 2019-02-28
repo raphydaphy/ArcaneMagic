@@ -10,6 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Tickable;
@@ -43,6 +44,32 @@ public class PumpBlockEntity extends BlockEntity implements Tickable, FluidConta
 	public boolean canExtractFluid(Direction direction, Fluid fluid, int amount)
 	{
 		return fluid == ModRegistry.LIQUIFIED_SOUL && this.water.getAmount() - amount >= 0;
+	}
+
+	@Override
+	public void fromTag(CompoundTag tag)
+	{
+		super.fromTag(tag);
+		if (tag.containsKey(WATER_KEY))
+		{
+			water = new FluidInstance((CompoundTag)tag.getTag(WATER_KEY));
+		} else
+		{
+			water = new FluidInstance(Fluids.WATER);
+		}
+	}
+
+	@Override
+	public CompoundTag toTag(CompoundTag tag)
+	{
+		super.toTag(tag);
+		if (!water.isEmpty())
+		{
+			CompoundTag waterTag = new CompoundTag();
+			water.toTag(waterTag);
+			tag.put(WATER_KEY, waterTag);
+		}
+		return tag;
 	}
 
 	@Override
