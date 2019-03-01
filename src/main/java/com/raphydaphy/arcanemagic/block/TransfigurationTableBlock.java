@@ -5,7 +5,6 @@ import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
-import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -57,7 +56,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 
 			for (TransfigurationRecipe recipe : ModRegistry.TRANSFIGURATION_RECIPES)
 			{
-				if (recipe.matches(inv))
+				if (recipe.matchesItems(inv))
 				{
 					match = recipe;
 					break;

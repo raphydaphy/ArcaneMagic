@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.api;
+package com.raphydaphy.arcanemagic.api.parchment;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;

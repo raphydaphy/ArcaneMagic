@@ -1,74 +1,50 @@
 package com.raphydaphy.arcanemagic.recipe;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.init.ModRegistry;
-import net.minecraft.block.Blocks;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.DefaultedList;
 
-public class TransfigurationRecipe
+public interface TransfigurationRecipe extends Recipe<Inventory>
 {
-	private final ItemStack output;
-	private final int soul;
-	private final ItemStack[] recipe;
+	RecipeType TRANSFIGURATION = RecipeType.register(ArcaneMagic.PREFIX + "transfiguration");
 
-	public TransfigurationRecipe(ItemStack output, int soul, ItemStack... recipeIn)
+	/**
+	 * @return A list of the ingredients needed for the recipe
+	 */
+	DefaultedList<Ingredient> getIngredients();
+
+	/**
+	 * @return The amount of soul needed to craft the item
+	 */
+	int getSoul();
+
+	/**
+	 * @return True if the layout of the items does not affect the output
+	 */
+	boolean isShapeless();
+
+	@Override
+	default boolean isIgnoredInRecipeBook()
 	{
-		ItemStack[] safeRecipe = new ItemStack[9];
-
-		for (int i = 0; i < 9; i++)
-		{
-			if (i < recipeIn.length && recipeIn[i] != null)
-			{
-				safeRecipe[i] = recipeIn[i];
-			} else
-			{
-				safeRecipe[i] = ItemStack.EMPTY;
-			}
-		}
-
-		this.output = output == null ? ItemStack.EMPTY : output;
-		this.soul = soul;
-		this.recipe = safeRecipe;
-
-		if (output != null && !output.isEmpty())
-		{
-			ModRegistry.TRANSFIGURATION_RECIPES.add(this);
-		} else
-		{
-			ArcaneMagic.getLogger().error("Tried to register transfiguration recipe with empty output!");
-		}
-	}
-
-	public boolean matches(DefaultedList<ItemStack> table)
-	{
-		for (int item = 0; item < 9; item++)
-		{
-			if (!table.get(item).isEqualIgnoreDurability(recipe[item]))
-			{
-				if (recipe[item].isEmpty() && (table.get(item).isEmpty() || table.get(item).getItem() == Blocks.GLASS_PANE.getItem()))
-				{
-					continue;
-				}
-				return false;
-			}
-		}
-
 		return true;
 	}
 
-	public int getSoul()
+	@Override
+	default RecipeType<?> getType()
 	{
-		return soul;
+		return TRANSFIGURATION;
 	}
 
-	public ItemStack getOutput()
+	/**
+	 * Transfiguration Recipes are not crafted using this method since they require soul
+	 */
+	@Override
+	default ItemStack craft(Inventory var1)
 	{
-		return output.copy();
-	}
-
-	public ItemStack[] getInputs()
-	{
-		return recipe.clone();
+		return ItemStack.EMPTY;
 	}
 }

@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.IParchment;
+import com.raphydaphy.arcanemagic.api.parchment.IParchment;
 import com.raphydaphy.arcanemagic.client.screen.ParchmentScreen;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;

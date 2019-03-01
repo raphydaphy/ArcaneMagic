@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.intergration;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.IRecipePlugin;
 import me.shedaniel.rei.api.ItemRegisterer;
 import me.shedaniel.rei.api.RecipeHelper;

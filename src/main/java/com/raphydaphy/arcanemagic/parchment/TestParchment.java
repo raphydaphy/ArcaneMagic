@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.parchment;
 
-import com.raphydaphy.arcanemagic.api.IParchment;
+import com.raphydaphy.arcanemagic.api.parchment.IParchment;
 
 public class TestParchment implements IParchment
 {

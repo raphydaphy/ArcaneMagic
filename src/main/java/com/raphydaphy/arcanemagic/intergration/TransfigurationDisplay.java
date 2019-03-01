@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.intergration;
 
-import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.IRecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
