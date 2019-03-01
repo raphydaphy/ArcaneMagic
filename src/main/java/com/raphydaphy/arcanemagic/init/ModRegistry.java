@@ -6,9 +6,7 @@ import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
-import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
-import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
-import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
+import com.raphydaphy.arcanemagic.recipe.*;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.ModDamageSource;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -125,5 +123,6 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
 
 		ShapedTransfigurationRecipe.SERIALIZER =  Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
+		ShapelessTransfigurationRecipe.SERIALIZER =  Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shapeless", new ShapelessTransfigurationRecipeSerializer());
 	}
 }

@@ -14,10 +14,12 @@ import java.util.List;
 
 public class ShapelessTransfigurationRecipe implements TransfigurationRecipe
 {
+	public static RecipeSerializer<ShapelessTransfigurationRecipe> SERIALIZER;
+
 	private final Identifier id;
-	private final ItemStack output;
-	private final DefaultedList<Ingredient> inputs;
-	private final int soul;
+	final ItemStack output;
+	final DefaultedList<Ingredient> inputs;
+	final int soul;
 
 	public ShapelessTransfigurationRecipe(Identifier id, ItemStack output, DefaultedList<Ingredient> inputs, int soul)
 	{
@@ -85,6 +87,6 @@ public class ShapelessTransfigurationRecipe implements TransfigurationRecipe
 	@Override
 	public RecipeSerializer<ShapelessTransfigurationRecipe> getSerializer()
 	{
-		return null;
+		return SERIALIZER;
 	}
 }

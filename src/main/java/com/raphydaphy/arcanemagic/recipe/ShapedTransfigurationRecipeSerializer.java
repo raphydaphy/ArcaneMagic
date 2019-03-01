@@ -2,8 +2,11 @@ package com.raphydaphy.arcanemagic.recipe;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.google.gson.*;
-import net.minecraft.item.Item;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.RecipeSerializer;
@@ -11,7 +14,6 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.PacketByteBuf;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Map;
 import java.util.Set;
@@ -19,16 +21,16 @@ import java.util.Set;
 public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<ShapedTransfigurationRecipe>
 {
 	@Override
-	public ShapedTransfigurationRecipe read(Identifier identifier_1, JsonObject jsonObject_1)
+	public ShapedTransfigurationRecipe read(Identifier id, JsonObject object)
 	{
-		Map<String, Ingredient> map_1 = deserializeComponents(JsonHelper.getObject(jsonObject_1, "key"));
-		String[] strings_1 = makePatternList(deserializePattern(JsonHelper.getArray(jsonObject_1, "pattern")));
+		Map<String, Ingredient> ingredients = deserializeComponents(JsonHelper.getObject(object, "key"));
+		String[] strings_1 = makePatternList(deserializePattern(JsonHelper.getArray(object, "pattern")));
 		int width = strings_1[0].length();
 		int height = strings_1.length;
-		DefaultedList<Ingredient> inputs = patternToList(strings_1, map_1, width, height);
-		ItemStack output = deserializeItemStack(JsonHelper.getObject(jsonObject_1, "result"));
-		int soul = JsonHelper.getInt(jsonObject_1, "soul");
-		return new ShapedTransfigurationRecipe(identifier_1, output, inputs, soul, width, height);
+		DefaultedList<Ingredient> inputs = patternToList(strings_1, ingredients, width, height);
+		ItemStack output = ArcaneMagicUtils.deserializeItemStack(JsonHelper.getObject(object, "result"));
+		int soul = JsonHelper.getInt(object, "soul");
+		return new ShapedTransfigurationRecipe(id, output, inputs, soul, width, height);
 	}
 
 	@Override
@@ -145,7 +147,9 @@ public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<S
 	private static int findNonEmpty(String in)
 	{
 		int position;
-		for (position = 0; position < in.length() && in.charAt(position) == ' '; ++position) { }
+		for (position = 0; position < in.length() && in.charAt(position) == ' '; ++position)
+		{
+		}
 		return position;
 	}
 
@@ -153,8 +157,33 @@ public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<S
 	private static int findNonEmptyReverse(String in)
 	{
 		int position;
-		for (position = in.length() - 1; position >= 0 && in.charAt(position) == ' '; --position) { }
+		for (position = in.length() - 1; position >= 0 && in.charAt(position) == ' '; --position)
+		{
+		}
 		return position;
+	}
+
+	private static Map<String, Ingredient> deserializeComponents(JsonObject object)
+	{
+		Map<String, Ingredient> ingredients = Maps.newHashMap();
+
+		for (Map.Entry<String, JsonElement> entry : object.entrySet())
+		{
+			if ((entry.getKey()).length() != 1)
+			{
+				throw new JsonSyntaxException("Invalid key entry: '" + entry.getKey() + "' is an invalid symbol (must be 1 character only).");
+			}
+
+			if (" ".equals(entry.getKey()))
+			{
+				throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
+			}
+
+			ingredients.put(entry.getKey(), Ingredient.fromJson(entry.getValue()));
+		}
+
+		ingredients.put(" ", Ingredient.EMPTY);
+		return ingredients;
 	}
 
 	private static String[] deserializePattern(JsonArray array)
@@ -185,43 +214,6 @@ public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<S
 			}
 
 			return strings_1;
-		}
-	}
-
-	private static Map<String, Ingredient> deserializeComponents(JsonObject object)
-	{
-		Map<String, Ingredient> ingredients = Maps.newHashMap();
-
-		for (Map.Entry<String, JsonElement> entry : object.entrySet())
-		{
-			if ((entry.getKey()).length() != 1)
-			{
-				throw new JsonSyntaxException("Invalid key entry: '" + entry.getKey() + "' is an invalid symbol (must be 1 character only).");
-			}
-
-			if (" ".equals(entry.getKey()))
-			{
-				throw new JsonSyntaxException("Invalid key entry: ' ' is a reserved symbol.");
-			}
-
-			ingredients.put(entry.getKey(), Ingredient.fromJson(entry.getValue()));
-		}
-
-		ingredients.put(" ", Ingredient.EMPTY);
-		return ingredients;
-	}
-
-	private static ItemStack deserializeItemStack(JsonObject object)
-	{
-		String id = JsonHelper.getString(object, "item");
-		Item item = Registry.ITEM.getOrEmpty(new Identifier(id)).orElseThrow(() -> new JsonSyntaxException("Unknown item '" + id + "'"));
-		if (object.has("data"))
-		{
-			throw new JsonParseException("Disallowed data tag found");
-		} else
-		{
-			int int_1 = JsonHelper.getInt(object, "count", 1);
-			return new ItemStack(item, int_1);
 		}
 	}
 }

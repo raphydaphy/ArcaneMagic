@@ -311,6 +311,23 @@ public class ArcaneMagicUtils
 		}
 	}
 
+	/**
+	 * Used in JSON recipe serializers
+	 */
+	public static ItemStack deserializeItemStack(JsonObject object)
+	{
+		String id = JsonHelper.getString(object, "item");
+		Item item = Registry.ITEM.getOrEmpty(new Identifier(id)).orElseThrow(() -> new JsonSyntaxException("Unknown item '" + id + "'"));
+		if (object.has("data"))
+		{
+			throw new JsonParseException("Disallowed data tag found");
+		} else
+		{
+			int int_1 = JsonHelper.getInt(object, "count", 1);
+			return new ItemStack(item, int_1);
+		}
+	}
+
 	public enum ForgeCrystal
 	{
 		EMERALD("emerald"), DIAMOND("diamond"), GOLD("gold"), REDSTONE("redstone"), LAPIS("lapis"), COAL("coal");
