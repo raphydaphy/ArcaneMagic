@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.client.ClientEvents;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.*;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
@@ -17,8 +18,6 @@ import net.minecraft.util.Identifier;
 
 public class ArcaneMagicClient implements ClientModInitializer
 {
-	public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
-	public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
 
 	@Override
 	public void onInitializeClient()
@@ -34,8 +33,8 @@ public class ArcaneMagicClient implements ClientModInitializer
 		ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
 
 		ClientSpriteRegistryCallback.EVENT.register((atlaxTexture, registry) -> {
-			registry.register(GLOW_PARTICLE_TEXTURE);
-			registry.register(SMOKE_PARTICLE_TEXTURE);
+			registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
+			registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
 		});
 
 		ClientTickCallback.EVENT.register((client) -> {

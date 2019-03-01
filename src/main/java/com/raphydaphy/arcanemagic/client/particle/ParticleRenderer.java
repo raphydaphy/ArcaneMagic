@@ -82,7 +82,7 @@ public class ParticleRenderer
 			BufferBuilder buffer = tess.getBufferBuilder();
 
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_UV_LMAP); //PARTICLE_POSITION_TEX_COLOR_LMAP
+			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP); //PARTICLE_POSITION_TEX_COLOR_LMAP
 			for (Particle particle3 : particles)
 			{
 				if (particle3 instanceof ArcaneMagicParticle)

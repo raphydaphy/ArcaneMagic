@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
@@ -48,16 +49,13 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 			setBottom = true;
 		}
 
-		if (world.isClient && bottom)
-		{
-			doParticles();
-		}
 		if (bottom && smeltTime > 0)
 		{
 			smeltTime++;
 
 			if (world.isClient)
 			{
+				doParticles();
 			} else
 			{
 				if (smeltTime % 10 == 0)
@@ -86,12 +84,30 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 
 	private void doParticles()
 	{
-		float inverseSpread = 100;
-		for (int i = 0; i < 2; i++)
+		Direction dir = world.getBlockState(pos).get(SmelterBlock.FACING);
+
+		float offsetX = 0;
+		float offsetZ = 0;
+
+		if (dir == Direction.SOUTH)
 		{
-			ParticleUtil.spawnSmokeParticle(world, pos.getX() + 0.4f + ParticleUtil.random.nextFloat() / 5f, pos.getY() + 1.6f, pos.getZ() + 0.55f + ParticleUtil.random.nextFloat() / 5f,
-					(float) ParticleUtil.random.nextGaussian() / inverseSpread, 0.05f + ParticleUtil.random.nextFloat() * 0 / 20f, (float) ParticleUtil.random.nextGaussian() / inverseSpread,
-					1, 1, 1, 1,0.3f, 250);
+			offsetZ = -0.3f;
+		} else if (dir == Direction.EAST || dir == Direction.WEST)
+		{
+			offsetZ -= 0.15f;
+			offsetX -= 0.15f;
+			if (dir == Direction.WEST)
+			{
+				offsetX += 0.3f;
+			}
+		}
+
+		float inverseSpread = 400;
+		for (int i = 0; i < 4; i++)
+		{
+			ParticleUtil.spawnSmokeParticle(world, pos.getX() + 0.4f + offsetX + ParticleUtil.random.nextFloat() / 5f, pos.getY() + 1.55f, pos.getZ() + offsetZ + 0.55f + ParticleUtil.random.nextFloat() / 5f,
+					(float) ParticleUtil.random.nextGaussian() / inverseSpread, 0.03f + ParticleUtil.random.nextFloat() * 0 / 20f, (float) ParticleUtil.random.nextGaussian() / inverseSpread,
+					1, 1, 1, 0.2f,0.2f, 100);
 		}
 	}
 
