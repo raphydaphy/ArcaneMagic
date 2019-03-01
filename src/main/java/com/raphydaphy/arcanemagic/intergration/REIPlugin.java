@@ -2,12 +2,17 @@ package com.raphydaphy.arcanemagic.intergration;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.IRecipePlugin;
 import me.shedaniel.rei.api.ItemRegisterer;
 import me.shedaniel.rei.api.RecipeHelper;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
 
 public class REIPlugin implements IRecipePlugin
@@ -39,9 +44,12 @@ public class REIPlugin implements IRecipePlugin
 		recipeHelper.registerDisplay(INFUSION, new InfusionDisplay(new ItemStack(Items.LAPIS_LAZULI), new ItemStack(ModRegistry.LAPIS_CRYSTAL), 6));
 		recipeHelper.registerDisplay(INFUSION, new InfusionDisplay(new ItemStack(Items.COAL), new ItemStack(ModRegistry.COAL_CRYSTAL), 6));
 
-		for (TransfigurationRecipe recipe : ModRegistry.TRANSFIGURATION_RECIPES)
+		for (Recipe recipe : recipeHelper.getRecipeManager().values())
 		{
-			recipeHelper.registerDisplay(TRANSFIGURATION, new TransfigurationDisplay(recipe));
+			if (recipe instanceof ShapedTransfigurationRecipe)
+			{
+				recipeHelper.registerDisplay(TRANSFIGURATION, new TransfigurationDisplay((ShapedTransfigurationRecipe)recipe));
+			}
 		}
 	}
 

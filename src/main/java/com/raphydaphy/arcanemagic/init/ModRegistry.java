@@ -6,6 +6,8 @@ import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
+import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.ModDamageSource;
@@ -22,6 +24,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 public class ModRegistry
@@ -29,7 +32,6 @@ public class ModRegistry
 	public static final LiquifiedSoulFluid FLOWING_LIQUIFIED_SOUL = new LiquifiedSoulFluid.Flowing();
 	public static final LiquifiedSoulFluid LIQUIFIED_SOUL = new LiquifiedSoulFluid.Still();
 	public static final FluidBlockBase LIQUIFIED_SOUL_BLOCK = new FluidBlockBase(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
-	public static final List<TransfigurationRecipe> TRANSFIGURATION_RECIPES = new ArrayList<>();
 	public static final ModDamageSource DRAINED_DAMAGE = new ModDamageSource(ArcaneMagic.DOMAIN + ".drained").setUnblockable().setUsesMagic().setBypassesArmor();
 
 	public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new).build(null));
@@ -121,5 +123,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "iron_dagger"), IRON_DAGGER);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
+
+		ShapedTransfigurationRecipe.SERIALIZER =  Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
 	}
 }

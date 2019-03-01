@@ -1,0 +1,20 @@
+{
+  "result": {
+	"item": "arcanemagic:soul_pendant"
+  },
+  "pattern": [
+	" s ",
+	"scs",
+	" s "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"s": {
+	  "item": "minecraft:stone"
+	},
+	"c": {
+	  "item": "arcanemagic:gold_crystal"
+	}
+  },
+  "soul": 20
+}

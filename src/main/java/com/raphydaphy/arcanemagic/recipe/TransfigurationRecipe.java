@@ -10,7 +10,7 @@ import net.minecraft.util.DefaultedList;
 
 public interface TransfigurationRecipe extends Recipe<Inventory>
 {
-	RecipeType TRANSFIGURATION = RecipeType.register(ArcaneMagic.PREFIX + "transfiguration");
+	RecipeType<TransfigurationRecipe> TYPE = RecipeType.register(ArcaneMagic.PREFIX + "transfiguration");
 
 	/**
 	 * @return A list of the ingredients needed for the recipe
@@ -22,11 +22,6 @@ public interface TransfigurationRecipe extends Recipe<Inventory>
 	 */
 	int getSoul();
 
-	/**
-	 * @return True if the layout of the items does not affect the output
-	 */
-	boolean isShapeless();
-
 	@Override
 	default boolean isIgnoredInRecipeBook()
 	{
@@ -36,7 +31,7 @@ public interface TransfigurationRecipe extends Recipe<Inventory>
 	@Override
 	default RecipeType<?> getType()
 	{
-		return TRANSFIGURATION;
+		return TYPE;
 	}
 
 	/**

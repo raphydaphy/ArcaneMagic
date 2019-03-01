@@ -71,12 +71,6 @@ public class ShapelessTransfigurationRecipe implements TransfigurationRecipe
 	}
 
 	@Override
-	public boolean isShapeless()
-	{
-		return true;
-	}
-
-	@Override
 	public boolean fits(int width, int height)
 	{
 		return width * height >= inputs.size();

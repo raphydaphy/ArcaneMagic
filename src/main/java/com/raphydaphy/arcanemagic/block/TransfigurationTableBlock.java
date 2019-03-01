@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
+import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -13,6 +14,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -26,6 +28,8 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public class TransfigurationTableBlock extends OrientableBlockBase implements BlockEntityProvider
 {
@@ -49,28 +53,16 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 	{
 		if (scepter.getTag() != null)
 		{
-			int soul = scepter.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+			Optional<TransfigurationRecipe> recipe = world.getRecipeManager().get(TransfigurationRecipe.TYPE, (TransfigurationTableBlockEntity) blockEntity, world);
 
-			DefaultedList<ItemStack> inv = ((TransfigurationTableBlockEntity) blockEntity).getInventory();
-			TransfigurationRecipe match = null;
-
-			for (TransfigurationRecipe recipe : ModRegistry.TRANSFIGURATION_RECIPES)
+			if (recipe.isPresent())
 			{
-				if (recipe.matchesItems(inv))
-				{
-					match = recipe;
-					break;
-				}
-			}
-
-			if (match != null)
-			{
-				if (ArcaneMagicUtils.useSoul(world, scepter, player, match.getSoul()))
+				if (ArcaneMagicUtils.useSoul(world, scepter, player, recipe.get().getSoul()))
 				{
 					if (!world.isClient)
 					{
 						((TransfigurationTableBlockEntity) blockEntity).clearRecipe(world.isReceivingRedstonePower(blockEntity.getPos()));
-						ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, match.getOutput());
+						ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, recipe.get().getOutput());
 						result.setVelocity(0, 0, 0);
 						world.spawnEntity(result);
 					}

@@ -1,13 +1,12 @@
 package com.raphydaphy.arcanemagic.intergration;
 
+import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.IRecipeDisplay;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class TransfigurationDisplay implements IRecipeDisplay
 {
@@ -20,9 +19,9 @@ public class TransfigurationDisplay implements IRecipeDisplay
 	{
 		this.recipe = recipe;
 		input = new ArrayList<>();
-		for (ItemStack stack : recipe.getInputs())
+		for (Ingredient ingredient : recipe.getIngredients())
 		{
-			input.add(Collections.singletonList(stack));
+			input.add(Arrays.asList(ingredient.getStackArray()));
 		}
 		this.output = Collections.singletonList(recipe.getOutput());
 		this.soul = recipe.getSoul();

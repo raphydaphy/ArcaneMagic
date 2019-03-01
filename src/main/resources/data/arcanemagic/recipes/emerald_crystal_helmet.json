@@ -1,0 +1,16 @@
+{
+  "result": {
+	"item": "arcanemagic:emerald_crystal_helmet"
+  },
+  "pattern": [
+	"ccc",
+	"c c"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"c": {
+	  "item": "arcanemagic:emerald_crystal"
+	}
+  },
+  "soul": 34
+}

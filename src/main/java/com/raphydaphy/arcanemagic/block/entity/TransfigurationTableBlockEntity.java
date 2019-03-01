@@ -57,11 +57,6 @@ public class TransfigurationTableBlockEntity extends InventoryBlockEntity implem
 		}
 	}
 
-	public DefaultedList<ItemStack> getInventory()
-	{
-		return contents;
-	}
-
 	@Override
 	public void markDirty()
 	{
