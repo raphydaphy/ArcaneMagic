@@ -1,0 +1,27 @@
+{
+  "type": "arcanemagic:transfiguration_shapeless",
+  "ingredients": [
+	{
+	  "item": "arcanemagic:emerald_crystal"
+	},
+	{
+	  "item": "arcanemagic:diamond_crystal"
+	},
+	{
+	  "item": "arcanemagic:gold_crystal"
+	},
+	{
+	  "item": "arcanemagic:redstone_crystal"
+	},
+	{
+	  "item": "arcanemagic:lapis_crystal"
+	},
+	{
+	  "item": "arcanemagic:coal_crystal"
+	}
+  ],
+  "result": {
+	"item": "arcanemagic:pure_crystal"
+  },
+  "soul": 20
+}

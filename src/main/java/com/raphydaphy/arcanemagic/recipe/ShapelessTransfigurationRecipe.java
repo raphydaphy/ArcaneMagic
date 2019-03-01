@@ -1,9 +1,11 @@
 package com.raphydaphy.arcanemagic.recipe;
 
+import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.recipe.RecipeFinder;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
@@ -32,26 +34,18 @@ public class ShapelessTransfigurationRecipe implements TransfigurationRecipe
 	@Override
 	public boolean matches(Inventory inv, World world)
 	{
-		List<ItemStack> toCheck = new ArrayList<>();
-		for (int slot = 0; slot < inv.getInvSize(); slot++)
-		{
-			toCheck.add(inv.getInvStack(slot));
-		}
-		for (Ingredient i : this.inputs)
-		{
-			for (int ix = 0; ix < toCheck.size(); ix++)
-			{
-				if (i == Ingredient.EMPTY && (toCheck.get(ix).isEmpty() || toCheck.get(ix).getItem() == Items.GLASS_PANE))
-				{
-					toCheck.remove(ix);
-				} else if (i.method_8093(toCheck.get(ix))) // apply
-				{
-					toCheck.remove(ix);
-					break;
-				}
+		RecipeFinder finder = new RecipeFinder();
+		int items = 0;
+
+		for(int item = 0; item < inv.getInvSize(); ++item) {
+			ItemStack stack = inv.getInvStack(item);
+			if (!(stack.isEmpty() || stack.getItem() == Items.GLASS_PANE)) {
+				++items;
+				finder.addItem(stack);
 			}
 		}
-		return toCheck.isEmpty();
+
+		return items == this.inputs.size() && finder.findRecipe(this, null);
 	}
 
 	@Override
