@@ -21,6 +21,22 @@ public class CrystalInfuserBlock extends WaterloggableBlockBase implements Block
 {
 	private static final VoxelShape shape;
 
+	static
+	{
+		VoxelShape cubes_one = VoxelShapes.union(
+				VoxelShapes.union(Block.createCuboidShape(12, 0, 2, 14, 2, 4), Block.createCuboidShape(12, 0, 12, 14, 2, 14)),
+				VoxelShapes.union(Block.createCuboidShape(2, 0, 12, 4, 2, 14), Block.createCuboidShape(2, 0, 2, 4, 2, 4)));
+		VoxelShape cubes_two = VoxelShapes.union(
+				VoxelShapes.union(Block.createCuboidShape(9, 1, 5, 11, 3, 7), Block.createCuboidShape(9, 1, 9, 11, 3, 11)),
+				VoxelShapes.union(Block.createCuboidShape(5, 1, 9, 7, 3, 11), Block.createCuboidShape(5, 1, 5, 7, 3, 7)));
+		VoxelShape cubes_three = VoxelShapes.union(
+				VoxelShapes.union(Block.createCuboidShape(4, 4, 10, 6, 6, 12), Block.createCuboidShape(4, 4, 4, 6, 6, 6)),
+				VoxelShapes.union(Block.createCuboidShape(10, 4, 4, 12, 6, 6), Block.createCuboidShape(10, 4, 10, 12, 6, 12)));
+		VoxelShape cubes_four = VoxelShapes.union(Block.createCuboidShape(2, 6, 2, 14, 8, 14), Block.createCuboidShape(4, 8, 4, 12, 10, 12));
+
+		shape = VoxelShapes.union(VoxelShapes.union(cubes_one, cubes_two), VoxelShapes.union(cubes_three, cubes_four));
+	}
+
 	public CrystalInfuserBlock()
 	{
 		super(FabricBlockSettings.of(Material.WOOD).strength(2f, 3f).sounds(BlockSoundGroup.WOOD).build());
@@ -36,7 +52,7 @@ public class CrystalInfuserBlock extends WaterloggableBlockBase implements Block
 			return false;
 		}
 
-		if (!((CrystalInfuserBlockEntity)blockEntity).isActive())
+		if (!((CrystalInfuserBlockEntity) blockEntity).isActive())
 		{
 			if (player.isSneaking())
 			{
@@ -99,21 +115,5 @@ public class CrystalInfuserBlock extends WaterloggableBlockBase implements Block
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new CrystalInfuserBlockEntity();
-	}
-
-	static
-	{
-		VoxelShape cubes_one = VoxelShapes.union(
-				VoxelShapes.union(Block.createCuboidShape(12, 0, 2, 14, 2, 4), Block.createCuboidShape(12, 0, 12, 14, 2, 14)),
-				VoxelShapes.union(Block.createCuboidShape(2, 0, 12, 4, 2, 14), Block.createCuboidShape(2, 0, 2, 4, 2, 4)));
-		VoxelShape cubes_two = VoxelShapes.union(
-				VoxelShapes.union(Block.createCuboidShape(9, 1, 5, 11, 3, 7), Block.createCuboidShape(9, 1, 9, 11, 3, 11)),
-				VoxelShapes.union(Block.createCuboidShape(5, 1, 9, 7, 3, 11), Block.createCuboidShape(5, 1, 5, 7, 3, 7)));
-		VoxelShape cubes_three = VoxelShapes.union(
-				VoxelShapes.union(Block.createCuboidShape(4, 4, 10, 6, 6, 12), Block.createCuboidShape(4, 4, 4, 6, 6, 6)),
-				VoxelShapes.union(Block.createCuboidShape(10, 4, 4, 12, 6, 6), Block.createCuboidShape(10, 4, 10, 12, 6, 12)));
-		VoxelShape cubes_four = VoxelShapes.union(Block.createCuboidShape(2, 6, 2, 14, 8, 14), Block.createCuboidShape(4, 8, 4, 12, 10, 12));
-
-		shape = VoxelShapes.union(VoxelShapes.union(cubes_one, cubes_two), VoxelShapes.union(cubes_three, cubes_four));
 	}
 }

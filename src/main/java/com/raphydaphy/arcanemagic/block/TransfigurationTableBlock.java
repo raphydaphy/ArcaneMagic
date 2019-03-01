@@ -32,6 +32,15 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 {
 	private static final VoxelShape shape;
 
+	static
+	{
+		VoxelShape bottom = Block.createCuboidShape(2, 0, 2, 14, 4, 14);
+		VoxelShape middle = Block.createCuboidShape(0, 4, 0, 16, 8, 16);
+		VoxelShape top = Block.createCuboidShape(3, 8, 3, 13, 10, 13);
+
+		shape = VoxelShapes.union(VoxelShapes.union(bottom, middle), top);
+	}
+
 	public TransfigurationTableBlock()
 	{
 		super(FabricBlockSettings.of(Material.WOOD).strength(2f, 3f).sounds(BlockSoundGroup.WOOD).build());
@@ -43,7 +52,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 		{
 			int soul = scepter.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 
-			DefaultedList<ItemStack> inv = ((TransfigurationTableBlockEntity)blockEntity).getInventory();
+			DefaultedList<ItemStack> inv = ((TransfigurationTableBlockEntity) blockEntity).getInventory();
 			TransfigurationRecipe match = null;
 
 			for (TransfigurationRecipe recipe : ModRegistry.TRANSFIGURATION_RECIPES)
@@ -115,12 +124,10 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 			{
 				row = 2 - row;
 				slot = row * 3 + col;
-			}
-			else if (facing == Direction.SOUTH)
+			} else if (facing == Direction.SOUTH)
 			{
 				slot = 8 - slot;
-			}
-			else if (facing == Direction.WEST)
+			} else if (facing == Direction.WEST)
 			{
 				col = 2 - col;
 				slot = row * 3 + col;
@@ -169,14 +176,5 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new TransfigurationTableBlockEntity();
-	}
-
-	static
-	{
-		VoxelShape bottom = Block.createCuboidShape(2, 0, 2, 14, 4, 14);
-		VoxelShape middle = Block.createCuboidShape(0, 4, 0, 16, 8, 16);
-		VoxelShape top = Block.createCuboidShape(3, 8, 3, 13, 10, 13);
-
-		shape = VoxelShapes.union(VoxelShapes.union(bottom, middle), top);
 	}
 }

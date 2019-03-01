@@ -9,7 +9,10 @@ import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -18,7 +21,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -33,7 +39,6 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class ScepterItem extends SoulStorageItem
 {
@@ -92,22 +97,21 @@ public class ScepterItem extends SoulStorageItem
 						ctx.getWorld().setBlockState(ctx.getBlockPos(), ModRegistry.TRANSFIGURATION_TABLE.getPlacementState(new ItemPlacementContext(ctx)));
 					} else
 					{
-						Random rand = new Random(System.currentTimeMillis());
 						for (int i = 0; i < 30; i++)
 						{
-							ctx.getWorld().addParticle(ParticleTypes.PORTAL, ctx.getBlockPos().getX() + rand.nextFloat(), ctx.getBlockPos().getY() + rand.nextFloat() / 2d, ctx.getBlockPos().getZ() + rand.nextFloat(), 0, 0, 0);
+							ctx.getWorld().addParticle(ParticleTypes.PORTAL, ctx.getBlockPos().getX() + ArcaneMagic.RANDOM.nextFloat(), ctx.getBlockPos().getY() + ArcaneMagic.RANDOM.nextFloat() / 2d, ctx.getBlockPos().getZ() + ArcaneMagic.RANDOM.nextFloat(), 0, 0, 0);
 						}
 					}
 					ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
 					return ActionResult.SUCCESS;
 				}
-			} else if(block == ModRegistry.CRYSTAL_INFUSER)
+			} else if (block == ModRegistry.CRYSTAL_INFUSER)
 			{
 				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
 				if (blockEntity instanceof CrystalInfuserBlockEntity)
 				{
-					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity)blockEntity;
-					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && !((CrystalInfuserBlockEntity)blockEntity).isActive())
+					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity) blockEntity;
+					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && !((CrystalInfuserBlockEntity) blockEntity).isActive())
 					{
 						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 20))
 						{
@@ -121,12 +125,12 @@ public class ScepterItem extends SoulStorageItem
 						}
 					}
 				}
-			} else if(block == ModRegistry.SMELTER)
+			} else if (block == ModRegistry.SMELTER)
 			{
 				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
 				if (blockEntity instanceof SmelterBlockEntity)
 				{
-					SmelterBlockEntity smelter = (SmelterBlockEntity)blockEntity;
+					SmelterBlockEntity smelter = (SmelterBlockEntity) blockEntity;
 					if (smelter.startSmelting(true))
 					{
 						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 2))
@@ -213,8 +217,7 @@ public class ScepterItem extends SoulStorageItem
 				Entity drainTarget = player.world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
 				if (drainTarget instanceof LivingEntity)
 				{
-					Random rand = new Random(System.nanoTime());
-					if (rand.nextInt(10) == 1)
+					if (ArcaneMagic.RANDOM.nextInt(10) == 1)
 					{
 						if (!world.isClient)
 						{
@@ -235,12 +238,10 @@ public class ScepterItem extends SoulStorageItem
 			Entity mousedEntity = world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
 			if (mousedEntity instanceof LivingEntity)
 			{
-				mousedEntity.damage(ModRegistry.DRAINED_DAMAGE, ((LivingEntity)mousedEntity).getHealthMaximum());
+				mousedEntity.damage(ModRegistry.DRAINED_DAMAGE, ((LivingEntity) mousedEntity).getHealthMaximum());
 			}
 			stack.getTag().remove(DRAIN_TARGET);
-			Random rand = new Random(System.nanoTime());
-
-			ArcaneMagicUtils.addSoul(world, stack, livingEntity instanceof PlayerEntity ? (PlayerEntity) livingEntity : null, rand.nextInt(3) + 4);
+			ArcaneMagicUtils.addSoul(world, stack, livingEntity instanceof PlayerEntity ? (PlayerEntity) livingEntity : null, ArcaneMagic.RANDOM.nextInt(3) + 4);
 		}
 
 		if (livingEntity instanceof PlayerEntity)

@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
-import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -8,7 +7,6 @@ import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
-import io.github.prospector.silk.fluid.FluidContainer;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.fluid.Fluid;
@@ -19,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.InventoryUtil;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.registry.Registry;
 
 public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInventory, Tickable
 {
@@ -28,12 +25,10 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	private static final int WATER_USE = DropletValues.NUGGET;
 	private static final int LIQUIFIED_SOUL_PRODUCTION = DropletValues.NUGGET + 5;
 	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
-
+	private final int[] slots = {0};
+	public long ticks = 0;
 	private FluidInstance water = new FluidInstance(Fluids.WATER);
 	private FluidInstance liquified_soul = new FluidInstance(ModRegistry.LIQUIFIED_SOUL);
-	public long ticks = 0;
-
-	private final int[] slots = { 0 };
 
 	public MixerBlockEntity()
 	{
@@ -56,7 +51,7 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 			ItemStack pendant = getInvStack(0);
 			if (!pendant.isEmpty() && pendant.getItem() == ModRegistry.SOUL_PENDANT)
 			{
-				if (liquified_soul.getAmount() + LIQUIFIED_SOUL_PRODUCTION <= MAX_FLUID && water.getAmount() >= WATER_USE && pendant.getTag() != null )
+				if (liquified_soul.getAmount() + LIQUIFIED_SOUL_PRODUCTION <= MAX_FLUID && water.getAmount() >= WATER_USE && pendant.getTag() != null)
 				{
 					int pendantSoul = pendant.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 					if (pendantSoul >= 1)
@@ -77,14 +72,14 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 		super.fromTag(tag);
 		if (tag.containsKey(WATER_KEY))
 		{
-			water = new FluidInstance((CompoundTag)tag.getTag(WATER_KEY));
+			water = new FluidInstance((CompoundTag) tag.getTag(WATER_KEY));
 		} else
 		{
 			water = new FluidInstance(Fluids.WATER);
 		}
 		if (tag.containsKey(LIQUIFIED_SOUL_KEY))
 		{
-			liquified_soul = new FluidInstance((CompoundTag)tag.getTag(LIQUIFIED_SOUL_KEY));
+			liquified_soul = new FluidInstance((CompoundTag) tag.getTag(LIQUIFIED_SOUL_KEY));
 		} else
 		{
 			liquified_soul = new FluidInstance(ModRegistry.LIQUIFIED_SOUL);
@@ -176,10 +171,10 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	{
 		if (bottom)
 		{
-			return new FluidInstance[] {liquified_soul};
+			return new FluidInstance[]{liquified_soul};
 		} else
 		{
-			return new FluidInstance[] {water};
+			return new FluidInstance[]{water};
 		}
 	}
 

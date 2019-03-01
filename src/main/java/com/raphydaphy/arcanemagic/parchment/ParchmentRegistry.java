@@ -21,7 +21,7 @@ public class ParchmentRegistry
 
 	public static IParchment getParchment(ItemStack from)
 	{
-		if (from.getItem() instanceof ParchmentItem && ((ParchmentItem)from.getItem()).type != ParchmentItem.ParchmentType.BLANK)
+		if (from.getItem() instanceof ParchmentItem && ((ParchmentItem) from.getItem()).type != ParchmentItem.ParchmentType.BLANK)
 		{
 			CompoundTag tag = from.getTag();
 			if (tag != null && tag.containsKey(ArcaneMagicConstants.PARCHMENT_TYPE_KEY))

@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 import java.util.*;
 import java.util.function.Function;
 
+@SuppressWarnings("WeakerAccess")
 @Environment(EnvType.CLIENT)
 public class IronDaggerModel implements UnbakedModel
 {
@@ -56,6 +57,7 @@ public class IronDaggerModel implements UnbakedModel
 			this.pommel = null;
 		}
 	}
+
 	@Override
 	public Collection<Identifier> getModelDependencies()
 	{
@@ -130,22 +132,23 @@ public class IronDaggerModel implements UnbakedModel
 
 			key = "" + hilt + pommel;
 
-			if (!((IronDaggerBakedModel)originalModel).cache.containsKey(key))
+			if (!((IronDaggerBakedModel) originalModel).cache.containsKey(key))
 			{
 				ImmutableMap.Builder<String, String> map = ImmutableMap.builder();
 				map.put(ArcaneMagicUtils.ForgeCrystal.HILT_KEY, hilt + "");
 				map.put(ArcaneMagicUtils.ForgeCrystal.POMMEL_KEY, pommel + "");
 
-				IronDaggerModel model = ((IronDaggerBakedModel)originalModel).parent.process(map.build());
+				IronDaggerModel model = ((IronDaggerBakedModel) originalModel).parent.process(map.build());
 				Function<Identifier, Sprite> textureGetter = id -> MinecraftClient.getInstance().getSpriteAtlas().getSprite(id);
 
 				//IronDaggerBakedModel bakedModel = model.bake()
 
 			}
 
-			return ((IronDaggerBakedModel)originalModel).cache.get(key);
+			return ((IronDaggerBakedModel) originalModel).cache.get(key);
 		}
 	}
+
 	protected static class IronDaggerBakedModel implements BakedModel
 	{
 		private final IronDaggerModel parent;

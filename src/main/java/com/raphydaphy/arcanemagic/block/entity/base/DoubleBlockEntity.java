@@ -34,7 +34,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 			BlockEntity below = world.getBlockEntity(pos.add(0, -1, 0));
 			if (below instanceof DoubleBlockEntity)
 			{
-				return (DoubleBlockEntity)below;
+				return (DoubleBlockEntity) below;
 			}
 		}
 		return null;

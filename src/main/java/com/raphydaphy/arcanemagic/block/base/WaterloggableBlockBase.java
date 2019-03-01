@@ -17,6 +17,11 @@ public class WaterloggableBlockBase extends Block implements Waterloggable
 {
 	public static final BooleanProperty WATERLOGGED;
 
+	static
+	{
+		WATERLOGGED = Properties.WATERLOGGED;
+	}
+
 	protected WaterloggableBlockBase(Settings settings)
 	{
 		super(settings);
@@ -50,10 +55,5 @@ public class WaterloggableBlockBase extends Block implements Waterloggable
 	protected void appendProperties(StateFactory.Builder<Block, BlockState> map)
 	{
 		map.with(WATERLOGGED);
-	}
-
-	static
-	{
-		WATERLOGGED = Properties.WATERLOGGED;
 	}
 }

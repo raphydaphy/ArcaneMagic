@@ -17,15 +17,6 @@ import org.lwjgl.opengl.GL11;
 public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 {
 	private static Identifier tex = new Identifier(ArcaneMagic.DOMAIN, "textures/block/pipe.png");
-
-	RenderUtils.TextureBounds[] centerBig = {
-			new RenderUtils.TextureBounds(7,7,13,13), // Bottom
-			new RenderUtils.TextureBounds(7,7,13,13), // Top
-			new RenderUtils.TextureBounds(7,7,13,13), // North
-			new RenderUtils.TextureBounds(7,7,13,13), // South
-			new RenderUtils.TextureBounds(7,7,13,13), // West
-			new RenderUtils.TextureBounds(7,7,13,13)}; // East
-
 	private static RenderUtils.TextureBounds[] centerSmall = {
 			new RenderUtils.TextureBounds(0, 0, 4, 4), // Bottom
 			new RenderUtils.TextureBounds(0, 0, 4, 4), // Top
@@ -33,7 +24,6 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			new RenderUtils.TextureBounds(0, 0, 4, 4), // South
 			new RenderUtils.TextureBounds(0, 0, 4, 4), // West
 			new RenderUtils.TextureBounds(0, 0, 4, 4)}; // East
-
 	private static RenderUtils.TextureBounds[] upDown = {
 			new RenderUtils.TextureBounds(0, 0, 0, 0), // Bottom
 			new RenderUtils.TextureBounds(0, 0, 0, 0), // Top
@@ -41,7 +31,6 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			new RenderUtils.TextureBounds(0, 4, 4, 10), // South
 			new RenderUtils.TextureBounds(0, 4, 4, 10), // West
 			new RenderUtils.TextureBounds(0, 4, 4, 10)}; // East
-
 	private static RenderUtils.TextureBounds[] northSouth = {
 			new RenderUtils.TextureBounds(4, 0, 10, 4), // Bottom
 			new RenderUtils.TextureBounds(4, 0, 10, 4), // Top
@@ -49,7 +38,6 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			new RenderUtils.TextureBounds(0, 0, 0, 0), // South
 			new RenderUtils.TextureBounds(4, 0, 10, 4), // West
 			new RenderUtils.TextureBounds(4, 0, 10, 4)}; // East
-
 	private static RenderUtils.TextureBounds[] westEast = {
 			new RenderUtils.TextureBounds(0, 4, 4, 10), // Bottom
 			new RenderUtils.TextureBounds(0, 4, 4, 10), // Top
@@ -57,11 +45,17 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			new RenderUtils.TextureBounds(4, 0, 10, 4), // South
 			new RenderUtils.TextureBounds(0, 0, 0, 0), // West
 			new RenderUtils.TextureBounds(0, 0, 0, 0)}; // East
+	private static RenderUtils.TextureBounds[] centerBig = {
+			new RenderUtils.TextureBounds(7, 7, 13, 13), // Bottom
+			new RenderUtils.TextureBounds(7, 7, 13, 13), // Top
+			new RenderUtils.TextureBounds(7, 7, 13, 13), // North
+			new RenderUtils.TextureBounds(7, 7, 13, 13), // South
+			new RenderUtils.TextureBounds(7, 7, 13, 13), // West
+			new RenderUtils.TextureBounds(7, 7, 13, 13)}; // East
 
 	public void render(PipeBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
 	{
 		super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
-
 
 
 		if (entity != null)

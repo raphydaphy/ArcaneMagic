@@ -9,12 +9,14 @@ import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Random;
+
 public class ArcaneMagic implements ModInitializer
 {
 	public static final String DOMAIN = "arcanemagic";
 	public static final String PREFIX = DOMAIN + ":";
+	public static final Random RANDOM = new Random();
 	private static final Logger LOGGER = LogManager.getLogger();
-
 	public static ItemGroup GROUP;
 
 	public static Logger getLogger()

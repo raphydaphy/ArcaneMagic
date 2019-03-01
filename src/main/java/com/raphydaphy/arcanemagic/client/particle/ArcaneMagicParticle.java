@@ -5,6 +5,8 @@ package com.raphydaphy.arcanemagic.client.particle;
 public interface ArcaneMagicParticle
 {
 	boolean alive();
+
 	boolean isAdditive();
+
 	boolean renderThroughBlocks();
 }

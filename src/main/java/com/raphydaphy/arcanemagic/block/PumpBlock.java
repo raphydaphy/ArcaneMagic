@@ -14,6 +14,11 @@ public class PumpBlock extends WaterloggableBlockBase implements BlockEntityProv
 {
 	private static final VoxelShape shape;
 
+	static
+	{
+		shape = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
+	}
+
 	public PumpBlock()
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6f).build());
@@ -35,10 +40,5 @@ public class PumpBlock extends WaterloggableBlockBase implements BlockEntityProv
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new PumpBlockEntity();
-	}
-
-	static
-	{
-		shape = Block.createCuboidShape(0, 0, 0, 16, 8, 16);
 	}
 }

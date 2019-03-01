@@ -26,6 +26,7 @@ public class InfusionCategory implements IRecipeCategory<InfusionDisplay>
 {
 	private static final Identifier DISPLAY_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/recipe_display.png");
 	private static final Identifier SOUL_METER_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_meter.png");
+
 	@Override
 	public Identifier getIdentifier()
 	{
@@ -60,7 +61,7 @@ public class InfusionCategory implements IRecipeCategory<InfusionDisplay>
 				drawTexturedRect(startPoint.x, startPoint.y, 0, 55, 125, 36);
 				MinecraftClient.getInstance().getTextureManager().bindTexture(SOUL_METER_TEXTURE);
 
-				float percent = ((float)recipeDisplaySupplier.get().getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
+				float percent = ((float) recipeDisplaySupplier.get().getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
 				int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);
 				int row = stage / 10;
 				int col = stage % 10;

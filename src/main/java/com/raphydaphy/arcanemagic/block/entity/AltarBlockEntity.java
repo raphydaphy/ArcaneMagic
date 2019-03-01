@@ -13,9 +13,8 @@ import net.minecraft.util.math.Direction;
 
 public class AltarBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
+	private final int[] slots = {0};
 	public long ticks = 0;
-
-	private final int[] slots = { 0 };
 
 	public AltarBlockEntity()
 	{

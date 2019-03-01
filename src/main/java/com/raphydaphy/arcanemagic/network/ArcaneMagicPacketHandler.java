@@ -33,7 +33,7 @@ public class ArcaneMagicPacketHandler
 		}
 	}
 
-	public static void sendToClient(IPacket packet, ServerPlayerEntity player)
+	private static void sendToClient(IPacket packet, ServerPlayerEntity player)
 	{
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		packet.write(buf);
@@ -45,13 +45,12 @@ public class ArcaneMagicPacketHandler
 		if (world instanceof ServerWorld)
 		{
 			Iterator<PlayerEntity> iter = PlayerStream.around(world, center, radius).iterator();
-			while(iter.hasNext())
+			while (iter.hasNext())
 			{
 				PlayerEntity player = iter.next();
-				sendToClient(packet, (ServerPlayerEntity)player);
+				sendToClient(packet, (ServerPlayerEntity) player);
 			}
-		}
-		else
+		} else
 		{
 			ArcaneMagic.getLogger().warn("Tried to send server packet to client");
 		}

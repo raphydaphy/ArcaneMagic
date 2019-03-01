@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.block.entity.base;
 
-import com.raphydaphy.arcanemagic.block.entity.MixerBlockEntity;
 import io.github.prospector.silk.fluid.FluidContainer;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.block.entity.BlockEntityType;
@@ -75,7 +74,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 			DoubleBlockEntity bottomBlockEntity = getBottom();
 			if (bottomBlockEntity instanceof DoubleFluidBlockEntity)
 			{
-				((DoubleFluidBlockEntity)bottomBlockEntity).extractFluidImpl(false, fromSide, fluid, amount);
+				((DoubleFluidBlockEntity) bottomBlockEntity).extractFluidImpl(false, fromSide, fluid, amount);
 			}
 		}
 	}
@@ -91,7 +90,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 			DoubleBlockEntity bottomBlockEntity = getBottom();
 			if (bottomBlockEntity instanceof DoubleFluidBlockEntity)
 			{
-				((DoubleFluidBlockEntity)bottomBlockEntity).setFluidImpl(false, fromSide, instance);
+				((DoubleFluidBlockEntity) bottomBlockEntity).setFluidImpl(false, fromSide, instance);
 			}
 		}
 	}
@@ -107,7 +106,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 			DoubleBlockEntity bottomBlockEntity = getBottom();
 			if (bottomBlockEntity instanceof DoubleFluidBlockEntity)
 			{
-				return ((DoubleFluidBlockEntity)bottomBlockEntity).getFluidsImpl(false, fromSide);
+				return ((DoubleFluidBlockEntity) bottomBlockEntity).getFluidsImpl(false, fromSide);
 			}
 		}
 		return new FluidInstance[]{};
@@ -119,9 +118,14 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	 * whilst having separate fluids in each half if desired
 	 */
 	protected abstract boolean canInsertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount);
+
 	protected abstract boolean canExtractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount);
+
 	protected abstract void insertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount);
+
 	protected abstract void extractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount);
+
 	protected abstract void setFluidImpl(boolean bottom, Direction fromSide, FluidInstance instance);
+
 	protected abstract FluidInstance[] getFluidsImpl(boolean bottom, Direction fromSide);
 }

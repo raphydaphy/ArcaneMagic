@@ -27,7 +27,7 @@ public class AltarRenderer extends BlockEntityRenderer<AltarBlockEntity>
 				GuiLighting.enable();
 				GlStateManager.enableLighting();
 				GlStateManager.disableRescaleNormal();
-				GlStateManager.translated(renderX + .5, renderY + 0.9 + Math.sin((Math.PI / 180) * (ticks* 4)) / 15, renderZ + .5);
+				GlStateManager.translated(renderX + .5, renderY + 0.9 + Math.sin((Math.PI / 180) * (ticks * 4)) / 15, renderZ + .5);
 				GlStateManager.rotated(2 * ticks, 0, 1, 0);
 				MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.GROUND);
 

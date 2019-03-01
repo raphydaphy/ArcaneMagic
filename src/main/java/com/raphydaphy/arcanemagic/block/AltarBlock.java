@@ -20,6 +20,15 @@ public class AltarBlock extends WaterloggableBlockBase implements BlockEntityPro
 {
 	private static final VoxelShape shape;
 
+	static
+	{
+		VoxelShape bottom = Block.createCuboidShape(2, 0, 2, 14, 4, 14);
+		VoxelShape middle = Block.createCuboidShape(4, 4, 4, 12, 6, 12);
+		VoxelShape top = Block.createCuboidShape(0, 6, 0, 16, 12, 16);
+
+		shape = VoxelShapes.union(VoxelShapes.union(bottom, middle), top);
+	}
+
 	public AltarBlock()
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(3.5f, 3.5f).build());
@@ -75,14 +84,5 @@ public class AltarBlock extends WaterloggableBlockBase implements BlockEntityPro
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new AltarBlockEntity();
-	}
-
-	static
-	{
-		VoxelShape bottom = Block.createCuboidShape(2, 0, 2, 14, 4, 14);
-		VoxelShape middle = Block.createCuboidShape(4, 4, 4, 12, 6, 12);
-		VoxelShape top = Block.createCuboidShape(0, 6, 0, 16, 12, 16);
-
-		shape = VoxelShapes.union(VoxelShapes.union(bottom, middle), top);
 	}
 }

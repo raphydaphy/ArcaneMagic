@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.world.World;
@@ -47,7 +48,7 @@ public abstract class ParticleBase extends SpriteBillboardParticle implements Ar
 	public void update()
 	{
 		super.update();
-		if (ParticleUtil.random.nextInt(6) == 0)
+		if (ArcaneMagic.RANDOM.nextInt(6) == 0)
 		{
 			this.age++;
 		}

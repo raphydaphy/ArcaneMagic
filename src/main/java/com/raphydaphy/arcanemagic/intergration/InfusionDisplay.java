@@ -1,12 +1,14 @@
 package com.raphydaphy.arcanemagic.intergration;
 
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.IRecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class InfusionDisplay implements IRecipeDisplay
 {
@@ -15,7 +17,7 @@ public class InfusionDisplay implements IRecipeDisplay
 	private List<ItemStack> output;
 	private int soul;
 
-	public InfusionDisplay(ItemStack catalyst, ItemStack output, int soul)
+	InfusionDisplay(ItemStack catalyst, ItemStack output, int soul)
 	{
 		this.input = new ArrayList<>();
 		input.add(scepters);
@@ -24,7 +26,7 @@ public class InfusionDisplay implements IRecipeDisplay
 		this.soul = soul;
 	}
 
-	public int getSoul()
+	int getSoul()
 	{
 		return soul;
 	}

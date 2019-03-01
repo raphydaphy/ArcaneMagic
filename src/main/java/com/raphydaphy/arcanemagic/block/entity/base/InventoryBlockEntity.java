@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.block.entity.base;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -9,14 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.InventoryUtil;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 
 public class InventoryBlockEntity extends BlockEntity implements Inventory
 {
-	protected DefaultedList<ItemStack> contents;
 	private final int size;
+	protected DefaultedList<ItemStack> contents;
 
 	public InventoryBlockEntity(BlockEntityType<?> type, int size)
 	{

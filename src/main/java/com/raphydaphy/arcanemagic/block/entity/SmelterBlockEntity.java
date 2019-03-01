@@ -1,22 +1,19 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
-import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.cooking.BlastingRecipe;
-import net.minecraft.util.DefaultedList;
-import net.minecraft.util.InventoryUtil;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
@@ -28,7 +25,6 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 	private static final String SMELT_TIME_KEY = "SmeltTime";
 	private final int[] slots = {0, 1, 2};
 
-	public long ticks = 0;
 	private int smeltTime = 0;
 
 	public SmelterBlockEntity()
@@ -39,10 +35,6 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 	@Override
 	public void tick()
 	{
-		if (world.isClient)
-		{
-			ticks++;
-		}
 		if (!setBottom)
 		{
 			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.SMELTER);
@@ -105,9 +97,9 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 		float inverseSpread = 400;
 		for (int i = 0; i < 4; i++)
 		{
-			ParticleUtil.spawnSmokeParticle(world, pos.getX() + 0.4f + offsetX + ParticleUtil.random.nextFloat() / 5f, pos.getY() + 1.55f, pos.getZ() + offsetZ + 0.55f + ParticleUtil.random.nextFloat() / 5f,
-					(float) ParticleUtil.random.nextGaussian() / inverseSpread, 0.03f + ParticleUtil.random.nextFloat() * 0 / 20f, (float) ParticleUtil.random.nextGaussian() / inverseSpread,
-					1, 1, 1, 0.2f,0.2f, 100);
+			ParticleUtil.spawnSmokeParticle(world, pos.getX() + 0.4f + offsetX + ArcaneMagic.RANDOM.nextFloat() / 5f, pos.getY() + 1.55f, pos.getZ() + offsetZ + 0.55f + ArcaneMagic.RANDOM.nextFloat() / 5f,
+					(float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, 0.03f + ArcaneMagic.RANDOM.nextFloat() * 0 / 20f, (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
+					1, 1, 1, 0.2f, 0.2f, 100);
 		}
 	}
 

@@ -3,19 +3,13 @@ package com.raphydaphy.arcanemagic.client.render;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
-import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.block.BlockItem;
-import net.minecraft.util.math.Direction;
 
 public class TransfigurationTableRenderer extends BlockEntityRenderer<TransfigurationTableBlockEntity>
 {
@@ -28,11 +22,9 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 		GlStateManager.disableRescaleNormal();
 
 
-
 		if (entity != null && entity.getWorld() != null)
 		{
 			BlockState state = entity.getWorld().getBlockState(entity.getPos());
-
 
 
 			if (state.getBlock() instanceof TransfigurationTableBlock)
@@ -56,8 +48,7 @@ public class TransfigurationTableRenderer extends BlockEntityRenderer<Transfigur
 							GlStateManager.translated(0, -0.064, 0);
 							GlStateManager.rotated(90, 1, 0, 0);
 							GlStateManager.rotated(180, 0, 1, 0);
-						}
-						else
+						} else
 						{
 							GlStateManager.rotated(-90, 0, 1, 0);
 						}

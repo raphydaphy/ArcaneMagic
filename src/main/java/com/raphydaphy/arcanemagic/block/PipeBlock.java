@@ -14,6 +14,11 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 {
 	private static final VoxelShape shape;
 
+	static
+	{
+		shape = Block.createCuboidShape(5, 5, 5, 11, 11, 11);
+	}
+
 	public PipeBlock()
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6f).build());
@@ -35,10 +40,5 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new PipeBlockEntity();
-	}
-
-	static
-	{
-		shape = Block.createCuboidShape(5, 5, 5, 11, 11, 11);;
 	}
 }

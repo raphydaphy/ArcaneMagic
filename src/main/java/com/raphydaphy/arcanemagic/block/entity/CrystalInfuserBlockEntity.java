@@ -20,7 +20,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 {
 	private static final String ACTIVE_KEY = "active";
 	private static final String CRAFTING_TIME_KEY = "crafting_time";
-	private static final int[] slots = { 0, 1, 2 };
+	private static final int[] slots = {0, 1, 2};
 
 	// Updated client-side for rendering
 	public long ticksExisted = 0;
@@ -41,7 +41,8 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		{
 			ticksExisted++;
 			doParticles();
-		} else {
+		} else
+		{
 			if (craftingTime >= 8250 && active)
 			{
 				craftingTime = 0;
@@ -74,7 +75,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 			if (active && craftingTime > 7500)
 			{
 				float size = (craftingTime - 7500) / 1000f;
-				ParticleUtil.spawnGlowParticle(world,pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
+				ParticleUtil.spawnGlowParticle(world, pos.getX() + .5f, pos.getY() + 1.1f, pos.getZ() + .5f,
 						0, 0, 0, 1, 1, 1, 0.1f, size, 100);
 			}
 
@@ -165,15 +166,6 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 		return -1;
 	}
 
-	public void setActive(boolean active)
-	{
-		if (!world.isClient)
-		{
-			this.active = active;
-			markDirty();
-		}
-	}
-
 	public void resetCraftingTime()
 	{
 		if (!world.isClient)
@@ -186,6 +178,15 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public boolean isActive()
 	{
 		return active;
+	}
+
+	public void setActive(boolean active)
+	{
+		if (!world.isClient)
+		{
+			this.active = active;
+			markDirty();
+		}
 	}
 
 	public long getCraftingTime()

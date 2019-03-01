@@ -2,15 +2,10 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ToolItem;
+import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.ItemTags;
 import net.minecraft.util.Lazy;
 
 import java.util.function.Supplier;
@@ -24,7 +19,8 @@ public class CrystalToolItem extends ToolItem implements ICrystalEquipment
 
 	private enum ModToolMaterials implements ToolMaterial
 	{
-		EMERALD_CRYSTAL(2, 500, 5.0F, 2.5F, 15, () -> {
+		EMERALD_CRYSTAL(2, 500, 5.0F, 2.5F, 15, () ->
+		{
 			return Ingredient.ofItems(ModRegistry.EMERALD_CRYSTAL);
 		});
 
@@ -35,7 +31,8 @@ public class CrystalToolItem extends ToolItem implements ICrystalEquipment
 		private final int enchantability;
 		private final Lazy<Ingredient> repairIngredient;
 
-		ModToolMaterials(int miningLevel, int durability, float blockBreakSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+		ModToolMaterials(int miningLevel, int durability, float blockBreakSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient)
+		{
 			this.miningLevel = miningLevel;
 			this.durability = durability;
 			this.blockBreakSpeed = blockBreakSpeed;
@@ -44,28 +41,34 @@ public class CrystalToolItem extends ToolItem implements ICrystalEquipment
 			this.repairIngredient = new Lazy<>(repairIngredient);
 		}
 
-		public int getDurability() {
+		public int getDurability()
+		{
 			return this.durability;
 		}
 
-		public float getBlockBreakingSpeed() {
+		public float getBlockBreakingSpeed()
+		{
 			return this.blockBreakSpeed;
 		}
 
-		public float getAttackDamage() {
+		public float getAttackDamage()
+		{
 			return this.attackDamage;
 		}
 
-		public int getMiningLevel() {
+		public int getMiningLevel()
+		{
 			return this.miningLevel;
 		}
 
-		public int getEnchantability() {
+		public int getEnchantability()
+		{
 			return this.enchantability;
 		}
 
-		public Ingredient getRepairIngredient() {
-			return (Ingredient)this.repairIngredient.get();
+		public Ingredient getRepairIngredient()
+		{
+			return this.repairIngredient.get();
 		}
 	}
 

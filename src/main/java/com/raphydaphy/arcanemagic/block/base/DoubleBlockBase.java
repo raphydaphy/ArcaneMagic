@@ -26,6 +26,11 @@ public class DoubleBlockBase extends OrientableBlockBase
 {
 	public static final EnumProperty<DoubleBlockHalf> HALF;
 
+	static
+	{
+		HALF = Properties.DOUBLE_BLOCK_HALF;
+	}
+
 	protected DoubleBlockBase(Settings settings)
 	{
 		super(settings);
@@ -53,7 +58,6 @@ public class DoubleBlockBase extends OrientableBlockBase
 			return otherHalf == DoubleBlockHalf.LOWER && dir == Direction.DOWN && !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, dir, otherState, world, pos, otherPos);
 		}
 	}
-
 
 	@Override
 	public void afterBreak(World world_1, PlayerEntity playerEntity_1, BlockPos blockPos_1, BlockState blockState_1, BlockEntity blockEntity_1, ItemStack itemStack_1)
@@ -117,10 +121,5 @@ public class DoubleBlockBase extends OrientableBlockBase
 	{
 		super.appendProperties(map);
 		map.with(HALF);
-	}
-
-	static
-	{
-		HALF = Properties.DOUBLE_BLOCK_HALF;
 	}
 }

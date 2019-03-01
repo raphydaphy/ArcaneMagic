@@ -16,6 +16,11 @@ public class OrientableBlockBase extends WaterloggableBlockBase
 {
 	public static final DirectionProperty FACING;
 
+	static
+	{
+		FACING = HorizontalFacingBlock.field_11177;
+	}
+
 	protected OrientableBlockBase(Settings settings)
 	{
 		super(settings);
@@ -46,10 +51,5 @@ public class OrientableBlockBase extends WaterloggableBlockBase
 	{
 		super.appendProperties(map);
 		map.with(FACING);
-	}
-
-	static
-	{
-		FACING = HorizontalFacingBlock.field_11177;
 	}
 }

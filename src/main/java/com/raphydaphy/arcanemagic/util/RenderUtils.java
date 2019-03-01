@@ -34,13 +34,11 @@ public class RenderUtils
 		{
 			GlStateManager.rotated(-90, 0, 1, 0);
 			GlStateManager.translated(0, 0, -1);
-		}
-		else if (dir == Direction.SOUTH)
+		} else if (dir == Direction.SOUTH)
 		{
 			GlStateManager.rotated(-180, 0, 1, 0);
 			GlStateManager.translated(-1, 0, -1);
-		}
-		else if (dir == Direction.WEST)
+		} else if (dir == Direction.WEST)
 		{
 			GlStateManager.rotated(-270, 0, 1, 0);
 			GlStateManager.translated(-1, 0, 0);
@@ -111,17 +109,17 @@ public class RenderUtils
 
 	public static class TextureBounds
 	{
-		public double u;
-		public double v;
-		public double maxU;
-		public double maxV;
+		double u;
+		double v;
+		double maxU;
+		double maxV;
 
 		public TextureBounds(double u, double v, double maxU, double maxV)
 		{
 			this(u, v, maxU, maxV, 16, 16);
 		}
 
-		public TextureBounds(double u, double v, double maxU, double maxV, double textureWidth, double textureHeight)
+		private TextureBounds(double u, double v, double maxU, double maxV, double textureWidth, double textureHeight)
 		{
 			this.u = u / textureWidth;
 			this.v = v / textureHeight;

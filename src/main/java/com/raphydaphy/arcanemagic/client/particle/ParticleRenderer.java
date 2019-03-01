@@ -52,7 +52,7 @@ public class ParticleRenderer
 		}
 	}
 
-	public void render(PlayerEntity fakePlayer, float partialTicks)
+	public void render(float partialTicks)
 	{
 		GlStateManager.pushMatrix();
 
@@ -69,41 +69,41 @@ public class ParticleRenderer
 			Particle.cameraZ = player.prevZ + (player.z - player.prevZ) * partialTicks;
 			Particle.cameraRotation = ArcaneMagicUtils.interpPlayerLook(player, partialTicks);
 
-			GlStateManager.enableAlphaTest(); // enableAlpha
+			GlStateManager.enableAlphaTest();
 			GlStateManager.enableBlend();
-			GlStateManager.alphaFunc(516, 0.003921569F);
+			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
 			GlStateManager.disableCull();
 
 			GlStateManager.depthMask(false);
 
-			MinecraftClient.getInstance().getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX); // LOCATION_BLOCKS_TEXTURE
+			MinecraftClient.getInstance().getTextureManager().bindTexture(SpriteAtlasTexture.BLOCK_ATLAS_TEX);
 
 			Tessellator tess = Tessellator.getInstance();
 			BufferBuilder buffer = tess.getBufferBuilder();
 
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP); //PARTICLE_POSITION_TEX_COLOR_LMAP
-			for (Particle particle3 : particles)
+			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP);
+			for (Particle particle : particles)
 			{
-				if (particle3 instanceof ArcaneMagicParticle)
+				if (particle instanceof ArcaneMagicParticle)
 				{
-					if (!((ArcaneMagicParticle) particle3).isAdditive())
+					if (!((ArcaneMagicParticle) particle).isAdditive())
 					{
-						particle3.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
 			tess.draw();
 
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP); //PARTICLE_POSITION_TEX_COLOR_LMAP
-			for (Particle particle2 : particles)
+			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP);
+			for (Particle particle : particles)
 			{
-				if (particle2 != null)
+				if (particle != null)
 				{
-					if (((ArcaneMagicParticle) particle2).isAdditive())
+					if (((ArcaneMagicParticle) particle).isAdditive())
 					{
-						particle2.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
@@ -111,21 +111,21 @@ public class ParticleRenderer
 
 			GlStateManager.disableDepthTest(); // disableDepth
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP);  //PARTICLE_POSITION_TEX_COLOR_LMAP
-			for (Particle particle1 : particles)
+			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP);
+			for (Particle particle : particles)
 			{
-				if (particle1 instanceof ArcaneMagicParticle)
+				if (particle instanceof ArcaneMagicParticle)
 				{
-					if (!((ArcaneMagicParticle) particle1).isAdditive() && ((ArcaneMagicParticle) particle1).renderThroughBlocks())
+					if (!((ArcaneMagicParticle) particle).isAdditive() && ((ArcaneMagicParticle) particle).renderThroughBlocks())
 					{
-						particle1.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
 			tess.draw();
 
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP);  //PARTICLE_POSITION_TEX_COLOR_LMAP
+			buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_LMAP);
 			for (Particle particle : particles)
 			{
 				if (particle != null)
@@ -137,13 +137,13 @@ public class ParticleRenderer
 				}
 			}
 			tess.draw();
-			GlStateManager.enableDepthTest(); // enableDepth
+			GlStateManager.enableDepthTest();
 
 			GlStateManager.enableCull();
 			GlStateManager.depthMask(true);
 			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 			GlStateManager.disableBlend();
-			GlStateManager.alphaFunc(516, 0.1F);
+			GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 		}
 
 		GlStateManager.popMatrix();

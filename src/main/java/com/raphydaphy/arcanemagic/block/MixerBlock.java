@@ -7,7 +7,10 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.util.ActionType;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.*;
+import net.minecraft.block.BlockEntityProvider;
+import net.minecraft.block.BlockRenderLayer;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
@@ -29,6 +32,11 @@ import net.minecraft.world.World;
 public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 {
 	private static final VoxelShape shape;
+
+	static
+	{
+		shape = VoxelShapes.fullCube();
+	}
 
 	public MixerBlock()
 	{
@@ -130,10 +138,5 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new MixerBlockEntity();
-	}
-
-	static
-	{
-		shape = VoxelShapes.fullCube();
 	}
 }

@@ -5,7 +5,10 @@ import me.shedaniel.rei.api.IRecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class TransfigurationDisplay implements IRecipeDisplay
 {
@@ -14,7 +17,7 @@ public class TransfigurationDisplay implements IRecipeDisplay
 	private List<ItemStack> output;
 	private int soul;
 
-	public TransfigurationDisplay(TransfigurationRecipe recipe)
+	TransfigurationDisplay(TransfigurationRecipe recipe)
 	{
 		this.recipe = recipe;
 		input = new ArrayList<>();
@@ -26,7 +29,7 @@ public class TransfigurationDisplay implements IRecipeDisplay
 		this.soul = recipe.getSoul();
 	}
 
-	public int getSoul()
+	int getSoul()
 	{
 		return soul;
 	}

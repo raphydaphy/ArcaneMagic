@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.init;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.entity.AltarBlockEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
@@ -12,13 +13,12 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Objects;
-import java.util.Random;
 
 public class ModEvents
 {
 	public static boolean shouldLivingEntityDropLoot(Entity entity, DamageSource src)
 	{
-		if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity)entity).getHealthMaximum() < 20)
+		if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity) entity).getHealthMaximum() < 20)
 		{
 			BlockPos pos = entity.getPos();
 			for (int x = -2; x < 2; x++)
@@ -31,13 +31,12 @@ public class ModEvents
 						BlockEntity blockEntity = entity.world.getBlockEntity(curPos);
 						if (blockEntity instanceof AltarBlockEntity)
 						{
-							ItemStack stack = ((AltarBlockEntity)blockEntity).getInvStack(0);
+							ItemStack stack = ((AltarBlockEntity) blockEntity).getInvStack(0);
 							if (!stack.isEmpty() && stack.getItem() == ModRegistry.SOUL_PENDANT)
 							{
 								if (!entity.world.isClient)
 								{
-									Random rand = new Random(System.currentTimeMillis());
-									stack.getOrCreateTag().putInt(ArcaneMagicConstants.SOUL_KEY, stack.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY) + rand.nextInt(3) + 4);
+									stack.getOrCreateTag().putInt(ArcaneMagicConstants.SOUL_KEY, stack.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY) + ArcaneMagic.RANDOM.nextInt(3) + 4);
 									if (Objects.requireNonNull(stack.getTag()).getInt(ArcaneMagicConstants.SOUL_KEY) > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
 									{
 										stack.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);

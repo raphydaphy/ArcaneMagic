@@ -22,16 +22,16 @@ import net.minecraft.util.Identifier;
 public class ParchmentScreen extends Screen
 {
 	// x and y size of the parchment texture
-	public static final int DIMENSIONS = 64;
-	public static final int TEX_HEIGHT = 69;
+	private static final int DIMENSIONS = 64;
+	private static final int TEX_HEIGHT = 69;
 
-	public static final int PROGRESS_BAR_LENGTH = 48;
-	public static final int FULL_PROGRESS = PROGRESS_BAR_LENGTH - 2;
+	private static final int PROGRESS_BAR_LENGTH = 48;
+	private static final int FULL_PROGRESS = PROGRESS_BAR_LENGTH - 2;
 
-	public static final float SCALE = 3;
-	public static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * SCALE);
+	private static final float SCALE = 3;
+	private static final int SCALED_DIMENSIONS = (int) (DIMENSIONS * SCALE);
 
-	Identifier PARCHMENT = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/parchment.png");
+	private Identifier BACKGROUND = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/parchment.png");
 
 	private ItemStack stack;
 	private IParchment parchment;
@@ -57,7 +57,7 @@ public class ParchmentScreen extends Screen
 
 		GlStateManager.pushMatrix();
 
-		client.getTextureManager().bindTexture(PARCHMENT);
+		client.getTextureManager().bindTexture(BACKGROUND);
 
 		// The start x and y coords of the notebook on the screen
 		int screenCenterX = (client.window.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
@@ -92,7 +92,7 @@ public class ParchmentScreen extends Screen
 	{
 		GlStateManager.pushMatrix();
 
-		client.getTextureManager().bindTexture(PARCHMENT);
+		client.getTextureManager().bindTexture(BACKGROUND);
 
 		DrawableHelper.drawTexturedRect(
 				(int) (screenCenterX + 8 * SCALE), (int) (screenCenterY + 54 * SCALE), 0, DIMENSIONS,
@@ -122,7 +122,7 @@ public class ParchmentScreen extends Screen
 
 		GlStateManager.pushMatrix();
 
-		client.getTextureManager().bindTexture(PARCHMENT);
+		client.getTextureManager().bindTexture(BACKGROUND);
 
 		//draw the input
 		switch (type)
@@ -148,7 +148,7 @@ public class ParchmentScreen extends Screen
 						ItemStack[] ingredient = ingredients.get((inputX) + (3 * inputY)).getStackArray();
 						if (ingredient.length != 0)
 						{
-							if (!ingredient[(int)(client.world.getTime() % ingredient.length)].isEmpty())
+							if (!ingredient[(int) (client.world.getTime() % ingredient.length)].isEmpty())
 							{
 								// Render the recipe component
 								client.getItemRenderer().renderGuiItem(ingredient[0], x + (inputX * 25),
@@ -166,7 +166,7 @@ public class ParchmentScreen extends Screen
 
 		GlStateManager.popMatrix();
 
-		client.getTextureManager().bindTexture(PARCHMENT);
+		client.getTextureManager().bindTexture(BACKGROUND);
 
 		// Draw the crafting arrow
 		DrawableHelper.drawTexturedRect(x + 78, y + 26, 49, 64, 7, 5, (22), (15), DIMENSIONS,
@@ -198,7 +198,7 @@ public class ParchmentScreen extends Screen
 					if (!ingredient[0].isEmpty())
 					{
 						// Render the recipe component
-						drawItemstackTooltip(ingredient[(int)(client.world.getTime() % ingredient.length)], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
+						drawItemstackTooltip(ingredient[(int) (client.world.getTime() % ingredient.length)], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
 
 					}
 				}

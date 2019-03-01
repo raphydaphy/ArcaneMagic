@@ -35,7 +35,7 @@ public class ParchmentItem extends Item
 		if (!player.isSneaking())
 		{
 			IParchment parchment = ParchmentRegistry.getParchment(stack);
-			if (parchment != null && (((ParchmentItem)stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient())
+			if (parchment != null && (((ParchmentItem) stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient())
 			{
 				if (world.isClient)
 				{

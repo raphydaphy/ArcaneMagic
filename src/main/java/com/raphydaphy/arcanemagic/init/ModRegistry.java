@@ -25,6 +25,11 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 public class ModRegistry
 {
+	public static final LiquifiedSoulFluid FLOWING_LIQUIFIED_SOUL = new LiquifiedSoulFluid.Flowing();
+	public static final LiquifiedSoulFluid LIQUIFIED_SOUL = new LiquifiedSoulFluid.Still();
+	public static final FluidBlockBase LIQUIFIED_SOUL_BLOCK = new FluidBlockBase(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
+	public static final List<TransfigurationRecipe> TRANSFIGURATION_RECIPES = new ArrayList<>();
+	public static final ModDamageSource DRAINED_DAMAGE = new ModDamageSource(ArcaneMagic.DOMAIN + ".drained").setUnblockable().setUsesMagic().setBypassesArmor();
 	public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new).build(null));
 	public static BlockEntityType<AnalyzerBlockEntity> ANALYZER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "analyzer", BlockEntityType.Builder.create(AnalyzerBlockEntity::new).build(null));
 	public static BlockEntityType<CrystalInfuserBlockEntity> CRYSTAL_INFUSER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "crystal_infuser", BlockEntityType.Builder.create(CrystalInfuserBlockEntity::new).build(null));
@@ -33,7 +38,6 @@ public class ModRegistry
 	public static BlockEntityType<PumpBlockEntity> PUMP_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pump", BlockEntityType.Builder.create(PumpBlockEntity::new).build(null));
 	public static BlockEntityType<SmelterBlockEntity> SMELTER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "smelter", BlockEntityType.Builder.create(SmelterBlockEntity::new).build(null));
 	public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new).build(null));
-
 	public static AltarBlock ALTAR = new AltarBlock();
 	public static AnalyzerBlock ANALYZER = new AnalyzerBlock();
 	public static CrystalInfuserBlock CRYSTAL_INFUSER = new CrystalInfuserBlock();
@@ -42,12 +46,6 @@ public class ModRegistry
 	public static PumpBlock PUMP = new PumpBlock();
 	public static SmelterBlock SMELTER = new SmelterBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
-
-	public static final LiquifiedSoulFluid FLOWING_LIQUIFIED_SOUL = new LiquifiedSoulFluid.Flowing();
-	public static final LiquifiedSoulFluid LIQUIFIED_SOUL = new LiquifiedSoulFluid.Still();
-
-	public static final FluidBlockBase LIQUIFIED_SOUL_BLOCK = new FluidBlockBase(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
-
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
 	public static ScepterItem PURE_SCEPTER = new ScepterItem(50);
 	public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);
@@ -68,10 +66,6 @@ public class ModRegistry
 	public static CrystalArmorItem EMERALD_CRYSTAL_BOOTS = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.FEET);
 	public static DaggerItem IRON_DAGGER = new DaggerItem(ToolMaterials.IRON, 3, -2.4f);
 	public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
-
-	public static final List<TransfigurationRecipe> TRANSFIGURATION_RECIPES = new ArrayList<>();
-
-	public static final ModDamageSource DRAINED_DAMAGE = new ModDamageSource(ArcaneMagic.DOMAIN + ".drained").setUnblockable().setUsesMagic().setBypassesArmor();
 
 	public static void init()
 	{
@@ -96,8 +90,8 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 
 		// Fluid Registration
-		Registry.register(Registry.FLUID,"liquified_soul", LIQUIFIED_SOUL);
-		Registry.register(Registry.FLUID,"flowing_liquified_soul", FLOWING_LIQUIFIED_SOUL);
+		Registry.register(Registry.FLUID, "liquified_soul", LIQUIFIED_SOUL);
+		Registry.register(Registry.FLUID, "flowing_liquified_soul", FLOWING_LIQUIFIED_SOUL);
 
 		// Fluid Block Registration
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul"), LIQUIFIED_SOUL_BLOCK);

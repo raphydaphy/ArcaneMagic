@@ -22,7 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import java.util.*;
+
+import java.util.Objects;
 
 public class ArcaneMagicUtils
 {
@@ -179,7 +180,7 @@ public class ArcaneMagicUtils
 				// insertStack = 1 item to insert
 				// held = remaining items
 
-				if (((Inventory)container).isValidInvStack(slot, insertStack))
+				if (((Inventory) container).isValidInvStack(slot, insertStack))
 				{
 
 					if (!world.isClient)
@@ -271,8 +272,7 @@ public class ArcaneMagicUtils
 		if (partialTicks == 1.0F)
 		{
 			return getVectorForRotation(player.pitch, player.headYaw);
-		}
-		else
+		} else
 		{
 			float f = player.prevPitch + (player.pitch - player.prevPitch) * partialTicks;
 			float f1 = player.prevHeadYaw + (player.headYaw - player.prevHeadYaw) * partialTicks;
@@ -282,11 +282,11 @@ public class ArcaneMagicUtils
 
 	private static Vec3d getVectorForRotation(float pitch, float yaw)
 	{
-		float f = MathHelper.cos(-yaw * 0.017453292F - (float)Math.PI);
-		float f1 = MathHelper.sin(-yaw * 0.017453292F - (float)Math.PI);
+		float f = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
+		float f1 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
 		float f2 = -MathHelper.cos(-pitch * 0.017453292F);
 		float f3 = MathHelper.sin(-pitch * 0.017453292F);
-		return new Vec3d((double)(f1 * f2), (double)f3, (double)(f * f2));
+		return new Vec3d((double) (f1 * f2), (double) f3, (double) (f * f2));
 	}
 
 	/**

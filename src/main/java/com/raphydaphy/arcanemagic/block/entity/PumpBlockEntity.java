@@ -52,7 +52,7 @@ public class PumpBlockEntity extends BlockEntity implements Tickable, FluidConta
 		super.fromTag(tag);
 		if (tag.containsKey(WATER_KEY))
 		{
-			water = new FluidInstance((CompoundTag)tag.getTag(WATER_KEY));
+			water = new FluidInstance((CompoundTag) tag.getTag(WATER_KEY));
 		} else
 		{
 			water = new FluidInstance(Fluids.WATER);
@@ -91,7 +91,7 @@ public class PumpBlockEntity extends BlockEntity implements Tickable, FluidConta
 	@Override
 	public void setFluid(Direction direction, FluidInstance fluidInstance)
 	{
-		if(!world.isClient)
+		if (!world.isClient)
 		{
 			this.water = fluidInstance;
 			markDirty();
@@ -101,7 +101,7 @@ public class PumpBlockEntity extends BlockEntity implements Tickable, FluidConta
 	@Override
 	public FluidInstance[] getFluids(Direction direction)
 	{
-		return new FluidInstance[] { water };
+		return new FluidInstance[]{water};
 	}
 
 	@Override
