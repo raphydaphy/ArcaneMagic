@@ -5,7 +5,9 @@ import com.raphydaphy.arcanemagic.block.TransfigurationTableBlock;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
+import com.raphydaphy.arcanemagic.core.SpawnEggItemHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
@@ -21,10 +23,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.*;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -217,6 +216,10 @@ public class ScepterItem extends SoulStorageItem
 				Entity drainTarget = player.world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
 				if (drainTarget instanceof LivingEntity)
 				{
+					if (world.isClient)
+					{
+						drainingParticles(world, player, (LivingEntity) drainTarget);
+					}
 					if (ArcaneMagic.RANDOM.nextInt(10) == 1)
 					{
 						if (!world.isClient)
@@ -226,6 +229,30 @@ public class ScepterItem extends SoulStorageItem
 						((LivingEntityHooks) drainTarget).playHurtSound(DamageSource.MAGIC);
 					}
 				}
+			}
+		}
+	}
+
+	private void drainingParticles(World world, LivingEntity player, LivingEntity target)
+	{
+		float travelTime = 50;
+		float inverseSpread = 7;
+
+		SpawnEggItem egg = SpawnEggItem.forEntity(target.getType());
+
+		if (egg instanceof SpawnEggItemHooks)
+		{
+			int color = ((SpawnEggItemHooks) egg).getColor();
+
+			float red = ((color >> 16) & 0xFF) / 255f;
+			float green = ((color >> 8) & 0xFF) / 255f;
+			float blue = (color & 0xFF) / 255f;
+
+			for (int i = 0; i < 5; i++)
+			{
+				ParticleUtil.spawnGlowParticle(world, (float) target.x + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, (float) target.y + target.getHeight() - 0.1f + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, (float) target.z + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
+						(float) (player.x - target.x) / travelTime, (float) (player.y + 0.3f - target.y) / travelTime, (float) (player.z - target.z) / travelTime,
+						red, green, blue, 0.1f, 0.2f, 100);
 			}
 		}
 	}

@@ -6,7 +6,8 @@
   "mixins": [
 	"LivingEntityMixin",
 	"LivingEntityHooks",
-	"BucketItemMixin"
+	"BucketItemMixin",
+	"SpawnEggItemHooks"
   ],
   "injectors": {
 	"defaultRequire": 1
