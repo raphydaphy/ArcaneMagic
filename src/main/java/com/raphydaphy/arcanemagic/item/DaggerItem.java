@@ -17,9 +17,16 @@ import java.util.List;
 
 public class DaggerItem extends SwordItem implements ICrystalEquipment
 {
+	private final float speed;
 	public DaggerItem(ToolMaterial material, int damage, float speed)
 	{
 		super(material, damage, speed, new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+		this.speed = speed;
+	}
+
+	public float getSpeed()
+	{
+		return this.speed;
 	}
 
 	@Override

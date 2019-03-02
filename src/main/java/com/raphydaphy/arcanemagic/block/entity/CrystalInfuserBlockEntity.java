@@ -62,6 +62,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 					{
 						output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem)crystal).type.id);
 					}
+					output.getOrCreateTag().putInt("HideFlags", 2);
 				}
 
 				ItemEntity outputEntity = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, output);
