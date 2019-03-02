@@ -21,9 +21,12 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	private static final int MAX_FLUID = DropletValues.NUGGET;
 	private static final int TRANSFER_SPEED = DropletValues.NUGGET;
 	private static final int MAX_COOLDOWN = 5;
+
 	private static final String LAST_DIRECTION_KEY = "LastDirection";
 	private static final String PULL_COOLDOWN_KEY = "PullCooldown";
 	private static final String PUSH_COOLDOWN_KEY = "PushCooldown";
+
+	private static final Direction[] SIDES = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
 
 	private FluidInstance fluid = new FluidInstance(Fluids.EMPTY);
 	private Direction lastDirection = Direction.NORTH;
@@ -76,86 +79,68 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	 * Second priority is to continue traveling in the direction the fluid traveled last tick (calculated with lastDirection)
 	 * If fluid can't travel up or forwards, it will pick randomly between left and right
 	 * If fluid cannot travel in any other new direction, it goes up
-	 * Fluid will only travel backwards if every other direction fails
+	 * Fluid will never travel backwards, and if the previous direction is disconnected it will find a new one
 	 */
-	private boolean moveFluid(Direction preference, Direction previous, Function<Direction, Boolean> check)
+	private void moveFluid(Direction preference, Direction previous, Function<Direction, Boolean> check)
 	{
-		if (isConnected(preference) && check.apply(preference)) return true;
+		if (isConnected(preference) && check.apply(preference)) return;
 
-		boolean north = isConnected(Direction.NORTH);
-		boolean east = isConnected(Direction.EAST);
-		boolean south = isConnected(Direction.SOUTH);
-		boolean west = isConnected(Direction.WEST);
-
-		boolean previousConnected = isConnected(previous);
 		Direction opposite = previous.getOpposite();
 
-		if (!previousConnected)
+		if (!isConnected(previous))
 		{
-			if (north && opposite != Direction.NORTH)
+			for (Direction dir : SIDES)
 			{
-				previous = Direction.NORTH;
-			} else if (east && opposite != Direction.EAST)
-			{
-				previous = Direction.EAST;
-			} else if (south && opposite != Direction.SOUTH)
-			{
-				previous = Direction.SOUTH;
-			} else if (west && opposite != Direction.WEST)
-			{
-				previous = Direction.WEST;
+				if (dir != opposite && isConnected(dir))
+				{
+					previous = dir;
+					break;
+				}
 			}
 		}
 
-		previousConnected = isConnected(previous);
-
-		if (previous != preference && previousConnected && check.apply(previous)) return true;
+		if (previous != preference && isConnected(previous) && check.apply(previous)) return;
 		if (previous == Direction.NORTH || previous == Direction.SOUTH)
 		{
+			boolean east = isConnected(Direction.EAST);
+			boolean west = isConnected(Direction.WEST);
+
 			if (east && west)
 			{
 				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.EAST))
 				{
-					return true;
+					return;
 				} else if (check.apply(Direction.WEST))
 				{
-					return true;
+					return;
 				}
 			} else if (east && check.apply(Direction.EAST))
 			{
-				return true;
+				return;
 			} else if (west && check.apply(Direction.WEST))
 			{
-				return true;
+				return;
 			}
 		} else if (previous == Direction.EAST || previous == Direction.WEST)
 		{
+			boolean north = isConnected(Direction.NORTH);
+			boolean south = isConnected(Direction.SOUTH);
 
 			if (north && south)
 			{
-				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.NORTH))
-				{
-					return true;
-				} else if (check.apply(Direction.SOUTH))
-				{
-					return true;
-				}
-			} else if (north && check.apply(Direction.NORTH))
-			{
-				return true;
-			} else if (south && check.apply(Direction.SOUTH))
-			{
-				return true;
+				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.NORTH)) return;
+				else if (check.apply(Direction.SOUTH)) return;
 			}
+			else if (north && check.apply(Direction.NORTH)) return;
+			else if (south && check.apply(Direction.SOUTH)) return;
 		}
-		if (isConnected(preference.getOpposite()) && check.apply(preference.getOpposite())) return true;
-		//return isConnected(preference.getOpposite()) && check.apply(previous.getOpposite());
-		return false;
+		if (isConnected(preference.getOpposite())) check.apply(preference.getOpposite());
 	}
 
 	/**
 	 * Tries to put fluid into an adjacent FluidContainer
 	 * Assumes that TRANSFER_SPEED fluid is available to extract from this pipe
+	 *
 	 * @param toSide The direction that the container is located in
 	 * @return True if the fluid could be moved
 	 */
@@ -176,6 +161,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	/**
 	 * Tries to pull fluid from an adjacent FluidContainer that isn't a pipe
 	 * Assumes that at least TRANSFER_SPEED fluid can fit in the pipe
+	 *
 	 * @param fromSide The side that the FluidContainer is located on
 	 * @return True if the fluid is extracted
 	 */
