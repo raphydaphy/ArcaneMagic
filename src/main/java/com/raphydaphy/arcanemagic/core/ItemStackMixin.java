@@ -35,21 +35,26 @@ public abstract class ItemStackMixin
 		if (getItem() instanceof DaggerItem && getTag() != null && getTag().containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) && slot == EquipmentSlot.HAND_MAIN)
 		{
 			DaggerItem dagger = (DaggerItem)getItem();
-			Multimap<String, EntityAttributeModifier> map = info.getReturnValue();
-			Multimap<String, EntityAttributeModifier> otherMap = HashMultimap.create();
+			Multimap<String, EntityAttributeModifier> map = HashMultimap.create();
 			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.GOLD)
 			{
 
 				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(MODIFIER_SWING_SPEED, "Weapon modifier", dagger.getSpeed() + 1, EntityAttributeModifier.Operation.ADDITION));
+				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIER_DAMAGE, "Weapon modifier", dagger.getWeaponDamage(), EntityAttributeModifier.Operation.ADDITION));
 
 			} else if (passive == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 			{
+
+				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(MODIFIER_SWING_SPEED, "Weapon modifier", dagger.getSpeed(), EntityAttributeModifier.Operation.ADDITION));
 				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIER_DAMAGE, "Weapon modifier", dagger.getWeaponDamage() + 1, EntityAttributeModifier.Operation.ADDITION));
 
 			}
 
-			info.setReturnValue(map);
+			if (!map.isEmpty())
+			{
+				info.setReturnValue(map);
+			}
 		}
 	}
 }
