@@ -43,7 +43,7 @@ public class PumpBlockEntity extends BlockEntity implements Tickable, FluidConta
 	@Override
 	public boolean canExtractFluid(Direction direction, Fluid fluid, int amount)
 	{
-		return fluid == ModRegistry.LIQUIFIED_SOUL && this.water.getAmount() - amount >= 0;
+		return fluid == Fluids.WATER && this.water.getAmount() - amount >= 0;
 	}
 
 	@Override

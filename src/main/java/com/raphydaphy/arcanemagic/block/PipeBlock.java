@@ -35,7 +35,6 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	public static final BooleanProperty SOUTH;
 	public static final BooleanProperty WEST;
 
-
 	static
 	{
 		CENTER_SHAPE = Block.createCuboidShape(6, 6, 6, 10, 10, 10);
@@ -131,5 +130,26 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	{
 		BlockEntity blockEntity = world.getBlockEntity(pos);
 		return blockEntity instanceof FluidContainer;
+	}
+
+	public static BooleanProperty getProp(Direction dir)
+	{
+		switch(dir)
+		{
+			case UP:
+				return UP;
+			case DOWN:
+				return DOWN;
+			case NORTH:
+				return NORTH;
+			case EAST:
+				return EAST;
+			case SOUTH:
+				return SOUTH;
+			case WEST:
+				return WEST;
+			default:
+				return UP;
+		}
 	}
 }

@@ -48,7 +48,6 @@ public class BucketItemMixin extends Item
 			{
 				if (block == ModRegistry.MIXER || block == ModRegistry.PUMP)
 				{
-					System.out.println("yeet magnmu");
 					info.setReturnValue(new TypedActionResult<>(ActionResult.PASS, stack));
 				}
 			}
