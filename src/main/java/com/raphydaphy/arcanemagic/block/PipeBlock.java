@@ -2,14 +2,19 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.PipeBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.PumpBlockEntity;
 import io.github.prospector.silk.fluid.FluidContainer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.text.StringTextComponent;
+import net.minecraft.util.Hand;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
@@ -57,6 +62,22 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6f).build());
 		this.setDefaultState(this.getDefaultState().with(UP, false).with(DOWN, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
+	}
+
+	@Override
+	public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult info)
+	{
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (!player.isSneaking() && blockEntity instanceof PipeBlockEntity)
+		{
+			if (!world.isClient)
+			{
+				PipeBlockEntity pipe = (PipeBlockEntity) blockEntity;
+				player.addChatMessage(new StringTextComponent("Storing " + pipe.getFluids(null)[0].getAmount() + " Droplets recieved from " + pipe.getFrom().toString()), true);
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -134,7 +155,7 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 
 	public static BooleanProperty getProp(Direction dir)
 	{
-		switch(dir)
+		switch (dir)
 		{
 			case UP:
 				return UP;

@@ -7,6 +7,7 @@ import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidContainer;
 import io.github.prospector.silk.fluid.FluidInstance;
 import io.github.prospector.silk.util.ActionType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -14,6 +15,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Function;
 
 public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tickable
@@ -22,14 +27,14 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	private static final int TRANSFER_SPEED = DropletValues.NUGGET;
 	private static final int MAX_COOLDOWN = 5;
 
-	private static final String LAST_DIRECTION_KEY = "LastDirection";
+	private static final String FROM_KEY = "From";
 	private static final String PULL_COOLDOWN_KEY = "PullCooldown";
 	private static final String PUSH_COOLDOWN_KEY = "PushCooldown";
 
-	private static final Direction[] SIDES = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
+	private static final List<Direction> SIDES = new ArrayList<>(Arrays.asList(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST));
 
 	private FluidInstance fluid = new FluidInstance(Fluids.EMPTY);
-	private Direction lastDirection = Direction.NORTH;
+	private Direction from = Direction.NORTH;
 	private int pullCooldown = 0;
 	private int pushCooldown = 0;
 
@@ -38,6 +43,10 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 		super(ModRegistry.PIPE_TE);
 	}
 
+	public Direction getFrom()
+	{
+		return from;
+	}
 
 	@Override
 	public void tick()
@@ -46,7 +55,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 		{
 			if (pushCooldown <= 0 && !this.fluid.isEmpty() && this.fluid.getAmount() >= TRANSFER_SPEED)
 			{
-				moveFluid(Direction.DOWN, lastDirection.getOpposite(), this::putFluid);
+				moveFluid(Direction.DOWN, from.getOpposite(), this::putFluid);
 			}
 
 			// Pipes will only try to pull fluids if they have a redstone signal
@@ -54,7 +63,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 			{
 				if (pullCooldown <= 0 && this.fluid.getAmount() + TRANSFER_SPEED <= MAX_FLUID)
 				{
-					moveFluid(Direction.UP, lastDirection, this::pullFluid);
+					moveFluid(Direction.UP, from, this::pullFluid);
 				}
 			}
 
@@ -75,7 +84,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 
 	/**
 	 * Try to move fluid from or into an adjacent FluidContainer
-	 * Fluid will always try to travel in a prefered direction (down when pushing, up when pulling) first
+	 * Fluid will always try to travel in a preferred direction (down when pushing, up when pulling) first
 	 * Second priority is to continue traveling in the direction the fluid traveled last tick (calculated with lastDirection)
 	 * If fluid can't travel up or forwards, it will pick randomly between left and right
 	 * If fluid cannot travel in any other new direction, it goes up
@@ -83,58 +92,80 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	 */
 	private void moveFluid(Direction preference, Direction previous, Function<Direction, Boolean> check)
 	{
-		if (isConnected(preference) && check.apply(preference)) return;
+		BlockState state = world.getBlockState(pos);
 
-		Direction opposite = previous.getOpposite();
+		Direction backwards = previous.getOpposite();
 
-		if (!isConnected(previous))
+		// If we can go the preferred direction without going backwards, do it
+		if (backwards != preference && isConnected(state, preference) && check.apply(preference)) return;
+
+		List<Direction> sideOrder = new ArrayList<>(SIDES);
+		Collections.shuffle(sideOrder, ArcaneMagic.RANDOM);
+
+		// The direction which the fluids should flow for in this tick
+		Direction path = previous;
+
+		// If the forward direction has no connection, we need to pick a new forward direction
+		if (!isConnected(state, previous))
 		{
-			for (Direction dir : SIDES)
+			for (Direction dir : sideOrder)
 			{
-				if (dir != opposite && isConnected(dir))
+				// Make sure we are not changing the direction to go backwards
+				if (dir != backwards && isConnected(state, dir))
 				{
-					previous = dir;
+					// Select a new direction if it is suitable
+					path = dir;
 					break;
 				}
 			}
 		}
 
-		if (previous != preference && isConnected(previous) && check.apply(previous)) return;
-		if (previous == Direction.NORTH || previous == Direction.SOUTH)
+		// This will only be false now if the only way to go is the opposite of the preferred way
+		if (isConnected(state, path))
 		{
-			boolean east = isConnected(Direction.EAST);
-			boolean west = isConnected(Direction.WEST);
-
-			if (east && west)
-			{
-				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.EAST))
-				{
-					return;
-				} else if (check.apply(Direction.WEST))
-				{
-					return;
-				}
-			} else if (east && check.apply(Direction.EAST))
-			{
-				return;
-			} else if (west && check.apply(Direction.WEST))
+			// Try to travel in selected 'forward' direction
+			if (check.apply(path))
 			{
 				return;
 			}
-		} else if (previous == Direction.EAST || previous == Direction.WEST)
-		{
-			boolean north = isConnected(Direction.NORTH);
-			boolean south = isConnected(Direction.SOUTH);
 
-			if (north && south)
+			// These directions should be to the left and right of the ideal path
+			Direction[] leftRight = new Direction[] { Direction.EAST, Direction.WEST };
+
+			// If they are not, correct it
+			if (path == Direction.EAST || path == Direction.WEST)
 			{
-				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.NORTH)) return;
-				else if (check.apply(Direction.SOUTH)) return;
+				leftRight = new Direction[] { Direction.NORTH, Direction.SOUTH };
 			}
-			else if (north && check.apply(Direction.NORTH)) return;
-			else if (south && check.apply(Direction.SOUTH)) return;
+
+			// Chose either left or right at random
+			boolean left = ArcaneMagic.RANDOM.nextBoolean();
+
+			boolean leftValid = leftRight[0] != backwards && isConnected(leftRight[0]);
+			boolean rightValid = leftRight[1] != backwards && isConnected(leftRight[1]);
+
+			// Try to push liquid to the left if that direction was chosen
+			if (left && leftValid && check.apply(leftRight[0]))
+			{
+				return;
+			}
+
+			// If that failed or left was not chosen, try to push liquid right
+			if (!left && rightValid && check.apply(leftRight[1]))
+			{
+				return;
+			}
+
+			// Try both sides again in case the randomly chosen side did not work
+			if (leftValid && check.apply(leftRight[0])) return;
+			if (rightValid && check.apply(leftRight[1])) return;
 		}
-		if (isConnected(preference.getOpposite())) check.apply(preference.getOpposite());
+
+		// If everything else fails, we try to travel in the opposite direction of the preference if it is not backwards
+		if (preference.getOpposite() != backwards && isConnected(preference.getOpposite()))
+		{
+			check.apply(preference.getOpposite());
+		}
 	}
 
 	/**
@@ -192,7 +223,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	{
 		super.fromTag(tag);
 		fluid = new FluidInstance(tag);
-		lastDirection = Direction.byId(tag.getInt(LAST_DIRECTION_KEY));
+		from = Direction.byId(tag.getInt(FROM_KEY));
 		pullCooldown = tag.getInt(PULL_COOLDOWN_KEY);
 		pushCooldown = tag.getInt(PUSH_COOLDOWN_KEY);
 	}
@@ -202,7 +233,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	{
 		super.toTag(tag);
 		fluid.toTag(tag);
-		tag.putInt(LAST_DIRECTION_KEY, lastDirection.getId());
+		tag.putInt(FROM_KEY, from.getId());
 		tag.putInt(PULL_COOLDOWN_KEY, pullCooldown);
 		tag.putInt(PUSH_COOLDOWN_KEY, pushCooldown);
 		return tag;
@@ -238,7 +269,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 			{
 				this.fluid.addAmount(amount);
 			}
-			this.lastDirection = fromSide;
+			this.from = fromSide;
 			this.pullCooldown = MAX_COOLDOWN;
 
 			markDirty();
@@ -256,7 +287,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 				this.fluid.setFluid(Fluids.EMPTY);
 			}
 			this.pushCooldown = MAX_COOLDOWN;
-			this.lastDirection = fromSide.getOpposite();
+			this.from = fromSide.getOpposite();
 			this.markDirty();
 		}
 	}
@@ -273,7 +304,12 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 
 	private boolean isConnected(Direction side)
 	{
-		return world.getBlockState(pos).get(PipeBlock.getProp(side));
+		return isConnected(world.getBlockState(pos), side);
+	}
+
+	private boolean isConnected(BlockState state, Direction side)
+	{
+		return side == null || state.get(PipeBlock.getProp(side));
 	}
 
 	@Override
