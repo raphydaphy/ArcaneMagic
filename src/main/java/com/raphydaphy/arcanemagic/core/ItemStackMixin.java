@@ -36,18 +36,19 @@ public abstract class ItemStackMixin
 		{
 			DaggerItem dagger = (DaggerItem)getItem();
 			Multimap<String, EntityAttributeModifier> map = HashMultimap.create();
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(MODIFIER_SWING_SPEED, "Weapon modifier", dagger.getSpeed() + 1, EntityAttributeModifier.Operation.ADDITION));
+
+			map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(DaggerItem.getSpeedModifier(), "Weapon modifier", dagger.getSpeed(), EntityAttributeModifier.Operation.ADDITION));
+			map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(DaggerItem.getDamageModifier(), "Weapon modifier", dagger.getWeaponDamage(), EntityAttributeModifier.Operation.ADDITION));
+
 			if (passive == ArcaneMagicUtils.ForgeCrystal.GOLD)
 			{
-
-				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(MODIFIER_SWING_SPEED, "Weapon modifier", dagger.getSpeed() + 1, EntityAttributeModifier.Operation.ADDITION));
-				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIER_DAMAGE, "Weapon modifier", dagger.getWeaponDamage(), EntityAttributeModifier.Operation.ADDITION));
+				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(DaggerItem.getSpeedModifier(), "Weapon modifier", dagger.getSpeed() + 1, EntityAttributeModifier.Operation.ADDITION));
 
 			} else if (passive == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 			{
 
-				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(MODIFIER_SWING_SPEED, "Weapon modifier", dagger.getSpeed(), EntityAttributeModifier.Operation.ADDITION));
-				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(MODIFIER_DAMAGE, "Weapon modifier", dagger.getWeaponDamage() + 1, EntityAttributeModifier.Operation.ADDITION));
+				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(DaggerItem.getDamageModifier(), "Weapon modifier", dagger.getWeaponDamage() + 1, EntityAttributeModifier.Operation.ADDITION));
 
 			}
 
