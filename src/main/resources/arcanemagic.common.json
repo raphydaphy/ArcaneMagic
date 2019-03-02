@@ -8,7 +8,8 @@
 	"LivingEntityHooks",
 	"BucketItemMixin",
 	"SpawnEggItemHooks",
-	"ItemStackMixin"
+	"ItemStackMixin",
+	"EnchantmentHelperMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

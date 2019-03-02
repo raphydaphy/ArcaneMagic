@@ -57,12 +57,19 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 				{
 					if (getInvStack(1).getItem() == Items.REDSTONE)
 					{
-						output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem)crystal).type.id);
+						// Make sure we aren't adding the a crystal that is already present somewhere on the item
+						if (output.getTag() == null || !output.getTag().containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) || !output.getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
+						{
+							output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+						}
 					} else if (getInvStack(1).getItem() == Items.LAPIS_LAZULI)
 					{
-						output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem)crystal).type.id);
+						// Make sure we aren't adding the a crystal that is already present somewhere on the item
+						if (output.getTag() == null || !output.getTag().containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY) || !output.getTag().getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
+						{
+							output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+						}
 					}
-					output.getOrCreateTag().putInt("HideFlags", 2);
 				}
 
 				ItemEntity outputEntity = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, output);
