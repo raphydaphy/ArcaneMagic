@@ -23,7 +23,7 @@ import java.util.function.Function;
 
 public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tickable
 {
-	private static final int MAX_FLUID = DropletValues.NUGGET;
+	private static final int MAX_FLUID = DropletValues.NUGGET * 4;
 	private static final int TRANSFER_SPEED = DropletValues.NUGGET;
 	private static final int MAX_COOLDOWN = 5;
 

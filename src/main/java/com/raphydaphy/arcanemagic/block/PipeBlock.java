@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.PipeBlockEntity;
-import com.raphydaphy.arcanemagic.block.entity.PumpBlockEntity;
 import io.github.prospector.silk.fluid.FluidContainer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
