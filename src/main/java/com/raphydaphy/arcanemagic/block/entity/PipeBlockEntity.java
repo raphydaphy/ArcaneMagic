@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tickable
 {
 	private static final int MAX_FLUID = DropletValues.NUGGET;
-	private static final int TRANSFER_SPEED = DropletValues.NUGGET / 4;
+	private static final int TRANSFER_SPEED = DropletValues.NUGGET;
 	private static final int MAX_COOLDOWN = 5;
 	private static final String LAST_DIRECTION_KEY = "LastDirection";
 	private static final String PULL_COOLDOWN_KEY = "PullCooldown";
@@ -41,6 +41,11 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	{
 		if (!world.isClient)
 		{
+			if (pushCooldown <= 0 && !this.fluid.isEmpty() && this.fluid.getAmount() >= TRANSFER_SPEED)
+			{
+				moveFluid(Direction.DOWN, lastDirection.getOpposite(), this::putFluid);
+			}
+
 			// Pipes will only try to pull fluids if they have a redstone signal
 			if (world.isReceivingRedstonePower(pos))
 			{
@@ -48,11 +53,6 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 				{
 					moveFluid(Direction.UP, lastDirection, this::pullFluid);
 				}
-			}
-
-			if (pushCooldown <= 0 && !this.fluid.isEmpty() && this.fluid.getAmount() >= TRANSFER_SPEED)
-			{
-				moveFluid(Direction.DOWN, lastDirection.getOpposite(), this::putFluid);
 			}
 
 			boolean changed = false;
@@ -78,55 +78,79 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	 * If fluid cannot travel in any other new direction, it goes up
 	 * Fluid will only travel backwards if every other direction fails
 	 */
-	private void moveFluid(Direction preference, Direction previous, Function<Direction, Boolean> check)
+	private boolean moveFluid(Direction preference, Direction previous, Function<Direction, Boolean> check)
 	{
-		if (isConnected(preference) && check.apply(preference)) return;
-		if (previous != preference && isConnected(previous) && check.apply(previous)) return;
+		if (isConnected(preference) && check.apply(preference)) return true;
+
+		boolean north = isConnected(Direction.NORTH);
+		boolean east = isConnected(Direction.EAST);
+		boolean south = isConnected(Direction.SOUTH);
+		boolean west = isConnected(Direction.WEST);
+
+		boolean previousConnected = isConnected(previous);
+		Direction opposite = previous.getOpposite();
+
+		if (!previousConnected)
+		{
+			if (north && opposite != Direction.NORTH)
+			{
+				previous = Direction.NORTH;
+			} else if (east && opposite != Direction.EAST)
+			{
+				previous = Direction.EAST;
+			} else if (south && opposite != Direction.SOUTH)
+			{
+				previous = Direction.SOUTH;
+			} else if (west && opposite != Direction.WEST)
+			{
+				previous = Direction.WEST;
+			}
+		}
+
+		previousConnected = isConnected(previous);
+
+		if (previous != preference && previousConnected && check.apply(previous)) return true;
 		if (previous == Direction.NORTH || previous == Direction.SOUTH)
 		{
-			boolean east = isConnected(Direction.EAST);
-			boolean west = isConnected(Direction.WEST);
-
 			if (east && west)
 			{
 				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.EAST))
 				{
-					return;
+					return true;
 				} else if (check.apply(Direction.WEST))
 				{
-					return;
+					return true;
 				}
 			} else if (east && check.apply(Direction.EAST))
 			{
-				return;
+				return true;
 			} else if (west && check.apply(Direction.WEST))
 			{
-				return;
+				return true;
 			}
 		} else if (previous == Direction.EAST || previous == Direction.WEST)
 		{
-			boolean north = isConnected(Direction.NORTH);
-			boolean south = isConnected(Direction.SOUTH);
 
 			if (north && south)
 			{
 				if (ArcaneMagic.RANDOM.nextBoolean() && check.apply(Direction.NORTH))
 				{
-					return;
+					return true;
 				} else if (check.apply(Direction.SOUTH))
 				{
-					return;
+					return true;
 				}
 			} else if (north && check.apply(Direction.NORTH))
 			{
-				return;
+				return true;
 			} else if (south && check.apply(Direction.SOUTH))
 			{
-				return;
+				return true;
 			}
 		}
-		if (isConnected(preference.getOpposite()) && check.apply(preference.getOpposite())) return;
-		if (isConnected(preference.getOpposite())) check.apply(previous.getOpposite());
+		if (isConnected(preference.getOpposite()) && check.apply(preference.getOpposite())) return true;
+		//return isConnected(preference.getOpposite()) && check.apply(previous.getOpposite());
+		return false;
 	}
 
 	/**
@@ -228,11 +252,9 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 			{
 				this.fluid.addAmount(amount);
 			}
-			if (fromSide != Direction.UP && fromSide != Direction.DOWN)
-			{
-				this.lastDirection = fromSide;
-			}
+			this.lastDirection = fromSide;
 			this.pullCooldown = MAX_COOLDOWN;
+
 			markDirty();
 		}
 	}
@@ -248,6 +270,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 				this.fluid.setFluid(Fluids.EMPTY);
 			}
 			this.pushCooldown = MAX_COOLDOWN;
+			this.lastDirection = fromSide.getOpposite();
 			this.markDirty();
 		}
 	}
