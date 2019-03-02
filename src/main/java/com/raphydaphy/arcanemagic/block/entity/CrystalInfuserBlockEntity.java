@@ -2,14 +2,17 @@ package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.inventory.SidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -47,9 +50,23 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 			{
 				craftingTime = 0;
 				active = false;
-				ItemEntity result = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, getInvStack(0));
-				result.setVelocity(0, 0, 0);
-				world.spawnEntity(result);
+				ItemStack output = getInvStack(0).copy();
+
+				Item crystal = getInvStack(2).getItem();
+				if (crystal instanceof CrystalItem)
+				{
+					if (getInvStack(1).getItem() == Items.REDSTONE)
+					{
+						output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem)crystal).type.id);
+					} else if (getInvStack(1).getItem() == Items.LAPIS_LAZULI)
+					{
+						output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem)crystal).type.id);
+					}
+				}
+
+				ItemEntity outputEntity = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, output);
+				outputEntity.setVelocity(0, 0, 0);
+				world.spawnEntity(outputEntity);
 				clear();
 				markDirty();
 			} else if (world.getTime() % 20 == 0 && active)
@@ -88,22 +105,24 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 
 				if (!getInvStack(1).isEmpty())
 				{
+					Item binder = getInvStack(1).getItem();
 					float particlePosX = (float) (.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 					float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8);
 					float particlePosZ = (float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 					ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
-							0, 0, 0, 1, 0, 0, alpha, scale, 150);
+							0, 0, 0, binder == Items.REDSTONE ? 1 : 0, 0, binder == Items.LAPIS_LAZULI ? 1 : 0, alpha, scale, 150);
 				}
 
 				renderTicks += 90;
 
 				if (!getInvStack(2).isEmpty())
 				{
+					ArcaneMagicUtils.ForgeCrystal crystal = ((CrystalItem)getInvStack(2).getItem()).type;
 					float particlePosX = (float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 					float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8);
 					float particlePosZ = (float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 					ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
-							0, 0, 0, 1, 0.5f, 0, alpha, scale, 150);
+							0, 0, 0, crystal.red, crystal.green, crystal.blue, alpha, scale, 150);
 				}
 			}
 		}

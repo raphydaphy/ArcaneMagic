@@ -27,7 +27,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
 
-		ClientSpriteRegistryCallback.EVENT.register((atlaxTexture, registry) ->
+		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
 		{
 			registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
 			registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);

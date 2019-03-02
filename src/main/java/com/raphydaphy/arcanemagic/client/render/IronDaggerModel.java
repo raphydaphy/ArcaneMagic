@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -94,8 +95,8 @@ public class IronDaggerModel implements UnbakedModel
 
 	public IronDaggerModel process(ImmutableMap<String, String> customData)
 	{
-		ArcaneMagicUtils.ForgeCrystal hilt = ArcaneMagicUtils.ForgeCrystal.getFromID(customData.get(ArcaneMagicUtils.ForgeCrystal.HILT_KEY));
-		ArcaneMagicUtils.ForgeCrystal pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(customData.get(ArcaneMagicUtils.ForgeCrystal.POMMEL_KEY));
+		ArcaneMagicUtils.ForgeCrystal hilt = ArcaneMagicUtils.ForgeCrystal.getFromID(customData.get(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+		ArcaneMagicUtils.ForgeCrystal pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(customData.get(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 
 		return new IronDaggerModel(hilt, pommel);
 	}
@@ -126,8 +127,8 @@ public class IronDaggerModel implements UnbakedModel
 
 			if (stack.getTag() != null)
 			{
-				hilt = ArcaneMagicUtils.ForgeCrystal.getFromID(ArcaneMagicUtils.ForgeCrystal.HILT_KEY);
-				pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(ArcaneMagicUtils.ForgeCrystal.POMMEL_KEY);
+				hilt = ArcaneMagicUtils.ForgeCrystal.getFromID(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY);
+				pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY);
 			}
 
 			key = "" + hilt + pommel;
@@ -135,8 +136,8 @@ public class IronDaggerModel implements UnbakedModel
 			if (!((IronDaggerBakedModel) originalModel).cache.containsKey(key))
 			{
 				ImmutableMap.Builder<String, String> map = ImmutableMap.builder();
-				map.put(ArcaneMagicUtils.ForgeCrystal.HILT_KEY, hilt + "");
-				map.put(ArcaneMagicUtils.ForgeCrystal.POMMEL_KEY, pommel + "");
+				map.put(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, hilt + "");
+				map.put(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, pommel + "");
 
 				IronDaggerModel model = ((IronDaggerBakedModel) originalModel).parent.process(map.build());
 				Function<Identifier, Sprite> textureGetter = id -> MinecraftClient.getInstance().getSpriteAtlas().getSprite(id);

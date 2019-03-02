@@ -330,20 +330,23 @@ public class ArcaneMagicUtils
 
 	public enum ForgeCrystal
 	{
-		EMERALD("emerald"), DIAMOND("diamond"), GOLD("gold"), REDSTONE("redstone"), LAPIS("lapis"), COAL("coal");
-
-		public static final String HILT_KEY = "hilt_crystal";
-		public static final String POMMEL_KEY = "pommel_crystal";
+		EMERALD("emerald", 0x08a346), DIAMOND("diamond", 0x30dbbd), GOLD("gold", 0xf1ca0e), REDSTONE("redstone", 0xda2c0b), LAPIS("lapis", 0x0a38cb), COAL("coal", 0x282229);
 
 		public final String id;
 		public final Identifier hilt;
 		public final Identifier pommel;
+		public final float red;
+		public final float green;
+		public final float blue;
 
-		ForgeCrystal(String id)
+		ForgeCrystal(String id, int rgb)
 		{
 			this.id = id;
 			this.hilt = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_hilt");
 			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_pommel");
+			this.red = ((rgb>>16)&0xFF) / 255f;
+			this.green = ((rgb>>8)&0xFF) / 255f;
+			this.blue = ((rgb)&0xFF) / 255f;
 		}
 
 		public static ForgeCrystal getFromID(String id)

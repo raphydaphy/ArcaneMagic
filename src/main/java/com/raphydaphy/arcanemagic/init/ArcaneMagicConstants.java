@@ -14,4 +14,7 @@ public class ArcaneMagicConstants
 
 	public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
 	public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
+
+	public static final String PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
+	public static final String ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
 }
