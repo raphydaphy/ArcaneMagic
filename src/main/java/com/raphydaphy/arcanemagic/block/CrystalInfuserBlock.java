@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
+import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -17,7 +17,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class CrystalInfuserBlock extends WaterloggableBlockBase implements BlockEntityProvider
+public class CrystalInfuserBlock extends OrientableBlockBase implements BlockEntityProvider
 {
 	private static final VoxelShape shape;
 

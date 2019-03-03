@@ -1,5 +1,12 @@
 {
   "variants": {
-    "": { "model": "arcanemagic:block/crystal_infuser" }
+    "facing=north,waterlogged=true": { "model": "arcanemagic:block/crystal_infuser"},
+    "facing=north,waterlogged=false": { "model": "arcanemagic:block/crystal_infuser" },
+    "facing=east,waterlogged=true":  { "model": "arcanemagic:block/crystal_infuser", "y": 90 },
+    "facing=east,waterlogged=false":  { "model": "arcanemagic:block/crystal_infuser", "y": 90 },
+    "facing=south,waterlogged=true": { "model": "arcanemagic:block/crystal_infuser", "y": 180 },
+    "facing=south,waterlogged=false": { "model": "arcanemagic:block/crystal_infuser", "y": 180 },
+    "facing=west,waterlogged=true":  { "model": "arcanemagic:block/crystal_infuser", "y": 270 },
+    "facing=west,waterlogged=false":  { "model": "arcanemagic:block/crystal_infuser", "y": 270 }
   }
 }

@@ -78,16 +78,14 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		{
 			if (tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) <= 0)
 			{
-				if (!world.isClient)
+				int time = 10 * 20;
+				ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+				if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
 				{
-					int time = 5 * 20;
-					ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
-					if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
-					{
-						time = 3 * 20;
-					}
-					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
-				} else
+					time = 3 * 20;
+				}
+				tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
+				if (world.isClient)
 				{
 					world.playSound(player, player.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
 				}
@@ -106,18 +104,15 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 			int timer = tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
 			if (timer > 0)
 			{
-				if (!world.isClient)
+				tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, timer - 1);
+				if (entity instanceof PlayerEntity)
 				{
-					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, timer - 1);
-					if (entity instanceof PlayerEntity)
+					if (!world.isClient)
 					{
 						((PlayerEntity) entity).addChatMessage(new StringTextComponent((timer / 20) + "s Remaining"), true);
-					}
-				} else
-				{
-					if (entity instanceof PlayerEntity && timer - 1 == 0)
+					} else if (timer - 1 == 0)
 					{
-						world.playSound((PlayerEntity)entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
+						world.playSound((PlayerEntity) entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
 					}
 				}
 			}

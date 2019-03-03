@@ -25,7 +25,7 @@ public abstract class PlayerEntityMixin extends LivingEntity
 		super(type, world);
 	}
 
-	@Inject(at = @At(value="INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;method_7350()V"), method = "attack")
+	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;method_7350()V"), method = "attack")
 	private void attack(Entity entity, CallbackInfo info)
 	{
 		ItemStack stack = getMainHandStack();
@@ -34,14 +34,11 @@ public abstract class PlayerEntityMixin extends LivingEntity
 		{
 			if (tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) > 0)
 			{
-				System.out.println("its got a timer");
 				ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
 				if (active == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 				{
-					if (!world.isClient)
-					{
-						tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
-					} else
+					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
+					if (world.isClient)
 					{
 						world.playSound(null, getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
 					}

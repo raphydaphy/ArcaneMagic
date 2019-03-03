@@ -19,6 +19,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
+import java.util.UUID;
+
 public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements SidedInventory, Tickable
 {
 	private static final String ACTIVE_KEY = "active";
@@ -51,23 +53,27 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 				craftingTime = 0;
 				active = false;
 				ItemStack output = getInvStack(0).copy();
+				output.getOrCreateTag().putUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID, UUID.randomUUID());
 				CompoundTag outputTag = output.getTag();
-				Item crystal = getInvStack(2).getItem();
-				if (crystal instanceof CrystalItem)
+				if (outputTag != null)
 				{
-					if (getInvStack(1).getItem() == Items.REDSTONE)
+					Item crystal = getInvStack(2).getItem();
+					if (crystal instanceof CrystalItem)
 					{
-						// Make sure we aren't adding the a crystal that is already present somewhere on the item
-						if (outputTag == null || !outputTag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
+						if (getInvStack(1).getItem() == Items.REDSTONE)
 						{
-							output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
-						}
-					} else if (getInvStack(1).getItem() == Items.LAPIS_LAZULI)
-					{
-						// Make sure we aren't adding the a crystal that is already present somewhere on the item
-						if (outputTag == null || !outputTag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
+							// Make sure we aren't adding the a crystal that is already present somewhere on the item
+							if (!outputTag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY).equals(((CrystalItem) crystal).type.id))
+							{
+								output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+							}
+						} else if (getInvStack(1).getItem() == Items.LAPIS_LAZULI)
 						{
-							output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+							// Make sure we aren't adding the a crystal that is already present somewhere on the item
+							if (!outputTag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY).equals(((CrystalItem) crystal).type.id))
+							{
+								output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+							}
 						}
 					}
 				}

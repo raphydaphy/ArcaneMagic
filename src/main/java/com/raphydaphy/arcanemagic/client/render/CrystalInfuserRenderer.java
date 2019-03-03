@@ -1,8 +1,11 @@
 package com.raphydaphy.arcanemagic.client.render;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.RenderUtils;
+import me.shedaniel.rei.client.ClientHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
@@ -11,6 +14,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.Direction;
 
 public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBlockEntity>
 {
@@ -48,6 +52,13 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 					scale = scale - ((craftingTime - 7500) / 500f) * scale;
 				}
 
+				GlStateManager.translated(renderX, renderY, renderZ);
+				if (!active)
+				{
+					Direction dir = getWorld().getBlockState(entity.getPos()).get(OrientableBlockBase.FACING);
+					RenderUtils.rotateTo(dir);
+				}
+
 				// Render Equipment
 				if (!equipment.isEmpty())
 				{
@@ -55,15 +66,13 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 
 					if (active)
 					{
-						GlStateManager.translated(renderX + .5, renderY + 1 + Math.sin((Math.PI / 180) * (ticks * 4)) / 15, renderZ + .5);
+						GlStateManager.translated(.5, 1 + Math.sin((Math.PI / 180) * (ticks * 4)) / 15, .5);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
-
-
 					} else
 					{
-						GlStateManager.translated(renderX + .5, renderY + .635, renderZ + .5);
-						GlStateManager.rotated(90, 1, 0, 0);
+						GlStateManager.translated(.5, .635, .5);
 
+						GlStateManager.rotated(90, 1, 0, 0);
 						if (equipment.getItem() instanceof ArmorItem && ((ArmorItem) equipment.getItem()).getSlotType() == EquipmentSlot.HEAD)
 						{
 							GlStateManager.translated(0, -0.07, 0);
@@ -95,12 +104,11 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 						float posX = (float) (.5 + Math.cos((Math.PI / 180) * (ticks * 2)) / inverseRadius);
 						float posY = (float) (1 - Math.sin((Math.PI / 180) * (ticks * 4)) / 8);
 						float posZ = (float) (.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius);
-						GlStateManager.translated(renderX + posX, renderY + posY, renderZ + posZ);
+						GlStateManager.translated(posX, posY, posZ);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
 					} else
 					{
-						GlStateManager.translated(renderX + .35, renderY + .635, renderZ + .3);
-
+						GlStateManager.translated(.35, .635, .3);
 						if (binder.getItem() == Items.LAPIS_LAZULI)
 						{
 							GlStateManager.rotated(90, 1, 0, 0);
@@ -143,11 +151,11 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 						float posX = (float) (0.5 + Math.cos((Math.PI / 180) * (ticks * 2)) / inverseRadius);
 						float posY = (float) (1 - Math.sin((Math.PI / 180) * ((ticks + 45) * 4)) / 8);
 						float posZ = (float) (0.5 + Math.sin((Math.PI / 180) * (ticks * 2)) / inverseRadius);
-						GlStateManager.translated(renderX + posX, renderY + posY, renderZ + posZ);
+						GlStateManager.translated(posX, posY, posZ);
 						GlStateManager.rotated(2 * ticks, 0, 1, 0);
 					} else
 					{
-						GlStateManager.translated(renderX + .69, renderY + .635, renderZ + .6);
+						GlStateManager.translated(.69, .635, .6);
 						GlStateManager.rotated(90, 1, 0, 0);
 						GlStateManager.rotated(50, 0, 0, 1);
 
