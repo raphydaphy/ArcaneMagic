@@ -25,7 +25,7 @@ public abstract class DamageSourceMixin
 		Entity attacker = getAttacker();
 		if (attacker instanceof LivingEntity)
 		{
-			ItemStack stack = ((LivingEntity)attacker).getStackInHand(((LivingEntity)attacker).preferredHand);
+			ItemStack stack = ((LivingEntity)attacker).getMainHandStack();
 			CompoundTag tag;
 			if (!stack.isEmpty() && stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null)
 			{

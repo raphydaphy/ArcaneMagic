@@ -89,7 +89,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
 				} else
 				{
-					world.playSound(player, player.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+					world.playSound(player, player.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
 				}
 				return new TypedActionResult<>(ActionResult.SUCCESS, stack);
 			}
@@ -117,7 +117,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 				{
 					if (entity instanceof PlayerEntity && timer - 1 == 0)
 					{
-						world.playSound((PlayerEntity)entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+						world.playSound((PlayerEntity)entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
 					}
 				}
 			}

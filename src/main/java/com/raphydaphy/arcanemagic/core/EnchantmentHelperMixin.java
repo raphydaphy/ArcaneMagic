@@ -20,7 +20,7 @@ public class EnchantmentHelperMixin
 	@Inject(at = @At("RETURN"), method = "getLooting", cancellable = true)
 	private static void getLooting(LivingEntity entity, CallbackInfoReturnable<Integer> info)
 	{
-		ItemStack hand = entity.getStackInHand(entity.preferredHand);
+		ItemStack hand = entity.getMainHandStack();
 		CompoundTag tag;
 		if (hand.getItem() instanceof ICrystalEquipment && (tag = hand.getTag()) != null)
 		{
@@ -35,7 +35,7 @@ public class EnchantmentHelperMixin
 	@Inject(at = @At("RETURN"), method = "getSweepingMultiplier", cancellable = true)
 	private static void getSweepingMultiplier(LivingEntity entity, CallbackInfoReturnable<Float> info)
 	{
-		ItemStack hand = entity.getStackInHand(entity.preferredHand);
+		ItemStack hand = entity.getMainHandStack();
 		CompoundTag tag;
 		if (hand.getItem() instanceof ICrystalEquipment && (tag = hand.getTag()) != null)
 		{
@@ -64,7 +64,7 @@ public class EnchantmentHelperMixin
 			{
 				if (tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) > 0)
 				{
-					info.setReturnValue(info.getReturnValue() + 7);
+					info.setReturnValue(info.getReturnValue() + 15);
 				}
 			}
 		}

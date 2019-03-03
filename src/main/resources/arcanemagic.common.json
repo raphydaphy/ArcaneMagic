@@ -7,10 +7,10 @@
 	"LivingEntityMixin",
 	"LivingEntityHooks",
 	"BucketItemMixin",
-	"SpawnEggItemHooks",
 	"ItemStackMixin",
 	"EnchantmentHelperMixin",
-	"DamageSourceMixin"
+	"DamageSourceMixin",
+	"PlayerEntityMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

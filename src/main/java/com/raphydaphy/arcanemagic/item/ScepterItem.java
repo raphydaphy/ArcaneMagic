@@ -7,7 +7,6 @@ import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.TransfigurationTableBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.core.LivingEntityHooks;
-import com.raphydaphy.arcanemagic.core.SpawnEggItemHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
@@ -37,8 +36,6 @@ import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-
-import java.util.Objects;
 
 public class ScepterItem extends SoulStorageItem
 {
@@ -249,9 +246,9 @@ public class ScepterItem extends SoulStorageItem
 
 		SpawnEggItem egg = SpawnEggItem.forEntity(target.getType());
 
-		if (egg instanceof SpawnEggItemHooks)
+		if (egg != null)
 		{
-			int color = ((SpawnEggItemHooks) egg).getColor();
+			int color = egg.method_8016(0); // getColor
 
 			float red = ((color >> 16) & 0xFF) / 255f;
 			float green = ((color >> 8) & 0xFF) / 255f;
