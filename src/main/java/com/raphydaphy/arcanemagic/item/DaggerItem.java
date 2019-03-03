@@ -6,13 +6,17 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.network.packet.EntityEquipmentUpdateS2CPacket;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.StringTextComponent;
@@ -82,7 +86,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 				ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
 				if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
 				{
-					time = 3 * 20;
+					time = 5 * 20;
 				}
 				tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
 				if (world.isClient)
