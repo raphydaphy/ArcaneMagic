@@ -64,10 +64,6 @@ public class ModRegistry
 	public static CrystalItem REDSTONE_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.REDSTONE);
 	public static CrystalItem COAL_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.COAL);
 	public static Item PURE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-	public static CrystalArmorItem EMERALD_CRYSTAL_HELMET = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.HEAD);
-	public static CrystalArmorItem EMERALD_CRYSTAL_CHESTPLATE = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.CHEST);
-	public static CrystalArmorItem EMERALD_CRYSTAL_LEGGINGS = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.LEGS);
-	public static CrystalArmorItem EMERALD_CRYSTAL_BOOTS = new CrystalArmorItem(CrystalArmorItem.ModArmorMaterials.EMERALD_CRYSTAL, EquipmentSlot.FEET);
 	public static DaggerItem IRON_DAGGER = new DaggerItem(ToolMaterials.IRON, 3, -2.4f);
 	public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
 
@@ -115,10 +111,6 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal"), REDSTONE_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "coal_crystal"), COAL_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "pure_crystal"), PURE_CRYSTAL);
-		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_helmet"), EMERALD_CRYSTAL_HELMET);
-		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_chestplate"), EMERALD_CRYSTAL_CHESTPLATE);
-		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_leggings"), EMERALD_CRYSTAL_LEGGINGS);
-		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal_boots"), EMERALD_CRYSTAL_BOOTS);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "iron_dagger"), IRON_DAGGER);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
 

@@ -3,7 +3,6 @@ package com.raphydaphy.arcanemagic.core;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.item.CrystalToolItem;
 import com.raphydaphy.arcanemagic.item.DaggerItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
