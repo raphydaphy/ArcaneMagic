@@ -67,6 +67,7 @@ public class ParchmentItem extends Item
 		return type == ParchmentType.ANCIENT;
 	}
 
+	@Environment(EnvType.CLIENT)
 	private void openGUI(ItemStack stack, IParchment parchment)
 	{
 		MinecraftClient.getInstance().openScreen(new ParchmentScreen(stack, parchment));

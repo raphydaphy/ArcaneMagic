@@ -17,4 +17,5 @@ public class ArcaneMagicConstants
 
 	public static final String PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
 	public static final String ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
+	public static final String ACTIVE_TIMER_KEY = "ActiveTimer";
 }

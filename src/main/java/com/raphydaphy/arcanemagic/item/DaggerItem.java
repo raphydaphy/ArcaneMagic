@@ -1,29 +1,28 @@
 package com.raphydaphy.arcanemagic.item;
 
-import com.google.common.collect.Multimap;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityGroup;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.*;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TextComponent;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 public class DaggerItem extends SwordItem implements ICrystalEquipment
@@ -58,23 +57,70 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
-			boolean changed = false;
-			ArcaneMagicUtils.ForgeCrystal passive = null;
-			ArcaneMagicUtils.ForgeCrystal active = null;
-
 			if (tag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
 			{
-				changed = true;
-				active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
 				lines.add(new StringTextComponent("Active Crystal: " + tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY)));
 			}
 			if (tag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY))
 			{
-				changed = true;
-				passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 				lines.add(new StringTextComponent("Passive Crystal: " + tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY)));
 			}
 
+		}
+	}
+
+	@Override
+	public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
+	{
+		ItemStack stack = player.getStackInHand(hand);
+		CompoundTag tag = stack.getTag();
+		if (player.isSneaking() && tag != null && tag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
+		{
+			if (tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) <= 0)
+			{
+				if (!world.isClient)
+				{
+					int time = 5 * 20;
+					ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+					if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
+					{
+						time = 3 * 20;
+					}
+					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
+				} else
+				{
+					world.playSound(player, player.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+				}
+				return new TypedActionResult<>(ActionResult.SUCCESS, stack);
+			}
+		}
+		return new TypedActionResult<>(ActionResult.PASS, stack);
+	}
+
+	@Override
+	public void onEntityTick(ItemStack stack, World world, Entity entity, int slot, boolean selected)
+	{
+		CompoundTag tag = stack.getTag();
+		if (tag != null)
+		{
+			int timer = tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
+			if (timer > 0)
+			{
+				if (!world.isClient)
+				{
+					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, timer - 1);
+					if (entity instanceof PlayerEntity)
+					{
+						((PlayerEntity) entity).addChatMessage(new StringTextComponent((timer / 20) + "s Remaining"), true);
+					}
+				} else
+				{
+					if (entity instanceof PlayerEntity && timer - 1 == 0)
+					{
+						world.playSound((PlayerEntity)entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+					}
+				}
+			}
 		}
 	}
 }
