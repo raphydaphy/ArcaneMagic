@@ -6,6 +6,8 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -38,9 +40,16 @@ public abstract class PlayerEntityMixin extends LivingEntity
 				if (active == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 				{
 					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
-					if (world.isClient)
+				} else if (active == ArcaneMagicUtils.ForgeCrystal.EMERALD)
+				{
+					if (entity instanceof LivingEntity)
 					{
-						world.playSound(null, getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
+						if (!world.isClient)
+						{
+							((LivingEntity) entity).addPotionEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 128, 128, true, false));
+							((LivingEntity) entity).addPotionEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 128, 128, true, false));
+						}
+						tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
 					}
 				}
 			}

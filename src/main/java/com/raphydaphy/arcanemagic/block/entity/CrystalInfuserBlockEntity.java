@@ -9,8 +9,11 @@ import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -78,9 +81,28 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 					}
 				}
 
-				ItemEntity outputEntity = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, output);
-				outputEntity.setVelocity(0, 0, 0);
-				world.spawnEntity(outputEntity);
+				BlockEntity below = world.getBlockEntity(pos.add(0, -1, 0));
+				boolean addedToHopper = false;
+				if (below instanceof HopperBlockEntity)
+				{
+					HopperBlockEntity hopper = (HopperBlockEntity) below;
+					for (int i = 0; i < hopper.getInvSize(); i++)
+					{
+						if (hopper.getInvStack(i).isEmpty())
+						{
+							addedToHopper = true;
+							hopper.setInvStack(i, output);
+							hopper.markDirty();
+							break;
+						}
+					}
+				}
+				if (!addedToHopper)
+				{
+					ItemEntity outputEntity = new ItemEntity(world, pos.getX() + .5, pos.getY() + 1, pos.getZ() + .5, output);
+					outputEntity.setVelocity(0, 0, 0);
+					world.spawnEntity(outputEntity);
+				}
 				clear();
 				markDirty();
 			} else if (world.getTime() % 20 == 0 && active)
@@ -258,6 +280,6 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return true;
+		return false;
 	}
 }
