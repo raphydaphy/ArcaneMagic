@@ -87,6 +87,9 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 				if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
 				{
 					time = 5 * 20;
+				} else if (crystal == ArcaneMagicUtils.ForgeCrystal.COAL)
+				{
+					time = 20 * 20;
 				}
 				tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
 				if (world.isClient)

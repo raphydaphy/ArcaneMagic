@@ -13,12 +13,14 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Random;
 import java.util.UUID;
 
 @Mixin(ItemStack.class)
@@ -40,6 +42,20 @@ public abstract class ItemStackMixin
 			if (passive == ArcaneMagicUtils.ForgeCrystal.COAL)
 			{
 				info.setReturnValue((int)(info.getReturnValue() * 1.2f));
+			}
+		}
+	}
+
+	@Inject(at = @At("HEAD"), method="applyDamage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
+	private void applyDamage(int amount, Random rand, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> info)
+	{
+		CompoundTag tag = getTag();
+		if (tag != null && tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) > 0)
+		{
+			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+			if (active == ArcaneMagicUtils.ForgeCrystal.COAL)
+			{
+				info.setReturnValue(false);
 			}
 		}
 	}
@@ -78,16 +94,19 @@ public abstract class ItemStackMixin
 	{
 		CompoundTag tagOne;
 		CompoundTag tagTwo;
-		if (!info.getReturnValue() && one.getItem() instanceof ICrystalEquipment && two.getItem() instanceof ICrystalEquipment && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
+		if (one.getDamage() == two.getDamage())
 		{
-			UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID);
-			if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID)))
+			if (!info.getReturnValue() && one.getItem() instanceof ICrystalEquipment && two.getItem() instanceof ICrystalEquipment && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
 			{
-				int timerOne = tagOne.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
-				int timerTwo = tagTwo.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
-				if ((timerOne != 0 && timerTwo != 0) || (timerTwo == 0 && timerOne == 0))
+				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID);
+				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID)))
 				{
-					info.setReturnValue(true);
+					int timerOne = tagOne.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
+					int timerTwo = tagTwo.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
+					if ((timerOne != 0 && timerTwo != 0) || (timerTwo == 0 && timerOne == 0))
+					{
+						info.setReturnValue(true);
+					}
 				}
 			}
 		}
