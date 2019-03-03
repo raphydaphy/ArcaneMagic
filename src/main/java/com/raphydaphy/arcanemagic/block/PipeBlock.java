@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.block;
 import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.PipeBlockEntity;
 import io.github.prospector.silk.fluid.FluidContainer;
+import io.github.prospector.silk.fluid.FluidInstance;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -125,31 +126,36 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 
 	private BlockState updateState(IWorld world, BlockState base, BlockPos pos)
 	{
-		if (canConnect(world, pos.add(0, 1, 0))) base = base.with(UP, true);
+		if (canConnect(world, Direction.UP, pos.add(0, 1, 0))) base = base.with(UP, true);
 		else base = base.with(UP, false);
 
-		if (canConnect(world, pos.add(0, -1, 0))) base = base.with(DOWN, true);
+		if (canConnect(world, Direction.DOWN,  pos.add(0, -1, 0))) base = base.with(DOWN, true);
 		else base = base.with(DOWN, false);
 
-		if (canConnect(world, pos.add(0, 0, -1))) base = base.with(NORTH, true);
+		if (canConnect(world, Direction.NORTH, pos.add(0, 0, -1))) base = base.with(NORTH, true);
 		else base = base.with(NORTH, false);
 
-		if (canConnect(world, pos.add(1, 0, 0))) base = base.with(EAST, true);
+		if (canConnect(world, Direction.EAST, pos.add(1, 0, 0))) base = base.with(EAST, true);
 		else base = base.with(EAST, false);
 
-		if (canConnect(world, pos.add(0, 0, 1))) base = base.with(SOUTH, true);
+		if (canConnect(world, Direction.SOUTH, pos.add(0, 0, 1))) base = base.with(SOUTH, true);
 		else base = base.with(SOUTH, false);
 
-		if (canConnect(world, pos.add(-1, 0, 0))) base = base.with(WEST, true);
+		if (canConnect(world, Direction.WEST, pos.add(-1, 0, 0))) base = base.with(WEST, true);
 		else base = base.with(WEST, false);
 
 		return base;
 	}
 
-	private boolean canConnect(IWorld world, BlockPos pos)
+	private boolean canConnect(IWorld world, Direction offset, BlockPos pos)
 	{
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		return blockEntity instanceof FluidContainer;
+		if (blockEntity instanceof FluidContainer)
+		{
+			FluidInstance[] fluids = ((FluidContainer)blockEntity).getFluids(offset.getOpposite());
+			return fluids.length > 0 || blockEntity instanceof PipeBlockEntity;
+		}
+		return false;
 	}
 
 	public static BooleanProperty getProp(Direction dir)

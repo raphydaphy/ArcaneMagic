@@ -3,12 +3,18 @@ package com.raphydaphy.arcanemagic.block.entity;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
+import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import io.github.prospector.silk.fluid.DropletValues;
+import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -19,12 +25,14 @@ import net.minecraft.util.math.Direction;
 
 import java.util.Optional;
 
-public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
+public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickable
 {
+	private static final int MAX_FLUID = DropletValues.BLOCK;
 	private static final int TOTAL_SMELTING_TIME = 150;
 	private static final String SMELT_TIME_KEY = "SmeltTime";
 	private final int[] slots = {0, 1, 2};
 
+	private FluidInstance liquified_soul = new FluidInstance(Fluids.EMPTY);
 	private int smeltTime = 0;
 
 	public SmelterBlockEntity()
@@ -41,35 +49,46 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 			setBottom = true;
 		}
 
-		if (bottom && smeltTime > 0)
+		if (bottom)
 		{
-			smeltTime++;
-
-			if (world.isClient)
+			if (smeltTime > 0)
 			{
-				doParticles();
-			} else
-			{
-				if (smeltTime % 10 == 0)
-				{
-					markDirty();
-				}
+				smeltTime++;
 
-				if (smeltTime >= TOTAL_SMELTING_TIME)
+				if (world.isClient)
 				{
-					Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
-
-					if (optionalRecipe.isPresent())
+					doParticles();
+				} else
+				{
+					if (smeltTime % 10 == 0)
 					{
-						BlastingRecipe recipe = optionalRecipe.get();
-						setInvStack(0, ItemStack.EMPTY);
-						setInvStack(1, recipe.getOutput().copy());
-						setInvStack(2, recipe.getOutput().copy());
+						markDirty();
 					}
 
-					smeltTime = 0;
-					markDirty();
+					if (smeltTime >= TOTAL_SMELTING_TIME)
+					{
+						Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
+
+						if (optionalRecipe.isPresent())
+						{
+							BlastingRecipe recipe = optionalRecipe.get();
+							setInvStack(0, ItemStack.EMPTY);
+							setInvStack(1, recipe.getOutput().copy());
+							setInvStack(2, recipe.getOutput().copy());
+						}
+
+						smeltTime = 0;
+						markDirty();
+					}
 				}
+			} else if (!world.isClient && this.liquified_soul.getAmount() >= ArcaneMagicConstants.LIQUIFIED_SOUL_RATIO * ArcaneMagicConstants.SOUL_PER_SMELT && startSmelting(false))
+			{
+				this.liquified_soul.subtractAmount(ArcaneMagicConstants.LIQUIFIED_SOUL_RATIO * ArcaneMagicConstants.SOUL_PER_SMELT);
+				if (liquified_soul.getAmount() <= 0)
+				{
+					this.liquified_soul.setFluid(Fluids.EMPTY);
+				}
+				markDirty();
 			}
 		}
 	}
@@ -133,6 +152,7 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 		if (bottom)
 		{
 			tag.putInt(SMELT_TIME_KEY, smeltTime);
+			liquified_soul.toTag(tag);
 		}
 	}
 
@@ -143,6 +163,7 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 		if (bottom)
 		{
 			smeltTime = tag.getInt(SMELT_TIME_KEY);
+			liquified_soul = new FluidInstance(tag);
 		}
 	}
 
@@ -207,5 +228,58 @@ public class SmelterBlockEntity extends DoubleBlockEntity implements Tickable
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
 		return bottom && slot != 0;
+	}
+
+	@Override
+	protected boolean canInsertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
+	{
+		return getFluidsImpl(bottom, fromSide).length > 0 && fluid == ModRegistry.LIQUIFIED_SOUL && this.liquified_soul.getAmount() + amount <= MAX_FLUID;
+	}
+
+	@Override
+	protected boolean canExtractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
+	{
+		return false;
+	}
+
+	@Override
+	protected void insertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
+	{
+		if (!world.isClient && canInsertFluidImpl(bottom, fromSide, fluid, amount))
+		{
+			if (this.liquified_soul.getFluid() == Fluids.EMPTY)
+			{
+				this.liquified_soul.setFluid(fluid);
+			}
+			this.liquified_soul.addAmount(amount);
+		}
+	}
+
+	@Override
+	protected void extractFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
+	{
+
+	}
+
+	@Override
+	protected void setFluidImpl(boolean bottom, Direction fromSide, FluidInstance instance)
+	{
+		if (!world.isClient)
+		{
+			this.liquified_soul = instance;
+		}
+	}
+
+	@Override
+	protected FluidInstance[] getFluidsImpl(boolean bottom, Direction fromSide)
+	{
+		Direction facing = world.getBlockState(pos).get(SmelterBlock.FACING);
+		return (bottom && fromSide != facing) ? new FluidInstance[] { liquified_soul } : new FluidInstance[] { };
+	}
+
+	@Override
+	public int getMaxCapacity()
+	{
+		return MAX_FLUID;
 	}
 }

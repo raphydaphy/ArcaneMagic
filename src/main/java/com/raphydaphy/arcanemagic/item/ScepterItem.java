@@ -136,7 +136,7 @@ public class ScepterItem extends SoulStorageItem
 					SmelterBlockEntity smelter = (SmelterBlockEntity) blockEntity;
 					if (smelter.startSmelting(true))
 					{
-						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 2))
+						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), ArcaneMagicConstants.SOUL_PER_SMELT))
 						{
 							smelter.startSmelting(false);
 							ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);

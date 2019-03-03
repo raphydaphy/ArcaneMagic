@@ -23,7 +23,6 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	private static final String WATER_KEY = "Water";
 	private static final String LIQUIFIED_SOUL_KEY = "LiquifiedSoul";
 	private static final int WATER_USE = DropletValues.NUGGET;
-	private static final int LIQUIFIED_SOUL_PRODUCTION = DropletValues.NUGGET + 5;
 	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
 	private final int[] slots = {0};
 	public long ticks = 0;
@@ -52,13 +51,13 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 			if (!pendant.isEmpty() && pendant.getItem() == ModRegistry.SOUL_PENDANT)
 			{
 				CompoundTag tag = pendant.getTag();
-				if (liquified_soul.getAmount() + LIQUIFIED_SOUL_PRODUCTION <= MAX_FLUID && water.getAmount() >= WATER_USE && tag != null)
+				if (liquified_soul.getAmount() + ArcaneMagicConstants.LIQUIFIED_SOUL_RATIO <= MAX_FLUID && water.getAmount() >= WATER_USE && tag != null)
 				{
 					int pendantSoul = tag.getInt(ArcaneMagicConstants.SOUL_KEY);
 					if (pendantSoul >= 1)
 					{
 						water.subtractAmount(WATER_USE);
-						liquified_soul.addAmount(LIQUIFIED_SOUL_PRODUCTION);
+						liquified_soul.addAmount(ArcaneMagicConstants.LIQUIFIED_SOUL_RATIO);
 						tag.putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - 1);
 						markDirty();
 					}
