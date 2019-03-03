@@ -9,6 +9,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 
 public class ClientEvents
@@ -116,9 +117,10 @@ public class ClientEvents
 			}
 			int currentSoul = 0;
 
-			if (held.getTag() != null)
+			CompoundTag tag = held.getTag();
+			if (tag != null)
 			{
-				currentSoul = held.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+				currentSoul = tag.getInt(ArcaneMagicConstants.SOUL_KEY);
 			}
 
 			if (lastSoulMeterMode == SoulMeterMode.EMPTY)
@@ -164,9 +166,10 @@ public class ClientEvents
 				ItemStack pendantItem = mc.player.inventory.getInvStack(pendant);
 				if (!pendantItem.isEmpty() && pendantItem.getItem() == ModRegistry.SOUL_PENDANT)
 				{
-					if (pendantItem.getTag() != null)
+					CompoundTag pendantTag = pendantItem.getTag();
+					if (pendantTag != null)
 					{
-						currentSoul = currentSoul + pendantItem.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+						currentSoul = currentSoul + pendantTag.getInt(ArcaneMagicConstants.SOUL_KEY);
 					}
 					if (pureScepter)
 					{

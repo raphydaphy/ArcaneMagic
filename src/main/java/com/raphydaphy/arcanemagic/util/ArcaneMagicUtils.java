@@ -16,7 +16,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.command.TagCommand;
 import net.minecraft.sortme.ItemScatterer;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -52,30 +54,32 @@ public class ArcaneMagicUtils
 			}
 			int pendantSoul = 0;
 			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+			CompoundTag scepterTag = scepter.getTag();
 
 			if (!pendant.isEmpty())
 			{
 				pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
 			}
 
-			if (amount <= ((ScepterItem) scepter.getItem()).maxSoul && amount <= scepterSoul + pendantSoul)
+			if (scepterTag != null && amount <= ((ScepterItem) scepter.getItem()).maxSoul && amount <= scepterSoul + pendantSoul)
 			{
 				if (!world.isClient)
 				{
-					if (!pendant.isEmpty() && pendant.getTag() != null)
+					CompoundTag pendantTag;
+					if (!pendant.isEmpty() && (pendantTag = pendant.getTag()) != null)
 					{
 						if (pendantSoul >= amount)
 						{
-							pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - amount);
+							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - amount);
 						} else
 						{
 							amount -= pendantSoul;
-							pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, 0);
-							Objects.requireNonNull(scepter.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - amount);
+							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, 0);
+							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - amount);
 						}
 					} else
 					{
-						Objects.requireNonNull(scepter.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - amount);
+						scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul - amount);
 					}
 				}
 				return true;
@@ -102,27 +106,32 @@ public class ArcaneMagicUtils
 				amount = scepterMax;
 			}
 
-			if (!world.isClient && scepter.getTag() != null)
+			CompoundTag scepterTag;
+			if (!world.isClient && (scepterTag = scepter.getTag()) != null)
 			{
 				// All the new soul can fit into the scepter
 				if (scepterMax - scepterSoul >= amount)
 				{
-					scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + amount);
+					scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + amount);
 					return true;
 				} else
 				{
 					amount -= (scepterMax - scepterSoul);
-					scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterMax);
+					scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterMax);
 				}
 
 				if (amount > 0 && !pendant.isEmpty())
 				{
 					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-					if (pendantSoul + amount > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+					CompoundTag pendantTag = pendant.getTag();
+					if (pendantTag != null)
 					{
-						amount = ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL - pendantSoul;
+						if (pendantSoul + amount > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+						{
+							amount = ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL - pendantSoul;
+						}
+						pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul + amount);
 					}
-					Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul + amount);
 				}
 			}
 			return true;

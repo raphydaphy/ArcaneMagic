@@ -51,21 +51,21 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 				craftingTime = 0;
 				active = false;
 				ItemStack output = getInvStack(0).copy();
-
+				CompoundTag outputTag = output.getTag();
 				Item crystal = getInvStack(2).getItem();
 				if (crystal instanceof CrystalItem)
 				{
 					if (getInvStack(1).getItem() == Items.REDSTONE)
 					{
 						// Make sure we aren't adding the a crystal that is already present somewhere on the item
-						if (output.getTag() == null || !output.getTag().containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) || !output.getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
+						if (outputTag == null || !outputTag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
 						{
 							output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
 						}
 					} else if (getInvStack(1).getItem() == Items.LAPIS_LAZULI)
 					{
 						// Make sure we aren't adding the a crystal that is already present somewhere on the item
-						if (output.getTag() == null || !output.getTag().containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY) || !output.getTag().getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
+						if (outputTag == null || !outputTag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY).equals(((CrystalItem)crystal).type.id))
 						{
 							output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
 						}

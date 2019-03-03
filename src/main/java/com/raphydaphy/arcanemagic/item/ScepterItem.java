@@ -24,6 +24,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -57,24 +58,29 @@ public class ScepterItem extends SoulStorageItem
 		if (world.getTime() % 20 == 0 && !world.isClient && selected && holder instanceof PlayerEntity)
 		{
 			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-			if (scepterSoul < this.maxSoul && scepter.getTag() != null)
+			CompoundTag scepterTag = scepter.getTag();
+			if (scepterSoul < this.maxSoul && scepterTag != null)
 			{
 				int pendantSlot = ArcaneMagicUtils.findPendant((PlayerEntity) holder);
 				if (pendantSlot != -1)
 				{
 					ItemStack pendant = ((PlayerEntity) holder).inventory.getInvStack(pendantSlot);
 					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+					CompoundTag pendantTag = pendant.getTag();
 
-					if (scepterSoul + pendantSoul <= this.maxSoul)
+					if (pendantTag != null)
 					{
-						// Transfer all soul from the pendant into the scepter
-						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul);
-						Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, 0);
-					} else
-					{
-						// Fill the scepter and leave the remaining soul in the pendant
-						scepter.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, maxSoul);
-						Objects.requireNonNull(pendant.getTag()).putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul - this.maxSoul);
+						if (scepterSoul + pendantSoul <= this.maxSoul)
+						{
+							// Transfer all soul from the pendant into the scepter
+							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul);
+							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, 0);
+						} else
+						{
+							// Fill the scepter and leave the remaining soul in the pendant
+							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, maxSoul);
+							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul - this.maxSoul);
+						}
 					}
 				}
 			}
@@ -84,7 +90,8 @@ public class ScepterItem extends SoulStorageItem
 	@Override
 	public ActionResult useOnBlock(ItemUsageContext ctx)
 	{
-		if (ctx.getItemStack().getTag() != null)
+		CompoundTag tag = ctx.getItemStack().getTag();
+		if (tag != null)
 		{
 			Block block = ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock();
 			if (block == Blocks.CRAFTING_TABLE)
@@ -190,14 +197,15 @@ public class ScepterItem extends SoulStorageItem
 	@Override
 	public void onItemStopUsing(ItemStack stack, World world, LivingEntity player, int int_1)
 	{
-		if (!world.isClient && stack.getTag() != null)
+		CompoundTag tag = stack.getTag();
+		if (!world.isClient && tag != null)
 		{
-			Entity drainTarget = player.world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
+			Entity drainTarget = player.world.getEntityById(tag.getInt(DRAIN_TARGET));
 			if (drainTarget instanceof LivingEntity)
 			{
 				((LivingEntity) drainTarget).clearPotionEffects();
 			}
-			stack.getTag().remove(DRAIN_TARGET);
+			tag.remove(DRAIN_TARGET);
 		}
 
 		if (player instanceof PlayerEntity)
@@ -211,9 +219,10 @@ public class ScepterItem extends SoulStorageItem
 	{
 		if (player instanceof PlayerEntity)
 		{
-			if (stack.getTag() != null)
+			CompoundTag tag = stack.getTag();
+			if (tag != null)
 			{
-				Entity drainTarget = player.world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
+				Entity drainTarget = player.world.getEntityById(tag.getInt(DRAIN_TARGET));
 				if (drainTarget instanceof LivingEntity)
 				{
 					if (world.isClient)
@@ -260,14 +269,15 @@ public class ScepterItem extends SoulStorageItem
 	@Override
 	public ItemStack onItemFinishedUsing(ItemStack stack, World world, LivingEntity livingEntity)
 	{
-		if (!world.isClient && stack.getTag() != null)
+		CompoundTag tag = stack.getTag();
+		if (!world.isClient && tag != null)
 		{
-			Entity mousedEntity = world.getEntityById(stack.getTag().getInt(DRAIN_TARGET));
+			Entity mousedEntity = world.getEntityById(tag.getInt(DRAIN_TARGET));
 			if (mousedEntity instanceof LivingEntity)
 			{
 				mousedEntity.damage(ModRegistry.DRAINED_DAMAGE, ((LivingEntity) mousedEntity).getHealthMaximum());
 			}
-			stack.getTag().remove(DRAIN_TARGET);
+			tag.remove(DRAIN_TARGET);
 			ArcaneMagicUtils.addSoul(world, stack, livingEntity instanceof PlayerEntity ? (PlayerEntity) livingEntity : null, ArcaneMagic.RANDOM.nextInt(3) + 4);
 		}
 

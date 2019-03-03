@@ -14,6 +14,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
@@ -51,7 +52,8 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 
 	public boolean useScepter(World world, BlockEntity blockEntity, ItemStack scepter, PlayerEntity player, Hand hand)
 	{
-		if (scepter.getTag() != null)
+		CompoundTag tag = scepter.getTag();
+		if (tag != null)
 		{
 			Optional<TransfigurationRecipe> recipe = world.getRecipeManager().get(TransfigurationRecipe.TYPE, (TransfigurationTableBlockEntity) blockEntity, world);
 

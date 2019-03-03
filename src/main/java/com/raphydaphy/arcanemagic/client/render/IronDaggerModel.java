@@ -18,6 +18,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -125,10 +126,11 @@ public class IronDaggerModel implements UnbakedModel
 			ArcaneMagicUtils.ForgeCrystal pommel = null;
 			String key;
 
-			if (stack.getTag() != null)
+			CompoundTag tag = stack.getTag();
+			if (tag != null)
 			{
-				hilt = ArcaneMagicUtils.ForgeCrystal.getFromID(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY);
-				pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY);
+				hilt = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+				pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 			}
 
 			key = "" + hilt + pommel;

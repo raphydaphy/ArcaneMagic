@@ -51,14 +51,15 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 			ItemStack pendant = getInvStack(0);
 			if (!pendant.isEmpty() && pendant.getItem() == ModRegistry.SOUL_PENDANT)
 			{
-				if (liquified_soul.getAmount() + LIQUIFIED_SOUL_PRODUCTION <= MAX_FLUID && water.getAmount() >= WATER_USE && pendant.getTag() != null)
+				CompoundTag tag = pendant.getTag();
+				if (liquified_soul.getAmount() + LIQUIFIED_SOUL_PRODUCTION <= MAX_FLUID && water.getAmount() >= WATER_USE && tag != null)
 				{
-					int pendantSoul = pendant.getTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+					int pendantSoul = tag.getInt(ArcaneMagicConstants.SOUL_KEY);
 					if (pendantSoul >= 1)
 					{
 						water.subtractAmount(WATER_USE);
 						liquified_soul.addAmount(LIQUIFIED_SOUL_PRODUCTION);
-						pendant.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - 1);
+						tag.putInt(ArcaneMagicConstants.SOUL_KEY, pendantSoul - 1);
 						markDirty();
 					}
 				}

@@ -9,7 +9,8 @@
 	"BucketItemMixin",
 	"SpawnEggItemHooks",
 	"ItemStackMixin",
-	"EnchantmentHelperMixin"
+	"EnchantmentHelperMixin",
+	"DamageSourceMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

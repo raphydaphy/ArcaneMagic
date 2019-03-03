@@ -18,6 +18,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.*;
 import net.minecraft.world.World;
 
@@ -54,23 +55,24 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 	@Environment(EnvType.CLIENT)
 	public void buildTooltip(ItemStack stack, World world, List<TextComponent> lines, TooltipContext ctx)
 	{
-		if (stack.getTag() != null)
+		CompoundTag tag = stack.getTag();
+		if (tag != null)
 		{
 			boolean changed = false;
 			ArcaneMagicUtils.ForgeCrystal passive = null;
 			ArcaneMagicUtils.ForgeCrystal active = null;
 
-			if (stack.getTag().containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
+			if (tag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
 			{
 				changed = true;
-				active = ArcaneMagicUtils.ForgeCrystal.getFromID(stack.getTag().getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
-				lines.add(new StringTextComponent("Active Crystal: " + stack.getTag().getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY)));
+				active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+				lines.add(new StringTextComponent("Active Crystal: " + tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY)));
 			}
-			if (stack.getTag().containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY))
+			if (tag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY))
 			{
 				changed = true;
-				passive = ArcaneMagicUtils.ForgeCrystal.getFromID(stack.getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
-				lines.add(new StringTextComponent("Passive Crystal: " + stack.getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY)));
+				passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+				lines.add(new StringTextComponent("Passive Crystal: " + tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY)));
 			}
 
 		}

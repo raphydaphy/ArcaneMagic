@@ -8,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -37,9 +38,10 @@ public class ModEvents
 								if (!entity.world.isClient)
 								{
 									stack.getOrCreateTag().putInt(ArcaneMagicConstants.SOUL_KEY, stack.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY) + ArcaneMagic.RANDOM.nextInt(3) + 4);
-									if (Objects.requireNonNull(stack.getTag()).getInt(ArcaneMagicConstants.SOUL_KEY) > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
+									CompoundTag tag = stack.getTag();
+									if (tag.getInt(ArcaneMagicConstants.SOUL_KEY) > ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL)
 									{
-										stack.getTag().putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
+										tag.putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
 									}
 									entity.world.playSound(null, curPos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
 								}
