@@ -36,22 +36,17 @@ public class ShapelessTransfigurationRecipeSerializer implements RecipeSerialize
 	@Override
 	public ShapelessTransfigurationRecipe read(Identifier id, PacketByteBuf buf)
 	{
-		System.out.println("read 1");
 		int soul = buf.readVarInt();
 		int size = buf.readVarInt();
 
-		System.out.println("read 2");
 		DefaultedList<Ingredient> inputs = DefaultedList.create(size, Ingredient.EMPTY);
 
-		System.out.println("read 3");
 		for (int input = 0; input < inputs.size(); ++input)
 		{
 			inputs.set(input, Ingredient.fromPacket(buf));
 		}
-		System.out.println("read 4s");
 
 		ItemStack output = buf.readItemStack();
-		System.out.println("read 5");
 		return new ShapelessTransfigurationRecipe(id, output, inputs, soul);
 	}
 

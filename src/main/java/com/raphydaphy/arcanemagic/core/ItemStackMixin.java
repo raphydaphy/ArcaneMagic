@@ -31,9 +31,10 @@ public abstract class ItemStackMixin
 	@Inject(at = @At("RETURN"), method = "getDurability", cancellable = true)
 	private void getDurability(CallbackInfoReturnable<Integer> info)
 	{
-		if (getItem() instanceof ICrystalEquipment && getTag() != null)
+		CompoundTag tag;
+		if (getItem() instanceof ICrystalEquipment && (tag = getTag()) != null)
 		{
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.COAL)
 			{
 				info.setReturnValue((int)(info.getReturnValue() * 1.2f));
@@ -44,32 +45,25 @@ public abstract class ItemStackMixin
 	@Inject(at = @At("RETURN"), method = "getAttributeModifiers", cancellable = true)
 	private void getAttributeModifiers(EquipmentSlot slot, CallbackInfoReturnable<Multimap<String, EntityAttributeModifier>> info)
 	{
-		if (getItem() instanceof DaggerItem && getTag() != null && getTag().containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) && slot == EquipmentSlot.HAND_MAIN)
+		CompoundTag tag;
+		if (getItem() instanceof DaggerItem && (tag = getTag()) != null && tag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) && slot == EquipmentSlot.HAND_MAIN)
 		{
 			DaggerItem dagger = (DaggerItem) getItem();
 			Multimap<String, EntityAttributeModifier> map = HashMultimap.create();
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(getTag().getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+
+			double speed = dagger.getSpeed();
+			float damage = dagger.getWeaponDamage();
 
 			if (passive == ArcaneMagicUtils.ForgeCrystal.GOLD)
 			{
-				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(DaggerItem.getSpeedModifier(), "Weapon modifier", (double) dagger.getSpeed() + 0.5d, EntityAttributeModifier.Operation.ADDITION));
-
-			} else
-			{
-				map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(DaggerItem.getSpeedModifier(), "Weapon modifier", dagger.getSpeed(), EntityAttributeModifier.Operation.ADDITION));
-			}
-			if (passive == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
-			{
-				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(DaggerItem.getDamageModifier(), "Weapon modifier", (double) dagger.getWeaponDamage() + 1, EntityAttributeModifier.Operation.ADDITION));
-			} else
-			{
-				map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(DaggerItem.getDamageModifier(), "Weapon modifier", dagger.getWeaponDamage(), EntityAttributeModifier.Operation.ADDITION));
+				speed += 0.5;
 			}
 
-			if (!map.isEmpty())
-			{
-				info.setReturnValue(map);
-			}
+			map.put(EntityAttributes.ATTACK_SPEED.getId(), new EntityAttributeModifier(DaggerItem.getSpeedModifier(), "Weapon modifier", speed, EntityAttributeModifier.Operation.ADDITION));
+			map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(DaggerItem.getDamageModifier(), "Weapon modifier", damage, EntityAttributeModifier.Operation.ADDITION));
+
+			info.setReturnValue(map);
 		}
 	}
 }
