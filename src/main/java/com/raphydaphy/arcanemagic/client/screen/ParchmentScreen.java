@@ -70,7 +70,9 @@ public class ParchmentScreen extends Screen
 		int percent = (int) (parchment.getPercent() * FULL_PROGRESS);
 
 		if (parchment.getRecipe() != null)
+		{
 			drawRecipe(parchment.getRecipe(), screenCenterX, screenCenterY, mouseX, mouseY);
+		}
 
 		if (parchment.showProgressBar()) drawProgressBar(percent, screenCenterX, screenCenterY);
 
@@ -110,7 +112,7 @@ public class ParchmentScreen extends Screen
 
 	}
 
-	private void drawRecipe(Recipe<Inventory> recipe, int screenCenterX, int screenCenterY, int mouseX, int mouseY)
+	private void drawRecipe(Recipe<? extends Inventory> recipe, int screenCenterX, int screenCenterY, int mouseX, int mouseY)
 	{
 		int x = screenCenterX + 31;
 		int y = (int) (screenCenterY + 37 * SCALE);
@@ -124,42 +126,35 @@ public class ParchmentScreen extends Screen
 
 		client.getTextureManager().bindTexture(BACKGROUND);
 
-		//draw the input
-		switch (type)
+		if (type == ParchmentRecipeType.LARGE_CRAFTING)
 		{
-			case LARGE_CRAFTING:
-				DrawableHelper.drawTexturedRect(x + 20, y - 3, 0, DIMENSIONS, 1, 1, 2, 73, DIMENSIONS,
-						TEX_HEIGHT);
-				DrawableHelper.drawTexturedRect(x - 3, y + 20, 0, DIMENSIONS, 1, 1, 73, 2, DIMENSIONS,
-						TEX_HEIGHT);
-				DrawableHelper.drawTexturedRect(x + 45, y - 3, 0, DIMENSIONS, 1, 1, 2, 73, DIMENSIONS,
-						TEX_HEIGHT);
-				DrawableHelper.drawTexturedRect(x - 3, y + 45, 0, DIMENSIONS, 1, 1, 73, 2, DIMENSIONS,
-						TEX_HEIGHT);
+			DrawableHelper.drawRect(x + 20, y - 3, x + 20 + 2, y - 3 + 73, 0xff422c0e);
+			DrawableHelper.drawRect(x - 3, y + 20, x - 3 + 73, y + 20 + 2, 0xff422c0e);
+			DrawableHelper.drawRect(x + 45, y - 3, x + 45 + 2, y - 3  + 73, 0xff422c0e);
+			DrawableHelper.drawRect(x - 3, y + 45, x - 3 + 73, y + 45 + 2, 0xff422c0e);
 
-				GlStateManager.pushMatrix();
+			GlStateManager.pushMatrix();
 
-				GuiLighting.enableForItems();
+			GuiLighting.enableForItems();
 
-				for (int inputX = 0; inputX < 3; inputX++)
+			for (int inputX = 0; inputX < 3; inputX++)
+			{
+				for (int inputY = 0; inputY < 3; inputY++)
 				{
-					for (int inputY = 0; inputY < 3; inputY++)
+					ItemStack[] ingredient = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+					if (ingredient.length != 0)
 					{
-						ItemStack[] ingredient = ingredients.get((inputX) + (3 * inputY)).getStackArray();
-						if (ingredient.length != 0)
+						if (!ingredient[(int) (client.world.getTime() % ingredient.length)].isEmpty())
 						{
-							if (!ingredient[(int) (client.world.getTime() % ingredient.length)].isEmpty())
-							{
-								// Render the recipe component
-								client.getItemRenderer().renderGuiItem(ingredient[0], x + (inputX * 25),
-										y + (inputY * 25));
-							}
+							// Render the recipe component
+							client.getItemRenderer().renderGuiItem(ingredient[0], x + (inputX * 25),
+									y + (inputY * 25));
 						}
 					}
 				}
-				break;
-			default:
-				break;
+			}
+
+			GlStateManager.popMatrix();
 		}
 
 		GuiLighting.disable();
@@ -169,18 +164,14 @@ public class ParchmentScreen extends Screen
 		client.getTextureManager().bindTexture(BACKGROUND);
 
 		// Draw the crafting arrow
-		DrawableHelper.drawTexturedRect(x + 78, y + 26, 49, 64, 7, 5, (22), (15), DIMENSIONS,
+		DrawableHelper.drawTexturedRect(x + 78, y + 26, 48, 64, 7, 5, 22, 15, DIMENSIONS,
 				TEX_HEIGHT);
 
-		// Draw the crafting output box
-		DrawableHelper.drawTexturedRect(x + 108, y + 21, 0, DIMENSIONS, 1, 1, 26, 2, DIMENSIONS,
-				TEX_HEIGHT);
-		DrawableHelper.drawTexturedRect(x + 108, y + 45, 0, DIMENSIONS, 1, 1, 26, 2, DIMENSIONS,
-				TEX_HEIGHT);
-		DrawableHelper.drawTexturedRect(x + 108, y + 21, 0, DIMENSIONS, 1, 1, 2, 25, DIMENSIONS,
-				TEX_HEIGHT);
-		DrawableHelper.drawTexturedRect(x + 132, y + 21, 0, DIMENSIONS, 1, 1, 2, 25, DIMENSIONS,
-				TEX_HEIGHT);
+		// Crafting Output Box
+		DrawableHelper.drawRect(x + 108, y + 21, x + 108 + 26, y + 21 + 2, 0xff422c0e);
+		DrawableHelper.drawRect(x + 108, y + 45, x + 108 + 26, y + 45 + 2, 0xff422c0e);
+		DrawableHelper.drawRect(x + 108, y + 21, x + 108 + 2, y + 21 + 25, 0xff422c0e);
+		DrawableHelper.drawRect(x + 132, y + 21, x + 132 + 2, y + 21 + 25, 0xff422c0e);
 
 		// Draw the output item
 		GuiLighting.enableForItems();

@@ -27,5 +27,5 @@
   "item.arcanemagic.iron_dagger": "Iron Dagger",
   "item.arcanemagic.liquified_soul_bucket": "Liquified Soul Bucket",
   "death.attack.arcanemagic.drained": "%1$s's soul was drained",
-  "parchment.arcanemagic.test": "This is a test parchment for the mod Arcane Magic! In theory, any mod can add their own parchments to the game to intergrate with the Arcane Magic lore system. Adding a parchment is easy - all you have to do is implement IParchment and register your class to the parchment registry. Send your thanks to B0undaryBreaker for making this system for the Rift version of the mod."
+  "parchment.arcanemagic.test": "After placing a stick in my analyzer, I observed a reaction unlike anything I have seen before. However, this leaves me with many new questions, requiring further investigation. Perhaps augmenting some sticks with redstone and gold will help to amplify the effect?"
 }

@@ -1,6 +1,12 @@
 package com.raphydaphy.arcanemagic.parchment;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.parchment.IParchment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeManager;
+import net.minecraft.util.Identifier;
 
 public class TestParchment implements IParchment
 {
@@ -19,8 +25,9 @@ public class TestParchment implements IParchment
 	}
 
 	@Override
-	public boolean verticallyCenteredText()
+	public Recipe<? extends Inventory> getRecipe()
 	{
-		return true;
+		RecipeManager manager = MinecraftClient.getInstance().world.getRecipeManager();
+		return manager.get(new Identifier(ArcaneMagic.DOMAIN, "golden_scepter")).orElse(null);
 	}
 }

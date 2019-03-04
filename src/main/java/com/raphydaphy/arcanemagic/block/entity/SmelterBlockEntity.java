@@ -12,6 +12,8 @@ import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
@@ -93,6 +95,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 		}
 	}
 
+	@Environment(EnvType.CLIENT)
 	private void doParticles()
 	{
 		Direction dir = world.getBlockState(pos).get(SmelterBlock.FACING);

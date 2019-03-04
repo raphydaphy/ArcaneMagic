@@ -4,6 +4,8 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Recipe;
 
+import java.util.Optional;
+
 public interface IParchment
 {
 	/**
@@ -52,7 +54,7 @@ public interface IParchment
 	 * @return the recipe to display, if necessary
 	 * return null to not display a recipe
 	 */
-	default Recipe<Inventory> getRecipe()
+	default Recipe<? extends Inventory> getRecipe()
 	{
 		return null;
 	}
