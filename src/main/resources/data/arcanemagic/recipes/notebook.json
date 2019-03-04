@@ -1,0 +1,20 @@
+{
+  "result": {
+	"item": "arcanemagic:notebook"
+  },
+  "group": "arcanemagic:magic",
+  "pattern": [
+	" p ",
+	"pbp",
+	" p "
+  ],
+  "type": "crafting_shaped",
+  "key": {
+	"b": {
+	  "item": "minecraft:book"
+	},
+	"p": {
+	  "item": "arcanemagic:parchment"
+	}
+  }
+}

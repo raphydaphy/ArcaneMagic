@@ -2,8 +2,11 @@ package com.raphydaphy.arcanemagic.api.parchment;
 
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 public interface IParchment
@@ -26,13 +29,6 @@ public interface IParchment
 		return false;
 	}
 
-	/**
-	 * @return the current percentage of progress for the parchment, from 0 to 1
-	 */
-	default double getPercent()
-	{
-		return 0;
-	}
 
 	/**
 	 * @return true if the parchment should be an Ancient Parchment item
@@ -51,12 +47,29 @@ public interface IParchment
 	}
 
 	/**
+	 * @return the current percentage of progress for the parchment, from 0 to 1
+	 */
+	default double getProgressPercent()
+	{
+		return 0;
+	}
+
+	/**
 	 * @return the recipe to display, if necessary
 	 * return null to not display a recipe
 	 */
 	default Recipe<? extends Inventory> getRecipe()
 	{
 		return null;
+	}
+
+	/**
+	 * @return a list of items to be displayed for collection at the bottom of the page
+	 * If the list is empty, no items will be shown
+	 */
+	default List<Ingredient> getRequiredItems()
+	{
+		return Collections.emptyList();
 	}
 
 	/**

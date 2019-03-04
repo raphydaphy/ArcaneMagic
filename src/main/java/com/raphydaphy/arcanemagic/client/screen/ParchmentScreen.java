@@ -18,6 +18,8 @@ import net.minecraft.recipe.cooking.SmeltingRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 
+import java.util.List;
+
 @Environment(EnvType.CLIENT)
 public class ParchmentScreen extends Screen
 {
@@ -67,7 +69,7 @@ public class ParchmentScreen extends Screen
 
 		drawText(parchment.getText(), screenCenterY + (parchment.verticallyCenteredText() ? SCALED_DIMENSIONS / 2f : 4 * SCALE));
 
-		int percent = (int) (parchment.getPercent() * FULL_PROGRESS);
+		int percent = (int) (parchment.getProgressPercent() * FULL_PROGRESS);
 
 		if (parchment.getRecipe() != null)
 		{
@@ -75,6 +77,11 @@ public class ParchmentScreen extends Screen
 		}
 
 		if (parchment.showProgressBar()) drawProgressBar(percent, screenCenterX, screenCenterY);
+
+		if (parchment.getRequiredItems() != null && !parchment.getRequiredItems().isEmpty())
+		{
+			drawRequiredItems(parchment.getRequiredItems(), screenCenterX, screenCenterY, mouseX, mouseY);
+		}
 
 		GlStateManager.popMatrix();
 	}
@@ -102,10 +109,11 @@ public class ParchmentScreen extends Screen
 
 		if (progress > 0)
 		{
-			System.out.println(progress);
-			DrawableHelper.drawTexturedRect(
-					(int) (screenCenterX + 9 * SCALE), (int) (screenCenterY + 55 * SCALE), PROGRESS_BAR_LENGTH, DIMENSIONS + 1,
-					1, 3, (int) (progress * SCALE), (int) ((3) * SCALE), DIMENSIONS, TEX_HEIGHT);
+			DrawableHelper.drawRect(
+					(int) (screenCenterX + 9 * SCALE),
+					(int) (screenCenterY + 55 * SCALE),
+					(int) (screenCenterX + 9 * SCALE + progress * SCALE),
+					(int) (screenCenterY + 55 * SCALE + 3 * SCALE), 0xff926527);
 		}
 
 		GlStateManager.popMatrix();
@@ -130,7 +138,7 @@ public class ParchmentScreen extends Screen
 		{
 			DrawableHelper.drawRect(x + 20, y - 3, x + 20 + 2, y - 3 + 73, 0xff422c0e);
 			DrawableHelper.drawRect(x - 3, y + 20, x - 3 + 73, y + 20 + 2, 0xff422c0e);
-			DrawableHelper.drawRect(x + 45, y - 3, x + 45 + 2, y - 3  + 73, 0xff422c0e);
+			DrawableHelper.drawRect(x + 45, y - 3, x + 45 + 2, y - 3 + 73, 0xff422c0e);
 			DrawableHelper.drawRect(x - 3, y + 45, x - 3 + 73, y + 45 + 2, 0xff422c0e);
 
 			GlStateManager.pushMatrix();
@@ -168,10 +176,7 @@ public class ParchmentScreen extends Screen
 				TEX_HEIGHT);
 
 		// Crafting Output Box
-		DrawableHelper.drawRect(x + 108, y + 21, x + 108 + 26, y + 21 + 2, 0xff422c0e);
-		DrawableHelper.drawRect(x + 108, y + 45, x + 108 + 26, y + 45 + 2, 0xff422c0e);
-		DrawableHelper.drawRect(x + 108, y + 21, x + 108 + 2, y + 21 + 25, 0xff422c0e);
-		DrawableHelper.drawRect(x + 132, y + 21, x + 132 + 2, y + 21 + 25, 0xff422c0e);
+		drawBox(x + 108, y + 21, 24, 24, 2, -1);
 
 		// Draw the output item
 		GuiLighting.enableForItems();
@@ -198,6 +203,65 @@ public class ParchmentScreen extends Screen
 
 		// Draw the tooltip for the output item
 		drawItemstackTooltip(output, x + 113, y + 25, mouseX, mouseY);
+	}
+
+	private void drawRequiredItems(List<Ingredient> items, int screenCenterX, int screenCenterY, int mouseX, int mouseY)
+	{
+		int itemsWidth = items.size() * 35;
+		int x = screenCenterX + SCALED_DIMENSIONS / 2 - itemsWidth / 2;
+		int y = (int) (screenCenterY + 51 * SCALE);
+
+		GlStateManager.pushMatrix();
+
+		for (int i = 0; i < items.size(); i++)
+		{
+			drawBox(x + i * 35, y, 24, 24, 2, i == 2 ? 0x8010ce40 : 0x80e80d0d);
+
+			GuiLighting.enableForItems();
+			ItemStack[] ingredient = items.get(i).getStackArray();
+			if (ingredient.length != 0)
+			{
+				int id = (int) (client.world.getTime() / 30) % ingredient.length;
+				if (!ingredient[id].isEmpty())
+				{
+					// Render the recipe component
+					client.getItemRenderer().renderGuiItem(ingredient[id], x + 5 + i * 35, y + 4);
+				}
+			}
+			GuiLighting.disable();
+		}
+
+
+		for (int i = 0; i < items.size(); i++)
+		{
+			ItemStack[] item = items.get(i).getStackArray();
+			if (item.length != 0)
+			{
+				if (!item[0].isEmpty())
+				{
+					// Render the recipe component
+					drawItemstackTooltip(item[(int) (client.world.getTime() / 30) % item.length], x + 5 + i * 35, y + 4, mouseX, mouseY);
+				}
+			}
+		}
+
+		GlStateManager.popMatrix();
+	}
+
+	/**
+	 * Draws a brown box with the given dimensions.
+	 * @param background The background color. Set to -1 for no background
+	 */
+	private void drawBox(int x, int y, int width, int height, int lineWidth, int background)
+	{
+		DrawableHelper.drawRect(x, y, x + width, y + lineWidth, 0xff422c0e);
+		DrawableHelper.drawRect(x, y + height, x + width, y + height + lineWidth, 0xff422c0e);
+		DrawableHelper.drawRect(x, y, x + lineWidth, y + height, 0xff422c0e);
+		DrawableHelper.drawRect(x + width, y, x + width + lineWidth, y + height + lineWidth, 0xff422c0e);
+		if (background != -1)
+		{
+			DrawableHelper.drawRect(x + lineWidth, y + lineWidth, x + width, y + width, background);
+		}
 	}
 
 	private ParchmentRecipeType getRecipeType(Recipe recipe)
