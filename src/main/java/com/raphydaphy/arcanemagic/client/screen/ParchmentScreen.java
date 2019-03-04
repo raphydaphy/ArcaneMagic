@@ -6,6 +6,8 @@ import com.raphydaphy.arcanemagic.api.parchment.IParchment;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.MinecraftClientGame;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.render.GuiLighting;
@@ -18,7 +20,10 @@ import net.minecraft.recipe.cooking.SmeltingRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class ParchmentScreen extends Screen
@@ -213,9 +218,23 @@ public class ParchmentScreen extends Screen
 
 		GlStateManager.pushMatrix();
 
+		List<Ingredient> foundItems = new ArrayList<>();
+
+		for (int i = 0; i < MinecraftClient.getInstance().player.inventory.getInvSize(); i ++)
+		{
+			for (int j = 0; j < items.size(); j++)
+			{
+				// If the player has this item in their inventory
+				if (items.get(j).method_8093(MinecraftClient.getInstance().player.inventory.getInvStack(i)))
+				{
+					foundItems.add(items.get(j));
+				}
+			}
+		}
+
 		for (int i = 0; i < items.size(); i++)
 		{
-			drawBox(x + i * 35, y, 24, 24, 2, i == 2 ? 0x8010ce40 : 0x80e80d0d);
+			drawBox(x + i * 35, y, 24, 24, 2, foundItems.contains(items.get(i)) ? 0x8010ce40 : 0x80e80d0d);
 
 			GuiLighting.enableForItems();
 			ItemStack[] ingredient = items.get(i).getStackArray();

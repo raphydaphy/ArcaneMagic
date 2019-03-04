@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.core;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -11,7 +12,6 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.AxeItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
@@ -23,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity
+public abstract class PlayerEntityMixin extends LivingEntity implements DataHolder
 {
 	@Shadow public abstract ItemCooldownManager getItemCooldownManager();
 
@@ -82,5 +82,26 @@ public abstract class PlayerEntityMixin extends LivingEntity
 				this.world.summonParticle(this, (byte) 30);
 			}
 		}
+	}
+
+	private static final String ADDITIONAL_DATA_TAG = "ArcaneMagicData";
+	public CompoundTag additionalData = new CompoundTag();
+
+	@Inject(at=@At("TAIL"), method="readCustomDataFromTag")
+	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo info)
+	{
+		additionalData = tag.getCompound(ADDITIONAL_DATA_TAG);
+	}
+
+	@Inject(at=@At("TAIL"), method="writeCustomDataToTag")
+	private void writeCustomDataToTag(CompoundTag tag, CallbackInfo info)
+	{
+		tag.put(ADDITIONAL_DATA_TAG, additionalData);
+	}
+
+	@Override
+	public CompoundTag getAdditionalData()
+	{
+		return additionalData;
 	}
 }
