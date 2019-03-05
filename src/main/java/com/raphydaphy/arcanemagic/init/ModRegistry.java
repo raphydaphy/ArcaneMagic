@@ -6,23 +6,31 @@ import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
-import com.raphydaphy.arcanemagic.recipe.*;
+import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
+import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipe;
+import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.util.ModDamageSource;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.registry.CommandRegistry;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.command.arguments.EntityArgumentType;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.item.block.BlockItem;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.command.ServerCommandManager;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Style;
+import net.minecraft.text.TextFormat;
+import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SuppressWarnings("WeakerAccess")
 public class ModRegistry
@@ -114,7 +122,18 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "iron_dagger"), IRON_DAGGER);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
 
-		ShapedTransfigurationRecipe.SERIALIZER =  Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
-		ShapelessTransfigurationRecipe.SERIALIZER =  Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shapeless", new ShapelessTransfigurationRecipeSerializer());
+		ShapedTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
+		ShapelessTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shapeless", new ShapelessTransfigurationRecipeSerializer());
+
+		// Command Registration
+		CommandRegistry.INSTANCE.register(false, dispatcher -> dispatcher.register(ServerCommandManager.literal("arcanemagic-reset").requires((command) -> command.hasPermissionLevel(2))
+				.then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer()).executes(command ->
+				{
+					ServerPlayerEntity player = EntityArgumentType.method_9315(command, "target");
+					((DataHolder) player).setAdditionalData(new CompoundTag());
+					((DataHolder) player).markAdditionalDataDirty();
+					command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
+					return 1;
+				}))));
 	}
 }

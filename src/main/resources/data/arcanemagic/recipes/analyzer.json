@@ -1,0 +1,26 @@
+{
+  "result": {
+	"item": "arcanemagic:analyzer"
+  },
+  "group": "arcanemagic:magic",
+  "pattern": [
+	" g ",
+	"psp",
+	"lll"
+  ],
+  "type": "crafting_shaped",
+  "key": {
+	"g": {
+	  "item": "minecraft:glass"
+	},
+	"l": {
+	  "tag": "minecraft:logs"
+	},
+	"p": {
+	  "tag": "minecraft:planks"
+	},
+	"s": {
+	  "tag": "minecraft:wooden_slabs"
+	}
+  }
+}

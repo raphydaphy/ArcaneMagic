@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.core.common;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModEvents;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -27,6 +28,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity
@@ -118,10 +122,24 @@ public abstract class LivingEntityMixin extends Entity
 						}
 					}
 
-					if (giveParchment)
+					if (giveParchment && !world.isClient)
 					{
 						ItemStack parchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT);
 						parchment.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, DiscoveryParchment.NAME);
+
+						List<Integer> newGatherIndexes = new ArrayList<>();
+
+						while (newGatherIndexes.size() < 4)
+						{
+							int index = ArcaneMagic.RANDOM.nextInt(DiscoveryParchment.GATHER_QUEST_NEW_OPTIONS.length);
+							if (!newGatherIndexes.contains(index))
+							{
+								newGatherIndexes.add(index);
+							}
+						}
+
+						((DataHolder) attacker).getAdditionalData().putIntArray(ArcaneMagicConstants.NEW_GATHER_QUEST_INDEXES_KEY, newGatherIndexes);
+						((DataHolder)attacker).markAdditionalDataDirty();
 
 						ItemStack paperStack = ((PlayerEntity) attacker).inventory.getInvStack(paper);
 						if (!paperStack.isEmpty())

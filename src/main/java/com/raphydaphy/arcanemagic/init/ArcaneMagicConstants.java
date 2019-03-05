@@ -25,5 +25,9 @@ public class ArcaneMagicConstants
 	public static final String ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
 	public static final String ACTIVE_TIMER_KEY = "ActiveTimer";
 
+	// For the Discovery parchment
 	public static final String DROWNED_KILLS_KEY = "DrownedKills";
+	public static final String NEW_GATHER_QUEST_INDEXES_KEY = "NewGatherQuestIndexes";
+	public static final String NEW_GATHER_QUEST_FINISHED_KEY = "FinishedNewGatherQuest";
+	public static final String PLACED_ANALYZER = "PlacedAnalyzer";
 }

@@ -2,12 +2,16 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -87,5 +91,15 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new AnalyzerBlockEntity();
+	}
+
+	@Override
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	{
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder)placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER))
+		{
+			((DataHolder)placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER, true);
+			((DataHolder)placer).markAdditionalDataDirty();
+		}
 	}
 }

@@ -2,13 +2,19 @@ package com.raphydaphy.arcanemagic.api.parchment;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeManager;
+import net.minecraft.util.Hand;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IParchment
@@ -33,6 +39,11 @@ public interface IParchment
 		return false;
 	}
 
+	@Environment(EnvType.CLIENT)
+	default int getVerticalTextOffset()
+	{
+		return 0;
+	}
 
 	/**
 	 * @return true if the parchment should be an Ancient Parchment item
@@ -65,9 +76,15 @@ public interface IParchment
 	 * return null to not display a recipe
 	 */
 	@Environment(EnvType.CLIENT)
-	default Recipe<? extends Inventory> getRecipe()
+	default Recipe<? extends Inventory> getRecipe(RecipeManager manager)
 	{
 		return null;
+	}
+
+	@Environment(EnvType.CLIENT)
+	default int getVerticalFeatureOffset()
+	{
+		return 0;
 	}
 
 	/**
@@ -75,17 +92,24 @@ public interface IParchment
 	 * If the list is empty, no items will be shown
 	 */
 	@Environment(EnvType.CLIENT)
-	default List<Ingredient> getRequiredItems()
+	default Map<Ingredient, Boolean> getRequiredItems()
 	{
-		return Collections.emptyList();
+		return Collections.emptyMap();
 	}
 
 	/**
-	 * Provides the stack which the parchment is on
-	 * Used to check NBT for rendering
+	 * Called on the client-side when the parchment screen is opened
 	 */
 	@Environment(EnvType.CLIENT)
-	default void init(ItemStack stack)
+	default void initScreen(ItemStack stack)
+	{
+
+	}
+
+	/**
+	 * Called on the client and server when the parchment is opened
+	 */
+	default void onOpened(IWorld world, PlayerEntity player, Hand hand, ItemStack stack)
 	{
 
 	}

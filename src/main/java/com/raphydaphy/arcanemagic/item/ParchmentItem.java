@@ -38,6 +38,7 @@ public class ParchmentItem extends Item
 			IParchment parchment = ParchmentRegistry.getParchment(stack);
 			if (parchment != null && (((ParchmentItem) stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient())
 			{
+				parchment.onOpened(world, player, hand, stack);
 				if (world.isClient)
 				{
 					openGUI(stack, parchment);

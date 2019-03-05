@@ -19,8 +19,7 @@ import net.minecraft.recipe.cooking.SmeltingRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class ParchmentScreen extends Screen
@@ -44,7 +43,7 @@ public class ParchmentScreen extends Screen
 	{
 		this.stack = stack;
 		this.parchment = parchment;
-		parchment.init(stack);
+		parchment.initScreen(stack);
 	}
 
 	@Override
@@ -69,20 +68,20 @@ public class ParchmentScreen extends Screen
 
 		drawBackground(screenCenterX, screenCenterY);
 
-		drawText(parchment.getText(), screenCenterY + (parchment.verticallyCenteredText() ? SCALED_DIMENSIONS / 2f : 4 * SCALE));
+		drawText(parchment.getText(), screenCenterY + (parchment.verticallyCenteredText() ? SCALED_DIMENSIONS / 2f : 4 * SCALE) + parchment.getVerticalTextOffset() * SCALE);
 
 		int percent = (int) (parchment.getProgressPercent() * FULL_PROGRESS);
 
-		if (parchment.getRecipe() != null)
+		if (parchment.getRecipe(MinecraftClient.getInstance().world.getRecipeManager()) != null)
 		{
-			drawRecipe(parchment.getRecipe(), screenCenterX, screenCenterY, mouseX, mouseY);
+			drawRecipe(parchment.getRecipe(MinecraftClient.getInstance().world.getRecipeManager()), screenCenterX, screenCenterY, parchment.getVerticalFeatureOffset(), mouseX, mouseY);
 		}
 
-		if (parchment.showProgressBar()) drawProgressBar(percent, screenCenterX, screenCenterY);
+		if (parchment.showProgressBar()) drawProgressBar(percent, screenCenterX, screenCenterY, parchment.getVerticalFeatureOffset());
 
 		if (parchment.getRequiredItems() != null && !parchment.getRequiredItems().isEmpty())
 		{
-			drawRequiredItems(parchment.getRequiredItems(), screenCenterX, screenCenterY, mouseX, mouseY);
+			drawRequiredItems(parchment.getRequiredItems(), screenCenterX, screenCenterY, parchment.getVerticalFeatureOffset(), mouseX, mouseY);
 		}
 
 		GlStateManager.popMatrix();
@@ -99,33 +98,35 @@ public class ParchmentScreen extends Screen
 		RenderUtils.drawSplitString(client.textRenderer, I18n.translate(unlocalizedText), client.window.getScaledWidth() / 2f, (int) (top), 160, 0, parchment.verticallyCenteredText());
 	}
 
-	private void drawProgressBar(int progress, int screenCenterX, int screenCenterY)
+	private void drawProgressBar(int progress, int screenCenterX, int screenCenterY, int verticalOffset)
 	{
 		GlStateManager.pushMatrix();
 
 		client.getTextureManager().bindTexture(BACKGROUND);
 
+		int y = (int)(screenCenterY + 54 * SCALE + verticalOffset * SCALE);
+
 		DrawableHelper.drawTexturedRect(
-				(int) (screenCenterX + 8 * SCALE), (int) (screenCenterY + 54 * SCALE), 0, DIMENSIONS,
+				(int) (screenCenterX + 8 * SCALE), y, 0, DIMENSIONS,
 				PROGRESS_BAR_LENGTH, 5, (int) (PROGRESS_BAR_LENGTH * SCALE), (int) ((5) * SCALE), DIMENSIONS, TEX_HEIGHT);
 
 		if (progress > 0)
 		{
 			DrawableHelper.drawRect(
 					(int) (screenCenterX + 9 * SCALE),
-					(int) (screenCenterY + 55 * SCALE),
+					(int) (y + SCALE),
 					(int) (screenCenterX + 9 * SCALE + progress * SCALE),
-					(int) (screenCenterY + 55 * SCALE + 3 * SCALE), 0xff926527);
+					(int) (y + SCALE + 3 * SCALE), 0xff926527);
 		}
 
 		GlStateManager.popMatrix();
 
 	}
 
-	private void drawRecipe(Recipe<? extends Inventory> recipe, int screenCenterX, int screenCenterY, int mouseX, int mouseY)
+	private void drawRecipe(Recipe<? extends Inventory> recipe, int screenCenterX, int screenCenterY, int verticalOffset, int mouseX, int mouseY)
 	{
 		int x = screenCenterX + 31;
-		int y = (int) (screenCenterY + 37 * SCALE);
+		int y = (int) (screenCenterY + 37 * SCALE + verticalOffset * SCALE);
 
 		DefaultedList<Ingredient> ingredients = recipe.getPreviewInputs();
 		ItemStack output = recipe.getOutput();
@@ -151,13 +152,14 @@ public class ParchmentScreen extends Screen
 			{
 				for (int inputY = 0; inputY < 3; inputY++)
 				{
-					ItemStack[] ingredient = ingredients.get((inputX) + (3 * inputY)).getStackArray();
-					if (ingredient.length != 0)
+					ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+					if (stackArray.length > 0)
 					{
-						if (!ingredient[(int) (client.world.getTime() % ingredient.length)].isEmpty())
+						int id = (int) (client.world.getTime() / 30) % stackArray.length;
+						if (!stackArray[id].isEmpty())
 						{
 							// Render the recipe component
-							client.getItemRenderer().renderGuiItem(ingredient[0], x + (inputX * 25),
+							client.getItemRenderer().renderGuiItem(stackArray[id], x + (inputX * 25),
 									y + (inputY * 25));
 						}
 					}
@@ -190,14 +192,14 @@ public class ParchmentScreen extends Screen
 		{
 			for (int inputY = 0; inputY < 3; inputY++)
 			{
-				ItemStack[] ingredient = ingredients.get((inputX) + (3 * inputY)).getStackArray();
-				if (ingredient.length != 0)
+				ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+				if (stackArray.length != 0)
 				{
-					if (!ingredient[0].isEmpty())
+					int id = (int) (client.world.getTime() / 30) % stackArray.length;
+					if (!stackArray[id].isEmpty())
 					{
 						// Render the recipe component
-						drawItemstackTooltip(ingredient[(int) (client.world.getTime() % ingredient.length)], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
-
+						drawItemstackTooltip(stackArray[id], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
 					}
 				}
 			}
@@ -207,58 +209,48 @@ public class ParchmentScreen extends Screen
 		drawItemstackTooltip(output, x + 113, y + 25, mouseX, mouseY);
 	}
 
-	private void drawRequiredItems(List<Ingredient> items, int screenCenterX, int screenCenterY, int mouseX, int mouseY)
+	private void drawRequiredItems(Map<Ingredient, Boolean> items, int screenCenterX, int screenCenterY, int verticalOffset, int mouseX, int mouseY)
 	{
 		int itemsWidth = items.size() * 35;
 		int x = screenCenterX + SCALED_DIMENSIONS / 2 - itemsWidth / 2;
-		int y = (int) (screenCenterY + 51 * SCALE);
+		int y = (int) (screenCenterY + 51 * SCALE + verticalOffset * SCALE);
 
 		GlStateManager.pushMatrix();
 
-		List<Ingredient> foundItems = new ArrayList<>();
-
-		for (int i = 0; i < MinecraftClient.getInstance().player.inventory.getInvSize(); i ++)
+		int i = 0;
+		for (Map.Entry<Ingredient, Boolean> item : items.entrySet())
 		{
-			for (int j = 0; j < items.size(); j++)
-			{
-				// If the player has this item in their inventory
-				if (items.get(j).method_8093(MinecraftClient.getInstance().player.inventory.getInvStack(i)))
-				{
-					foundItems.add(items.get(j));
-				}
-			}
-		}
-
-		for (int i = 0; i < items.size(); i++)
-		{
-			drawBox(x + i * 35, y, 24, 24, 2, foundItems.contains(items.get(i)) ? 0x8010ce40 : 0x80e80d0d);
+			drawBox(x + i * 35, y, 24, 24, 2, items.get(item.getKey()) ? 0x8010ce40 : 0x80e80d0d);
 
 			GuiLighting.enableForItems();
-			ItemStack[] ingredient = items.get(i).getStackArray();
-			if (ingredient.length != 0)
+			ItemStack[] stackArray = item.getKey().getStackArray();
+			if (stackArray.length != 0)
 			{
-				int id = (int) (client.world.getTime() / 30) % ingredient.length;
-				if (!ingredient[id].isEmpty())
+				int id = (int) (client.world.getTime() / 30) % stackArray.length;
+				if (!stackArray[id].isEmpty())
 				{
 					// Render the recipe component
-					client.getItemRenderer().renderGuiItem(ingredient[id], x + 5 + i * 35, y + 4);
+					client.getItemRenderer().renderGuiItem(stackArray[id], x + 5 + i * 35, y + 4);
 				}
 			}
 			GuiLighting.disable();
+			i++;
 		}
 
-
-		for (int i = 0; i < items.size(); i++)
+		i = 0;
+		for (Map.Entry<Ingredient, Boolean> item : items.entrySet())
 		{
-			ItemStack[] item = items.get(i).getStackArray();
-			if (item.length != 0)
+			ItemStack[] stackArray = item.getKey().getStackArray();
+			if (stackArray.length != 0)
 			{
-				if (!item[0].isEmpty())
+				int id = (int) (client.world.getTime() / 30) % stackArray.length;
+				if (!stackArray[id].isEmpty())
 				{
 					// Render the recipe component
-					drawItemstackTooltip(item[(int) (client.world.getTime() / 30) % item.length], x + 5 + i * 35, y + 4, mouseX, mouseY);
+					drawItemstackTooltip(stackArray[id], x + 5 + i * 35, y + 4, mouseX, mouseY);
 				}
 			}
+			i++;
 		}
 
 		GlStateManager.popMatrix();
@@ -266,6 +258,7 @@ public class ParchmentScreen extends Screen
 
 	/**
 	 * Draws a brown box with the given dimensions.
+	 *
 	 * @param background The background color. Set to -1 for no background
 	 */
 	private void drawBox(int x, int y, int width, int height, int lineWidth, int background)
