@@ -16,7 +16,7 @@ public class ParchmentRegistry
 	static
 	{
 		// Add parchments here
-		REGISTRY.add(new TestParchment());
+		REGISTRY.add(new DiscoveryParchment());
 	}
 
 	public static IParchment getParchment(ItemStack from)

@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.common;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;

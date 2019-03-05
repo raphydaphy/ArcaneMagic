@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.common;
 
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import net.minecraft.block.Block;

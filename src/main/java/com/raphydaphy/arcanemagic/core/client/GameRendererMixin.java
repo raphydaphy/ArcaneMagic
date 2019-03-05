@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.client;
 
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import net.minecraft.client.render.GameRenderer;

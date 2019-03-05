@@ -1,5 +1,7 @@
 package com.raphydaphy.arcanemagic.api.parchment;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
@@ -19,11 +21,13 @@ public interface IParchment
 	/**
 	 * @return the current unlocalized text for the parchment
 	 */
+	@Environment(EnvType.CLIENT)
 	String getText();
 
 	/**
 	 * If true, the text will automatically be centered not only horizontally but also vertically
 	 */
+	@Environment(EnvType.CLIENT)
 	default boolean verticallyCenteredText()
 	{
 		return false;
@@ -41,6 +45,7 @@ public interface IParchment
 	/**
 	 * @return true if a progress bar should be shown currently
 	 */
+	@Environment(EnvType.CLIENT)
 	default boolean showProgressBar()
 	{
 		return false;
@@ -49,6 +54,7 @@ public interface IParchment
 	/**
 	 * @return the current percentage of progress for the parchment, from 0 to 1
 	 */
+	@Environment(EnvType.CLIENT)
 	default double getProgressPercent()
 	{
 		return 0;
@@ -58,6 +64,7 @@ public interface IParchment
 	 * @return the recipe to display, if necessary
 	 * return null to not display a recipe
 	 */
+	@Environment(EnvType.CLIENT)
 	default Recipe<? extends Inventory> getRecipe()
 	{
 		return null;
@@ -67,6 +74,7 @@ public interface IParchment
 	 * @return a list of items to be displayed for collection at the bottom of the page
 	 * If the list is empty, no items will be shown
 	 */
+	@Environment(EnvType.CLIENT)
 	default List<Ingredient> getRequiredItems()
 	{
 		return Collections.emptyList();
@@ -76,7 +84,8 @@ public interface IParchment
 	 * Provides the stack which the parchment is on
 	 * Used to check NBT for rendering
 	 */
-	default void setParchmentStack(ItemStack stack)
+	@Environment(EnvType.CLIENT)
+	default void init(ItemStack stack)
 	{
 
 	}

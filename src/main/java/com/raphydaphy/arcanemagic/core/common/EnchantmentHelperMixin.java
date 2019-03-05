@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.common;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;

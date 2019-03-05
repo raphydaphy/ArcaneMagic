@@ -27,5 +27,9 @@
   "item.arcanemagic.iron_dagger": "Iron Dagger",
   "item.arcanemagic.liquified_soul_bucket": "Liquified Soul Bucket",
   "death.attack.arcanemagic.drained": "%1$s's soul was drained",
-  "parchment.arcanemagic.test": "After killing several more underwater zombies, I am beginning to realize that they are not the only anomaly - in fact, so much of the world I knew is changing. The zombies that I have been analyzing share their home with fish, dolphins and various plants that I have never seen before - even the trees and flowers on the surface look different. It might be easier to examine the changes if I gathered some of the new items."
+  "message.arcanemagic.drowned_first_kill": "You have never seen a zombie like that before. Perhaps you should get some paper to document your findings before killing another.",
+  "message.arcanemagic.drowned_paper_first": "You have never seen a zombie like that before. You use some paper to document your findings.",
+  "message.arcanemagic.drowned_paper_second": "You use the paper to document your discovery.",
+  "parchment.arcanemagic.discovery.kill_quest": "I am writing this to record an unusual species which I discovered whilst swimming today. It featured many of the same properties as the Zombies I have seen countless times before, but it was blue and thrived underwater. This change seems to have happened unnaturally fast, and I should like to find out why. Since I don't know enough about the zombies to come to a conclusion at this point, I will try and find some more to kill before writing an update.",
+  "parchment.arcanemagic.discovery.gather_new": "After killing several more underwater zombies, I am beginning to realize that they are not the only anomaly - in fact, so much of the world I knew is changing. The zombies that I have been analyzing share their home with fish, dolphins and various plants that I have never seen before - even the trees and flowers on the surface look different. It might be easier to examine the changes if I gathered some of the new items."
 }

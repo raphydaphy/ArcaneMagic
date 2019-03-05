@@ -14,7 +14,6 @@
   },
   "mixins": {
 	"client": "arcanemagic.client.json",
-	"common": "arcanemagic.common.json",
-	"server": "arcanemagic.server.json"
+	"common": "arcanemagic.common.json"
   }
 }

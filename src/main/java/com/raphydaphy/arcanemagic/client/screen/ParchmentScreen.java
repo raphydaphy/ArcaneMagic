@@ -7,7 +7,6 @@ import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.MinecraftClientGame;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.render.GuiLighting;
@@ -21,9 +20,7 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 public class ParchmentScreen extends Screen
@@ -47,7 +44,7 @@ public class ParchmentScreen extends Screen
 	{
 		this.stack = stack;
 		this.parchment = parchment;
-		parchment.setParchmentStack(stack);
+		parchment.init(stack);
 	}
 
 	@Override

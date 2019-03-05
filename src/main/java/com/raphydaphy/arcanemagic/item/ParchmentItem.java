@@ -7,7 +7,7 @@ import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
-import com.raphydaphy.arcanemagic.parchment.TestParchment;
+import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -35,7 +35,6 @@ public class ParchmentItem extends Item
 		ItemStack stack = player.getStackInHand(hand);
 		if (!player.isSneaking())
 		{
-			System.out.println("the magic number is " + ((DataHolder)player).getAdditionalData().getInt("IntTest"));
 			IParchment parchment = ParchmentRegistry.getParchment(stack);
 			if (parchment != null && (((ParchmentItem) stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient())
 			{
@@ -51,14 +50,6 @@ public class ParchmentItem extends Item
 					player.setStackInHand(hand, new ItemStack(ModRegistry.PARCHMENT, stack.getAmount()));
 				}
 				return new TypedActionResult<>(ActionResult.FAIL, stack);
-			}
-		} else
-		{
-			// TODO: remove this once real parchments are added
-			if (!world.isClient)
-			{
-				((DataHolder)player).getAdditionalData().putInt("IntTest", 47);
-				stack.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, TestParchment.NAME);
 			}
 		}
 		return new TypedActionResult<>(ActionResult.PASS, stack);

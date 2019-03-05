@@ -33,7 +33,7 @@ public class ArcaneMagicPacketHandler
 		}
 	}
 
-	private static void sendToClient(IPacket packet, ServerPlayerEntity player)
+	public static void sendToClient(IPacket packet, ServerPlayerEntity player)
 	{
 		PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
 		packet.write(buf);

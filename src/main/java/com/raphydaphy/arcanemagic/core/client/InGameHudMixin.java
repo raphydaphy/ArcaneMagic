@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.client;
 
 import com.raphydaphy.arcanemagic.client.ClientEvents;
 import net.minecraft.client.gui.hud.InGameHud;

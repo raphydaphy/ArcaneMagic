@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.common;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
@@ -85,7 +85,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 	}
 
 	private static final String ADDITIONAL_DATA_TAG = "ArcaneMagicData";
-	public CompoundTag additionalData = new CompoundTag();
+	private CompoundTag additionalData = new CompoundTag();
 
 	@Inject(at=@At("TAIL"), method="readCustomDataFromTag")
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo info)
@@ -103,5 +103,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 	public CompoundTag getAdditionalData()
 	{
 		return additionalData;
+	}
+
+	@Override
+	public void setAdditionalData(CompoundTag tag)
+	{
+		this.additionalData = tag;
 	}
 }

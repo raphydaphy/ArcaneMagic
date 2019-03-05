@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.core;
+package com.raphydaphy.arcanemagic.core.common;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
