@@ -1,8 +1,10 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -12,6 +14,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -20,6 +24,9 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityProvider
 {
@@ -51,7 +58,58 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 			return false;
 		}
 
-		return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, 0);
+		return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, 0, (stack) ->
+		{
+			if (stack.getItem() == Items.STICK)
+			{
+				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
+				((DataHolder) player).markAdditionalDataDirty();
+			} else
+			{
+				if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY))
+				{
+					for (int index : ((DataHolder) player).getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY))
+					{
+						Ingredient ingredient = DiscoveryParchment.GATHER_QUEST_OPTIONS[index];
+						if (ingredient.method_8093(stack)) // apply
+						{
+							int[] analyzedArray = ((DataHolder) player).getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY);
+							List<Integer> analyzed = new ArrayList<>();
+							for (int analyzedID : analyzedArray)
+							{
+								analyzed.add(analyzedID);
+							}
+							analyzed.add(index);
+							((DataHolder) player).getAdditionalData().putIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY, analyzed);
+							((DataHolder) player).markAdditionalDataDirty();
+							return;
+						}
+					}
+				} else if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
+				{
+					for (int index : ((DataHolder)player).getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY))
+					{
+						if (index != -1)
+						{
+							Ingredient ingredient = DiscoveryParchment.ANALYSIS_QUEST_OPTIONS[index];
+							if (ingredient.method_8093(stack)) // apply
+							{
+								int[] analyzedArray = ((DataHolder) player).getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY);
+								List<Integer> analyzed = new ArrayList<>();
+								for (int analyzedID : analyzedArray)
+								{
+									analyzed.add(analyzedID);
+								}
+								analyzed.add(index);
+								((DataHolder) player).getAdditionalData().putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY, analyzed);
+								((DataHolder) player).markAdditionalDataDirty();
+								return;
+							}
+						}
+					}
+				}
+			}
+		});
 	}
 
 	@Override
@@ -96,10 +154,10 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder)placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER))
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY))
 		{
-			((DataHolder)placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER, true);
-			((DataHolder)placer).markAdditionalDataDirty();
+			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
+			((DataHolder) placer).markAdditionalDataDirty();
 		}
 	}
 }

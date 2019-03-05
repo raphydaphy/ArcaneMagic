@@ -33,6 +33,8 @@ import net.minecraft.world.World;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class ArcaneMagicUtils
 {
@@ -155,14 +157,20 @@ public class ArcaneMagicUtils
 		return -1;
 	}
 
+	public static boolean pedestalInteraction(World world, PlayerEntity player, BlockEntity container, Hand hand, int slot)
+	{
+		return pedestalInteraction(world, player, container, hand, slot, null);
+	}
+
 	/**
 	 * Tries to insert or extract an item from a BlockEntity
 	 * Items are only extracted if the player is holding shift with an empty hand
 	 *
 	 * @param slot The container slot to try and interact with
+	 * @param onSet This is called if a new stack is added with the ItemStack parameter being the added stack
 	 * @return True if an item was either inserted or extracted
 	 */
-	public static boolean pedestalInteraction(World world, PlayerEntity player, BlockEntity container, Hand hand, int slot)
+	public static boolean pedestalInteraction(World world, PlayerEntity player, BlockEntity container, Hand hand, int slot, Consumer<ItemStack> onSet)
 	{
 		ItemStack held = player.getStackInHand(hand);
 		ItemStack stackInTable = ((Inventory) container).getInvStack(slot);
@@ -201,6 +209,10 @@ public class ArcaneMagicUtils
 
 					if (!world.isClient)
 					{
+						if (onSet != null)
+						{
+							onSet.accept(insertStack.copy());
+						}
 						((Inventory) container).setInvStack(slot, insertStack);
 					}
 

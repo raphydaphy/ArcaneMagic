@@ -26,8 +26,13 @@ public class ArcaneMagicConstants
 	public static final String ACTIVE_TIMER_KEY = "ActiveTimer";
 
 	// For the Discovery parchment
-	public static final String DROWNED_KILLS_KEY = "DrownedKills";
-	public static final String NEW_GATHER_QUEST_INDEXES_KEY = "NewGatherQuestIndexes";
-	public static final String NEW_GATHER_QUEST_FINISHED_KEY = "FinishedNewGatherQuest";
-	public static final String PLACED_ANALYZER = "PlacedAnalyzer";
+	public static final String DROWNED_KILLS_KEY = "DrownedKills"; // How many Drowned Zombies the player has killed, capped at 5
+	public static final String GATHER_QUEST_INDEXES_KEY = "GatherQuestIndexes"; // List of indexes in DiscoveryParchment.GATHER_QUEST_OPTIONS of new 1.13 & 1.14 items that need to be collected
+	public static final String GATHER_QUEST_FINISHED_KEY = "FinishedGatherQuest"; // If the player has collected all four of the new 1.13 and 1.14 items requested
+	public static final String GATHER_QUEST_ANALYZED_INDEXES_KEY = "GatherAnalysisFinishedIndexes"; // List of indexes DiscoveryParchment.GATHER_QUEST_OPTIONS of the new 1.13 & 1.14 items that have been analyzed
+	public static final String PLACED_ANALYZER_KEY = "PlacedAnalyzer"; // If the player has placed an Analyzer block
+	public static final String ANALYSIS_QUEST_INDEXES_KEY = "AnalysisQuestIndexes"; // List of indexes in DiscoveryParchment.ANALYSIS_QUEST_OPTIONS of items that need to be analyzed
+	public static final String ANALYSIS_QUEST_ANALYZED_INDEXES_KEY = "AnalysisQuestAnalyzedIndexesKey"; // List of indexes in DiscoveryParchment.ANALYSIS_QUEST_OPTION of items which have been analyzed
+	public static final String ANALYZED_STICK_KEY = "AnalyzedStick"; // If the player has placed a stick in the analyzer
+	public static final String CRAFTED_SCEPTER_KEY = "CraftedScepter"; // If the player has crafted a Golden Scepter
 }

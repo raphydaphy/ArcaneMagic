@@ -10,6 +10,7 @@ import com.raphydaphy.arcanemagic.core.common.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -315,6 +316,19 @@ public class ScepterItem extends SoulStorageItem
 		protected void spawnParticles(BlockPointer pointer, Direction dir)
 		{
 			//pointer.getWorld().playEvent(2000, pointer.getBlockPos(), dir.getId());
+		}
+	}
+
+	@Override
+	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
+	{
+		if (!world.isClient && player != null)
+		{
+			if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
+			{
+				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
+				((DataHolder) player).markAdditionalDataDirty();
+			}
 		}
 	}
 }

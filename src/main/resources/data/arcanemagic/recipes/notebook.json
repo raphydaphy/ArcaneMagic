@@ -4,9 +4,9 @@
   },
   "group": "arcanemagic:magic",
   "pattern": [
-	" p ",
+	" l ",
 	"pbp",
-	" p "
+	" r "
   ],
   "type": "crafting_shaped",
   "key": {
@@ -14,7 +14,13 @@
 	  "item": "minecraft:book"
 	},
 	"p": {
-	  "item": "arcanemagic:parchment"
+	  "item": "minecraft:paper"
+	},
+	"l": {
+	  "item": "minecraft:lapis_lazuli"
+	},
+	"r": {
+	  "item": "minecraft:redstone"
 	}
   }
 }

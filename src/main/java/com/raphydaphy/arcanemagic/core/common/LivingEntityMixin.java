@@ -13,7 +13,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.DrownedEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -30,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Mixin(LivingEntity.class)
@@ -127,18 +127,33 @@ public abstract class LivingEntityMixin extends Entity
 						ItemStack parchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT);
 						parchment.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, DiscoveryParchment.NAME);
 
-						List<Integer> newGatherIndexes = new ArrayList<>();
+						List<Integer> gatherIndexes = new ArrayList<>();
 
-						while (newGatherIndexes.size() < 4)
+						while (gatherIndexes.size() < 4)
 						{
-							int index = ArcaneMagic.RANDOM.nextInt(DiscoveryParchment.GATHER_QUEST_NEW_OPTIONS.length);
-							if (!newGatherIndexes.contains(index))
+							int index = ArcaneMagic.RANDOM.nextInt(DiscoveryParchment.GATHER_QUEST_OPTIONS.length);
+							if (!gatherIndexes.contains(index))
 							{
-								newGatherIndexes.add(index);
+								gatherIndexes.add(index);
 							}
 						}
 
-						((DataHolder) attacker).getAdditionalData().putIntArray(ArcaneMagicConstants.NEW_GATHER_QUEST_INDEXES_KEY, newGatherIndexes);
+						List<Integer> analysisIndexes = new ArrayList<>();
+
+						while (analysisIndexes.size() < 3)
+						{
+							int index = ArcaneMagic.RANDOM.nextInt(DiscoveryParchment.ANALYSIS_QUEST_OPTIONS.length);
+							if (!analysisIndexes.contains(index))
+							{
+								analysisIndexes.add(index);
+							}
+						}
+
+						analysisIndexes.add(-1);
+						Collections.shuffle(analysisIndexes);
+
+						((DataHolder) attacker).getAdditionalData().putIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY, gatherIndexes);
+						((DataHolder) attacker).getAdditionalData().putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY, analysisIndexes);
 						((DataHolder)attacker).markAdditionalDataDirty();
 
 						ItemStack paperStack = ((PlayerEntity) attacker).inventory.getInvStack(paper);
