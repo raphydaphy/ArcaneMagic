@@ -39,5 +39,6 @@
   "parchment.arcanemagic.discovery.analyzed_stick": "Placing a stick in my analyzer created reaction unlike anything I have seen before. However, this left me with many new questions, requiring further investigation. To begin, I have drawn up plans for an item which I hope will amplify the effect created in my analyzer.",
   "parchment.arcanemagic.discovery.crafted_scepter": "The Scepter I have created is capable of even more than I imagined. Not only does it produce golden particles in my analyzer, but it can slowly kill creatures that I look at while holding right-click. I should record these findings to help other travelers learn the things I have discovered.",
   "notebook.arcanemagic.title": "%s's Notes",
-  "notebook.arcanemagic.intro": "After noticing many odd changes around the world, I have decided to start a journal to keep track of anything that may be useful to future travelers.\n\nThe book is divided into sections which are dedicated to each major discovery that I have made. I still have a lot more to learn, so I have set aside plenty of room for the future."
+  "notebook.arcanemagic.intro": "After noticing many odd changes around the world, I have decided to start a journal to keep track of anything that may be useful to future travelers.\n\nThe book is divided into sections which are dedicated to each major discovery that I have made. I still have a lot more to learn, so I have set aside plenty of room for the future.",
+  "notebook.arcanemagic.categories": "Categories"
 }

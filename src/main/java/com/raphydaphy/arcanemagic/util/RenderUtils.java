@@ -227,6 +227,34 @@ public class RenderUtils
 		drawItemstackTooltip(screen, output, x + 113, y + 25, mouseX, mouseY);
 	}
 
+	public static int drawItemInBox(Screen screen, ItemStack item, List<String> tooltip, int x, int y, int mouseX, int mouseY)
+	{
+		MinecraftClient client = MinecraftClient.getInstance();
+		GlStateManager.pushMatrix();
+		GlStateManager.pushTextureAttributes();
+
+		drawBox(x, y, 24, 24, 2, -1);
+
+		if (!item.isEmpty())
+		{
+			GuiLighting.enableForItems();
+			client.getItemRenderer().renderGuiItem(item, x + 5, y + 5);
+			GuiLighting.disable();
+
+			if (tooltip != null && !tooltip.isEmpty() && mouseX >= x + 5 && mouseY >= y + 5 && mouseX <= x + 21 && mouseY <= y + 21)
+			{
+				// Actually draw the tooltip
+				screen.drawTooltip(tooltip, mouseX, mouseY);
+
+			}
+		}
+
+		GlStateManager.popAttributes();
+		GlStateManager.popMatrix();
+
+		return 26;
+	}
+
 	public static void drawRequiredItems(Screen screen, Map<Ingredient, Boolean> items, int x, int y, int mouseX, int mouseY)
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
