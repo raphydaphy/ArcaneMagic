@@ -67,7 +67,6 @@ public class NotebookUpdatePacket implements IPacket
 
 			if (stack.getItem() == ModRegistry.NOTEBOOK)
 			{
-				System.out.println("Updated notebook!");
 				stack.getOrCreateTag().putString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY, message.section);
 				stack.getOrCreateTag().putInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY, message.page);
 			}

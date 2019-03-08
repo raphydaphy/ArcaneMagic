@@ -18,8 +18,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import java.util.UUID;
-
 public class NotebookItem extends Item
 {
 	public NotebookItem()
@@ -30,22 +28,13 @@ public class NotebookItem extends Item
 	@Override
 	public void onEntityTick(ItemStack stack, World world, Entity entity, int slot, boolean selected)
 	{
-		if (!world.isClient && entity instanceof PlayerEntity)
+		if (!world.isClient)
 		{
-			ItemStack notebook = ((PlayerEntity)entity).inventory.getInvStack(slot);
-
-			if (notebook.getItem() == ModRegistry.NOTEBOOK)
+			CompoundTag tag = stack.getOrCreateTag();
+			if (!tag.containsKey(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY))
 			{
-				CompoundTag tag = notebook.getOrCreateTag();
-				if (!tag.hasUuid(ArcaneMagicConstants.UUID_KEY))
-				{
-					System.out.println("reset tag");
-					tag.putUuid(ArcaneMagicConstants.UUID_KEY, UUID.randomUUID());
-					System.out.println(tag.containsKey(ArcaneMagicConstants.UUID_KEY));
-					tag.putString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY, NotebookSectionRegistry.CONTENTS.getID().toString());
-					tag.putInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY, 0);
-				}
-
+				tag.putString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY, NotebookSectionRegistry.CONTENTS.getID().toString());
+				tag.putInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY, 0);
 			}
 		}
 	}

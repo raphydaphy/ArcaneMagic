@@ -108,13 +108,6 @@ public abstract class ItemStackMixin
 						info.setReturnValue(true);
 					}
 				}
-			} else if (!info.getReturnValue() && one.getItem() instanceof NotebookItem && two.getItem() instanceof NotebookItem && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
-			{
-				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.UUID_KEY);
-				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.UUID_KEY)))
-				{
-					info.setReturnValue(true);
-				}
 			}
 		}
 	}
