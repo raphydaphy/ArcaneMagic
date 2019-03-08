@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -44,6 +45,16 @@ public class RenderUtils
 		}
 
 		return strings.size() * textRenderer.fontHeight;
+	}
+
+	public static int drawCustomSizedSplitString(int x, int y, double scale, int width, int color, boolean verticallyCentered, boolean horizontallyCentered, String unlocalizedText, Object... keys)
+	{
+		GlStateManager.pushMatrix();
+		GlStateManager.scaled(scale, scale, scale);
+		int height = RenderUtils.drawSplitString(MinecraftClient.getInstance().textRenderer, I18n.translate(unlocalizedText, keys),
+				(int) (x / scale), (int) (y / scale), (int) (width / scale), color, verticallyCentered, horizontallyCentered);
+		GlStateManager.popMatrix();
+		return (int) (height * scale);
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -352,5 +363,11 @@ public class RenderUtils
 		{
 			DrawableHelper.drawRect(x + lineWidth, y + lineWidth, x + width, y + width, background);
 		}
+	}
+
+	public static int drawTexturedRect(int x, int y, int u, int v, int maxU, int maxV, int width, int height, int textureWidth, int textureHeight)
+	{
+		DrawableHelper.drawTexturedRect(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
+		return height;
 	}
 }

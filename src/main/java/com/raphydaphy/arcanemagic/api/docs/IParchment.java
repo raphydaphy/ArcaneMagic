@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.api.parchment;
+package com.raphydaphy.arcanemagic.api.docs;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,12 +10,9 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.util.Hand;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface IParchment
 {

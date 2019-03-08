@@ -1,13 +1,10 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.parchment.IParchment;
+import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.client.screen.ParchmentScreen;
-import com.raphydaphy.arcanemagic.util.DataHolder;
-import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
-import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

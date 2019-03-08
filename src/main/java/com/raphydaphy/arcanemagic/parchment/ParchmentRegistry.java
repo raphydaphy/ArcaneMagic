@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.parchment;
 
-import com.raphydaphy.arcanemagic.api.parchment.IParchment;
+import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.ParchmentItem;
 import net.minecraft.item.ItemStack;

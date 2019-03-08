@@ -15,6 +15,12 @@ public class ArcaneMagicConstants
 
 	public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
 	public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
+	public static final Identifier NOTEBOOK_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/notebook.png");
+
+	// Dimensions of the notebook texture with and without the bottom icons
+	public static final int NOTEBOOK_WIDTH = 272;
+	public static final int NOTEBOOK_HEIGHT = 180;
+	public static final int NOTEBOOK_TEX_HEIGHT = 256;
 
 	// Amount of liquified soul produced by a single unit of soul
 	public static final int LIQUIFIED_SOUL_RATIO = DropletValues.NUGGET + 5;
