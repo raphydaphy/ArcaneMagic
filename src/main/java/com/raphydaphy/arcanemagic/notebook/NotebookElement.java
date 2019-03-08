@@ -58,7 +58,7 @@ public class NotebookElement
 		@Override
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
-			return RenderUtils.drawCustomSizedSplitString(x, y, 0.7, 116, 0, false, false, unlocalized, keys) + padding;
+			return RenderUtils.drawCustomSizedSplitString(x + (centered ? 57 : 0), y, 0.7, 116, 0, false, centered, unlocalized, keys) + padding;
 		}
 	}
 
