@@ -11,9 +11,11 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.InputListener;
 import net.minecraft.client.gui.Screen;
-import net.minecraft.item.ItemProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvents;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Environment(EnvType.CLIENT)
 public class NotebookScreen extends Screen
@@ -23,9 +25,32 @@ public class NotebookScreen extends Screen
 	private int scaledMouseX = 0;
 	private int scaledMouseY = 0;
 
+	private List<INotebookElement> leftElements = new ArrayList<>();
+	private List<INotebookElement> rightElements = new ArrayList<>();
+
 	public NotebookScreen(ItemStack stack)
 	{
-		section = ContentsNotebookSection.INSTANCE;
+		setSection(ContentsNotebookSection.INSTANCE);
+	}
+
+	private void setSection(INotebookSection section)
+	{
+		this.leftPage = 0;
+		this.section = section;
+		this.leftElements.clear();
+		this.rightElements.clear();
+
+		this.leftElements = this.section.getElements(0);
+		this.rightElements = this.section.getElements(1);
+	}
+
+	private void pageChanged()
+	{
+		this.leftElements.clear();
+		this.rightElements.clear();
+
+		this.leftElements = this.section.getElements(this.leftPage);
+		this.rightElements = this.section.getElements(this.leftPage + 1);
 	}
 
 	@Override
@@ -39,13 +64,13 @@ public class NotebookScreen extends Screen
 			{
 				if (button == 0)
 				{
-					if (overRightArrow() && leftPage + 1 < section.getPageCount())
+					if ((leftPage + 1 < section.getPageCount() && overRightArrow()) || (leftPage > 0 && overLeftArrow()) || (!(section instanceof ContentsNotebookSection) && overBackArrow()))
 					{
 						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
-					} else if (overLeftArrow() && leftPage > 0)
+					} else if (isMouseOverAny(leftElements) || isMouseOverAny(rightElements))
 					{
-						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
+						client.player.playSound(SoundEvents.UI_BUTTON_CLICK, 0.5f, 1);
 						return true;
 					}
 				}
@@ -57,23 +82,56 @@ public class NotebookScreen extends Screen
 			{
 				if (button == 0)
 				{
-					if (overRightArrow() && leftPage + 1 < section.getPageCount())
+					if (leftPage + 1 < section.getPageCount() && overRightArrow())
 					{
 						leftPage += 2;
+						pageChanged();
 						return true;
-					} else if (overLeftArrow() && leftPage > 0)
+					} else if (leftPage > 0 && overLeftArrow())
 					{
 						leftPage -= 2;
 						if (leftPage < 0)
 						{
 							leftPage = 0;
 						}
+						pageChanged();
+						return true;
+					} else if (!(section instanceof ContentsNotebookSection) && overBackArrow())
+					{
+						setSection(ContentsNotebookSection.INSTANCE);
 						return true;
 					}
+					return handleClickOn(leftElements) || handleClickOn(rightElements);
 				}
 				return false;
 			}
 		});
+	}
+
+	private boolean isMouseOverAny(List<INotebookElement> elements)
+	{
+		for (INotebookElement element : elements)
+		{
+			if (element.mouseOver(scaledMouseX, scaledMouseY))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean handleClickOn(List<INotebookElement> elements)
+	{
+		for (INotebookElement element : elements)
+		{
+			INotebookSection s = element.handleClick(scaledMouseX, scaledMouseY);
+			if (s != null)
+			{
+				setSection(s);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private boolean overRightArrow()
@@ -96,6 +154,16 @@ public class NotebookScreen extends Screen
 		return scaledMouseX >= left + 10 && scaledMouseY >= yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21 && scaledMouseX <= left + 28 && scaledMouseY <= yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 11;
 	}
 
+	private boolean overBackArrow()
+	{
+		//right + 85, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21
+		int xTop = (client.window.getScaledWidth() / 2) - (ArcaneMagicConstants.NOTEBOOK_WIDTH / 2);
+		int yTop = (client.window.getScaledHeight() / 2) - (ArcaneMagicConstants.NOTEBOOK_HEIGHT / 2);
+
+		int right = xTop + 142;
+		return scaledMouseX >= right - 15 && scaledMouseY >= yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21 && scaledMouseX <= right && scaledMouseY <= yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 10;
+	}
+
 	@Override
 	public void draw(int mouseX, int mouseY, float partialTicks)
 	{
@@ -116,9 +184,14 @@ public class NotebookScreen extends Screen
 		client.getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
 		DrawableHelper.drawTexturedRect(xTop, yTop, 0, 0, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_HEIGHT, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_HEIGHT, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 
+		if (section instanceof ContentsNotebookSection)
+		{
+			DrawableHelper.drawTexturedRect(xTop + 133, yTop + 156, 136, 180, 5, 11, 5, 11, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
+		}
+
 		// Intro page
 		int pointer = yTop + 15;
-		for (INotebookElement element : section.getElements(leftPage))
+		for (INotebookElement element : this.leftElements)
 		{
 			GlStateManager.pushMatrix();
 			pointer += element.draw(this, left, pointer, mouseX, mouseY, xTop, yTop);
@@ -126,7 +199,7 @@ public class NotebookScreen extends Screen
 		}
 
 		pointer = yTop + 15;
-		for (INotebookElement element : section.getElements(leftPage + 1))
+		for (INotebookElement element : this.rightElements)
 		{
 			GlStateManager.pushMatrix();
 			pointer += element.draw(this, right, pointer, mouseX, mouseY, xTop, yTop);
@@ -143,6 +216,11 @@ public class NotebookScreen extends Screen
 		if (leftPage > 0)
 		{
 			RenderUtils.drawTexturedRect(left + 10, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21, overLeftArrow() ? 23 : 0, 193, 18, 10, 18, 10, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
+		}
+
+		if (!(section instanceof ContentsNotebookSection))
+		{
+			RenderUtils.drawTexturedRect(right - 15, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21, overBackArrow() ? 66 : 46, 193, 15, 11, 15, 11, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 		}
 		GlStateManager.popMatrix();
 	}

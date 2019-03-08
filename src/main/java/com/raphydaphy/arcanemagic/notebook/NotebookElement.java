@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.notebook;
 
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
+import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
@@ -9,11 +10,11 @@ import net.minecraft.client.gui.Screen;
 import net.minecraft.item.ItemProvider;
 import net.minecraft.item.ItemStack;
 
-public class NotebookElement
+class NotebookElement
 {
 	public static class BigHeading extends Writable
 	{
-		public BigHeading(String unlocalized, Object... keys)
+		BigHeading(String unlocalized, Object... keys)
 		{
 			super(unlocalized, keys);
 		}
@@ -30,7 +31,7 @@ public class NotebookElement
 
 	public static class SmallHeading extends Writable
 	{
-		public SmallHeading(String unlocalized, Object... keys)
+		SmallHeading(String unlocalized, Object... keys)
 		{
 			super(unlocalized, keys);
 		}
@@ -47,9 +48,9 @@ public class NotebookElement
 
 	public static class Paragraph extends Writable
 	{
-		public final boolean centered;
+		private final boolean centered;
 
-		public Paragraph(boolean centered, String unlocalized, Object... keys)
+		Paragraph(boolean centered, String unlocalized, Object... keys)
 		{
 			super(unlocalized, keys);
 			this.centered = centered;
@@ -62,12 +63,57 @@ public class NotebookElement
 		}
 	}
 
+	public static class ItemInfoButton extends ItemInfo
+	{
+		private final INotebookSection link;
+
+		private int startX;
+		private int startY;
+		private int endX;
+		private int endY;
+
+		ItemInfoButton(INotebookSection link, ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys)
+		{
+			super(item, unlocalizedTitle, unlocalizedDesc, descKeys);
+			this.link = link;
+		}
+
+		@Override
+		public boolean mouseOver(int mouseX, int mouseY)
+		{
+			return mouseX >= startX && mouseX <= endX && mouseY >= startY && mouseY <= endY;
+		}
+
+		@Override
+		public INotebookSection handleClick(int mouseX, int mouseY)
+		{
+			if (mouseX >= startX && mouseX <= endX && mouseY >= startY && mouseY <= endY)
+			{
+				return link;
+			}
+			return null;
+		}
+
+		@Override
+		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
+		{
+			int height = super.draw(screen, x, y, mouseX, mouseY, xTop, yTop);
+
+			this.startX = x;
+			this.startY = y;
+			this.endX = startX + 26;
+			this.endY = startY + 26;
+
+			return height;
+		}
+	}
+
 	public static class ItemInfo extends Writable
 	{
-		public final ItemProvider item;
-		public final String unlocalizedTitle;
+		private final ItemProvider item;
+		private final String unlocalizedTitle;
 
-		public ItemInfo(ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys)
+		ItemInfo(ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys)
 		{
 			super(unlocalizedDesc, descKeys);
 			this.item = item;
@@ -86,7 +132,23 @@ public class NotebookElement
 		}
 	}
 
-	public static abstract class Writable implements INotebookElement
+	public static class Padding implements INotebookElement
+	{
+		private final int amount;
+
+		public Padding(int amount)
+		{
+			this.amount = amount;
+		}
+
+		@Override
+		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
+		{
+			return amount;
+		}
+	}
+
+	private static abstract class Writable implements INotebookElement
 	{
 		final String unlocalized;
 		final Object[] keys;
@@ -98,7 +160,7 @@ public class NotebookElement
 			this.keys = keys;
 		}
 
-		public Writable withPadding(int padding)
+		Writable withPadding(int padding)
 		{
 			this.padding = padding;
 			return this;
