@@ -1,10 +1,14 @@
 package com.raphydaphy.arcanemagic.client.screen;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
 import com.raphydaphy.arcanemagic.notebook.ContentsNotebookSection;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,7 +16,9 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.InputListener;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +36,29 @@ public class NotebookScreen extends Screen
 
 	public NotebookScreen(ItemStack stack)
 	{
-		setSection(ContentsNotebookSection.INSTANCE);
+		CompoundTag tag = stack.getTag();
+		if (tag != null && tag.containsKey(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY))
+		{
+			INotebookSection section = NotebookSectionRegistry.get(Identifier.create(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
+			int page = tag.getInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY);
+
+			if (section != null)
+			{
+				setSection(section, false);
+				if (page <= section.getPageCount())
+				{
+					this.leftPage = page;
+					pageChanged(false);
+				}
+				return;
+			}
+		}
+
+		ArcaneMagic.getLogger().warn("Tried to open a notebook with invalid NBT !");
+		setSection(NotebookSectionRegistry.CONTENTS, false);
 	}
 
-	private void setSection(INotebookSection section)
+	private void setSection(INotebookSection section, boolean sync)
 	{
 		this.leftPage = 0;
 		this.section = section;
@@ -42,15 +67,25 @@ public class NotebookScreen extends Screen
 
 		this.leftElements = this.section.getElements(0);
 		this.rightElements = this.section.getElements(1);
+
+		if (sync)
+		{
+			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), leftPage));
+		}
 	}
 
-	private void pageChanged()
+	private void pageChanged(boolean sync)
 	{
 		this.leftElements.clear();
 		this.rightElements.clear();
 
 		this.leftElements = this.section.getElements(this.leftPage);
 		this.rightElements = this.section.getElements(this.leftPage + 1);
+
+		if (sync)
+		{
+			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(section.getID().toString(), leftPage));
+		}
 	}
 
 	@Override
@@ -85,7 +120,7 @@ public class NotebookScreen extends Screen
 					if (leftPage + 1 < section.getPageCount() && overRightArrow())
 					{
 						leftPage += 2;
-						pageChanged();
+						pageChanged(true);
 						return true;
 					} else if (leftPage > 0 && overLeftArrow())
 					{
@@ -94,11 +129,11 @@ public class NotebookScreen extends Screen
 						{
 							leftPage = 0;
 						}
-						pageChanged();
+						pageChanged(true);
 						return true;
 					} else if (!(section instanceof ContentsNotebookSection) && overBackArrow())
 					{
-						setSection(ContentsNotebookSection.INSTANCE);
+						setSection(NotebookSectionRegistry.CONTENTS, true);
 						return true;
 					}
 					return handleClickOn(leftElements) || handleClickOn(rightElements);
@@ -127,7 +162,7 @@ public class NotebookScreen extends Screen
 			INotebookSection s = element.handleClick(scaledMouseX, scaledMouseY);
 			if (s != null)
 			{
-				setSection(s);
+				setSection(s, true);
 				return true;
 			}
 		}

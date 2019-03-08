@@ -13,7 +13,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.entity.ItemEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -56,7 +55,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 				craftingTime = 0;
 				active = false;
 				ItemStack output = getInvStack(0).copy();
-				output.getOrCreateTag().putUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID, UUID.randomUUID());
+				output.getOrCreateTag().putUuid(ArcaneMagicConstants.UUID_KEY, UUID.randomUUID());
 				CompoundTag outputTag = output.getTag();
 				if (outputTag != null)
 				{

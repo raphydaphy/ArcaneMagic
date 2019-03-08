@@ -1,16 +1,22 @@
 package com.raphydaphy.arcanemagic.notebook;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContentsNotebookSection implements INotebookSection
 {
-	public static ContentsNotebookSection INSTANCE = new ContentsNotebookSection();
+	@Override
+	public Identifier getID()
+	{
+		return new Identifier(ArcaneMagic.DOMAIN, "contents");
+	}
 
 	@Override
 	public List<INotebookElement> getElements(int page)
@@ -23,7 +29,7 @@ public class ContentsNotebookSection implements INotebookSection
 		} else if (page == 1)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.categories").withPadding(3));
-			elements.add(new NotebookElement.ItemInfoButton(DrainingNotebookSection.INSTANCE, ModRegistry.GOLDEN_SCEPTER, "Draining", "Using a Scepter to extract Soul").withPadding(5));
+			elements.add(new NotebookElement.ItemInfoButton(NotebookSectionRegistry.DRAINING, ModRegistry.GOLDEN_SCEPTER, "Draining", "Using a Scepter to extract Soul").withPadding(5));
 			elements.add(new NotebookElement.ItemInfo(ModRegistry.TRANSFIGURATION_TABLE, "Transfiguration", "Using Soul to craft various items").withPadding(5));
 			elements.add(new NotebookElement.ItemInfo(ModRegistry.SOUL_PENDANT, "Soul Storage", "Binding Soul to items for storage").withPadding(5));
 			elements.add(new NotebookElement.ItemInfo(ModRegistry.ALTAR, "Soul Collection", "Gathering Soul more efficiently").withPadding(5));

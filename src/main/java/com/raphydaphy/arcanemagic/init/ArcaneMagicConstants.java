@@ -22,11 +22,14 @@ public class ArcaneMagicConstants
 	public static final int NOTEBOOK_HEIGHT = 180;
 	public static final int NOTEBOOK_TEX_HEIGHT = 256;
 
+	public static final String NOTEBOOK_SECTION_KEY = "NotebookSection";
+	public static final String NOTEBOOK_PAGE_KEY = "NotebookPage";
+
 	// Amount of liquified soul produced by a single unit of soul
 	public static final int LIQUIFIED_SOUL_RATIO = DropletValues.NUGGET + 5;
 	public static final int SOUL_PER_SMELT = 2;
 
-	public static final String CRYSTAL_ITEM_UUID = "CrystalItemIdentifier";
+	public static final String UUID_KEY = "CrystalItemIdentifier";
 	public static final String PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
 	public static final String ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
 	public static final String ACTIVE_TIMER_KEY = "ActiveTimer";

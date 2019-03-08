@@ -1,15 +1,21 @@
 package com.raphydaphy.arcanemagic.notebook;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DrainingNotebookSection implements INotebookSection
 {
-	public static DrainingNotebookSection INSTANCE = new DrainingNotebookSection();
+	@Override
+	public Identifier getID()
+	{
+		return new Identifier(ArcaneMagic.DOMAIN, "draining");
+	}
 
 	@Override
 	public List<INotebookElement> getElements(int page)

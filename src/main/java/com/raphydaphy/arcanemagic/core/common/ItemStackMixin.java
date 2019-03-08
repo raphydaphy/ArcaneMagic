@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.DaggerItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
+import com.raphydaphy.arcanemagic.item.NotebookItem;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -97,8 +98,8 @@ public abstract class ItemStackMixin
 		{
 			if (!info.getReturnValue() && one.getItem() instanceof ICrystalEquipment && two.getItem() instanceof ICrystalEquipment && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
 			{
-				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID);
-				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.CRYSTAL_ITEM_UUID)))
+				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.UUID_KEY);
+				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.UUID_KEY)))
 				{
 					int timerOne = tagOne.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
 					int timerTwo = tagTwo.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
@@ -106,6 +107,13 @@ public abstract class ItemStackMixin
 					{
 						info.setReturnValue(true);
 					}
+				}
+			} else if (!info.getReturnValue() && one.getItem() instanceof NotebookItem && two.getItem() instanceof NotebookItem && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
+			{
+				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.UUID_KEY);
+				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.UUID_KEY)))
+				{
+					info.setReturnValue(true);
 				}
 			}
 		}
