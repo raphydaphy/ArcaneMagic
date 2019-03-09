@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
 import com.raphydaphy.arcanemagic.notebook.ContentsNotebookSection;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -42,33 +43,33 @@ public class NotebookScreen extends Screen
 			INotebookSection section = NotebookSectionRegistry.get(Identifier.create(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
 			int page = tag.getInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY);
 
+			this.section = section;
+
 			if (section != null)
 			{
-				setSection(section, false);
-				if (page <= section.getPageCount())
-				{
-					this.leftPage = page;
-					pageChanged(false);
-				}
+				this.leftPage = page;
 				return;
 			}
 		}
-
-		ArcaneMagic.getLogger().warn("Tried to open a notebook with invalid NBT !");
-		setSection(NotebookSectionRegistry.CONTENTS, false);
 	}
 
 	private void setSection(INotebookSection section, boolean sync)
 	{
 		this.leftPage = 0;
-		this.section = section;
+		if (!section.isVisibleTo((DataHolder)client.player))
+		{
+			this.section = NotebookSectionRegistry.CONTENTS;
+		} else
+		{
+			this.section = section;
+		}
 		this.leftElements.clear();
 		this.rightElements.clear();
 
-		this.leftElements = this.section.getElements(0);
-		this.rightElements = this.section.getElements(1);
+		this.leftElements = this.section.getElements((DataHolder)client.player, 0);
+		this.rightElements = this.section.getElements((DataHolder)client.player, 1);
 
-		if (sync)
+		if (sync || this.section != section)
 		{
 			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), leftPage));
 		}
@@ -79,8 +80,8 @@ public class NotebookScreen extends Screen
 		this.leftElements.clear();
 		this.rightElements.clear();
 
-		this.leftElements = this.section.getElements(this.leftPage);
-		this.rightElements = this.section.getElements(this.leftPage + 1);
+		this.leftElements = this.section.getElements((DataHolder)client.player, this.leftPage);
+		this.rightElements = this.section.getElements((DataHolder)client.player, this.leftPage + 1);
 
 		if (sync)
 		{
@@ -92,6 +93,20 @@ public class NotebookScreen extends Screen
 	protected void onInitialized()
 	{
 		super.onInitialized();
+		if (section != null)
+		{
+			int page = leftPage;
+			setSection(section, false);
+			if (page <= section.getPageCount((DataHolder) client.player))
+			{
+				this.leftPage = page;
+				pageChanged(false);
+			}
+		} else
+		{
+			ArcaneMagic.getLogger().warn("Tried to open a notebook with invalid NBT !");
+			setSection(NotebookSectionRegistry.CONTENTS, true);
+		}
 		this.listeners.add(new InputListener()
 		{
 			@Override
@@ -99,7 +114,7 @@ public class NotebookScreen extends Screen
 			{
 				if (button == 0)
 				{
-					if ((leftPage + 1 < section.getPageCount() && overRightArrow()) || (leftPage > 0 && overLeftArrow()) || (!(section instanceof ContentsNotebookSection) && overBackArrow()))
+					if ((leftPage + 1 < section.getPageCount((DataHolder)client.player) && overRightArrow()) || (leftPage > 0 && overLeftArrow()) || (!(section instanceof ContentsNotebookSection) && overBackArrow()))
 					{
 						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
@@ -117,7 +132,7 @@ public class NotebookScreen extends Screen
 			{
 				if (button == 0)
 				{
-					if (leftPage + 1 < section.getPageCount() && overRightArrow())
+					if (leftPage + 1 < section.getPageCount((DataHolder)client.player) && overRightArrow())
 					{
 						leftPage += 2;
 						pageChanged(true);
@@ -243,7 +258,7 @@ public class NotebookScreen extends Screen
 
 		client.getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
 
-		if (leftPage + 1 < section.getPageCount())
+		if (leftPage + 1 < section.getPageCount((DataHolder)client.player))
 		{
 			RenderUtils.drawTexturedRect(right + 85, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21, overRightArrow() ? 23 : 0, 180, 18, 10, 18, 10, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 		}

@@ -31,6 +31,8 @@
   "message.arcanemagic.drowned_first_kill": "You have never seen a zombie like that before. Perhaps you should get some paper to document your findings before killing another.",
   "message.arcanemagic.drowned_paper_first": "You have never seen a zombie like that before. You use some paper to document your findings.",
   "message.arcanemagic.drowned_paper_second": "You use the paper to document your discovery.",
+  "toast.arcanemagic.parchment_update": "Parchment Updated!",
+  "toast.arcanemagic.notebook_update": "Notebook Updated!",
   "parchment.arcanemagic.discovery.kill_quest": "I am writing this to record an unusual species which I discovered whilst swimming today. It featured many of the same properties as the Zombies I have seen countless times before, but it was blue and thrived underwater. This change seems to have happened unnaturally fast, and I should like to find out why. Since I don't know enough about the zombies to come to a conclusion at this point, I will try and find some more to kill before writing an update.",
   "parchment.arcanemagic.discovery.gather_new": "After killing several more underwater zombies, I am beginning to realize that they are not the only anomaly - in fact, so much of the world I knew is changing. The zombies that I have been analyzing share their home with fish, dolphins and various plants that I have never seen before - even the trees and flowers on the surface look different. It might be easier to examine the changes if I gathered some of the new items.",
   "parchment.arcanemagic.discovery.craft_analyzer": "I have certainly never seen anything like these items before. To take a closer look, I have written up plans for a device capable of analyzing the item placed in it.",
@@ -40,5 +42,14 @@
   "parchment.arcanemagic.discovery.crafted_scepter": "The Scepter I have created is capable of even more than I imagined. Not only does it produce golden particles in my analyzer, but it can slowly kill creatures that I look at while holding right-click. I should record these findings to help other travelers learn the things I have discovered.",
   "notebook.arcanemagic.title": "%s's Notes",
   "notebook.arcanemagic.intro": "After noticing many odd changes around the world, I have decided to start a journal to keep track of anything that may be useful to future travelers.\n\nThe book is divided into sections which are dedicated to each major discovery that I have made. I still have a lot more to learn, so I have set aside plenty of room for the future.",
-  "notebook.arcanemagic.categories": "Categories"
+  "notebook.arcanemagic.categories": "Categories",
+  "notebook.arcanemagic.discovery.title": "Discovery",
+  "notebook.arcanemagic.discovery.desc": "A recollection of various experiments",
+  "notebook.arcanemagic.discovery.0": "Until recently, I took most of the world we live in for granted. I was able to kill my enemies with relative ease, and I could see for several chunks into the horizon - nothing was beyond my reach if I wanted it.\n\nMy experiments with various new items and creatures have lead me to realize that a lot of what I thought I knew was wrong. There is an unseen force sealed within every living mob, and I have been able to examine it for a few short moments by §5§ldraining§r it out of creatures with a Scepter of my own creation. I realize now that there is a lot",
+  "notebook.arcanemagic.discovery.1": "more to learn about this force, and I believe that it is not the only thing which I have been unaware of.\n\nBecause of its presence within living creatures, and how it causes their death when it is taken away, I suppose it could represent their §5§lSoul§r. Unless I can find a reason to call it something different, I shall refer to it as so from now on.\n\nAfter it is drained out of lifeforms, a small amount of §5§lSoul§r can be stored within the Scepter that was used to collect it. I can see the potential to store a lot more, but I have not been able to construct a suitable object using a Crafting",
+  "notebook.arcanemagic.discovery.2": "Table as of yet. Perhaps there are other ways to construct items - §1§oI will need to take a closer look at a Crafting Table if I want to properly understand how it works§r.",
+  "notebook.arcanemagic.transfiguration.title": "Transfiguration",
+  "notebook.arcanemagic.transfiguration.desc": "Improved Crafting using Soul",
+  "notebook.arcanemagic.transfiguration.0": "<put transfiguration description here>"
+
 }

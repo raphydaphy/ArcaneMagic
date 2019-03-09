@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.*;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.network.PlayerDataUpdatePacket;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
@@ -28,6 +29,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
 		ClientSidePacketRegistry.INSTANCE.register(PlayerDataUpdatePacket.ID, new PlayerDataUpdatePacket.Handler());
+		ClientSidePacketRegistry.INSTANCE.register(ProgressionUpdateToastPacket.ID, new ProgressionUpdateToastPacket.Handler());
 
 		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
 		{

@@ -44,4 +44,7 @@ public class ArcaneMagicConstants
 	public static final String ANALYSIS_QUEST_ANALYZED_INDEXES_KEY = "AnalysisQuestAnalyzedIndexesKey"; // List of indexes in DiscoveryParchment.ANALYSIS_QUEST_OPTION of items which have been analyzed
 	public static final String ANALYZED_STICK_KEY = "AnalyzedStick"; // If the player has placed a stick in the analyzer
 	public static final String CRAFTED_SCEPTER_KEY = "CraftedScepter"; // If the player has crafted a Golden Scepter
+
+	// For notebook progression
+	public static final String ANALYZED_CRAFTING_TABLE = "AnalyzedCraftingTable";
 }

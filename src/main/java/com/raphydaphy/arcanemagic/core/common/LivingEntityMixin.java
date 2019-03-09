@@ -5,6 +5,8 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModEvents;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
@@ -17,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TranslatableTextComponent;
@@ -122,7 +125,7 @@ public abstract class LivingEntityMixin extends Entity
 						}
 					}
 
-					if (giveParchment && !world.isClient)
+					if (giveParchment)
 					{
 						ItemStack parchment = new ItemStack(ModRegistry.WRITTEN_PARCHMENT);
 						parchment.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, DiscoveryParchment.NAME);
@@ -168,6 +171,10 @@ public abstract class LivingEntityMixin extends Entity
 					}
 					if (kills != 1 || paper != -1)
 					{
+						if (kills == 4)
+						{
+							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)attacker);
+						}
 						((DataHolder)attacker).getAdditionalData().putInt(ArcaneMagicConstants.DROWNED_KILLS_KEY, kills + 1);
 						((DataHolder)attacker).markAdditionalDataDirty();
 					}

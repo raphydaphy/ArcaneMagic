@@ -3,6 +3,8 @@ package com.raphydaphy.arcanemagic.parchment;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,6 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeManager;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -46,7 +49,7 @@ public class DiscoveryParchment implements IParchment
 			Ingredient.ofItems(Items.LEATHER), Ingredient.ofItems(Items.REDSTONE),
 			Ingredient.ofItems(Items.LAPIS_LAZULI), Ingredient.fromTag(ItemTags.LOGS),
 			Ingredient.fromTag(ItemTags.PLANKS), Ingredient.fromTag(ItemTags.COALS),
-			Ingredient.ofItems(Blocks.GLASS), Ingredient.ofItems(Blocks.CRAFTING_TABLE),
+			Ingredient.ofItems(Blocks.GLASS), Ingredient.ofItems(Blocks.CHEST),
 			Ingredient.ofItems(Blocks.FURNACE), Ingredient.ofItems(Blocks.TNT)
 	};
 
@@ -169,6 +172,7 @@ public class DiscoveryParchment implements IParchment
 					{
 						if (!world.isClient())
 						{
+							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)player);
 							((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY, true);
 							((DataHolder) player).markAdditionalDataDirty();
 						}

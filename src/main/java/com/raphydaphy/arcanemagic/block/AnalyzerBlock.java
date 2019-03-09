@@ -1,9 +1,10 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
@@ -16,6 +17,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -60,49 +62,68 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 
 		return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, 0, (stack) ->
 		{
+			// All of this is only called on the server-side
+			DataHolder dataPlayer = ((DataHolder)player);
 			if (stack.getItem() == Items.STICK)
 			{
-				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
-				((DataHolder) player).markAdditionalDataDirty();
+				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
+				{
+					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
+					dataPlayer.markAdditionalDataDirty();
+				}
+			} else if (stack.getItem() == Blocks.CRAFTING_TABLE.getItem())
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE))
+				{
+					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE, true);
+					dataPlayer.markAdditionalDataDirty();
+				}
 			} else
 			{
-				if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY))
+				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)
 				{
-					for (int index : ((DataHolder) player).getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY))
+					for (int index : dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY))
 					{
 						Ingredient ingredient = DiscoveryParchment.GATHER_QUEST_OPTIONS[index];
 						if (ingredient.method_8093(stack)) // apply
 						{
-							int[] analyzedArray = ((DataHolder) player).getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY);
+							int[] analyzedArray = dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY);
 							List<Integer> analyzed = new ArrayList<>();
 							for (int analyzedID : analyzedArray)
 							{
 								analyzed.add(analyzedID);
 							}
 							analyzed.add(index);
-							((DataHolder) player).getAdditionalData().putIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY, analyzed);
-							((DataHolder) player).markAdditionalDataDirty();
-							return;
+							dataPlayer.getAdditionalData().putIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY, analyzed);
+							dataPlayer.markAdditionalDataDirty();
+							break;
 						}
 					}
-				} else if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
+
+					if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4)
+					{
+						ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)player);
+					}
+				} else if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
 				{
-					for (int index : ((DataHolder)player).getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY))
+					for (int index : dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY))
 					{
 						if (index != -1)
 						{
 							Ingredient ingredient = DiscoveryParchment.ANALYSIS_QUEST_OPTIONS[index];
 							if (ingredient.method_8093(stack)) // apply
 							{
-								int[] analyzedArray = ((DataHolder) player).getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY);
+								int[] analyzedArray = dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY);
 								List<Integer> analyzed = new ArrayList<>();
 								for (int analyzedID : analyzedArray)
 								{
 									analyzed.add(analyzedID);
 								}
 								analyzed.add(index);
-								((DataHolder) player).getAdditionalData().putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY, analyzed);
-								((DataHolder) player).markAdditionalDataDirty();
+								dataPlayer.getAdditionalData().putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY, analyzed);
+								dataPlayer.markAdditionalDataDirty();
 								return;
 							}
 						}
@@ -156,6 +177,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	{
 		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY))
 		{
+			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)placer);
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}

@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
@@ -43,7 +44,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 	@Environment(EnvType.CLIENT)
 	private void doParticles(Item item)
 	{
-		if (item == Items.STICK || item instanceof ScepterItem)
+		if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem())
 		{
 			float inverseSpread = 400;
 			for (int i = 0; i < 4; i++)

@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
@@ -19,41 +20,50 @@ public class ContentsNotebookSection implements INotebookSection
 	}
 
 	@Override
-	public List<INotebookElement> getElements(int page)
+	public boolean isVisibleTo(DataHolder player)
+	{
+		return true;
+	}
+
+	@Override
+	public List<INotebookElement> getElements(DataHolder player, int page)
 	{
 		List<INotebookElement> elements = new ArrayList<>();
+		List<NotebookElement.ItemInfoButton> buttons = new ArrayList<>();
+
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.DISCOVERY, ModRegistry.GOLDEN_SCEPTER, "notebook.arcanemagic.discovery.title", "notebook.arcanemagic.discovery.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.TRANSFIGURATION, ModRegistry.TRANSFIGURATION_TABLE, "notebook.arcanemagic.transfiguration.title", "notebook.arcanemagic.transfiguration.desc").withPadding(5));
+
 		if (page == 0)
 		{
-			elements.add(new NotebookElement.BigHeading("notebook.arcanemagic.title", MinecraftClient.getInstance().player.getEntityName()).withPadding(-3));
+			String name = MinecraftClient.getInstance().player.getEntityName();
+			elements.add(new NotebookElement.BigHeading("notebook.arcanemagic.title", name.substring(0, 1).toUpperCase() + name.substring(1)).withPadding(-3));
 			elements.add(new NotebookElement.Paragraph(false, "notebook.arcanemagic.intro"));
 		} else if (page == 1)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.categories").withPadding(3));
-			elements.add(new NotebookElement.ItemInfoButton(NotebookSectionRegistry.DRAINING, ModRegistry.GOLDEN_SCEPTER, "Draining", "Using a Scepter to extract Soul").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.TRANSFIGURATION_TABLE, "Transfiguration", "Using Soul to craft various items").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.SOUL_PENDANT, "Soul Storage", "Binding Soul to items for storage").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.ALTAR, "Soul Collection", "Gathering Soul more efficiently").withPadding(5));
-		} else if (page == 2)
-		{
-			elements.add(new NotebookElement.Padding(10));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.DIAMOND_CRYSTAL, "Crystallization", "Infusing Soul into various gems").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.PURE_SCEPTER, "Perfection", "Experimenting with pure Soul").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.SMELTER, "Smelting", "Using Soul to smelt items efficiently").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.IRON_DAGGER, "Armoury", "Creating new weapons and armor").withPadding(5));
-		} else if (page == 3)
-		{
-			elements.add(new NotebookElement.Padding(10));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.CRYSTAL_INFUSER, "Infusing", "Improving equipment using Soul").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.PUMP, "Pumping", "Collecting fluids for easier usage").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.MIXER, "Liquefaction", "Creating Liquified Soul").withPadding(5));
-			elements.add(new NotebookElement.ItemInfo(ModRegistry.PIPE, "Automation", "Transport systems for fluids").withPadding(5));
+			int amount = 0;
+
+			for (NotebookElement.ItemInfoButton button : buttons)
+			{
+				if (button.link.isVisibleTo(player))
+				{
+					elements.add(button);
+					amount++;
+				}
+
+				if (amount >= 4)
+				{
+					break;
+				}
+			}
 		}
 		return elements;
 	}
 
 	@Override
-	public int getPageCount()
+	public int getPageCount(DataHolder player)
 	{
-		return 3;
+		return 1;
 	}
 }

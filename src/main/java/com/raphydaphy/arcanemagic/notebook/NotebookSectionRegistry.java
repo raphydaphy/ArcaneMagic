@@ -11,7 +11,8 @@ public class NotebookSectionRegistry
 	private static final Map<Identifier, INotebookSection> REGISTRY = new HashMap<>();
 
 	public static final INotebookSection CONTENTS = register(new ContentsNotebookSection());
-	public static final INotebookSection DRAINING = register(new DrainingNotebookSection());
+	static final INotebookSection DISCOVERY = register(new DiscoveryNotebookSection());
+	static final INotebookSection TRANSFIGURATION = register(new TransfigurationNotebookSection());
 
 	public static INotebookSection get(Identifier id)
 	{

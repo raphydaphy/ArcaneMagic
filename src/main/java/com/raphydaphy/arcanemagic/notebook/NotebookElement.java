@@ -65,7 +65,7 @@ class NotebookElement
 
 	public static class ItemInfoButton extends ItemInfo
 	{
-		private final INotebookSection link;
+		public final INotebookSection link;
 
 		private int startX;
 		private int startY;
