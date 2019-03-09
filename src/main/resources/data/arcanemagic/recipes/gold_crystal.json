@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:gold_crystal"
+  },
+  "pattern": [
+	" g ",
+	"nin",
+	" g "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"g": {
+	  "item": "minecraft:gold_ingot"
+	},
+	"n": {
+	  "item": "minecraft:gold_nugget"
+	},
+	"i": {
+	  "item": "iron_ingot"
+	}
+  },
+  "soul": 8
+}

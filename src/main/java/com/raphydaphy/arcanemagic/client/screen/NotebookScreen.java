@@ -52,10 +52,10 @@ public class NotebookScreen extends Screen
 		}
 	}
 
-	private void setSection(INotebookSection section, boolean sync)
+	private void setSection(INotebookSection section)
 	{
 		this.leftPage = 0;
-		if (!section.isVisibleTo((DataHolder)client.player))
+		if (!section.isVisibleTo((DataHolder) client.player))
 		{
 			this.section = NotebookSectionRegistry.CONTENTS;
 		} else
@@ -65,27 +65,17 @@ public class NotebookScreen extends Screen
 		this.leftElements.clear();
 		this.rightElements.clear();
 
-		this.leftElements = this.section.getElements((DataHolder)client.player, 0);
-		this.rightElements = this.section.getElements((DataHolder)client.player, 1);
-
-		if (sync || this.section != section)
-		{
-			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), leftPage));
-		}
+		this.leftElements = this.section.getElements((DataHolder) client.player, 0);
+		this.rightElements = this.section.getElements((DataHolder) client.player, 1);
 	}
 
-	private void pageChanged(boolean sync)
+	private void pageChanged()
 	{
 		this.leftElements.clear();
 		this.rightElements.clear();
 
-		this.leftElements = this.section.getElements((DataHolder)client.player, this.leftPage);
-		this.rightElements = this.section.getElements((DataHolder)client.player, this.leftPage + 1);
-
-		if (sync)
-		{
-			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(section.getID().toString(), leftPage));
-		}
+		this.leftElements = this.section.getElements((DataHolder) client.player, this.leftPage);
+		this.rightElements = this.section.getElements((DataHolder) client.player, this.leftPage + 1);
 	}
 
 	@Override
@@ -95,16 +85,16 @@ public class NotebookScreen extends Screen
 		if (section != null)
 		{
 			int page = leftPage;
-			setSection(section, false);
+			setSection(section);
 			if (page <= section.getPageCount((DataHolder) client.player))
 			{
 				this.leftPage = page;
-				pageChanged(false);
+				pageChanged();
 			}
 		} else
 		{
 			ArcaneMagic.getLogger().warn("Tried to open a notebook with invalid NBT !");
-			setSection(NotebookSectionRegistry.CONTENTS, true);
+			setSection(NotebookSectionRegistry.CONTENTS);
 		}
 		this.listeners.add(new InputListener()
 		{
@@ -113,10 +103,10 @@ public class NotebookScreen extends Screen
 			{
 				if (button == 0)
 				{
-					if (leftPage + 1 < section.getPageCount((DataHolder)client.player) && overRightArrow())
+					if (leftPage + 1 < section.getPageCount((DataHolder) client.player) && overRightArrow())
 					{
 						leftPage += 2;
-						pageChanged(true);
+						pageChanged();
 						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
 					} else if (leftPage > 0 && overLeftArrow())
@@ -126,12 +116,12 @@ public class NotebookScreen extends Screen
 						{
 							leftPage = 0;
 						}
-						pageChanged(true);
+						pageChanged();
 						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
 					} else if (!(section instanceof ContentsNotebookSection) && overBackArrow())
 					{
-						setSection(NotebookSectionRegistry.CONTENTS, true);
+						setSection(NotebookSectionRegistry.CONTENTS);
 						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
 					} else if (handleClickOn(leftElements) || handleClickOn(rightElements))
@@ -143,7 +133,7 @@ public class NotebookScreen extends Screen
 				{
 					if (section != NotebookSectionRegistry.CONTENTS)
 					{
-						setSection(NotebookSectionRegistry.CONTENTS, true);
+						setSection(NotebookSectionRegistry.CONTENTS);
 						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
 					}
@@ -172,7 +162,7 @@ public class NotebookScreen extends Screen
 			INotebookSection s = element.handleClick(scaledMouseX, scaledMouseY);
 			if (s != null)
 			{
-				setSection(s, true);
+				setSection(s);
 				return true;
 			}
 		}
@@ -253,7 +243,7 @@ public class NotebookScreen extends Screen
 
 		client.getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
 
-		if (leftPage + 1 < section.getPageCount((DataHolder)client.player))
+		if (leftPage + 1 < section.getPageCount((DataHolder) client.player))
 		{
 			RenderUtils.drawTexturedRect(right + 85, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21, overRightArrow() ? 23 : 0, 180, 18, 10, 18, 10, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 		}
@@ -283,6 +273,15 @@ public class NotebookScreen extends Screen
 		}
 
 		GlStateManager.popMatrix();
+	}
+
+	@Override
+	public void onClosed()
+	{
+		if (this.section != null)
+		{
+			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), this.leftPage));
+		}
 	}
 
 	@Override

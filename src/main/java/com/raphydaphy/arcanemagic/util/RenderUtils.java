@@ -158,18 +158,15 @@ public class RenderUtils
 		}
 	}
 
-	public static void drawRecipeItems(Screen screen, Recipe<? extends Inventory> recipe, int x, int y)
+	public static void drawRecipeItems(Recipe<? extends Inventory> recipe, int x, int y)
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
 
 		DefaultedList<Ingredient> ingredients = recipe.getPreviewInputs();
-		ItemStack output = recipe.getOutput();
-
-		RenderRecipeType type = getRecipeType(recipe);
 
 		GlStateManager.pushMatrix();
 
-		if (type == RenderRecipeType.LARGE_CRAFTING)
+		if (!recipe.getPreviewInputs().isEmpty())
 		{
 			DrawableHelper.drawRect(x + 20, y - 3, x + 20 + 2, y - 3 + 73, 0xff422c0e);
 			DrawableHelper.drawRect(x - 3, y + 20, x - 3 + 73, y + 20 + 2, 0xff422c0e);
@@ -184,15 +181,18 @@ public class RenderUtils
 			{
 				for (int inputY = 0; inputY < 3; inputY++)
 				{
-					ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
-					if (stackArray.length > 0)
+					if (inputX + 3 * inputY < ingredients.size())
 					{
-						int id = (int) (client.world.getTime() / 30) % stackArray.length;
-						if (!stackArray[id].isEmpty())
+						ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+						if (stackArray.length > 0)
 						{
-							// Render the recipe component
-							client.getItemRenderer().renderGuiItem(stackArray[id], x + (inputX * 25),
-									y + (inputY * 25));
+							int id = (int) (client.world.getTime() / 30) % stackArray.length;
+							if (!stackArray[id].isEmpty())
+							{
+								// Render the recipe component
+								client.getItemRenderer().renderGuiItem(stackArray[id], x + (inputX * 25),
+										y + (inputY * 25));
+							}
 						}
 					}
 				}
@@ -207,7 +207,7 @@ public class RenderUtils
 
 	}
 
-	public static void drawRecipeOutput(Screen screen, Recipe<? extends Inventory> recipe, int x, int y)
+	public static void drawRecipeOutput(Recipe<? extends Inventory> recipe, int x, int y)
 	{
 		GlStateManager.pushMatrix();
 
@@ -230,14 +230,17 @@ public class RenderUtils
 		{
 			for (int inputY = 0; inputY < 3; inputY++)
 			{
-				ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
-				if (stackArray.length != 0)
+				if (inputX + 3 * inputY < ingredients.size())
 				{
-					int id = (int) (MinecraftClient.getInstance().world.getTime() / 30) % stackArray.length;
-					if (!stackArray[id].isEmpty())
+					ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+					if (stackArray.length != 0)
 					{
-						// Render the recipe component
-						drawItemstackTooltip(screen, stackArray[id], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
+						int id = (int) (MinecraftClient.getInstance().world.getTime() / 30) % stackArray.length;
+						if (!stackArray[id].isEmpty())
+						{
+							// Render the recipe component
+							drawItemstackTooltip(screen, stackArray[id], x + (inputX * 25), y + (inputY * 25), mouseX, mouseY);
+						}
 					}
 				}
 			}
@@ -246,8 +249,8 @@ public class RenderUtils
 
 	public static void drawRecipe(Screen screen, BiConsumer<Integer, Integer> drawArrow, Recipe<? extends Inventory> recipe, int x, int y, int mouseX, int mouseY)
 	{
-		drawRecipeItems(screen, recipe, x, y);
-		drawRecipeOutput(screen, recipe, x + 108, y + 21);
+		drawRecipeItems(recipe, x, y);
+		drawRecipeOutput(recipe, x + 108, y + 21);
 
 		GlStateManager.pushMatrix();
 		drawArrow.accept(x + 78, y + 26);

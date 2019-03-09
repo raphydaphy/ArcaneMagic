@@ -47,4 +47,5 @@ public class ArcaneMagicConstants
 
 	// For notebook progression
 	public static final String ANALYZED_CRAFTING_TABLE = "AnalyzedCraftingTable";
+	public static final String PLACED_TRANSFIGURATION_TABLE_KEY = "PlacedTransfigurationTable";
 }

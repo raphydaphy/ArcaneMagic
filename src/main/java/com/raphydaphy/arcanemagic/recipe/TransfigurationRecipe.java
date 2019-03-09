@@ -17,6 +17,12 @@ public interface TransfigurationRecipe extends Recipe<Inventory>
 	 */
 	DefaultedList<Ingredient> getIngredients();
 
+	@Override
+	default DefaultedList<Ingredient> getPreviewInputs()
+	{
+		return getIngredients();
+	}
+
 	/**
 	 * @return The amount of soul needed to craft the item
 	 */

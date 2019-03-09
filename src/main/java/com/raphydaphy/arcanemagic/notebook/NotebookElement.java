@@ -1,13 +1,16 @@
 package com.raphydaphy.arcanemagic.notebook;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
+import net.minecraft.client.render.GuiLighting;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemProvider;
 import net.minecraft.item.ItemStack;
@@ -169,11 +172,33 @@ class NotebookElement
 		{
 			if (this.recipe != null)
 			{
-				RenderUtils.drawRecipeOutput(screen, this.recipe, x + 41, y);
-				RenderUtils.drawRecipeItems(screen, this.recipe, x + 20, y + 40);
+				if (this.recipe instanceof TransfigurationRecipe)
+				{
+					GlStateManager.pushMatrix();
+
+					MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_meter.png"));
+
+					float percent = ((float) ((TransfigurationRecipe) this.recipe).getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
+					int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);
+					int row = stage / 10;
+					int col = stage % 10;
+					RenderUtils.drawTexturedRect(x + 36, y,0, 0,36, 36, 36, 36,360, 360);
+					RenderUtils.drawTexturedRect( x + 36, y,36 * col, 36 + 36 * row,36, 36, 36, 36, 360, 360);
+
+					GuiLighting.enableForItems();
+					MinecraftClient.getInstance().getItemRenderer().renderGuiItem(this.recipe.getOutput(), x + 46, y + 10);
+					GuiLighting.disable();
+
+					GlStateManager.popMatrix();
+				} else
+				{
+					RenderUtils.drawRecipeOutput(this.recipe, x + 41, y);
+				}
+
+				RenderUtils.drawRecipeItems(this.recipe, x + 20, y + (this.recipe instanceof TransfigurationRecipe ? 46 : 40));
 				this.startX = x;
 				this.startY = y;
-				return 111;
+				return this.recipe instanceof TransfigurationRecipe ? 117 : 111;
 			}
 			return 0;
 		}
