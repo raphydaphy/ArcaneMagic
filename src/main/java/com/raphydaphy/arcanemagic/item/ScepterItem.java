@@ -95,24 +95,7 @@ public class ScepterItem extends SoulStorageItem
 		if (tag != null)
 		{
 			Block block = ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock();
-			if (block == Blocks.CRAFTING_TABLE)
-			{
-				if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 15))
-				{
-					if (!ctx.getWorld().isClient)
-					{
-						ctx.getWorld().setBlockState(ctx.getBlockPos(), ModRegistry.TRANSFIGURATION_TABLE.getPlacementState(new ItemPlacementContext(ctx)));
-					} else
-					{
-						for (int i = 0; i < 30; i++)
-						{
-							ctx.getWorld().addParticle(ParticleTypes.PORTAL, ctx.getBlockPos().getX() + ArcaneMagic.RANDOM.nextFloat(), ctx.getBlockPos().getY() + ArcaneMagic.RANDOM.nextFloat() / 2d, ctx.getBlockPos().getZ() + ArcaneMagic.RANDOM.nextFloat(), 0, 0, 0);
-						}
-					}
-					ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
-					return ActionResult.SUCCESS;
-				}
-			} else if (block == ModRegistry.CRYSTAL_INFUSER)
+			if (block == ModRegistry.CRYSTAL_INFUSER)
 			{
 				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
 				if (blockEntity instanceof CrystalInfuserBlockEntity)
