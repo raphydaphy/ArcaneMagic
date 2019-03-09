@@ -46,6 +46,7 @@ public class ArcaneMagicConstants
 	public static final String CRAFTED_SCEPTER_KEY = "CraftedScepter"; // If the player has crafted a Golden Scepter
 
 	// For notebook progression
-	public static final String ANALYZED_CRAFTING_TABLE = "AnalyzedCraftingTable";
+	public static final String ANALYZED_CRAFTING_TABLE_KEY = "AnalyzedCraftingTable";
 	public static final String PLACED_TRANSFIGURATION_TABLE_KEY = "PlacedTransfigurationTable";
+	public static final String CRAFTED_GOLD_CRYSTAL_KEY = "CraftedGoldCrystal";
 }

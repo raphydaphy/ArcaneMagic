@@ -13,6 +13,7 @@ public class NotebookSectionRegistry
 	public static final INotebookSection CONTENTS = register(new ContentsNotebookSection());
 	static final INotebookSection DISCOVERY = register(new DiscoveryNotebookSection());
 	static final INotebookSection TRANSFIGURATION = register(new TransfigurationNotebookSection());
+	static final INotebookSection CRYSTALLIZATION = register(new CrystallizationNotebookSection());
 
 	public static INotebookSection get(Identifier id)
 	{

@@ -208,8 +208,8 @@ class NotebookElement
 		{
 			if (this.recipe != null)
 			{
-				RenderUtils.drawRecipeTooltips(screen, this.recipe, this.startX + 20, this.startY + 35, mouseX, mouseY);
-				RenderUtils.drawItemstackTooltip(screen, recipe.getOutput(), this.startX + 46, this.startY + 5, mouseX, mouseY);
+				RenderUtils.drawRecipeTooltips(screen, this.recipe, this.startX + 20, this.startY + (this.recipe instanceof TransfigurationRecipe ? 46 : 40), mouseX, mouseY);
+				RenderUtils.drawItemstackTooltip(screen, recipe.getOutput(), this.startX + 46, this.startY + (this.recipe instanceof TransfigurationRecipe ? 10 : 5), mouseX, mouseY);
 			}
 		}
 	}

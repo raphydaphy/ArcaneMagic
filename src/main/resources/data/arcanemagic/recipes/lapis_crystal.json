@@ -1,0 +1,20 @@
+{
+  "result": {
+	"item": "arcanemagic:lapis_crystal"
+  },
+  "pattern": [
+	" l ",
+	"lil",
+	" l "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"l": {
+	  "item": "minecraft:lapis_lazuli"
+	},
+	"i": {
+	  "item": "iron_ingot"
+	}
+  },
+  "soul": 6
+}

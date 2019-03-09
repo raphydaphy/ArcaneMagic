@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:diamond_crystal"
+  },
+  "pattern": [
+	" d ",
+	"qiq",
+	" d "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"d": {
+	  "item": "minecraft:diamond"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
+	},
+	"i": {
+	  "item": "iron_ingot"
+	}
+  },
+  "soul": 7
+}

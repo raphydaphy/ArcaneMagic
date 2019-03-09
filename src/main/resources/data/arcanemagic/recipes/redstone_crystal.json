@@ -1,0 +1,20 @@
+{
+  "result": {
+	"item": "arcanemagic:redstone_crystal"
+  },
+  "pattern": [
+	" r ",
+	"rir",
+	" r "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"r": {
+	  "item": "minecraft:redstone"
+	},
+	"i": {
+	  "item": "iron_ingot"
+	}
+  },
+  "soul": 9
+}

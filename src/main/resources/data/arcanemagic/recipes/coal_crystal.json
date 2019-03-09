@@ -1,23 +1,23 @@
 {
   "result": {
-	"item": "arcanemagic:gold_crystal"
+	"item": "arcanemagic:coal_crystal"
   },
   "pattern": [
-	" g ",
+	" c ",
 	"nin",
-	" g "
+	" c "
   ],
   "type": "arcanemagic:transfiguration_shaped",
   "key": {
-	"g": {
-	  "item": "minecraft:gold_ingot"
+	"c": {
+	  "item": "minecraft:coal"
 	},
 	"n": {
-	  "item": "minecraft:gold_nugget"
+	  "item": "minecraft:charcoal"
 	},
 	"i": {
 	  "item": "iron_ingot"
 	}
   },
-  "soul": 5
+  "soul": 10
 }

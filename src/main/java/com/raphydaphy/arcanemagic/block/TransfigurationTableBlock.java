@@ -17,6 +17,7 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Recipe;
@@ -72,6 +73,19 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 						ItemEntity result = new ItemEntity(world, blockEntity.getPos().getX() + 0.5, blockEntity.getPos().getY() + 1, blockEntity.getPos().getZ() + 0.5, recipe.get().getOutput());
 						result.setVelocity(0, 0, 0);
 						world.spawnEntity(result);
+
+						if (player != null)
+						{
+							DataHolder dataPlayer = (DataHolder)player;
+							Item output = recipe.get().getOutput().getItem();
+
+							if (output.getItem() == ModRegistry.GOLD_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY))
+							{
+								ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY, true);
+								dataPlayer.markAdditionalDataDirty();
+							}
+						}
 					}
 					if (player != null)
 					{

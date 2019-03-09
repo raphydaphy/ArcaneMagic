@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:emerald_crystal"
+  },
+  "pattern": [
+	" e ",
+	"qiq",
+	" e "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"e": {
+	  "item": "minecraft:emerald"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
+	},
+	"i": {
+	  "item": "iron_ingot"
+	}
+  },
+  "soul": 6
+}
