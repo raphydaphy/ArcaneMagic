@@ -32,15 +32,15 @@ public class DiscoveryNotebookSection implements INotebookSection
 		if (page == 0)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.discovery.title", MinecraftClient.getInstance().player.getEntityName()).withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, "notebook.arcanemagic.discovery.0"));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.discovery.0"));
 		} else if (page == 1)
 		{
 			elements.add(new NotebookElement.Padding(2));
-			elements.add(new NotebookElement.Paragraph(false, "notebook.arcanemagic.discovery.1"));
+			elements.add(new NotebookElement.Paragraph(false, 0.7,"notebook.arcanemagic.discovery.1"));
 		} else if (page == 2)
 		{
 			elements.add(new NotebookElement.Padding(2));
-			elements.add(new NotebookElement.Paragraph(false, "notebook.arcanemagic.discovery.2"));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.discovery.2"));
 		}
 		return elements;
 	}

@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.notebook;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -7,8 +8,10 @@ import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemProvider;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Identifier;
 
 class NotebookElement
 {
@@ -49,17 +52,19 @@ class NotebookElement
 	public static class Paragraph extends Writable
 	{
 		private final boolean centered;
+		private final double scale;
 
-		Paragraph(boolean centered, String unlocalized, Object... keys)
+		Paragraph(boolean centered, double scale, String unlocalized, Object... keys)
 		{
 			super(unlocalized, keys);
 			this.centered = centered;
+			this.scale = scale;
 		}
 
 		@Override
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
-			return RenderUtils.drawCustomSizedSplitString(x + (centered ? 57 : 0), y, 0.7, 116, 0, false, centered, unlocalized, keys) + padding;
+			return RenderUtils.drawCustomSizedSplitString(x + (centered ? 57 : 0), y, scale, 116, 0, false, centered, unlocalized, keys) + padding;
 		}
 	}
 
@@ -145,6 +150,42 @@ class NotebookElement
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
 			return amount;
+		}
+	}
+
+	public static class Recipe implements INotebookElement
+	{
+		private final net.minecraft.recipe.Recipe<? extends Inventory> recipe;
+		private int startX;
+		private int startY;
+
+		public Recipe(net.minecraft.recipe.Recipe recipe)
+		{
+			this.recipe = recipe;
+		}
+
+		@Override
+		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
+		{
+			if (this.recipe != null)
+			{
+				RenderUtils.drawRecipeOutput(screen, this.recipe, x + 41, y);
+				RenderUtils.drawRecipeItems(screen, this.recipe, x + 20, y + 40);
+				this.startX = x;
+				this.startY = y;
+				return 111;
+			}
+			return 0;
+		}
+
+		@Override
+		public void drawOverlay(Screen screen, int mouseX, int mouseY, int xTop, int yTop)
+		{
+			if (this.recipe != null)
+			{
+				RenderUtils.drawRecipeTooltips(screen, this.recipe, this.startX + 20, this.startY + 35, mouseX, mouseY);
+				RenderUtils.drawItemstackTooltip(screen, recipe.getOutput(), this.startX + 46, this.startY + 5, mouseX, mouseY);
+			}
 		}
 	}
 

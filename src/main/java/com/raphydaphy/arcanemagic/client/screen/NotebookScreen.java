@@ -48,7 +48,6 @@ public class NotebookScreen extends Screen
 			if (section != null)
 			{
 				this.leftPage = page;
-				return;
 			}
 		}
 	}
@@ -114,28 +113,11 @@ public class NotebookScreen extends Screen
 			{
 				if (button == 0)
 				{
-					if ((leftPage + 1 < section.getPageCount((DataHolder)client.player) && overRightArrow()) || (leftPage > 0 && overLeftArrow()) || (!(section instanceof ContentsNotebookSection) && overBackArrow()))
-					{
-						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
-						return true;
-					} else if (isMouseOverAny(leftElements) || isMouseOverAny(rightElements))
-					{
-						client.player.playSound(SoundEvents.UI_BUTTON_CLICK, 0.5f, 1);
-						return true;
-					}
-				}
-				return false;
-			}
-
-			@Override
-			public boolean mouseReleased(double mouseX, double mouseY, int button)
-			{
-				if (button == 0)
-				{
 					if (leftPage + 1 < section.getPageCount((DataHolder)client.player) && overRightArrow())
 					{
 						leftPage += 2;
 						pageChanged(true);
+						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
 					} else if (leftPage > 0 && overLeftArrow())
 					{
@@ -145,13 +127,26 @@ public class NotebookScreen extends Screen
 							leftPage = 0;
 						}
 						pageChanged(true);
+						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
 						return true;
 					} else if (!(section instanceof ContentsNotebookSection) && overBackArrow())
 					{
 						setSection(NotebookSectionRegistry.CONTENTS, true);
+						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
+						return true;
+					} else if (handleClickOn(leftElements) || handleClickOn(rightElements))
+					{
+						client.player.playSound(SoundEvents.UI_BUTTON_CLICK, 0.5f, 1);
 						return true;
 					}
-					return handleClickOn(leftElements) || handleClickOn(rightElements);
+				} else if (button == 1)
+				{
+					if (section != NotebookSectionRegistry.CONTENTS)
+					{
+						setSection(NotebookSectionRegistry.CONTENTS, true);
+						client.player.playSound(SoundEvents.ITEM_BOOK_PAGE_TURN, 1, 1);
+						return true;
+					}
 				}
 				return false;
 			}
@@ -272,6 +267,21 @@ public class NotebookScreen extends Screen
 		{
 			RenderUtils.drawTexturedRect(right - 15, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21, overBackArrow() ? 66 : 46, 193, 15, 11, 15, 11, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 		}
+
+		for (INotebookElement element : this.leftElements)
+		{
+			GlStateManager.pushMatrix();
+			element.drawOverlay(this, mouseX, mouseY, xTop, yTop);
+			GlStateManager.popMatrix();
+		}
+
+		for (INotebookElement element : this.rightElements)
+		{
+			GlStateManager.pushMatrix();
+			element.drawOverlay(this, mouseX, mouseY, xTop, yTop);
+			GlStateManager.popMatrix();
+		}
+
 		GlStateManager.popMatrix();
 	}
 

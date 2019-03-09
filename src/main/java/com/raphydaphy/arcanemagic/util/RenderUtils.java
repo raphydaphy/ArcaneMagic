@@ -158,8 +158,7 @@ public class RenderUtils
 		}
 	}
 
-
-	public static void drawRecipe(Screen screen, BiConsumer<Integer, Integer> drawArrow, Recipe<? extends Inventory> recipe, int x, int y, int mouseX, int mouseY)
+	public static void drawRecipeItems(Screen screen, Recipe<? extends Inventory> recipe, int x, int y)
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
 
@@ -206,16 +205,26 @@ public class RenderUtils
 
 		GlStateManager.popMatrix();
 
-		drawArrow.accept(x + 78, y + 26);
+	}
+
+	public static void drawRecipeOutput(Screen screen, Recipe<? extends Inventory> recipe, int x, int y)
+	{
+		GlStateManager.pushMatrix();
 
 		// Crafting Output Box
-		drawBox(x + 108, y + 21, 24, 24, 2, -1);
+		drawBox(x, y, 24, 24, 2, -1);
 
 		// Draw the output item
 		GuiLighting.enableForItems();
-		MinecraftClient.getInstance().getItemRenderer().renderGuiItem(output, x + 113, y + 26);
+		MinecraftClient.getInstance().getItemRenderer().renderGuiItem(recipe.getOutput(), x + 5, y + 5);
 		GuiLighting.disable();
+		GlStateManager.popMatrix();
+	}
 
+	public static void drawRecipeTooltips(Screen screen, Recipe<? extends Inventory> recipe, int x, int y, int mouseX, int mouseY)
+	{
+		DefaultedList<Ingredient> ingredients = recipe.getPreviewInputs();
+		ItemStack output = recipe.getOutput();
 		// Render the tooltips for the recipe matrix
 		for (int inputX = 0; inputX < 3; inputX++)
 		{
@@ -233,9 +242,21 @@ public class RenderUtils
 				}
 			}
 		}
+	}
+
+	public static void drawRecipe(Screen screen, BiConsumer<Integer, Integer> drawArrow, Recipe<? extends Inventory> recipe, int x, int y, int mouseX, int mouseY)
+	{
+		drawRecipeItems(screen, recipe, x, y);
+		drawRecipeOutput(screen, recipe, x + 108, y + 21);
+
+		GlStateManager.pushMatrix();
+		drawArrow.accept(x + 78, y + 26);
+		GlStateManager.popMatrix();
+
+		drawRecipeTooltips(screen, recipe, x, y, mouseX, mouseY);
 
 		// Draw the tooltip for the output item
-		drawItemstackTooltip(screen, output, x + 113, y + 25, mouseX, mouseY);
+		drawItemstackTooltip(screen, recipe.getOutput(), x + 113, y + 25, mouseX, mouseY);
 	}
 
 	public static int drawItemInBox(Screen screen, ItemStack item, List<String> tooltip, int x, int y, int mouseX, int mouseY)

@@ -38,7 +38,7 @@ public class ContentsNotebookSection implements INotebookSection
 		{
 			String name = MinecraftClient.getInstance().player.getEntityName();
 			elements.add(new NotebookElement.BigHeading("notebook.arcanemagic.title", name.substring(0, 1).toUpperCase() + name.substring(1)).withPadding(-3));
-			elements.add(new NotebookElement.Paragraph(false, "notebook.arcanemagic.intro"));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.intro"));
 		} else if (page == 1)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.categories").withPadding(3));

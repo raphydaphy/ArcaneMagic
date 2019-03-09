@@ -32,7 +32,12 @@ public class TransfigurationNotebookSection implements INotebookSection
 		if (page == 0)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.transfiguration.title", MinecraftClient.getInstance().player.getEntityName()).withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, "notebook.arcanemagic.transfiguration.0"));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.transfiguration.0"));
+		} else if (page == 1)
+		{
+			elements.add(new NotebookElement.Padding(8));
+			elements.add(new NotebookElement.Paragraph(true, 0.8,"Transfiguration Table").withPadding(10));
+			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table")).orElse(null)));
 		}
 		return elements;
 	}
@@ -40,6 +45,6 @@ public class TransfigurationNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 0;
+		return 1;
 	}
 }

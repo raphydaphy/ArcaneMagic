@@ -1,0 +1,26 @@
+{
+  "result": {
+	"item": "arcanemagic:transfiguration_table"
+  },
+  "group": "arcanemagic:magic",
+  "pattern": [
+	" r ",
+	"scs",
+	"lll"
+  ],
+  "type": "crafting_shaped",
+  "key": {
+	"c": {
+	  "item": "minecraft:crafting_table"
+	},
+	"r": {
+	  "item": "minecraft:redstone"
+	},
+	"l": {
+	  "tag": "minecraft:logs"
+	},
+	"s": {
+	  "tag": "minecraft:wooden_slabs"
+	}
+  }
+}
