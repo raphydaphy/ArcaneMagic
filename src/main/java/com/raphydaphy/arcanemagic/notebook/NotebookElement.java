@@ -164,7 +164,7 @@ class NotebookElement
 	{
 		private final int amount;
 
-		public Padding(int amount)
+		Padding(int amount)
 		{
 			this.amount = amount;
 		}
@@ -182,7 +182,7 @@ class NotebookElement
 		private int startX;
 		private int startY;
 
-		public Recipe(net.minecraft.recipe.Recipe recipe)
+		public Recipe(net.minecraft.recipe.Recipe<? extends Inventory> recipe)
 		{
 			this.recipe = recipe;
 		}

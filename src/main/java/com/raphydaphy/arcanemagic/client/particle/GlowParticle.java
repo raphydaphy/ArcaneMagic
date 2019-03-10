@@ -18,8 +18,8 @@ public class GlowParticle extends ParticleBase
 	public void update()
 	{
 		super.update();
-		this.field_3857 = field_3839; // prevParticleAngle = particleAngle
-		field_3839 += 1.0f; // particleAngle
+		this.prevAngle = angle;
+		angle += 1.0f;
 	}
 
 	@Override

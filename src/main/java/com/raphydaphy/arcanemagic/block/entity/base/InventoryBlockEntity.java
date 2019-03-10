@@ -3,11 +3,11 @@ package com.raphydaphy.arcanemagic.block.entity.base;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.InventoryUtil;
 
 public class InventoryBlockEntity extends BlockEntity implements Inventory
 {
@@ -27,7 +27,7 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	{
 		super.fromTag(tag);
 		contents = DefaultedList.create(size, ItemStack.EMPTY);
-		InventoryUtil.deserialize(tag, contents);
+		Inventories.fromTag(tag, contents);
 	}
 
 	public CompoundTag toTag(CompoundTag tag)
@@ -39,7 +39,7 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 
 	public void writeContents(CompoundTag tag)
 	{
-		InventoryUtil.serialize(tag, contents);
+		Inventories.toTag(tag, contents);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	@Override
 	public ItemStack takeInvStack(int slot, int count)
 	{
-		ItemStack stack = InventoryUtil.splitStack(contents, slot, count);
+		ItemStack stack = Inventories.splitStack(contents, slot, count);
 		markDirty();
 
 		return stack;
@@ -79,7 +79,7 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory
 	@Override
 	public ItemStack removeInvStack(int slot)
 	{
-		ItemStack ret = InventoryUtil.removeStack(contents, slot);
+		ItemStack ret = Inventories.removeStack(contents, slot);
 		markDirty();
 		return ret;
 	}

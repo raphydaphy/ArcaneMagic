@@ -23,7 +23,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TranslatableTextComponent;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -36,27 +35,16 @@ import java.util.Collections;
 import java.util.List;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity
+public abstract class LivingEntityMixin
 {
 	@Shadow protected int playerHitTimer;
 
-	@Shadow private int lastAttackedTime;
-
-	@Shadow public int hurtTime;
-
-	@Shadow public abstract void setAttacker(LivingEntity livingEntity_1);
-
 	@Shadow protected boolean dead;
 
-	protected LivingEntityMixin(EntityType<? extends LivingEntity> type, World world)
-	{
-		super(type, world);
-	}
-
-	@Inject(at = @At(value = "HEAD"), method = "method_16077", cancellable = true) // dropLoot
+	@Inject(at = @At(value = "HEAD"), method = "dropLoot", cancellable = true)
 	private void method_16077(DamageSource source, boolean killedByPlayer, CallbackInfo info)
 	{
-		if (source == ModRegistry.DRAINED_DAMAGE || ModEvents.shouldLivingEntityDropLoot(this, source))
+		if (source == ModRegistry.DRAINED_DAMAGE || ModEvents.shouldLivingEntityDropLoot(((LivingEntity)(Object)this), source))
 		{
 			info.cancel();
 		}
@@ -86,7 +74,7 @@ public abstract class LivingEntityMixin extends Entity
 	@Inject(at = @At("HEAD"), method="onDeath")
 	private void onDeath(DamageSource source, CallbackInfo info)
 	{
-		if (this.getType() == EntityType.DROWNED && !this.dead && !world.isClient)
+		if (((LivingEntity)(Object)this).getType() == EntityType.DROWNED && !this.dead && !((LivingEntity)(Object)this).world.isClient)
 		{
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof PlayerEntity)
@@ -164,9 +152,9 @@ public abstract class LivingEntityMixin extends Entity
 						{
 							paperStack.subtractAmount(1);
 						}
-						if (!((PlayerEntity)attacker).method_7270(parchment.copy())) // addItemStackToInventory
+						if (!((PlayerEntity)attacker).giveItemStack(parchment.copy()))
 						{
-							world.spawnEntity(new ItemEntity(world, attacker.x, attacker.y + 0.5, attacker.z, parchment.copy()));
+							((LivingEntity)(Object)this).world.spawnEntity(new ItemEntity(((LivingEntity)(Object)this).world, attacker.x, attacker.y + 0.5, attacker.z, parchment.copy()));
 						}
 					}
 					if (kills != 1 || paper != -1)

@@ -232,7 +232,7 @@ public class ArcaneMagicUtils
 			{
 				if (!world.isClient)
 				{
-					if (!player.method_7270(stackInTable.copy())) // addItemStackToInventory
+					if (!player.giveItemStack(stackInTable.copy()))
 					{
 						ItemEntity result = new ItemEntity(world, container.getPos().getX() + 0.5, container.getPos().getY() + 1, container.getPos().getZ() + 0.5, stackInTable.copy());
 						result.setVelocity(0, 0, 0);

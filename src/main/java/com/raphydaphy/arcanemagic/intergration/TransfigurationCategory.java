@@ -5,8 +5,8 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import me.shedaniel.rei.api.IDisplaySettings;
-import me.shedaniel.rei.api.IRecipeCategory;
+import me.shedaniel.rei.api.DisplaySettings;
+import me.shedaniel.rei.api.RecipeCategory;
 import me.shedaniel.rei.gui.widget.IWidget;
 import me.shedaniel.rei.gui.widget.ItemSlotWidget;
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget;
@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class TransfigurationCategory implements IRecipeCategory<TransfigurationDisplay>
+public class TransfigurationCategory implements RecipeCategory<TransfigurationDisplay>
 {
 	private static final Identifier DISPLAY_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/recipe_display.png");
 	private static final Identifier SOUL_METER_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_meter.png");
@@ -30,7 +30,7 @@ public class TransfigurationCategory implements IRecipeCategory<TransfigurationD
 	@Override
 	public Identifier getIdentifier()
 	{
-		return REIPlugin.TRANSFIGURATION;
+		return ArcaneMagicREIPlugin.TRANSFIGURATION;
 	}
 
 	@Override
@@ -106,24 +106,24 @@ public class TransfigurationCategory implements IRecipeCategory<TransfigurationD
 	}
 
 	@Override
-	public IDisplaySettings getDisplaySettings()
+	public DisplaySettings getDisplaySettings()
 	{
-		return new IDisplaySettings<TransfigurationDisplay>()
+		return new DisplaySettings<TransfigurationDisplay>()
 		{
 			@Override
-			public int getDisplayHeight(IRecipeCategory category)
+			public int getDisplayHeight(RecipeCategory category)
 			{
 				return 66;
 			}
 
 			@Override
-			public int getDisplayWidth(IRecipeCategory category, TransfigurationDisplay display)
+			public int getDisplayWidth(RecipeCategory category, TransfigurationDisplay display)
 			{
 				return 158;
 			}
 
 			@Override
-			public int getMaximumRecipePerPage(IRecipeCategory category)
+			public int getMaximumRecipePerPage(RecipeCategory category)
 			{
 				return 99;
 			}

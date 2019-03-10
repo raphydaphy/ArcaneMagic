@@ -16,7 +16,6 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.dispenser.ItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
@@ -200,7 +199,7 @@ public class ScepterItem extends SoulStorageItem
 	}
 
 	@Override
-	public void method_7852(World world, LivingEntity player, ItemStack stack, int timeLeft) // usingUpdate
+	public void onUsingTick(World world, LivingEntity player, ItemStack stack, int timeLeft)
 	{
 		if (player instanceof PlayerEntity)
 		{
@@ -236,7 +235,7 @@ public class ScepterItem extends SoulStorageItem
 
 		if (egg != null)
 		{
-			int color = egg.method_8016(0); // getColor
+			int color = egg.getColor(0);
 
 			float red = ((color >> 16) & 0xFF) / 255f;
 			float green = ((color >> 8) & 0xFF) / 255f;

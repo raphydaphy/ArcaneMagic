@@ -4,10 +4,10 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.class_295;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.CameraHelper;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -56,11 +56,11 @@ public class ParticleRenderer
 	{
 		GlStateManager.pushMatrix();
 
-		float rotationX = class_295.method_1375();
-		float rotationZ = class_295.method_1380();
-		float rotationYZ = class_295.method_1381();
-		float rotationXY = class_295.method_1378();
-		float rotationXZ = class_295.method_1377();
+		float rotationX = CameraHelper.getRotationX();
+		float rotationZ = CameraHelper.getRotationZ();
+		float rotationYZ = CameraHelper.getRotationYZ();
+		float rotationXY = CameraHelper.getRotationXY();
+		float rotationXZ = CameraHelper.getRotationXZ();
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if (player != null)
 		{

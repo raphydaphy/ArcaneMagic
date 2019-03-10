@@ -1,6 +1,6 @@
 [
   {
 	"id": "rei_plugin",
-	"initializer": "com.raphydaphy.arcanemagic.intergration.REIPlugin"
+	"initializer": "com.raphydaphy.arcanemagic.intergration.ArcaneMagicREIPlugin"
   }
 ]

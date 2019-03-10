@@ -1,14 +1,14 @@
 package com.raphydaphy.arcanemagic.intergration;
 
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
-import me.shedaniel.rei.api.IRecipeDisplay;
+import me.shedaniel.rei.api.RecipeDisplay;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
 
-public class TransfigurationDisplay implements IRecipeDisplay
+public class TransfigurationDisplay implements RecipeDisplay
 {
 	private TransfigurationRecipe recipe;
 	private List<List<ItemStack>> input;
@@ -53,6 +53,6 @@ public class TransfigurationDisplay implements IRecipeDisplay
 	@Override
 	public Identifier getRecipeCategory()
 	{
-		return REIPlugin.TRANSFIGURATION;
+		return ArcaneMagicREIPlugin.TRANSFIGURATION;
 	}
 }

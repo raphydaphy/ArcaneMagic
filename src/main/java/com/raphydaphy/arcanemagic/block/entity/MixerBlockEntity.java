@@ -11,10 +11,10 @@ import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.InventoryUtil;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
 
@@ -91,18 +91,14 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	{
 		if (bottom)
 		{
-			InventoryUtil.serialize(tag, contents);
+			Inventories.toTag(tag, contents);
 			if (!water.isEmpty())
 			{
-				CompoundTag waterTag = new CompoundTag();
-				water.toTag(waterTag);
-				tag.put(WATER_KEY, waterTag);
+				tag.put(WATER_KEY, water.toTag(new CompoundTag()));
 			}
 			if (!liquified_soul.isEmpty())
 			{
-				CompoundTag liquifiedSoulTag = new CompoundTag();
-				liquified_soul.toTag(liquifiedSoulTag);
-				tag.put(LIQUIFIED_SOUL_KEY, liquifiedSoulTag);
+				tag.put(LIQUIFIED_SOUL_KEY, liquified_soul.toTag(new CompoundTag()));
 			}
 		}
 	}

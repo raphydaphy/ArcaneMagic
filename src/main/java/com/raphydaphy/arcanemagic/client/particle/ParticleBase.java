@@ -35,13 +35,13 @@ public abstract class ParticleBase extends SpriteBillboardParticle implements Ar
 		}
 		this.setColor(colorR, colorG, colorB);
 		this.maxAge = lifetime;
-		this.field_17867 = scale; // particleScale
+		this.scale = scale;
 		this.initScale = scale;
 		this.velocityX = velocityX * 2.0f;
 		this.velocityY = velocityY * 2.0f;
 		this.velocityZ = velocityZ * 2.0f;
 		this.initAlpha = alpha;
-		this.field_3839 = 2.0f * (float) Math.PI; // particleAngle
+		this.angle = 2.0f * (float) Math.PI;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public abstract class ParticleBase extends SpriteBillboardParticle implements Ar
 			this.age = this.maxAge;
 		}
 		float lifeCoeff = (float) this.age / (float) this.maxAge;
-		this.field_3839 = initScale - initScale * lifeCoeff; // particleScale
+		this.scale = initScale - initScale * lifeCoeff;
 		this.colorAlpha = initAlpha * (1.0f - lifeCoeff);
 	}
 

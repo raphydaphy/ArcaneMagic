@@ -24,6 +24,7 @@ minecraft {
 repositories {
 	maven { url 'https://jitpack.io' }
 	maven { url "https://tehnut.info/maven/" }
+	maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
 dependencies {
@@ -34,6 +35,10 @@ dependencies {
 
 	// Fabric API
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
+
+	// Jankson for Rougly Enough Items
+	compile "blue.endless:jankson:${project.jankson_version}"
+//	contained "blue.endless:jankson:${project.jankson_version}"
 
 	// Roughly Enough Items
 	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"

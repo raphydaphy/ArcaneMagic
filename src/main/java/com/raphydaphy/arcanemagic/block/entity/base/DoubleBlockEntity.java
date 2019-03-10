@@ -2,11 +2,11 @@ package com.raphydaphy.arcanemagic.block.entity.base;
 
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
-import net.minecraft.util.InventoryUtil;
 
 /**
  * This manages most things required to have a double block with a shared entity
@@ -70,7 +70,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	{
 		if (bottom)
 		{
-			InventoryUtil.serialize(tag, contents);
+			Inventories.toTag(tag, contents);
 		}
 	}
 
@@ -81,7 +81,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 		if (bottom)
 		{
 			contents = DefaultedList.create(getInvSize(), ItemStack.EMPTY);
-			InventoryUtil.deserialize(tag, contents);
+			Inventories.fromTag(tag, contents);
 		}
 	}
 
