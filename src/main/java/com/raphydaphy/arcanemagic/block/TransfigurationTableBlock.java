@@ -103,6 +103,9 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 								dataPlayer.markAdditionalDataDirty();
 							}
 						}
+					} else
+					{
+						doParticles(blockEntity.getPos());
 					}
 					if (player != null)
 					{
@@ -116,6 +119,11 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 			}
 		}
 		return false;
+	}
+
+	private void doParticles(BlockPos pos)
+	{
+
 	}
 
 	@Override
