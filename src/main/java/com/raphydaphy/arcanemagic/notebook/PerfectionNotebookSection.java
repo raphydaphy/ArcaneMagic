@@ -36,8 +36,8 @@ public class PerfectionNotebookSection implements INotebookSection
 		} else if (page == 1)
 		{
 			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.pure_crystal").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_crystal")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.pure_scepter").withPadding(10));
+			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_scepter")).orElse(null)));
 		}
 		return elements;
 	}

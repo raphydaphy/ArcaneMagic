@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:pure_scepter"
+  },
+  "pattern": [
+	"pq ",
+	"qs ",
+	"  s"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"p": {
+	  "item": "arcanemagic:pure_crystal"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
+	},
+	"s": {
+	  "item": "minecraft:stick"
+	}
+  },
+  "soul": 10
+}

@@ -30,6 +30,7 @@ public class NotebookScreen extends Screen
 {
 	private INotebookSection section;
 	private int leftPage = 0;
+	private int contentsPage = 0;
 	private int scaledMouseX = 0;
 	private int scaledMouseY = 0;
 
@@ -43,12 +44,14 @@ public class NotebookScreen extends Screen
 		{
 			INotebookSection section = NotebookSectionRegistry.get(Identifier.create(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
 			int page = tag.getInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY);
+			int contentsPage = tag.getInt(ArcaneMagicConstants.NOTEBOOK_CONTENTS_PAGE_KEY);
 
 			this.section = section;
 
 			if (section != null)
 			{
 				this.leftPage = page;
+				this.contentsPage = contentsPage;
 			}
 		}
 	}
@@ -64,6 +67,11 @@ public class NotebookScreen extends Screen
 			this.section = section;
 		}
 
+		if (this.section == NotebookSectionRegistry.CONTENTS)
+		{
+			this.leftPage = contentsPage;
+		}
+
 		if (this.section.hasNewInfo((DataHolder)client.player))
 		{
 			ArcaneMagicPacketHandler.sendToServer(new NotebookSectionReadPacket(this.section));
@@ -72,12 +80,16 @@ public class NotebookScreen extends Screen
 		this.leftElements.clear();
 		this.rightElements.clear();
 
-		this.leftElements = this.section.getElements((DataHolder) client.player, 0);
-		this.rightElements = this.section.getElements((DataHolder) client.player, 1);
+		this.leftElements = this.section.getElements((DataHolder) client.player, leftPage);
+		this.rightElements = this.section.getElements((DataHolder) client.player, leftPage + 1);
 	}
 
 	private void pageChanged()
 	{
+		if (this.section == NotebookSectionRegistry.CONTENTS)
+		{
+			this.contentsPage = leftPage;
+		}
 		this.leftElements.clear();
 		this.rightElements.clear();
 
@@ -287,7 +299,7 @@ public class NotebookScreen extends Screen
 	{
 		if (this.section != null)
 		{
-			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), this.leftPage));
+			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), this.leftPage, this.contentsPage));
 		}
 	}
 
