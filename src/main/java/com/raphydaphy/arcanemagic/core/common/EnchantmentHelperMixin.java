@@ -42,7 +42,6 @@ public class EnchantmentHelperMixin
 			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.EMERALD)
 			{
-				System.out.println(info.getReturnValue());
 				info.setReturnValue(info.getReturnValue() + 0.2f);
 			}
 		}

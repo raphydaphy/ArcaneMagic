@@ -12,7 +12,8 @@ public class ArcaneMagicConstants
 	public static final int SOUL_METER_MAX = SOUL_PENDANT_MAX_SOUL + 50;
 
 	public static final String PARCHMENT_TYPE_KEY = "ParchmentType";
-	public static final String DIED_WITH_PARCHMENT = "DiedWithParchment";
+	public static final String DIED_WITH_PARCHMENT_KEY = "DiedWithParchment";
+	public static final String SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY = "SendParchmentRecipeOnRespawn";
 
 	public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
 	public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");

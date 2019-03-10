@@ -11,7 +11,6 @@ import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.TextFormat;
@@ -30,6 +29,11 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 	private void method_14203(ServerPlayerEntity playerEntity, boolean keepEverything, CallbackInfo info) // copyFrom
 	{
 		this.setAdditionalData(((DataHolder) playerEntity).getAdditionalData());
+		if (this.getAdditionalData().getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
+		{
+			this.getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
+			((PlayerEntity)(Object)this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
+		}
 		markAdditionalDataDirty();
 	}
 
@@ -46,21 +50,19 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 	@Inject(at=@At(value="HEAD"), method="onDeath")
 	private void onDeath(DamageSource source, CallbackInfo info)
 	{
-		if (!((PlayerEntity)(Object)this).world.isClient && !((PlayerEntity)(Object)this).world.getGameRules().getBoolean("keepInventory") && !getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT))
+		if (!((PlayerEntity)(Object)this).world.isClient && !((PlayerEntity)(Object)this).world.getGameRules().getBoolean("keepInventory") && !getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
 		{
 			for (int slot = 0; slot < ((PlayerEntity)(Object)this).inventory.getInvSize(); slot++)
 			{
 				ItemStack stack = ((PlayerEntity)(Object)this).inventory.getInvStack(slot);
-				System.out.println(stack.getItem());
 				if (stack.getItem() == ModRegistry.WRITTEN_PARCHMENT)
 				{
 					IParchment parchment = ParchmentRegistry.getParchment(stack);
 					if (parchment instanceof DiscoveryParchment)
 					{
-						getAdditionalData().putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT, true);
+						getAdditionalData().putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY, true);
+						getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, true);
 						markAdditionalDataDirty();
-
-						((PlayerEntity)(Object)this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
 						break;
 					}
 				}
