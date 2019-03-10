@@ -75,15 +75,31 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 
 						if (player != null)
 						{
-							DataHolder dataPlayer = (DataHolder)player;
+							DataHolder dataPlayer = (DataHolder) player;
 							Item output = recipe.get().getOutput().getItem();
+							boolean updated = false;
 
 							if (output.getItem() == ModRegistry.GOLD_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY))
 							{
-								ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+								updated = true;
 								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY, true);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.CRYSTALLIZATION.getID().toString(), false);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_STORAGE.getID().toString(), false);
+							} else if (output.getItem() == ModRegistry.SOUL_PENDANT && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
+							{
+								updated = true;
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY, true);
+								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_STORAGE.getID().toString(), false);
+							} else if (output.getItem() == ModRegistry.PURE_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
+							{
+								updated = true;
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY, true);
+								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
+							}
+
+							if (updated)
+							{
+								ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 								dataPlayer.markAdditionalDataDirty();
 							}
 						}
@@ -196,7 +212,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 	{
 		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
 		{
-			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity)placer);
+			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY, true);
 			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
 			((DataHolder) placer).markAdditionalDataDirty();

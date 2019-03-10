@@ -13,6 +13,18 @@ import java.util.List;
 
 public class ContentsNotebookSection implements INotebookSection
 {
+	private static List<NotebookElement.ItemInfoButton> buttons = new ArrayList<>();
+
+	static
+	{
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.DISCOVERY, ModRegistry.GOLDEN_SCEPTER, "notebook.arcanemagic.discovery.title", "notebook.arcanemagic.discovery.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.TRANSFIGURATION, ModRegistry.TRANSFIGURATION_TABLE, "notebook.arcanemagic.transfiguration.title", "notebook.arcanemagic.transfiguration.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.CRYSTALLIZATION, ModRegistry.GOLD_CRYSTAL, "notebook.arcanemagic.crystallization.title", "notebook.arcanemagic.crystallization.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.SOUL_STORAGE, ModRegistry.SOUL_PENDANT, "notebook.arcanemagic.soul_storage.title", "notebook.arcanemagic.soul_storage.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.PERFECTION, ModRegistry.PURE_CRYSTAL, "notebook.arcanemagic.perfection.title", "notebook.arcanemagic.perfection.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.SOUL_COLLECTION, ModRegistry.ALTAR, "notebook.arcanemagic.soul_collection.title", "notebook.arcanemagic.soul_collection.desc").withPadding(5));
+	}
+
 	@Override
 	public Identifier getID()
 	{
@@ -29,34 +41,37 @@ public class ContentsNotebookSection implements INotebookSection
 	public List<INotebookElement> getElements(DataHolder player, int page)
 	{
 		List<INotebookElement> elements = new ArrayList<>();
-		List<NotebookElement.ItemInfoButton> buttons = new ArrayList<>();
-
-		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.DISCOVERY, ModRegistry.GOLDEN_SCEPTER, "notebook.arcanemagic.discovery.title", "notebook.arcanemagic.discovery.desc").withPadding(5));
-		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.TRANSFIGURATION, ModRegistry.TRANSFIGURATION_TABLE, "notebook.arcanemagic.transfiguration.title", "notebook.arcanemagic.transfiguration.desc").withPadding(5));
-		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.CRYSTALLIZATION, ModRegistry.GOLD_CRYSTAL, "notebook.arcanemagic.crystallization.title", "notebook.arcanemagic.crystallization.desc").withPadding(5));
-		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.SOUL_STORAGE, ModRegistry.SOUL_PENDANT, "notebook.arcanemagic.soul_storage.title", "notebook.arcanemagic.soul_storage.desc").withPadding(5));
 
 		if (page == 0)
 		{
 			String name = MinecraftClient.getInstance().player.getEntityName();
 			elements.add(new NotebookElement.BigHeading("notebook.arcanemagic.title", name.substring(0, 1).toUpperCase() + name.substring(1)).withPadding(-3));
 			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.intro"));
-		} else if (page == 1)
+		} else
 		{
-			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.categories").withPadding(3));
-			int amount = 0;
+			int number = 0;
+
+			if (page == 1)
+			{
+				elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.categories").withPadding(3));
+			} else
+			{
+				elements.add(new NotebookElement.Padding(10));
+			}
 
 			for (NotebookElement.ItemInfoButton button : buttons)
 			{
 				if (button.link.isVisibleTo(player))
 				{
-					elements.add(button);
-					amount++;
-				}
-
-				if (amount >= 4)
-				{
-					break;
+					number++;
+					int properPage = (int)Math.ceil(number / 4f);
+					if (properPage == page)
+					{
+						elements.add(button);
+					} else if (properPage > page)
+					{
+						break;
+					}
 				}
 			}
 		}
@@ -66,6 +81,14 @@ public class ContentsNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 1;
+		int amount = 0;
+		for (NotebookElement.ItemInfoButton button : buttons)
+		{
+			if (button.link.isVisibleTo(player))
+			{
+				amount++;
+			}
+		}
+		return (int)Math.ceil(amount / 4f);
 	}
 }

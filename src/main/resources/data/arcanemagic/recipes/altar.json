@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:altar"
+  },
+  "pattern": [
+	" c ",
+	"ooo",
+	"qoq"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"o": {
+	  "item": "minecraft:obsidian"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
+	},
+	"c": {
+	  "item": "arcanemagic:coal_crystal"
+	}
+  },
+  "soul": 5
+}

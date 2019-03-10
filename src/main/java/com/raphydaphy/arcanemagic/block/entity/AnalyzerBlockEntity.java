@@ -44,7 +44,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 	@Environment(EnvType.CLIENT)
 	private void doParticles(Item item)
 	{
-		if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem())
+		if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem() || item == Blocks.OBSIDIAN.getItem())
 		{
 			float inverseSpread = 400;
 			for (int i = 0; i < 4; i++)

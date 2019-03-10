@@ -82,6 +82,15 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
 					dataPlayer.markAdditionalDataDirty();
 				}
+			} else if (stack.getItem() == Blocks.OBSIDIAN.getItem())
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY))
+				{
+					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_COLLECTION.getID().toString(), false);
+					dataPlayer.markAdditionalDataDirty();
+				}
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)

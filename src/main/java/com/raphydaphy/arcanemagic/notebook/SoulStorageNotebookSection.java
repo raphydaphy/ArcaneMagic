@@ -38,6 +38,14 @@ public class SoulStorageNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Padding(8));
 			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.soul_pendant").withPadding(10));
 			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "soul_pendant")).orElse(null)));
+		} else if (page == 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
+		{
+			elements.add(new NotebookElement.Padding(2));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.soul_storage.1"));
+		}else if (page == 3 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
+		{
+			elements.add(new NotebookElement.Padding(2));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.soul_storage.2"));
 		}
 		return elements;
 	}
@@ -45,6 +53,6 @@ public class SoulStorageNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 1;
+		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) ? 3 : 1;
 	}
 }
