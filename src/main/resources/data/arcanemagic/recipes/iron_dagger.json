@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:iron_dagger"
+  },
+  "group": "arcanemagic:iron_dagger",
+  "pattern": [
+	" q ",
+	" i ",
+	" s "
+  ],
+  "type": "crafting_shaped",
+  "key": {
+	"i": {
+	  "item": "minecraft:iron_ingot"
+	},
+	"s": {
+	  "item": "minecraft:stick"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
+	}
+  }
+}

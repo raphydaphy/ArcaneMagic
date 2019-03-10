@@ -16,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.cooking.SmeltingRecipe;
+import net.minecraft.recipe.crafting.CraftingRecipe;
+import net.minecraft.recipe.crafting.ShapedRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.Direction;
 
@@ -177,13 +179,16 @@ public class RenderUtils
 
 			GuiLighting.enableForItems();
 
-			for (int inputX = 0; inputX < 3; inputX++)
+			boolean thin = recipe.fits(1, 3);
+
+			for (int inputX = thin ? 1 : 0; inputX < (thin ? 2 : 3); inputX++)
 			{
 				for (int inputY = 0; inputY < 3; inputY++)
 				{
-					if (inputX + 3 * inputY < ingredients.size())
+					int slot = thin ? inputY : (inputX + (3 * inputY));
+					if (slot < ingredients.size())
 					{
-						ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+						ItemStack[] stackArray = ingredients.get(slot).getStackArray();
 						if (stackArray.length > 0)
 						{
 							int id = (int) (client.world.getTime() / 30) % stackArray.length;
@@ -224,15 +229,16 @@ public class RenderUtils
 	public static void drawRecipeTooltips(Screen screen, Recipe<? extends Inventory> recipe, int x, int y, int mouseX, int mouseY)
 	{
 		DefaultedList<Ingredient> ingredients = recipe.getPreviewInputs();
-		ItemStack output = recipe.getOutput();
+		boolean thin = recipe.fits(1, 3);
 		// Render the tooltips for the recipe matrix
-		for (int inputX = 0; inputX < 3; inputX++)
+		for (int inputX = thin ? 1 : 0; inputX < (thin ? 2 : 3); inputX++)
 		{
 			for (int inputY = 0; inputY < 3; inputY++)
 			{
-				if (inputX + 3 * inputY < ingredients.size())
+				int slot = thin ? inputY : (inputX + (3 * inputY));
+				if (slot < ingredients.size())
 				{
-					ItemStack[] stackArray = ingredients.get((inputX) + (3 * inputY)).getStackArray();
+					ItemStack[] stackArray = ingredients.get(slot).getStackArray();
 					if (stackArray.length != 0)
 					{
 						int id = (int) (MinecraftClient.getInstance().world.getTime() / 30) % stackArray.length;

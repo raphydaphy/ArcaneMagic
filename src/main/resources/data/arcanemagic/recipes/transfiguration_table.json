@@ -2,7 +2,7 @@
   "result": {
 	"item": "arcanemagic:transfiguration_table"
   },
-  "group": "arcanemagic:magic",
+  "group": "arcanemagic:transfiguration_table",
   "pattern": [
 	" r ",
 	"scs",

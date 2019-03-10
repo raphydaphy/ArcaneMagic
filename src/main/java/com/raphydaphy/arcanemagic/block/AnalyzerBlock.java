@@ -17,6 +17,7 @@ import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SwordItem;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
@@ -65,6 +66,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 		{
 			// All of this is only called on the server-side
 			DataHolder dataPlayer = ((DataHolder)player);
+			boolean notebookUpdate = false;
 			if (stack.getItem() == Items.STICK)
 			{
 				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
@@ -77,19 +79,25 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 			{
 				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY))
 				{
-					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
-					dataPlayer.markAdditionalDataDirty();
+					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.OBSIDIAN.getItem())
 			{
 				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY))
 				{
-					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_COLLECTION.getID().toString(), false);
-					dataPlayer.markAdditionalDataDirty();
+					notebookUpdate = true;
+				}
+			} else if (stack.getItem() instanceof SwordItem)
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SWORD))
+				{
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SWORD, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
+					notebookUpdate = true;
 				}
 			} else
 			{
@@ -140,6 +148,12 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 						}
 					}
 				}
+			}
+
+			if (notebookUpdate)
+			{
+				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+				dataPlayer.markAdditionalDataDirty();
 			}
 		});
 	}

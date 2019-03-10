@@ -65,5 +65,8 @@
   "notebook.arcanemagic.perfection.0": "Combining the six basic crystals using Transfiguration created an entirely new §5Pure Crystal§r. Everything about it seems vastly different from the crystals that it is made of.\n\nIt should be the perfect item to use in the creation of a new Scepter. If its power is augmented with some quartz, I imagine that it will be capable of so much more than the Golden Scepter I created at the start of my adventures.",
   "notebook.arcanemagic.soul_collection.title": "Soul Collection",
   "notebook.arcanemagic.soul_collection.desc": "Gathering Soul more efficiently",
-  "notebook.arcanemagic.soul_collection.0": "the best altar your money can buy"
+  "notebook.arcanemagic.soul_collection.0": "After taking a close look at Obsidian, it has became clear to me that it is the perfect material to attract and contain Soul. An Obsidian Altar should be able to gather Soul from any creatures that die near it and store it in any Pendant placed on the Altar.\n\nUnfortunately, it may be difficult to position enemies close to the Altar in order to collect their Soul. §1§oIf I had a better understanding on how Swords worked, I might be able to create a new weapon that makes sacrificial killings easier§r.",
+  "notebook.arcanemagic.armoury.title": "Armoury",
+  "notebook.arcanemagic.armoury.desc": "Creating new weapons and armor",
+  "notebook.arcanemagic.armoury.0": "< weapon make strong fist >"
 }

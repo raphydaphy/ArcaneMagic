@@ -2,7 +2,7 @@
   "result": {
 	"item": "arcanemagic:analyzer"
   },
-  "group": "arcanemagic:magic",
+  "group": "arcanemagic:analyzer",
   "pattern": [
 	" g ",
 	"psp",

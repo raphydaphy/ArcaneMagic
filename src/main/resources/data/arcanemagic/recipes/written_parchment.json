@@ -2,7 +2,7 @@
   "result": {
 	"item": "arcanemagic:written_parchment"
   },
-  "group": "arcanemagic:magic",
+  "group": "arcanemagic:written_parchment",
   "type": "crafting_shapeless",
   "ingredients": [
 	{

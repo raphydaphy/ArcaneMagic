@@ -15,6 +15,7 @@ import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
@@ -44,7 +45,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 	@Environment(EnvType.CLIENT)
 	private void doParticles(Item item)
 	{
-		if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem() || item == Blocks.OBSIDIAN.getItem())
+		if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem() || item == Blocks.OBSIDIAN.getItem() || item instanceof SwordItem)
 		{
 			float inverseSpread = 400;
 			for (int i = 0; i < 4; i++)
