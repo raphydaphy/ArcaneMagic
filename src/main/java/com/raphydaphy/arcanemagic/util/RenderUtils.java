@@ -212,7 +212,7 @@ public class RenderUtils
 		GlStateManager.pushMatrix();
 
 		// Crafting Output Box
-		drawBox(x, y, 24, 24, 2, -1);
+		drawBox(x, y, 24, 24, 2, 0xff422c0e, -1);
 
 		// Draw the output item
 		GuiLighting.enableForItems();
@@ -262,13 +262,13 @@ public class RenderUtils
 		drawItemstackTooltip(screen, recipe.getOutput(), x + 113, y + 25, mouseX, mouseY);
 	}
 
-	public static int drawItemInBox(Screen screen, ItemStack item, List<String> tooltip, int x, int y, int mouseX, int mouseY)
+	public static int drawItemInBox(Screen screen, ItemStack item, List<String> tooltip, int color, int x, int y, int mouseX, int mouseY)
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
 		GlStateManager.pushMatrix();
 		GlStateManager.pushTextureAttributes();
 
-		drawBox(x, y, 24, 24, 2, -1);
+		drawBox(x, y, 24, 24, 2,color, -1);
 
 		if (!item.isEmpty())
 		{
@@ -298,7 +298,7 @@ public class RenderUtils
 		int i = 0;
 		for (Map.Entry<Ingredient, Boolean> item : items.entrySet())
 		{
-			drawBox(x + i * 35, y, 24, 24, 2, items.get(item.getKey()) ? 0x8010ce40 : 0x80e80d0d);
+			drawBox(x + i * 35, y, 24, 24, 2, 0xff422c0e, items.get(item.getKey()) ? 0x8010ce40 : 0x80e80d0d);
 
 			GuiLighting.enableForItems();
 			ItemStack[] stackArray = item.getKey().getStackArray();
@@ -377,12 +377,12 @@ public class RenderUtils
 	 *
 	 * @param background The background color. Set to -1 for no background
 	 */
-	public static void drawBox(int x, int y, int width, int height, int lineWidth, int background)
+	public static void drawBox(int x, int y, int width, int height, int lineWidth, int border, int background)
 	{
-		DrawableHelper.drawRect(x, y, x + width, y + lineWidth, 0xff422c0e);
-		DrawableHelper.drawRect(x, y + height, x + width, y + height + lineWidth, 0xff422c0e);
-		DrawableHelper.drawRect(x, y, x + lineWidth, y + height, 0xff422c0e);
-		DrawableHelper.drawRect(x + width, y, x + width + lineWidth, y + height + lineWidth, 0xff422c0e);
+		DrawableHelper.drawRect(x, y, x + width, y + lineWidth, border);
+		DrawableHelper.drawRect(x, y + height, x + width, y + height + lineWidth, border);
+		DrawableHelper.drawRect(x, y, x + lineWidth, y + height, border);
+		DrawableHelper.drawRect(x + width, y, x + width + lineWidth, y + height + lineWidth, border);
 		if (background != -1)
 		{
 			DrawableHelper.drawRect(x + lineWidth, y + lineWidth, x + width, y + width, background);

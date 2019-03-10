@@ -68,29 +68,32 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			{
 				BlockState state = entity.getWorld().getBlockState(entity.getPos());
 
-				if (state.get(PipeBlock.UP))
+				if (state.getProperties().contains(PipeBlock.UP))
 				{
-					RenderUtils.renderBox(builder, renderX + pixel * 6, renderY + pixel * 10, renderZ + pixel * 6, renderX + pixel * 10, renderY + 1, renderZ + pixel * 10, upDown, new int[]{1, 1, 1, 1, 1, 1});
-				}
-				if (state.get(PipeBlock.DOWN))
-				{
-					RenderUtils.renderBox(builder, renderX + pixel * 6, renderY, renderZ + pixel * 6, renderX + pixel * 10, renderY + pixel * 6, renderZ + pixel * 10, upDown, new int[]{-1, -1, 1, 1, 1, 1});
-				}
-				if (state.get(PipeBlock.NORTH))
-				{
-					RenderUtils.renderBox(builder, renderX + pixel * 6, renderY + pixel * 6, renderZ, renderX + pixel * 10, renderY + pixel * 10, renderZ + pixel * 6, northSouth, new int[]{1, 1, 1, 1, 1, 1});
-				}
-				if (state.get(PipeBlock.SOUTH))
-				{
-					RenderUtils.renderBox(builder, renderX + pixel * 6, renderY + pixel * 6, renderZ + pixel * 10, renderX + pixel * 10, renderY + pixel * 10, renderZ + 1, northSouth, new int[]{1, 1, -1, -1, 1, 1});
-				}
-				if (state.get(PipeBlock.WEST))
-				{
-					RenderUtils.renderBox(builder, renderX, renderY + pixel * 6, renderZ + pixel * 6, renderX + pixel * 6, renderY + pixel * 10, renderZ + pixel * 10, westEast, new int[]{1, 1, 1, 1, 1, 1});
-				}
-				if (state.get(PipeBlock.EAST))
-				{
-					RenderUtils.renderBox(builder, renderX + pixel * 10, renderY + pixel * 6, renderZ + pixel * 6, renderX + 1, renderY + pixel * 10, renderZ + pixel * 10, westEast, new int[]{1, 1, 1, 1, -1, -1});
+					if (state.get(PipeBlock.UP))
+					{
+						RenderUtils.renderBox(builder, renderX + pixel * 6, renderY + pixel * 10, renderZ + pixel * 6, renderX + pixel * 10, renderY + 1, renderZ + pixel * 10, upDown, new int[]{1, 1, 1, 1, 1, 1});
+					}
+					if (state.get(PipeBlock.DOWN))
+					{
+						RenderUtils.renderBox(builder, renderX + pixel * 6, renderY, renderZ + pixel * 6, renderX + pixel * 10, renderY + pixel * 6, renderZ + pixel * 10, upDown, new int[]{-1, -1, 1, 1, 1, 1});
+					}
+					if (state.get(PipeBlock.NORTH))
+					{
+						RenderUtils.renderBox(builder, renderX + pixel * 6, renderY + pixel * 6, renderZ, renderX + pixel * 10, renderY + pixel * 10, renderZ + pixel * 6, northSouth, new int[]{1, 1, 1, 1, 1, 1});
+					}
+					if (state.get(PipeBlock.SOUTH))
+					{
+						RenderUtils.renderBox(builder, renderX + pixel * 6, renderY + pixel * 6, renderZ + pixel * 10, renderX + pixel * 10, renderY + pixel * 10, renderZ + 1, northSouth, new int[]{1, 1, -1, -1, 1, 1});
+					}
+					if (state.get(PipeBlock.WEST))
+					{
+						RenderUtils.renderBox(builder, renderX, renderY + pixel * 6, renderZ + pixel * 6, renderX + pixel * 6, renderY + pixel * 10, renderZ + pixel * 10, westEast, new int[]{1, 1, 1, 1, 1, 1});
+					}
+					if (state.get(PipeBlock.EAST))
+					{
+						RenderUtils.renderBox(builder, renderX + pixel * 10, renderY + pixel * 6, renderZ + pixel * 6, renderX + 1, renderY + pixel * 10, renderZ + pixel * 10, westEast, new int[]{1, 1, 1, 1, -1, -1});
+					}
 				}
 			}
 

@@ -3,6 +3,7 @@ package com.raphydaphy.arcanemagic.util;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -29,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import java.util.Map;
@@ -346,6 +348,26 @@ public class ArcaneMagicUtils
 		{
 			int int_1 = JsonHelper.getInt(object, "count", 1);
 			return new ItemStack(item, int_1);
+		}
+	}
+
+	public static void updateNotebookSection(IWorld world, DataHolder dataPlayer, String section, boolean remove)
+	{
+		if (!world.isClient())
+		{
+			CompoundTag updates = dataPlayer.getAdditionalData().getCompound(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET);
+			if (remove)
+			{
+				if (updates.containsKey(section))
+				{
+					updates.remove(section);
+				}
+			} else
+			{
+				updates.putBoolean(section, true);
+			}
+			dataPlayer.getAdditionalData().put(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET, updates);;
+			dataPlayer.markAdditionalDataDirty();
 		}
 	}
 

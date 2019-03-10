@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
+import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
 import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
@@ -140,5 +141,6 @@ public class ModRegistry
 
 		// Server-side Packet Registration
 		ServerSidePacketRegistry.INSTANCE.register(NotebookUpdatePacket.ID, new NotebookUpdatePacket.Handler());
+		ServerSidePacketRegistry.INSTANCE.register(NotebookSectionReadPacket.ID, new NotebookSectionReadPacket.Handler());
 	}
 }

@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
@@ -73,7 +74,7 @@ class NotebookElement
 
 	public static class ItemInfoButton extends ItemInfo
 	{
-		public final INotebookSection link;
+		final INotebookSection link;
 
 		private int startX;
 		private int startY;
@@ -105,14 +106,32 @@ class NotebookElement
 		@Override
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
-			int height = super.draw(screen, x, y, mouseX, mouseY, xTop, yTop);
-
 			this.startX = x;
 			this.startY = y;
 			this.endX = startX + 26;
 			this.endY = startY + 26;
 
-			return height;
+			if (this.link.hasNewInfo((DataHolder) MinecraftClient.getInstance().player))
+			{
+				if (mouseOver(mouseX, mouseY))
+				{
+					this.color = 0xff17a836;
+				} else
+				{
+					this.color = 0xff14912f;
+				}
+			} else
+			{
+				if (mouseOver(mouseX, mouseY))
+				{
+					this.color = 0xff634316;
+				} else
+				{
+					this.color = 0xff422c0e;
+				}
+			}
+
+			return super.draw(screen, x, y, mouseX, mouseY, xTop, yTop);
 		}
 	}
 
@@ -120,6 +139,7 @@ class NotebookElement
 	{
 		private final ItemProvider item;
 		private final String unlocalizedTitle;
+		int color = -1;
 
 		ItemInfo(ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys)
 		{
@@ -132,7 +152,7 @@ class NotebookElement
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
 			int largest = 0;
-			int tmp = RenderUtils.drawItemInBox(screen, new ItemStack(item), null, x, y, mouseX, mouseY);
+			int tmp = RenderUtils.drawItemInBox(screen, new ItemStack(item), null, color, x, y, mouseX, mouseY);
 			largest = tmp > largest ? tmp : largest;
 			tmp = RenderUtils.drawCustomSizedSplitString(x + 29, y + 2, 0.9, 80, 0, false, false, unlocalizedTitle) + 3;
 			tmp += RenderUtils.drawCustomSizedSplitString(x + 29, y + 2 + tmp, 0.7, 80, 0, false, false, unlocalized, keys);

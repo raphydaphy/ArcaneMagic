@@ -11,6 +11,7 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.block.Block;
@@ -314,6 +315,7 @@ public class ScepterItem extends SoulStorageItem
 			{
 				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
+				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
 			}
 		}

@@ -11,10 +11,10 @@ public class NotebookSectionRegistry
 	private static final Map<Identifier, INotebookSection> REGISTRY = new HashMap<>();
 
 	public static final INotebookSection CONTENTS = register(new ContentsNotebookSection());
-	static final INotebookSection DISCOVERY = register(new DiscoveryNotebookSection());
-	static final INotebookSection TRANSFIGURATION = register(new TransfigurationNotebookSection());
-	static final INotebookSection CRYSTALLIZATION = register(new CrystallizationNotebookSection());
-	static final INotebookSection SOUL_STORAGE = register(new SoulStorageNotebookSection());
+	public static final INotebookSection DISCOVERY = register(new DiscoveryNotebookSection());
+	public static final INotebookSection TRANSFIGURATION = register(new TransfigurationNotebookSection());
+	public static final INotebookSection CRYSTALLIZATION = register(new CrystallizationNotebookSection());
+	public static final INotebookSection SOUL_STORAGE = register(new SoulStorageNotebookSection());
 
 	public static INotebookSection get(Identifier id)
 	{

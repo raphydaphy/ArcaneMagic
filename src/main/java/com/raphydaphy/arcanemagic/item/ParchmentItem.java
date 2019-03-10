@@ -3,9 +3,9 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.client.screen.ParchmentScreen;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -13,7 +13,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -66,6 +65,15 @@ public class ParchmentItem extends Item
 	private void openGUI(ItemStack stack, IParchment parchment)
 	{
 		MinecraftClient.getInstance().openScreen(new ParchmentScreen(stack, parchment));
+	}
+
+	@Override
+	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
+	{
+		if (type == ParchmentType.WRITTEN)
+		{
+			stack.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, DiscoveryParchment.NAME);
+		}
 	}
 
 	public enum ParchmentType

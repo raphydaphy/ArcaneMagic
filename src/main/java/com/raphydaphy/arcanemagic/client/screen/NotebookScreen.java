@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
 import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
 import com.raphydaphy.arcanemagic.notebook.ContentsNotebookSection;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
@@ -62,6 +63,12 @@ public class NotebookScreen extends Screen
 		{
 			this.section = section;
 		}
+
+		if (this.section.hasNewInfo((DataHolder)client.player))
+		{
+			ArcaneMagicPacketHandler.sendToServer(new NotebookSectionReadPacket(this.section));
+		}
+
 		this.leftElements.clear();
 		this.rightElements.clear();
 

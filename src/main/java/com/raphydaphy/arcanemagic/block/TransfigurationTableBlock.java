@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
@@ -83,6 +84,8 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 							{
 								ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY, true);
+								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.CRYSTALLIZATION.getID().toString(), false);
+								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_STORAGE.getID().toString(), false);
 								dataPlayer.markAdditionalDataDirty();
 							}
 						}
@@ -197,6 +200,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 		{
 			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity)placer);
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY, true);
+			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}
 	}
