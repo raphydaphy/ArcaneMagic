@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -23,7 +22,6 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -97,11 +95,19 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				}
 			} else if (stack.getItem() instanceof SwordItem)
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SWORD))
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SWORD, true);
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
 					ArcaneMagicUtils.unlockRecipe(player, "iron_dagger");
+					notebookUpdate = true;
+				}
+			} else if (stack.getItem() == Blocks.BLAST_FURNACE.getItem())
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY))
+				{
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else

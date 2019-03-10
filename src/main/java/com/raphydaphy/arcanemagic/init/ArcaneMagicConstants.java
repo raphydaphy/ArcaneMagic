@@ -54,7 +54,8 @@ public class ArcaneMagicConstants
 	public static final String PLACED_TRANSFIGURATION_TABLE_KEY = "PlacedTransfigurationTable";
 	public static final String CRAFTED_GOLD_CRYSTAL_KEY = "CraftedGoldCrystal";
 	public static final String CRAFTED_SOUL_PENDANT_KEY = "CraftedSoulPendant";
+	public static final String ANALYZED_BLAST_FURNACE_KEY = "AnalyzedBlastFurnace";
 	public static final String CRAFTED_PURE_CRYSTAL_KEY = "CraftedPureCrystal";
 	public static final String ANALYZED_OBSIDIAN_KEY = "AnalyzedObsidian";
-	public static final String ANALYZED_SWORD = "AnalyzedSword";
+	public static final String ANALYZED_SWORD_KEY = "AnalyzedSword";
 }

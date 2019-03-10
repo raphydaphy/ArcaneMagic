@@ -1,0 +1,26 @@
+{
+  "result": {
+	"item": "arcanemagic:smelter"
+  },
+  "pattern": [
+	" b ",
+	"tct",
+	"tft"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"b": {
+	  "item": "minecraft:bricks"
+	},
+	"c": {
+	  "item": "arcanemagic:redstone_crystal"
+	},
+	"t": {
+	  "item": "minecraft:terracotta"
+	},
+	"f": {
+	  "item": "minecraft:blast_furnace"
+	}
+  },
+  "soul": 35
+}

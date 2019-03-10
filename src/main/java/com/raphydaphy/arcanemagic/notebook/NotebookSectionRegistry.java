@@ -17,6 +17,7 @@ public class NotebookSectionRegistry
 	public static final INotebookSection PERFECTION = register(new PerfectionNotebookSection());
 	public static final INotebookSection SOUL_COLLECTION = register(new SoulCollectionNotebookSection());
 	public static final INotebookSection ARMOURY = register(new ArmouryNotebookSection());
+	public static final INotebookSection SMELTING = register(new SmeltingNotebookSection());
 
 	public static final INotebookSection CONTENTS = register(new ContentsNotebookSection());
 
