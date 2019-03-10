@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.PlayerDataUpdatePacket;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
@@ -33,6 +34,7 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 		{
 			this.getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
 			((PlayerEntity)(Object)this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
+			ArcaneMagicUtils.unlockRecipe((PlayerEntity)(Object)this, "written_parchment");
 		}
 		markAdditionalDataDirty();
 	}

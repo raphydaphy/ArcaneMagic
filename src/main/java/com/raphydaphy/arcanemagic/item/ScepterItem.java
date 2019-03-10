@@ -316,6 +316,7 @@ public class ScepterItem extends SoulStorageItem
 				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
 				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
+				ArcaneMagicUtils.unlockRecipe(player, "notebook");
 			}
 		}
 	}

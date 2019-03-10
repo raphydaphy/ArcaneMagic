@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -22,6 +23,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
@@ -73,6 +75,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				{
 					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
+					ArcaneMagicUtils.unlockRecipe(player, "golden_scepter");
 					dataPlayer.markAdditionalDataDirty();
 				}
 			} else if (stack.getItem() == Blocks.CRAFTING_TABLE.getItem())
@@ -81,6 +84,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				{
 					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
+					ArcaneMagicUtils.unlockRecipe(player, "transfiguration_table");
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.OBSIDIAN.getItem())
@@ -97,6 +101,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				{
 					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SWORD, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
+					ArcaneMagicUtils.unlockRecipe(player, "iron_dagger");
 					notebookUpdate = true;
 				}
 			} else

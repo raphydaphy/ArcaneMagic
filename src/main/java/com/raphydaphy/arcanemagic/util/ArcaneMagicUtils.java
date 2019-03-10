@@ -250,6 +250,11 @@ public class ArcaneMagicUtils
 		return false;
 	}
 
+	public static void unlockRecipe(PlayerEntity player, String recipe)
+	{
+		player.unlockRecipes(new Identifier[] {new Identifier(ArcaneMagic.DOMAIN, recipe)});
+	}
+
 	public static boolean handleTileEntityBroken(Block block, BlockState oldState, World world, BlockPos pos, BlockState newState)
 	{
 		if (oldState.getBlock() != newState.getBlock())
