@@ -39,6 +39,7 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPointer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class ScepterItem extends SoulStorageItem
@@ -88,52 +89,57 @@ public class ScepterItem extends SoulStorageItem
 		}
 	}
 
-	@Override
-	public ActionResult useOnBlock(ItemUsageContext ctx)
+	private static boolean useOnBlock(ItemStack stack, IWorld world, BlockPos pos, PlayerEntity player)
 	{
-		CompoundTag tag = ctx.getItemStack().getTag();
+		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
-			Block block = ctx.getWorld().getBlockState(ctx.getBlockPos()).getBlock();
+			Block block = world.getBlockState(pos).getBlock();
 			if (block == ModRegistry.CRYSTAL_INFUSER)
 			{
-				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
+				BlockEntity blockEntity = world.getBlockEntity(pos);
 				if (blockEntity instanceof CrystalInfuserBlockEntity)
 				{
 					CrystalInfuserBlockEntity crystalInfuser = (CrystalInfuserBlockEntity) blockEntity;
 					if (!crystalInfuser.getInvStack(0).isEmpty() && !crystalInfuser.getInvStack(1).isEmpty() && !crystalInfuser.getInvStack(2).isEmpty() && !((CrystalInfuserBlockEntity) blockEntity).isActive())
 					{
-						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), 20))
+						if (ArcaneMagicUtils.useSoul(world, stack, player, 20))
 						{
-							if (!ctx.getWorld().isClient)
+							if (!world.isClient())
 							{
 								((CrystalInfuserBlockEntity) blockEntity).resetCraftingTime();
 								((CrystalInfuserBlockEntity) blockEntity).setActive(true);
 							}
-							ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
-							return ActionResult.SUCCESS;
+							world.playSound(player, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+							return true;
 						}
 					}
 				}
 			} else if (block == ModRegistry.SMELTER)
 			{
-				BlockEntity blockEntity = ctx.getWorld().getBlockEntity(ctx.getBlockPos());
+				BlockEntity blockEntity = world.getBlockEntity(pos);
 				if (blockEntity instanceof SmelterBlockEntity)
 				{
 					SmelterBlockEntity smelter = (SmelterBlockEntity) blockEntity;
 					if (smelter.startSmelting(true))
 					{
-						if (ArcaneMagicUtils.useSoul(ctx.getWorld(), ctx.getItemStack(), ctx.getPlayer(), ArcaneMagicConstants.SOUL_PER_SMELT))
+						if (ArcaneMagicUtils.useSoul(world, stack, player, ArcaneMagicConstants.SOUL_PER_SMELT))
 						{
 							smelter.startSmelting(false);
-							ctx.getWorld().playSound(ctx.getPlayer(), ctx.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
-							return ActionResult.SUCCESS;
+							world.playSound(player, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+							return true;
 						}
 					}
 				}
 			}
 		}
-		return ActionResult.PASS;
+		return false;
+	}
+
+	@Override
+	public ActionResult useOnBlock(ItemUsageContext ctx)
+	{
+		return useOnBlock(ctx.getItemStack(), ctx.getWorld(), ctx.getBlockPos(), ctx.getPlayer()) ? ActionResult.SUCCESS : ActionResult.PASS;
 	}
 
 	@Override
@@ -288,6 +294,9 @@ public class ScepterItem extends SoulStorageItem
 				{
 					((TransfigurationTableBlock) facingBlock.getBlock()).useScepter(world, blockEntity, stack, null, null);
 				}
+			} else
+			{
+				useOnBlock(stack, world, facingPos, null);
 			}
 
 			return stack;

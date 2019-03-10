@@ -12,6 +12,7 @@ public class SmokeParticle extends ParticleBase
 		super(worldIn, xPos, yPos, zPos, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, lifetime);
 		Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas().getSprite(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
 		this.setSprite(sprite);
+		this.prevAngle = angle;
 	}
 
 	@Override

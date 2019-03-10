@@ -61,6 +61,7 @@ public class ParticleRenderer
 		float rotationYZ = CameraHelper.getRotationYZ();
 		float rotationXY = CameraHelper.getRotationXY();
 		float rotationXZ = CameraHelper.getRotationXZ();
+
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if (player != null)
 		{

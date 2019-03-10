@@ -46,7 +46,7 @@ public class ArcaneMagicUtils
 	 * @param user The player using the soul, if there is one
 	 * @return True if the soul was consumed
 	 ***/
-	public static boolean useSoul(World world, ItemStack scepter, PlayerEntity user, int amount)
+	public static boolean useSoul(IWorld world, ItemStack scepter, PlayerEntity user, int amount)
 	{
 		if (!scepter.isEmpty() && scepter.getItem() instanceof ScepterItem)
 		{
@@ -67,7 +67,7 @@ public class ArcaneMagicUtils
 
 			if (scepterTag != null && amount <= ((ScepterItem) scepter.getItem()).maxSoul && amount <= scepterSoul + pendantSoul)
 			{
-				if (!world.isClient)
+				if (!world.isClient())
 				{
 					CompoundTag pendantTag;
 					if (!pendant.isEmpty() && (pendantTag = pendant.getTag()) != null)
