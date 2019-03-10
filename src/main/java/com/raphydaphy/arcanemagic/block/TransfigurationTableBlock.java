@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicSounds;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -21,12 +22,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -95,7 +93,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 						player.swingHand(hand);
 					}
 
-					world.playSound(player, blockEntity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+					world.playSound(player, blockEntity.getPos(), ArcaneMagicSounds.TRANSFIGURATION, SoundCategory.BLOCK, 0.5f, 1);
 
 					return true;
 				}
