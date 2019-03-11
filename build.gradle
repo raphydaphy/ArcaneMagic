@@ -48,6 +48,9 @@ dependencies {
 
 	// Silk
 	modCompile "com.github.prospector:Silk:${project.silk_version}"
+
+	//Nonnull annotations
+	modCompile "com.google.code.findbugs:jsr305:3.0.1"
 }
 
 processResources {

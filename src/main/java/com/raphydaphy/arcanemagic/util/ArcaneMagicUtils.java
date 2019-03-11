@@ -390,8 +390,8 @@ public class ArcaneMagicUtils
 		ForgeCrystal(String id, int rgb)
 		{
 			this.id = id;
-			this.hilt = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_hilt");
-			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "textures/item/weapon_gems/" + id + "_pommel");
+			this.hilt = new Identifier(ArcaneMagic.DOMAIN, "item/weapon_gems/" + id + "_hilt");
+			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "item/weapon_gems/" + id + "_pommel");
 			this.red = ((rgb>>16)&0xFF) / 255f;
 			this.green = ((rgb>>8)&0xFF) / 255f;
 			this.blue = ((rgb)&0xFF) / 255f;
