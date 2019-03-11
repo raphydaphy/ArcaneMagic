@@ -26,6 +26,7 @@ public class ContentsNotebookSection implements INotebookSection
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.SOUL_COLLECTION, ModRegistry.ALTAR, "notebook.arcanemagic.soul_collection.title", "notebook.arcanemagic.soul_collection.desc").withPadding(5));
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.ARMOURY, ModRegistry.IRON_DAGGER, "notebook.arcanemagic.armoury.title", "notebook.arcanemagic.armoury.desc").withPadding(5));
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.INFUSION, ModRegistry.CRYSTAL_INFUSER, "notebook.arcanemagic.infusion.title", "notebook.arcanemagic.infusion.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.LIQUEFACTION, ModRegistry.MIXER, "notebook.arcanemagic.liquefaction.title", "notebook.arcanemagic.liquefaction.desc").withPadding(5));
 	}
 
 	@Override

@@ -62,4 +62,5 @@ public class ArcaneMagicConstants
 	public static final String CRAFTED_DAGGER_KEY = "CraftedDagger";
 	public static final String ANALYZED_ENCHANTING_TABLE_KEY = "AnalyzedEnchantingTable";
 	public static final String PLACED_INFUSER_KEY = "PlacedInfuser";
+	public static final String ANALYZED_DISPENSER_KEY = "AnalyzedDispenser";
 }

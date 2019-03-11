@@ -31,7 +31,7 @@ public class SoulCollectionNotebookSection implements INotebookSection
 		List<INotebookElement> elements = new ArrayList<>();
 		if (page == 0)
 		{
-			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.soul_collection.title", MinecraftClient.getInstance().player.getEntityName()).withPadding(3));
+			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.soul_collection.title").withPadding(3));
 			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.soul_collection.0"));
 		} else if (page == 1)
 		{
