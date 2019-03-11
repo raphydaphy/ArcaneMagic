@@ -56,25 +56,6 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 	}
 
 	@Override
-	@Environment(EnvType.CLIENT)
-	public void buildTooltip(ItemStack stack, World world, List<TextComponent> lines, TooltipContext ctx)
-	{
-		CompoundTag tag = stack.getTag();
-		if (tag != null)
-		{
-			if (tag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
-			{
-				lines.add(new StringTextComponent("Active Crystal: " + tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY)));
-			}
-			if (tag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY))
-			{
-				lines.add(new StringTextComponent("Passive Crystal: " + tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY)));
-			}
-
-		}
-	}
-
-	@Override
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getStackInHand(hand);
