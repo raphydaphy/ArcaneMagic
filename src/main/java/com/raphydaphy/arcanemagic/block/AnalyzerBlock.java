@@ -110,6 +110,22 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
 					notebookUpdate = true;
 				}
+			} else if (stack.getItem() == Blocks.ENCHANTING_TABLE.getItem())
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY))
+				{
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.INFUSION.getID().toString(), false);
+					notebookUpdate = true;
+				}
+			} else if (stack.getItem() == Blocks.DISPENSER.getItem())
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY))
+				{
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.LIQUEFACTION.getID().toString(), false);
+					notebookUpdate = true;
+				}
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)

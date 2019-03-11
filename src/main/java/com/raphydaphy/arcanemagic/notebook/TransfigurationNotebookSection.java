@@ -31,7 +31,7 @@ public class TransfigurationNotebookSection implements INotebookSection
 		List<INotebookElement> elements = new ArrayList<>();
 		if (page == 0)
 		{
-			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.transfiguration.title", MinecraftClient.getInstance().player.getEntityName()).withPadding(3));
+			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.transfiguration.title").withPadding(3));
 			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.transfiguration.0"));
 		} else if (page == 1)
 		{

@@ -8,15 +8,22 @@ import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
+import io.github.prospector.silk.fluid.DropletValues;
+import io.github.prospector.silk.fluid.FluidContainer;
+import io.github.prospector.silk.util.ActionType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.command.TagCommand;
@@ -27,6 +34,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
@@ -139,6 +147,32 @@ public class ArcaneMagicUtils
 				}
 			}
 			return true;
+		}
+		return false;
+	}
+
+	public static boolean insertFluidFromBucket(IWorld world, PlayerEntity player, Hand hand, Direction side, BlockPos pos, FluidContainer fluidContainer, Fluid fluid)
+	{
+		ItemStack stack = player.getStackInHand(hand);
+
+		if (!stack.isEmpty() && stack.getItem() instanceof BucketItem)
+		{
+			if (stack.getItem() == fluid.getBucketItem())
+			{
+				System.out.println("hello yes it matches");
+				if (fluidContainer.tryInsertFluid(side, fluid, DropletValues.BUCKET, ActionType.PERFORM))
+				{
+					System.out.println("oh well it is happening now");
+					if (!world.isClient() && !player.isCreative())
+					{
+						// This assumes that buckets cannot stack
+						// May want to change this one day if stackable buckets are modded into fabric
+						player.setStackInHand(hand, new ItemStack(Items.BUCKET));
+					}
+					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCK, 1, 1);
+					return true;
+				}
+			}
 		}
 		return false;
 	}

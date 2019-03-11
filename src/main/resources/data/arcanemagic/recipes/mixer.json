@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:mixer"
+  },
+  "pattern": [
+	" c ",
+	"pwp",
+	"ppp"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"w": {
+	  "item": "minecraft:water_bucket"
+	},
+	"p": {
+	  "item": "minecraft:prismarine"
+	},
+	"c": {
+	  "item": "arcanemagic:lapis_crystal"
+	}
+  },
+  "soul": 40
+}

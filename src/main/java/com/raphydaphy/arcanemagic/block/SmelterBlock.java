@@ -2,13 +2,24 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
+import io.github.prospector.silk.fluid.FluidContainer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.DoubleBlockHalf;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BucketItem;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -83,6 +94,15 @@ public class SmelterBlock extends DoubleBlockBase implements BlockEntityProvider
 			return false;
 		}
 
+		if (player.getStackInHand(hand).getItem() instanceof BucketItem)
+		{
+			if (ArcaneMagicUtils.insertFluidFromBucket(world, player, hand, Direction.DOWN, pos, (FluidContainer) blockEntity, ModRegistry.LIQUIFIED_SOUL))
+			{
+				return true;
+			}
+			return false;
+		}
+
 		if (player.isSneaking())
 		{
 			for (int slot = 2; slot >= 1; slot--)
@@ -127,5 +147,18 @@ public class SmelterBlock extends DoubleBlockBase implements BlockEntityProvider
 	public BlockEntity createBlockEntity(BlockView view)
 	{
 		return new SmelterBlockEntity();
+	}
+
+	@Override
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	{
+		super.onPlaced(world, pos, state, placer, stack);
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))
+		{
+			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
+			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY, true);
+			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
+			((DataHolder) placer).markAdditionalDataDirty();
+		}
 	}
 }

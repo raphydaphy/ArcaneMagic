@@ -11,18 +11,18 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PerfectionNotebookSection implements INotebookSection
+public class LiquefactionNotebookSection implements INotebookSection
 {
 	@Override
 	public Identifier getID()
 	{
-		return new Identifier(ArcaneMagic.DOMAIN, "perfection");
+		return new Identifier(ArcaneMagic.DOMAIN, "liquefaction");
 	}
 
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY);
+		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY);
 	}
 
 	@Override
@@ -31,13 +31,17 @@ public class PerfectionNotebookSection implements INotebookSection
 		List<INotebookElement> elements = new ArrayList<>();
 		if (page == 0)
 		{
-			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.perfection.title").withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.perfection.0"));
+			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.liquefaction.title").withPadding(3));
+			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.liquefaction.0"));
 		} else if (page == 1)
 		{
+			elements.add(new NotebookElement.Padding(2));
+			elements.add(new NotebookElement.Paragraph(false, 0.7,"notebook.arcanemagic.liquefaction.1"));
+		} else if (page == 2)
+		{
 			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.pure_scepter").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_scepter")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 0.8,"block.arcanemagic.mixer").withPadding(10));
+			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "mixer")).orElse(null)));
 		}
 		return elements;
 	}
@@ -45,6 +49,6 @@ public class PerfectionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 1;
+		return 2;
 	}
 }
