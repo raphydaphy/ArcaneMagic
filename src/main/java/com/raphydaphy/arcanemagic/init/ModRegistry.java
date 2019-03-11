@@ -76,6 +76,7 @@ public class ModRegistry
 	public static CrystalItem COAL_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.COAL);
 	public static Item PURE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 	public static DaggerItem IRON_DAGGER = new DaggerItem(ToolMaterials.IRON, 3, -2.4f);
+	public static final Identifier IRON_DAGGER_IDENTIFIER = new Identifier(ArcaneMagic.DOMAIN, "iron_dagger");
 	public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
 
 	public static void init()
@@ -122,7 +123,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal"), REDSTONE_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "coal_crystal"), COAL_CRYSTAL);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "pure_crystal"), PURE_CRYSTAL);
-		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "iron_dagger"), IRON_DAGGER);
+		Registry.register(Registry.ITEM, IRON_DAGGER_IDENTIFIER, IRON_DAGGER);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
 
 		ShapedTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
