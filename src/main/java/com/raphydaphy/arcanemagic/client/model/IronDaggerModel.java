@@ -24,6 +24,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Function;
 
@@ -192,7 +193,7 @@ public class IronDaggerModel implements UnbakedModel
 		public final ForgeCrystal hilt;
 		public final ForgeCrystal pommel;
 
-		private CacheKey(ForgeCrystal hilt, ForgeCrystal pommel) {
+		private CacheKey(@Nonnull ForgeCrystal hilt, @Nonnull ForgeCrystal pommel) {
 			this.hilt = hilt;
 			this.pommel = pommel;
 		}
