@@ -3,11 +3,13 @@ package com.raphydaphy.arcanemagic.block;
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import io.github.prospector.silk.fluid.FluidContainer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,6 +17,7 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Hand;
@@ -88,6 +91,15 @@ public class SmelterBlock extends DoubleBlockBase implements BlockEntityProvider
 
 		if (!(blockEntity instanceof SmelterBlockEntity))
 		{
+			return false;
+		}
+
+		if (player.getStackInHand(hand).getItem() instanceof BucketItem)
+		{
+			if (ArcaneMagicUtils.insertFluidFromBucket(world, player, hand, Direction.DOWN, pos, (FluidContainer) blockEntity, ModRegistry.LIQUIFIED_SOUL))
+			{
+				return true;
+			}
 			return false;
 		}
 

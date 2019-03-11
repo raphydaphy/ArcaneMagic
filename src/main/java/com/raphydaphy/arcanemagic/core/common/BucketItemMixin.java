@@ -46,7 +46,7 @@ public class BucketItemMixin extends Item
 
 			if (!player.isSneaking())
 			{
-				if (block == ModRegistry.MIXER || block == ModRegistry.PUMP)
+				if (block == ModRegistry.MIXER || block == ModRegistry.PUMP || block == ModRegistry.SMELTER)
 				{
 					info.setReturnValue(new TypedActionResult<>(ActionResult.PASS, stack));
 				}
