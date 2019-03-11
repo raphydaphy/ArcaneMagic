@@ -2,19 +2,14 @@ package com.raphydaphy.arcanemagic.client.model;
 
 import net.minecraft.client.render.model.ModelLoader;
 import net.minecraft.client.render.model.UnbakedModel;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
-@ParametersAreNonnullByDefault
 public class ArcaneModelLoader {
 	public static final ArcaneModelLoader INSTANCE = new ArcaneModelLoader();
 
@@ -36,7 +31,6 @@ public class ArcaneModelLoader {
 		loaders.put(identifier, loader);
 	}
 
-	@Nullable
 	public UnbakedModel tryLoad(Identifier modelIdentifier, ModelLoader vanillaLoader){
 		return loaders.getOrDefault(modelIdentifier, NULL_SUPPLIER).apply(vanillaLoader);
 	}
