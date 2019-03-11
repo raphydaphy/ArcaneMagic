@@ -2,21 +2,22 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.client.network.packet.EntityEquipmentUpdateS2CPacket;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.StringTextComponent;
@@ -122,6 +123,22 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 						world.playSound((PlayerEntity) entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
 					}
 				}
+			}
+		}
+	}
+
+
+	@Override
+	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
+	{
+		if (!world.isClient && player != null)
+		{
+			if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
+			{
+				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY, true);
+				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
+				((DataHolder) player).markAdditionalDataDirty();
 			}
 		}
 	}

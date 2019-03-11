@@ -2,12 +2,20 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.CrystalInfuserBlockEntity;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -115,5 +123,17 @@ public class CrystalInfuserBlock extends OrientableBlockBase implements BlockEnt
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new CrystalInfuserBlockEntity();
+	}
+
+	@Override
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	{
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY))
+		{
+			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
+			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY, true);
+			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.INFUSION.getID().toString(), false);
+			((DataHolder) placer).markAdditionalDataDirty();
+		}
 	}
 }

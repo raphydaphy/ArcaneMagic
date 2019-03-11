@@ -38,6 +38,14 @@ public class SmeltingNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Padding(8));
 			elements.add(new NotebookElement.Paragraph(true, 0.8,"block.arcanemagic.smelter").withPadding(10));
 			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "smelter")).orElse(null)));
+		} else if (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) && page == 2)
+		{
+			elements.add(new NotebookElement.Padding(2));
+			elements.add(new NotebookElement.Paragraph(false, 0.7,"notebook.arcanemagic.smelting.1"));
+		} else if (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) && page == 3)
+		{
+			elements.add(new NotebookElement.Padding(2));
+			elements.add(new NotebookElement.Paragraph(false, 0.7,"notebook.arcanemagic.smelting.2"));
 		}
 		return elements;
 	}
@@ -45,6 +53,6 @@ public class SmeltingNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 1;
+		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) ? 3 : 1;
 	}
 }

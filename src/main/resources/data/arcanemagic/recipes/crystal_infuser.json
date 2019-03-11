@@ -1,0 +1,26 @@
+{
+  "result": {
+	"item": "arcanemagic:crystal_infuser"
+  },
+  "pattern": [
+	" c ",
+	"lpl",
+	"q q"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"l": {
+	  "tag": "minecraft:logs"
+	},
+	"q": {
+	  "item": "minecraft:quartz_block"
+	},
+	"p": {
+	  "item": "minecraft:prismarine_crystals"
+	},
+	"c": {
+	  "item": "arcanemagic:emerald_crystal"
+	}
+  },
+  "soul": 50
+}
