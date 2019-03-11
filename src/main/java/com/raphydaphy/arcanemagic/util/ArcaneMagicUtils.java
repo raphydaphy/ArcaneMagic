@@ -412,7 +412,7 @@ public class ArcaneMagicUtils
 
 	public enum ForgeCrystal
 	{
-		EMERALD("emerald", 0x08a346), DIAMOND("diamond", 0x30dbbd), GOLD("gold", 0xf1ca0e), REDSTONE("redstone", 0xda2c0b), LAPIS("lapis", 0x0a38cb), COAL("coal", 0x282229);
+		EMERALD("emerald", 0x08a346), DIAMOND("diamond", 0x30dbbd), GOLD("gold", 0xf1ca0e), REDSTONE("redstone", 0xda2c0b), LAPIS("lapis", 0x0a38cb), COAL("coal", 0x282229), EMPTY("empty", 0);
 
 		public final String id;
 		public final Identifier hilt;
@@ -440,7 +440,7 @@ public class ArcaneMagicUtils
 					return crystal;
 				}
 			}
-			return null;
+			return EMPTY;
 		}
 
 		@Override

@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.client.model;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -10,7 +9,6 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils.ForgeCrystal;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.model.*;
 import net.minecraft.client.render.model.json.ItemModelGenerator;
 import net.minecraft.client.render.model.json.JsonUnbakedModel;
@@ -37,7 +35,7 @@ public class IronDaggerModel implements UnbakedModel
 
 	private static final ItemModelGenerator ITEM_MODEL_GENERATOR = new ItemModelGenerator();
 
-	private UnbakedModel basemodel;
+	private UnbakedModel baseModel;
 
 	public IronDaggerModel(ModelLoader vanillaLoader)
 	{
@@ -50,17 +48,21 @@ public class IronDaggerModel implements UnbakedModel
 	}
 
 	@Override
-	public Collection<Identifier> getTextureDependencies(Function<Identifier, UnbakedModel> var1, Set<String> var2)
+	public Collection<Identifier> getTextureDependencies(Function<Identifier, UnbakedModel> unbakedModelGetter, Set<String> var2)
 	{
 		ImmutableSet.Builder<Identifier> builder = ImmutableSet.builder();
 
 		builder.add(BASE);
-		basemodel = var1.apply(BASE_MODEL);
-		builder.addAll(basemodel.getTextureDependencies(var1, var2));//important to get it to resolve its parent -.-
+		baseModel = unbakedModelGetter.apply(BASE_MODEL);
+		builder.addAll(baseModel.getTextureDependencies(unbakedModelGetter, var2)); //important to get it to resolve its parent -.-
 
-		for (ForgeCrystal crystal : ForgeCrystal.values()){
-			builder.add(crystal.hilt);
-			builder.add(crystal.pommel);
+		for (ForgeCrystal crystal : ForgeCrystal.values())
+		{
+			if (crystal != ForgeCrystal.EMPTY)
+			{
+				builder.add(crystal.hilt);
+				builder.add(crystal.pommel);
+			}
 		}
 
 		return builder.build();
@@ -69,40 +71,45 @@ public class IronDaggerModel implements UnbakedModel
 	@Override
 	public BakedModel bake(ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer)
 	{
-		Map<CacheKey,BakedModel> variants = new HashMap<>();
-		for (ForgeCrystal hilt : ForgeCrystal.values()){
-			for (ForgeCrystal pommel : ForgeCrystal.values()){
-				Map<String,String> newTextures = new HashMap<>();
+		Map<CacheKey, BakedModel> variants = new HashMap<>();
+		for (ForgeCrystal hilt : ForgeCrystal.values())
+		{
+			for (ForgeCrystal pommel : ForgeCrystal.values())
+			{
+				Map<String, String> newTextures = new HashMap<>();
 				newTextures.put("layer0", BASE.toString());
-				newTextures.put("layer1", hilt.hilt.toString());
-				newTextures.put("layer2", pommel.pommel.toString());
-				CustomJsonUnbakedModel baseCopy = new CustomJsonUnbakedModel(BASE_MODEL, (JsonUnbakedModel) basemodel, newTextures, loader::getOrLoadModel);
+				if (hilt != ForgeCrystal.EMPTY) newTextures.put("layer1", hilt.hilt.toString());
+				if (pommel != ForgeCrystal.EMPTY) newTextures.put(hilt == ForgeCrystal.EMPTY ? "layer1" : "layer2", pommel.pommel.toString());
+				CustomJsonUnbakedModel baseCopy = new CustomJsonUnbakedModel(BASE_MODEL, (JsonUnbakedModel) baseModel, newTextures, loader::getOrLoadModel);
 				variants.put(new CacheKey(hilt, pommel), doBake(baseCopy, loader, bakedTextureGetter, rotationContainer));
 			}
 		}
 
-		return new IronDaggerBakedModel(doBake(basemodel, loader, bakedTextureGetter, rotationContainer), variants);
+		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, rotationContainer), variants);
 	}
 
-	//copied from net.minecraft.client.render.model.ModelLoader.bake because the generated models dont have ids
-	private BakedModel doBake(UnbakedModel unbakedModel_1, ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer){
-		if (unbakedModel_1 instanceof JsonUnbakedModel) {
-			JsonUnbakedModel jsonUnbakedModel_1 = (JsonUnbakedModel)unbakedModel_1;
-			if (jsonUnbakedModel_1.getRootModel() == ModelLoader.GENERATION_MARKER) {
+	// copied from net.minecraft.client.render.model.ModelLoader.bake because the generated models don't have ids
+	private BakedModel doBake(UnbakedModel unbakedModel_1, ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer)
+	{
+		if (unbakedModel_1 instanceof JsonUnbakedModel)
+		{
+			JsonUnbakedModel jsonUnbakedModel_1 = (JsonUnbakedModel) unbakedModel_1;
+			if (jsonUnbakedModel_1.getRootModel() == ModelLoader.GENERATION_MARKER)
+			{
 				return ITEM_MODEL_GENERATOR.create(bakedTextureGetter, jsonUnbakedModel_1).bake(loader, jsonUnbakedModel_1, bakedTextureGetter, rotationContainer);
 			}
 		}
-		return unbakedModel_1.bake(loader,bakedTextureGetter, rotationContainer);
+		return unbakedModel_1.bake(loader, bakedTextureGetter, rotationContainer);
 	}
 
 	private static final class IronDaggerOverrideHandler extends ModelItemPropertyOverrideList
 	{
 
-		private final Map<CacheKey,BakedModel> cache;
+		private final Map<CacheKey, BakedModel> cache;
 
-		public IronDaggerOverrideHandler(Map<CacheKey,BakedModel> cache)
+		public IronDaggerOverrideHandler(Map<CacheKey, BakedModel> cache)
 		{
-			super(null, null, (u)->null, Collections.emptyList());
+			super(null, null, (u) -> null, Collections.emptyList());
 			this.cache = cache;
 		}
 
@@ -120,15 +127,15 @@ public class IronDaggerModel implements UnbakedModel
 				pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
 			}
 
-			if (hilt == null || pommel == null){
+			if (hilt == null || pommel == null)
+			{
 				return originalModel;
 			}
-			key = new CacheKey(hilt,pommel);
+			key = new CacheKey(hilt, pommel);
 
 			if (cache.containsKey(key))
 			{
 				return cache.get(key);
-
 			}
 
 			return originalModel;
@@ -189,26 +196,29 @@ public class IronDaggerModel implements UnbakedModel
 		}
 	}
 
-	private static class CacheKey {
+	private static class CacheKey
+	{
 		public final ForgeCrystal hilt;
 		public final ForgeCrystal pommel;
 
-		private CacheKey(@Nonnull ForgeCrystal hilt, @Nonnull ForgeCrystal pommel) {
+		private CacheKey(@Nonnull ForgeCrystal hilt, @Nonnull ForgeCrystal pommel)
+		{
 			this.hilt = hilt;
 			this.pommel = pommel;
 		}
 
 		@Override
-		public boolean equals(Object o) {
+		public boolean equals(Object o)
+		{
 			if (this == o) return true;
 			if (o == null || getClass() != o.getClass()) return false;
 			CacheKey cacheKey = (CacheKey) o;
-			return hilt == cacheKey.hilt &&
-					pommel == cacheKey.pommel;
+			return hilt == cacheKey.hilt && pommel == cacheKey.pommel;
 		}
 
 		@Override
-		public int hashCode() {
+		public int hashCode()
+		{
 			return Objects.hash(hilt, pommel);
 		}
 	}

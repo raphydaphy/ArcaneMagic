@@ -11,13 +11,17 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ModelLoader.class)
-public abstract class ModelLoaderMixin {
-	@Shadow protected abstract void putModel(Identifier identifier_1, UnbakedModel unbakedModel_1);
+public abstract class ModelLoaderMixin
+{
+	@Shadow
+	protected abstract void putModel(Identifier id, UnbakedModel unbakedModel);
 
-	@Inject(method = "loadModel", at=@At("HEAD"), cancellable = true)
-	private void loadDaggerModel(Identifier modelId, CallbackInfo callbackInfo){
-		UnbakedModel model = ArcaneModelLoader.INSTANCE.tryLoad(modelId, (ModelLoader)(Object)this);
-		if (model != null){
+	@Inject(method = "loadModel", at = @At("HEAD"), cancellable = true)
+	private void loadDaggerModel(Identifier modelId, CallbackInfo callbackInfo)
+	{
+		UnbakedModel model = ArcaneModelLoader.INSTANCE.tryLoad(modelId, (ModelLoader) (Object) this);
+		if (model != null)
+		{
 			this.putModel(modelId, model);
 			callbackInfo.cancel();
 		}
