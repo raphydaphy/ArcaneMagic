@@ -279,7 +279,7 @@ class NotebookElement
 			case 3:
 				return 18;
 			case 4:
-				return 22;
+				return 21;
 			default:
 				return 15;
 		}
@@ -312,16 +312,28 @@ class NotebookElement
 
 			int start = page == 0 ? 0 : page * lines - headingSize;
 
+			StringBuilder builder = new StringBuilder();
+
 			for (int i = start; i < start + (page == 0 ? (lines - headingSize) : lines); i++)
 			{
 				if (i < wrapped.size())
 				{
-					elements.add(new NotebookElement.Paragraph(false, scale, width, wrapped.get(i)));
+					String line = wrapped.get(i);
+					if (line.isEmpty())
+					{
+						elements.add(new NotebookElement.Paragraph(false, scale, 116, builder.toString()).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
+						builder = new StringBuilder();
+					} else
+					{
+						builder.append(line);
+						builder.append(" ");
+					}
 				} else
 				{
 					break;
 				}
 			}
+			elements.add(new NotebookElement.Paragraph(false, scale, 116, builder.toString()));
 		}
 		return elements;
 	}
