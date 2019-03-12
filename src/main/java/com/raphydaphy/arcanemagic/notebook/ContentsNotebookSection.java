@@ -46,16 +46,22 @@ public class ContentsNotebookSection implements INotebookSection
 	{
 		List<INotebookElement> elements = new ArrayList<>();
 
+		int textPages = NotebookElement.textPages("notebook.arcanemagic.intro", 2);
+
 		if (page == 0)
 		{
 			String name = MinecraftClient.getInstance().player.getEntityName();
 			elements.add(new NotebookElement.BigHeading("notebook.arcanemagic.title", name.substring(0, 1).toUpperCase() + name.substring(1)).withPadding(-3));
-			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.intro"));
+		}
+
+		if (page <= textPages)
+		{
+			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.intro", 2, 0, page));
 		} else
 		{
 			int number = 0;
 
-			if (page == 1)
+			if (page == textPages + 1)
 			{
 				elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.categories").withPadding(3));
 			} else
@@ -63,16 +69,17 @@ public class ContentsNotebookSection implements INotebookSection
 				elements.add(new NotebookElement.Padding(10));
 			}
 
+			int thisPage = page - textPages;
 			for (NotebookElement.ItemInfoButton button : buttons)
 			{
 				if (button.link.isVisibleTo(player))
 				{
 					number++;
 					int properPage = (int)Math.ceil(number / 4f);
-					if (properPage == page)
+					if (properPage == thisPage)
 					{
 						elements.add(button);
-					} else if (properPage > page)
+					} else if (properPage > thisPage)
 					{
 						break;
 					}
@@ -93,6 +100,6 @@ public class ContentsNotebookSection implements INotebookSection
 				amount++;
 			}
 		}
-		return (int)Math.ceil(amount / 4f);
+		return (int)Math.ceil(amount / 4f) + NotebookElement.textPages("notebook.arcanemagic.intro", 2);
 	}
 }

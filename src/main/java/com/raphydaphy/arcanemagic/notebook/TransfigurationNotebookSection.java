@@ -32,28 +32,52 @@ public class TransfigurationNotebookSection implements INotebookSection
 		if (page == 0)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.transfiguration.title").withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.transfiguration.0"));
-		} else if (page == 1)
+		} else
 		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"block.arcanemagic.transfiguration_table").withPadding(10));
+			elements.add(new NotebookElement.Padding(3));
+		}
+
+		int firstText = NotebookElement.textPages("notebook.arcanemagic.transfiguration.0", 2);
+		elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.transfiguration.0", 2, 0, page));
+
+		if (page == firstText + 1)
+		{
+			elements.add(new NotebookElement.Padding(4));
+			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.transfiguration_table").withPadding(10));
 			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table")).orElse(null)));
-		} else if (page == 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
+		}
+
+		if (page >= firstText + 2)
+		{
+			int secondText = NotebookElement.textPages("notebook.arcanemagic.transfiguration.1", 0) + firstText + 2;
+			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.transfiguration.1", 0, firstText + 2, page));
+
+			if (page == secondText + 1)
+			{
+				elements.add(new NotebookElement.Padding(4));
+				elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.gold_crystal").withPadding(8));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "gold_crystal")).orElse(null)));
+			}
+		}
+		/*
+		if (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
 		{
 			elements.add(new NotebookElement.Padding(2));
 			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.transfiguration.1"));
-		} else if (page == 3 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
+		}
+
+		else if (page == 3 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
 		{
 			elements.add(new NotebookElement.Padding(7));
 			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.gold_crystal").withPadding(8));
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "gold_crystal")).orElse(null)));
-		}
+		}*/
 		return elements;
 	}
 
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY) ? 2 : 1;
+		return NotebookElement.textPages("notebook.arcanemagic.transfiguration.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY) ? NotebookElement.textPages("notebook.arcanemagic.transfiguration.1", 0) + 3 : 1);
 	}
 }

@@ -400,4 +400,9 @@ public class RenderUtils
 		DrawableHelper.drawTexturedRect(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
 		return height;
 	}
+
+	public static List<String> wrapText(String unlocalized, int width)
+	{
+		return MinecraftClient.getInstance().textRenderer.wrapStringToWidthAsList(I18n.translate(unlocalized), width);
+	}
 }

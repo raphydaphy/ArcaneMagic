@@ -29,35 +29,43 @@ public class CrystallizationNotebookSection implements INotebookSection
 	public List<INotebookElement> getElements(DataHolder player, int page)
 	{
 		List<INotebookElement> elements = new ArrayList<>();
+
+		int textPages = NotebookElement.textPages("notebook.arcanemagic.crystallization.0", 2);
 		if (page == 0)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.crystallization.title").withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.crystallization.0"));
-		} else if (page == 1)
+		} else
 		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.coal_crystal").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "coal_crystal")).orElse(null)));
-		} else if (page == 2)
+			elements.add(new NotebookElement.Padding(3));
+		}
+
+		if (page <= textPages)
 		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.lapis_crystal").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "lapis_crystal")).orElse(null)));
-		} else if (page == 3)
+			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.crystallization.0", 2, 0, page));
+		} else
 		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.redstone_crystal").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal")).orElse(null)));
-		} else if (page == 4)
-		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.diamond_crystal").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "diamond_crystal")).orElse(null)));
-		} else if (page == 5)
-		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"item.arcanemagic.emerald_crystal").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal")).orElse(null)));
+			elements.add(new NotebookElement.Padding(3));
+			if (page == textPages + 1)
+			{
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.coal_crystal").withPadding(10));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "coal_crystal")).orElse(null)));
+			} else if (page == textPages + 2)
+			{
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.lapis_crystal").withPadding(10));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "lapis_crystal")).orElse(null)));
+			} else if (page == textPages + 3)
+			{
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.redstone_crystal").withPadding(10));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "redstone_crystal")).orElse(null)));
+			} else if (page == textPages + 4)
+			{
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.diamond_crystal").withPadding(10));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "diamond_crystal")).orElse(null)));
+			} else if (page == textPages + 5)
+			{
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.emerald_crystal").withPadding(10));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "emerald_crystal")).orElse(null)));
+			}
 		}
 		return elements;
 	}
@@ -65,6 +73,6 @@ public class CrystallizationNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 5;
+		return NotebookElement.textPages("notebook.arcanemagic.crystallization.0", 2) + 5;
 	}
 }

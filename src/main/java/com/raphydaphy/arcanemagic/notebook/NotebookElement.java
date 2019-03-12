@@ -11,11 +11,16 @@ import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
+import net.minecraft.client.options.GameOption;
 import net.minecraft.client.render.GuiLighting;
+import net.minecraft.client.resource.language.I18n;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemProvider;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
+
+import java.util.ArrayList;
+import java.util.List;
 
 class NotebookElement
 {
@@ -46,7 +51,7 @@ class NotebookElement
 		@Override
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
-			int height = RenderUtils.drawCustomSizedSplitString(x + 57, y, 1, 116, 0, false, true, unlocalized) + 3;
+			int height = RenderUtils.drawCustomSizedSplitString(x + 57, y, 1.2, 116, 0, false, true, unlocalized) + 3;
 			MinecraftClient.getInstance().getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
 			height += RenderUtils.drawTexturedRect(x + 14, y + height, 46, 180, 85, 3, 85, 3, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT) + 3;
 			return height + padding;
@@ -57,18 +62,24 @@ class NotebookElement
 	{
 		private final boolean centered;
 		private final double scale;
+		private final int width;
 
 		Paragraph(boolean centered, double scale, String unlocalized, Object... keys)
+		{
+			this(centered, scale, 116, unlocalized, keys);
+		}
+		Paragraph(boolean centered, double scale, int width, String unlocalized, Object... keys)
 		{
 			super(unlocalized, keys);
 			this.centered = centered;
 			this.scale = scale;
+			this.width = width;
 		}
 
 		@Override
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
-			return RenderUtils.drawCustomSizedSplitString(x + (centered ? 57 : 0), y, scale, 116, 0, false, centered, unlocalized, keys) + padding;
+			return RenderUtils.drawCustomSizedSplitString(x + (centered ? 57 : 0), y, scale, width, 0, false, centered, unlocalized, keys) + padding;
 		}
 	}
 
@@ -251,5 +262,67 @@ class NotebookElement
 			this.padding = padding;
 			return this;
 		}
+	}
+
+	static int textPages(String content, int headingSize)
+	{
+		double scale = textScale();
+		int lines = linesPerPage();
+		return (int)Math.ceil(((MinecraftClient.getInstance().textRenderer.wrapStringToWidthAsList(I18n.translate(content), (int)(116 / scale)).size() - (lines - headingSize))) / (float)lines);
+	}
+
+	private static int linesPerPage()
+	{
+		int guiScale = (int)MinecraftClient.getInstance().window.getScaleFactor();;
+		switch(guiScale)
+		{
+			case 3:
+				return 18;
+			case 4:
+				return 22;
+			default:
+				return 15;
+		}
+	}
+
+	private static double textScale()
+	{
+		int guiScale = (int)MinecraftClient.getInstance().window.getScaleFactor();;
+		switch(guiScale)
+		{
+			case 4:
+				return 0.7f;
+			case 3:
+				return 0.85f;
+			default:
+				return 1;
+		}
+	}
+	static List<INotebookElement> wrapText(String text, int headingSize, int startPage, int curPage)
+	{
+		List<INotebookElement> elements = new ArrayList<>();
+		if (curPage >= startPage)
+		{
+			double scale = textScale();
+			int width = (int)(116 / scale);
+			List<String> wrapped = RenderUtils.wrapText(text, width);
+
+			int page = curPage - startPage;
+			int lines = linesPerPage();
+
+			int start = page == 0 ? 0 : page * lines - headingSize;
+
+			for (int i = start; i < start + (page == 0 ? (lines - headingSize) : lines); i++)
+			{
+				if (i < wrapped.size())
+				{
+					elements.add(new NotebookElement.Paragraph(false, scale, width, wrapped.get(i)));
+				} else
+				{
+					break;
+				}
+			}
+		}
+		return elements;
 	}
 }
