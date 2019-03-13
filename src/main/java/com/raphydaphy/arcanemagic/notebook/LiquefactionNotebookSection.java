@@ -29,19 +29,28 @@ public class LiquefactionNotebookSection implements INotebookSection
 	public List<INotebookElement> getElements(DataHolder player, int page)
 	{
 		List<INotebookElement> elements = new ArrayList<>();
+
 		if (page == 0)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.liquefaction.title").withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.liquefaction.0"));
-		} else if (page == 1)
+		} else
 		{
-			elements.add(new NotebookElement.Padding(2));
-			elements.add(new NotebookElement.Paragraph(false, 0.7,"notebook.arcanemagic.liquefaction.1"));
-		} else if (page == 2)
+			elements.add(new NotebookElement.Padding(3));
+		}
+
+		int firstText = NotebookElement.textPages("notebook.arcanemagic.liquefaction.0", 2);
+		elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.liquefaction.0", 2, 0, page));
+
+		if (page == firstText + 1)
 		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"block.arcanemagic.mixer").withPadding(10));
+			elements.add(new NotebookElement.Padding(4));
+			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.mixer").withPadding(10));
 			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "mixer")).orElse(null)));
+		}
+
+		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY))
+		{
+			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.liquefaction.1", 0, firstText + 2, page));
 		}
 		return elements;
 	}
@@ -49,6 +58,6 @@ public class LiquefactionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 2;
+		return NotebookElement.textPages("notebook.arcanemagic.liquefaction.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.liquefaction.1", 0) + 2 : 1);
 	}
 }

@@ -2,8 +2,13 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.MixerBlockEntity;
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.util.ActionType;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -13,12 +18,14 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
@@ -138,5 +145,18 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 	public BlockEntity createBlockEntity(BlockView var1)
 	{
 		return new MixerBlockEntity();
+	}
+
+	@Override
+	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	{
+		super.onPlaced(world, pos, state, placer, stack);
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY))
+		{
+			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
+			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY, true);
+			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.LIQUEFACTION.getID().toString(), false);
+			((DataHolder) placer).markAdditionalDataDirty();
+		}
 	}
 }

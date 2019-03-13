@@ -32,11 +32,18 @@ public class SoulCollectionNotebookSection implements INotebookSection
 		if (page == 0)
 		{
 			elements.add(new NotebookElement.SmallHeading("notebook.arcanemagic.soul_collection.title").withPadding(3));
-			elements.add(new NotebookElement.Paragraph(false, 0.7, "notebook.arcanemagic.soul_collection.0"));
-		} else if (page == 1)
+		} else
 		{
-			elements.add(new NotebookElement.Padding(8));
-			elements.add(new NotebookElement.Paragraph(true, 0.8,"block.arcanemagic.altar").withPadding(10));
+			elements.add(new NotebookElement.Padding(3));
+		}
+
+		int firstText = NotebookElement.textPages("notebook.arcanemagic.soul_collection.0", 2);
+		elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.soul_collection.0", 2, 0, page));
+
+		if (page == firstText + 1)
+		{
+			elements.add(new NotebookElement.Padding(4));
+			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.altar").withPadding(10));
 			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "altar")).orElse(null)));
 		}
 		return elements;
@@ -45,6 +52,6 @@ public class SoulCollectionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return 1;
+		return NotebookElement.textPages("notebook.arcanemagic.soul_collection.0", 2) + 1;
 	}
 }

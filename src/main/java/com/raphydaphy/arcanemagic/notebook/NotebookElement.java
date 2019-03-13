@@ -313,7 +313,7 @@ class NotebookElement
 			int start = page == 0 ? 0 : page * lines - headingSize;
 
 			StringBuilder builder = new StringBuilder();
-
+			int size = 0;
 			for (int i = start; i < start + (page == 0 ? (lines - headingSize) : lines); i++)
 			{
 				if (i < wrapped.size())
@@ -321,8 +321,13 @@ class NotebookElement
 					String line = wrapped.get(i);
 					if (line.isEmpty())
 					{
-						elements.add(new NotebookElement.Paragraph(false, scale, 116, builder.toString()).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
-						builder = new StringBuilder();
+						String paragraph = builder.toString();
+						if (!paragraph.isEmpty() || size > 0)
+						{
+							elements.add(new NotebookElement.Paragraph(false, scale, 116, paragraph).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
+							builder = new StringBuilder();
+							size++;
+						}
 					} else
 					{
 						builder.append(line);
@@ -333,7 +338,12 @@ class NotebookElement
 					break;
 				}
 			}
-			elements.add(new NotebookElement.Paragraph(false, scale, 116, builder.toString()));
+
+			String last = builder.toString();
+			if (!last.isEmpty())
+			{
+				elements.add(new NotebookElement.Paragraph(false, scale, 116, last));
+			}
 		}
 		return elements;
 	}
