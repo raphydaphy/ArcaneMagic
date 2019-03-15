@@ -1,17 +1,17 @@
 package com.raphydaphy.arcanemagic.client.particle;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.render.BufferBuilder;
-import net.minecraft.client.render.CameraHelper;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -52,15 +52,21 @@ public class ParticleRenderer
 		}
 	}
 
-	public void render(float partialTicks)
+	public void render(float partialTicks, class_4184 camera)
 	{
 		GlStateManager.pushMatrix();
 
-		float rotationX = CameraHelper.getRotationX();
-		float rotationZ = CameraHelper.getRotationZ();
-		float rotationYZ = CameraHelper.getRotationYZ();
-		float rotationXY = CameraHelper.getRotationXY();
-		float rotationXZ = CameraHelper.getRotationXZ();
+		//float rotationX = CameraHelper.getRotationX();
+		//float rotationZ = CameraHelper.getRotationZ();
+		//float rotationYZ = CameraHelper.getRotationYZ();
+		//float rotationXY = CameraHelper.getRotationXY();
+		//float rotationXZ = CameraHelper.getRotationXZ();
+
+		float rotationX = MathHelper.cos(camera.method_19330() * 0.017453292F);
+		float rotationZ = MathHelper.sin(camera.method_19330() * 0.017453292F);
+		float rotationYZ = -rotationZ * MathHelper.sin(camera.method_19329() * 0.017453292F);
+		float rotationXY = rotationX * MathHelper.sin(camera.method_19329() * 0.017453292F);
+		float rotationXZ = MathHelper.cos(camera.method_19329() * 0.017453292F);
 
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if (player != null)
@@ -68,7 +74,7 @@ public class ParticleRenderer
 			Particle.cameraX = player.prevX + (player.x - player.prevX) * partialTicks;
 			Particle.cameraY = player.prevY + (player.y - player.prevY) * partialTicks;
 			Particle.cameraZ = player.prevZ + (player.z - player.prevZ) * partialTicks;
-			Particle.cameraRotation = ArcaneMagicUtils.interpPlayerLook(player, partialTicks);
+			//Particle.cameraRotation = ArcaneMagicUtils.interpPlayerLook(player, partialTicks);
 
 			GlStateManager.enableAlphaTest();
 			GlStateManager.enableBlend();
@@ -90,7 +96,7 @@ public class ParticleRenderer
 				{
 					if (!((ArcaneMagicParticle) particle).isAdditive())
 					{
-						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, camera, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
@@ -104,7 +110,7 @@ public class ParticleRenderer
 				{
 					if (((ArcaneMagicParticle) particle).isAdditive())
 					{
-						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, camera, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
@@ -119,7 +125,7 @@ public class ParticleRenderer
 				{
 					if (!((ArcaneMagicParticle) particle).isAdditive() && ((ArcaneMagicParticle) particle).renderThroughBlocks())
 					{
-						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, camera, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
@@ -133,7 +139,7 @@ public class ParticleRenderer
 				{
 					if (((ArcaneMagicParticle) particle).isAdditive() && ((ArcaneMagicParticle) particle).renderThroughBlocks())
 					{
-						particle.buildGeometry(buffer, player, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
+						particle.buildGeometry(buffer, camera, partialTicks, rotationX, rotationXZ, rotationZ, rotationYZ, rotationXY);
 					}
 				}
 			}
