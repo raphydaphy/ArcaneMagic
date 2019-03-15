@@ -36,9 +36,9 @@ dependencies {
 	// Fabric API
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
 
-	// Jankson for Rougly Enough Items
+	// REI Dependencies
 	compile "blue.endless:jankson:${project.jankson_version}"
-//	contained "blue.endless:jankson:${project.jankson_version}"
+	modCompile "com.github.raphydaphy:Cloth:${project.cloth_version}"
 
 	// Roughly Enough Items
 	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
@@ -51,6 +51,9 @@ dependencies {
 
 	//Nonnull annotations
 	modCompile "com.google.code.findbugs:jsr305:3.0.1"
+
+	// ModMenu
+	modCompile "com.github.prospector:ModMenu:${project.modmenu_version}"
 }
 
 processResources {

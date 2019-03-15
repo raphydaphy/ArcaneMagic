@@ -56,12 +56,6 @@ public class ParticleRenderer
 	{
 		GlStateManager.pushMatrix();
 
-		//float rotationX = CameraHelper.getRotationX();
-		//float rotationZ = CameraHelper.getRotationZ();
-		//float rotationYZ = CameraHelper.getRotationYZ();
-		//float rotationXY = CameraHelper.getRotationXY();
-		//float rotationXZ = CameraHelper.getRotationXZ();
-
 		float rotationX = MathHelper.cos(camera.method_19330() * 0.017453292F);
 		float rotationZ = MathHelper.sin(camera.method_19330() * 0.017453292F);
 		float rotationYZ = -rotationZ * MathHelper.sin(camera.method_19329() * 0.017453292F);
@@ -71,10 +65,9 @@ public class ParticleRenderer
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if (player != null)
 		{
-			Particle.cameraX = player.prevX + (player.x - player.prevX) * partialTicks;
-			Particle.cameraY = player.prevY + (player.y - player.prevY) * partialTicks;
-			Particle.cameraZ = player.prevZ + (player.z - player.prevZ) * partialTicks;
-			//Particle.cameraRotation = ArcaneMagicUtils.interpPlayerLook(player, partialTicks);
+			Particle.cameraX = camera.method_19326().x;
+			Particle.cameraY = camera.method_19326().y;
+			Particle.cameraZ = camera.method_19326().z;
 
 			GlStateManager.enableAlphaTest();
 			GlStateManager.enableBlend();
