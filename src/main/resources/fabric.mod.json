@@ -1,7 +1,7 @@
 {
   "id": "arcanemagic",
   "name": "Arcane Magic",
-  "description": "Bend the souls of others to your will",
+  "description": "A magic mod with immersive progression focussed on a story.\n\nProgrammed and designed by raphydaphy with contributions from Thiakil and B0undaryBreaker and textures by wiiv. Sound effects are sourced from https://www.zapsplat.com.",
   "version": "${version}",
   "side": "universal",
   "initializers": [
