@@ -9,6 +9,7 @@ public class ArcaneMagicSounds
 {
 	public static SoundEvent TRANSFIGURATION = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "transfiguration")));
 	public static SoundEvent SLIDE = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "slide")));
+	public static SoundEvent BURN = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "burn")));
 
 	private static SoundEvent register(SoundEvent event)
 	{

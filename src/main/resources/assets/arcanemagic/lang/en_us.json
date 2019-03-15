@@ -28,6 +28,7 @@
   "death.attack.arcanemagic.drained": "%1$s's soul was drained",
   "subtitle.arcanemagic.transfiguration": "Items Transfigured",
   "subtitle.arcanemagic.slide": "Something Slides",
+  "subtitle.arcanemagic.burn": "Something Burning",
   "message.arcanemagic.data-reset": "ArcaneMagic player data was reset!",
   "message.arcanemagic.drowned_first_kill": "You have never seen a zombie like that before. Perhaps you should get some paper to document your findings before killing another.",
   "message.arcanemagic.drowned_paper_first": "You have never seen a zombie like that before. You use some paper to document your findings.",
