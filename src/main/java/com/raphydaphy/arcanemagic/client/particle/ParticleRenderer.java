@@ -24,29 +24,31 @@ public class ParticleRenderer
 {
 	public static ParticleRenderer INSTANCE = new ParticleRenderer();
 	private List<Particle> particles = new ArrayList<>();
+	private List<ParticleSource> particleSources = new ArrayList<>();
 
 	public void update()
 	{
 		if (!MinecraftClient.getInstance().isPaused())
 		{
-			boolean doRemove;
 			for (int i = 0; i < particles.size(); i++)
 			{
-				doRemove = true;
-				if (particles.get(i) != null)
+				if (particles.get(i) != null && particles.get(i) instanceof ArcaneMagicParticle && ((ArcaneMagicParticle) particles.get(i)).alive())
 				{
-					if (particles.get(i) instanceof ArcaneMagicParticle)
-					{
-						if (((ArcaneMagicParticle) particles.get(i)).alive())
-						{
-							particles.get(i).update();
-							doRemove = false;
-						}
-					}
-				}
-				if (doRemove)
+					particles.get(i).update();
+				} else
 				{
 					particles.remove(i);
+				}
+			}
+
+			for (int i = 0; i < particleSources.size(); i++)
+			{
+				if (particleSources.get(i) != null && particleSources.get(i).alive())
+				{
+					particleSources.get(i).update();
+				} else
+				{
+					particleSources.remove(i);
 				}
 			}
 		}
@@ -149,11 +151,19 @@ public class ParticleRenderer
 		GlStateManager.popMatrix();
 	}
 
-	public void add(Particle particle)
+	void addParticle(Particle particle)
 	{
 		if (!MinecraftClient.getInstance().isPaused())
 		{
 			particles.add(particle);
+		}
+	}
+
+	public void addSource(ParticleSource source)
+	{
+		if (!MinecraftClient.getInstance().isPaused())
+		{
+			particleSources.add(source);
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class ParticleUtil
 		counter += ArcaneMagic.RANDOM.nextInt(3);
 		if (counter % (MinecraftClient.getInstance().options.particles.getId() == 0 ? 1 : 2 * MinecraftClient.getInstance().options.particles.getId()) == 0)
 		{
-			ParticleRenderer.INSTANCE.add(new GlowParticle(world, posX, posY, posZ, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, lifetime));
+			ParticleRenderer.INSTANCE.addParticle(new GlowParticle(world, posX, posY, posZ, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, lifetime));
 		}
 	}
 
@@ -28,7 +28,7 @@ public class ParticleUtil
 		counter += ArcaneMagic.RANDOM.nextInt(3);
 		if (counter % (MinecraftClient.getInstance().options.particles.getId() == 0 ? 1 : 2 * MinecraftClient.getInstance().options.particles.getId()) == 0)
 		{
-			ParticleRenderer.INSTANCE.add(new SmokeParticle(world, posX, posY, posZ, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, lifetime));
+			ParticleRenderer.INSTANCE.addParticle(new SmokeParticle(world, posX, posY, posZ, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, lifetime));
 		}
 	}
 }
