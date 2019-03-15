@@ -218,6 +218,7 @@ class NotebookElement
 
 					GuiLighting.enableForItems();
 					MinecraftClient.getInstance().getItemRenderer().renderGuiItem(this.recipe.getOutput(), x + 46, y + 10);
+					MinecraftClient.getInstance().getItemRenderer().renderGuiItemOverlay(MinecraftClient.getInstance().textRenderer, this.recipe.getOutput(), x + 46, y + 10, null);
 					GuiLighting.disable();
 
 					GlStateManager.popMatrix();

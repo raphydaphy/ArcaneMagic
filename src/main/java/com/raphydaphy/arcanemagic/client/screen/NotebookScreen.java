@@ -77,15 +77,16 @@ public class NotebookScreen extends Screen
 			ArcaneMagicPacketHandler.sendToServer(new NotebookSectionReadPacket(this.section));
 		}
 
-		this.leftElements.clear();
-		this.rightElements.clear();
-
-		this.leftElements = this.section.getElements((DataHolder) client.player, leftPage);
-		this.rightElements = this.section.getElements((DataHolder) client.player, leftPage + 1);
+		pageChanged();
 	}
 
 	private void pageChanged()
 	{
+		if (leftPage > section.getPageCount((DataHolder) client.player))
+		{
+			leftPage -= 2;
+			pageChanged();
+		}
 		if (this.section == NotebookSectionRegistry.CONTENTS)
 		{
 			this.contentsPage = leftPage;
@@ -105,7 +106,7 @@ public class NotebookScreen extends Screen
 		{
 			int page = leftPage;
 			setSection(section);
-			if (page <= section.getPageCount((DataHolder) client.player))
+			if (page != leftPage)
 			{
 				this.leftPage = page;
 				pageChanged();

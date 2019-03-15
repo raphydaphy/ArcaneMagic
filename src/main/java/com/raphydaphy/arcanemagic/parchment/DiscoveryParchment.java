@@ -28,30 +28,26 @@ public class DiscoveryParchment implements IParchment
 {
 	public static final String NAME = "progression.arcanemagic.discovery";
 	public static final Ingredient[] GATHER_QUEST_OPTIONS = {
-			Ingredient.ofItems(Items.HORN_CORAL), Ingredient.ofItems(Items.TUBE_CORAL),
-			Ingredient.ofItems(Items.FIRE_CORAL), Ingredient.ofItems(Items.BRAIN_CORAL),
-			Ingredient.ofItems(Items.BUBBLE_CORAL), Ingredient.ofItems(Items.CROSSBOW),
-			Ingredient.ofItems(Items.BELL), Ingredient.ofItems(Items.BAMBOO),
+			Ingredient.ofItems(Items.CROSSBOW), Ingredient.ofItems(Blocks.SMOKER),
+			Ingredient.ofItems(Items.BELL), Ingredient.ofItems(Blocks.LOOM),
 			Ingredient.ofItems(Items.LILY_OF_THE_VALLEY), Ingredient.ofItems(Blocks.LANTERN),
 			Ingredient.ofItems(Items.SWEET_BERRIES), Ingredient.ofItems(Items.KELP),
-			Ingredient.ofItems(Blocks.BRAIN_CORAL), Ingredient.ofItems(Blocks.BUBBLE_CORAL),
-			Ingredient.ofItems(Blocks.FIRE_CORAL), Ingredient.ofItems(Blocks.HORN_CORAL),
-			Ingredient.ofItems(Blocks.TUBE_CORAL), Ingredient.ofItems(Items.LEATHER_HORSE_ARMOR),
+			Ingredient.ofItems(Items.LEATHER_HORSE_ARMOR), Ingredient.ofItems(Blocks.FLETCHING_TABLE),
+			Ingredient.ofItems(Blocks.SMITHING_TABLE), Ingredient.ofItems(Blocks.BLAST_FURNACE),
 			Ingredient.ofItems(Blocks.BARREL), Ingredient.ofItems(Blocks.CAMPFIRE),
 			Ingredient.ofItems(Blocks.COMPOSTER), Ingredient.ofItems(Blocks.CARTOGRAPHY_TABLE),
 			Ingredient.ofItems(Items.CORNFLOWER), Ingredient.ofItems(Blocks.GRINDSTONE),
-			Ingredient.ofItems(Blocks.LECTERN), Ingredient.ofItems(Blocks.LOOM),
-			Ingredient.ofItems(Blocks.SCAFFOLDING), Ingredient.ofItems(Blocks.SMOKER),
-			Ingredient.ofItems(Blocks.BLAST_FURNACE)
+			Ingredient.ofItems(Blocks.LECTERN)
 	};
 
 	public static final Ingredient[] ANALYSIS_QUEST_OPTIONS = {
 			Ingredient.ofItems(Items.IRON_INGOT), Ingredient.ofItems(Items.GOLD_INGOT),
-			Ingredient.ofItems(Items.LEATHER), Ingredient.ofItems(Items.REDSTONE),
-			Ingredient.ofItems(Items.LAPIS_LAZULI), Ingredient.fromTag(ItemTags.LOGS),
+			Ingredient.ofItems(Items.LEATHER), Ingredient.ofItems(Items.LAPIS_LAZULI),
+			Ingredient.fromTag(ItemTags.LOGS), Ingredient.ofItems(Blocks.TNT),
 			Ingredient.fromTag(ItemTags.PLANKS), Ingredient.fromTag(ItemTags.COALS),
 			Ingredient.ofItems(Blocks.GLASS), Ingredient.ofItems(Blocks.CHEST),
-			Ingredient.ofItems(Blocks.FURNACE), Ingredient.ofItems(Blocks.TNT)
+			Ingredient.ofItems(Blocks.FURNACE), Ingredient.ofItems(Items.IRON_AXE),
+			Ingredient.ofItems(Items.WOODEN_PICKAXE), Ingredient.ofItems(Items.STONE_HOE)
 	};
 
 	private int drownedKills = 0;

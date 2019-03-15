@@ -1,0 +1,21 @@
+{
+  "result": {
+	"item": "arcanemagic:pipe",
+	"count": 4
+  },
+  "pattern": [
+	" c ",
+	"cbc",
+	" c "
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"b": {
+	  "item": "minecraft:bucket"
+	},
+	"c": {
+	  "item": "minecraft:cobblestone"
+	}
+  },
+  "soul": 8
+}

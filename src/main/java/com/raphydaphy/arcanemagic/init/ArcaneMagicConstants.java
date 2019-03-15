@@ -64,4 +64,5 @@ public class ArcaneMagicConstants
 	public static final String PLACED_INFUSER_KEY = "PlacedInfuser";
 	public static final String ANALYZED_DISPENSER_KEY = "AnalyzedDispenser";
 	public static final String PLACED_MIXER_KEY = "PlacedMixer";
+	public static final String ANALYZED_REDSTONE_KEY = "AnalyzedRedstone";
 }

@@ -52,22 +52,22 @@ public class ParticleRenderer
 		}
 	}
 
-	public void render(float partialTicks, class_4184 camera)
+	public void render(float partialTicks, class_4184 camera) // Camera
 	{
 		GlStateManager.pushMatrix();
 
-		float rotationX = MathHelper.cos(camera.method_19330() * 0.017453292F);
-		float rotationZ = MathHelper.sin(camera.method_19330() * 0.017453292F);
-		float rotationYZ = -rotationZ * MathHelper.sin(camera.method_19329() * 0.017453292F);
-		float rotationXY = rotationX * MathHelper.sin(camera.method_19329() * 0.017453292F);
-		float rotationXZ = MathHelper.cos(camera.method_19329() * 0.017453292F);
+		float rotationX = MathHelper.cos(camera.method_19330() * 0.017453292F); // yaw
+		float rotationZ = MathHelper.sin(camera.method_19330() * 0.017453292F); // yaw
+		float rotationYZ = -rotationZ * MathHelper.sin(camera.method_19329() * 0.017453292F); // pitch
+		float rotationXY = rotationX * MathHelper.sin(camera.method_19329() * 0.017453292F); // pitch
+		float rotationXZ = MathHelper.cos(camera.method_19329() * 0.017453292F); // pitch
 
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if (player != null)
 		{
-			Particle.cameraX = camera.method_19326().x;
-			Particle.cameraY = camera.method_19326().y;
-			Particle.cameraZ = camera.method_19326().z;
+			Particle.cameraX = camera.method_19326().x; // getPos
+			Particle.cameraY = camera.method_19326().y; // getPos
+			Particle.cameraZ = camera.method_19326().z; // getPos
 
 			GlStateManager.enableAlphaTest();
 			GlStateManager.enableBlend();

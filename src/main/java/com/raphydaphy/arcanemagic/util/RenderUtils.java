@@ -280,6 +280,7 @@ public class RenderUtils
 		{
 			GuiLighting.enableForItems();
 			client.getItemRenderer().renderGuiItem(item, x + 5, y + 5);
+			client.getItemRenderer().renderGuiItemOverlay(client.textRenderer, item, x + 5, y + 5, null);
 			GuiLighting.disable();
 
 			if (tooltip != null && !tooltip.isEmpty() && mouseX >= x + 5 && mouseY >= y + 5 && mouseX <= x + 21 && mouseY <= y + 21)
