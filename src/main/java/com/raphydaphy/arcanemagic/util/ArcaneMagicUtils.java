@@ -331,9 +331,9 @@ public class ArcaneMagicUtils
 		return 0;
 	}
 
-	public static float lerp(float a, float b, float t)
+	public static float lerp(float previous, float current, float delta)
 	{
-		return (1 - t) * a + t * b;
+		return (1 - delta) * previous + delta * current;
 	}
 
 	public static Vec3d interpPlayerLook(PlayerEntity player, float partialTicks)

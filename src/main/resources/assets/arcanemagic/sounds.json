@@ -1,3 +1,4 @@
 {
-   "transfiguration": { "category": "master", "sounds": ["arcanemagic:transfiguration"], "subtitle": "subtitle.arcanemagic.transfiguration" }
+   "transfiguration": { "category": "master", "sounds": ["arcanemagic:transfiguration"], "subtitle": "subtitle.arcanemagic.transfiguration" },
+   "slide": { "category": "master", "sounds": ["arcanemagic:slide"], "subtitle": "subtitle.arcanemagic.slide" }
 }

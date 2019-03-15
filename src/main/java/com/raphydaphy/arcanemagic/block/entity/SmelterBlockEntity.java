@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicSounds;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
@@ -43,7 +44,7 @@ import java.util.Optional;
 public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickable
 {
 	private static final int MAX_FLUID = DropletValues.BLOCK;
-	private static final int TOTAL_SMELTING_TIME = 150;
+	public static final int TOTAL_SMELTING_TIME = 150;
 	private static final String SMELT_TIME_KEY = "SmeltTime";
 	private final int[] slots = {0, 1, 2};
 
@@ -72,12 +73,20 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 
 				if (world.isClient)
 				{
-					doParticles();
+					if (smeltTime < TOTAL_SMELTING_TIME - 4)
+					{
+						doParticles();
+					}
 				} else
 				{
 					if (smeltTime % 10 == 0)
 					{
 						markDirty();
+					}
+
+					if (smeltTime == TOTAL_SMELTING_TIME - 4)
+					{
+						world.playSound(null, pos, ArcaneMagicSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
 					}
 
 					if (smeltTime >= TOTAL_SMELTING_TIME)
