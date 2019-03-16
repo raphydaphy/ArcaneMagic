@@ -1,26 +1,26 @@
 {
   "result": {
-	"item": "arcanemagic:mixer"
+	"item": "arcanemagic:pump"
   },
   "pattern": [
 	" c ",
-	"psp",
-	"pbp"
+	"qbq",
+	"ppp"
   ],
   "type": "arcanemagic:transfiguration_shaped",
   "key": {
 	"b": {
-	  "item": "minecraft:coal_block"
+	  "item": "minecraft:bucket"
 	},
 	"p": {
 	  "tag": "minecraft:planks"
 	},
-	"s": {
-	  "item": "minecraft:prismarine"
-	},
 	"c": {
-	  "item": "arcanemagic:lapis_crystal"
+	  "item": "arcanemagic:coal_crystal"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
 	}
   },
-  "soul": 40
+  "soul": 30
 }

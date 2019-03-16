@@ -134,6 +134,14 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.FLUID_TRANSPORT.getID().toString(), false);
 					notebookUpdate = true;
 				}
+			} else if (stack.getItem() == Items.WATER_BUCKET)
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_WATER_BUCKET_KEY))
+				{
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_WATER_BUCKET_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PUMPING.getID().toString(), false);
+					notebookUpdate = true;
+				}
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)
