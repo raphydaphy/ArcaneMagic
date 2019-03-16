@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.core.common;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
@@ -49,6 +50,7 @@ public abstract class PlayerEntityMixin implements DataHolder
 				if (active == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 				{
 					tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
+					((PlayerEntity)(Object)this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 				}
 
 				if (entity instanceof LivingEntity)
@@ -63,6 +65,7 @@ public abstract class PlayerEntityMixin implements DataHolder
 							livingEntity.addPotionEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 128, 128, true, false));
 						}
 						tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
+						((PlayerEntity)(Object)this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 					} else if (active == ArcaneMagicUtils.ForgeCrystal.DIAMOND)
 					{
 						ItemStack held = livingEntity.getMainHandStack().copy();
@@ -87,6 +90,7 @@ public abstract class PlayerEntityMixin implements DataHolder
 								livingEntity.world.spawnEntity(itemEntity);
 							}
 							tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, 0);
+							((PlayerEntity)(Object)this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 						}
 					}
 				}

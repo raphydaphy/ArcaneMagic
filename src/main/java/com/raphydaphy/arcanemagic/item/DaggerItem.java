@@ -102,6 +102,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 					} else if (timer - 1 == 0)
 					{
 						world.playSound((PlayerEntity) entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
+						((PlayerEntity)entity).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 					}
 				}
 			}

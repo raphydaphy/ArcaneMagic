@@ -33,6 +33,9 @@ public class ArcaneMagicConstants
 	public static final int LIQUIFIED_SOUL_RATIO = DropletValues.NUGGET + 5;
 	public static final int SOUL_PER_SMELT = 2;
 
+	// Time you need to wait after using a dagger ability
+	public static final int DAGGER_ACTIVE_COOLDOWN = 360;
+
 	public static final String UUID_KEY = "CrystalItemIdentifier";
 	public static final String PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
 	public static final String ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
