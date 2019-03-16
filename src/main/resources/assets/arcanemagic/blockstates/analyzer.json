@@ -1,12 +1,12 @@
 {
     "variants": {
-        "facing=north,waterlogged=true": { "model": "arcanemagic:block/analyzer_combined"},
-        "facing=north,waterlogged=false": { "model": "arcanemagic:block/analyzer_combined" },
-        "facing=east,waterlogged=true":  { "model": "arcanemagic:block/analyzer_combined", "y": 90 },
-        "facing=east,waterlogged=false":  { "model": "arcanemagic:block/analyzer_combined", "y": 90 },
-        "facing=south,waterlogged=true": { "model": "arcanemagic:block/analyzer_combined", "y": 180 },
-        "facing=south,waterlogged=false": { "model": "arcanemagic:block/analyzer_combined", "y": 180 },
-        "facing=west,waterlogged=true":  { "model": "arcanemagic:block/analyzer_combined", "y": 270 },
-        "facing=west,waterlogged=false":  { "model": "arcanemagic:block/analyzer_combined", "y": 270 }
+        "facing=north,waterlogged=true": { "model": "arcanemagic:block/analyzer_combined", "y": 180 },
+        "facing=north,waterlogged=false": { "model": "arcanemagic:block/analyzer_combined", "y": 180  },
+        "facing=east,waterlogged=true":  { "model": "arcanemagic:block/analyzer_combined", "y": 270 },
+        "facing=east,waterlogged=false":  { "model": "arcanemagic:block/analyzer_combined", "y": 270 },
+        "facing=south,waterlogged=true": { "model": "arcanemagic:block/analyzer_combined"},
+        "facing=south,waterlogged=false": { "model": "arcanemagic:block/analyzer_combined"},
+        "facing=west,waterlogged=true":  { "model": "arcanemagic:block/analyzer_combined", "y": 90 },
+        "facing=west,waterlogged=false":  { "model": "arcanemagic:block/analyzer_combined", "y": 90 }
     }
 }

@@ -1,0 +1,37 @@
+{
+	"__comment": "Designed by Wiiv with Cubik Studio - https://cubik.studio",
+	"ambientocclusion": true,
+	"parent": "block/block",
+	"textures": {
+		"missing": "arcanemagic:block/pipe",
+		"particle": "arcanemagic:block/pipe_particle"
+	},
+	"elements": [ 	 
+		{
+			"__comment": "Element",
+			"from": [ 0, 4, 4 ],
+			"to": [ 2, 12, 12 ],
+			"faces": {
+				"down": { "uv": [ 11, 0, 12, 4 ], "texture": "#missing" },
+				"up": { "uv": [ 11, 0, 12, 4 ], "texture": "#missing" },
+				"north": { "uv": [ 11, 0, 12, 4 ], "texture": "#missing" },
+				"south": { "uv": [ 11, 0, 12, 4 ], "texture": "#missing" },
+				"west": { "uv": [ 12, 0, 16, 4 ], "texture": "#missing" },
+				"east": { "uv": [ 12, 0, 16, 4 ], "texture": "#missing" }
+			}
+		},
+		{
+			"__comment": "Element",
+			"from": [ 2, 6, 6 ],
+			"to": [ 16, 10, 10 ],
+			"faces": {
+				"down": { "uv": [ 0, 0, 7, 2 ], "texture": "#missing" },
+				"up": { "uv": [ 0, 0, 7, 2 ], "texture": "#missing" },
+				"north": { "uv": [ 0, 4, 7, 6 ], "texture": "#missing" },
+				"south": { "uv": [ 0, 4, 7, 6 ], "texture": "#missing" },
+				"west": { "uv": [ 9, 4, 11, 6 ], "texture": "#missing" },
+				"east": { "uv": [ 9, 4, 11, 6 ], "texture": "#missing" }
+			}
+		}
+	]
+}

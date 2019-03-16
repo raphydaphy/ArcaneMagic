@@ -1,7 +1,0 @@
-{
-	"credit": "Made with Blockbench",
-  	"parent": "block/block",
-	"textures": {
-		"particle": "arcanemagic:block/pipe"
-	}
-}
