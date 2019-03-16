@@ -7,9 +7,9 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import me.shedaniel.rei.api.DisplaySettings;
 import me.shedaniel.rei.api.RecipeCategory;
-import me.shedaniel.rei.gui.widget.IWidget;
 import me.shedaniel.rei.gui.widget.ItemSlotWidget;
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget;
+import me.shedaniel.rei.gui.widget.Widget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.resource.language.I18n;
@@ -46,10 +46,10 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 	}
 
 	@Override
-	public List<IWidget> setupDisplay(Supplier<TransfigurationDisplay> recipeDisplaySupplier, Rectangle bounds)
+	public List<Widget> setupDisplay(Supplier<TransfigurationDisplay> recipeDisplaySupplier, Rectangle bounds)
 	{
 		Point startPoint = new Point((int) bounds.getCenterX() - 62, (int) bounds.getCenterY() - 27);
-		List<IWidget> widgets = new LinkedList<>(Collections.singletonList(new RecipeBaseWidget(bounds)
+		List<Widget> widgets = new LinkedList<>(Collections.singletonList(new RecipeBaseWidget(bounds)
 		{
 			@Override
 			public void draw(int mouseX, int mouseY, float partialTicks)

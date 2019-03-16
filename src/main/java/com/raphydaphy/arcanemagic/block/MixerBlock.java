@@ -12,11 +12,9 @@ import com.raphydaphy.arcanemagic.util.DataHolder;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.util.ActionType;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockRenderLayer;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.VerticalEntityPosition;
@@ -31,23 +29,62 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 {
-	private static final VoxelShape shape;
+	private static final Map<Direction, VoxelShape> bottom = new HashMap<>();
+	private static final VoxelShape top;
 
 	static
 	{
-		shape = VoxelShapes.fullCube();
+		VoxelShape bottomNorth = VoxelShapes.union(Block.createCuboidShape(12, 0, 8, 4, 2, 4), Block.createCuboidShape(14, 2, 14, 2, 14, 2),
+				Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(16, 4, 12, 14, 12, 4),
+				Block.createCuboidShape(2, 4, 12, 0, 12, 4), Block.createCuboidShape(9, 10, 9, 7, 12, 7));
+
+		VoxelShape bottomEast = VoxelShapes.union(Block.createCuboidShape(8, 0, 4, 12, 2, 12), Block.createCuboidShape(2, 2, 2, 14, 14, 14),
+				Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(4, 4, 0, 12, 12, 2),
+				Block.createCuboidShape(4, 4, 14, 12, 12, 16), Block.createCuboidShape(7, 10, 7, 9, 12, 9));
+
+		VoxelShape bottomSouth = VoxelShapes.union(Block.createCuboidShape(4, 0, 8, 12, 2, 12), Block.createCuboidShape(2, 2, 2, 14, 14, 14),
+				Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(0, 4, 4, 2, 12, 12),
+				Block.createCuboidShape(14, 4, 4, 16, 12, 12), Block.createCuboidShape(7, 10, 7, 9, 12, 9));
+
+		VoxelShape bottomWest = VoxelShapes.union(Block.createCuboidShape(8, 0, 12, 4, 2, 4), Block.createCuboidShape(14, 2, 14, 2, 14, 2),
+				Block.createCuboidShape(4, 0, 4, 8, 2, 12), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(12, 4, 16, 4, 12, 14),
+				Block.createCuboidShape(12, 4, 2, 4, 12, 0), Block.createCuboidShape(9, 10, 9, 7, 12, 7));
+
+		top = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
+
+		bottom.put(Direction.NORTH, bottomNorth);
+		bottom.put(Direction.EAST, bottomEast);
+		bottom.put(Direction.SOUTH, bottomSouth);
+		bottom.put(Direction.WEST, bottomWest);
+
 	}
 
 	public MixerBlock()
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(3.5f, 3.5f).build());
+	}
+
+	@Override
+	public boolean isTranslucent(BlockState state, BlockView view, BlockPos pos)
+	{
+		return state.get(HALF) == DoubleBlockHalf.UPPER;
+	}
+
+	@Override
+	public BlockRenderLayer getRenderLayer()
+	{
+		return BlockRenderLayer.CUTOUT;
 	}
 
 	@Override
@@ -118,12 +155,6 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 	}
 
 	@Override
-	public BlockRenderLayer getRenderLayer()
-	{
-		return BlockRenderLayer.CUTOUT;
-	}
-
-	@Override
 	public boolean hasComparatorOutput(BlockState blockState_1)
 	{
 		return true;
@@ -138,7 +169,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 	@Override
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition vep)
 	{
-		return shape;
+		return state.get(HALF) == DoubleBlockHalf.LOWER ? bottom.get(state.get(FACING)) : top;
 	}
 
 	@Override

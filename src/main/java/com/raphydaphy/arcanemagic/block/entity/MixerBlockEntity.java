@@ -23,7 +23,7 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	private static final String WATER_KEY = "Water";
 	private static final String LIQUIFIED_SOUL_KEY = "LiquifiedSoul";
 	private static final int WATER_USE = DropletValues.NUGGET;
-	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
+	public static final int MAX_FLUID = DropletValues.BUCKET * 4;
 	private final int[] slots = {0};
 	public long ticks = 0;
 	private FluidInstance water = new FluidInstance(Fluids.WATER);

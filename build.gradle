@@ -38,7 +38,7 @@ dependencies {
 
 	// REI Dependencies
 	compile "blue.endless:jankson:${project.jankson_version}"
-	modCompile "com.github.raphydaphy:Cloth:${project.cloth_version}"
+	modCompile "com.github.shedaniel:Cloth:${project.cloth_version}"
 
 	// Roughly Enough Items
 	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
