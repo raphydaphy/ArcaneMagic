@@ -11,32 +11,35 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
+import net.minecraft.client.render.block.BiomeColors;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 {
-	private static Identifier tex = new Identifier(ArcaneMagic.DOMAIN, "textures/block/mixer_tanks.png");
-	private static RenderUtils.TextureBounds[] outer = {
-			new RenderUtils.TextureBounds(0, 0, 6, 6), // Bottom
-			new RenderUtils.TextureBounds(0, 0, 6, 6), // Top
-			new RenderUtils.TextureBounds(0, 6, 6, 13), // North
-			new RenderUtils.TextureBounds(0, 6, 6, 13), // South
-			new RenderUtils.TextureBounds(0, 6, 6, 13), // West
-			new RenderUtils.TextureBounds(0, 6, 6, 13)}; // East
+	private static Identifier tankTexture = new Identifier(ArcaneMagic.DOMAIN, "textures/block/mixer_tanks.png");
+	private static Identifier waterTexture = new Identifier("textures/block/water_still.png");
 
+	private static RenderUtils.TextureBounds[] outer = {
+			new RenderUtils.TextureBounds(12, 12, 0, 0, 32, 32), // Bottom
+			new RenderUtils.TextureBounds(12, 12, 0, 0, 32, 32), // Top
+			new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32), // North
+			new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32), // South
+			new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32), // West
+			new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32)}; // East
 	private static RenderUtils.TextureBounds[] inner = {
-			new RenderUtils.TextureBounds(11, 0, 16, 5), // Bottom
-			new RenderUtils.TextureBounds(11, 0, 16, 5), // Top
-			new RenderUtils.TextureBounds(11, 5, 16, 11), // North
-			new RenderUtils.TextureBounds(11, 5, 16, 11), // South
-			new RenderUtils.TextureBounds(11, 5, 16, 11), // West
-			new RenderUtils.TextureBounds(11, 5, 16, 11)}; // East
+			new RenderUtils.TextureBounds(32, 10, 22, 0, 32, 32), // Bottom
+			new RenderUtils.TextureBounds(32, 10, 22, 0, 32, 32), // Top
+			new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32), // North
+			new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32), // South
+			new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32), // West
+			new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32)}; // East
 
 	public void render(MixerBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
 	{
@@ -65,19 +68,11 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 				}
 			} else
 			{
-				int water = 0;
-				FluidInstance[] fluids = entity.getFluids(Direction.UP);
-				if (fluids.length >= 1 && fluids[0] != null && fluids[0].getFluid() == Fluids.WATER)
-				{
-					water = (int) (fluids[0].getAmount() / (float) MixerBlockEntity.MAX_FLUID * 12);
-				}
 
 				GlStateManager.pushMatrix();
-				MinecraftClient.getInstance().getTextureManager().bindTexture(tex);
-				GlStateManager.enableAlphaTest();
+				MinecraftClient.getInstance().getTextureManager().bindTexture(tankTexture);
 				GlStateManager.enableBlend();
 				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-				GlStateManager.alphaFunc(GL11.GL_GREATER, 0.1F);
 				GlStateManager.depthMask(false);
 				GlStateManager.disableCull();
 				Tessellator tess = Tessellator.getInstance();
@@ -87,19 +82,40 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 
 				builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 				RenderUtils.renderBox(builder, renderX + pixel * 2, renderY, renderZ + pixel * 2, renderX + pixel * 14, renderY + pixel * 14, renderZ + pixel * 14, outer, new int[]{1, 1, 1, 1, 1, 1});
+				RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * 13, renderZ + pixel * 13, 255, 255, 255, 128, inner, new int[]{1, 1, 1, 1, 1, 1});
 
+				tess.draw();
+				int water = 0;
+				FluidInstance[] fluids = entity.getFluids(Direction.UP);
+				if (fluids.length >= 1 && fluids[0] != null && fluids[0].getFluid() == Fluids.WATER)
+				{
+					water = (int) (fluids[0].getAmount() / (float) MixerBlockEntity.MAX_FLUID * 12);
+				}
 				if (water > 0)
 				{
-					RenderUtils.TextureBounds[] waterTextures = {
-							new RenderUtils.TextureBounds(22, 0, 32, 10, 32, 32), // Bottom
-							new RenderUtils.TextureBounds(22, 0, 32, 10, 32, 32), // Top
-							new RenderUtils.TextureBounds(22, 10, 32, 10 + water, 32, 32), // North
-							new RenderUtils.TextureBounds(22, 10, 32, 10 + water, 32, 32), // South
-							new RenderUtils.TextureBounds(22, 10, 32, 10 + water, 32, 32), // West
-							new RenderUtils.TextureBounds(22, 10, 32, 10 + water, 32, 32)}; // East
-					RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (water + 1), renderZ + pixel * 13, 28, 120, 206, waterTextures, new int[]{1, 1, 1, 1, 1, 1});
+					int frame = 0;
+
+					World world;
+					if ((world = entity.getWorld()) != null)
+					{
+						frame = (int) ((world.getTime() / 2) % 32);
+					}
+					RenderUtils.TextureBounds[] waterBounds = {
+							new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512), // Bottom
+							new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512), // Top
+							new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512), // North
+							new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512), // South
+							new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512), // West
+							new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512)}; // East
+
+					MinecraftClient.getInstance().getTextureManager().bindTexture(waterTexture);
+					builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
+					int waterColor = BiomeColors.waterColorAt(getWorld(), entity.getPos());
+					RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 255, waterBounds, new int[]{1, 1, 1, 1, 1, 1});
+
+					tess.draw();
 				}
-				tess.draw();
+				GlStateManager.depthMask(true);
 
 				GlStateManager.popMatrix();
 			}

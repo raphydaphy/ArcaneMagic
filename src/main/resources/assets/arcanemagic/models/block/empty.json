@@ -1,0 +1,7 @@
+{
+  	"__comment": "Designed by Wiiv with Cubik Studio - https://cubik.studio",
+	"parent": "block/block",
+	"textures": {
+		"particle": "block/mixer_particle"
+	}
+}

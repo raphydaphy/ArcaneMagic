@@ -8,13 +8,13 @@
     "half=lower,facing=south,waterlogged=false": { "model": "arcanemagic:block/mixer_bottom" },
     "half=lower,facing=west,waterlogged=true":  { "model": "arcanemagic:block/mixer_bottom", "y": 90 },
     "half=lower,facing=west,waterlogged=false":  { "model": "arcanemagic:block/mixer_bottom", "y": 90 },
-    "half=upper,facing=north,waterlogged=true": { "model": "arcanemagic:block/mixer_top", "y": 180 },
-    "half=upper,facing=north,waterlogged=false": { "model": "arcanemagic:block/mixer_top", "y": 180 },
-    "half=upper,facing=east,waterlogged=true":  { "model": "arcanemagic:block/mixer_top", "y": 270 },
-    "half=upper,facing=east,waterlogged=false":  { "model": "arcanemagic:block/mixer_top", "y": 270 },
-    "half=upper,facing=south,waterlogged=true": { "model": "arcanemagic:block/mixer_top" },
-    "half=upper,facing=south,waterlogged=false": { "model": "arcanemagic:block/mixer_top" },
-    "half=upper,facing=west,waterlogged=true":  { "model": "arcanemagic:block/mixer_top", "y": 90 },
-    "half=upper,facing=west,waterlogged=false":  { "model": "arcanemagic:block/mixer_top", "y": 90 }
+    "half=upper,facing=north,waterlogged=true": { "model": "arcanemagic:block/empty", "y": 180 },
+    "half=upper,facing=north,waterlogged=false": { "model": "arcanemagic:block/empty", "y": 180 },
+    "half=upper,facing=east,waterlogged=true":  { "model": "arcanemagic:block/empty", "y": 270 },
+    "half=upper,facing=east,waterlogged=false":  { "model": "arcanemagic:block/empty", "y": 270 },
+    "half=upper,facing=south,waterlogged=true": { "model": "arcanemagic:block/empty" },
+    "half=upper,facing=south,waterlogged=false": { "model": "arcanemagic:block/empty" },
+    "half=upper,facing=west,waterlogged=true":  { "model": "arcanemagic:block/empty", "y": 90 },
+    "half=upper,facing=west,waterlogged=false":  { "model": "arcanemagic:block/empty", "y": 90 }
   }
 }
