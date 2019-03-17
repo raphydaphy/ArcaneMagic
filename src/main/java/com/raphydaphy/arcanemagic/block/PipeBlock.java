@@ -11,9 +11,10 @@ import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateFactory;
-import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.EnumProperty;
 import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.Hand;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -26,42 +27,58 @@ import net.minecraft.world.World;
 public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProvider
 {
 	private static final VoxelShape CENTER_SHAPE;
-	private static final VoxelShape UP_SHAPE;
-	private static final VoxelShape DOWN_SHAPE;
-	private static final VoxelShape NORTH_SHAPE;
-	private static final VoxelShape EAST_SHAPE;
-	private static final VoxelShape SOUTH_SHAPE;
-	private static final VoxelShape WEST_SHAPE;
+	private static final VoxelShape UP_PIPE_SHAPE;
+	private static final VoxelShape UP_BLOCK_SHAPE;
+	private static final VoxelShape DOWN_PIPE_SHAPE;
+	private static final VoxelShape DOWN_BLOCK_SHAPE;
+	private static final VoxelShape NORTH_PIPE_SHAPE;
+	private static final VoxelShape NORTH_BLOCK_SHAPE;
+	private static final VoxelShape EAST_PIPE_SHAPE;
+	private static final VoxelShape EAST_BLOCK_SHAPE;
+	private static final VoxelShape SOUTH_PIPE_SHAPE;
+	private static final VoxelShape SOUTH_BLOCK_SHAPE;
+	private static final VoxelShape WEST_PIPE_SHAPE;
+	private static final VoxelShape WEST_BLOCK_SHAPE;
 
-	public static final BooleanProperty UP;
-	public static final BooleanProperty DOWN;
-	public static final BooleanProperty NORTH;
-	public static final BooleanProperty EAST;
-	public static final BooleanProperty SOUTH;
-	public static final BooleanProperty WEST;
+	public static final EnumProperty<PipeConnection> UP;
+	public static final EnumProperty<PipeConnection> DOWN;
+	public static final EnumProperty<PipeConnection> NORTH;
+	public static final EnumProperty<PipeConnection> EAST;
+	public static final EnumProperty<PipeConnection> SOUTH;
+	public static final EnumProperty<PipeConnection> WEST;
 
 	static
 	{
 		CENTER_SHAPE = Block.createCuboidShape(6, 6, 6, 10, 10, 10);
-		UP_SHAPE = Block.createCuboidShape(6, 10, 6, 10, 16, 10);
-		DOWN_SHAPE = Block.createCuboidShape(6, 0, 6, 10, 6, 10);
-		NORTH_SHAPE = Block.createCuboidShape(6, 6, 0, 10, 10, 6);
-		EAST_SHAPE = Block.createCuboidShape(10, 6, 6, 16, 10, 10);
-		SOUTH_SHAPE = Block.createCuboidShape(6, 6, 10, 10, 10, 16);
-		WEST_SHAPE = Block.createCuboidShape(0, 6, 6, 6, 10, 10);
+		UP_PIPE_SHAPE = Block.createCuboidShape(6, 10, 6, 10, 16, 10);
+		UP_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(6, 10, 6, 10, 14, 10), Block.createCuboidShape(4, 14, 4, 12, 16, 12));
+		DOWN_PIPE_SHAPE = Block.createCuboidShape(6, 0, 6, 10, 6, 10);
+		DOWN_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(6, 2, 6, 10, 6, 10), Block.createCuboidShape(4, 0, 4, 12, 2, 12));
 
-		UP = BooleanProperty.create("connection_up");
-		DOWN = BooleanProperty.create("connection_down");
-		NORTH = BooleanProperty.create("connection_north");
-		EAST = BooleanProperty.create("connection_east");
-		SOUTH = BooleanProperty.create("connection_south");
-		WEST = BooleanProperty.create("connection_west");
+		NORTH_PIPE_SHAPE = Block.createCuboidShape(6, 6, 0, 10, 10, 6);
+		NORTH_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(6, 6, 2, 10, 10, 6), Block.createCuboidShape(4, 4, 0, 12, 12, 2));
+
+		SOUTH_PIPE_SHAPE = Block.createCuboidShape(6, 6, 10, 10, 10, 16);
+		SOUTH_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(6, 6, 10, 10, 10, 14), Block.createCuboidShape(4, 4, 14, 12, 12, 16));
+
+		EAST_PIPE_SHAPE = Block.createCuboidShape(10, 6, 6, 16, 10, 10);
+		EAST_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(10, 6, 6, 14, 10, 10), Block.createCuboidShape(14, 4, 4, 16, 12, 12));
+
+		WEST_PIPE_SHAPE = Block.createCuboidShape(0, 6, 6, 6, 10, 10);
+		WEST_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(2, 6, 6, 6, 10, 10), Block.createCuboidShape(0, 4, 4, 2, 12, 12));
+
+		UP = EnumProperty.create("connection_up", PipeConnection.class);
+		DOWN = EnumProperty.create("connection_down", PipeConnection.class);
+		NORTH = EnumProperty.create("connection_north", PipeConnection.class);
+		EAST = EnumProperty.create("connection_east", PipeConnection.class);
+		SOUTH = EnumProperty.create("connection_south", PipeConnection.class);
+		WEST = EnumProperty.create("connection_west", PipeConnection.class);
 	}
 
 	public PipeBlock()
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6f).build());
-		this.setDefaultState(this.getDefaultState().with(UP, false).with(DOWN, false).with(NORTH, false).with(EAST, false).with(SOUTH, false).with(WEST, false));
+		this.setDefaultState(this.getDefaultState().with(UP, PipeConnection.NONE).with(DOWN, PipeConnection.NONE).with(NORTH, PipeConnection.NONE).with(EAST, PipeConnection.NONE).with(SOUTH, PipeConnection.NONE).with(WEST, PipeConnection.NONE));
 	}
 
 	@Override
@@ -90,12 +107,31 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition vep)
 	{
 		VoxelShape shape = CENTER_SHAPE;
-		if (state.get(UP)) shape = VoxelShapes.union(shape, UP_SHAPE);
-		if (state.get(DOWN)) shape = VoxelShapes.union(shape, DOWN_SHAPE);
-		if (state.get(NORTH)) shape = VoxelShapes.union(shape, NORTH_SHAPE);
-		if (state.get(EAST)) shape = VoxelShapes.union(shape, EAST_SHAPE);
-		if (state.get(SOUTH)) shape = VoxelShapes.union(shape, SOUTH_SHAPE);
-		if (state.get(WEST)) shape = VoxelShapes.union(shape, WEST_SHAPE);
+
+		PipeConnection connection = state.get(UP);
+		if (connection == PipeConnection.PIPE) shape = VoxelShapes.union(shape, UP_PIPE_SHAPE);
+		else if (connection == PipeConnection.BLOCK) shape = VoxelShapes.union(shape, UP_BLOCK_SHAPE);
+
+		connection = state.get(DOWN);
+		if (connection == PipeConnection.PIPE) shape = VoxelShapes.union(shape, DOWN_PIPE_SHAPE);
+		else if (connection == PipeConnection.BLOCK) shape = VoxelShapes.union(shape, DOWN_BLOCK_SHAPE);
+
+		connection = state.get(NORTH);
+		if (connection == PipeConnection.PIPE) shape = VoxelShapes.union(shape, NORTH_PIPE_SHAPE);
+		else if (connection == PipeConnection.BLOCK) shape = VoxelShapes.union(shape, NORTH_BLOCK_SHAPE);
+
+		connection = state.get(EAST);
+		if (connection == PipeConnection.PIPE) shape = VoxelShapes.union(shape, EAST_PIPE_SHAPE);
+		else if (connection == PipeConnection.BLOCK) shape = VoxelShapes.union(shape, EAST_BLOCK_SHAPE);
+
+		connection = state.get(SOUTH);
+		if (connection == PipeConnection.PIPE) shape = VoxelShapes.union(shape, SOUTH_PIPE_SHAPE);
+		else if (connection == PipeConnection.BLOCK) shape = VoxelShapes.union(shape, SOUTH_BLOCK_SHAPE);
+
+		connection = state.get(WEST);
+		if (connection == PipeConnection.PIPE) shape = VoxelShapes.union(shape, WEST_PIPE_SHAPE);
+		else if (connection == PipeConnection.BLOCK) shape = VoxelShapes.union(shape, WEST_BLOCK_SHAPE);
+
 		return shape;
 	}
 
@@ -126,39 +162,31 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 
 	private BlockState updateState(IWorld world, BlockState base, BlockPos pos)
 	{
-		if (canConnect(world, Direction.UP, pos.add(0, 1, 0))) base = base.with(UP, true);
-		else base = base.with(UP, false);
-
-		if (canConnect(world, Direction.DOWN,  pos.add(0, -1, 0))) base = base.with(DOWN, true);
-		else base = base.with(DOWN, false);
-
-		if (canConnect(world, Direction.NORTH, pos.add(0, 0, -1))) base = base.with(NORTH, true);
-		else base = base.with(NORTH, false);
-
-		if (canConnect(world, Direction.EAST, pos.add(1, 0, 0))) base = base.with(EAST, true);
-		else base = base.with(EAST, false);
-
-		if (canConnect(world, Direction.SOUTH, pos.add(0, 0, 1))) base = base.with(SOUTH, true);
-		else base = base.with(SOUTH, false);
-
-		if (canConnect(world, Direction.WEST, pos.add(-1, 0, 0))) base = base.with(WEST, true);
-		else base = base.with(WEST, false);
-
+		base = base.with(UP, getConnectionFor(world, Direction.UP, pos.add(0, 1, 0)))
+				.with(DOWN, getConnectionFor(world, Direction.DOWN, pos.add(0, -1, 0)))
+				.with(NORTH, getConnectionFor(world, Direction.NORTH, pos.add(0, 0, -1)))
+				.with(EAST, getConnectionFor(world, Direction.EAST, pos.add(1, 0, 0)))
+				.with(SOUTH, getConnectionFor(world, Direction.SOUTH, pos.add(0, 0, 1)))
+				.with(WEST, getConnectionFor(world, Direction.WEST, pos.add(-1, 0, 0)));
 		return base;
 	}
 
-	private boolean canConnect(IWorld world, Direction offset, BlockPos pos)
+	private PipeConnection getConnectionFor(IWorld world, Direction offset, BlockPos pos)
 	{
 		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof PipeBlockEntity)
+		{
+			return PipeConnection.PIPE;
+		}
 		if (blockEntity instanceof FluidContainer)
 		{
-			FluidInstance[] fluids = ((FluidContainer)blockEntity).getFluids(offset.getOpposite());
-			return fluids.length > 0 || blockEntity instanceof PipeBlockEntity;
+			FluidInstance[] fluids = ((FluidContainer) blockEntity).getFluids(offset.getOpposite());
+			return fluids.length > 0 ? PipeConnection.BLOCK : PipeConnection.NONE;
 		}
-		return false;
+		return PipeConnection.NONE;
 	}
 
-	public static BooleanProperty getProp(Direction dir)
+	public static EnumProperty<PipeConnection> getProp(Direction dir)
 	{
 		switch (dir)
 		{
@@ -178,4 +206,37 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 				return UP;
 		}
 	}
+
+	public enum PipeConnection implements StringRepresentable
+	{
+		NONE,
+		PIPE,
+		BLOCK;
+
+		public String toString()
+		{
+			return this.asString();
+		}
+
+		public String asString()
+		{
+			return this == BLOCK ? "block" : this == PIPE ? "pipe" : "lower";
+		}
+
+		public boolean hasConnection()
+		{
+			return this == PIPE || this == BLOCK;
+		}
+
+		public boolean isPipe()
+		{
+			return this == PIPE;
+		}
+
+		public boolean isBlock()
+		{
+			return this == BLOCK;
+		}
+	}
+
 }

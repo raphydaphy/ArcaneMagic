@@ -309,7 +309,7 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 
 	private boolean isConnected(BlockState state, Direction side)
 	{
-		return side == null || state.get(PipeBlock.getProp(side));
+		return side == null || state.get(PipeBlock.getProp(side)) != PipeBlock.PipeConnection.NONE;
 	}
 
 	@Override

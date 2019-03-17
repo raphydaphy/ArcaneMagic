@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block.entity;
 
+import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -165,12 +166,13 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	@Override
 	protected FluidInstance[] getFluidsImpl(boolean bottom, Direction fromSide)
 	{
-		if (bottom)
+		if (!bottom)
 		{
-			return new FluidInstance[]{liquified_soul};
+			return fromSide == null ? new FluidInstance[]{water} : new FluidInstance[]{};
 		} else
 		{
-			return new FluidInstance[]{water};
+			Direction facing = world.getBlockState(pos).get(SmelterBlock.FACING);
+			return (facing != fromSide && facing != fromSide.getOpposite()) ? new FluidInstance[]{liquified_soul, water} : new FluidInstance[]{};
 		}
 	}
 

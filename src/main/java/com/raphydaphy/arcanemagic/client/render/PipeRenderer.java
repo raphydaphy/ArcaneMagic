@@ -51,6 +51,14 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			new RenderUtils.TextureBounds(16, 16, 10, 12, 32, 32), // West
 			new RenderUtils.TextureBounds(16, 16, 10, 12, 32, 32)}; // East
 
+	private static RenderUtils.TextureBounds[] longAll = {
+			new RenderUtils.TextureBounds(17, 28, 1, 24, 32, 32), // Bottom
+			new RenderUtils.TextureBounds(17, 28, 1, 24, 32, 32), // Top
+			new RenderUtils.TextureBounds(0, 0, 0, 0, 32, 32), // North
+			new RenderUtils.TextureBounds(0, 0, 0, 0, 32, 32), // South
+			new RenderUtils.TextureBounds(17, 32, 1, 28, 32, 32), // West
+			new RenderUtils.TextureBounds(17, 32, 1, 28, 32, 32)}; // East
+
 	public void render(PipeBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
 	{
 		super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
@@ -67,12 +75,20 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 
 			Direction.Axis centerAxis = null;
 
-			boolean connectsUp = false;
-			boolean connectsDown = false;
-			boolean connectsNorth = false;
-			boolean connectsSouth = false;
-			boolean connectsEast = false;
-			boolean connectsWest = false;
+			PipeBlock.PipeConnection connectionUp = PipeBlock.PipeConnection.NONE;
+			PipeBlock.PipeConnection connectionDown = PipeBlock.PipeConnection.NONE;
+			PipeBlock.PipeConnection connectionNorth = PipeBlock.PipeConnection.NONE;
+			PipeBlock.PipeConnection connectionSouth = PipeBlock.PipeConnection.NONE;
+			PipeBlock.PipeConnection connectionEast = PipeBlock.PipeConnection.NONE;
+			PipeBlock.PipeConnection connectionWest = PipeBlock.PipeConnection.NONE;
+
+			RenderUtils.TextureBounds[] bigConnector = {
+					new RenderUtils.TextureBounds(24, 8, 22, 0, 32, 32), // Bottom
+					new RenderUtils.TextureBounds(24, 8, 22, 0, 32, 32), // Top
+					new RenderUtils.TextureBounds(32, 8, 24, 0, 32, 32), // North
+					new RenderUtils.TextureBounds(32, 8, 24, 0, 32, 32), // South
+					new RenderUtils.TextureBounds(24, 8, 22, 0, 32, 32), // West
+					new RenderUtils.TextureBounds(24, 8, 22, 0, 32, 32)}; // East
 
 			boolean renderCenter = true;
 
@@ -82,39 +98,39 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 
 				if (state.getProperties().contains(PipeBlock.UP))
 				{
-					connectsUp = state.get(PipeBlock.UP);
-					connectsDown = state.get(PipeBlock.DOWN);
-					connectsNorth = state.get(PipeBlock.NORTH);
-					connectsSouth = state.get(PipeBlock.SOUTH);
-					connectsWest = state.get(PipeBlock.WEST);
-					connectsEast = state.get(PipeBlock.EAST);
+					connectionUp = state.get(PipeBlock.UP);
+					connectionDown = state.get(PipeBlock.DOWN);
+					connectionNorth = state.get(PipeBlock.NORTH);
+					connectionSouth = state.get(PipeBlock.SOUTH);
+					connectionWest = state.get(PipeBlock.WEST);
+					connectionEast = state.get(PipeBlock.EAST);
 
-					if (connectsUp || connectsDown)
+					if (connectionUp.hasConnection() || connectionDown.hasConnection())
 					{
 						centerAxis = Direction.Axis.Y;
 
-						if (connectsNorth || connectsSouth || connectsEast || connectsWest)
+						if (connectionNorth.hasConnection() || connectionSouth.hasConnection() || connectionEast.hasConnection() || connectionWest.hasConnection())
 						{
 							centerAxis = null;
-						} else if (connectsUp && connectsDown)
+						} else if (connectionUp.isPipe() && connectionDown.isPipe())
 						{
 							renderCenter = false;
 						}
-					} else if (connectsNorth || connectsSouth)
+					} else if (connectionNorth.hasConnection() || connectionSouth.hasConnection())
 					{
 						centerAxis = Direction.Axis.Z;
 
-						if (connectsEast || connectsWest)
+						if (connectionEast.hasConnection() || connectionWest.hasConnection())
 						{
 							centerAxis = null;
-						} else if (connectsNorth && connectsSouth)
+						} else if (connectionNorth.isPipe() && connectionSouth.isPipe())
 						{
 							renderCenter = false;
 						}
-					} else if (connectsEast || connectsWest)
+					} else if (connectionEast.hasConnection() || connectionWest.hasConnection())
 					{
 						centerAxis = Direction.Axis.X;
-						if (connectsEast && connectsWest)
+						if (connectionEast.isPipe() && connectionWest.isPipe())
 						{
 							renderCenter = false;
 						}
@@ -125,15 +141,7 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			double pixel = 1d / 16d;
 			GlStateManager.translated(renderX, renderY, renderZ);
 
-			RenderUtils.TextureBounds[] longAll = {
-					new RenderUtils.TextureBounds(17, 28, 1, 24, 32, 32), // Bottom
-					new RenderUtils.TextureBounds(17, 28, 1, 24, 32, 32), // Top
-					new RenderUtils.TextureBounds(0, 0, 0, 0, 32, 32), // North
-					new RenderUtils.TextureBounds(0, 0, 0, 0, 32, 32), // South
-					new RenderUtils.TextureBounds(17, 32, 1, 28, 32, 32), // West
-					new RenderUtils.TextureBounds(17, 32, 1, 28, 32, 32)}; // East
-
-			if (connectsNorth || connectsSouth || renderCenter)
+			if (connectionNorth.hasConnection() || connectionSouth.hasConnection() || renderCenter)
 			{
 				builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 
@@ -141,10 +149,20 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 					RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, 1, longAll, new int[]{1, 1, 1, 1, 1, 1});
 				else
 				{
-					if (connectsNorth)
+					if (connectionNorth.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, 1, 1, 1, 1});
-					if (connectsSouth)
+					else if (connectionNorth.isBlock())
+					{
+						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 2, pixel * 10, pixel * 10, pixel * 6, center, new int[]{1, 1, 1, 1, 1, 1});
+					}
+					if (connectionSouth.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, 1, southEastDown, new int[]{1, 1, -1, -1, 1, 1});
+					else if (connectionSouth.isBlock())
+					{
+						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, pixel * 14, center, new int[]{1, 1, -1, -1, 1, 1});
+					}
 					if (centerAxis == null || centerAxis == Direction.Axis.Z)
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, centerAxis == null ? center : centerConnection, new int[]{1, 1, 1, 1, 1, 1});
 				}
@@ -154,7 +172,7 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			GlStateManager.rotated(90, 0, 1, 0);
 			GlStateManager.translated(-1, 0, 0);
 
-			if (connectsEast || connectsWest)
+			if (connectionEast.hasConnection() || connectionWest.hasConnection())
 			{
 				builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 
@@ -162,10 +180,20 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 					RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, 1, longAll, new int[]{1, 1, 1, 1, 1, 1});
 				else
 				{
-					if (connectsEast)
+					if (connectionEast.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, 1, southEastDown, new int[]{1, 1, 1, 1, 1, 1});
-					if (connectsWest)
+					else if (connectionEast.isBlock())
+					{
+						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, pixel * 14, center, new int[]{1, 1, 1, 1, 1, 1});
+					}
+					if (connectionWest.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, -1, -1, 1, 1});
+					else if (connectionWest.isBlock())
+					{
+						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 2, pixel * 10, pixel * 10, pixel * 6, center, new int[]{1, 1, 1, 1, 1, 1});
+					}
 					if (centerAxis == Direction.Axis.X)
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, centerConnection, new int[]{1, 1, 1, 1, 1, 1});
 				}
@@ -175,7 +203,7 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 			GlStateManager.rotated(90, 1, 0, 0);
 			GlStateManager.translated(0, 0, -1);
 
-			if (connectsUp || connectsDown)
+			if (connectionUp.hasConnection() || connectionDown.hasConnection())
 			{
 				builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 
@@ -183,10 +211,20 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 					RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, 1, longAll, new int[]{1, 1, 1, 1, 1, 1});
 				else
 				{
-					if (connectsUp)
-						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, 1, 1, 1, 1});
-					if (connectsDown)
+					if (connectionUp.isPipe())
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, 1, 1, 1, 1});
+					else if (connectionUp.isBlock())
+					{
+						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 2, pixel * 10, pixel * 10, pixel * 6, center, new int[]{1, 1, 1, 1, 1, 1});
+					}
+					if (connectionDown.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, 1, southEastDown, new int[]{1, 1, -1, -1, 1, 1});
+					else if (connectionDown.isBlock())
+					{
+						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, pixel * 14, center, new int[]{1, 1, -1, -1, 1, 1});
+					}
 					if (centerAxis == Direction.Axis.Y)
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, centerConnection, new int[]{1, 1, 1, 1, 1, 1});
 				}

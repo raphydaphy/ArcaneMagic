@@ -75,6 +75,8 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 				GlStateManager.depthMask(false);
 				GlStateManager.disableCull();
+				GlStateManager.enableAlphaTest();
+				GlStateManager.alphaFunc(GL11.GL_GREATER, 0.003921569F);
 				Tessellator tess = Tessellator.getInstance();
 				BufferBuilder builder = tess.getBufferBuilder();
 
@@ -86,7 +88,7 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 
 				tess.draw();
 				int water = 0;
-				FluidInstance[] fluids = entity.getFluids(Direction.UP);
+				FluidInstance[] fluids = entity.getFluids(null);
 				if (fluids.length >= 1 && fluids[0] != null && fluids[0].getFluid() == Fluids.WATER)
 				{
 					water = (int) (fluids[0].getAmount() / (float) MixerBlockEntity.MAX_FLUID * 12);

@@ -13,31 +13,19 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicSounds;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
-import io.github.prospector.silk.util.ActionType;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.BasicInventory;
-import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.RecipeType;
 import net.minecraft.recipe.cooking.BlastingRecipe;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Tickable;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
 
 import java.util.Optional;
 
@@ -206,7 +194,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	@Override
 	public boolean isValidInvStackBottom(int slot, ItemStack item)
 	{
-		if (slot == 9)
+		if (slot == 0)
 		{
 			if (!getInvStack(1).isEmpty() || !getInvStack(2).isEmpty())
 			{
@@ -225,6 +213,8 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 			{
 				if (!simulate)
 				{
+					world.playSound(null, pos, ArcaneMagicSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
+					world.playSound(null, pos, ArcaneMagicSounds.BURN, SoundCategory.BLOCK, 0.5f, 1);
 					if (!world.isClient)
 					{
 						smeltTime = 1;
@@ -299,7 +289,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	protected FluidInstance[] getFluidsImpl(boolean bottom, Direction fromSide)
 	{
 		Direction facing = world.getBlockState(pos).get(SmelterBlock.FACING);
-		return (bottom && fromSide != facing) ? new FluidInstance[] { liquified_soul } : new FluidInstance[] { };
+		return (bottom && (fromSide == facing.getOpposite() || fromSide == Direction.DOWN || fromSide == Direction.UP)) ? new FluidInstance[] { liquified_soul } : new FluidInstance[] { };
 	}
 
 	@Override

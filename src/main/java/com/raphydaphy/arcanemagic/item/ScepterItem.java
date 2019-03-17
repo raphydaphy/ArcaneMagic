@@ -127,8 +127,6 @@ public class ScepterItem extends SoulStorageItem
 						if (ArcaneMagicUtils.useSoul(world, stack, player, ArcaneMagicConstants.SOUL_PER_SMELT))
 						{
 							smelter.startSmelting(false);
-							world.playSound(player, pos, ArcaneMagicSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
-							world.playSound(player, pos, ArcaneMagicSounds.BURN, SoundCategory.BLOCK, 0.5f, 1);
 							return true;
 						}
 					}

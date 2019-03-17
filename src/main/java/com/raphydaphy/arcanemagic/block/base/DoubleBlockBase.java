@@ -74,6 +74,7 @@ public class DoubleBlockBase extends OrientableBlockBase
 		if (otherPartState.getBlock() == this && otherPartState.get(HALF) != half)
 		{
 			world.setBlockState(otherPartPos, Blocks.AIR.getDefaultState(), 35);
+			world.playEvent(breaker, 2001, otherPartPos, Block.getRawIdFromState(otherPartState));
 			ItemStack itemStack_1 = breaker.getMainHandStack();
 			if (!world.isClient && !breaker.isCreative())
 			{
