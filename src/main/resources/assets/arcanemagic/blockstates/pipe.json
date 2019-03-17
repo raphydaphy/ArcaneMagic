@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "arcanemagic:block/pipe_single" }
+    "": { "model": "arcanemagic:block/pipe_particle" }
   }
 }
