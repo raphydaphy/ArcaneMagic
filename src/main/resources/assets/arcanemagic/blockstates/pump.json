@@ -1,5 +1,20 @@
 {
   "variants": {
-    "": { "model": "arcanemagic:block/pump" }
+    "half=lower,facing=north,waterlogged=true": { "model": "arcanemagic:block/pump_bottom", "y": 180 },
+    "half=lower,facing=north,waterlogged=false": { "model": "arcanemagic:block/pump_bottom", "y": 180 },
+    "half=lower,facing=east,waterlogged=true":  { "model": "arcanemagic:block/pump_bottom", "y": 270 },
+    "half=lower,facing=east,waterlogged=false":  { "model": "arcanemagic:block/pump_bottom", "y": 270 },
+    "half=lower,facing=south,waterlogged=true": { "model": "arcanemagic:block/pump_bottom" },
+    "half=lower,facing=south,waterlogged=false": { "model": "arcanemagic:block/pump_bottom" },
+    "half=lower,facing=west,waterlogged=true":  { "model": "arcanemagic:block/pump_bottom", "y": 90 },
+    "half=lower,facing=west,waterlogged=false":  { "model": "arcanemagic:block/pump_bottom", "y": 90 },
+    "half=upper,facing=north,waterlogged=true": { "model": "arcanemagic:block/pump_top", "y": 180 },
+    "half=upper,facing=north,waterlogged=false": { "model": "arcanemagic:block/pump_top", "y": 180 },
+    "half=upper,facing=east,waterlogged=true":  { "model": "arcanemagic:block/pump_top", "y": 270 },
+    "half=upper,facing=east,waterlogged=false":  { "model": "arcanemagic:block/pump_top", "y": 270 },
+    "half=upper,facing=south,waterlogged=true": { "model": "arcanemagic:block/pump_top" },
+    "half=upper,facing=south,waterlogged=false": { "model": "arcanemagic:block/pump_top" },
+    "half=upper,facing=west,waterlogged=true":  { "model": "arcanemagic:block/pump_top", "y": 90 },
+    "half=upper,facing=west,waterlogged=false":  { "model": "arcanemagic:block/pump_top", "y": 90 }
   }
 }

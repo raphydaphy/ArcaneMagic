@@ -113,7 +113,7 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	@Override
 	protected boolean canInsertFluidImpl(boolean bottom, Direction fromSide, Fluid fluid, int amount)
 	{
-		return !bottom && fluid == Fluids.WATER && this.water.getAmount() + amount <= MAX_FLUID;
+		return fluid == Fluids.WATER && this.water.getAmount() + amount <= MAX_FLUID;
 	}
 
 	@Override

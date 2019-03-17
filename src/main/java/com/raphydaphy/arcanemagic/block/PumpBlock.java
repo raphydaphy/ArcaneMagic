@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
-import com.raphydaphy.arcanemagic.block.base.WaterloggableBlockBase;
+import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.PumpBlockEntity;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
-public class PumpBlock extends WaterloggableBlockBase implements BlockEntityProvider
+public class PumpBlock extends DoubleBlockBase implements BlockEntityProvider
 {
 	private static final VoxelShape shape;
 
