@@ -129,7 +129,7 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 		double pixel = 1d / 16d;
 
 		builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
-		RenderUtils.renderBox(builder, renderX + pixel * 2, renderY, renderZ + pixel * 2, renderX + pixel * 14, renderY + pixel * 14, renderZ + pixel * 14, outer, new int[]{1, 1, 1, 1, 1, 1});
+		RenderUtils.renderBox(builder, renderX + pixel * 2, renderY + pixel * 0.001, renderZ + pixel * 2, renderX + pixel * 14, renderY + pixel * 14, renderZ + pixel * 14, outer, new int[]{1, 1, 1, 1, 1, 1});
 		RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * 13, renderZ + pixel * 13, 255, 255, 255, 128, inner, new int[]{1, 1, 1, 1, 1, 1});
 
 		tess.draw();

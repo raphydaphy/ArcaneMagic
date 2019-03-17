@@ -1,9 +1,9 @@
 package com.raphydaphy.arcanemagic.util;
 
-import com.google.common.collect.Maps;
-import com.google.gson.*;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -18,15 +18,12 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.server.command.TagCommand;
 import net.minecraft.sortme.ItemScatterer;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -41,10 +38,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-import java.util.Map;
-import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class ArcaneMagicUtils
 {
@@ -202,7 +196,7 @@ public class ArcaneMagicUtils
 	 * Tries to insert or extract an item from a BlockEntity
 	 * Items are only extracted if the player is holding shift with an empty hand
 	 *
-	 * @param slot The container slot to try and interact with
+	 * @param slot  The container slot to try and interact with
 	 * @param onSet This is called if a new stack is added with the ItemStack parameter being the added stack
 	 * @return True if an item was either inserted or extracted
 	 */
@@ -221,21 +215,8 @@ public class ArcaneMagicUtils
 			if (stackInTable.isEmpty())
 			{
 				ItemStack insertStack = held.copy();
+				insertStack.setAmount(1);
 
-				if (held.getAmount() > 1)
-				{
-					if (!world.isClient)
-					{
-						if (!player.isCreative())
-						{
-							held.subtractAmount(1);
-						}
-						insertStack.setAmount(1);
-					}
-				} else if (!world.isClient && !player.isCreative())
-				{
-					player.setStackInHand(hand, ItemStack.EMPTY);
-				}
 
 				// insertStack = 1 item to insert
 				// held = remaining items
@@ -245,6 +226,17 @@ public class ArcaneMagicUtils
 
 					if (!world.isClient)
 					{
+						if (held.getAmount() > 1)
+						{
+							if (!player.isCreative())
+							{
+								held.subtractAmount(1);
+							}
+						} else if (!player.isCreative())
+						{
+							player.setStackInHand(hand, ItemStack.EMPTY);
+						}
+
 						if (onSet != null)
 						{
 							onSet.accept(insertStack.copy());
@@ -286,7 +278,7 @@ public class ArcaneMagicUtils
 
 	public static void unlockRecipe(PlayerEntity player, String recipe)
 	{
-		player.unlockRecipes(new Identifier[] {new Identifier(ArcaneMagic.DOMAIN, recipe)});
+		player.unlockRecipes(new Identifier[]{new Identifier(ArcaneMagic.DOMAIN, recipe)});
 	}
 
 	public static boolean handleTileEntityBroken(Block block, BlockState oldState, World world, BlockPos pos, BlockState newState)
@@ -405,7 +397,8 @@ public class ArcaneMagicUtils
 			{
 				updates.putBoolean(section, true);
 			}
-			dataPlayer.getAdditionalData().put(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET, updates);;
+			dataPlayer.getAdditionalData().put(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET, updates);
+			;
 			dataPlayer.markAdditionalDataDirty();
 		}
 	}
@@ -426,9 +419,9 @@ public class ArcaneMagicUtils
 			this.id = id;
 			this.hilt = new Identifier(ArcaneMagic.DOMAIN, "item/weapon_gems/" + id + "_hilt");
 			this.pommel = new Identifier(ArcaneMagic.DOMAIN, "item/weapon_gems/" + id + "_pommel");
-			this.red = ((rgb>>16)&0xFF) / 255f;
-			this.green = ((rgb>>8)&0xFF) / 255f;
-			this.blue = ((rgb)&0xFF) / 255f;
+			this.red = ((rgb >> 16) & 0xFF) / 255f;
+			this.green = ((rgb >> 8) & 0xFF) / 255f;
+			this.blue = ((rgb) & 0xFF) / 255f;
 		}
 
 		public static ForgeCrystal getFromID(String id)

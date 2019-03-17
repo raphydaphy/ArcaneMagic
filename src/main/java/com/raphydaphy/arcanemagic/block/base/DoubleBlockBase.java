@@ -11,6 +11,8 @@ import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateFactory;
@@ -73,7 +75,14 @@ public class DoubleBlockBase extends OrientableBlockBase
 		BlockState otherPartState = world.getBlockState(otherPartPos);
 		if (otherPartState.getBlock() == this && otherPartState.get(HALF) != half)
 		{
-			world.setBlockState(otherPartPos, Blocks.AIR.getDefaultState(), 35);
+			FluidState otherFluidState = world.getFluidState(otherPartPos);
+			if (!otherFluidState.isEmpty())
+			{
+				world.setBlockState(otherPartPos, otherFluidState.getBlockState(), 35);
+			} else
+			{
+				world.setBlockState(otherPartPos, Blocks.AIR.getDefaultState(), 35);
+			}
 			world.playEvent(breaker, 2001, otherPartPos, Block.getRawIdFromState(otherPartState));
 			ItemStack itemStack_1 = breaker.getMainHandStack();
 			if (!world.isClient && !breaker.isCreative())
@@ -91,7 +100,8 @@ public class DoubleBlockBase extends OrientableBlockBase
 		BlockPos above = ctx.getBlockPos();
 		if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).method_11587(ctx))
 		{
-			return this.getDefaultState().with(FACING, ctx.getPlayerHorizontalFacing().getOpposite()).with(HALF, DoubleBlockHalf.LOWER);
+			FluidState fluid = ctx.getWorld().getFluidState(ctx.getBlockPos());
+			return this.getDefaultState().with(FACING, ctx.getPlayerHorizontalFacing().getOpposite()).with(HALF, DoubleBlockHalf.LOWER).with(WATERLOGGED, fluid.getFluid() == Fluids.WATER);
 		} else
 		{
 			return null;
@@ -101,7 +111,8 @@ public class DoubleBlockBase extends OrientableBlockBase
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER), 3);
+		FluidState fluidAbove = world.getFluidState(pos.up());
+		world.setBlockState(pos.up(), state.with(HALF, DoubleBlockHalf.UPPER).with(WATERLOGGED, fluidAbove.getFluid() == Fluids.WATER), 3);
 	}
 
 	@Override
