@@ -112,7 +112,7 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 						if (connectionNorth.hasConnection() || connectionSouth.hasConnection() || connectionEast.hasConnection() || connectionWest.hasConnection())
 						{
 							centerAxis = null;
-						} else if (connectionUp.isPipe() && connectionDown.isPipe())
+						} else if (connectionUp.hasConnection() && connectionDown.hasConnection())
 						{
 							renderCenter = false;
 						}
@@ -123,14 +123,14 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 						if (connectionEast.hasConnection() || connectionWest.hasConnection())
 						{
 							centerAxis = null;
-						} else if (connectionNorth.isPipe() && connectionSouth.isPipe())
+						} else if (connectionNorth.hasConnection() && connectionSouth.hasConnection())
 						{
 							renderCenter = false;
 						}
 					} else if (connectionEast.hasConnection() || connectionWest.hasConnection())
 					{
 						centerAxis = Direction.Axis.X;
-						if (connectionEast.isPipe() && connectionWest.isPipe())
+						if (connectionEast.hasConnection() && connectionWest.hasConnection())
 						{
 							renderCenter = false;
 						}
@@ -152,20 +152,19 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 					if (connectionNorth.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, 1, 1, 1, 1});
 					else if (connectionNorth.isBlock())
-					{
-						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 2, pixel * 10, pixel * 10, pixel * 6, center, new int[]{1, 1, 1, 1, 1, 1});
-					}
 					if (connectionSouth.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, 1, southEastDown, new int[]{1, 1, -1, -1, 1, 1});
 					else if (connectionSouth.isBlock())
-					{
-						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, pixel * 14, center, new int[]{1, 1, -1, -1, 1, 1});
-					}
 					if (centerAxis == null || centerAxis == Direction.Axis.Z)
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, centerAxis == null ? center : centerConnection, new int[]{1, 1, 1, 1, 1, 1});
 				}
+
+				if (connectionNorth.isBlock())
+					RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+				if (connectionSouth.isBlock())
+					RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 				tess.draw();
 			}
 
@@ -183,20 +182,19 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 					if (connectionEast.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, 1, southEastDown, new int[]{1, 1, 1, 1, 1, 1});
 					else if (connectionEast.isBlock())
-					{
-						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, pixel * 14, center, new int[]{1, 1, 1, 1, 1, 1});
-					}
 					if (connectionWest.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, -1, -1, 1, 1});
 					else if (connectionWest.isBlock())
-					{
-						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 2, pixel * 10, pixel * 10, pixel * 6, center, new int[]{1, 1, 1, 1, 1, 1});
-					}
 					if (centerAxis == Direction.Axis.X)
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, centerConnection, new int[]{1, 1, 1, 1, 1, 1});
 				}
+
+				if (connectionEast.isBlock())
+					RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+				if (connectionWest.isBlock())
+					RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 				tess.draw();
 			}
 
@@ -214,20 +212,18 @@ public class PipeRenderer extends BlockEntityRenderer<PipeBlockEntity>
 					if (connectionUp.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, 0, pixel * 10, pixel * 10, pixel * 6, northWestUp, new int[]{1, 1, 1, 1, 1, 1});
 					else if (connectionUp.isBlock())
-					{
-						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 2, pixel * 10, pixel * 10, pixel * 6, center, new int[]{1, 1, 1, 1, 1, 1});
-					}
 					if (connectionDown.isPipe())
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, 1, southEastDown, new int[]{1, 1, -1, -1, 1, 1});
 					else if (connectionDown.isBlock())
-					{
-						RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, pixel * 14, center, new int[]{1, 1, -1, -1, 1, 1});
-					}
 					if (centerAxis == Direction.Axis.Y)
 						RenderUtils.renderBox(builder, pixel * 6, pixel * 6, pixel * 6, pixel * 10, pixel * 10, pixel * 10, centerConnection, new int[]{1, 1, 1, 1, 1, 1});
 				}
+				if (connectionUp.isBlock())
+					RenderUtils.renderBox(builder, pixel * 4, pixel * 4, 0, pixel * 12, pixel * 12, pixel * 2, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
+				if (connectionDown.isBlock())
+					RenderUtils.renderBox(builder, pixel * 4, pixel * 4, pixel * 14, pixel * 12, pixel * 12, 1, bigConnector, new int[]{1, 1, 1, 1, 1, 1});
 				tess.draw();
 			}
 			GlStateManager.popMatrix();

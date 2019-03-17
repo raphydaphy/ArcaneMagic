@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
@@ -62,8 +63,9 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		CompoundTag tag = stack.getTag();
 		if (player.isSneaking() && tag != null && tag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
 		{
-			if (tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) <= 0)
+			if (!player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER) && tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) <= 0)
 			{
+				System.out.println("hello its " + player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER));
 				int time = 10 * 20;
 				ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
 				if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)

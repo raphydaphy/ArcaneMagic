@@ -15,7 +15,7 @@
 		"texture9": "arcanemagic:block/forge_front_side",
 		"texture10": "arcanemagic:block/forge_front_top_2",
 		"texture11": "arcanemagic:block/forge_front_front_2",
-		"particle": "arcanemagic:block/forge_top_front",
+		"particle": "arcanemagic:block/forge_top_front"
 	},
 	"elements": [ 	 
 		{
