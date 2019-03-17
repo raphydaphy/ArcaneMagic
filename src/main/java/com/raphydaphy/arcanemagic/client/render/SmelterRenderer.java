@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.UVSet;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
@@ -26,14 +27,15 @@ import java.util.Optional;
 public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 {
 	private static float animTime = 4;
-	private static Identifier coverTexture = new Identifier(ArcaneMagic.DOMAIN, "textures/block/smelter_interior.png");
-	private static RenderUtils.TextureBounds[] cover = {
-			new RenderUtils.TextureBounds(0, 0, 0, 0), // Bottom
-			new RenderUtils.TextureBounds(0, 0, 0, 0), // Top
-			new RenderUtils.TextureBounds(0, 0, 0, 0), // North
-			new RenderUtils.TextureBounds(0, 0, 8, 6), // South
-			new RenderUtils.TextureBounds(0, 0, 0, 0), // West
-			new RenderUtils.TextureBounds(0, 0, 0, 0)}; // East
+	Identifier detail = new Identifier(ArcaneMagic.DOMAIN, "textures/block/smelter_detail.png");
+
+	private static RenderUtils.TextureBounds[] teeth = {
+			new UVSet(8, 0, 2, 8), // Bottom
+			new UVSet(8, 0, 2, 8), // Top
+			new UVSet(0, 0, 8, 6), // North
+			new UVSet(0, 0, 8, 6), // South
+			new UVSet(0, 0, 2, 6), // West
+			new UVSet(0, 0, 2, 6)}; // East
 
 	public void render(SmelterBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
 	{
@@ -51,39 +53,42 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 
 			if (state.getBlock() instanceof SmelterBlock)
 			{
+				animTime = 8f;
 				int smeltTime = entity.getSmeltTime();
 				boolean finishing = smeltTime >= SmelterBlockEntity.TOTAL_SMELTING_TIME - animTime;
+
+				GlStateManager.pushMatrix();
+				MinecraftClient.getInstance().getTextureManager().bindTexture(detail);
+				RenderUtils.rotateTo(state.get(SmelterBlock.FACING));
+
+				GlStateManager.disableCull();
+				GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+
+				Tessellator tess = Tessellator.getInstance();
+				BufferBuilder builder = tess.getBufferBuilder();
+
+				builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
+
+				float startY = 2;
+
 				if (smeltTime > 0)
 				{
-					GlStateManager.pushMatrix();
-					RenderUtils.rotateTo(state.get(SmelterBlock.FACING));
-
-					MinecraftClient.getInstance().getTextureManager().bindTexture(coverTexture);
-					GlStateManager.disableCull();
-					GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-
-					Tessellator tess = Tessellator.getInstance();
-					BufferBuilder builder = tess.getBufferBuilder();
-
-					builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
-					double pixel = 1d / 16d;
-
-					float startY = 2;
-
 					if (smeltTime < animTime)
 					{
-						startY = ArcaneMagicUtils.lerp(startY + 6, startY, ArcaneMagicUtils.lerp(smeltTime - 1, smeltTime, partialTicks) / animTime);
+						startY = ArcaneMagicUtils.lerp(startY + 4, startY, ArcaneMagicUtils.lerp(smeltTime - 1, smeltTime, partialTicks) / animTime);
 					} else if (finishing)
 					{
 						int remaining = SmelterBlockEntity.TOTAL_SMELTING_TIME - smeltTime;
-						startY = ArcaneMagicUtils.lerp(startY + 6, startY,ArcaneMagicUtils.lerp( remaining + 1, remaining, partialTicks) / (animTime + 1));
+						startY = ArcaneMagicUtils.lerp(startY + 4, startY, ArcaneMagicUtils.lerp(remaining + 1, remaining, partialTicks) / (animTime + 1));
 					}
-
-					RenderUtils.renderBox(builder, pixel * 4, pixel * startY, 0, pixel * 12, pixel * (startY + 6), pixel * 1, cover, new int[]{1, 1, 1, 1, 1, 1});
-
-					tess.draw();
-					GlStateManager.popMatrix();
+				} else
+				{
+					startY = 6;
 				}
+
+				RenderUtils.renderCube(builder, 4, startY, 2, 8,  6, 2, teeth);
+				tess.draw();
+				GlStateManager.popMatrix();
 				if (smeltTime < animTime || finishing)
 				{
 					if (finishing && !input.isEmpty())
@@ -138,10 +143,8 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 					} else if (!input.isEmpty())
 					{
 						renderItemPre(state);
-						if (smeltTime > 0)
-						{
-							GlStateManager.translated(0, 0, smeltTime >= animTime / 2 ? 1 / 8d : ArcaneMagicUtils.lerp(0, 1 / 8f, ArcaneMagicUtils.lerp(smeltTime - 1, smeltTime, partialTicks) / 2f));
-						}
+
+						GlStateManager.translated(0, 0, 0.25); // 0.128 y
 						renderItem(input);
 					}
 				}

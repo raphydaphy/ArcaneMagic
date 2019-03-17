@@ -153,10 +153,8 @@ public class ArcaneMagicUtils
 		{
 			if (stack.getItem() == fluid.getBucketItem())
 			{
-				System.out.println("hello yes it matches");
 				if (fluidContainer.tryInsertFluid(side, fluid, DropletValues.BUCKET, ActionType.PERFORM))
 				{
-					System.out.println("oh well it is happening now");
 					if (!world.isClient() && !player.isCreative())
 					{
 						// This assumes that buckets cannot stack

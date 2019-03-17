@@ -65,7 +65,6 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		{
 			if (!player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER) && tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) <= 0)
 			{
-				System.out.println("hello its " + player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER));
 				int time = 10 * 20;
 				ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
 				if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)

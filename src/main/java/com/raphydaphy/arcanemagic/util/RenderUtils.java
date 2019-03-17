@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.util;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -16,8 +15,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.cooking.SmeltingRecipe;
-import net.minecraft.recipe.crafting.CraftingRecipe;
-import net.minecraft.recipe.crafting.ShapedRecipe;
 import net.minecraft.util.DefaultedList;
 import net.minecraft.util.math.Direction;
 
@@ -29,6 +26,7 @@ public class RenderUtils
 {
 	/**
 	 * Draws a string split across multiple lines when needed
+	 *
 	 * @return The total height of the string
 	 */
 	public static int drawSplitString(TextRenderer textRenderer, String text, float x, float y, int wrap, int color, boolean verticallyCentered, boolean horizontallyCentered)
@@ -77,10 +75,22 @@ public class RenderUtils
 		}
 	}
 
+
+	/**
+	 * A smarter version of renderBox
+	 * Takes coordinates in pixels, and adds
+	 * uses the start coordinates and size to
+	 * calculate the end coordinates
+	 */
+	public static void renderCube(BufferBuilder builder, double x, double y, double z, double xSize, double ySize, double zSize, TextureBounds[] textures)
+	{
+		double pixel = 0.0625;
+		renderBox(builder, x * pixel, y * pixel, z * pixel, (x + xSize) * pixel, (y + ySize) * pixel, (z + zSize) * pixel, 255, 255, 255, 255, textures, new int[]{1, 1, 1, 1, 1, 1});
+	}
 	/**
 	 * Draws a box with the specified dimensions
 	 * Expects drawing in GL_QUADS mode
-	 * Set maxU/V of any side to 0 to remove it
+	 * Set u/v or maxU/V of any side to 0 to remove it
 	 */
 	public static void renderBox(BufferBuilder builder, double x1, double y1, double z1, double x2, double y2, double z2, TextureBounds[] textures, int[] inversions)
 	{
@@ -279,7 +289,7 @@ public class RenderUtils
 		GlStateManager.pushMatrix();
 		GlStateManager.pushTextureAttributes();
 
-		drawBox(x, y, 24, 24, 2,color, -1);
+		drawBox(x, y, 24, 24, 2, color, -1);
 
 		if (!item.isEmpty())
 		{
