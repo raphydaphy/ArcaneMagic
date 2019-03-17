@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block.entity.base;
 
+import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.inventory.Inventories;
@@ -71,6 +72,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 		if (bottom)
 		{
 			Inventories.toTag(tag, contents);
+			tag.putBoolean(ArcaneMagicConstants.IS_BOTTOM_KEY, true);
 		}
 	}
 
@@ -78,7 +80,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (bottom)
+		if (bottom || tag.getBoolean(ArcaneMagicConstants.IS_BOTTOM_KEY))
 		{
 			contents = DefaultedList.create(getInvSize(), ItemStack.EMPTY);
 			Inventories.fromTag(tag, contents);

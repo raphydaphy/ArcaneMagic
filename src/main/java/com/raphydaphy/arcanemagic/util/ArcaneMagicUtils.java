@@ -326,28 +326,6 @@ public class ArcaneMagicUtils
 		return (1 - delta) * previous + delta * current;
 	}
 
-	public static Vec3d interpPlayerLook(PlayerEntity player, float partialTicks)
-	{
-		if (partialTicks == 1.0F)
-		{
-			return getVectorForRotation(player.pitch, player.headYaw);
-		} else
-		{
-			float f = player.prevPitch + (player.pitch - player.prevPitch) * partialTicks;
-			float f1 = player.prevHeadYaw + (player.headYaw - player.prevHeadYaw) * partialTicks;
-			return getVectorForRotation(f, f1);
-		}
-	}
-
-	private static Vec3d getVectorForRotation(float pitch, float yaw)
-	{
-		float f = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
-		float f1 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
-		float f2 = -MathHelper.cos(-pitch * 0.017453292F);
-		float f3 = MathHelper.sin(-pitch * 0.017453292F);
-		return new Vec3d((double) (f1 * f2), (double) f3, (double) (f * f2));
-	}
-
 	/**
 	 * Used by children of DoubleBlockBase to check if their BlockEntity is on the bottom or top
 	 */
@@ -396,7 +374,6 @@ public class ArcaneMagicUtils
 				updates.putBoolean(section, true);
 			}
 			dataPlayer.getAdditionalData().put(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET, updates);
-			;
 			dataPlayer.markAdditionalDataDirty();
 		}
 	}

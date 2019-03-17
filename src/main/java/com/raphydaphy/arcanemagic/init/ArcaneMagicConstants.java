@@ -33,6 +33,9 @@ public class ArcaneMagicConstants
 	public static final int LIQUIFIED_SOUL_RATIO = DropletValues.NUGGET + 5;
 	public static final int SOUL_PER_SMELT = 2;
 
+	// Used in DoubleBlockEntities to keep track of the bottom half
+	public static final String IS_BOTTOM_KEY = "IsBottomBlock";
+
 	// Time you need to wait after using a dagger ability
 	public static final int DAGGER_ACTIVE_COOLDOWN = 360;
 

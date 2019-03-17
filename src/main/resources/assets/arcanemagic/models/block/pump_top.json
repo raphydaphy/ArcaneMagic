@@ -3,31 +3,19 @@
 	"parent": "block/block",
 	"textures": {
 		"texture": "arcanemagic:block/pump",
-		"particle": "arcanemagic:block/pump_particle"
+	  	"particle": "arcanemagic:block/pump_particle"
 	},
 	"elements": [
 		{
 			"name": "Element",
-			"from": [4, 4, 4],
-			"to": [12, 8, 12],
-			"faces": {
-				"north": {"uv": [0, 10, 4, 12], "texture": "#texture"},
-				"east": {"uv": [0, 14, 4, 16], "texture": "#texture"},
-				"south": {"uv": [0, 12, 4, 14], "texture": "#texture"},
-				"west": {"uv": [0, 14, 4, 16], "texture": "#texture"},
-				"up": {"uv": [0, 0, 4, 4], "rotation": 90, "texture": "#texture"},
-				"down": {"uv": [12, 0, 16, 4], "rotation": 270, "texture": "#texture"}
-			}
-		},
-		{
-			"name": "Element",
 			"from": [6, 0, 6],
-			"to": [10, 4, 10],
+			"to": [10, 6, 10],
 			"faces": {
-				"north": {"uv": [0, 4, 2, 6], "texture": "#texture"},
-				"east": {"uv": [0, 4, 2, 6], "texture": "#texture"},
-				"south": {"uv": [0, 4, 2, 6], "texture": "#texture"},
-				"west": {"uv": [0, 4, 2, 6], "texture": "#texture"}
+				"north": {"uv": [0, 4, 2, 7], "texture": "#texture"},
+				"east": {"uv": [0, 4, 2, 7], "texture": "#texture"},
+				"south": {"uv": [0, 4, 2, 7], "texture": "#texture"},
+				"west": {"uv": [0, 4, 2, 7], "texture": "#texture"},
+				"up": {"uv": [8, 8, 10, 10], "texture": "#texture"}
 			}
 		}
 	],

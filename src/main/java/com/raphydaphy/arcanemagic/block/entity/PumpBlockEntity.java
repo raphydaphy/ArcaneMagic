@@ -4,6 +4,8 @@ import com.raphydaphy.arcanemagic.block.PumpBlock;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidContainer;
@@ -27,6 +29,8 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
 
 	private FluidInstance water = new FluidInstance(Fluids.WATER);
+	public int ticks = 0;
+	public int prevTicks = 0;
 
 	public PumpBlockEntity()
 	{
@@ -43,7 +47,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (bottom)
+		if (bottom || tag.containsKey(WATER_KEY))
 		{
 			if (tag.containsKey(WATER_KEY))
 			{
@@ -51,7 +55,9 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 			} else
 			{
 				water = new FluidInstance(Fluids.WATER);
+				System.out.println("error 404 no water found ! !!!?!?!?1");
 			}
+			System.out.println("Got " + water.getAmount() + " droplets of water");
 		}
 	}
 
@@ -121,17 +127,23 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.PUMP);
 			setBottom = true;
 		}
-		if (bottom && !world.isClient && world.getTime() % 160 == 0)
+		if (bottom)
 		{
+			prevTicks = ticks;
 			BlockState blockState = world.getBlockState(pos);
 			FluidState fluidState = world.getFluidState(pos);
 			if (blockState.get(PumpBlock.WATERLOGGED) && !fluidState.isEmpty() && fluidState.isStill() && fluidState.getFluid() == Fluids.WATER && water.getAmount() + DropletValues.BUCKET <= MAX_FLUID)
 			{
-				world.setBlockState(pos, blockState.with(PumpBlock.WATERLOGGED, false));
-				water.addAmount(DropletValues.BUCKET);
-				markDirty();
+				ticks++;
+				if (!world.isClient && world.getTime() % 160 == 0)
+				{
+					world.setBlockState(pos, blockState.with(PumpBlock.WATERLOGGED, false));
+					water.addAmount(DropletValues.BUCKET);
+					markDirty();
 
-				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCK, 1, 1);
+					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCK, 1, 1);
+					ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toTag(new CompoundTag())),world, getPos(), 64);
+				}
 			}
 		}
 	}
