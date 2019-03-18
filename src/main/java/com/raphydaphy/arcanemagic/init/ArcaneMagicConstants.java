@@ -17,7 +17,6 @@ public class ArcaneMagicConstants
 
 	public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
 	public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
-	public static final Identifier ROCK_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/rock_particle");
 	public static final Identifier NOTEBOOK_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/notebook.png");
 
 	// Dimensions of the notebook texture with and without the bottom icons
@@ -39,6 +38,9 @@ public class ArcaneMagicConstants
 
 	// Time you need to wait after using a dagger ability
 	public static final int DAGGER_ACTIVE_COOLDOWN = 360;
+
+	public static final String TIME_SINCE_TREMOR_KEY = "TimeSinceTremor";
+	public static final String TIME_SINCE_VOID_SOUND_KEY = "TimeSinceVoidSound";
 
 	public static final String UUID_KEY = "CrystalItemIdentifier";
 	public static final String PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
@@ -73,4 +75,5 @@ public class ArcaneMagicConstants
 	public static final String PLACED_MIXER_KEY = "PlacedMixer";
 	public static final String ANALYZED_REDSTONE_KEY = "AnalyzedRedstone";
 	public static final String ANALYZED_WATER_BUCKET_KEY = "AnalyzedWaterBucket";
+	public static final String EXPERIENCED_TREMOR_KEY = "ExperiencedTremor";
 }

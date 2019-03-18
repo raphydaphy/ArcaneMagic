@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
 
@@ -29,6 +30,7 @@ public class ContentsNotebookSection implements INotebookSection
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.LIQUEFACTION, ModRegistry.MIXER, "notebook.arcanemagic.liquefaction.title", "notebook.arcanemagic.liquefaction.desc").withPadding(5));
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.FLUID_TRANSPORT, ModRegistry.PIPE, "notebook.arcanemagic.fluid_transport.title", "notebook.arcanemagic.fluid_transport.desc").withPadding(5));
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.PUMPING, ModRegistry.PUMP, "notebook.arcanemagic.pumping.title", "notebook.arcanemagic.pumping.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.TREMORS, Blocks.BEDROCK, "notebook.arcanemagic.tremors.title", "notebook.arcanemagic.tremors.desc").withPadding(5));
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.core.client;
 
-import com.raphydaphy.arcanemagic.client.ScreenShake;
+import com.raphydaphy.arcanemagic.util.TremorTracker;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.MixerRenderer;
 import net.minecraft.class_4184;
@@ -27,6 +27,6 @@ public class GameRendererMixin
 	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=prepareterrain", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
 	private void renderBeforeWorld(float partialTicks, long finishTimeNano, CallbackInfo info)
 	{
-		ScreenShake.shake();
+		TremorTracker.renderTremors();
 	}
 }

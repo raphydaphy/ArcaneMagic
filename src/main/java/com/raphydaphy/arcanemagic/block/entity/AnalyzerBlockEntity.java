@@ -52,7 +52,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 			{
 				ParticleUtil.spawnGlowParticle(world, pos.getX() + 0.4f + ArcaneMagic.RANDOM.nextFloat() / 5f, pos.getY() + 0.7f, pos.getZ() + 0.4f + ArcaneMagic.RANDOM.nextFloat() / 5f,
 						(float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, -0.01f + ArcaneMagic.RANDOM.nextFloat() * 0 / 20f, (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
-						ArcaneMagic.RANDOM.nextFloat() / 10f, ArcaneMagic.RANDOM.nextFloat() / 10f, item == ModRegistry.GOLDEN_SCEPTER ? 0 : ArcaneMagic.RANDOM.nextFloat() / 10f, 0.5f, 0.2f, 100);
+						ArcaneMagic.RANDOM.nextFloat() / 10f, ArcaneMagic.RANDOM.nextFloat() / 10f, item == ModRegistry.GOLDEN_SCEPTER ? 0 : ArcaneMagic.RANDOM.nextFloat() / 10f, 0.5f, true, 0.2f, 100);
 			}
 		}
 		if (item instanceof ScepterItem)
@@ -65,7 +65,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 			float particlePosY = (float) (0.45 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8);
 			float particlePosZ = (float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 			ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
-					0, 0, 0, ArcaneMagic.RANDOM.nextFloat() / 5f, ArcaneMagic.RANDOM.nextFloat() / 5f, item == ModRegistry.GOLDEN_SCEPTER ? 0 : ArcaneMagic.RANDOM.nextFloat() / 5f, 0.6f, scale, 150);
+					0, 0, 0, ArcaneMagic.RANDOM.nextFloat() / 5f, ArcaneMagic.RANDOM.nextFloat() / 5f, item == ModRegistry.GOLDEN_SCEPTER ? 0 : ArcaneMagic.RANDOM.nextFloat() / 5f, 0.6f,true, scale, 150);
 
 		}
 	}

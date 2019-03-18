@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.block.entity.*;
-import com.raphydaphy.arcanemagic.client.ScreenShake;
 import com.raphydaphy.arcanemagic.client.model.ArcaneModelLoader;
 import com.raphydaphy.arcanemagic.client.model.IronDaggerModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
@@ -9,8 +8,10 @@ import com.raphydaphy.arcanemagic.client.render.*;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.network.PlayerDataUpdatePacket;
+import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.network.TremorPacket;
+import com.raphydaphy.arcanemagic.util.TremorTracker;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -36,18 +37,18 @@ public class ArcaneMagicClient implements ClientModInitializer
 		ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
 		ClientSidePacketRegistry.INSTANCE.register(PlayerDataUpdatePacket.ID, new PlayerDataUpdatePacket.Handler());
 		ClientSidePacketRegistry.INSTANCE.register(ProgressionUpdateToastPacket.ID, new ProgressionUpdateToastPacket.Handler());
+		ClientSidePacketRegistry.INSTANCE.register(TremorPacket.ID, new TremorPacket.Handler());
 
 		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
 		{
 			registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
 			registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
-			registry.register(ArcaneMagicConstants.ROCK_PARTICLE_TEXTURE);
 		});
 
 		ClientTickCallback.EVENT.register((client) ->
 		{
 			ParticleRenderer.INSTANCE.update();
-			ScreenShake.update();
+			TremorTracker.updateClient();
 		});
 
 		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);

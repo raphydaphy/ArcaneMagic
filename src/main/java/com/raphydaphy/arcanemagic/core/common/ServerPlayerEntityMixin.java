@@ -27,7 +27,7 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 	private boolean additionalDataNeedsSync = true;
 
 	@Inject(at = @At("HEAD"), method = "method_14203")
-	private void method_14203(ServerPlayerEntity playerEntity, boolean keepEverything, CallbackInfo info) // copyFrom
+	private void onPlayerClone(ServerPlayerEntity playerEntity, boolean keepEverything, CallbackInfo info) // copyFrom
 	{
 		this.setAdditionalData(((DataHolder) playerEntity).getAdditionalData());
 		if (this.getAdditionalData().getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
@@ -40,7 +40,7 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 	}
 
 	@Inject(at = @At("TAIL"), method="method_14226")
-	private void method_14226(CallbackInfo info)
+	private void syncAdditionalData(CallbackInfo info)
 	{
 		if (additionalDataNeedsSync)
 		{

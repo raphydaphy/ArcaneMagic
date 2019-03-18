@@ -7,9 +7,12 @@ import net.minecraft.world.World;
 
 public class GlowParticle extends ParticleBase
 {
-	public GlowParticle(World worldIn, double xPos, double yPos, double zPos, double velocityX, double velocityY, double velocityZ, float red, float green, float blue, float alpha, float scale, int lifetime)
+	private final boolean lit;
+
+	public GlowParticle(World worldIn, double xPos, double yPos, double zPos, double velocityX, double velocityY, double velocityZ, float red, float green, float blue, float alpha, boolean lit, float scale, int lifetime)
 	{
 		super(worldIn, xPos, yPos, zPos, velocityX, velocityY, velocityZ, red, green, blue, alpha, scale, (int) ((float) lifetime * 0.5f));
+		this.lit = lit;
 		Sprite sprite = MinecraftClient.getInstance().getSpriteAtlas().getSprite(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
 		this.setSprite(sprite);
 	}
@@ -25,7 +28,7 @@ public class GlowParticle extends ParticleBase
 	@Override
 	public boolean isAdditive()
 	{
-		return true;
+		return lit;
 	}
 
 	@Override

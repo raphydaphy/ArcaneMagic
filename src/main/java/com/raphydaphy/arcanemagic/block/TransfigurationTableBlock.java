@@ -132,7 +132,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 		float colorDiviser = 5;
 		ParticleRenderer.INSTANCE.addSource(new ParticleSource((age) -> {
 			ParticleUtil.spawnGlowParticle(MinecraftClient.getInstance().world, pos.getX() + 0.5f + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, pos.getY() + 0.77f, pos.getZ() + 0.5f + (float)ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
-					0, 0.01f, 0, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, 1, 0.3f, 100);
+					0, 0.01f, 0, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, 1, true, 0.3f, 100);
 		}, 12));
 	}
 
