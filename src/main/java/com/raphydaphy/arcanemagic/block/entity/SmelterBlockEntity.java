@@ -47,13 +47,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	@Override
 	public void tick()
 	{
-		if (!setBottom)
-		{
-			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.SMELTER);
-			setBottom = true;
-		}
-
-		if (bottom)
+		if (isBottom())
 		{
 			if (smeltTime > 0)
 			{
@@ -162,7 +156,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	public void writeContents(CompoundTag tag)
 	{
 		super.writeContents(tag);
-		if (bottom)
+		if (isBottom())
 		{
 			tag.putInt(SMELT_TIME_KEY, smeltTime);
 			liquified_soul.toTag(tag);
@@ -173,7 +167,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (bottom)
+		if (isBottom())
 		{
 			smeltTime = tag.getInt(SMELT_TIME_KEY);
 			liquified_soul = new FluidInstance(tag);
@@ -236,13 +230,13 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	@Override
 	public boolean canInsertInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return bottom && getInvStack(1).isEmpty() && getInvStack(2).isEmpty() && slot == 0 && isValidInvStack(slot, stack);
+		return isBottom() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty() && slot == 0 && isValidInvStack(slot, stack);
 	}
 
 	@Override
 	public boolean canExtractInvStack(int slot, ItemStack stack, Direction dir)
 	{
-		return bottom && slot != 0;
+		return isBottom() && slot != 0;
 	}
 
 	@Override

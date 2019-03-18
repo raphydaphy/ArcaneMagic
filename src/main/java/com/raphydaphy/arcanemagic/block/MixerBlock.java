@@ -103,7 +103,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 
 		if (!stack.isEmpty() && stack.getItem() instanceof BucketItem)
 		{
-			if (!mixer.bottom && stack.getItem() == Items.WATER_BUCKET)
+			if (!mixer.isBottom() && stack.getItem() == Items.WATER_BUCKET)
 			{
 				if (mixer.tryInsertFluid(hitResult.getSide(), Fluids.WATER, DropletValues.BUCKET, ActionType.PERFORM))
 				{
@@ -116,7 +116,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCK, 1, 1);
 					return true;
 				}
-			} else if (mixer.bottom && stack.getItem() == Items.BUCKET)
+			} else if (mixer.isBottom() && stack.getItem() == Items.BUCKET)
 			{
 				if (mixer.tryExtractFluid(hitResult.getSide(), ModRegistry.LIQUIFIED_SOUL, DropletValues.BUCKET, ActionType.PERFORM))
 				{

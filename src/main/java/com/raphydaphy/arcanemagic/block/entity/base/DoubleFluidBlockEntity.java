@@ -16,7 +16,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	@Override
 	public boolean canInsertFluid(Direction fromSide, Fluid fluid, int amount)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return canInsertFluidImpl(true, fromSide, fluid, amount);
 		} else
@@ -24,7 +24,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 			DoubleBlockEntity bottomBlockEntity = getBottom();
 			if (bottomBlockEntity instanceof DoubleFluidBlockEntity)
 			{
-				return ((DoubleFluidBlockEntity) bottomBlockEntity).canInsertFluidImpl(bottom, fromSide, fluid, amount);
+				return ((DoubleFluidBlockEntity) bottomBlockEntity).canInsertFluidImpl(isBottom(), fromSide, fluid, amount);
 			}
 		}
 		return false;
@@ -33,7 +33,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	@Override
 	public boolean canExtractFluid(Direction fromSide, Fluid fluid, int amount)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return canExtractFluidImpl(true, fromSide, fluid, amount);
 		} else
@@ -41,7 +41,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 			DoubleBlockEntity bottomBlockEntity = getBottom();
 			if (bottomBlockEntity instanceof DoubleFluidBlockEntity)
 			{
-				return ((DoubleFluidBlockEntity) bottomBlockEntity).canExtractFluidImpl(bottom, fromSide, fluid, amount);
+				return ((DoubleFluidBlockEntity) bottomBlockEntity).canExtractFluidImpl(isBottom(), fromSide, fluid, amount);
 			}
 		}
 		return false;
@@ -50,7 +50,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	@Override
 	public void insertFluid(Direction fromSide, Fluid fluid, int amount)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			insertFluidImpl(true, fromSide, fluid, amount);
 		} else
@@ -66,7 +66,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	@Override
 	public void extractFluid(Direction fromSide, Fluid fluid, int amount)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			extractFluidImpl(true, fromSide, fluid, amount);
 		} else
@@ -82,7 +82,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	@Override
 	public void setFluid(Direction fromSide, FluidInstance instance)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			setFluidImpl(true, fromSide, instance);
 		} else
@@ -98,7 +98,7 @@ public abstract class DoubleFluidBlockEntity extends DoubleBlockEntity implement
 	@Override
 	public FluidInstance[] getFluids(Direction fromSide)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return getFluidsImpl(true, fromSide);
 		} else

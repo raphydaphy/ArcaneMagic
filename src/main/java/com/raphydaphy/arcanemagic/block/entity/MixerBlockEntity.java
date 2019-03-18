@@ -38,15 +38,10 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	@Override
 	public void tick()
 	{
-		if (!setBottom)
-		{
-			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.MIXER);
-			setBottom = true;
-		}
 		if (world.isClient)
 		{
 			ticks++;
-		} else if (bottom && world.getTime() % 10 == 0 && (world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.add(0, 1, 0))))
+		} else if (isBottom() && world.getTime() % 10 == 0 && (world.isReceivingRedstonePower(pos) || world.isReceivingRedstonePower(pos.add(0, 1, 0))))
 		{
 			ItemStack pendant = getInvStack(0);
 			if (!pendant.isEmpty() && pendant.getItem() == ModRegistry.SOUL_PENDANT)
@@ -90,7 +85,7 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	@Override
 	public void writeContents(CompoundTag tag)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			Inventories.toTag(tag, contents);
 			if (!water.isEmpty())

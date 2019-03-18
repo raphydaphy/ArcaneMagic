@@ -33,7 +33,7 @@ public class PumpRenderer extends BlockEntityRenderer<PumpBlockEntity>
 	{
 		super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
 
-		if (entity != null && !entity.bottom && entity.getWorld() != null)
+		if (entity != null && !entity.isBottom() && entity.getWorld() != null)
 		{
 			BlockEntity bottom = entity.getWorld().getBlockEntity(entity.getPos().down());
 			if (bottom instanceof PumpBlockEntity)

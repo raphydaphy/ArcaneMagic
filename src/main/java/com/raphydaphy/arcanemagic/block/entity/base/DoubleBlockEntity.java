@@ -1,8 +1,11 @@
 package com.raphydaphy.arcanemagic.block.entity.base;
 
+import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -17,8 +20,8 @@ import net.minecraft.util.DefaultedList;
 
 public abstract class DoubleBlockEntity extends InventoryBlockEntity implements SidedInventory
 {
-	public boolean bottom;
-	protected boolean setBottom = false;
+	private boolean bottom;
+	private boolean setBottom = false;
 
 	protected DoubleBlockEntity(BlockEntityType<?> type, int size)
 	{
@@ -27,10 +30,10 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 
 	protected DoubleBlockEntity getBottom()
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return this;
-		} else
+		} else if (world != null)
 		{
 			BlockEntity below = world.getBlockEntity(pos.add(0, -1, 0));
 			if (below instanceof DoubleBlockEntity)
@@ -52,7 +55,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public boolean isValidInvStack(int slot, ItemStack stack)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return isValidInvStackBottom(slot, stack);
 		} else
@@ -69,7 +72,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public void writeContents(CompoundTag tag)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			Inventories.toTag(tag, contents);
 			tag.putBoolean(ArcaneMagicConstants.IS_BOTTOM_KEY, true);
@@ -80,17 +83,37 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (bottom || tag.getBoolean(ArcaneMagicConstants.IS_BOTTOM_KEY))
+		if (isBottom())
 		{
 			contents = DefaultedList.create(getInvSize(), ItemStack.EMPTY);
 			Inventories.fromTag(tag, contents);
 		}
 	}
 
+	public boolean isBottom()
+	{
+		if (world != null && !setBottom)
+		{
+			BlockState state = world.getBlockState(pos);
+			if (state.getBlock() instanceof DoubleBlockBase)
+			{
+				if (state.get(DoubleBlockBase.HALF) == DoubleBlockHalf.LOWER)
+				{
+					bottom = true;
+				} else
+				{
+					bottom = false;
+				}
+				setBottom = true;
+			}
+		}
+		return bottom;
+	}
+
 	@Override
 	public boolean isInvEmpty()
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return super.isInvEmpty();
 		} else
@@ -107,7 +130,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public ItemStack getInvStack(int slot)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return super.getInvStack(slot);
 		} else
@@ -124,7 +147,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public ItemStack takeInvStack(int slot, int count)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return super.takeInvStack(slot, count);
 		} else
@@ -141,7 +164,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public ItemStack removeInvStack(int slot)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			return super.removeInvStack(slot);
 		} else
@@ -158,7 +181,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public void setInvStack(int slot, ItemStack stack)
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			super.setInvStack(slot, stack);
 		} else
@@ -174,7 +197,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
 	@Override
 	public void clear()
 	{
-		if (bottom)
+		if (isBottom())
 		{
 			super.clear();
 		} else

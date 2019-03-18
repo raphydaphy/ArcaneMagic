@@ -53,7 +53,7 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 
 		if (entity != null)
 		{
-			if (entity.bottom)
+			if (entity.isBottom())
 			{
 				ItemStack stack = entity.getInvStack(0);
 				float ticks = ArcaneMagicUtils.lerp(entity.ticks - 1, entity.ticks, partialTicks);

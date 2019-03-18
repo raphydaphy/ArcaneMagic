@@ -47,7 +47,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (bottom || tag.containsKey(WATER_KEY))
+		if (isBottom() || tag.containsKey(WATER_KEY))
 		{
 			if (tag.containsKey(WATER_KEY))
 			{
@@ -55,9 +55,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 			} else
 			{
 				water = new FluidInstance(Fluids.WATER);
-				System.out.println("error 404 no water found ! !!!?!?!?1");
 			}
-			System.out.println("Got " + water.getAmount() + " droplets of water");
 		}
 	}
 
@@ -65,7 +63,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 	public CompoundTag toTag(CompoundTag tag)
 	{
 		super.toTag(tag);
-		if (bottom && !water.isEmpty())
+		if (isBottom() && !water.isEmpty())
 		{
 			CompoundTag waterTag = new CompoundTag();
 			water.toTag(waterTag);
@@ -122,12 +120,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 	@Override
 	public void tick()
 	{
-		if (!setBottom)
-		{
-			bottom = ArcaneMagicUtils.isBottomBlock(world, pos, ModRegistry.PUMP);
-			setBottom = true;
-		}
-		if (bottom)
+		if (isBottom())
 		{
 			prevTicks = ticks;
 			BlockState blockState = world.getBlockState(pos);

@@ -41,7 +41,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 	{
 		super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
 
-		if (entity != null && entity.bottom)
+		if (entity != null && entity.isBottom())
 		{
 			ItemStack input = entity.getInvStack(0).copy();
 			ItemStack output1 = entity.getInvStack(1).copy();
