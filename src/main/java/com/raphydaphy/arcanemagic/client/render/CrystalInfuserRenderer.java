@@ -30,8 +30,8 @@ public class CrystalInfuserRenderer extends BlockEntityRenderer<CrystalInfuserBl
 			ItemStack binder = entity.getInvStack(1);
 			ItemStack crystal = entity.getInvStack(2);
 
-			boolean active = entity.isActive();
 			float craftingTime = entity.getCraftingTime();
+			boolean active = entity.isActive() && craftingTime > 10;
 
 			if (active && craftingTime > 8000 && craftingTime > 8150)
 			{

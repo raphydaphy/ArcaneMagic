@@ -131,7 +131,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 						0, 0, 0, 1, 1, 1, 0.1f, true, size, 100);
 			}
 
-			if (active)
+			if (active && craftingTime > 10)
 			{
 				float inverseRadius = (craftingTime / 2f) / 1000f + 3;
 				long renderTicks = ticksExisted + 400;

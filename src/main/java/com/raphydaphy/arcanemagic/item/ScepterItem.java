@@ -9,6 +9,7 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.core.common.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.init.ModSounds;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
@@ -110,7 +111,7 @@ public class ScepterItem extends SoulStorageItem
 								((CrystalInfuserBlockEntity) blockEntity).resetCraftingTime();
 								((CrystalInfuserBlockEntity) blockEntity).setActive(true);
 							}
-							world.playSound(player, pos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+							world.playSound(player, pos, ModSounds.SPELL, SoundCategory.BLOCK, 0.5f, 1);
 							return true;
 						}
 					}
