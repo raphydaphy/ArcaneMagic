@@ -1,11 +1,10 @@
 package com.raphydaphy.arcanemagic.core.client;
 
+import com.raphydaphy.arcanemagic.client.ScreenShake;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.MixerRenderer;
 import net.minecraft.class_4184;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,5 +22,11 @@ public class GameRendererMixin
 	{
 		ParticleRenderer.INSTANCE.render(partialTicks, field_18765);
 		MixerRenderer.renderMixers();
+	}
+
+	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=prepareterrain", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
+	private void renderBeforeWorld(float partialTicks, long finishTimeNano, CallbackInfo info)
+	{
+		ScreenShake.shake();
 	}
 }

@@ -8,12 +8,12 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleSource;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.init.ModSounds;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicSounds;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
@@ -117,7 +117,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 						player.swingHand(hand);
 					}
 
-					world.playSound(player, blockEntity.getPos(), ArcaneMagicSounds.TRANSFIGURATION, SoundCategory.BLOCK, 0.5f, 1);
+					world.playSound(player, blockEntity.getPos(), ModSounds.TRANSFIGURATION, SoundCategory.BLOCK, 0.5f, 1);
 
 					return true;
 				}

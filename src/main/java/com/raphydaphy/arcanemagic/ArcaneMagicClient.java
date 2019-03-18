@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.block.entity.*;
+import com.raphydaphy.arcanemagic.client.ScreenShake;
 import com.raphydaphy.arcanemagic.client.model.ArcaneModelLoader;
 import com.raphydaphy.arcanemagic.client.model.IronDaggerModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
@@ -40,9 +41,14 @@ public class ArcaneMagicClient implements ClientModInitializer
 		{
 			registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
 			registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
+			registry.register(ArcaneMagicConstants.ROCK_PARTICLE_TEXTURE);
 		});
 
-		ClientTickCallback.EVENT.register(client -> ParticleRenderer.INSTANCE.update());
+		ClientTickCallback.EVENT.register((client) ->
+		{
+			ParticleRenderer.INSTANCE.update();
+			ScreenShake.update();
+		});
 
 		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
 	}

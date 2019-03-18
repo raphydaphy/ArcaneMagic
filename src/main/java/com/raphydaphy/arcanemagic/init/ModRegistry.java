@@ -29,6 +29,7 @@ import net.minecraft.item.block.BlockItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Style;
 import net.minecraft.text.TextFormat;
 import net.minecraft.text.TranslatableTextComponent;

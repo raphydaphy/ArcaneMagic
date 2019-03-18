@@ -2,15 +2,13 @@ package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
-import com.raphydaphy.arcanemagic.block.entity.base.DoubleBlockEntity;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.init.ModSounds;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicSounds;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.fabricmc.api.EnvType;
@@ -68,7 +66,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 
 					if (smeltTime == TOTAL_SMELTING_TIME - 4)
 					{
-						world.playSound(null, pos, ArcaneMagicSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
+						world.playSound(null, pos, ModSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
 					}
 
 					if (smeltTime >= TOTAL_SMELTING_TIME)
@@ -207,8 +205,8 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 			{
 				if (!simulate)
 				{
-					world.playSound(null, pos, ArcaneMagicSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
-					world.playSound(null, pos, ArcaneMagicSounds.BURN, SoundCategory.BLOCK, 0.5f, 1);
+					world.playSound(null, pos, ModSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
+					world.playSound(null, pos, ModSounds.BURN, SoundCategory.BLOCK, 0.5f, 1);
 					if (!world.isClient)
 					{
 						smeltTime = 1;

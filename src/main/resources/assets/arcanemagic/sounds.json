@@ -1,5 +1,8 @@
 {
    "transfiguration": { "category": "master", "sounds": ["arcanemagic:transfiguration"], "subtitle": "subtitle.arcanemagic.transfiguration" },
    "slide": { "category": "master", "sounds": ["arcanemagic:slide"], "subtitle": "subtitle.arcanemagic.slide" },
-   "burn": { "category": "master", "sounds": ["arcanemagic:burn_0", "arcanemagic:burn_1"], "subtitle": "subtitle.arcanemagic.burn" }
+   "burn": { "category": "master", "sounds": ["arcanemagic:burn_0", "arcanemagic:burn_1"], "subtitle": "subtitle.arcanemagic.burn" },
+   "void_growl": {"category": "master", "sounds": ["arcanemagic:void_growl_1", "arcanemagic:void_growl_2", "arcanemagic:void_growl_3", "arcanemagic:void_growl_4", "arcanemagic:void_growl_5", "arcanemagic:void_growl_6"], "subtitle": "subtitle.arcanemagic.void_growl"},
+   "void_atmosphere": { "category": "ambient", "sounds": ["arcanemagic:void_atmosphere_1", "arcanemagic:void_atmosphere_2"], "subtitle": "subtitle.arcanemagic.void_atmosphere"},
+   "void_ambient": {  "category": "ambient", "sounds": ["arcanemagic:void_ambient_1", "arcanemagic:void_ambient_2"], "subtitle": "subtitle.arcanemagic.void_ambient"}
 }

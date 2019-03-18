@@ -52,13 +52,12 @@ public abstract class ParticleBase extends SpriteBillboardParticle implements Ar
 		{
 			this.age++;
 		}
-		if (this.age > this.maxAge)
-		{
-			this.age = this.maxAge;
-		}
 		float lifeCoeff = (float) this.age / (float) this.maxAge;
-		this.scale = initScale - initScale * lifeCoeff;
-		this.colorAlpha = initAlpha * (1.0f - lifeCoeff);
+		if (lifeCoeff < 1)
+		{
+			this.scale = initScale - initScale * lifeCoeff;
+			this.colorAlpha = initAlpha * (1.0f - lifeCoeff);
+		}
 	}
 
 	@Override

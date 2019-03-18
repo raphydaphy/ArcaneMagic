@@ -2,9 +2,11 @@ package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
+import com.raphydaphy.arcanemagic.client.ScreenShake;
 import com.raphydaphy.arcanemagic.client.screen.ParchmentScreen;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import com.raphydaphy.arcanemagic.init.ModSounds;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import net.fabricmc.api.EnvType;
@@ -13,6 +15,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -50,6 +53,13 @@ public class ParchmentItem extends Item
 					player.setStackInHand(hand, new ItemStack(ModRegistry.PARCHMENT, stack.getAmount()));
 				}
 				return new TypedActionResult<>(ActionResult.FAIL, stack);
+			}
+		} else
+		{
+			if (world.isClient)
+			{
+				ScreenShake.scheduleShake(5, ArcaneMagic.RANDOM.nextInt(20) + 30);
+				world.playSound(player, player.getPos(), ModSounds.VOID_GROWL, SoundCategory.AMBIENT, 1, 1);
 			}
 		}
 		return new TypedActionResult<>(ActionResult.PASS, stack);
