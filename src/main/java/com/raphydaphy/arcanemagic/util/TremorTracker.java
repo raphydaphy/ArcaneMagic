@@ -54,7 +54,6 @@ public class TremorTracker
 					int timeSinceTremor = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY);
 					int timeSinceVoidSound = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.TIME_SINCE_VOID_SOUND_KEY);
 					int rand = ArcaneMagic.RANDOM.nextInt((int)(player.y * 3));
-					System.out.println("Time since tremor: " + timeSinceTremor + " Time since last noise: " + timeSinceVoidSound + " Random: " + rand);
 					if (rand == 0)
 					{
 						if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY))
@@ -68,7 +67,6 @@ public class TremorTracker
 						} else
 						{
 							int tremorRand = ArcaneMagic.RANDOM.nextInt(Math.max(150 - timeSinceTremor, 1));
-							System.out.println("Tremor random: " + tremorRand);
 							if (timeSinceTremor > 50 && tremorRand == 0)
 							{
 								timeSinceTremor = -1;
@@ -80,7 +78,6 @@ public class TremorTracker
 						int soundRand = ArcaneMagic.RANDOM.nextInt(Math.max(50 - timeSinceVoidSound, 1));
 						if (timeSinceVoidSound > 20 && soundRand == 0)
 						{
-							System.out.println("magic the beetle bard");
 							ArcaneMagicPacketHandler.sendToClient(new TremorPacket(0, 0), player);
 							timeSinceVoidSound = -1;
 						}

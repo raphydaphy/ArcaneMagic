@@ -1,0 +1,65 @@
+{
+ 	 "__comment": "Designed by Wiiv with Cubik Studio - https://cubik.studio",
+	"parent": "block/block",
+	"textures": {
+		"texture": "arcanemagic:block/forge_top_front",
+		"particle": "arcanemagic:block/forge_top_front",
+		"texture4": "arcanemagic:block/forge_bottom_top",
+		"texture7": "arcanemagic:block/forge_bottom_back_side",
+		"texture11": "arcanemagic:block/forge_front_front_2"
+	},
+	"elements": [
+		{
+			"name": "Box1",
+			"from": [2, 0, 0],
+			"to": [14, 16, 12],
+			"faces": {
+				"north": {"uv": [2, 0, 14, 16], "texture": "#texture7"},
+				"east": {"uv": [2, 0, 14, 16], "texture": "#texture7"},
+				"south": {"uv": [2, 0, 14, 16], "texture": "#texture7"},
+				"west": {"uv": [2, 0, 14, 16], "texture": "#texture7"},
+				"up": {"uv": [2, 0, 14, 12], "texture": "#texture4"},
+				"down": {"uv": [2, 12, 14, 0], "texture": "#texture4"}
+			}
+		},
+		{
+			"name": "Box1",
+			"from": [0, 0, 12],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#texture11"},
+				"east": {"uv": [0, 0, 4, 16], "texture": "#texture"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#texture11"},
+				"west": {"uv": [12, 0, 16, 16], "texture": "#texture"},
+				"up": {"uv": [0, 12, 16, 16], "texture": "#texture4"},
+				"down": {"uv": [0, 12, 16, 16], "texture": "#texture4"}
+			}
+		},
+		{
+			"name": "Box1",
+			"from": [14, 0, 6],
+			"to": [16, 4, 10],
+			"faces": {
+				"north": {"uv": [4, 12, 6, 16], "texture": "#texture"},
+				"east": {"uv": [6, 12, 10, 16], "texture": "#texture"},
+				"south": {"uv": [4, 12, 6, 16], "texture": "#texture"},
+				"west": {"uv": [6, 12, 10, 16], "texture": "#texture"},
+				"up": {"uv": [4, 12, 6, 16], "texture": "#texture"},
+				"down": {"uv": [4, 12, 6, 16], "texture": "#texture"}
+			}
+		},
+		{
+			"name": "Box1",
+			"from": [0, 0, 6],
+			"to": [2, 4, 10],
+			"faces": {
+				"north": {"uv": [4, 12, 6, 16], "texture": "#texture"},
+				"east": {"uv": [6, 12, 10, 16], "texture": "#texture"},
+				"south": {"uv": [4, 12, 6, 16], "texture": "#texture"},
+				"west": {"uv": [6, 12, 10, 16], "texture": "#texture"},
+				"up": {"uv": [4, 12, 6, 16], "texture": "#texture"},
+				"down": {"uv": [4, 12, 6, 16], "texture": "#texture"}
+			}
+		}
+	]
+}

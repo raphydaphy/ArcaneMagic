@@ -66,6 +66,7 @@ public class ModRegistry
 	public static PumpBlock PUMP = new PumpBlock();
 	public static SmelterBlock SMELTER = new SmelterBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
+	public static ForgeBlock FORGE = new ForgeBlock();
 
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
 	public static ScepterItem PURE_SCEPTER = new ScepterItem(50);
@@ -95,6 +96,7 @@ public class ModRegistry
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "pump"), PUMP);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "smelter"), SMELTER);
 		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table"), TRANSFIGURATION_TABLE);
+		Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "forge"), FORGE);
 
 		// Item Block Registration
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "altar", new BlockItem(ALTAR, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
@@ -105,6 +107,7 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "pump", new BlockItem(PUMP, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "smelter", new BlockItem(SMELTER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
+		Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "forge", new BlockItem(FORGE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
 
 		// Fluid Registration
 		Registry.register(Registry.FLUID, "liquified_soul", LIQUIFIED_SOUL);
