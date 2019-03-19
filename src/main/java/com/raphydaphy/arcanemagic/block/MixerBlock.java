@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.MixerBlockEntity;
+import com.raphydaphy.arcanemagic.client.render.IExtraRenderLayers;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
@@ -38,7 +39,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
+public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, IExtraRenderLayers
 {
 	private static final Map<Direction, VoxelShape> bottom = new HashMap<>();
 	private static final VoxelShape top;
@@ -85,6 +86,11 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider
 	public BlockRenderLayer getRenderLayer()
 	{
 		return BlockRenderLayer.CUTOUT;
+	}
+
+	@Override
+	public BlockRenderLayer[] getExtraRenderLayers() {
+		return new BlockRenderLayer[]{BlockRenderLayer.TRANSLUCENT};
 	}
 
 	@Override

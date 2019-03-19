@@ -7,7 +7,8 @@
 	"MinecraftClientMixin",
 	"InGameHudMixin",
 	"GameRendererMixin",
-    "ModelLoaderMixin"
+    "ModelLoaderMixin",
+    "ChunkRendererMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

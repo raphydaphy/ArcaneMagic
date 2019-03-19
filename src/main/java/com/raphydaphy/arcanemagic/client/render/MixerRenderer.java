@@ -120,32 +120,29 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 
 	private static void renderTank(MixerBlockEntity entity, double renderX, double renderY, double renderZ)
 	{
-		GlStateManager.pushMatrix();
-
-		MinecraftClient.getInstance().getTextureManager().bindTexture(tankTexture);
-		Tessellator tess = Tessellator.getInstance();
-		BufferBuilder builder = tess.getBufferBuilder();
-
-		double pixel = 1d / 16d;
-
-		builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
-		RenderUtils.renderBox(builder, renderX + pixel * 2, renderY + pixel * 0.001, renderZ + pixel * 2, renderX + pixel * 14, renderY + pixel * 14, renderZ + pixel * 14, outer, new int[]{1, 1, 1, 1, 1, 1});
-		RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * 13, renderZ + pixel * 13, 255, 255, 255, 128, inner, new int[]{1, 1, 1, 1, 1, 1});
-
-		tess.draw();
 		int water = 0;
 		FluidInstance[] fluids = entity.getFluids(null);
 		if (fluids.length >= 1 && fluids[0] != null && fluids[0].getFluid() == Fluids.WATER)
 		{
 			water = (int) (fluids[0].getAmount() / (float) MixerBlockEntity.MAX_FLUID * 12);
 		}
-		if (water > 0)
-		{
+		if (water > 0) {
+
+			GlStateManager.pushMatrix();
+
+			Tessellator tess = Tessellator.getInstance();
+			BufferBuilder builder = tess.getBufferBuilder();
+
+			double pixel = 1d / 16d;
+
+			GlStateManager.enableBlend();
+			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+			GlStateManager.enableAlphaTest();
+
 			int frame = 0;
 
 			World world;
-			if ((world = entity.getWorld()) != null)
-			{
+			if ((world = entity.getWorld()) != null) {
 				frame = (int) ((world.getTime() / 2) % 32);
 			}
 			RenderUtils.TextureBounds[] waterBounds = {
@@ -159,12 +156,15 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 			MinecraftClient.getInstance().getTextureManager().bindTexture(waterTexture);
 			builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 			int waterColor = BiomeColors.waterColorAt(entity.getWorld(), entity.getPos());
-			RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 255, waterBounds, new int[]{1, 1, 1, 1, 1, 1});
+			RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 200, waterBounds, new int[]{1, 1, 1, 1, 1, 1});
 
 			tess.draw();
-		}
 
-		GlStateManager.popMatrix();
+			GlStateManager.disableBlend();
+			GlStateManager.disableAlphaTest();
+
+			GlStateManager.popMatrix();
+		}
 	}
 
 	private class MixerRenderInstance
