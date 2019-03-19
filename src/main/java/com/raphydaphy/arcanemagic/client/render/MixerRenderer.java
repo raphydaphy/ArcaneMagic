@@ -113,6 +113,9 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 
 			GlStateManager.enableCull();
 			GlStateManager.depthMask(true);
+			GlStateManager.disableBlend();
+			GuiLighting.disable();
+
 			GlStateManager.popMatrix();
 			renderQueue.clear();
 		}
@@ -126,44 +129,30 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 		{
 			water = (int) (fluids[0].getAmount() / (float) MixerBlockEntity.MAX_FLUID * 12);
 		}
-		if (water > 0) {
-
-			GlStateManager.pushMatrix();
-
+		if (water > 0)
+		{
 			Tessellator tess = Tessellator.getInstance();
 			BufferBuilder builder = tess.getBufferBuilder();
 
 			double pixel = 1d / 16d;
 
-			GlStateManager.enableBlend();
-			GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-			GlStateManager.enableAlphaTest();
-
 			int frame = 0;
 
 			World world;
-			if ((world = entity.getWorld()) != null) {
-				frame = (int) ((world.getTime() / 2) % 32);
-			}
-			RenderUtils.TextureBounds[] waterBounds = {
-					new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512), // Bottom
-					new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512), // Top
-					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512), // North
-					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512), // South
-					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512), // West
-					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512)}; // East
+			if ((world = entity.getWorld()) != null) frame = (int) ((world.getTime() / 2) % 32);
 
 			MinecraftClient.getInstance().getTextureManager().bindTexture(waterTexture);
 			builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 			int waterColor = BiomeColors.waterColorAt(entity.getWorld(), entity.getPos());
-			RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 200, waterBounds, new int[]{1, 1, 1, 1, 1, 1});
+			RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 200, new RenderUtils.TextureBounds[] {
+					new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512),
+					new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512),
+					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512),
+					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512),
+					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512),
+					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512)}, new int[]{1, 1, 1, 1, 1, 1});
 
 			tess.draw();
-
-			GlStateManager.disableBlend();
-			GlStateManager.disableAlphaTest();
-
-			GlStateManager.popMatrix();
 		}
 	}
 
