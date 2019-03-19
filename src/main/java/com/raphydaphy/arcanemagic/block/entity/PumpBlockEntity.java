@@ -6,7 +6,6 @@ import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidContainer;
 import io.github.prospector.silk.fluid.FluidInstance;
@@ -47,15 +46,12 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (isBottom() || tag.containsKey(WATER_KEY))
+		if (tag.containsKey(WATER_KEY))
 		{
-			if (tag.containsKey(WATER_KEY))
-			{
-				water = new FluidInstance((CompoundTag) tag.getTag(WATER_KEY));
-			} else
-			{
-				water = new FluidInstance(Fluids.WATER);
-			}
+			water = new FluidInstance((CompoundTag) tag.getTag(WATER_KEY));
+		} else
+		{
+			water = new FluidInstance(Fluids.WATER);
 		}
 	}
 
@@ -135,7 +131,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 					markDirty();
 
 					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCK, 1, 1);
-					ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toTag(new CompoundTag())),world, getPos(), 64);
+					ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toTag(new CompoundTag())), world, getPos(), 64);
 				}
 			}
 		}

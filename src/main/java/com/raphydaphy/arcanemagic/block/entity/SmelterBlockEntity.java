@@ -59,9 +59,12 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 					}
 				} else
 				{
-					if (smeltTime % 10 == 0)
+					if (world.getTime() % 10 == 0)
 					{
 						markDirty();
+					} else
+					{
+						super.markDirty();
 					}
 
 					if (smeltTime == TOTAL_SMELTING_TIME - 4)
@@ -165,7 +168,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	public void fromTag(CompoundTag tag)
 	{
 		super.fromTag(tag);
-		if (isBottom())
+		if (tag.getBoolean(ArcaneMagicConstants.IS_BOTTOM_KEY))
 		{
 			smeltTime = tag.getInt(SMELT_TIME_KEY);
 			liquified_soul = new FluidInstance(tag);
