@@ -24,6 +24,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @SuppressWarnings("WeakerAccess")
@@ -71,21 +72,14 @@ public class IronDaggerModel implements UnbakedModel
 	@Override
 	public BakedModel bake(ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer)
 	{
-		Map<CacheKey, BakedModel> variants = new HashMap<>();
-		for (ForgeCrystal hilt : ForgeCrystal.values())
-		{
-			for (ForgeCrystal pommel : ForgeCrystal.values())
-			{
-				Map<String, String> newTextures = new HashMap<>();
-				newTextures.put("layer0", BASE.toString());
-				if (hilt != ForgeCrystal.EMPTY) newTextures.put("layer1", hilt.hilt.toString());
-				if (pommel != ForgeCrystal.EMPTY) newTextures.put(hilt == ForgeCrystal.EMPTY ? "layer1" : "layer2", pommel.pommel.toString());
-				CustomJsonUnbakedModel baseCopy = new CustomJsonUnbakedModel(BASE_MODEL, (JsonUnbakedModel) baseModel, newTextures, loader::getOrLoadModel);
-				variants.put(new CacheKey(hilt, pommel), doBake(baseCopy, loader, bakedTextureGetter, rotationContainer));
-			}
-		}
-
-		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, rotationContainer), variants);
+		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, rotationContainer), (hilt,pommel)->{
+			Map<String, String> newTextures = new HashMap<>();
+			newTextures.put("layer0", BASE.toString());
+			if (hilt != ForgeCrystal.EMPTY) newTextures.put("layer1", hilt.hilt.toString());
+			if (pommel != ForgeCrystal.EMPTY) newTextures.put(hilt == ForgeCrystal.EMPTY ? "layer1" : "layer2", pommel.pommel.toString());
+			CustomJsonUnbakedModel baseCopy = new CustomJsonUnbakedModel(BASE_MODEL, (JsonUnbakedModel) baseModel, newTextures, loader::getOrLoadModel);
+			return doBake(baseCopy, loader, bakedTextureGetter, rotationContainer);
+		});
 	}
 
 	// copied from net.minecraft.client.render.model.ModelLoader.bake because the generated models don't have ids
@@ -105,19 +99,20 @@ public class IronDaggerModel implements UnbakedModel
 	private static final class IronDaggerOverrideHandler extends ModelItemPropertyOverrideList
 	{
 
-		private final Map<CacheKey, BakedModel> cache;
+		private final Map<CacheKey, BakedModel> cache = new HashMap<>();
+		private final BiFunction<ForgeCrystal, ForgeCrystal, BakedModel> lazyBaker;
 
-		public IronDaggerOverrideHandler(Map<CacheKey, BakedModel> cache)
+		public IronDaggerOverrideHandler(BiFunction<ForgeCrystal, ForgeCrystal, BakedModel> lazyBaker)
 		{
 			super(null, null, (u) -> null, Collections.emptyList());
-			this.cache = cache;
+			this.lazyBaker = lazyBaker;
 		}
 
 		@Override
 		public BakedModel apply(BakedModel originalModel, ItemStack stack, World world, LivingEntity entity)
 		{
-			ArcaneMagicUtils.ForgeCrystal hilt = null;
-			ArcaneMagicUtils.ForgeCrystal pommel = null;
+			ArcaneMagicUtils.ForgeCrystal hilt = ForgeCrystal.EMPTY;
+			ArcaneMagicUtils.ForgeCrystal pommel = ForgeCrystal.EMPTY;
 			CacheKey key;
 
 			CompoundTag tag = stack.getTag();
@@ -127,18 +122,13 @@ public class IronDaggerModel implements UnbakedModel
 				pommel = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
 			}
 
-			if (hilt == null || pommel == null)
+			if (hilt == ForgeCrystal.EMPTY && pommel == ForgeCrystal.EMPTY)
 			{
 				return originalModel;
 			}
 			key = new CacheKey(hilt, pommel);
 
-			if (cache.containsKey(key))
-			{
-				return cache.get(key);
-			}
-
-			return originalModel;
+			return cache.computeIfAbsent(key, k->lazyBaker.apply(k.hilt, k.pommel));
 		}
 	}
 
@@ -147,10 +137,10 @@ public class IronDaggerModel implements UnbakedModel
 		private final BakedModel base;
 		private final IronDaggerOverrideHandler overrideHandler;
 
-		public IronDaggerBakedModel(BakedModel base, Map<CacheKey, BakedModel> cache)
+		public IronDaggerBakedModel(BakedModel base, BiFunction<ForgeCrystal, ForgeCrystal, BakedModel> lazyBaker)
 		{
 			this.base = base;
-			this.overrideHandler = new IronDaggerOverrideHandler(cache);
+			this.overrideHandler = new IronDaggerOverrideHandler(lazyBaker);
 		}
 
 		@Override
