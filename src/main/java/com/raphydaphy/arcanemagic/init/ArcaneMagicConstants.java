@@ -64,6 +64,11 @@ public class ArcaneMagicConstants
 	public static final String CRAFTED_GOLD_CRYSTAL_KEY = "CraftedGoldCrystal";
 	public static final String CRAFTED_SOUL_PENDANT_KEY = "CraftedSoulPendant";
 	public static final String ANALYZED_BLAST_FURNACE_KEY = "AnalyzedBlastFurnace";
+	public static final String CRAFTED_COAL_CRYSTAL_KEY = "CraftedCoalCrystal";
+	public static final String CRAFTED_REDSTONE_CRYSTAL_KEY = "CraftedRedstoneCrystal";
+	public static final String CRAFTED_LAPIS_CRYSTAL_KEY = "CraftedLapisCrystal";
+	public static final String CRAFTED_DIAMOND_CRYSTAL_KEY = "CraftedDiamondCrystal";
+	public static final String CRAFTED_EMERALD_CRYSTAL_KEY = "CraftedEmeraldCrystal";
 	public static final String CRAFTED_PURE_CRYSTAL_KEY = "CraftedPureCrystal";
 	public static final String PLACED_SMELTER_KEY = "PlacedSmelter";
 	public static final String ANALYZED_OBSIDIAN_KEY = "AnalyzedObsidian";

@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.util.Identifier;
@@ -22,7 +23,7 @@ public class PerfectionNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY);
+		return ArcaneMagicUtils.craftedAllCrystals(player);
 	}
 
 	@Override
@@ -43,8 +44,21 @@ public class PerfectionNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.pure_scepter").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_scepter")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.pure_crystal").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_crystal")).orElse(null)));
+		}
+
+		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
+		{
+			int secondText = NotebookElement.textPages("notebook.arcanemagic.perfection.1", 0) + firstText + 2;
+			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.perfection.1", 0, firstText + 2, page));
+
+			if (page == secondText + 1)
+			{
+				elements.add(new NotebookElement.Padding(4));
+				elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.pure_scepter").withPadding(8));
+				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_scepter")).orElse(null)));
+			}
 		}
 		return elements;
 	}
@@ -52,6 +66,6 @@ public class PerfectionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.perfection.0", 2) + 1;
+		return NotebookElement.textPages("notebook.arcanemagic.perfection.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY) ? NotebookElement.textPages("notebook.arcanemagic.perfection.1", 0) + 3 : 1);
 	}
 }

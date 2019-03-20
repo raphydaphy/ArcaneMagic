@@ -24,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.command.TagCommand;
 import net.minecraft.sortme.ItemScatterer;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -143,6 +144,14 @@ public class ArcaneMagicUtils
 			return true;
 		}
 		return false;
+	}
+
+	public static boolean craftedAllCrystals(DataHolder dataPlayer)
+	{
+		CompoundTag data = dataPlayer.getAdditionalData();
+		return data.getBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY) && data.getBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY)
+				&& data.getBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY) && data.getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY)
+				&& data.getBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY) && data.getBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY);
 	}
 
 	public static boolean insertFluidFromBucket(IWorld world, PlayerEntity player, Hand hand, Direction side, BlockPos pos, FluidContainer fluidContainer, Fluid fluid)

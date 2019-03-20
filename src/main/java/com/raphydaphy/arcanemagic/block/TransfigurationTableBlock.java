@@ -95,6 +95,46 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 								updated = true;
 								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY, true);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_STORAGE.getID().toString(), false);
+							} else if (output.getItem() == ModRegistry.COAL_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY))
+							{
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY, true);
+								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
+								{
+									updated = true;
+									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
+								}
+							} else if (output.getItem() == ModRegistry.REDSTONE_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY))
+							{
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY, true);
+								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
+								{
+									updated = true;
+									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
+								}
+							} else if (output.getItem() == ModRegistry.LAPIS_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY))
+							{
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY, true);
+								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
+								{
+									updated = true;
+									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
+								}
+							} else if (output.getItem() == ModRegistry.DIAMOND_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY))
+							{
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY, true);
+								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
+								{
+									updated = true;
+									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
+								}
+							} else if (output.getItem() == ModRegistry.EMERALD_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY))
+							{
+								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY, true);
+								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
+								{
+									updated = true;
+									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
+								}
 							} else if (output.getItem() == ModRegistry.PURE_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
 							{
 								updated = true;
@@ -147,6 +187,11 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 		}
 
 		ItemStack held = player.getStackInHand(hand);
+
+		if (held.isEmpty() && hand == Hand.OFF && !player.getMainHandStack().isEmpty())
+		{
+			return false;
+		}
 
 		if (!held.isEmpty() && held.getItem() instanceof ScepterItem)
 		{
