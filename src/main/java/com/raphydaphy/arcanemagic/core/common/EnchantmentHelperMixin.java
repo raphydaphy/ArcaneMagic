@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import org.apache.commons.lang3.mutable.MutableFloat;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,7 +23,7 @@ public class EnchantmentHelperMixin
 		CompoundTag tag;
 		if (hand.getItem() instanceof ICrystalEquipment && (tag = hand.getTag()) != null)
 		{
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.LAPIS)
 			{
 				info.setReturnValue(info.getReturnValue() + 1);
@@ -39,7 +38,7 @@ public class EnchantmentHelperMixin
 		CompoundTag tag;
 		if (hand.getItem() instanceof ICrystalEquipment && (tag = hand.getTag()) != null)
 		{
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.EMERALD)
 			{
 				info.setReturnValue(info.getReturnValue() + 0.2f);
@@ -53,15 +52,15 @@ public class EnchantmentHelperMixin
 		CompoundTag tag;
 		if (stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null)
 		{
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
-			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
 
 			if (passive == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 			{
 				info.setReturnValue(info.getReturnValue() + 1);
 			} else if (active == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
 			{
-				if (tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) > 0)
+				if (tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0)
 				{
 					info.setReturnValue(info.getReturnValue() + 15);
 				}

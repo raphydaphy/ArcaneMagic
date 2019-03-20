@@ -17,6 +17,7 @@ import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
 
 public class ArcaneMagicClient implements ClientModInitializer
@@ -47,8 +48,12 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		ClientTickCallback.EVENT.register((client) ->
 		{
-			ParticleRenderer.INSTANCE.update();
-			TremorTracker.updateClient();
+			if (!MinecraftClient.getInstance().isPaused())
+			{
+				ParticleRenderer.INSTANCE.update();
+				TremorTracker.updateClient();
+				HudRenderer.update();
+			}
 		});
 
 		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);

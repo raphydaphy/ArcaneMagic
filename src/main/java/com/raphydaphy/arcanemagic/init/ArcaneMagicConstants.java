@@ -43,9 +43,10 @@ public class ArcaneMagicConstants
 	public static final String TIME_SINCE_VOID_SOUND_KEY = "TimeSinceVoidSound";
 
 	public static final String UUID_KEY = "CrystalItemIdentifier";
-	public static final String PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
-	public static final String ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
-	public static final String ACTIVE_TIMER_KEY = "ActiveTimer";
+	public static final String DAGGER_PASSIVE_CRYSTAL_KEY = "PassiveCrystal";
+	public static final String DAGGER_ACTIVE_CRYSTAL_KEY = "ActiveCrystal";
+	public static final String DAGGER_TIMER_KEY = "ActiveTimer";
+	public static final String DAGGER_IS_ACTIVE_KEY = "IsActive";
 
 	// For the Discovery parchment
 	public static final String DROWNED_KILLS_KEY = "DrownedKills"; // How many Drowned Zombies the player has killed, capped at 5

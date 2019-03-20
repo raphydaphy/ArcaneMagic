@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 public class TransfigurationCategory implements RecipeCategory<TransfigurationDisplay>
 {
 	private static final Identifier DISPLAY_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/recipe_display.png");
-	private static final Identifier SOUL_METER_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_meter.png");
+	private static final Identifier SOUL_METER_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/circle_hud.png");
 
 	@Override
 	public Identifier getIdentifier()

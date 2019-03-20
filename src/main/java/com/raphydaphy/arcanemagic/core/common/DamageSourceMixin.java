@@ -29,7 +29,7 @@ public abstract class DamageSourceMixin
 			CompoundTag tag;
 			if (!stack.isEmpty() && stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null)
 			{
-				ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+				ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
 				if (passive == ArcaneMagicUtils.ForgeCrystal.DIAMOND)
 				{
 					info.setReturnValue(true);

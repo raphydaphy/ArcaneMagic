@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.DaggerItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
-import com.raphydaphy.arcanemagic.item.NotebookItem;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
@@ -38,7 +37,7 @@ public abstract class ItemStackMixin
 		CompoundTag tag;
 		if (getItem() instanceof ICrystalEquipment && (tag = getTag()) != null)
 		{
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.COAL)
 			{
 				info.setReturnValue((int)(info.getReturnValue() * 1.2f));
@@ -50,9 +49,9 @@ public abstract class ItemStackMixin
 	private void applyDamage(int amount, Random rand, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> info)
 	{
 		CompoundTag tag = getTag();
-		if (tag != null && tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) > 0)
+		if (tag != null && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0)
 		{
-			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
 			if (active == ArcaneMagicUtils.ForgeCrystal.COAL)
 			{
 				info.setReturnValue(false);
@@ -68,8 +67,8 @@ public abstract class ItemStackMixin
 		{
 			DaggerItem dagger = (DaggerItem) getItem();
 			Multimap<String, EntityAttributeModifier> map = HashMultimap.create();
-			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY));
-			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
+			ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
 
 			double speed = dagger.getSpeed();
 			float damage = dagger.getWeaponDamage();
@@ -77,7 +76,7 @@ public abstract class ItemStackMixin
 			if (passive == ArcaneMagicUtils.ForgeCrystal.GOLD)
 			{
 				speed += 0.5;
-			} else if (active == ArcaneMagicUtils.ForgeCrystal.GOLD && tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) > 0)
+			} else if (active == ArcaneMagicUtils.ForgeCrystal.GOLD && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0)
 			{
 				speed += 128;
 			}
@@ -101,8 +100,8 @@ public abstract class ItemStackMixin
 				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.UUID_KEY);
 				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.UUID_KEY)))
 				{
-					int timerOne = tagOne.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
-					int timerTwo = tagTwo.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
+					int timerOne = tagOne.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
+					int timerTwo = tagTwo.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
 					if ((timerOne != 0 && timerTwo != 0) || (timerTwo == 0 && timerOne == 0))
 					{
 						info.setReturnValue(true);

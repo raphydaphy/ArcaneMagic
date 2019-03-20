@@ -60,8 +60,8 @@ public abstract class LivingEntityMixin
 			CompoundTag tag;
 			if (stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null)
 			{
-				ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
-				int timer = tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
+				ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
+				int timer = tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
 				if (active == ArcaneMagicUtils.ForgeCrystal.GOLD && timer > 0)
 				{
 					// TODO: Disable hit cooldown.. how?

@@ -65,16 +65,16 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 						if (getInvStack(1).getItem() == Items.REDSTONE)
 						{
 							// Make sure we aren't adding the a crystal that is already present somewhere on the item
-							if (!outputTag.containsKey(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY).equals(((CrystalItem) crystal).type.id))
+							if (!outputTag.containsKey(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY).equals(((CrystalItem) crystal).type.id))
 							{
-								output.getOrCreateTag().putString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+								output.getOrCreateTag().putString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
 							}
 						} else if (getInvStack(1).getItem() == Items.LAPIS_LAZULI)
 						{
 							// Make sure we aren't adding the a crystal that is already present somewhere on the item
-							if (!outputTag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY).equals(((CrystalItem) crystal).type.id))
+							if (!outputTag.containsKey(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY) || !outputTag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY).equals(((CrystalItem) crystal).type.id))
 							{
-								output.getOrCreateTag().putString(ArcaneMagicConstants.PASSIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
+								output.getOrCreateTag().putString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY, ((CrystalItem) crystal).type.id);
 							}
 						}
 					}

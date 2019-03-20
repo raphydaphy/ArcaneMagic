@@ -207,7 +207,7 @@ class NotebookElement
 				{
 					GlStateManager.pushMatrix();
 
-					MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_meter.png"));
+					MinecraftClient.getInstance().getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/misc/circle_hud.png"));
 
 					float percent = ((float) ((TransfigurationRecipe) this.recipe).getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
 					int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);

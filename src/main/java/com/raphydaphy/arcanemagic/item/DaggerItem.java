@@ -8,9 +8,6 @@ import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -22,13 +19,11 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.StringTextComponent;
-import net.minecraft.text.TextComponent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import java.util.List;
 import java.util.UUID;
 
 public class DaggerItem extends SwordItem implements ICrystalEquipment
@@ -61,20 +56,12 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 	{
 		ItemStack stack = player.getStackInHand(hand);
 		CompoundTag tag = stack.getTag();
-		if (player.isSneaking() && tag != null && tag.containsKey(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY))
+		if (player.isSneaking() && tag != null && tag.containsKey(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY))
 		{
-			if (!player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER) && tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY) <= 0)
+			if (!player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER) && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) <= 0)
 			{
-				int time = 10 * 20;
-				ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.ACTIVE_CRYSTAL_KEY));
-				if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
-				{
-					time = 5 * 20;
-				} else if (crystal == ArcaneMagicUtils.ForgeCrystal.COAL)
-				{
-					time = 20 * 20;
-				}
-				tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, time);
+				tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, true);
+				tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, activeDuration(stack));
 				if (world.isClient)
 				{
 					world.playSound(player, player.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
@@ -85,31 +72,49 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		return new TypedActionResult<>(ActionResult.PASS, stack);
 	}
 
+	public static int activeDuration(ItemStack stack)
+	{
+		CompoundTag tag = stack.getTag();
+		if (tag != null && tag.containsKey(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY))
+		{
+			ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
+			if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
+			{
+				return 5 * 20;
+			} else if (crystal == ArcaneMagicUtils.ForgeCrystal.COAL)
+			{
+				return 20 * 20;
+			}
+			return 10 * 20;
+		}
+		return 0;
+	}
+
 	@Override
 	public void onEntityTick(ItemStack stack, World world, Entity entity, int slot, boolean selected)
 	{
 		CompoundTag tag = stack.getTag();
 		if (tag != null)
 		{
-			int timer = tag.getInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY);
+			int timer = tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
 			if (timer > 0)
 			{
-				tag.putInt(ArcaneMagicConstants.ACTIVE_TIMER_KEY, timer - 1);
+				tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, timer - 1);
 				if (entity instanceof PlayerEntity)
 				{
-					if (!world.isClient)
+					if (timer - 1 == 0)
 					{
-						((PlayerEntity) entity).addChatMessage(new StringTextComponent((timer / 20) + "s Remaining"), true);
-					} else if (timer - 1 == 0)
-					{
-						world.playSound((PlayerEntity) entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
+						tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
 						((PlayerEntity)entity).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+						if (world.isClient)
+						{
+							world.playSound((PlayerEntity) entity, entity.getPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
+						}
 					}
 				}
 			}
 		}
 	}
-
 
 	@Override
 	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
