@@ -2,6 +2,7 @@ package com.raphydaphy.arcanemagic.block;
 
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
+import com.raphydaphy.arcanemagic.client.render.IExtraRenderLayers;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
@@ -32,7 +33,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityProvider
+public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityProvider, IExtraRenderLayers
 {
 	private static final VoxelShape shape;
 
@@ -249,5 +250,11 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}
+	}
+
+	@Override
+	public BlockRenderLayer[] getExtraRenderLayers()
+	{
+		return new BlockRenderLayer[] { BlockRenderLayer.TRANSLUCENT };
 	}
 }

@@ -204,12 +204,8 @@ public class ArcaneMagicUtils
 		ItemStack stackInTable = ((Inventory) container).getInvStack(slot);
 
 		// Try to insert stack
-		if (!player.isSneaking())
+		if (!player.isSneaking() && !held.isEmpty())
 		{
-			if (held.isEmpty())
-			{
-				return false;
-			}
 			if (stackInTable.isEmpty())
 			{
 				ItemStack insertStack = held.copy();

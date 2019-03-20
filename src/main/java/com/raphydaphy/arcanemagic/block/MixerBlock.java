@@ -73,7 +73,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, 
 
 	public MixerBlock()
 	{
-		super(FabricBlockSettings.of(Material.STONE).strength(3.5f, 3.5f).build());
+		super(FabricBlockSettings.of(Material.WOOD).strength(3.5f, 3.5f).build());
 	}
 
 	@Override
