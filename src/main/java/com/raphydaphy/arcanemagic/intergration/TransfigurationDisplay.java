@@ -1,5 +1,5 @@
 package com.raphydaphy.arcanemagic.intergration;
-
+/*
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.RecipeDisplay;
 import net.minecraft.item.ItemStack;
@@ -56,3 +56,4 @@ public class TransfigurationDisplay implements RecipeDisplay
 		return ArcaneMagicREIPlugin.TRANSFIGURATION;
 	}
 }
+*/

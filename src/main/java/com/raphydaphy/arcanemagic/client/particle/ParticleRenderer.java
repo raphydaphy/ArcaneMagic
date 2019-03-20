@@ -3,10 +3,10 @@ package com.raphydaphy.arcanemagic.client.particle;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.class_4184;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.render.BufferBuilder;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.texture.SpriteAtlasTexture;
@@ -54,22 +54,22 @@ public class ParticleRenderer
 		}
 	}
 
-	public void render(float partialTicks, class_4184 camera) // Camera
+	public void render(float partialTicks, Camera camera) // Camera
 	{
 		GlStateManager.pushMatrix();
 
-		float rotationX = MathHelper.cos(camera.method_19330() * 0.017453292F); // yaw
-		float rotationZ = MathHelper.sin(camera.method_19330() * 0.017453292F); // yaw
-		float rotationYZ = -rotationZ * MathHelper.sin(camera.method_19329() * 0.017453292F); // pitch
-		float rotationXY = rotationX * MathHelper.sin(camera.method_19329() * 0.017453292F); // pitch
-		float rotationXZ = MathHelper.cos(camera.method_19329() * 0.017453292F); // pitch
+		float rotationX = MathHelper.cos(camera.getYaw() * 0.017453292F); // yaw
+		float rotationZ = MathHelper.sin(camera.getYaw() * 0.017453292F); // yaw
+		float rotationYZ = -rotationZ * MathHelper.sin(camera.getPitch() * 0.017453292F); // pitch
+		float rotationXY = rotationX * MathHelper.sin(camera.getPitch() * 0.017453292F); // pitch
+		float rotationXZ = MathHelper.cos(camera.getPitch() * 0.017453292F); // pitch
 
 		PlayerEntity player = MinecraftClient.getInstance().player;
 		if (player != null)
 		{
-			Particle.cameraX = camera.method_19326().x; // getPos
-			Particle.cameraY = camera.method_19326().y; // getPos
-			Particle.cameraZ = camera.method_19326().z; // getPos
+			Particle.cameraX = camera.getPos().x; // getPos
+			Particle.cameraY = camera.getPos().y; // getPos
+			Particle.cameraZ = camera.getPos().z; // getPos
 
 			GlStateManager.enableAlphaTest();
 			GlStateManager.enableBlend();

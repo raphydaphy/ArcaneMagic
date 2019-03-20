@@ -1,5 +1,5 @@
 package com.raphydaphy.arcanemagic.intergration;
-
+/*
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import me.shedaniel.rei.api.ItemRegistry;
@@ -42,3 +42,4 @@ public class ArcaneMagicREIPlugin implements REIPlugin
 		recipeHelper.registerSpeedCraftButtonArea(TRANSFIGURATION, null);
 	}
 }
+*/

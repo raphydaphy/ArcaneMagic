@@ -93,7 +93,7 @@ public abstract class LiquifiedSoulFluid extends BaseFluid
 	@Override
 	public BlockState toBlockState(FluidState state)
 	{
-		return ModRegistry.LIQUIFIED_SOUL_BLOCK.getDefaultState().with(FluidBlock.field_11278, method_15741(state));
+		return ModRegistry.LIQUIFIED_SOUL_BLOCK.getDefaultState().with(FluidBlock.LEVEL, method_15741(state));
 	}
 
 	public static class Flowing extends LiquifiedSoulFluid

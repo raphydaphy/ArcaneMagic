@@ -1,5 +1,5 @@
 package com.raphydaphy.arcanemagic.intergration;
-
+/*
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
@@ -54,7 +54,6 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 			@Override
 			public void draw(int mouseX, int mouseY, float partialTicks)
 			{
-				super.draw(mouseX, mouseY, partialTicks);
 				GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GuiLighting.disable();
 				MinecraftClient.getInstance().getTextureManager().bindTexture(DISPLAY_TEXTURE);
@@ -66,10 +65,10 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 				int row = stage / 10;
 				int col = stage % 10;
 
-				drawTexturedRect(/* x */ startPoint.x + 58, /* y */ startPoint.y + 9,
-						/* min-u */ 36 * col, /* min-v */ 36 + 36 * row,
-						/* max-u */ 36, /* max-v */ 36,
-						/* width */ 360, /* height */ 360);
+				drawTexturedRect(startPoint.x + 58, startPoint.y + 9,
+						36 * col, 36 + 36 * row,
+						36, 36,
+						360, 360);
 			}
 		}));
 		List<List<ItemStack>> input = recipeDisplaySupplier.get().getInput();
@@ -130,3 +129,4 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 		};
 	}
 }
+*/
