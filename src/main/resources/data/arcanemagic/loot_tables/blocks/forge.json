@@ -9,13 +9,13 @@
 		  "conditions": [
 			{
 			  "condition": "minecraft:block_state_property",
-			  "block": "arcanemagic:pump",
+			  "block": "arcanemagic:forge",
 			  "properties": {
-				"half": "lower"
+				"part": "front_lower"
 			  }
 			}
 		  ],
-		  "name": "arcanemagic:pump"
+		  "name": "arcanemagic:forge"
 		}
 	  ],
 	  "conditions": [
