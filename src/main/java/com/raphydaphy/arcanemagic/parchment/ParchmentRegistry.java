@@ -36,6 +36,6 @@ public class ParchmentRegistry
 				}
 			}
 		}
-		return null;
+		return REGISTRY.get(0);
 	}
 }

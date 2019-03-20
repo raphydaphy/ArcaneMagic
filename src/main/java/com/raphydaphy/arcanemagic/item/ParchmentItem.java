@@ -32,7 +32,7 @@ public class ParchmentItem extends Item
 	public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand)
 	{
 		ItemStack stack = player.getStackInHand(hand);
-		if (!player.isSneaking())
+		if (stack.getItem() == ModRegistry.WRITTEN_PARCHMENT && !player.isSneaking())
 		{
 			IParchment parchment = ParchmentRegistry.getParchment(stack);
 			if (parchment != null && (((ParchmentItem) stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient())
