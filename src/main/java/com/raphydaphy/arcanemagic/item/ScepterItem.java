@@ -317,15 +317,19 @@ public class ScepterItem extends SoulStorageItem
 	@Override
 	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
 	{
+		super.onCrafted(stack, world, player);
 		if (!world.isClient && player != null)
 		{
-			if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
+			if (this == ModRegistry.GOLDEN_SCEPTER)
 			{
-				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
-				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
-				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
-				((DataHolder) player).markAdditionalDataDirty();
-				ArcaneMagicUtils.unlockRecipe(player, "notebook");
+				if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
+				{
+					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+					((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
+					((DataHolder) player).markAdditionalDataDirty();
+					ArcaneMagicUtils.unlockRecipe(player, "notebook");
+				}
 			}
 		}
 	}

@@ -45,7 +45,7 @@ public abstract class ScreenMixin extends ScreenComponent
 	@Inject(at = @At("HEAD"), method = "drawStackTooltip", cancellable = true)
 	private void drawStackTooltip(ItemStack stack, int int_1, int int_2, CallbackInfo info)
 	{
-		if (stack.getItem() instanceof SoulStorageItem)
+		if (stack.getItem() instanceof SoulStorageItem && stack.hasTag())
 		{
 			drawSoulTooltip(stack, getStackTooltip(stack), int_1, int_2);
 			info.cancel();
