@@ -1,16 +1,15 @@
 package com.raphydaphy.arcanemagic;
 
 import com.raphydaphy.arcanemagic.block.entity.*;
+import com.raphydaphy.arcanemagic.client.ClientEvents;
 import com.raphydaphy.arcanemagic.client.model.ArcaneModelLoader;
 import com.raphydaphy.arcanemagic.client.model.IronDaggerModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.*;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.raphydaphy.arcanemagic.network.PlayerDataUpdatePacket;
-import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
-import com.raphydaphy.arcanemagic.network.TremorPacket;
+import com.raphydaphy.arcanemagic.network.*;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.util.TremorTracker;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;

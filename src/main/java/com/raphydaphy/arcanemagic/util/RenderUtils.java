@@ -87,6 +87,7 @@ public class RenderUtils
 		double pixel = 0.0625;
 		renderBox(builder, x * pixel, y * pixel, z * pixel, (x + xSize) * pixel, (y + ySize) * pixel, (z + zSize) * pixel, 255, 255, 255, 255, textures, new int[]{1, 1, 1, 1, 1, 1});
 	}
+
 	/**
 	 * Draws a box with the specified dimensions
 	 * Expects drawing in GL_QUADS mode

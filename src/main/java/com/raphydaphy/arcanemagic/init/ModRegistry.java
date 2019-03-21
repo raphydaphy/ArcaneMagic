@@ -7,18 +7,12 @@ import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
-import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
-import com.raphydaphy.arcanemagic.network.TremorPacket;
+import com.raphydaphy.arcanemagic.network.*;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipeSerializer;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.raphydaphy.arcanemagic.util.DataHolder;
-import com.raphydaphy.arcanemagic.util.ModDamageSource;
-import com.raphydaphy.arcanemagic.util.TremorTracker;
+import com.raphydaphy.arcanemagic.util.*;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -139,24 +133,37 @@ public class ModRegistry
 		// Command Registration
 		CommandRegistry.INSTANCE.register(false, dispatcher -> dispatcher.register((ServerCommandManager.literal("arcanemagic").requires((command) -> command.hasPermissionLevel(2))
 				.then(ServerCommandManager.literal("tremor").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
-						.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(0)).then(ServerCommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
-						{
-							ArcaneMagicPacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.method_9315(command, "target"));
-							return 1;
-						}))))))
+				.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(0)).then(ServerCommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
+				{
+					ArcaneMagicPacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.method_9315(command, "target"));
+					return 1;
+				})))))
+				.then(ServerCommandManager.literal("cutscene").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
+				.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(1)).executes(command ->
+				{
+					DataHolder dataPlayer = (DataHolder)EntityArgumentType.method_9315(command, "target");
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, true);
+					dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_TIME_LEFT_KEY, IntegerArgumentType.getInteger(command, "duration"));
+					dataPlayer.markAdditionalDataDirty();
+					return 1;
+				})))))
 				.then(ServerCommandManager.literal("reset").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
-						.executes(command ->
-						{
-							ServerPlayerEntity player = EntityArgumentType.method_9315(command, "target");
-							((DataHolder) player).setAdditionalData(new CompoundTag());
-							((DataHolder) player).markAdditionalDataDirty();
-							command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
-							return 1;
-						})))));
+				.executes(command ->
+				{
+					ServerPlayerEntity player = EntityArgumentType.method_9315(command, "target");
+					((DataHolder) player).setAdditionalData(new CompoundTag());
+					((DataHolder) player).markAdditionalDataDirty();
+					command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
+					return 1;
+				})))));
 
 
 		// Callback Registration
-		ServerTickCallback.EVENT.register((callback) -> TremorTracker.updateServer(callback.getWorld(DimensionType.OVERWORLD)));
+		ServerTickCallback.EVENT.register((callback) ->
+		{
+			TremorTracker.updateServer(callback.getWorld(DimensionType.OVERWORLD));
+			CutsceneManager.update(callback.getWorlds());
+		});
 
 		// Server-side Packet Registration
 		ServerSidePacketRegistry.INSTANCE.register(NotebookUpdatePacket.ID, new NotebookUpdatePacket.Handler());

@@ -48,6 +48,10 @@ public class ArcaneMagicConstants
 	public static final String DAGGER_TIMER_KEY = "ActiveTimer";
 	public static final String DAGGER_IS_ACTIVE_KEY = "IsActive";
 
+	// Cutscenes
+	public static final String WATCHING_CUTSCENE_KEY = "WatchingCutscene";
+	public static final String CUTSCENE_TIME_LEFT_KEY = "CutsceneTimeLeft";
+
 	// For the Discovery parchment
 	public static final String DROWNED_KILLS_KEY = "DrownedKills"; // How many Drowned Zombies the player has killed, capped at 5
 	public static final String GATHER_QUEST_INDEXES_KEY = "GatherQuestIndexes"; // List of indexes in DiscoveryParchment.GATHER_QUEST_OPTIONS of new 1.13 & 1.14 items that need to be collected
