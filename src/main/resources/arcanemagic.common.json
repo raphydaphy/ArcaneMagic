@@ -11,7 +11,8 @@
 	"EnchantmentHelperMixin",
 	"DamageSourceMixin",
 	"PlayerEntityMixin",
-	"ServerPlayerEntityMixin"
+	"ServerPlayerEntityMixin",
+	"RecipeManagerMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

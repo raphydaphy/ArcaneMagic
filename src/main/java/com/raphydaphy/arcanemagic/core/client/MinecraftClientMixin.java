@@ -24,7 +24,7 @@ public class MinecraftClientMixin
 	}
 
 	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=render", target = "Lnet/minecraft/util/profiler/DisableableProfiler;push(Ljava/lang/String;)V"), method = "render", cancellable = true)
-	private void render(boolean something, CallbackInfo info)
+	private void render(boolean renderWorldIn, CallbackInfo info)
 	{
 		if (player != null)
 		{

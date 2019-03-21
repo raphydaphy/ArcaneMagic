@@ -39,10 +39,10 @@ dependencies {
 
 	// REI Dependencies
 	compile "blue.endless:jankson:${project.jankson_version}"
-	//modCompile "cloth:Cloth:${project.cloth_version}"
+	modCompile "cloth:Cloth:${project.cloth_version}"
 
 	// Roughly Enough Items
-	//modCompile "roughly-enough-items:RoughlyEnoughItems:${project.rei_version}"
+	modCompile "roughly-enough-items:RoughlyEnoughItems:${project.rei_version}"
 
 	// Plugin Loader
 	modCompile "info.tehnut.pluginloader:plugin-loader:${project.pluginloader_version}"
@@ -54,7 +54,7 @@ dependencies {
 	modCompile "com.google.code.findbugs:jsr305:3.0.1"
 
 	// ModMenu
-	//modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
+	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
 }
 
 processResources {
