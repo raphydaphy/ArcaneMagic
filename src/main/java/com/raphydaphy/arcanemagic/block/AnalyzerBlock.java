@@ -143,6 +143,14 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PUMPING.getID().toString(), false);
 					notebookUpdate = true;
 				}
+			} else if (stack.getItem() == Blocks.SOUL_SAND.getItem())
+			{
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY))
+				{
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
+					notebookUpdate = true;
+				}
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)

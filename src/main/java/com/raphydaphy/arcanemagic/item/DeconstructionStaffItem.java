@@ -7,6 +7,8 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.init.ModSounds;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
+import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.block.BedBlock;
 import net.minecraft.block.Block;
@@ -22,7 +24,6 @@ import net.minecraft.item.ItemUsageContext;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.crafting.CraftingRecipe;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.ActionResult;
@@ -51,13 +52,13 @@ public class DeconstructionStaffItem extends Item
 			DataHolder dataPlayer = (DataHolder)ctx.getPlayer();
 			if (!ctx.getWorld().isClient && dataPlayer != null)
 			{
-				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND))
+				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY))
 				{
 					ItemEntity entity = new ItemEntity(ctx.getWorld(), pos.getX() + ArcaneMagic.RANDOM.nextFloat(), pos.getY() + ArcaneMagic.RANDOM.nextFloat(), pos.getZ() + ArcaneMagic.RANDOM.nextFloat(), new ItemStack(ModRegistry.RELIC));
 					ctx.getWorld().spawnEntity(entity);
 
 					//TODO: Relic notebook section
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND, true);
+					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY, true);
 					dataPlayer.markAdditionalDataDirty();
 				}
 			}
@@ -145,8 +146,7 @@ public class DeconstructionStaffItem extends Item
 			{
 				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY, true);
-				// TODO: Deconstruction section
-				//ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
+				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
 			}
 		}

@@ -86,6 +86,7 @@ public class ArcaneMagicConstants
 	public static final String ANALYZED_REDSTONE_KEY = "AnalyzedRedstone";
 	public static final String ANALYZED_WATER_BUCKET_KEY = "AnalyzedWaterBucket";
 	public static final String EXPERIENCED_TREMOR_KEY = "ExperiencedTremor";
+	public static final String ANALYZED_SOUL_SAND_KEY = "AnalyzedSoulSand";
 	public static final String CRAFTED_DECONSTRUCTION_STAFF_KEY = "CraftedDeconstructionStaff";
-	public static final String DECONSTRUCTED_SOUL_SAND = "DeconstructedSoulSand";
+	public static final String DECONSTRUCTED_SOUL_SAND_KEY = "DeconstructedSoulSand";
 }

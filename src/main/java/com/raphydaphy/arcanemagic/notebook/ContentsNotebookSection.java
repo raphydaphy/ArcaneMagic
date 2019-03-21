@@ -31,6 +31,7 @@ public class ContentsNotebookSection implements INotebookSection
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.FLUID_TRANSPORT, ModRegistry.PIPE, "notebook.arcanemagic.fluid_transport.title", "notebook.arcanemagic.fluid_transport.desc").withPadding(5));
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.PUMPING, ModRegistry.PUMP, "notebook.arcanemagic.pumping.title", "notebook.arcanemagic.pumping.desc").withPadding(5));
 		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.TREMORS, Blocks.BEDROCK, "notebook.arcanemagic.tremors.title", "notebook.arcanemagic.tremors.desc").withPadding(5));
+		buttons.add((NotebookElement.ItemInfoButton) new NotebookElement.ItemInfoButton(NotebookSectionRegistry.DECONSTRUCTION, ModRegistry.DECONSTRUCTION_STAFF, "notebook.arcanemagic.deconstruction.title", "notebook.arcanemagic.deconstruction.desc").withPadding(5));
 	}
 
 	@Override

@@ -1,0 +1,23 @@
+{
+  "result": {
+	"item": "arcanemagic:deconstruction_staff"
+  },
+  "pattern": [
+	"pq ",
+	"qs ",
+	"  s"
+  ],
+  "type": "arcanemagic:transfiguration_shaped",
+  "key": {
+	"p": {
+	  "item": "arcanemagic:diamond_crystal"
+	},
+	"q": {
+	  "item": "minecraft:quartz"
+	},
+	"s": {
+	  "item": "minecraft:stick"
+	}
+  },
+  "soul": 35
+}
