@@ -21,7 +21,7 @@ public class ModEvents
 	{
 		if (entity instanceof LivingEntity && !(entity instanceof PlayerEntity) && ((LivingEntity) entity).getHealthMaximum() < 20)
 		{
-			BlockPos pos = entity.getPos();
+			BlockPos pos = entity.getBlockPos();
 			for (int x = -2; x < 2; x++)
 			{
 				for (int y = -1; y < 1; y++)

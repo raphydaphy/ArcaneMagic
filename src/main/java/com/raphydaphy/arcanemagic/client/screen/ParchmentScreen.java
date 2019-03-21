@@ -11,6 +11,8 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -32,6 +34,7 @@ public class ParchmentScreen extends Screen
 
 	public ParchmentScreen(ItemStack stack, IParchment parchment)
 	{
+		super(new TranslatableTextComponent("item.arcanemagic.written_parchment"));
 		this.parchment = parchment;
 		parchment.initScreen(stack);
 	}

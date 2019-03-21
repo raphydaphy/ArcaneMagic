@@ -62,10 +62,10 @@ public class TremorPacket implements IPacket
 			if (message.duration > 0)
 			{
 				TremorTracker.scheduleTremor(message.delay, message.duration);
-				player.world.playSound(player, player.getPos(), ModSounds.VOID_GROWL, SoundCategory.AMBIENT, 1, 1);
+				player.world.playSound(player, player.getBlockPos(), ModSounds.VOID_GROWL, SoundCategory.AMBIENT, 1, 1);
 			} else
 			{
-				player.world.playSound(player, player.getPos(), ModSounds.VOID_ATMOSPHERE, SoundCategory.AMBIENT, 1, 1);
+				player.world.playSound(player, player.getBlockPos(), ModSounds.VOID_ATMOSPHERE, SoundCategory.AMBIENT, 1, 1);
 			}
 		}
 	}

@@ -20,6 +20,8 @@ import net.minecraft.client.gui.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.StringTextComponent;
+import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class NotebookScreen extends Screen
 
 	public NotebookScreen(ItemStack stack)
 	{
+		super(new TranslatableTextComponent("item.arcanemagic.notebook"));
 		CompoundTag tag = stack.getTag();
 		if (tag != null && tag.containsKey(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY))
 		{
