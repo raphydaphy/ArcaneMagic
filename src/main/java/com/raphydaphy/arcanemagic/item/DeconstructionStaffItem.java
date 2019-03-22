@@ -1,6 +1,9 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
+import com.raphydaphy.arcanemagic.client.particle.ParticleSource;
+import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.core.common.RecipeManagerMixin;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -10,10 +13,9 @@ import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
-import net.minecraft.block.BedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DoorBlock;
+import com.raphydaphy.multiblockapi.MultiBlock;
+import net.minecraft.block.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
@@ -47,10 +49,13 @@ public class DeconstructionStaffItem extends Item
 		Block block = ctx.getWorld().getBlockState(pos).getBlock();
 		if (block == Blocks.SOUL_SAND)
 		{
-			ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 1, 1);
+			ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 0.5f, 1);
 
 			DataHolder dataPlayer = (DataHolder)ctx.getPlayer();
-			if (!ctx.getWorld().isClient && dataPlayer != null)
+			if (ctx.getWorld().isClient)
+			{
+				doParticles(ctx.getWorld(), pos);
+			} else if (dataPlayer != null)
 			{
 				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY))
 				{
@@ -65,7 +70,7 @@ public class DeconstructionStaffItem extends Item
 			ctx.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState());
 			return ActionResult.SUCCESS;
 		}
-		if (!(block instanceof BedBlock) && !(block instanceof DoorBlock))
+		if (!(block instanceof MultiBlock))
 		{
 			Map<Identifier, Recipe<CraftingInventory>> craftingRecipes =  ((RecipeManagerMixin)ctx.getWorld().getRecipeManager()).getRecipes(RecipeType.CRAFTING);
 			for (Map.Entry<Identifier, Recipe<CraftingInventory>> entry : craftingRecipes.entrySet())
@@ -73,9 +78,10 @@ public class DeconstructionStaffItem extends Item
 				Recipe<CraftingInventory> craftingRecipe = entry.getValue();
 				if (craftingRecipe.getOutput().getItem() == block.getItem())
 				{
-					ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 1, 1);
+					ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 0.5f, 1);
 					if (ctx.getWorld().isClient)
 					{
+						doParticles(ctx.getWorld(), pos);
 						return ActionResult.SUCCESS;
 					}
 
@@ -135,6 +141,34 @@ public class DeconstructionStaffItem extends Item
 			}
 		}
 		return ActionResult.PASS;
+	}
+
+	private void doParticles(World world, BlockPos pos)
+	{
+		BlockState state = world.getBlockState(pos);
+		int color = MinecraftClient.getInstance().getBlockColorMap().method_1691(state, world, pos);
+		if (state.getBlock() instanceof FallingBlock)
+		{
+			color = ((FallingBlock) state.getBlock()).getColor(state);
+		}
+
+		float r = (float) (color >> 16 & 255) / 255.0F;
+		float g = (float) (color >> 8 & 255) / 255.0F;
+		float b = (float) (color & 255) / 255.0F;
+
+		float inverseSpread = 100;
+		Random rand = ArcaneMagic.RANDOM;
+
+		ParticleRenderer.INSTANCE.addSource(new ParticleSource((ticks) ->
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				System.out.println(0.1f + rand.nextFloat() * 0.8f);
+				ParticleUtil.spawnGlowParticle(world,
+						pos.getX() + 0.1f + rand.nextFloat() * 0.8f, pos.getY() + 0.1f + rand.nextFloat() * 0.8f, pos.getZ() +  0.1f+ rand.nextFloat() * 0.8f,
+						(float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, r, g, b, 1, true, 0.3f, 50);
+			}
+		}, 3));
 	}
 
 	@Override
