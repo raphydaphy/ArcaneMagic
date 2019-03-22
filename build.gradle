@@ -40,10 +40,10 @@ dependencies {
 
 	// REI Dependencies
 	compile "blue.endless:jankson:${project.jankson_version}"
-	//modCompile "cloth:Cloth:${project.cloth_version}"
+	modCompile "com.github.shedaniel:Cloth:${project.cloth_version}"
 
 	// Roughly Enough Items
-	//modCompile "roughly-enough-items:RoughlyEnoughItems:${project.rei_version}"
+	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
 
 	// Plugin Loader
 	modCompile "info.tehnut.pluginloader:plugin-loader:${project.pluginloader_version}"

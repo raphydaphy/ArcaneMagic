@@ -1,8 +1,11 @@
-package com.raphydaphy.arcanemagic.util;
+package com.raphydaphy.arcanemagic.cutscene;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 
@@ -11,6 +14,9 @@ public class CutsceneManager
 	@Environment(EnvType.CLIENT)
 	public static void render()
 	{
+		ClientPlayerEntity player = MinecraftClient.getInstance().player;
+
+		int timeLeft = ((DataHolder)player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_TIME_LEFT_KEY);
 	}
 
 	public static void update(Iterable<ServerWorld> worlds)

@@ -1,5 +1,5 @@
 package com.raphydaphy.arcanemagic.integration;
-/*
+
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
@@ -52,7 +52,7 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 		List<Widget> widgets = new LinkedList<>(Collections.singletonList(new RecipeBaseWidget(bounds)
 		{
 			@Override
-			public void draw(int mouseX, int mouseY, float partialTicks)
+			public void render(int mouseX, int mouseY, float partialTicks)
 			{
 				GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GuiLighting.disable();
@@ -126,7 +126,12 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 			{
 				return 99;
 			}
+
+			@Override
+			public VisableType canDisplay(TransfigurationDisplay display)
+			{
+				return VisableType.NEVER;
+			}
 		};
 	}
 }
-*/

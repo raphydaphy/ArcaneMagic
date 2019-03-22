@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.core.client;
 
 import com.raphydaphy.arcanemagic.client.ClientEvents;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.util.CutsceneManager;
+import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -33,7 +33,6 @@ public class MinecraftClientMixin
 			if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY))
 			{
 				CutsceneManager.render();
-				info.cancel();
 			}
 		}
 	}

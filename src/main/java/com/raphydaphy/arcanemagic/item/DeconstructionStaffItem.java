@@ -19,6 +19,7 @@ import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemProvider;
@@ -68,7 +69,8 @@ public class DeconstructionStaffItem extends Item
 					dataPlayer.markAdditionalDataDirty();
 				}
 			}
-			ctx.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState());
+			FluidState fluid = ctx.getWorld().getFluidState(pos);
+			ctx.getWorld().setBlockState(pos, fluid.isEmpty() ? Blocks.AIR.getDefaultState() : fluid.getBlockState());
 			return ActionResult.SUCCESS;
 		}
 		if (!(block instanceof MultiBlock))
@@ -140,7 +142,8 @@ public class DeconstructionStaffItem extends Item
 						}
 					}
 
-					ctx.getWorld().setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
+					FluidState fluid = ctx.getWorld().getFluidState(pos);
+					ctx.getWorld().setBlockState(pos, fluid.isEmpty() ? Blocks.AIR.getDefaultState() : fluid.getBlockState());
 					return ActionResult.SUCCESS;
 				}
 			}
