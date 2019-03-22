@@ -25,6 +25,7 @@ repositories {
 	maven { url 'https://maven.fabricmc.net' }
 	maven { url "https://minecraft.curseforge.com/api/maven"}
 	maven { url "https://tehnut.info/maven/" }
+	maven { url "https://jitpack.io" }
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
@@ -49,6 +50,9 @@ dependencies {
 
 	// Silk
 	modCompile "io.github.prospector.silk:SilkAPI:${project.silk_version}"
+
+	// Multiblock API
+	modCompile "com.github.raphydaphy:MultiBlockAPI:${project.multiblock_api_version}"
 
 	//Nonnull annotations
 	modCompile "com.google.code.findbugs:jsr305:3.0.1"

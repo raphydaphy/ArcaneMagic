@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.block.base;
 
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.multiblockapi.MultiBlock;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -24,7 +25,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
-public class DoubleBlockBase extends OrientableBlockBase
+import java.util.Collections;
+import java.util.List;
+
+public class DoubleBlockBase extends OrientableBlockBase implements MultiBlock
 {
 	public static final EnumProperty<DoubleBlockHalf> HALF;
 
@@ -133,5 +137,11 @@ public class DoubleBlockBase extends OrientableBlockBase
 	{
 		super.appendProperties(map);
 		map.with(HALF);
+	}
+
+	@Override
+	public List<BlockPos> getOtherParts(BlockState blockState, BlockPos blockPos)
+	{
+		return blockState.getBlock() == this ? (blockState.get(HALF) == DoubleBlockHalf.LOWER ? Collections.singletonList(blockPos.up()) : Collections.singletonList(blockPos.down())) : Collections.emptyList();
 	}
 }

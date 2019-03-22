@@ -10,7 +10,8 @@
   ],
   "requires": {
 	"fabric": "*",
-	"silk": "*"
+	"silk": "*",
+	"multiblockapi": "*"
   },
   "mixins": {
 	"client": "arcanemagic.client.json",
