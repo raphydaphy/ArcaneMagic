@@ -12,7 +12,8 @@
 	"DamageSourceMixin",
 	"PlayerEntityMixin",
 	"ServerPlayerEntityMixin",
-	"RecipeManagerMixin"
+	"RecipeManagerMixin",
+	"IngredientHooks"
   ],
   "injectors": {
 	"defaultRequire": 1

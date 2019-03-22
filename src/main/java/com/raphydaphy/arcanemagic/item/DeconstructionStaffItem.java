@@ -4,6 +4,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.particle.ParticleSource;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
+import com.raphydaphy.arcanemagic.core.common.IngredientHooks;
 import com.raphydaphy.arcanemagic.core.common.RecipeManagerMixin;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -88,16 +89,20 @@ public class DeconstructionStaffItem extends Item
 					Map<ItemProvider, Integer> items = new HashMap<>();
 					for (Ingredient ingredient : craftingRecipe.getPreviewInputs())
 					{
-						ItemStack[] stacks = ingredient.getStackArray();
-						if (stacks.length > 0)
+						if (!ingredient.isEmpty())
 						{
-							ItemProvider provider = stacks[0].getItem();
-							if (!items.containsKey(stacks[0].getItem()))
+							((IngredientHooks) (Object) ingredient).validateStackArray();
+							ItemStack[] stacks = ((IngredientHooks) (Object) ingredient).getCachedStackArray();
+							if (stacks.length > 0)
 							{
-								items.put(provider, 1);
-							} else
-							{
-								items.put(provider, items.get(provider) + 1);
+								ItemProvider provider = stacks[0].getItem();
+								if (!items.containsKey(stacks[0].getItem()))
+								{
+									items.put(provider, 1);
+								} else
+								{
+									items.put(provider, items.get(provider) + 1);
+								}
 							}
 						}
 					}
@@ -163,7 +168,6 @@ public class DeconstructionStaffItem extends Item
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				System.out.println(0.1f + rand.nextFloat() * 0.8f);
 				ParticleUtil.spawnGlowParticle(world,
 						pos.getX() + 0.1f + rand.nextFloat() * 0.8f, pos.getY() + 0.1f + rand.nextFloat() * 0.8f, pos.getZ() +  0.1f+ rand.nextFloat() * 0.8f,
 						(float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, r, g, b, 1, true, 0.3f, 50);

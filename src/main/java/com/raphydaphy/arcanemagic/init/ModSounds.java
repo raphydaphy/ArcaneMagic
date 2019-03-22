@@ -7,17 +7,18 @@ import net.minecraft.util.registry.Registry;
 
 public class ModSounds
 {
-	public static SoundEvent TRANSFIGURATION = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "transfiguration")));
-	public static SoundEvent SLIDE = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "slide")));
-	public static SoundEvent BURN = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "burn")));
-	public static SoundEvent SPELL = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "spell")));
-	public static SoundEvent DECONSTRUCT = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "deconstruct")));
-	public static SoundEvent VOID_GROWL = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "void_growl")));
-	public static SoundEvent VOID_ATMOSPHERE = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "void_atmosphere")));
-	public static SoundEvent VOID_AMBIENT = register(new SoundEvent(new Identifier(ArcaneMagic.DOMAIN, "void_ambient")));
+	public static SoundEvent TRANSFIGURATION = register("transfiguration");
+	public static SoundEvent SLIDE = register("slide");
+	public static SoundEvent BURN = register("burn");
+	public static SoundEvent SPELL = register("spell");
+	public static SoundEvent DECONSTRUCT = register("deconstruct");
+	public static SoundEvent VOID_GROWL = register("void_growl");
+	public static SoundEvent VOID_ATMOSPHERE = register("void_atmosphere");
+	public static SoundEvent VOID_AMBIENT = register("void_ambient");
 
-	private static SoundEvent register(SoundEvent event)
+	private static SoundEvent register(String name)
 	{
-		return Registry.register(Registry.SOUND_EVENT, event.getId(), event);
+		Identifier id = new Identifier(ArcaneMagic.DOMAIN, name);
+		return Registry.register(Registry.SOUND_EVENT, id, new SoundEvent(id));
 	}
 }

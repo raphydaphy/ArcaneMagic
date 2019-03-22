@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.intergration;
+package com.raphydaphy.arcanemagic.integration;
 /*
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.platform.GlStateManager;

@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.intergration;
+package com.raphydaphy.arcanemagic.integration;
 /*
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;

@@ -1,4 +1,4 @@
-package com.raphydaphy.arcanemagic.intergration;
+package com.raphydaphy.arcanemagic.integration;
 /*
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import me.shedaniel.rei.api.RecipeDisplay;

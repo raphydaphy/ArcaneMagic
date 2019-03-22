@@ -102,11 +102,11 @@ public class DiscoveryParchment implements IParchment
 		CompoundTag data = ((DataHolder) player).getAdditionalData();
 
 		drownedKills = data.getInt(ArcaneMagicConstants.DROWNED_KILLS_KEY);
-		finishedNewGatherQuest = data.getBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY);
-		placedAnalyzer = data.getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY);
-		analyzedNewItems = data.getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4;
-		analyzedStick = data.getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY);
-		craftedScepter = data.getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY);
+		finishedNewGatherQuest = drownedKills > 4 && data.getBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY);
+		placedAnalyzer = finishedNewGatherQuest && data.getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY);
+		analyzedNewItems = placedAnalyzer && data.getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4;
+		analyzedStick = analyzedNewItems && data.getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY);
+		craftedScepter = analyzedStick && data.getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY);
 
 		if (analyzedNewItems && !analyzedStick)
 		{

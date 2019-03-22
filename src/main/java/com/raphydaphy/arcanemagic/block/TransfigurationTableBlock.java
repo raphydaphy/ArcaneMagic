@@ -16,6 +16,8 @@ import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -152,7 +154,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 						}
 					} else
 					{
-						doParticles(blockEntity.getPos());
+						doParticles(world, blockEntity.getPos());
 					}
 					if (player != null)
 					{
@@ -168,12 +170,13 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 		return false;
 	}
 
-	private void doParticles(BlockPos pos)
+	@Environment(EnvType.CLIENT)
+	private void doParticles(World world, BlockPos pos)
 	{
 		float inverseSpread = 300;
 		float colorDiviser = 5;
 		ParticleRenderer.INSTANCE.addSource(new ParticleSource((age) -> {
-			ParticleUtil.spawnGlowParticle(MinecraftClient.getInstance().world, pos.getX() + 0.5f + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, pos.getY() + 0.77f, pos.getZ() + 0.5f + (float)ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
+			ParticleUtil.spawnGlowParticle(world, pos.getX() + 0.5f + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, pos.getY() + 0.77f, pos.getZ() + 0.5f + (float)ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
 					0, 0.01f, 0, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, ArcaneMagic.RANDOM.nextFloat() / colorDiviser, 1, true, 0.3f, 100);
 		}, 12));
 	}

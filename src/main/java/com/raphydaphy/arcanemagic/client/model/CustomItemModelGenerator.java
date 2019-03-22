@@ -74,7 +74,7 @@ public class CustomItemModelGenerator
 
 			float back = 7.5f;
 			float front = 8.5f;
-			float top = base ? 16.0F : (faceDirection == FaceDirection.DOWN || faceDirection == FaceDirection.LEFT) ? 15.9999f : 16.0001F;
+			float top = 16.0f;
 
 			float float_3 = 0;
 			float startY = 0;
