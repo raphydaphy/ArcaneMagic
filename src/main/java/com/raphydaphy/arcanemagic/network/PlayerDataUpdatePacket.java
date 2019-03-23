@@ -52,7 +52,7 @@ public class PlayerDataUpdatePacket implements IPacket
 		@Override
 		public void handle(PacketContext ctx, PlayerDataUpdatePacket message)
 		{
-			((DataHolder)MinecraftClient.getInstance().player).setAdditionalData(message.data);
+			((DataHolder) MinecraftClient.getInstance().player).setAdditionalData(message.data);
 		}
 	}
 }

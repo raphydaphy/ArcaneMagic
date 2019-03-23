@@ -53,7 +53,7 @@ public class TremorTracker
 				{
 					int timeSinceTremor = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY);
 					int timeSinceVoidSound = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.TIME_SINCE_VOID_SOUND_KEY);
-					int rand = ArcaneMagic.RANDOM.nextInt((int)(player.y * 3));
+					int rand = ArcaneMagic.RANDOM.nextInt((int) (player.y * 3));
 					if (rand == 0)
 					{
 						if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY))

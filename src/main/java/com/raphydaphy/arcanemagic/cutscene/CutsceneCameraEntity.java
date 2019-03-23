@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.cutscene;
 
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
@@ -35,13 +34,19 @@ public class CutsceneCameraEntity extends Entity
 	}
 
 	@Override
-	protected void initDataTracker() { }
+	protected void initDataTracker()
+	{
+	}
 
 	@Override
-	protected void readCustomDataFromTag(CompoundTag var1) { }
+	protected void readCustomDataFromTag(CompoundTag var1)
+	{
+	}
 
 	@Override
-	protected void writeCustomDataToTag(CompoundTag var1) { }
+	protected void writeCustomDataToTag(CompoundTag var1)
+	{
+	}
 
 	@Override
 	public Packet<?> createSpawnPacket()

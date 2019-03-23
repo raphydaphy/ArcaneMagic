@@ -17,15 +17,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DamageSource.class)
 public abstract class DamageSourceMixin
 {
-	@Shadow public abstract Entity getAttacker();
+	@Shadow
+	public abstract Entity getAttacker();
 
-	@Inject(at=@At("RETURN"), method="doesBypassArmor", cancellable=true)
+	@Inject(at = @At("RETURN"), method = "doesBypassArmor", cancellable = true)
 	private void doesBypassArmor(CallbackInfoReturnable<Boolean> info)
 	{
 		Entity attacker = getAttacker();
 		if (attacker instanceof LivingEntity)
 		{
-			ItemStack stack = ((LivingEntity)attacker).getMainHandStack();
+			ItemStack stack = ((LivingEntity) attacker).getMainHandStack();
 			CompoundTag tag;
 			if (!stack.isEmpty() && stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null)
 			{

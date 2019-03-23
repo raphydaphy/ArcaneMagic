@@ -16,19 +16,17 @@ import java.util.function.Function;
 public class ArcaneModelLoader
 {
 	public static final ArcaneModelLoader INSTANCE = new ArcaneModelLoader();
-
-	public static void registerModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader)
-	{
-		INSTANCE.doRegisterModel(identifier, loader);
-	}
-
 	private static final Logger LOGGER = LogManager.getLogger("ArcaneModelLoader");
 	private static final Function<ModelLoader, UnbakedModel> NULL_SUPPLIER = (unused) -> null;
-
 	private Map<Identifier, Function<ModelLoader, UnbakedModel>> loaders = new HashMap<>();
 
 	private ArcaneModelLoader()
 	{
+	}
+
+	public static void registerModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader)
+	{
+		INSTANCE.doRegisterModel(identifier, loader);
 	}
 
 	private void doRegisterModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader)

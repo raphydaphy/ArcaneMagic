@@ -169,7 +169,7 @@ public class DiscoveryParchment implements IParchment
 					{
 						if (!world.isClient())
 						{
-							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)player);
+							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 							ArcaneMagicUtils.unlockRecipe(player, "analyzer");
 							((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY, true);
 							((DataHolder) player).markAdditionalDataDirty();
@@ -191,13 +191,13 @@ public class DiscoveryParchment implements IParchment
 	{
 		return (finishedNewGatherQuest && !placedAnalyzer) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "analyzer")).orElse(null) :
 				(analyzedStick && !craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "golden_scepter")).orElse(null) :
-				(craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "notebook")).orElse(null) : null;
+						(craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "notebook")).orElse(null) : null;
 	}
 
 	@Override
 	public int getVerticalFeatureOffset()
 	{
-		return ((finishedNewGatherQuest && !analyzedNewItems)) ? -4 : (analyzedNewItems && !craftedScepter) ? -1 :  0;
+		return ((finishedNewGatherQuest && !analyzedNewItems)) ? -4 : (analyzedNewItems && !craftedScepter) ? -1 : 0;
 	}
 
 	@Override

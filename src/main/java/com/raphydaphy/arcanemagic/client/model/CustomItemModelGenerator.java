@@ -6,13 +6,15 @@ import com.google.common.collect.Maps;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.model.json.*;
+import net.minecraft.client.render.model.json.JsonUnbakedModel;
+import net.minecraft.client.render.model.json.ModelElement;
+import net.minecraft.client.render.model.json.ModelElementFace;
+import net.minecraft.client.render.model.json.ModelElementTexture;
 import net.minecraft.client.texture.Sprite;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -229,12 +231,52 @@ public class CustomItemModelGenerator
 	}
 
 	@Environment(EnvType.CLIENT)
+	enum FaceDirection
+	{
+		UP(Direction.UP, 0, -1),
+		DOWN(Direction.DOWN, 0, 1),
+		LEFT(Direction.EAST, -1, 0),
+		RIGHT(Direction.WEST, 1, 0);
+
+		private final Direction field_4276;
+		private final int field_4280;
+		private final int field_4279;
+
+		FaceDirection(Direction direction_1, int int_1, int int_2)
+		{
+			this.field_4276 = direction_1;
+			this.field_4280 = int_1;
+			this.field_4279 = int_2;
+		}
+
+		public Direction method_3488()
+		{
+			return this.field_4276;
+		}
+
+		public int method_3490()
+		{
+			return this.field_4280;
+		}
+
+		public int method_3489()
+		{
+			return this.field_4279;
+		}
+
+		private boolean method_3491()
+		{
+			return this == DOWN || this == UP;
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
 	static class Face
 	{
 		private final FaceDirection direction;
+		private final int height;
 		private int width;
 		private int field_4273;
-		private final int height;
 
 		Face(FaceDirection direction, int width, int height)
 		{
@@ -283,48 +325,8 @@ public class CustomItemModelGenerator
 			{
 				return false;
 			}
-			Face ofd = (Face)other;
+			Face ofd = (Face) other;
 			return this.direction == ofd.direction && this.height == ofd.width && this.field_4273 == ofd.field_4273 && this.height == ofd.height;
-		}
-	}
-
-	@Environment(EnvType.CLIENT)
-	enum FaceDirection
-	{
-		UP(Direction.UP, 0, -1),
-		DOWN(Direction.DOWN, 0, 1),
-		LEFT(Direction.EAST, -1, 0),
-		RIGHT(Direction.WEST, 1, 0);
-
-		private final Direction field_4276;
-		private final int field_4280;
-		private final int field_4279;
-
-		FaceDirection(Direction direction_1, int int_1, int int_2)
-		{
-			this.field_4276 = direction_1;
-			this.field_4280 = int_1;
-			this.field_4279 = int_2;
-		}
-
-		public Direction method_3488()
-		{
-			return this.field_4276;
-		}
-
-		public int method_3490()
-		{
-			return this.field_4280;
-		}
-
-		public int method_3489()
-		{
-			return this.field_4279;
-		}
-
-		private boolean method_3491()
-		{
-			return this == DOWN || this == UP;
 		}
 	}
 }

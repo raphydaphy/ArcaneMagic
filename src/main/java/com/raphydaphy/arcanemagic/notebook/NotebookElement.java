@@ -11,7 +11,6 @@ import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
-import net.minecraft.client.options.GameOption;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.inventory.Inventory;
@@ -24,6 +23,93 @@ import java.util.List;
 
 class NotebookElement
 {
+	static int textPages(String content, int headingSize)
+	{
+		double scale = textScale();
+		int lines = linesPerPage();
+		return (int) Math.ceil(((MinecraftClient.getInstance().textRenderer.wrapStringToWidthAsList(I18n.translate(content), (int) (116 / scale)).size() - (lines - headingSize))) / (float) lines);
+	}
+
+	private static int linesPerPage()
+	{
+		int guiScale = (int) MinecraftClient.getInstance().window.getScaleFactor();
+		;
+		switch (guiScale)
+		{
+			case 3:
+				return 18;
+			case 4:
+				return 21;
+			default:
+				return 15;
+		}
+	}
+
+	private static double textScale()
+	{
+		int guiScale = (int) MinecraftClient.getInstance().window.getScaleFactor();
+		;
+		switch (guiScale)
+		{
+			case 4:
+				return 0.7f;
+			case 3:
+				return 0.85f;
+			default:
+				return 1;
+		}
+	}
+
+	static List<INotebookElement> wrapText(String text, int headingSize, int startPage, int curPage)
+	{
+		List<INotebookElement> elements = new ArrayList<>();
+		if (curPage >= startPage)
+		{
+			double scale = textScale();
+			int width = (int) (116 / scale);
+			List<String> wrapped = RenderUtils.wrapText(text, width);
+
+			int page = curPage - startPage;
+			int lines = linesPerPage();
+
+			int start = page == 0 ? 0 : page * lines - headingSize;
+
+			StringBuilder builder = new StringBuilder();
+			int size = 0;
+			for (int i = start; i < start + (page == 0 ? (lines - headingSize) : lines); i++)
+			{
+				if (i < wrapped.size())
+				{
+					String line = wrapped.get(i);
+					if (line.isEmpty())
+					{
+						String paragraph = builder.toString();
+						if (!paragraph.isEmpty() || size > 0)
+						{
+							elements.add(new NotebookElement.Paragraph(false, scale, 116, paragraph).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
+							builder = new StringBuilder();
+							size++;
+						}
+					} else
+					{
+						builder.append(line);
+						builder.append(" ");
+					}
+				} else
+				{
+					break;
+				}
+			}
+
+			String last = builder.toString();
+			if (!last.isEmpty())
+			{
+				elements.add(new NotebookElement.Paragraph(false, scale, 116, last));
+			}
+		}
+		return elements;
+	}
+
 	public static class BigHeading extends Writable
 	{
 		BigHeading(String unlocalized, Object... keys)
@@ -68,6 +154,7 @@ class NotebookElement
 		{
 			this(centered, scale, 116, unlocalized, keys);
 		}
+
 		Paragraph(boolean centered, double scale, int width, String unlocalized, Object... keys)
 		{
 			super(unlocalized, keys);
@@ -213,8 +300,8 @@ class NotebookElement
 					int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);
 					int row = stage / 10;
 					int col = stage % 10;
-					RenderUtils.drawTexturedRect(x + 36, y,0, 0,36, 36, 36, 36,360, 360);
-					RenderUtils.drawTexturedRect( x + 36, y,36 * col, 36 + 36 * row,36, 36, 36, 36, 360, 360);
+					RenderUtils.drawTexturedRect(x + 36, y, 0, 0, 36, 36, 36, 36, 360, 360);
+					RenderUtils.drawTexturedRect(x + 36, y, 36 * col, 36 + 36 * row, 36, 36, 36, 36, 360, 360);
 
 					GuiLighting.enableForItems();
 					MinecraftClient.getInstance().getItemRenderer().renderGuiItem(this.recipe.getOutput(), x + 46, y + 10);
@@ -263,89 +350,5 @@ class NotebookElement
 			this.padding = padding;
 			return this;
 		}
-	}
-
-	static int textPages(String content, int headingSize)
-	{
-		double scale = textScale();
-		int lines = linesPerPage();
-		return (int)Math.ceil(((MinecraftClient.getInstance().textRenderer.wrapStringToWidthAsList(I18n.translate(content), (int)(116 / scale)).size() - (lines - headingSize))) / (float)lines);
-	}
-
-	private static int linesPerPage()
-	{
-		int guiScale = (int)MinecraftClient.getInstance().window.getScaleFactor();;
-		switch(guiScale)
-		{
-			case 3:
-				return 18;
-			case 4:
-				return 21;
-			default:
-				return 15;
-		}
-	}
-
-	private static double textScale()
-	{
-		int guiScale = (int)MinecraftClient.getInstance().window.getScaleFactor();;
-		switch(guiScale)
-		{
-			case 4:
-				return 0.7f;
-			case 3:
-				return 0.85f;
-			default:
-				return 1;
-		}
-	}
-	static List<INotebookElement> wrapText(String text, int headingSize, int startPage, int curPage)
-	{
-		List<INotebookElement> elements = new ArrayList<>();
-		if (curPage >= startPage)
-		{
-			double scale = textScale();
-			int width = (int)(116 / scale);
-			List<String> wrapped = RenderUtils.wrapText(text, width);
-
-			int page = curPage - startPage;
-			int lines = linesPerPage();
-
-			int start = page == 0 ? 0 : page * lines - headingSize;
-
-			StringBuilder builder = new StringBuilder();
-			int size = 0;
-			for (int i = start; i < start + (page == 0 ? (lines - headingSize) : lines); i++)
-			{
-				if (i < wrapped.size())
-				{
-					String line = wrapped.get(i);
-					if (line.isEmpty())
-					{
-						String paragraph = builder.toString();
-						if (!paragraph.isEmpty() || size > 0)
-						{
-							elements.add(new NotebookElement.Paragraph(false, scale, 116, paragraph).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
-							builder = new StringBuilder();
-							size++;
-						}
-					} else
-					{
-						builder.append(line);
-						builder.append(" ");
-					}
-				} else
-				{
-					break;
-				}
-			}
-
-			String last = builder.toString();
-			if (!last.isEmpty())
-			{
-				elements.add(new NotebookElement.Paragraph(false, scale, 116, last));
-			}
-		}
-		return elements;
 	}
 }

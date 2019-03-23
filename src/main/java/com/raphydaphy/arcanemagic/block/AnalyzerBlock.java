@@ -68,7 +68,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 		return ArcaneMagicUtils.pedestalInteraction(world, player, blockEntity, hand, 0, (stack) ->
 		{
 			// All of this is only called on the server-side
-			DataHolder dataPlayer = ((DataHolder)player);
+			DataHolder dataPlayer = ((DataHolder) player);
 			boolean notebookUpdate = false;
 			if (stack.getItem() == Items.STICK)
 			{
@@ -155,7 +155,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				}
 			} else if (stack.getItem() == ModRegistry.RELIC)
 			{
-				CutsceneManager.startServer((ServerPlayerEntity)player, 200);
+				CutsceneManager.startServer((ServerPlayerEntity) player, 200);
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)
@@ -180,7 +180,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 
 					if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4)
 					{
-						ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)player);
+						ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 					}
 				} else if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
 				{
@@ -259,7 +259,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	{
 		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY))
 		{
-			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity)placer);
+			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) placer);
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}
@@ -268,6 +268,6 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	@Override
 	public BlockRenderLayer[] getExtraRenderLayers()
 	{
-		return new BlockRenderLayer[] { BlockRenderLayer.TRANSLUCENT };
+		return new BlockRenderLayer[]{BlockRenderLayer.TRANSLUCENT};
 	}
 }

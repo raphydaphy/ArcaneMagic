@@ -157,27 +157,6 @@ public class RenderUtils
 		}
 	}
 
-	public static class TextureBounds
-	{
-		double u;
-		double v;
-		double maxU;
-		double maxV;
-
-		public TextureBounds(double u, double v, double maxU, double maxV)
-		{
-			this(u, v, maxU, maxV, 16, 16);
-		}
-
-		public TextureBounds(double u, double v, double maxU, double maxV, double textureWidth, double textureHeight)
-		{
-			this.u = u / textureWidth;
-			this.v = v / textureHeight;
-			this.maxU = maxU / textureWidth;
-			this.maxV = maxV / textureHeight;
-		}
-	}
-
 	public static void drawRecipeItems(Recipe<? extends Inventory> recipe, int x, int y)
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
@@ -392,11 +371,6 @@ public class RenderUtils
 		}
 	}
 
-	enum RenderRecipeType
-	{
-		SMELTING, SMALL_CRAFTING, LARGE_CRAFTING, UNSUPPORTED
-	}
-
 	/**
 	 * Draws a brown box with the given dimensions.
 	 *
@@ -423,13 +397,15 @@ public class RenderUtils
 	public static void drawRect(int x, int y, int width, int height, float alpha, float red, float green, float blue)
 	{
 		int int_7;
-		if (x < width) {
+		if (x < width)
+		{
 			int_7 = x;
 			x = width;
 			width = int_7;
 		}
 
-		if (y < height) {
+		if (y < height)
+		{
 			int_7 = y;
 			y = height;
 			height = int_7;
@@ -442,10 +418,10 @@ public class RenderUtils
 		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.color4f(red, green, blue, alpha);
 		bufferBuilder_1.begin(7, VertexFormats.POSITION);
-		bufferBuilder_1.vertex((double)x, (double)height, 0.0D).next();
-		bufferBuilder_1.vertex((double)width, (double)height, 0.0D).next();
-		bufferBuilder_1.vertex((double)width, (double)y, 0.0D).next();
-		bufferBuilder_1.vertex((double)x, (double)y, 0.0D).next();
+		bufferBuilder_1.vertex((double) x, (double) height, 0.0D).next();
+		bufferBuilder_1.vertex((double) width, (double) height, 0.0D).next();
+		bufferBuilder_1.vertex((double) width, (double) y, 0.0D).next();
+		bufferBuilder_1.vertex((double) x, (double) y, 0.0D).next();
 		tessellator_1.draw();
 		GlStateManager.enableTexture();
 		GlStateManager.disableBlend();
@@ -454,5 +430,31 @@ public class RenderUtils
 	public static List<String> wrapText(String unlocalized, int width)
 	{
 		return MinecraftClient.getInstance().textRenderer.wrapStringToWidthAsList(I18n.translate(unlocalized), width);
+	}
+
+	enum RenderRecipeType
+	{
+		SMELTING, SMALL_CRAFTING, LARGE_CRAFTING, UNSUPPORTED
+	}
+
+	public static class TextureBounds
+	{
+		double u;
+		double v;
+		double maxU;
+		double maxV;
+
+		public TextureBounds(double u, double v, double maxU, double maxV)
+		{
+			this(u, v, maxU, maxV, 16, 16);
+		}
+
+		public TextureBounds(double u, double v, double maxU, double maxV, double textureWidth, double textureHeight)
+		{
+			this.u = u / textureWidth;
+			this.v = v / textureHeight;
+			this.maxU = maxU / textureWidth;
+			this.maxV = maxV / textureHeight;
+		}
 	}
 }

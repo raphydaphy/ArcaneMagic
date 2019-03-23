@@ -43,8 +43,8 @@ public class DeconstructionNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.deconstruction_staff").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "deconstruction_staff")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.deconstruction_staff").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "deconstruction_staff")).orElse(null)));
 		}
 
 		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY))

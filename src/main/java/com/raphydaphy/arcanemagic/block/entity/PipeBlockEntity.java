@@ -130,12 +130,12 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 			}
 
 			// These directions should be to the left and right of the ideal path
-			Direction[] leftRight = new Direction[] { Direction.EAST, Direction.WEST };
+			Direction[] leftRight = new Direction[]{Direction.EAST, Direction.WEST};
 
 			// If they are not, correct it
 			if (path == Direction.EAST || path == Direction.WEST)
 			{
-				leftRight = new Direction[] { Direction.NORTH, Direction.SOUTH };
+				leftRight = new Direction[]{Direction.NORTH, Direction.SOUTH};
 			}
 
 			// Chose either left or right at random

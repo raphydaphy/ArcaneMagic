@@ -5,8 +5,8 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.raphydaphy.arcanemagic.util.UVSet;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
+import com.raphydaphy.arcanemagic.util.UVSet;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
@@ -27,8 +27,6 @@ import java.util.Optional;
 public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 {
 	private static float animTime = 4;
-	Identifier detail = new Identifier(ArcaneMagic.DOMAIN, "textures/block/smelter_detail.png");
-
 	private static RenderUtils.TextureBounds[] teeth = {
 			new UVSet(8, 0, 2, 8), // Bottom
 			new UVSet(8, 0, 2, 8), // Top
@@ -36,6 +34,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 			new UVSet(0, 0, 8, 6), // South
 			new UVSet(0, 0, 2, 6), // West
 			new UVSet(0, 0, 2, 6)}; // East
+	Identifier detail = new Identifier(ArcaneMagic.DOMAIN, "textures/block/smelter_detail.png");
 
 	public void render(SmelterBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
 	{
@@ -86,7 +85,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 					startY = 6;
 				}
 
-				RenderUtils.renderCube(builder, 4, startY, 2, 8,  6, 2, teeth);
+				RenderUtils.renderCube(builder, 4, startY, 2, 8, 6, 2, teeth);
 				tess.draw();
 				GlStateManager.popMatrix();
 				if (smeltTime < animTime || finishing)
@@ -97,7 +96,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 						if (optionalRecipe.isPresent())
 						{
 							int remaining = SmelterBlockEntity.TOTAL_SMELTING_TIME - smeltTime;
-							float interpolatedRemaining = ArcaneMagicUtils.lerp( remaining + 1, remaining, partialTicks) / (animTime + 1);
+							float interpolatedRemaining = ArcaneMagicUtils.lerp(remaining + 1, remaining, partialTicks) / (animTime + 1);
 
 							if (interpolatedRemaining < 3.5f)
 							{

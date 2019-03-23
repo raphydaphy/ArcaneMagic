@@ -29,8 +29,8 @@ import java.util.Optional;
 
 public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickable
 {
-	private static final int MAX_FLUID = DropletValues.BLOCK;
 	public static final int TOTAL_SMELTING_TIME = 150;
+	private static final int MAX_FLUID = DropletValues.BLOCK;
 	private static final String SMELT_TIME_KEY = "SmeltTime";
 	private final int[] slots = {0, 1, 2};
 
@@ -284,7 +284,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	protected FluidInstance[] getFluidsImpl(boolean bottom, Direction fromSide)
 	{
 		Direction facing = world.getBlockState(pos).get(SmelterBlock.FACING);
-		return (bottom && (fromSide == facing.getOpposite() || fromSide == Direction.DOWN || fromSide == Direction.UP)) ? new FluidInstance[] { liquified_soul } : new FluidInstance[] { };
+		return (bottom && (fromSide == facing.getOpposite() || fromSide == Direction.DOWN || fromSide == Direction.UP)) ? new FluidInstance[]{liquified_soul} : new FluidInstance[]{};
 	}
 
 	@Override

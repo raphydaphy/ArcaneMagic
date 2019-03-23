@@ -68,7 +68,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 			float particlePosY = (float) (0.45 - Math.sin((Math.PI / 180) * (renderTicks * 4)) / 8);
 			float particlePosZ = (float) (.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 			ParticleUtil.spawnGlowParticle(world, pos.getX() + particlePosX, pos.getY() + particlePosY, pos.getZ() + particlePosZ,
-					0, 0, 0, ArcaneMagic.RANDOM.nextFloat() / 5f, ArcaneMagic.RANDOM.nextFloat() / 5f, item == ModRegistry.GOLDEN_SCEPTER ? 0 : ArcaneMagic.RANDOM.nextFloat() / 5f, 0.6f,true, scale, 150);
+					0, 0, 0, ArcaneMagic.RANDOM.nextFloat() / 5f, ArcaneMagic.RANDOM.nextFloat() / 5f, item == ModRegistry.GOLDEN_SCEPTER ? 0 : ArcaneMagic.RANDOM.nextFloat() / 5f, 0.6f, true, scale, 150);
 
 		}
 	}

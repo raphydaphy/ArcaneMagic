@@ -44,8 +44,8 @@ public class SoulStorageNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.soul_pendant").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "soul_pendant")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.soul_pendant").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "soul_pendant")).orElse(null)));
 		}
 
 		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))

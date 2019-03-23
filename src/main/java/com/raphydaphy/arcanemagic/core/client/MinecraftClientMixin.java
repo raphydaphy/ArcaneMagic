@@ -17,7 +17,8 @@ public class MinecraftClientMixin
 	@Shadow
 	public ClientPlayerEntity player;
 
-	@Shadow public ClientWorld world;
+	@Shadow
+	public ClientWorld world;
 
 	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=gameRenderer", target = "Lnet/minecraft/util/profiler/DisableableProfiler;swap(Ljava/lang/String;)V"), method = "render")
 	private void worldRenderTick(boolean renderWorldIn, CallbackInfo info)

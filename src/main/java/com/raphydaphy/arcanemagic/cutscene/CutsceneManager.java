@@ -8,11 +8,9 @@ import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.Hand;
 
 public class CutsceneManager
 {
@@ -25,7 +23,7 @@ public class CutsceneManager
 
 	public static boolean isActive(PlayerEntity player)
 	{
-		return ((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY);
+		return ((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY);
 	}
 
 	@Environment(EnvType.CLIENT)
@@ -51,7 +49,7 @@ public class CutsceneManager
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
 		client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
-		int duration = ((DataHolder)client.player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
+		int duration = ((DataHolder) client.player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
 		currentCutscene = new Cutscene(client.player, client.options.perspective).withTransition(new Transition.DipTo(0, 20, 255, 255, 255).setIntro())
 				.withTransition(new Transition.DipTo(duration - 19, 20, 255, 255, 255).setOutro());
 	}
@@ -69,7 +67,7 @@ public class CutsceneManager
 	public static void startServer(ServerPlayerEntity player, int duration)
 	{
 		player.stopRiding();
-		DataHolder dataPlayer = (DataHolder)player;
+		DataHolder dataPlayer = (DataHolder) player;
 		dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, true);
 		dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_LENGTH, duration);
 		dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_TIME, 0);
@@ -80,7 +78,7 @@ public class CutsceneManager
 
 	public static void finishServer(PlayerEntity player)
 	{
-		DataHolder dataPlayer = (DataHolder)player;
+		DataHolder dataPlayer = (DataHolder) player;
 		dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, false);
 		dataPlayer.markAdditionalDataDirty();
 	}

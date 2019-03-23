@@ -20,7 +20,6 @@ import net.minecraft.client.gui.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 
@@ -75,7 +74,7 @@ public class NotebookScreen extends Screen
 			this.leftPage = contentsPage;
 		}
 
-		if (this.section.hasNewInfo((DataHolder)client.player))
+		if (this.section.hasNewInfo((DataHolder) client.player))
 		{
 			ArcaneMagicPacketHandler.sendToServer(new NotebookSectionReadPacket(this.section));
 		}

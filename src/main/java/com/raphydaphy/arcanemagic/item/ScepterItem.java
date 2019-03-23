@@ -26,13 +26,15 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsageContext;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -53,41 +55,6 @@ public class ScepterItem extends SoulStorageItem
 		super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
 		this.maxSoul = maxSoul;
 		DispenserBlock.registerBehavior(this, new ScepterDispenserBehavior());
-	}
-
-	@Override
-	public void onEntityTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected)
-	{
-		if (world.getTime() % 20 == 0 && !world.isClient && selected && holder instanceof PlayerEntity)
-		{
-			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-			CompoundTag scepterTag = scepter.getTag();
-			if (scepterSoul < this.maxSoul && scepterTag != null)
-			{
-				int pendantSlot = ArcaneMagicUtils.findPendant((PlayerEntity) holder);
-				if (pendantSlot != -1)
-				{
-					ItemStack pendant = ((PlayerEntity) holder).inventory.getInvStack(pendantSlot);
-					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
-					CompoundTag pendantTag = pendant.getTag();
-
-					if (pendantTag != null)
-					{
-						if (scepterSoul + pendantSoul <= this.maxSoul)
-						{
-							// Transfer all soul from the pendant into the scepter
-							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul);
-							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, 0);
-						} else
-						{
-							// Fill the scepter and leave the remaining soul in the pendant
-							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, maxSoul);
-							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul - this.maxSoul);
-						}
-					}
-				}
-			}
-		}
 	}
 
 	private static boolean useOnBlock(ItemStack stack, IWorld world, BlockPos pos, PlayerEntity player)
@@ -134,6 +101,41 @@ public class ScepterItem extends SoulStorageItem
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public void onEntityTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected)
+	{
+		if (world.getTime() % 20 == 0 && !world.isClient && selected && holder instanceof PlayerEntity)
+		{
+			int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+			CompoundTag scepterTag = scepter.getTag();
+			if (scepterSoul < this.maxSoul && scepterTag != null)
+			{
+				int pendantSlot = ArcaneMagicUtils.findPendant((PlayerEntity) holder);
+				if (pendantSlot != -1)
+				{
+					ItemStack pendant = ((PlayerEntity) holder).inventory.getInvStack(pendantSlot);
+					int pendantSoul = pendant.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
+					CompoundTag pendantTag = pendant.getTag();
+
+					if (pendantTag != null)
+					{
+						if (scepterSoul + pendantSoul <= this.maxSoul)
+						{
+							// Transfer all soul from the pendant into the scepter
+							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul);
+							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, 0);
+						} else
+						{
+							// Fill the scepter and leave the remaining soul in the pendant
+							scepterTag.putInt(ArcaneMagicConstants.SOUL_KEY, maxSoul);
+							pendantTag.putInt(ArcaneMagicConstants.SOUL_KEY, scepterSoul + pendantSoul - this.maxSoul);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override
@@ -278,6 +280,26 @@ public class ScepterItem extends SoulStorageItem
 		return stack;
 	}
 
+	@Override
+	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
+	{
+		super.onCrafted(stack, world, player);
+		if (!world.isClient && player != null)
+		{
+			if (this == ModRegistry.GOLDEN_SCEPTER)
+			{
+				if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
+				{
+					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+					((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
+					ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
+					((DataHolder) player).markAdditionalDataDirty();
+					ArcaneMagicUtils.unlockRecipe(player, "notebook");
+				}
+			}
+		}
+	}
+
 	private class ScepterDispenserBehavior extends ItemDispenserBehavior
 	{
 		@Override
@@ -311,26 +333,6 @@ public class ScepterItem extends SoulStorageItem
 		protected void spawnParticles(BlockPointer pointer, Direction dir)
 		{
 			//pointer.getWorld().playEvent(2000, pointer.getBlockPos(), dir.getId());
-		}
-	}
-
-	@Override
-	public void onCrafted(ItemStack stack, World world, PlayerEntity player)
-	{
-		super.onCrafted(stack, world, player);
-		if (!world.isClient && player != null)
-		{
-			if (this == ModRegistry.GOLDEN_SCEPTER)
-			{
-				if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
-				{
-					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
-					((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
-					ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
-					((DataHolder) player).markAdditionalDataDirty();
-					ArcaneMagicUtils.unlockRecipe(player, "notebook");
-				}
-			}
 		}
 	}
 }

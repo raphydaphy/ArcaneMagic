@@ -26,6 +26,12 @@ import net.minecraft.world.World;
 
 public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProvider
 {
+	public static final EnumProperty<PipeConnection> UP;
+	public static final EnumProperty<PipeConnection> DOWN;
+	public static final EnumProperty<PipeConnection> NORTH;
+	public static final EnumProperty<PipeConnection> EAST;
+	public static final EnumProperty<PipeConnection> SOUTH;
+	public static final EnumProperty<PipeConnection> WEST;
 	private static final VoxelShape CENTER_SHAPE;
 	private static final VoxelShape UP_PIPE_SHAPE;
 	private static final VoxelShape UP_BLOCK_SHAPE;
@@ -39,13 +45,6 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	private static final VoxelShape SOUTH_BLOCK_SHAPE;
 	private static final VoxelShape WEST_PIPE_SHAPE;
 	private static final VoxelShape WEST_BLOCK_SHAPE;
-
-	public static final EnumProperty<PipeConnection> UP;
-	public static final EnumProperty<PipeConnection> DOWN;
-	public static final EnumProperty<PipeConnection> NORTH;
-	public static final EnumProperty<PipeConnection> EAST;
-	public static final EnumProperty<PipeConnection> SOUTH;
-	public static final EnumProperty<PipeConnection> WEST;
 
 	static
 	{
@@ -79,6 +78,27 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	{
 		super(FabricBlockSettings.of(Material.STONE).strength(1.5f, 6f).build());
 		this.setDefaultState(this.getDefaultState().with(UP, PipeConnection.NONE).with(DOWN, PipeConnection.NONE).with(NORTH, PipeConnection.NONE).with(EAST, PipeConnection.NONE).with(SOUTH, PipeConnection.NONE).with(WEST, PipeConnection.NONE));
+	}
+
+	public static EnumProperty<PipeConnection> getProp(Direction dir)
+	{
+		switch (dir)
+		{
+			case UP:
+				return UP;
+			case DOWN:
+				return DOWN;
+			case NORTH:
+				return NORTH;
+			case EAST:
+				return EAST;
+			case SOUTH:
+				return SOUTH;
+			case WEST:
+				return WEST;
+			default:
+				return UP;
+		}
 	}
 
 	@Override
@@ -184,27 +204,6 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 			return fluids.length > 0 ? PipeConnection.BLOCK : PipeConnection.NONE;
 		}
 		return PipeConnection.NONE;
-	}
-
-	public static EnumProperty<PipeConnection> getProp(Direction dir)
-	{
-		switch (dir)
-		{
-			case UP:
-				return UP;
-			case DOWN:
-				return DOWN;
-			case NORTH:
-				return NORTH;
-			case EAST:
-				return EAST;
-			case SOUTH:
-				return SOUTH;
-			case WEST:
-				return WEST;
-			default:
-				return UP;
-		}
 	}
 
 	public enum PipeConnection implements StringRepresentable

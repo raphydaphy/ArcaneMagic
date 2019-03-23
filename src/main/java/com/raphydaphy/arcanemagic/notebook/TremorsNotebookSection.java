@@ -35,7 +35,7 @@ public class TremorsNotebookSection implements INotebookSection
 		{
 			elements.add(new NotebookElement.Padding(3));
 		}
-		elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.tremors.0", 2,0, page));
+		elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.tremors.0", 2, 0, page));
 		return elements;
 	}
 

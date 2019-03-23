@@ -152,7 +152,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 
 				if (!getInvStack(2).isEmpty())
 				{
-					ArcaneMagicUtils.ForgeCrystal crystal = ((CrystalItem)getInvStack(2).getItem()).type;
+					ArcaneMagicUtils.ForgeCrystal crystal = ((CrystalItem) getInvStack(2).getItem()).type;
 					float particlePosX = (float) (0.5 + Math.cos((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);
 					float particlePosY = (float) (1 - Math.sin((Math.PI / 180) * ((renderTicks + 45) * 4)) / 8);
 					float particlePosZ = (float) (0.5 + Math.sin((Math.PI / 180) * (renderTicks * 2)) / inverseRadius);

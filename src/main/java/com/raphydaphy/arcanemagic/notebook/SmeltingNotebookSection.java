@@ -44,8 +44,8 @@ public class SmeltingNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.smelter").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "smelter")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "block.arcanemagic.smelter").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "smelter")).orElse(null)));
 		}
 
 		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))

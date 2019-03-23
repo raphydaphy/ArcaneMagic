@@ -43,8 +43,8 @@ public class FluidTransportNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.pipe").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pipe")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "block.arcanemagic.pipe").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pipe")).orElse(null)));
 		}
 		return elements;
 	}

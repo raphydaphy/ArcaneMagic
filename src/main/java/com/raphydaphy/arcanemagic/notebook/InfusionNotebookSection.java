@@ -44,8 +44,8 @@ public class InfusionNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.crystal_infuser").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "crystal_infuser")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "block.arcanemagic.crystal_infuser").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "crystal_infuser")).orElse(null)));
 		}
 
 		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY))

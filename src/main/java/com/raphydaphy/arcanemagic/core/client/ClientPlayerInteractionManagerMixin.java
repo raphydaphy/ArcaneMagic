@@ -24,7 +24,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ClientPlayerInteractionManager.class)
 public class ClientPlayerInteractionManagerMixin
 {
-	@Shadow @Final private MinecraftClient client;
+	@Shadow
+	@Final
+	private MinecraftClient client;
 
 	@Inject(at = @At("HEAD"), method = "attackEntity", cancellable = true)
 	private void attackEntity(PlayerEntity player, Entity entity, CallbackInfo info)
@@ -44,7 +46,7 @@ public class ClientPlayerInteractionManagerMixin
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method="attackBlock", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "attackBlock", cancellable = true)
 	private void attackBlock(BlockPos blockPos_1, Direction direction_1, CallbackInfoReturnable<Boolean> info)
 	{
 		if (CutsceneManager.isActive(client.player))
@@ -53,7 +55,7 @@ public class ClientPlayerInteractionManagerMixin
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method="interactBlock", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "interactBlock", cancellable = true)
 	private void interactBlock(ClientPlayerEntity clientPlayerEntity_1, ClientWorld clientWorld_1, Hand hand_1, BlockHitResult blockHitResult_1, CallbackInfoReturnable<ActionResult> info)
 	{
 		if (CutsceneManager.isActive(client.player))
@@ -62,7 +64,7 @@ public class ClientPlayerInteractionManagerMixin
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method="interactItem", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "interactItem", cancellable = true)
 	private void interactItem(PlayerEntity playerEntity_1, World world_1, Hand hand_1, CallbackInfoReturnable<ActionResult> info)
 	{
 		if (CutsceneManager.isActive(client.player))

@@ -285,7 +285,8 @@ public class HudRenderer
 					displayed += (change > 0.05f ? 0.05f : change);
 					return displayed;
 				}
-			} return real;
+			}
+			return real;
 		}
 		return real;
 	}

@@ -80,7 +80,7 @@ public class ContentsNotebookSection implements INotebookSection
 				if (button.link.isVisibleTo(player))
 				{
 					number++;
-					int properPage = (int)Math.ceil(number / 4f);
+					int properPage = (int) Math.ceil(number / 4f);
 					if (properPage == thisPage)
 					{
 						elements.add(button);
@@ -105,6 +105,6 @@ public class ContentsNotebookSection implements INotebookSection
 				amount++;
 			}
 		}
-		return (int)Math.ceil(amount / 4f) + NotebookElement.textPages("notebook.arcanemagic.intro", 2);
+		return (int) Math.ceil(amount / 4f) + NotebookElement.textPages("notebook.arcanemagic.intro", 2);
 	}
 }

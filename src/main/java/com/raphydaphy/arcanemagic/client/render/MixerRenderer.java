@@ -47,38 +47,6 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 
 	private static List<MixerRenderInstance> renderQueue = new ArrayList<>();
 
-	public void render(MixerBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
-	{
-		super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
-
-		if (entity != null)
-		{
-			if (entity.isBottom())
-			{
-				ItemStack stack = entity.getInvStack(0);
-				float ticks = ArcaneMagicUtils.lerp(entity.ticks - 1, entity.ticks, partialTicks);
-
-				if (!stack.isEmpty())
-				{
-					GlStateManager.pushMatrix();
-
-					GuiLighting.enable();
-					GlStateManager.enableLighting();
-					GlStateManager.disableRescaleNormal();
-					GlStateManager.translated(renderX + .5, renderY + 0.35 + Math.sin((Math.PI / 180) * (ticks * 4)) / 30, renderZ + .5);
-					GlStateManager.rotated(2 * ticks, 0, 1, 0);
-					GlStateManager.scaled(0.7, 0.7, 0.7);
-					MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.GROUND);
-
-					GlStateManager.popMatrix();
-				}
-			} else
-			{
-				renderQueue.add(new MixerRenderInstance(entity, renderX, renderY, renderZ));
-			}
-		}
-	}
-
 	public static void renderMixers()
 	{
 		if (renderQueue.size() > 0)
@@ -144,7 +112,7 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 			MinecraftClient.getInstance().getTextureManager().bindTexture(waterTexture);
 			builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
 			int waterColor = BiomeColors.waterColorAt(entity.getWorld(), entity.getPos());
-			RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 200, new RenderUtils.TextureBounds[] {
+			RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 200, new RenderUtils.TextureBounds[]{
 					new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512),
 					new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512),
 					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512),
@@ -153,6 +121,38 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 					new RenderUtils.TextureBounds(0, frame * 16, 12, water + frame * 16, 16, 512)}, new int[]{1, 1, 1, 1, 1, 1});
 
 			tess.draw();
+		}
+	}
+
+	public void render(MixerBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage)
+	{
+		super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
+
+		if (entity != null)
+		{
+			if (entity.isBottom())
+			{
+				ItemStack stack = entity.getInvStack(0);
+				float ticks = ArcaneMagicUtils.lerp(entity.ticks - 1, entity.ticks, partialTicks);
+
+				if (!stack.isEmpty())
+				{
+					GlStateManager.pushMatrix();
+
+					GuiLighting.enable();
+					GlStateManager.enableLighting();
+					GlStateManager.disableRescaleNormal();
+					GlStateManager.translated(renderX + .5, renderY + 0.35 + Math.sin((Math.PI / 180) * (ticks * 4)) / 30, renderZ + .5);
+					GlStateManager.rotated(2 * ticks, 0, 1, 0);
+					GlStateManager.scaled(0.7, 0.7, 0.7);
+					MinecraftClient.getInstance().getItemRenderer().renderItem(stack, ModelTransformation.Type.GROUND);
+
+					GlStateManager.popMatrix();
+				}
+			} else
+			{
+				renderQueue.add(new MixerRenderInstance(entity, renderX, renderY, renderZ));
+			}
 		}
 	}
 

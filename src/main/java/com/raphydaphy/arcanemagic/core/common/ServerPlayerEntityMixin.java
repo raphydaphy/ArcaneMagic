@@ -33,13 +33,13 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 		if (this.getAdditionalData().getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
 		{
 			this.getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
-			((PlayerEntity)(Object)this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
-			ArcaneMagicUtils.unlockRecipe((PlayerEntity)(Object)this, "written_parchment");
+			((PlayerEntity) (Object) this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
+			ArcaneMagicUtils.unlockRecipe((PlayerEntity) (Object) this, "written_parchment");
 		}
 		markAdditionalDataDirty();
 	}
 
-	@Inject(at = @At("TAIL"), method="method_14226")
+	@Inject(at = @At("TAIL"), method = "method_14226")
 	private void syncAdditionalData(CallbackInfo info)
 	{
 		if (additionalDataNeedsSync)
@@ -49,14 +49,14 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 		}
 	}
 
-	@Inject(at=@At(value="HEAD"), method="onDeath")
+	@Inject(at = @At(value = "HEAD"), method = "onDeath")
 	private void onDeath(DamageSource source, CallbackInfo info)
 	{
-		if (!((PlayerEntity)(Object)this).world.isClient && !((PlayerEntity)(Object)this).world.getGameRules().getBoolean("keepInventory") && !getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
+		if (!((PlayerEntity) (Object) this).world.isClient && !((PlayerEntity) (Object) this).world.getGameRules().getBoolean("keepInventory") && !getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
 		{
-			for (int slot = 0; slot < ((PlayerEntity)(Object)this).inventory.getInvSize(); slot++)
+			for (int slot = 0; slot < ((PlayerEntity) (Object) this).inventory.getInvSize(); slot++)
 			{
-				ItemStack stack = ((PlayerEntity)(Object)this).inventory.getInvStack(slot);
+				ItemStack stack = ((PlayerEntity) (Object) this).inventory.getInvStack(slot);
 				if (stack.getItem() == ModRegistry.WRITTEN_PARCHMENT)
 				{
 					IParchment parchment = ParchmentRegistry.getParchment(stack);

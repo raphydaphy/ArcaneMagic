@@ -2,7 +2,6 @@ package com.raphydaphy.arcanemagic.api.docs;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.util.DataHolder;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Identifier;
 
 import java.util.List;

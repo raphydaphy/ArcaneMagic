@@ -5,8 +5,8 @@ import java.util.function.Consumer;
 public class ParticleSource
 {
 	private final Consumer<Integer> particles;
-	private int age = 0;
 	private final int lifetime;
+	private int age = 0;
 
 	public ParticleSource(Consumer<Integer> particles, int lifetime)
 	{

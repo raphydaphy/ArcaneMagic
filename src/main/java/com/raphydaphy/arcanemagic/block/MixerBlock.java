@@ -89,7 +89,8 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, 
 	}
 
 	@Override
-	public BlockRenderLayer[] getExtraRenderLayers() {
+	public BlockRenderLayer[] getExtraRenderLayers()
+	{
 		return new BlockRenderLayer[]{BlockRenderLayer.TRANSLUCENT};
 	}
 

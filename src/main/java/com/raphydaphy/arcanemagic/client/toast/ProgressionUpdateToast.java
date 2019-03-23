@@ -7,6 +7,7 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
 import net.minecraft.item.ItemStack;
+
 public class ProgressionUpdateToast implements Toast
 {
 	private boolean notebook = false;

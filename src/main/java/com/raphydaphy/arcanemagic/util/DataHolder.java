@@ -8,5 +8,7 @@ public interface DataHolder
 
 	void setAdditionalData(CompoundTag tag);
 
-	default void markAdditionalDataDirty() {}
+	default void markAdditionalDataDirty()
+	{
+	}
 }

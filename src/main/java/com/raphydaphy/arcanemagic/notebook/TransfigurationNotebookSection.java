@@ -43,8 +43,8 @@ public class TransfigurationNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.transfiguration_table").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "block.arcanemagic.transfiguration_table").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table")).orElse(null)));
 		}
 
 		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
@@ -55,7 +55,7 @@ public class TransfigurationNotebookSection implements INotebookSection
 			if (page == secondText + 1)
 			{
 				elements.add(new NotebookElement.Padding(4));
-				elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.gold_crystal").withPadding(8));
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.gold_crystal").withPadding(8));
 				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "gold_crystal")).orElse(null)));
 			}
 		}

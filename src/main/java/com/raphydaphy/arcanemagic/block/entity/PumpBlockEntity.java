@@ -26,10 +26,9 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 {
 	private static final String WATER_KEY = "Water";
 	private static final int MAX_FLUID = DropletValues.BUCKET * 4;
-
-	private FluidInstance water = new FluidInstance(Fluids.WATER);
 	public int ticks = 0;
 	public int prevTicks = 0;
+	private FluidInstance water = new FluidInstance(Fluids.WATER);
 
 	public PumpBlockEntity()
 	{

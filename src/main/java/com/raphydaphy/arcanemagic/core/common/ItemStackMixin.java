@@ -17,16 +17,37 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin
 {
+	@Inject(at = @At("RETURN"), method = "areEqual", cancellable = true)
+	private static void areEqual(ItemStack one, ItemStack two, CallbackInfoReturnable<Boolean> info)
+	{
+		CompoundTag tagOne;
+		CompoundTag tagTwo;
+		if (one.getDamage() == two.getDamage())
+		{
+			if (!info.getReturnValue() && one.getItem() instanceof ICrystalEquipment && two.getItem() instanceof ICrystalEquipment && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
+			{
+				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.UUID_KEY);
+				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.UUID_KEY)))
+				{
+					int timerOne = tagOne.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
+					int timerTwo = tagTwo.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
+					if ((timerOne != 0 && timerTwo != 0) || (timerTwo == 0 && timerOne == 0))
+					{
+						info.setReturnValue(true);
+					}
+				}
+			}
+		}
+	}
+
 	@Shadow
 	public abstract CompoundTag getTag();
 
@@ -42,12 +63,12 @@ public abstract class ItemStackMixin
 			ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
 			if (passive == ArcaneMagicUtils.ForgeCrystal.COAL)
 			{
-				info.setReturnValue((int)(info.getReturnValue() * 1.2f));
+				info.setReturnValue((int) (info.getReturnValue() * 1.2f));
 			}
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method="applyDamage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "applyDamage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
 	private void applyDamage(int amount, Random rand, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> info)
 	{
 		CompoundTag tag = getTag();
@@ -87,29 +108,6 @@ public abstract class ItemStackMixin
 			map.put(EntityAttributes.ATTACK_DAMAGE.getId(), new EntityAttributeModifier(DaggerItem.getDamageModifier(), "Weapon modifier", damage, EntityAttributeModifier.Operation.ADDITION));
 
 			info.setReturnValue(map);
-		}
-	}
-
-	@Inject(at = @At("RETURN"), method="areEqual", cancellable=true)
-	private static void areEqual(ItemStack one, ItemStack two, CallbackInfoReturnable<Boolean> info)
-	{
-		CompoundTag tagOne;
-		CompoundTag tagTwo;
-		if (one.getDamage() == two.getDamage())
-		{
-			if (!info.getReturnValue() && one.getItem() instanceof ICrystalEquipment && two.getItem() instanceof ICrystalEquipment && (tagOne = one.getTag()) != null && (tagTwo = two.getTag()) != null)
-			{
-				UUID uuidOne = tagOne.getUuid(ArcaneMagicConstants.UUID_KEY);
-				if (uuidOne != null && uuidOne.equals(tagTwo.getUuid(ArcaneMagicConstants.UUID_KEY)))
-				{
-					int timerOne = tagOne.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
-					int timerTwo = tagTwo.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
-					if ((timerOne != 0 && timerTwo != 0) || (timerTwo == 0 && timerOne == 0))
-					{
-						info.setReturnValue(true);
-					}
-				}
-			}
 		}
 	}
 }

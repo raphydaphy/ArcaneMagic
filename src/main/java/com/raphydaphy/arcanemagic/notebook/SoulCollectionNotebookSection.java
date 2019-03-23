@@ -43,8 +43,8 @@ public class SoulCollectionNotebookSection implements INotebookSection
 		if (page == firstText + 1)
 		{
 			elements.add(new NotebookElement.Padding(4));
-			elements.add(new NotebookElement.Paragraph(true, 1,"block.arcanemagic.altar").withPadding(10));
-			elements.add(new NotebookElement.Recipe( MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "altar")).orElse(null)));
+			elements.add(new NotebookElement.Paragraph(true, 1, "block.arcanemagic.altar").withPadding(10));
+			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "altar")).orElse(null)));
 		}
 		return elements;
 	}

@@ -18,7 +18,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -36,11 +35,6 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		this.speed = speed;
 	}
 
-	public float getSpeed()
-	{
-		return this.speed;
-	}
-
 	public static UUID getDamageModifier()
 	{
 		return Item.MODIFIER_DAMAGE;
@@ -49,6 +43,29 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 	public static UUID getSpeedModifier()
 	{
 		return Item.MODIFIER_SWING_SPEED;
+	}
+
+	public static int activeDuration(ItemStack stack)
+	{
+		CompoundTag tag = stack.getTag();
+		if (tag != null && tag.containsKey(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY))
+		{
+			ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
+			if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
+			{
+				return 5 * 20;
+			} else if (crystal == ArcaneMagicUtils.ForgeCrystal.COAL)
+			{
+				return 20 * 20;
+			}
+			return 10 * 20;
+		}
+		return 0;
+	}
+
+	public float getSpeed()
+	{
+		return this.speed;
 	}
 
 	@Override
@@ -72,24 +89,6 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		return new TypedActionResult<>(ActionResult.PASS, stack);
 	}
 
-	public static int activeDuration(ItemStack stack)
-	{
-		CompoundTag tag = stack.getTag();
-		if (tag != null && tag.containsKey(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY))
-		{
-			ArcaneMagicUtils.ForgeCrystal crystal = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
-			if (crystal == ArcaneMagicUtils.ForgeCrystal.GOLD)
-			{
-				return 5 * 20;
-			} else if (crystal == ArcaneMagicUtils.ForgeCrystal.COAL)
-			{
-				return 20 * 20;
-			}
-			return 10 * 20;
-		}
-		return 0;
-	}
-
 	@Override
 	public void onEntityTick(ItemStack stack, World world, Entity entity, int slot, boolean selected)
 	{
@@ -105,7 +104,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 					if (timer - 1 == 0)
 					{
 						tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-						((PlayerEntity)entity).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+						((PlayerEntity) entity).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 						if (world.isClient)
 						{
 							world.playSound((PlayerEntity) entity, entity.getBlockPos(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYER, 1, 1);
@@ -121,11 +120,11 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 	{
 		if (!world.isClient && player != null)
 		{
-			if (!((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
+			if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
 			{
 				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY, true);
-				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
+				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
 			}
 		}

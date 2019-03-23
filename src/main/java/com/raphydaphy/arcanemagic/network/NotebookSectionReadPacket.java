@@ -2,12 +2,9 @@ package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
-import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.fabric.api.network.PacketContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 

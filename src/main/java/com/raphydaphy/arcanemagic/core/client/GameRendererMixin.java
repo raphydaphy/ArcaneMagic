@@ -21,7 +21,9 @@ public class GameRendererMixin
 	@Final
 	private Camera camera; // Camera
 
-	@Shadow @Final private MinecraftClient client;
+	@Shadow
+	@Final
+	private MinecraftClient client;
 
 	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=hand", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
 	private void renderAfterWorld(float partialTicks, long finishTimeNano, CallbackInfo info)
@@ -36,7 +38,7 @@ public class GameRendererMixin
 		TremorTracker.renderTremors();
 	}
 
-	@Inject(at = @At(value = "HEAD"), method="method_3172", cancellable = true)
+	@Inject(at = @At(value = "HEAD"), method = "method_3172", cancellable = true)
 	private void renderHand(Camera camera_1, float float_1, CallbackInfo info)
 	{
 		if (CutsceneManager.hideHud(client.player))

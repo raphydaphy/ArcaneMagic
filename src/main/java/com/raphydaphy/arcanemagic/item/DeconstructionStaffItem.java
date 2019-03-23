@@ -15,7 +15,10 @@ import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.multiblockapi.MultiBlock;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FallingBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +38,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class DeconstructionStaffItem extends Item
 {
@@ -53,7 +58,7 @@ public class DeconstructionStaffItem extends Item
 		{
 			ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 0.5f, 1);
 
-			DataHolder dataPlayer = (DataHolder)ctx.getPlayer();
+			DataHolder dataPlayer = (DataHolder) ctx.getPlayer();
 			if (ctx.getWorld().isClient)
 			{
 				doParticles(ctx.getWorld(), pos);
@@ -75,7 +80,7 @@ public class DeconstructionStaffItem extends Item
 		}
 		if (!(block instanceof MultiBlock))
 		{
-			Map<Identifier, Recipe<CraftingInventory>> craftingRecipes =  ((RecipeManagerMixin)ctx.getWorld().getRecipeManager()).getRecipes(RecipeType.CRAFTING);
+			Map<Identifier, Recipe<CraftingInventory>> craftingRecipes = ((RecipeManagerMixin) ctx.getWorld().getRecipeManager()).getRecipes(RecipeType.CRAFTING);
 			for (Map.Entry<Identifier, Recipe<CraftingInventory>> entry : craftingRecipes.entrySet())
 			{
 				Recipe<CraftingInventory> craftingRecipe = entry.getValue();
@@ -132,7 +137,7 @@ public class DeconstructionStaffItem extends Item
 
 						if (item.getAmount() > 1)
 						{
-							item.setAmount((int)Math.ceil(item.getAmount() / 2f));
+							item.setAmount((int) Math.ceil(item.getAmount() / 2f));
 						}
 
 						if (item.getAmount() > 0)
@@ -172,7 +177,7 @@ public class DeconstructionStaffItem extends Item
 			for (int i = 0; i < 3; i++)
 			{
 				ParticleUtil.spawnGlowParticle(world,
-						pos.getX() + 0.1f + rand.nextFloat() * 0.8f, pos.getY() + 0.1f + rand.nextFloat() * 0.8f, pos.getZ() +  0.1f+ rand.nextFloat() * 0.8f,
+						pos.getX() + 0.1f + rand.nextFloat() * 0.8f, pos.getY() + 0.1f + rand.nextFloat() * 0.8f, pos.getZ() + 0.1f + rand.nextFloat() * 0.8f,
 						(float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, r, g, b, 1, true, 0.3f, 50);
 			}
 		}, 3));
@@ -187,7 +192,7 @@ public class DeconstructionStaffItem extends Item
 			{
 				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY, true);
-				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder)player, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
+				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
 			}
 		}

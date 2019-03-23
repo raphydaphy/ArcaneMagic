@@ -20,55 +20,6 @@ import java.util.Set;
 
 public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<ShapedTransfigurationRecipe>
 {
-	@Override
-	public ShapedTransfigurationRecipe read(Identifier id, JsonObject object)
-	{
-		Map<String, Ingredient> ingredients = deserializeComponents(JsonHelper.getObject(object, "key"));
-		String[] strings_1 = makePatternList(deserializePattern(JsonHelper.getArray(object, "pattern")));
-		int width = strings_1[0].length();
-		int height = strings_1.length;
-		DefaultedList<Ingredient> inputs = patternToList(strings_1, ingredients, width, height);
-		ItemStack output = ArcaneMagicUtils.deserializeItemStack(JsonHelper.getObject(object, "result"));
-		int soul = JsonHelper.getInt(object, "soul");
-		return new ShapedTransfigurationRecipe(id, output, inputs, soul, width, height);
-	}
-
-	@Override
-	public ShapedTransfigurationRecipe read(Identifier id, PacketByteBuf buf)
-	{
-		int soul = buf.readVarInt();
-
-		int width = buf.readVarInt();
-		int height = buf.readVarInt();
-
-		DefaultedList<Ingredient> inputs = DefaultedList.create(width * height, Ingredient.EMPTY);
-
-		for (int int_3 = 0; int_3 < inputs.size(); ++int_3)
-		{
-			inputs.set(int_3, Ingredient.fromPacket(buf));
-		}
-
-		ItemStack output = buf.readItemStack();
-
-		return new ShapedTransfigurationRecipe(id, output, inputs, soul, width, height);
-	}
-
-	@Override
-	public void write(PacketByteBuf buf, ShapedTransfigurationRecipe recipe)
-	{
-		buf.writeVarInt(recipe.soul);
-
-		buf.writeVarInt(recipe.width);
-		buf.writeVarInt(recipe.height);
-
-		for (Ingredient ingredient : recipe.inputs)
-		{
-			ingredient.write(buf);
-		}
-
-		buf.writeItemStack(recipe.output);
-	}
-
 	private static DefaultedList<Ingredient> patternToList(String[] pattern, Map<String, Ingredient> key, int width, int height)
 	{
 		DefaultedList<Ingredient> ingredients = DefaultedList.create(width * height, Ingredient.EMPTY);
@@ -215,5 +166,54 @@ public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<S
 
 			return strings_1;
 		}
+	}
+
+	@Override
+	public ShapedTransfigurationRecipe read(Identifier id, JsonObject object)
+	{
+		Map<String, Ingredient> ingredients = deserializeComponents(JsonHelper.getObject(object, "key"));
+		String[] strings_1 = makePatternList(deserializePattern(JsonHelper.getArray(object, "pattern")));
+		int width = strings_1[0].length();
+		int height = strings_1.length;
+		DefaultedList<Ingredient> inputs = patternToList(strings_1, ingredients, width, height);
+		ItemStack output = ArcaneMagicUtils.deserializeItemStack(JsonHelper.getObject(object, "result"));
+		int soul = JsonHelper.getInt(object, "soul");
+		return new ShapedTransfigurationRecipe(id, output, inputs, soul, width, height);
+	}
+
+	@Override
+	public ShapedTransfigurationRecipe read(Identifier id, PacketByteBuf buf)
+	{
+		int soul = buf.readVarInt();
+
+		int width = buf.readVarInt();
+		int height = buf.readVarInt();
+
+		DefaultedList<Ingredient> inputs = DefaultedList.create(width * height, Ingredient.EMPTY);
+
+		for (int int_3 = 0; int_3 < inputs.size(); ++int_3)
+		{
+			inputs.set(int_3, Ingredient.fromPacket(buf));
+		}
+
+		ItemStack output = buf.readItemStack();
+
+		return new ShapedTransfigurationRecipe(id, output, inputs, soul, width, height);
+	}
+
+	@Override
+	public void write(PacketByteBuf buf, ShapedTransfigurationRecipe recipe)
+	{
+		buf.writeVarInt(recipe.soul);
+
+		buf.writeVarInt(recipe.width);
+		buf.writeVarInt(recipe.height);
+
+		for (Ingredient ingredient : recipe.inputs)
+		{
+			ingredient.write(buf);
+		}
+
+		buf.writeItemStack(recipe.output);
 	}
 }

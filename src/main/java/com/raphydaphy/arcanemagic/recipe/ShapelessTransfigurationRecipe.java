@@ -1,6 +1,5 @@
 package com.raphydaphy.arcanemagic.recipe;
 
-import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -11,17 +10,13 @@ import net.minecraft.util.DefaultedList;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ShapelessTransfigurationRecipe implements TransfigurationRecipe
 {
 	public static RecipeSerializer<ShapelessTransfigurationRecipe> SERIALIZER;
-
-	private final Identifier id;
 	final ItemStack output;
 	final DefaultedList<Ingredient> inputs;
 	final int soul;
+	private final Identifier id;
 
 	public ShapelessTransfigurationRecipe(Identifier id, ItemStack output, DefaultedList<Ingredient> inputs, int soul)
 	{
@@ -37,9 +32,11 @@ public class ShapelessTransfigurationRecipe implements TransfigurationRecipe
 		RecipeFinder finder = new RecipeFinder();
 		int items = 0;
 
-		for(int item = 0; item < inv.getInvSize(); ++item) {
+		for (int item = 0; item < inv.getInvSize(); ++item)
+		{
 			ItemStack stack = inv.getInvStack(item);
-			if (!(stack.isEmpty() || stack.getItem() == Items.GLASS_PANE)) {
+			if (!(stack.isEmpty() || stack.getItem() == Items.GLASS_PANE))
+			{
 				++items;
 				finder.addItem(stack);
 			}

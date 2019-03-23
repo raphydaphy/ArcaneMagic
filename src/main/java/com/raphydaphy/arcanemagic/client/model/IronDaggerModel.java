@@ -72,11 +72,13 @@ public class IronDaggerModel implements UnbakedModel
 	@Override
 	public BakedModel bake(ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer)
 	{
-		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, rotationContainer), (hilt,pommel)->{
+		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, rotationContainer), (hilt, pommel) ->
+		{
 			Map<String, String> newTextures = new HashMap<>();
 			newTextures.put("layer0", BASE.toString());
 			if (hilt != ForgeCrystal.EMPTY) newTextures.put("layer1", hilt.hilt.toString());
-			if (pommel != ForgeCrystal.EMPTY) newTextures.put(hilt == ForgeCrystal.EMPTY ? "layer1" : "layer2", pommel.pommel.toString());
+			if (pommel != ForgeCrystal.EMPTY)
+				newTextures.put(hilt == ForgeCrystal.EMPTY ? "layer1" : "layer2", pommel.pommel.toString());
 			CustomJsonUnbakedModel baseCopy = new CustomJsonUnbakedModel(BASE_MODEL, (JsonUnbakedModel) baseModel, newTextures, loader::getOrLoadModel);
 			return doBake(baseCopy, loader, bakedTextureGetter, rotationContainer);
 		});
@@ -128,7 +130,7 @@ public class IronDaggerModel implements UnbakedModel
 			}
 			key = new CacheKey(hilt, pommel);
 
-			return cache.computeIfAbsent(key, k->lazyBaker.apply(k.hilt, k.pommel));
+			return cache.computeIfAbsent(key, k -> lazyBaker.apply(k.hilt, k.pommel));
 		}
 	}
 

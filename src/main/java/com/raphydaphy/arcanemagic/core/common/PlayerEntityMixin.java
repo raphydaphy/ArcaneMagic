@@ -28,6 +28,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements DataHolder
 {
+	private static final String ADDITIONAL_DATA_TAG = "ArcaneMagicData";
+	@Shadow
+	@Final
+	public PlayerInventory inventory;
+	private CompoundTag additionalData = new CompoundTag();
+
 	protected PlayerEntityMixin(EntityType<? extends LivingEntity> type, World world)
 	{
 		super(type, world);
@@ -35,10 +41,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 
 	@Shadow
 	public abstract ItemCooldownManager getItemCooldownManager();
-
-	@Shadow
-	@Final
-	public PlayerInventory inventory;
 
 	@Shadow
 	public abstract void addChatMessage(TextComponent textComponent_1, boolean boolean_1);
@@ -57,7 +59,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 				{
 					tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
 					tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-					((PlayerEntity)(Object)this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+					((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 				}
 
 				if (entity instanceof LivingEntity)
@@ -73,7 +75,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 						}
 						tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
 						tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-						((PlayerEntity)(Object)this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+						((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 					} else if (active == ArcaneMagicUtils.ForgeCrystal.DIAMOND)
 					{
 						ItemStack held = livingEntity.getMainHandStack().copy();
@@ -99,7 +101,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 							}
 							tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
 							tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-							((PlayerEntity)(Object)this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+							((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
 						}
 					}
 				}
@@ -108,9 +110,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 		}
 
 	}
-
-	private static final String ADDITIONAL_DATA_TAG = "ArcaneMagicData";
-	private CompoundTag additionalData = new CompoundTag();
 
 	@Inject(at = @At("TAIL"), method = "readCustomDataFromTag")
 	private void readCustomDataFromTag(CompoundTag tag, CallbackInfo info)
@@ -136,29 +135,29 @@ public abstract class PlayerEntityMixin extends LivingEntity implements DataHold
 		this.additionalData = tag;
 	}
 
-	@Inject(at = @At("HEAD"), method="tick")
+	@Inject(at = @At("HEAD"), method = "tick")
 	private void tick(CallbackInfo info)
 	{
-		if (CutsceneManager.isActive((PlayerEntity)(Object)this))
+		if (CutsceneManager.isActive((PlayerEntity) (Object) this))
 		{
 			this.onGround = false;
 			if (world.isClient)
 			{
-				clientTick();
+				arcaneMagicClientTick();
 			}
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method="interact", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "interact", cancellable = true)
 	private void interact(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> info)
 	{
-		if (CutsceneManager.isActive((PlayerEntity)(Object)this))
+		if (CutsceneManager.isActive((PlayerEntity) (Object) this))
 		{
 			info.setReturnValue(ActionResult.PASS);
 		}
 	}
 
-	private void clientTick()
+	private void arcaneMagicClientTick()
 	{
 		CutsceneManager.updateClient();
 	}

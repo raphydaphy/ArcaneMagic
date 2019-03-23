@@ -11,7 +11,6 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 

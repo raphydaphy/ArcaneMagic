@@ -3,7 +3,6 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.client.screen.NotebookScreen;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

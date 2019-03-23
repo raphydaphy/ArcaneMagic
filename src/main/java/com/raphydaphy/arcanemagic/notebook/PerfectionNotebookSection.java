@@ -56,7 +56,7 @@ public class PerfectionNotebookSection implements INotebookSection
 			if (page == secondText + 1)
 			{
 				elements.add(new NotebookElement.Padding(4));
-				elements.add(new NotebookElement.Paragraph(true, 1,"item.arcanemagic.pure_scepter").withPadding(8));
+				elements.add(new NotebookElement.Paragraph(true, 1, "item.arcanemagic.pure_scepter").withPadding(8));
 				elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_scepter")).orElse(null)));
 			}
 		}

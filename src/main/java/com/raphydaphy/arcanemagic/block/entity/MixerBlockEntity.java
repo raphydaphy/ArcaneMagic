@@ -6,7 +6,6 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
@@ -21,10 +20,10 @@ import net.minecraft.util.math.Direction;
 
 public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInventory, Tickable
 {
+	public static final int MAX_FLUID = DropletValues.BUCKET * 4;
 	private static final String WATER_KEY = "Water";
 	private static final String LIQUIFIED_SOUL_KEY = "LiquifiedSoul";
 	private static final int WATER_USE = DropletValues.NUGGET;
-	public static final int MAX_FLUID = DropletValues.BUCKET * 4;
 	private final int[] slots = {0};
 	public long ticks = 0;
 	private FluidInstance water = new FluidInstance(Fluids.WATER);

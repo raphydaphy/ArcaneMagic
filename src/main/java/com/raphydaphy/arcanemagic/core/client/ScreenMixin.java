@@ -6,7 +6,6 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
 import com.raphydaphy.arcanemagic.item.SoulStorageItem;
-import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -30,29 +29,29 @@ import java.util.List;
 public abstract class ScreenMixin extends ScreenComponent
 {
 	private static Identifier TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_tooltip.png");
+	@Shadow
+	public int screenWidth;
+	@Shadow
+	public int screenHeight;
+	@Shadow
+	protected TextRenderer fontRenderer;
+	@Shadow
+	protected ItemRenderer itemRenderer;
 
 	@Shadow
 	public abstract List<String> getStackTooltip(ItemStack itemStack_1);
-
-	@Shadow protected TextRenderer fontRenderer;
-
-	@Shadow public int screenWidth;
-
-	@Shadow public int screenHeight;
-
-	@Shadow protected ItemRenderer itemRenderer;
 
 	@Inject(at = @At("HEAD"), method = "drawStackTooltip", cancellable = true)
 	private void drawStackTooltip(ItemStack stack, int int_1, int int_2, CallbackInfo info)
 	{
 		if (stack.getItem() instanceof SoulStorageItem && stack.hasTag())
 		{
-			drawSoulTooltip(stack, getStackTooltip(stack), int_1, int_2);
+			drawArcaneMagicSoulTooltip(stack, getStackTooltip(stack), int_1, int_2);
 			info.cancel();
 		}
 	}
 
-	private void drawSoulTooltip(ItemStack stack, List<String> text, int x, int y)
+	private void drawArcaneMagicSoulTooltip(ItemStack stack, List<String> text, int x, int y)
 	{
 		if (!text.isEmpty())
 		{
@@ -111,13 +110,13 @@ public abstract class ScreenMixin extends ScreenComponent
 			RenderUtils.drawTexturedRect(drawX, drawY, 0, 0, 50, 8, 50, 8, 50, 12);
 
 			int soul = 0;
-			int max = stack.getItem() == ModRegistry.SOUL_PENDANT ? ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL : ((ScepterItem)stack.getItem()).maxSoul;
+			int max = stack.getItem() == ModRegistry.SOUL_PENDANT ? ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL : ((ScepterItem) stack.getItem()).maxSoul;
 			CompoundTag tag = stack.getTag();
 			if (tag != null)
 			{
 				soul = tag.getInt(ArcaneMagicConstants.SOUL_KEY);
 			}
-			int stage = Math.round(((float)soul / (float)max) * 46);
+			int stage = Math.round(((float) soul / (float) max) * 46);
 
 			RenderUtils.drawTexturedRect(drawX + 2, drawY + 2, 0, 8, stage, 4, stage, 4, 50, 12);
 			drawY += 12;

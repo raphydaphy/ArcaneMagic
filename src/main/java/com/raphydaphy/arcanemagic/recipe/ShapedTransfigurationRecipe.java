@@ -12,13 +12,12 @@ import net.minecraft.world.World;
 public class ShapedTransfigurationRecipe implements TransfigurationRecipe
 {
 	public static RecipeSerializer<ShapedTransfigurationRecipe> SERIALIZER;
-
-	private final Identifier id;
 	final ItemStack output;
 	final DefaultedList<Ingredient> inputs;
 	final int soul;
 	final int width;
 	final int height;
+	private final Identifier id;
 
 	public ShapedTransfigurationRecipe(Identifier id, ItemStack output, DefaultedList<Ingredient> inputs, int soul, int width, int height)
 	{

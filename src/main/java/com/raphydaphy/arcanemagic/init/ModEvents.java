@@ -13,8 +13,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 
-import java.util.Objects;
-
 public class ModEvents
 {
 	public static boolean shouldLivingEntityDropLoot(Entity entity, DamageSource src)

@@ -31,7 +31,7 @@ public class ArcaneMagicREIPlugin implements REIPlugin
 		{
 			if (recipe instanceof ShapedTransfigurationRecipe)
 			{
-				recipeHelper.registerDisplay(TRANSFIGURATION, new TransfigurationDisplay((ShapedTransfigurationRecipe)recipe));
+				recipeHelper.registerDisplay(TRANSFIGURATION, new TransfigurationDisplay((ShapedTransfigurationRecipe) recipe));
 			}
 		}
 	}

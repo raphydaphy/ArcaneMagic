@@ -14,7 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class InGameHudMixin
 {
-	@Shadow @Final private MinecraftClient client;
+	@Shadow
+	@Final
+	private MinecraftClient client;
 
 	@Inject(at = @At(value = "TAIL"), method = "draw")
 	private void renderHud(float partialTicks, CallbackInfo info)
@@ -22,7 +24,7 @@ public class InGameHudMixin
 		HudRenderer.render(partialTicks);
 	}
 
-	@Inject(at = @At(value = "HEAD"), method="draw", cancellable = true)
+	@Inject(at = @At(value = "HEAD"), method = "draw", cancellable = true)
 	private void renderhudPre(float partialTicks, CallbackInfo info)
 	{
 		if (CutsceneManager.hideHud(client.player))
@@ -32,7 +34,7 @@ public class InGameHudMixin
 		}
 	}
 
-	@Inject(at = @At(value = "TAIL"), method="draw")
+	@Inject(at = @At(value = "TAIL"), method = "draw")
 	private void renderHudPost(float partialTicks, CallbackInfo info)
 	{
 		if (CutsceneManager.isActive(client.player))
