@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.cutscene;
 
 import com.raphydaphy.arcanemagic.init.ModRegistry;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Packet;
@@ -13,14 +14,22 @@ public class CutsceneCameraEntity extends Entity
 		super(ModRegistry.CUTSCENE_CAMERA_ENTITY, world);
 	}
 
-	void setPos(double x, double y, double z)
+	CutsceneCameraEntity withPos(Vector3f pos)
 	{
-		this.x = x;
-		this.y = y;
-		this.z = z;
-		this.prevX = x;
-		this.prevY = y;
-		this.prevZ = z;
+		this.x = pos.x();
+		this.y = pos.y();
+		this.z = pos.z();
+		this.prevX = this.x;
+		this.prevY = this.y;
+		this.prevZ = this.z;
+		return this;
+	}
+
+	void moveTo(Vector3f pos)
+	{
+		this.x = pos.x();
+		this.y = pos.y();
+		this.z = pos.z();
 	}
 
 	void update()
@@ -28,9 +37,6 @@ public class CutsceneCameraEntity extends Entity
 		this.prevX = x;
 		this.prevY = y;
 		this.prevZ = z;
-		this.x += getVelocity().x;
-		this.y += getVelocity().y;
-		this.z += getVelocity().z;
 	}
 
 	@Override

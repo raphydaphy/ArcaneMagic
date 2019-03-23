@@ -24,9 +24,15 @@ public class Path
 		this.zCubics = new Vector<>();
 	}
 
-	public void addPoint(Vector3f point)
+	public Path withPoint(Vector3f point)
 	{
 		this.points.add(point);
+		return this;
+	}
+
+	public Path withPoint(float x, float y, float z)
+	{
+		return this.withPoint(new Vector3f(x, y, z));
 	}
 
 	public Vector<Vector3f> getPoints()
@@ -34,22 +40,30 @@ public class Path
 		return points;
 	}
 
-	public void calcSpline()
+	public Path build()
 	{
-		calcNaturalCubic(points, Vector3f::x, xCubics);
-		calcNaturalCubic(points, Vector3f::y, yCubics);
-		calcNaturalCubic(points, Vector3f::z, zCubics);
+		if (this.points.size() > 1)
+		{
+			calcNaturalCubic(points, Vector3f::x, xCubics);
+			calcNaturalCubic(points, Vector3f::y, yCubics);
+			calcNaturalCubic(points, Vector3f::z, zCubics);
+		}
+		return this;
 	}
 
 	public Vector3f getPoint(float position)
 	{
-		position = position * xCubics.size();
-		int cubicNum = (int) position;
-		float cubicPos = (position - cubicNum);
+		if (this.points.size() > 1)
+		{
+			position = position * xCubics.size();
+			int cubicNum = (int) position;
+			float cubicPos = (position - cubicNum);
 
-		return new Vector3f(xCubics.get(cubicNum).eval(cubicPos),
-				yCubics.get(cubicNum).eval(cubicPos),
-				zCubics.get(cubicNum).eval(cubicPos));
+			return new Vector3f(xCubics.get(cubicNum).eval(cubicPos),
+					yCubics.get(cubicNum).eval(cubicPos),
+					zCubics.get(cubicNum).eval(cubicPos));
+		}
+		return new Vector3f(this.points.get(0));
 	}
 
 	private void calcNaturalCubic(List<Vector3f> valueCollection, Function<Vector3f, Float> getVal, Collection<Cubic> cubicCollection)

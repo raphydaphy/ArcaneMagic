@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.cutscene;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModSounds;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
@@ -11,6 +12,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 
 public class CutsceneManager
 {
@@ -49,9 +51,8 @@ public class CutsceneManager
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
 		client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
-		int duration = ((DataHolder) client.player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
-		currentCutscene = new Cutscene(client.player, client.options.perspective).withTransition(new Transition.DipTo(0, 20, 255, 255, 255).setIntro())
-				.withTransition(new Transition.DipTo(duration - 19, 20, 255, 255, 255).setOutro());
+		currentCutscene = new Cutscene(client.player, new Path().withPoint(100, 100, 100))
+				.withDipTo(20, 255, 255, 255).withShader(new Identifier(ArcaneMagic.DOMAIN, "shaders/cutscene.json"));
 	}
 
 	@Environment(EnvType.CLIENT)

@@ -1,7 +1,6 @@
 package com.raphydaphy.arcanemagic.cutscene;
 
 import com.mojang.blaze3d.platform.GLX;
-import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.core.client.GameRendererHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
@@ -11,7 +10,7 @@ import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 
@@ -22,28 +21,36 @@ public class Cutscene
 {
 	private List<Transition> transitionList = new ArrayList<>();
 	private CutsceneCameraEntity camera;
-	private float startPitch;
-	private float startYaw;
 	private int ticks;
 	private int duration;
-	private int startPerspective;
-	private boolean setShader = false;
+	private boolean setCamera = false;
+	private Identifier shader;
+	private Path cameraPath;
 
-	Cutscene(PlayerEntity player, int perspective)
+	Cutscene(PlayerEntity player, Path cameraPath)
 	{
-		duration = ((DataHolder) player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
-		startPitch = player.pitch;
-		ticks = 0;
-		startYaw = player.yaw;
-		this.startPerspective = perspective;
-		camera = new CutsceneCameraEntity(player.world);
-		camera.setPos(player.x + 100, player.y + 20, player.z);
-		camera.setVelocity(-100f / duration, -0.2f / duration, 0 / duration);
+		this.duration = ((DataHolder) player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
+		this.ticks = 0;
+		this.cameraPath = cameraPath.build();
+		this.camera = new CutsceneCameraEntity(player.world).withPos(this.cameraPath.getPoint(0));
+	}
+
+	Cutscene withDipTo(float length, int red, int green, int blue)
+	{
+		withTransition(new Transition.DipTo(0, length, red, green, blue).setIntro());
+		withTransition(new Transition.DipTo(duration - length, length, red, green, blue).setOutro());
+		return this;
 	}
 
 	Cutscene withTransition(Transition transition)
 	{
 		transitionList.add(transition);
+		return this;
+	}
+
+	Cutscene withShader(Identifier shader)
+	{
+		this.shader = shader;
 		return this;
 	}
 
@@ -53,21 +60,26 @@ public class Cutscene
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (hideHud())
 		{
+			camera.moveTo(cameraPath.getPoint(ticks / (float)duration));
 			camera.update();
-			if (!setShader)
+			if (!setCamera)
 			{
 				client.cameraEntity = camera;
-				client.worldRenderer.method_3292();
-				if (GLX.usePostProcess)
+
+				if (this.shader != null)
 				{
-					((GameRendererHooks) client.gameRenderer).useShader(new Identifier(ArcaneMagic.DOMAIN, "shaders/cutscene.json"));
+					client.worldRenderer.method_3292();
+					if (GLX.usePostProcess)
+					{
+						((GameRendererHooks) client.gameRenderer).useShader(this.shader);
+					}
 				}
-				setShader = true;
+				setCamera = true;
 			}
 		} else
 		{
 			client.gameRenderer.disableShader();
-			setShader = false;
+			setCamera = false;
 			client.setCameraEntity(client.player);
 			client.worldRenderer.method_3292();
 		}
@@ -84,7 +96,6 @@ public class Cutscene
 	void updateLook()
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
-		ClientPlayerEntity player = client.player;
 
 		float interpCutsceneTime = ArcaneMagicUtils.lerp(ticks, ticks + 1, client.getTickDelta());
 
@@ -92,18 +103,26 @@ public class Cutscene
 		{
 			if (transition.active(interpCutsceneTime) && transition.fixedCamera)
 			{
-				player.yaw = startYaw;
-				player.pitch = startPitch;
 				return;
 			}
 		}
 		float percent = interpCutsceneTime / (float) duration;
+
+		Vector3f direction = cameraPath.getPoint(percent);
+		direction.subtract(cameraPath.getPoint(percent >= 0.99f ? 0.9999f : percent + 0.01f));
+		float lengthSquared = direction.x() * direction.x() + direction.y() * direction.y() + direction.z() * direction.z();
+		if (lengthSquared != 0 && lengthSquared != 1) direction.scale(1 / (float)Math.sqrt(lengthSquared));
+
 		camera.prevYaw = camera.yaw;
 		camera.prevPitch = camera.pitch;
 
-		camera.yaw = ArcaneMagicUtils.lerp(100, 0, percent);
-		camera.pitch = ArcaneMagicUtils.lerp(0, 50, percent);
+		//camera.yaw = (float)Math.atan2(distance.z(), distance.x());
+		//camera.pitch = (float)(Math.atan2(Math.sqrt(distance.z() * distance.z() + distance.x() * distance.x()), distance.y()) + Math.PI);
 
+		camera.pitch = (float)Math.toDegrees(Math.asin(direction.y()));
+		camera.yaw = (float)Math.toDegrees(Math.atan2(direction.x(), direction.z()));
+
+		System.out.println(direction.y() + ", " + camera.pitch);
 	}
 
 	@Environment(EnvType.CLIENT)
