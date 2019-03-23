@@ -13,11 +13,17 @@ public abstract class ClientPlayerEntityMixin
 {
 	@Shadow public abstract boolean isUsingItem();
 
+	@Shadow public abstract void method_6023();
+
 	@Inject(at =@At("HEAD"), method="updateMovement", cancellable = true)
 	private void updateMovement(CallbackInfo info)
 	{
 		if (CutsceneManager.isActive((ClientPlayerEntity)(Object)this))
 		{
+			if (!CutsceneManager.hideHud((ClientPlayerEntity)(Object)this))
+			{
+				this.method_6023();
+			}
 			info.cancel();
 		}
 	}

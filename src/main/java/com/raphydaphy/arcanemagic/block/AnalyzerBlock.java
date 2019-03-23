@@ -155,7 +155,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				}
 			} else if (stack.getItem() == ModRegistry.RELIC)
 			{
-				CutsceneManager.startServer((ServerPlayerEntity)player, 80);
+				CutsceneManager.startServer((ServerPlayerEntity)player, 200);
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)

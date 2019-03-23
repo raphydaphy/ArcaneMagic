@@ -49,7 +49,6 @@ public class CutsceneManager
 	@Environment(EnvType.CLIENT)
 	public static void startClient()
 	{
-		System.out.println("begin le cut scern");
 		MinecraftClient client = MinecraftClient.getInstance();
 		client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
 		int duration = ((DataHolder)client.player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);

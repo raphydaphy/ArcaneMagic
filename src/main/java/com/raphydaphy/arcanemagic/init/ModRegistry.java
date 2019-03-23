@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.*;
 import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
+import com.raphydaphy.arcanemagic.cutscene.CutsceneCameraEntity;
 import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
@@ -13,14 +14,21 @@ import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipeSerializer;
-import com.raphydaphy.arcanemagic.util.*;
+import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.arcanemagic.util.ModDamageSource;
+import com.raphydaphy.arcanemagic.util.TremorTracker;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
+import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.command.arguments.EntityArgumentType;
+import net.minecraft.entity.EntityCategory;
+import net.minecraft.entity.EntitySize;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -82,6 +90,8 @@ public class ModRegistry
 	public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
 	public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 
+	public static EntityType<CutsceneCameraEntity> CUTSCENE_CAMERA_ENTITY;
+
 	public static void init()
 	{
 		// Block Registration
@@ -131,6 +141,8 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "liquified_soul_bucket"), LIQUIFIED_SOUL_BUCKET);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "deconstruction_staff"), DECONSTRUCTION_STAFF);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "relic"), RELIC);
+
+		CUTSCENE_CAMERA_ENTITY = Registry.register(Registry.ENTITY_TYPE, new Identifier(ArcaneMagic.DOMAIN, "cutscene_camera"), FabricEntityTypeBuilder.create(EntityCategory.MISC, CutsceneCameraEntity::new).size(new EntitySize(1, 1, true)).build());
 
 		ShapedTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
 		ShapelessTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shapeless", new ShapelessTransfigurationRecipeSerializer());

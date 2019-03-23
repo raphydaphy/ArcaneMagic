@@ -21,6 +21,7 @@ import java.util.List;
 public class Cutscene
 {
 	private List<Transition> transitionList = new ArrayList<>();
+	private CutsceneCameraEntity camera;
 	private float startPitch;
 	private float startYaw;
 	private int ticks;
@@ -35,6 +36,9 @@ public class Cutscene
 		ticks = 0;
 		startYaw = player.yaw;
 		this.startPerspective = perspective;
+		camera = new CutsceneCameraEntity(player.world);
+		camera.setPos(player.x + 100, player.y + 20, player.z);
+		camera.setVelocity(-100f / duration, -0.2f / duration, 0 / duration);
 	}
 
 	Cutscene withTransition(Transition transition)
@@ -49,16 +53,11 @@ public class Cutscene
 		MinecraftClient client = MinecraftClient.getInstance();
 		if (hideHud())
 		{
-			if (client.options.perspective != 0)
-			{
-				client.options.perspective = 0;
-				client.worldRenderer.method_3292();
-				client.gameRenderer.onCameraEntitySet(client.getCameraEntity());
-
-
-			}
+			camera.update();
 			if (!setShader)
 			{
+				client.cameraEntity = camera;
+				client.worldRenderer.method_3292();
 				if (GLX.usePostProcess)
 				{
 					((GameRendererHooks) client.gameRenderer).useShader(new Identifier(ArcaneMagic.DOMAIN, "shaders/cutscene.json"));
@@ -69,20 +68,8 @@ public class Cutscene
 		{
 			client.gameRenderer.disableShader();
 			setShader = false;
-
-			if (client.options.perspective != startPerspective)
-			{
-				client.options.perspective = startPerspective;
-				client.worldRenderer.method_3292();
-
-				if (client.options.perspective == 0)
-				{
-					client.gameRenderer.onCameraEntitySet(client.getCameraEntity());
-				} else
-				{
-					client.gameRenderer.onCameraEntitySet(null);
-				}
-			}
+			client.setCameraEntity(client.player);
+			client.worldRenderer.method_3292();
 		}
 
 		if (ticks >= duration)
@@ -111,8 +98,12 @@ public class Cutscene
 			}
 		}
 		float percent = interpCutsceneTime / (float) duration;
-		player.yaw = ArcaneMagicUtils.lerp(0, 60, percent);
-		player.pitch = ArcaneMagicUtils.lerp(0, 30, percent);
+		camera.prevYaw = camera.yaw;
+		camera.prevPitch = camera.pitch;
+
+		camera.yaw = ArcaneMagicUtils.lerp(100, 0, percent);
+		camera.pitch = ArcaneMagicUtils.lerp(0, 50, percent);
+
 	}
 
 	@Environment(EnvType.CLIENT)
