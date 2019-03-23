@@ -5,11 +5,11 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModEvents;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -163,7 +163,7 @@ public abstract class LivingEntityMixin
 					{
 						if (kills == 4)
 						{
-							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) attacker);
+							PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) attacker);
 						}
 						((DataHolder) attacker).getAdditionalData().putInt(ArcaneMagicConstants.DROWNED_KILLS_KEY, kills + 1);
 						((DataHolder) attacker).markAdditionalDataDirty();

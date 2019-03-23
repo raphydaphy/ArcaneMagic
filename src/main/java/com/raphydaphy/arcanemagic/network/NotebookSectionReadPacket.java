@@ -4,6 +4,8 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.IPacket;
+import com.raphydaphy.cutsceneapi.network.MessageHandler;
 import net.fabricmc.fabric.api.network.PacketContext;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;

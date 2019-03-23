@@ -5,11 +5,11 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.*;
 import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
-import com.raphydaphy.arcanemagic.cutscene.CutsceneCameraEntity;
-import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
-import com.raphydaphy.arcanemagic.network.*;
+import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
+import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
+import com.raphydaphy.arcanemagic.network.TremorPacket;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipe;
@@ -18,17 +18,15 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.util.ModDamageSource;
 import com.raphydaphy.arcanemagic.util.TremorTracker;
+import com.raphydaphy.cutsceneapi.cutscene.CutsceneRegistry;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.command.arguments.EntityArgumentType;
-import net.minecraft.entity.EntityCategory;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -42,7 +40,6 @@ import net.minecraft.text.TextFormat;
 import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 
 @SuppressWarnings("WeakerAccess")
@@ -53,6 +50,7 @@ public class ModRegistry
 	public static final FluidBlockBase LIQUIFIED_SOUL_BLOCK = new FluidBlockBase(LIQUIFIED_SOUL, FabricBlockSettings.of(Material.WATER).noCollision().strength(100.0F, 100.0F).dropsNothing());
 	public static final ModDamageSource DRAINED_DAMAGE = new ModDamageSource(ArcaneMagic.DOMAIN + ".drained").setUnblockable().setUsesMagic().setBypassesArmor();
 	public static final Identifier IRON_DAGGER_IDENTIFIER = new Identifier(ArcaneMagic.DOMAIN, "iron_dagger");
+
 	public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new).build(null));
 	public static BlockEntityType<AnalyzerBlockEntity> ANALYZER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "analyzer", BlockEntityType.Builder.create(AnalyzerBlockEntity::new).build(null));
 	public static BlockEntityType<CrystalInfuserBlockEntity> CRYSTAL_INFUSER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "crystal_infuser", BlockEntityType.Builder.create(CrystalInfuserBlockEntity::new).build(null));
@@ -61,6 +59,7 @@ public class ModRegistry
 	public static BlockEntityType<PumpBlockEntity> PUMP_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pump", BlockEntityType.Builder.create(PumpBlockEntity::new).build(null));
 	public static BlockEntityType<SmelterBlockEntity> SMELTER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "smelter", BlockEntityType.Builder.create(SmelterBlockEntity::new).build(null));
 	public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new).build(null));
+
 	public static AltarBlock ALTAR = new AltarBlock();
 	public static AnalyzerBlock ANALYZER = new AnalyzerBlock();
 	public static CrystalInfuserBlock CRYSTAL_INFUSER = new CrystalInfuserBlock();
@@ -70,6 +69,7 @@ public class ModRegistry
 	public static SmelterBlock SMELTER = new SmelterBlock();
 	public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
 	public static ForgeBlock FORGE = new ForgeBlock();
+
 	public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
 	public static ScepterItem PURE_SCEPTER = new ScepterItem(50);
 	public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);
@@ -87,8 +87,6 @@ public class ModRegistry
 	public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
 	public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
 	public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
-
-	public static EntityType<CutsceneCameraEntity> CUTSCENE_CAMERA_ENTITY;
 
 	public static void init()
 	{
@@ -140,8 +138,6 @@ public class ModRegistry
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "deconstruction_staff"), DECONSTRUCTION_STAFF);
 		Registry.register(Registry.ITEM, new Identifier(ArcaneMagic.DOMAIN, "relic"), RELIC);
 
-		CUTSCENE_CAMERA_ENTITY = Registry.register(Registry.ENTITY_TYPE, new Identifier(ArcaneMagic.DOMAIN, "cutscene_camera"), FabricEntityTypeBuilder.create(EntityCategory.MISC, CutsceneCameraEntity::new).size(new EntitySize(1, 1, true)).build());
-
 		ShapedTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shaped", new ShapedTransfigurationRecipeSerializer());
 		ShapelessTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shapeless", new ShapelessTransfigurationRecipeSerializer());
 
@@ -150,36 +146,27 @@ public class ModRegistry
 				.then(ServerCommandManager.literal("tremor").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
 						.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(0)).then(ServerCommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
 						{
-							ArcaneMagicPacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.method_9315(command, "target"));
-							return 1;
-						})))))
-				.then(ServerCommandManager.literal("cutscene").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
-						.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(1)).executes(command ->
-						{
-							CutsceneManager.startServer(EntityArgumentType.method_9315(command, "target"), IntegerArgumentType.getInteger(command, "duration"));
+							PacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.getServerPlayerArgument(command, "target"));
 							return 1;
 						})))))
 				.then(ServerCommandManager.literal("reset").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
 						.executes(command ->
 						{
-							ServerPlayerEntity player = EntityArgumentType.method_9315(command, "target");
+							ServerPlayerEntity player = EntityArgumentType.getServerPlayerArgument(command, "target");
 							((DataHolder) player).setAdditionalData(new CompoundTag());
 							((DataHolder) player).markAdditionalDataDirty();
 							command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
 							return 1;
-						})))));
+						}))))));
 
 
 		// Callback Registration
-		ServerTickCallback.EVENT.register((callback) ->
-		{
-			TremorTracker.updateServer(callback.getWorld(DimensionType.OVERWORLD));
-			CutsceneManager.updateServer(callback.getWorlds());
-		});
+		ServerTickCallback.EVENT.register((callback) -> TremorTracker.updateServer(callback.getWorld(DimensionType.OVERWORLD)));
 
 		// Server-side Packet Registration
 		ServerSidePacketRegistry.INSTANCE.register(NotebookUpdatePacket.ID, new NotebookUpdatePacket.Handler());
 		ServerSidePacketRegistry.INSTANCE.register(NotebookSectionReadPacket.ID, new NotebookSectionReadPacket.Handler());
-		ServerSidePacketRegistry.INSTANCE.register(CutsceneFinishPacket.ID, new CutsceneFinishPacket.Handler());
+
+		ModCutscenes.init();
 	}
 }

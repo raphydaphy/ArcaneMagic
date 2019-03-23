@@ -4,8 +4,8 @@ import com.raphydaphy.arcanemagic.block.PumpBlock;
 import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidContainer;
 import io.github.prospector.silk.fluid.FluidInstance;
@@ -130,7 +130,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 					markDirty();
 
 					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCK, 1, 1);
-					ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toTag(new CompoundTag())), world, getPos(), 64);
+					PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toTag(new CompoundTag())), world, getPos(), 64);
 				}
 			}
 		}

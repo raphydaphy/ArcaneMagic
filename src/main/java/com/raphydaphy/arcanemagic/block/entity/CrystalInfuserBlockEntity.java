@@ -6,9 +6,9 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
@@ -167,7 +167,7 @@ public class CrystalInfuserBlockEntity extends InventoryBlockEntity implements S
 	public void markDirty()
 	{
 		super.markDirty();
-		ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
+		PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
 	}
 
 	@Override

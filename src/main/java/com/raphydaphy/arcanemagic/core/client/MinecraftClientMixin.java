@@ -1,9 +1,7 @@
 package com.raphydaphy.arcanemagic.core.client;
 
 import com.raphydaphy.arcanemagic.client.ClientEvents;
-import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,9 +13,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MinecraftClientMixin
 {
 	@Shadow
-	public ClientPlayerEntity player;
-
-	@Shadow
 	public ClientWorld world;
 
 	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=gameRenderer", target = "Lnet/minecraft/util/profiler/DisableableProfiler;swap(Ljava/lang/String;)V"), method = "render")
@@ -26,10 +21,6 @@ public class MinecraftClientMixin
 		if (world != null)
 		{
 			ClientEvents.onRenderTick();
-			if (CutsceneManager.isActive(player))
-			{
-				CutsceneManager.updateLook();
-			}
 		}
 	}
 }

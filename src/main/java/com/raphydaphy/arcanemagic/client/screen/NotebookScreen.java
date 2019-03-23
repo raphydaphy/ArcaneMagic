@@ -5,13 +5,13 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
 import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
 import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
 import com.raphydaphy.arcanemagic.notebook.ContentsNotebookSection;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawableHelper;
@@ -76,7 +76,7 @@ public class NotebookScreen extends Screen
 
 		if (this.section.hasNewInfo((DataHolder) client.player))
 		{
-			ArcaneMagicPacketHandler.sendToServer(new NotebookSectionReadPacket(this.section));
+			PacketHandler.sendToServer(new NotebookSectionReadPacket(this.section));
 		}
 
 		pageChanged();
@@ -302,7 +302,7 @@ public class NotebookScreen extends Screen
 	{
 		if (this.section != null)
 		{
-			ArcaneMagicPacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), this.leftPage, this.contentsPage));
+			PacketHandler.sendToServer(new NotebookUpdatePacket(this.section.getID().toString(), this.leftPage, this.contentsPage));
 		}
 	}
 

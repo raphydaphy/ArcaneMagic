@@ -4,11 +4,11 @@ import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import io.github.prospector.silk.fluid.FluidContainer;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -141,7 +141,7 @@ public class SmelterBlock extends DoubleBlockBase implements BlockEntityProvider
 		super.onPlaced(world, pos, state, placer, stack);
 		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))
 		{
-			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
+			PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY, true);
 			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
 			((DataHolder) placer).markAdditionalDataDirty();

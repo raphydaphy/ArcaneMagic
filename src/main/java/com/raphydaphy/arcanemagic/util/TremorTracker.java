@@ -6,10 +6,10 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.particle.ParticleSource;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.network.TremorPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockRenderType;
@@ -62,15 +62,15 @@ public class TremorTracker
 							dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY, 0);
 							ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TREMORS.getID().toString(), false);
 							dataPlayer.markAdditionalDataDirty();
-							ArcaneMagicPacketHandler.sendToClient(new TremorPacket(5, ArcaneMagic.RANDOM.nextInt(20) + 30), player);
-							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), player);
+							PacketHandler.sendToClient(new TremorPacket(5, ArcaneMagic.RANDOM.nextInt(20) + 30), player);
+							PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), player);
 						} else
 						{
 							int tremorRand = ArcaneMagic.RANDOM.nextInt(Math.max(150 - timeSinceTremor, 1));
 							if (timeSinceTremor > 50 && tremorRand == 0)
 							{
 								timeSinceTremor = -1;
-								ArcaneMagicPacketHandler.sendToClient(new TremorPacket(5, ArcaneMagic.RANDOM.nextInt(20) + 50), player);
+								PacketHandler.sendToClient(new TremorPacket(5, ArcaneMagic.RANDOM.nextInt(20) + 50), player);
 							}
 						}
 					} else if (rand < 100 - timeSinceVoidSound)
@@ -78,7 +78,7 @@ public class TremorTracker
 						int soundRand = ArcaneMagic.RANDOM.nextInt(Math.max(50 - timeSinceVoidSound, 1));
 						if (timeSinceVoidSound > 20 && soundRand == 0)
 						{
-							ArcaneMagicPacketHandler.sendToClient(new TremorPacket(0, 0), player);
+							PacketHandler.sendToClient(new TremorPacket(0, 0), player);
 							timeSinceVoidSound = -1;
 						}
 					}

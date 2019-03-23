@@ -4,16 +4,12 @@
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7.11-SNAPSHOT",
   "mixins": [
-	"MinecraftClientMixin",
-	"InGameHudMixin",
+	"ChunkRendererMixin",
 	"GameRendererMixin",
-    "ModelLoaderMixin",
-    "ChunkRendererMixin",
-	"ScreenMixin",
-	"ClientPlayerInteractionManagerMixin",
-	"WorldRendererMixin",
-	"ClientPlayerEntityMixin",
-	"GameRendererHooks"
+	"InGameHudMixin",
+	"MinecraftClientMixin",
+	"ModelLoaderMixin",
+	"ScreenMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

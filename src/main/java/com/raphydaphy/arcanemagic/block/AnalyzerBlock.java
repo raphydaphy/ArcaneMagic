@@ -3,15 +3,16 @@ package com.raphydaphy.arcanemagic.block;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.client.render.IExtraRenderLayers;
-import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModCutscenes;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.cutscene.CutsceneManager;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
@@ -74,7 +75,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 			{
 				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
 				{
-					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+					PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
 					ArcaneMagicUtils.unlockRecipe(player, "golden_scepter");
 					dataPlayer.markAdditionalDataDirty();
@@ -155,7 +156,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				}
 			} else if (stack.getItem() == ModRegistry.RELIC)
 			{
-				CutsceneManager.startServer((ServerPlayerEntity) player, 200);
+				CutsceneManager.startServer((ServerPlayerEntity) player, ModCutscenes.RELIC_NETHER);
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)
@@ -180,7 +181,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 
 					if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4)
 					{
-						ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+						PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 					}
 				} else if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
 				{
@@ -209,7 +210,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 
 			if (notebookUpdate)
 			{
-				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+				PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 				dataPlayer.markAdditionalDataDirty();
 			}
 		});
@@ -259,7 +260,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	{
 		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY))
 		{
-			ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) placer);
+			PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) placer);
 			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}

@@ -10,11 +10,11 @@ import com.raphydaphy.arcanemagic.core.common.LivingEntityHooks;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.init.ModSounds;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
@@ -290,7 +290,7 @@ public class ScepterItem extends SoulStorageItem
 			{
 				if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
 				{
-					ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+					PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 					((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
 					((DataHolder) player).markAdditionalDataDirty();

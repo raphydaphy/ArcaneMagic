@@ -5,8 +5,8 @@ import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.item.ScepterItem;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Blocks;
@@ -77,7 +77,7 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 	public void markDirty()
 	{
 		super.markDirty();
-		ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
+		PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
 	}
 
 	@Override

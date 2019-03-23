@@ -2,8 +2,8 @@ package com.raphydaphy.arcanemagic.block.entity;
 
 import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.inventory.SidedInventory;
 import net.minecraft.item.ItemStack;
@@ -34,7 +34,7 @@ public class AltarBlockEntity extends InventoryBlockEntity implements SidedInven
 	public void markDirty()
 	{
 		super.markDirty();
-		ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
+		PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
 	}
 
 	@Override

@@ -3,12 +3,12 @@ package com.raphydaphy.arcanemagic.core.common;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.PlayerDataUpdatePacket;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -45,7 +45,7 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 		if (additionalDataNeedsSync)
 		{
 			additionalDataNeedsSync = false;
-			ArcaneMagicPacketHandler.sendToClient(new PlayerDataUpdatePacket(this.getAdditionalData()), (ServerPlayerEntity) (Object) this);
+			PacketHandler.sendToClient(new PlayerDataUpdatePacket(this.getAdditionalData()), (ServerPlayerEntity) (Object) this);
 		}
 	}
 

@@ -4,8 +4,8 @@ import com.raphydaphy.arcanemagic.block.SmelterBlock;
 import com.raphydaphy.arcanemagic.block.entity.base.DoubleFluidBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
@@ -174,7 +174,7 @@ public class MixerBlockEntity extends DoubleFluidBlockEntity implements SidedInv
 	public void markDirty()
 	{
 		super.markDirty();
-		ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
+		PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
 	}
 
 	@Override

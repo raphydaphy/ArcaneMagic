@@ -3,11 +3,11 @@ package com.raphydaphy.arcanemagic.item;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -122,7 +122,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 		{
 			if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
 			{
-				ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
+				PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
 				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY, true);
 				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();

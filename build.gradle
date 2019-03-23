@@ -27,6 +27,10 @@ repositories {
 	maven { url "https://tehnut.info/maven/" }
 	maven { url "https://jitpack.io" }
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+	flatDir {
+		// earl gray
+		dirs 'libs'
+	}
 }
 
 dependencies {
@@ -53,6 +57,12 @@ dependencies {
 
 	// Multiblock API
 	modCompile "com.github.raphydaphy:MultiBlockAPI:${project.multiblock_api_version}"
+
+	// Earl Grey
+	modCompile name: "earlgray-0.4-dev"
+
+	// Cutscene API
+	modCompile "com.github.raphydaphy:CutSceneAPI:${project.cutscene_api_version}"
 
 	//Nonnull annotations
 	modCompile "com.google.code.findbugs:jsr305:3.0.1"

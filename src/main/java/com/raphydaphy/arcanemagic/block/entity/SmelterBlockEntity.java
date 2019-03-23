@@ -7,8 +7,8 @@ import com.raphydaphy.arcanemagic.client.particle.ParticleUtil;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.init.ModSounds;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import io.github.prospector.silk.fluid.DropletValues;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.fabricmc.api.EnvType;
@@ -134,7 +134,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 	public void markDirty()
 	{
 		super.markDirty();
-		ArcaneMagicPacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
+		PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toInitialChunkDataTag()), world, getPos(), 300);
 	}
 
 	@Override

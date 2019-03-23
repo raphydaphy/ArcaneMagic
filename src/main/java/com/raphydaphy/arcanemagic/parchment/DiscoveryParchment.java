@@ -3,10 +3,10 @@ package com.raphydaphy.arcanemagic.parchment;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.cutsceneapi.network.PacketHandler;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
@@ -169,7 +169,7 @@ public class DiscoveryParchment implements IParchment
 					{
 						if (!world.isClient())
 						{
-							ArcaneMagicPacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
+							PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 							ArcaneMagicUtils.unlockRecipe(player, "analyzer");
 							((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY, true);
 							((DataHolder) player).markAdditionalDataDirty();
