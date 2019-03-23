@@ -36,6 +36,7 @@
   "subtitle.arcanemagic.void_growl": "Deep Growl",
   "subtitle.arcanemagic.void_atmosphere": "Eerie Echo",
   "subtitle.arcanemagic.void_ambient": "Deep Eerie Noise",
+  "subtitle.arcanemagic.cutscene_start": "Sudden Crack",
   "message.arcanemagic.data-reset": "ArcaneMagic player data was reset!",
   "message.arcanemagic.drowned_first_kill": "You have never seen a zombie like that before. Perhaps you should get some paper to document your findings before killing another.",
   "message.arcanemagic.drowned_paper_first": "You have never seen a zombie like that before. You use some paper to document your findings.",

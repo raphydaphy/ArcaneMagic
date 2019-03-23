@@ -15,6 +15,7 @@ public class ModSounds
 	public static SoundEvent VOID_GROWL = register("void_growl");
 	public static SoundEvent VOID_ATMOSPHERE = register("void_atmosphere");
 	public static SoundEvent VOID_AMBIENT = register("void_ambient");
+	public static SoundEvent CUTSCENE_START = register("cutscene_start");
 
 	private static SoundEvent register(String name)
 	{

@@ -38,6 +38,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 		ClientSidePacketRegistry.INSTANCE.register(PlayerDataUpdatePacket.ID, new PlayerDataUpdatePacket.Handler());
 		ClientSidePacketRegistry.INSTANCE.register(ProgressionUpdateToastPacket.ID, new ProgressionUpdateToastPacket.Handler());
 		ClientSidePacketRegistry.INSTANCE.register(TremorPacket.ID, new TremorPacket.Handler());
+		ClientSidePacketRegistry.INSTANCE.register(CutsceneStartPacket.ID, new CutsceneStartPacket.Handler());
 
 		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
 		{

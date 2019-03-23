@@ -1,25 +1,92 @@
 package com.raphydaphy.arcanemagic.cutscene;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModSounds;
+import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
+import com.raphydaphy.arcanemagic.network.CutsceneStartPacket;
 import com.raphydaphy.arcanemagic.util.DataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Hand;
 
 public class CutsceneManager
 {
-	@Environment(EnvType.CLIENT)
-	public static void render()
-	{
-		ClientPlayerEntity player = MinecraftClient.getInstance().player;
+	private static Cutscene currentCutscene;
 
-		int timeLeft = ((DataHolder)player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_TIME_LEFT_KEY);
+	public static boolean hideHud(PlayerEntity player)
+	{
+		return isActive(player) && currentCutscene != null && currentCutscene.hideHud();
 	}
 
-	public static void update(Iterable<ServerWorld> worlds)
+	public static boolean isActive(PlayerEntity player)
+	{
+		return ((DataHolder)player).getAdditionalData().getBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY);
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void updateLook()
+	{
+		if (currentCutscene != null)
+		{
+			currentCutscene.updateLook();
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void renderHud()
+	{
+		if (currentCutscene != null)
+		{
+			currentCutscene.renderTransitions();
+		}
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void startClient()
+	{
+		System.out.println("begin le cut scern");
+		MinecraftClient client = MinecraftClient.getInstance();
+		client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
+		int duration = ((DataHolder)client.player).getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
+		currentCutscene = new Cutscene(client.player, client.options.perspective).withTransition(new Transition.DipTo(0, 20, 255, 255, 255).setIntro())
+				.withTransition(new Transition.DipTo(duration - 19, 20, 255, 255, 255).setOutro());
+	}
+
+	@Environment(EnvType.CLIENT)
+	public static void updateClient()
+	{
+		MinecraftClient client = MinecraftClient.getInstance();
+		if (isActive(client.player) && currentCutscene != null)
+		{
+			currentCutscene.updateClient();
+		}
+	}
+
+	public static void startServer(ServerPlayerEntity player, int duration)
+	{
+		player.stopRiding();
+		DataHolder dataPlayer = (DataHolder)player;
+		dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, true);
+		dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_LENGTH, duration);
+		dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_TIME, 0);
+		dataPlayer.markAdditionalDataDirty();
+
+		ArcaneMagicPacketHandler.sendToClient(new CutsceneStartPacket(), player);
+	}
+
+	public static void finishServer(PlayerEntity player)
+	{
+		DataHolder dataPlayer = (DataHolder)player;
+		dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, false);
+		dataPlayer.markAdditionalDataDirty();
+	}
+
+	public static void updateServer(Iterable<ServerWorld> worlds)
 	{
 		for (ServerWorld world : worlds)
 		{
@@ -27,13 +94,19 @@ public class CutsceneManager
 			{
 				DataHolder dataPlayer = (DataHolder) player;
 
-				int time = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_TIME_LEFT_KEY);
-				if (time == 1)
+				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, false);
+					int time = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_TIME);
+					int length = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.CUTSCENE_LENGTH);
+					if (time >= length)
+					{
+						dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, false);
+					} else
+					{
+						dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_TIME, time + 1);
+					}
+					dataPlayer.markAdditionalDataDirty();
 				}
-				dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_TIME_LEFT_KEY, time - 1);
-				dataPlayer.markAdditionalDataDirty();
 			}
 		}
 	}

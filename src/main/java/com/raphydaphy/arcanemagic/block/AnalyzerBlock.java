@@ -3,7 +3,9 @@ package com.raphydaphy.arcanemagic.block;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.client.render.IExtraRenderLayers;
+import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
@@ -151,6 +153,9 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
 					notebookUpdate = true;
 				}
+			} else if (stack.getItem() == ModRegistry.RELIC)
+			{
+				CutsceneManager.startServer((ServerPlayerEntity)player, 80);
 			} else
 			{
 				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)

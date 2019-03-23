@@ -6,5 +6,6 @@
    "deconstruct": {  "category": "master", "sounds": ["arcanemagic:deconstruct_1", "arcanemagic:deconstruct_2"], "subtitle": "subtitle.arcanemagic.deconstruct"},
    "void_growl": {"category": "master", "sounds": ["arcanemagic:void_growl_1", "arcanemagic:void_growl_2", "arcanemagic:void_growl_3", "arcanemagic:void_growl_4", "arcanemagic:void_growl_5", "arcanemagic:void_growl_6"], "subtitle": "subtitle.arcanemagic.void_growl"},
    "void_atmosphere": { "category": "ambient", "sounds": ["arcanemagic:void_atmosphere_1", "arcanemagic:void_atmosphere_2"], "subtitle": "subtitle.arcanemagic.void_atmosphere"},
-   "void_ambient": {  "category": "ambient", "sounds": ["arcanemagic:void_ambient_1", "arcanemagic:void_ambient_2"], "subtitle": "subtitle.arcanemagic.void_ambient"}
+   "void_ambient": {  "category": "ambient", "sounds": ["arcanemagic:void_ambient_1", "arcanemagic:void_ambient_2"], "subtitle": "subtitle.arcanemagic.void_ambient"},
+   "cutscene_start": {  "category": "ambient", "sounds": ["arcanemagic:cutscene_start"], "subtitle": "subtitle.arcanemagic.cutscene_start"}
 }

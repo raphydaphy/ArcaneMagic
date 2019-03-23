@@ -47,7 +47,8 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 	{
 		if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem() || item == Blocks.OBSIDIAN.getItem()
 				|| item instanceof SwordItem || item == Blocks.BLAST_FURNACE.getItem() || item == Blocks.ENCHANTING_TABLE.getItem()
-				|| item == Blocks.DISPENSER.getItem() || item == Items.REDSTONE || item == Items.WATER_BUCKET || item == Blocks.SOUL_SAND.getItem())
+				|| item == Blocks.DISPENSER.getItem() || item == Items.REDSTONE || item == Items.WATER_BUCKET
+				|| item == Blocks.SOUL_SAND.getItem() || item == ModRegistry.RELIC)
 		{
 			float inverseSpread = 400;
 			for (int i = 0; i < 4; i++)

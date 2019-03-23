@@ -9,6 +9,8 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GuiLighting;
+import net.minecraft.client.render.Tessellator;
+import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -416,6 +418,37 @@ public class RenderUtils
 	{
 		DrawableHelper.drawTexturedRect(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
 		return height;
+	}
+
+	public static void drawRect(int x, int y, int width, int height, float alpha, float red, float green, float blue)
+	{
+		int int_7;
+		if (x < width) {
+			int_7 = x;
+			x = width;
+			width = int_7;
+		}
+
+		if (y < height) {
+			int_7 = y;
+			y = height;
+			height = int_7;
+		}
+
+		Tessellator tessellator_1 = Tessellator.getInstance();
+		BufferBuilder bufferBuilder_1 = tessellator_1.getBufferBuilder();
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture();
+		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		GlStateManager.color4f(red, green, blue, alpha);
+		bufferBuilder_1.begin(7, VertexFormats.POSITION);
+		bufferBuilder_1.vertex((double)x, (double)height, 0.0D).next();
+		bufferBuilder_1.vertex((double)width, (double)height, 0.0D).next();
+		bufferBuilder_1.vertex((double)width, (double)y, 0.0D).next();
+		bufferBuilder_1.vertex((double)x, (double)y, 0.0D).next();
+		tessellator_1.draw();
+		GlStateManager.enableTexture();
+		GlStateManager.disableBlend();
 	}
 
 	public static List<String> wrapText(String unlocalized, int width)

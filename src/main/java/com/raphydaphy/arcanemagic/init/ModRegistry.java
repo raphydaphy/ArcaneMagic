@@ -8,10 +8,7 @@ import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
-import com.raphydaphy.arcanemagic.network.ArcaneMagicPacketHandler;
-import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
-import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
-import com.raphydaphy.arcanemagic.network.TremorPacket;
+import com.raphydaphy.arcanemagic.network.*;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipe;
@@ -149,10 +146,7 @@ public class ModRegistry
 				.then(ServerCommandManager.literal("cutscene").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
 						.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(1)).executes(command ->
 						{
-							DataHolder dataPlayer = (DataHolder) EntityArgumentType.method_9315(command, "target");
-							dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.WATCHING_CUTSCENE_KEY, true);
-							dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.CUTSCENE_TIME_LEFT_KEY, IntegerArgumentType.getInteger(command, "duration"));
-							dataPlayer.markAdditionalDataDirty();
+							CutsceneManager.startServer(EntityArgumentType.method_9315(command, "target"), IntegerArgumentType.getInteger(command, "duration"));
 							return 1;
 						})))))
 				.then(ServerCommandManager.literal("reset").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
@@ -170,11 +164,12 @@ public class ModRegistry
 		ServerTickCallback.EVENT.register((callback) ->
 		{
 			TremorTracker.updateServer(callback.getWorld(DimensionType.OVERWORLD));
-			CutsceneManager.update(callback.getWorlds());
+			CutsceneManager.updateServer(callback.getWorlds());
 		});
 
 		// Server-side Packet Registration
 		ServerSidePacketRegistry.INSTANCE.register(NotebookUpdatePacket.ID, new NotebookUpdatePacket.Handler());
 		ServerSidePacketRegistry.INSTANCE.register(NotebookSectionReadPacket.ID, new NotebookSectionReadPacket.Handler());
+		ServerSidePacketRegistry.INSTANCE.register(CutsceneFinishPacket.ID, new CutsceneFinishPacket.Handler());
 	}
 }

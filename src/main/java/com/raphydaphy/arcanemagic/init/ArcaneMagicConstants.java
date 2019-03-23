@@ -50,7 +50,8 @@ public class ArcaneMagicConstants
 
 	// Cutscenes
 	public static final String WATCHING_CUTSCENE_KEY = "WatchingCutscene";
-	public static final String CUTSCENE_TIME_LEFT_KEY = "CutsceneTimeLeft";
+	public static final String CUTSCENE_LENGTH = "CutsceneLength";
+	public static final String CUTSCENE_TIME = "CutsceneTimeLeft";
 
 	// For the Discovery parchment
 	public static final String DROWNED_KILLS_KEY = "DrownedKills"; // How many Drowned Zombies the player has killed, capped at 5

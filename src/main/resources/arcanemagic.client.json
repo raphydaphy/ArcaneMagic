@@ -9,7 +9,11 @@
 	"GameRendererMixin",
     "ModelLoaderMixin",
     "ChunkRendererMixin",
-	"ScreenMixin"
+	"ScreenMixin",
+	"ClientPlayerInteractionManagerMixin",
+	"WorldRendererMixin",
+	"ClientPlayerEntityMixin",
+	"GameRendererHooks"
   ],
   "injectors": {
 	"defaultRequire": 1

@@ -1,13 +1,11 @@
 package com.raphydaphy.arcanemagic.core.common;
 
+import com.raphydaphy.arcanemagic.cutscene.CutsceneManager;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.DataHolder;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.ItemCooldownManager;
@@ -16,16 +14,25 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.text.TextComponent;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin implements DataHolder
+public abstract class PlayerEntityMixin extends LivingEntity implements DataHolder
 {
+	protected PlayerEntityMixin(EntityType<? extends LivingEntity> type, World world)
+	{
+		super(type, world);
+	}
+
 	@Shadow
 	public abstract ItemCooldownManager getItemCooldownManager();
 
@@ -127,5 +134,32 @@ public abstract class PlayerEntityMixin implements DataHolder
 	public void setAdditionalData(CompoundTag tag)
 	{
 		this.additionalData = tag;
+	}
+
+	@Inject(at = @At("HEAD"), method="tick")
+	private void tick(CallbackInfo info)
+	{
+		if (CutsceneManager.isActive((PlayerEntity)(Object)this))
+		{
+			this.onGround = false;
+			if (world.isClient)
+			{
+				clientTick();
+			}
+		}
+	}
+
+	@Inject(at = @At("HEAD"), method="interact", cancellable = true)
+	private void interact(Entity entity, Hand hand, CallbackInfoReturnable<ActionResult> info)
+	{
+		if (CutsceneManager.isActive((PlayerEntity)(Object)this))
+		{
+			info.setReturnValue(ActionResult.PASS);
+		}
+	}
+
+	private void clientTick()
+	{
+		CutsceneManager.updateClient();
 	}
 }
