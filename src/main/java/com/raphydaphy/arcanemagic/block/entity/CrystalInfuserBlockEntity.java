@@ -8,7 +8,7 @@ import com.raphydaphy.arcanemagic.item.CrystalItem;
 import com.raphydaphy.arcanemagic.item.ICrystalEquipment;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.raphydaphy.cutsceneapi.network.PacketHandler;
+import com.raphydaphy.crochet.network.PacketHandler;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;

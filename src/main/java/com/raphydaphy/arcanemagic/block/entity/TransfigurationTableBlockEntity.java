@@ -3,7 +3,7 @@ package com.raphydaphy.arcanemagic.block.entity;
 import com.raphydaphy.arcanemagic.block.entity.base.InventoryBlockEntity;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
-import com.raphydaphy.cutsceneapi.network.PacketHandler;
+import com.raphydaphy.crochet.network.PacketHandler;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.network.packet.BlockEntityUpdateS2CPacket;
 import net.minecraft.entity.ItemEntity;

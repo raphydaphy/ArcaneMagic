@@ -27,10 +27,6 @@ repositories {
 	maven { url "https://tehnut.info/maven/" }
 	maven { url "https://jitpack.io" }
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-	flatDir {
-		// earl gray
-		dirs 'libs'
-	}
 }
 
 dependencies {
@@ -39,35 +35,19 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}"
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	// Fabric API
+	// Required Dependencies
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
+	modCompile "io.github.prospector.silk:SilkAPI:${project.silk_version}"
+	modCompile "com.github.raphydaphy:MultiBlockAPI:${project.multiblock_api_version}"
+	modCompile "com.github.raphydaphy:Crochet:${project.crochet_version}"
+	modCompile "com.github.raphydaphy:cutsceneapi:${project.cutscene_api_version}"
 
-	// REI Dependencies
+	// Optional Dependencies
 	compile "blue.endless:jankson:${project.jankson_version}"
 	modCompile "com.github.shedaniel:Cloth:${project.cloth_version}"
-
-	// Roughly Enough Items
-	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
-
-	// Plugin Loader
-	modCompile "info.tehnut.pluginloader:plugin-loader:${project.pluginloader_version}"
-
-	// Silk
-	modCompile "io.github.prospector.silk:SilkAPI:${project.silk_version}"
-
-	// Multiblock API
-	modCompile "com.github.raphydaphy:MultiBlockAPI:${project.multiblock_api_version}"
-
-	// Earl Grey
-	modCompile name: "earlgray-0.4-dev"
-
-	// Cutscene API
-	modCompile "com.github.raphydaphy:CutSceneAPI:${project.cutscene_api_version}"
-
-	//Nonnull annotations
 	modCompile "com.google.code.findbugs:jsr305:3.0.1"
-
-	// ModMenu
+	modCompile "com.github.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	modCompile "info.tehnut.pluginloader:plugin-loader:${project.pluginloader_version}"
 	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
 }
 

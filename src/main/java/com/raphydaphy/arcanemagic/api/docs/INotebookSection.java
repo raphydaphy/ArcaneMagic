@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.api.docs;
 
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
-import com.raphydaphy.arcanemagic.util.DataHolder;
+import com.raphydaphy.crochet.data.DataHolder;
 import net.minecraft.util.Identifier;
 
 import java.util.List;

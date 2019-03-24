@@ -3,12 +3,10 @@ package com.raphydaphy.arcanemagic.core.common;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import com.raphydaphy.arcanemagic.network.PlayerDataUpdatePacket;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.raphydaphy.arcanemagic.util.DataHolder;
-import com.raphydaphy.cutsceneapi.network.PacketHandler;
+import com.raphydaphy.crochet.data.DataHolder;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,37 +20,23 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
-public abstract class ServerPlayerEntityMixin implements DataHolder
+public abstract class ServerPlayerEntityMixin
 {
-	private boolean additionalDataNeedsSync = true;
-
 	@Inject(at = @At("HEAD"), method = "method_14203")
 	private void onPlayerClone(ServerPlayerEntity playerEntity, boolean keepEverything, CallbackInfo info) // copyFrom
 	{
-		this.setAdditionalData(((DataHolder) playerEntity).getAdditionalData());
-		if (this.getAdditionalData().getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
+		if (((DataHolder)this).getAdditionalData().getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
 		{
-			this.getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
+			((DataHolder)this).getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
 			((PlayerEntity) (Object) this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
 			ArcaneMagicUtils.unlockRecipe((PlayerEntity) (Object) this, "written_parchment");
-		}
-		markAdditionalDataDirty();
-	}
-
-	@Inject(at = @At("TAIL"), method = "method_14226")
-	private void syncAdditionalData(CallbackInfo info)
-	{
-		if (additionalDataNeedsSync)
-		{
-			additionalDataNeedsSync = false;
-			PacketHandler.sendToClient(new PlayerDataUpdatePacket(this.getAdditionalData()), (ServerPlayerEntity) (Object) this);
 		}
 	}
 
 	@Inject(at = @At(value = "HEAD"), method = "onDeath")
 	private void onDeath(DamageSource source, CallbackInfo info)
 	{
-		if (!((PlayerEntity) (Object) this).world.isClient && !((PlayerEntity) (Object) this).world.getGameRules().getBoolean("keepInventory") && !getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
+		if (!((PlayerEntity) (Object) this).world.isClient && !((PlayerEntity) (Object) this).world.getGameRules().getBoolean("keepInventory") && !((DataHolder)this).getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
 		{
 			for (int slot = 0; slot < ((PlayerEntity) (Object) this).inventory.getInvSize(); slot++)
 			{
@@ -62,19 +46,13 @@ public abstract class ServerPlayerEntityMixin implements DataHolder
 					IParchment parchment = ParchmentRegistry.getParchment(stack);
 					if (parchment instanceof DiscoveryParchment)
 					{
-						getAdditionalData().putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY, true);
-						getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, true);
-						markAdditionalDataDirty();
+						((DataHolder)this).getAdditionalData().putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY, true);
+						((DataHolder)this).getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, true);
+						((DataHolder)this).markAdditionalDataDirty();
 						break;
 					}
 				}
 			}
 		}
-	}
-
-	@Override
-	public void markAdditionalDataDirty()
-	{
-		additionalDataNeedsSync = true;
 	}
 }
