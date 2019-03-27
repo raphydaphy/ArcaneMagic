@@ -57,7 +57,7 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 				GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GuiLighting.disable();
 				MinecraftClient.getInstance().getTextureManager().bindTexture(DISPLAY_TEXTURE);
-				drawTexturedRect(startPoint.x, startPoint.y, 0, 0, 124, 54);
+				blit(startPoint.x, startPoint.y, 0, 0, 124, 54);
 				MinecraftClient.getInstance().getTextureManager().bindTexture(SOUL_METER_TEXTURE);
 
 				float percent = ((float) recipeDisplaySupplier.get().getSoul() / (ArcaneMagicConstants.SOUL_METER_MAX));
@@ -65,7 +65,7 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 				int row = stage / 10;
 				int col = stage % 10;
 
-				drawTexturedRect(startPoint.x + 58, startPoint.y + 9,
+				blit(startPoint.x + 58, startPoint.y + 9,
 						36 * col, 36 + 36 * row,
 						36, 36,
 						360, 360);

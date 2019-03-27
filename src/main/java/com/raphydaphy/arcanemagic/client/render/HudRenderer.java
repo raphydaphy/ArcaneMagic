@@ -56,14 +56,14 @@ public class HudRenderer
 		mc.getTextureManager().bindTexture(MAIN_TEX);
 
 		// Outline & Center
-		DrawableHelper.drawTexturedRect(/* x */ 0, /* y */ 0,
+		DrawableHelper.blit(/* x */ 0, /* y */ 0,
 				/* min-u */ 36 * lastCenter.id, /* min-v */ 0,
 				/* max-u */ 36, /* max-v */ 36,
 				/* width */ 360, /* height */ 360);
 
 		// Filled area
 		GlStateManager.color4f(displayedRed, displayedGreen, displayedBlue, alpha);
-		DrawableHelper.drawTexturedRect(/* x */ 0, /* y */ 0,
+		DrawableHelper.blit(/* x */ 0, /* y */ 0,
 				/* min-u */ 36 * col, /* min-v */ 36 + 36 * row,
 				/* max-u */ 36, /* max-v */ 36,
 				/* width */ 360, /* height */ 360);

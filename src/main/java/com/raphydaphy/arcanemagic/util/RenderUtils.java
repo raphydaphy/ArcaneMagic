@@ -167,10 +167,10 @@ public class RenderUtils
 
 		if (!recipe.getPreviewInputs().isEmpty())
 		{
-			DrawableHelper.drawRect(x + 20, y - 3, x + 20 + 2, y - 3 + 73, 0xff422c0e);
-			DrawableHelper.drawRect(x - 3, y + 20, x - 3 + 73, y + 20 + 2, 0xff422c0e);
-			DrawableHelper.drawRect(x + 45, y - 3, x + 45 + 2, y - 3 + 73, 0xff422c0e);
-			DrawableHelper.drawRect(x - 3, y + 45, x - 3 + 73, y + 45 + 2, 0xff422c0e);
+			DrawableHelper.fill(x + 20, y - 3, x + 20 + 2, y - 3 + 73, 0xff422c0e);
+			DrawableHelper.fill(x - 3, y + 20, x - 3 + 73, y + 20 + 2, 0xff422c0e);
+			DrawableHelper.fill(x + 45, y - 3, x + 45 + 2, y - 3 + 73, 0xff422c0e);
+			DrawableHelper.fill(x - 3, y + 45, x - 3 + 73, y + 45 + 2, 0xff422c0e);
 
 			GlStateManager.pushMatrix();
 
@@ -283,7 +283,7 @@ public class RenderUtils
 			if (tooltip != null && !tooltip.isEmpty() && mouseX >= x + 5 && mouseY >= y + 5 && mouseX <= x + 21 && mouseY <= y + 21)
 			{
 				// Actually draw the tooltip
-				screen.drawTooltip(tooltip, mouseX, mouseY);
+				screen.renderTooltip(tooltip, mouseX, mouseY);
 
 			}
 		}
@@ -347,7 +347,7 @@ public class RenderUtils
 				GlStateManager.pushMatrix();
 
 				// Actually draw the tooltip
-				screen.drawTooltip(screen.getStackTooltip(stack), mouseX, mouseY);
+				screen.renderTooltip(screen.getTooltipFromItem(stack), mouseX, mouseY);
 
 				GlStateManager.popMatrix();
 			}
@@ -378,19 +378,19 @@ public class RenderUtils
 	 */
 	public static void drawBox(int x, int y, int width, int height, int lineWidth, int border, int background)
 	{
-		DrawableHelper.drawRect(x, y, x + width, y + lineWidth, border);
-		DrawableHelper.drawRect(x, y + height, x + width, y + height + lineWidth, border);
-		DrawableHelper.drawRect(x, y, x + lineWidth, y + height, border);
-		DrawableHelper.drawRect(x + width, y, x + width + lineWidth, y + height + lineWidth, border);
+		DrawableHelper.fill(x, y, x + width, y + lineWidth, border);
+		DrawableHelper.fill(x, y + height, x + width, y + height + lineWidth, border);
+		DrawableHelper.fill(x, y, x + lineWidth, y + height, border);
+		DrawableHelper.fill(x + width, y, x + width + lineWidth, y + height + lineWidth, border);
 		if (background != -1)
 		{
-			DrawableHelper.drawRect(x + lineWidth, y + lineWidth, x + width, y + width, background);
+			DrawableHelper.fill(x + lineWidth, y + lineWidth, x + width, y + width, background);
 		}
 	}
 
 	public static int drawTexturedRect(int x, int y, int u, int v, int maxU, int maxV, int width, int height, int textureWidth, int textureHeight)
 	{
-		DrawableHelper.drawTexturedRect(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
+		DrawableHelper.blit(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
 		return height;
 	}
 

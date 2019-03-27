@@ -39,15 +39,16 @@ public class ParchmentScreen extends Screen
 	}
 
 	@Override
-	protected void onInitialized()
+	protected void init()
 	{
-		super.onInitialized();
+		super.init();
 	}
 
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
-		this.drawBackground();
+		MinecraftClient client = MinecraftClient.getInstance();
+		this.renderBackground();
 		super.render(mouseX, mouseY, partialTicks);
 
 		GlStateManager.pushMatrix();
@@ -58,7 +59,7 @@ public class ParchmentScreen extends Screen
 		int screenCenterX = (client.window.getScaledWidth() / 2) - (SCALED_DIMENSIONS / 2);
 		int screenCenterY = (client.window.getScaledHeight() / 2) - (SCALED_DIMENSIONS / 2);
 
-		DrawableHelper.drawTexturedRect(screenCenterX, screenCenterY, 0, 0, DIMENSIONS, DIMENSIONS, SCALED_DIMENSIONS, SCALED_DIMENSIONS, DIMENSIONS, TEX_HEIGHT);
+		DrawableHelper.blit(screenCenterX, screenCenterY, 0, 0, DIMENSIONS, DIMENSIONS, SCALED_DIMENSIONS, SCALED_DIMENSIONS, DIMENSIONS, TEX_HEIGHT);
 
 		drawCenteredUnlocalizedText(parchment.getText(), parchment.verticallyCenteredText(), screenCenterY + (parchment.verticallyCenteredText() ? SCALED_DIMENSIONS / 2f : 4 * SCALE) + parchment.getVerticalTextOffset() * SCALE);
 
@@ -69,7 +70,7 @@ public class ParchmentScreen extends Screen
 			RenderUtils.drawRecipe(this, (x, y) ->
 			{
 				client.getTextureManager().bindTexture(BACKGROUND);
-				DrawableHelper.drawTexturedRect(x, y, 48, 64, 7, 5, 22, 15, DIMENSIONS, TEX_HEIGHT);
+				DrawableHelper.blit(x, y, 48, 64, 7, 5, 22, 15, DIMENSIONS, TEX_HEIGHT);
 			}, parchment.getRecipe(MinecraftClient.getInstance().world.getRecipeManager()), screenCenterX + 31, (int) (screenCenterY + 37 * SCALE + parchment.getVerticalFeatureOffset() * SCALE), mouseX, mouseY);
 		}
 
@@ -95,17 +96,17 @@ public class ParchmentScreen extends Screen
 	{
 		GlStateManager.pushMatrix();
 
-		client.getTextureManager().bindTexture(BACKGROUND);
+		MinecraftClient.getInstance().getTextureManager().bindTexture(BACKGROUND);
 
 		int y = (int) (screenCenterY + 54 * SCALE + verticalOffset * SCALE);
 
-		DrawableHelper.drawTexturedRect(
+		DrawableHelper.blit(
 				(int) (screenCenterX + 8 * SCALE), y, 0, DIMENSIONS,
 				PROGRESS_BAR_LENGTH, 5, (int) (PROGRESS_BAR_LENGTH * SCALE), (int) ((5) * SCALE), DIMENSIONS, TEX_HEIGHT);
 
 		if (progress > 0)
 		{
-			DrawableHelper.drawRect(
+			DrawableHelper.fill(
 					(int) (screenCenterX + 9 * SCALE),
 					(int) (y + SCALE),
 					(int) (screenCenterX + 9 * SCALE + progress * SCALE),

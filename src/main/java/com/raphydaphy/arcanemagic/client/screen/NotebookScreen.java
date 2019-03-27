@@ -14,6 +14,7 @@ import com.raphydaphy.arcanemagic.util.RenderUtils;
 import com.raphydaphy.crochet.network.PacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.InputListener;
 import net.minecraft.client.gui.Screen;
@@ -60,6 +61,7 @@ public class NotebookScreen extends Screen
 
 	private void setSection(INotebookSection section)
 	{
+		MinecraftClient client = MinecraftClient.getInstance();
 		this.leftPage = 0;
 		if (!section.isVisibleTo((DataHolder) client.player))
 		{
@@ -84,6 +86,7 @@ public class NotebookScreen extends Screen
 
 	private void pageChanged()
 	{
+		MinecraftClient client = MinecraftClient.getInstance();
 		if (leftPage > section.getPageCount((DataHolder) client.player))
 		{
 			leftPage -= 2;
@@ -101,9 +104,10 @@ public class NotebookScreen extends Screen
 	}
 
 	@Override
-	protected void onInitialized()
+	protected void init()
 	{
-		super.onInitialized();
+		super.init();
+		MinecraftClient client = MinecraftClient.getInstance();
 		if (section != null)
 		{
 			int page = leftPage;
@@ -118,7 +122,7 @@ public class NotebookScreen extends Screen
 			ArcaneMagic.getLogger().warn("Tried to open a notebook with invalid NBT !");
 			setSection(NotebookSectionRegistry.CONTENTS);
 		}
-		this.listeners.add(new InputListener()
+		this.children.add(new InputListener()
 		{
 			@Override
 			public boolean mouseClicked(double mouseX, double mouseY, int button)
@@ -193,6 +197,7 @@ public class NotebookScreen extends Screen
 
 	private boolean overRightArrow()
 	{
+		MinecraftClient client = MinecraftClient.getInstance();
 		int xTop = (client.window.getScaledWidth() / 2) - (ArcaneMagicConstants.NOTEBOOK_WIDTH / 2);
 		int yTop = (client.window.getScaledHeight() / 2) - (ArcaneMagicConstants.NOTEBOOK_HEIGHT / 2);
 
@@ -203,6 +208,7 @@ public class NotebookScreen extends Screen
 
 	private boolean overLeftArrow()
 	{
+		MinecraftClient client = MinecraftClient.getInstance();
 		int xTop = (client.window.getScaledWidth() / 2) - (ArcaneMagicConstants.NOTEBOOK_WIDTH / 2);
 		int yTop = (client.window.getScaledHeight() / 2) - (ArcaneMagicConstants.NOTEBOOK_HEIGHT / 2);
 
@@ -213,6 +219,7 @@ public class NotebookScreen extends Screen
 
 	private boolean overBackArrow()
 	{
+		MinecraftClient client = MinecraftClient.getInstance();
 		//right + 85, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21
 		int xTop = (client.window.getScaledWidth() / 2) - (ArcaneMagicConstants.NOTEBOOK_WIDTH / 2);
 		int yTop = (client.window.getScaledHeight() / 2) - (ArcaneMagicConstants.NOTEBOOK_HEIGHT / 2);
@@ -224,7 +231,8 @@ public class NotebookScreen extends Screen
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks)
 	{
-		this.drawBackground();
+		this.renderBackground();
+		MinecraftClient client = MinecraftClient.getInstance();
 		super.render(mouseX, mouseY, partialTicks);
 
 		this.scaledMouseX = mouseX;
@@ -239,11 +247,11 @@ public class NotebookScreen extends Screen
 		int right = xTop + 142;
 
 		client.getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
-		DrawableHelper.drawTexturedRect(xTop, yTop, 0, 0, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_HEIGHT, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_HEIGHT, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
+		DrawableHelper.blit(xTop, yTop, 0, 0, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_HEIGHT, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_HEIGHT, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 
 		if (section instanceof ContentsNotebookSection)
 		{
-			DrawableHelper.drawTexturedRect(xTop + 133, yTop + 156, 136, 180, 5, 11, 5, 11, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
+			DrawableHelper.blit(xTop + 133, yTop + 156, 136, 180, 5, 11, 5, 11, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 		}
 
 		// Intro page
@@ -298,7 +306,7 @@ public class NotebookScreen extends Screen
 	}
 
 	@Override
-	public void onClosed()
+	public void removed()
 	{
 		if (this.section != null)
 		{

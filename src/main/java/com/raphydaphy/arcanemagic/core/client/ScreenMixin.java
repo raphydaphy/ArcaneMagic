@@ -30,18 +30,18 @@ public abstract class ScreenMixin extends ScreenComponent
 {
 	private static Identifier TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_tooltip.png");
 	@Shadow
-	public int screenWidth;
+	public int width;
 	@Shadow
-	public int screenHeight;
+	public int height;
 	@Shadow
-	protected TextRenderer fontRenderer;
+	protected TextRenderer font;
 	@Shadow
 	protected ItemRenderer itemRenderer;
 
 	@Shadow
 	public abstract List<String> getStackTooltip(ItemStack itemStack_1);
 
-	@Inject(at = @At("HEAD"), method = "drawStackTooltip", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "renderTooltip(Lnet/minecraft/item/ItemStack;II)V", cancellable = true)
 	private void drawStackTooltip(ItemStack stack, int int_1, int int_2, CallbackInfo info)
 	{
 		if (stack.getItem() instanceof SoulStorageItem && stack.hasTag())
@@ -63,7 +63,7 @@ public abstract class ScreenMixin extends ScreenComponent
 
 			for (String line : text)
 			{
-				int int_4 = this.fontRenderer.getStringWidth(line);
+				int int_4 = this.font.getStringWidth(line);
 				if (int_4 > int_3)
 				{
 					int_3 = int_4;
@@ -78,32 +78,32 @@ public abstract class ScreenMixin extends ScreenComponent
 				height += 2 + (text.size() - 1) * 10;
 			}
 
-			if (drawX + int_3 > this.screenWidth)
+			if (drawX + int_3 > this.width)
 			{
 				drawX -= 28 + int_3;
 			}
 
-			if (drawY + height + 6 > this.screenHeight)
+			if (drawY + height + 6 > this.height)
 			{
-				drawY = this.screenHeight - height - 6;
+				drawY = this.height - height - 6;
 			}
 
-			this.zOffset = 300.0F;
+			this.blitOffset = 300.0F;
 			this.itemRenderer.zOffset = 300.0F;
 			int int_9 = -267386864;
-			this.drawGradientRect(drawX - 3, drawY - 4, drawX + int_3 + 3, drawY - 3, -267386864, -267386864);
-			this.drawGradientRect(drawX - 3, drawY + height + 3, drawX + int_3 + 3, drawY + height + 4, -267386864, -267386864);
-			this.drawGradientRect(drawX - 3, drawY - 3, drawX + int_3 + 3, drawY + height + 3, -267386864, -267386864);
-			this.drawGradientRect(drawX - 4, drawY - 3, drawX - 3, drawY + height + 3, -267386864, -267386864);
-			this.drawGradientRect(drawX + int_3 + 3, drawY - 3, drawX + int_3 + 4, drawY + height + 3, -267386864, -267386864);
+			this.fillGradient(drawX - 3, drawY - 4, drawX + int_3 + 3, drawY - 3, -267386864, -267386864);
+			this.fillGradient(drawX - 3, drawY + height + 3, drawX + int_3 + 3, drawY + height + 4, -267386864, -267386864);
+			this.fillGradient(drawX - 3, drawY - 3, drawX + int_3 + 3, drawY + height + 3, -267386864, -267386864);
+			this.fillGradient(drawX - 4, drawY - 3, drawX - 3, drawY + height + 3, -267386864, -267386864);
+			this.fillGradient(drawX + int_3 + 3, drawY - 3, drawX + int_3 + 4, drawY + height + 3, -267386864, -267386864);
 			int int_10 = 1347420415;
 			int int_11 = 1344798847;
-			this.drawGradientRect(drawX - 3, drawY - 3 + 1, drawX - 3 + 1, drawY + height + 3 - 1, 1347420415, 1344798847);
-			this.drawGradientRect(drawX + int_3 + 2, drawY - 3 + 1, drawX + int_3 + 3, drawY + height + 3 - 1, 1347420415, 1344798847);
-			this.drawGradientRect(drawX - 3, drawY - 3, drawX + int_3 + 3, drawY - 3 + 1, 1347420415, 1347420415);
-			this.drawGradientRect(drawX - 3, drawY + height + 2, drawX + int_3 + 3, drawY + height + 3, 1344798847, 1344798847);
+			this.fillGradient(drawX - 3, drawY - 3 + 1, drawX - 3 + 1, drawY + height + 3 - 1, 1347420415, 1344798847);
+			this.fillGradient(drawX + int_3 + 2, drawY - 3 + 1, drawX + int_3 + 3, drawY + height + 3 - 1, 1347420415, 1344798847);
+			this.fillGradient(drawX - 3, drawY - 3, drawX + int_3 + 3, drawY - 3 + 1, 1347420415, 1347420415);
+			this.fillGradient(drawX - 3, drawY + height + 2, drawX + int_3 + 3, drawY + height + 3, 1344798847, 1344798847);
 
-			this.fontRenderer.drawWithShadow(text.get(0), (float) drawX, (float) drawY, -1);
+			this.font.drawWithShadow(text.get(0), (float) drawX, (float) drawY, -1);
 			drawY += 12;
 
 			MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
@@ -125,12 +125,12 @@ public abstract class ScreenMixin extends ScreenComponent
 				for (int lineNumber = 1; lineNumber < text.size(); ++lineNumber)
 				{
 					String string_2 = text.get(lineNumber);
-					this.fontRenderer.drawWithShadow(string_2, (float) drawX, (float) drawY, -1);
+					this.font.drawWithShadow(string_2, (float) drawX, (float) drawY, -1);
 					drawY += 10;
 				}
 			}
 
-			this.zOffset = 0.0F;
+			this.blitOffset = 0.0F;
 			this.itemRenderer.zOffset = 0.0F;
 			GlStateManager.enableLighting();
 			GlStateManager.enableDepthTest();

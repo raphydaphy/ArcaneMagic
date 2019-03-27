@@ -121,7 +121,7 @@ class NotebookElement
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
 			MinecraftClient.getInstance().getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
-			DrawableHelper.drawTexturedRect(xTop - 8, yTop + 11, 0, 206, 140, 31, 140, 30, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
+			DrawableHelper.blit(xTop - 8, yTop + 11, 0, 206, 140, 31, 140, 30, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 			RenderUtils.drawCustomSizedSplitString(xTop + 17 - 8, yTop + 18, 1, 119, 0x218e15, false, false, unlocalized, keys);
 			return 27 + padding;
 		}
