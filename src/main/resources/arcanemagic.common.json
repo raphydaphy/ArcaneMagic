@@ -13,8 +13,7 @@
 	"PlayerEntityMixin",
 	"ServerPlayerEntityMixin",
 	"RecipeManagerMixin",
-	"IngredientHooks",
-	"WorldMixin"
+	"IngredientHooks"
   ],
   "injectors": {
 	"defaultRequire": 1
