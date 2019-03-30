@@ -288,10 +288,10 @@ public class ScepterItem extends SoulStorageItem
 		{
 			if (this == ModRegistry.GOLDEN_SCEPTER)
 			{
-				if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
+				if (!((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY))
 				{
 					PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
-					((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
+					((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.DISCOVERY.getID().toString(), false);
 					((DataHolder) player).markAdditionalDataDirty();
 					ArcaneMagicUtils.unlockRecipe(player, "notebook");

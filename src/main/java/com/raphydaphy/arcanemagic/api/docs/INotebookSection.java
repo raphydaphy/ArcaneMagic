@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.api.docs;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.crochet.data.DataHolder;
 import net.minecraft.util.Identifier;
@@ -16,7 +17,7 @@ public interface INotebookSection
 
 	default boolean hasNewInfo(DataHolder player)
 	{
-		return player.getAdditionalData().getCompound(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET).getBoolean(getID().toString());
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getCompound(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET).getBoolean(getID().toString());
 	}
 
 	int getPageCount(DataHolder player);

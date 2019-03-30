@@ -22,7 +22,7 @@ public class CrystallizationNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY);
 	}
 
 	@Override

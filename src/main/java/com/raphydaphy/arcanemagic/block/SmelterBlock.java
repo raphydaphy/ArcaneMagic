@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.base.DoubleBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.SmelterBlockEntity;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
@@ -139,10 +140,10 @@ public class SmelterBlock extends DoubleBlockBase implements BlockEntityProvider
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
 		super.onPlaced(world, pos, state, placer, stack);
-		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))
 		{
 			PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
-			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY, true);
+			((DataHolder) placer).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY, true);
 			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}

@@ -48,19 +48,19 @@ public class TremorTracker
 		{
 			DataHolder dataPlayer = (DataHolder) player;
 
-			if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && player.y < 25)
+			if (dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && player.y < 25)
 			{
 				if (world.getTime() % 100 == 0)
 				{
-					int timeSinceTremor = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY);
-					int timeSinceVoidSound = dataPlayer.getAdditionalData().getInt(ArcaneMagicConstants.TIME_SINCE_VOID_SOUND_KEY);
+					int timeSinceTremor = dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY);
+					int timeSinceVoidSound = dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getInt(ArcaneMagicConstants.TIME_SINCE_VOID_SOUND_KEY);
 					int rand = ArcaneMagic.RANDOM.nextInt((int) (player.y * 3));
 					if (rand == 0)
 					{
-						if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY))
+						if (!dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY))
 						{
-							dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY, true);
-							dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY, 0);
+							dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY, true);
+							dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).putInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY, 0);
 							ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TREMORS.getID().toString(), false);
 							dataPlayer.markAdditionalDataDirty();
 							PacketHandler.sendToClient(new TremorPacket(5, ArcaneMagic.RANDOM.nextInt(20) + 30), player);
@@ -83,8 +83,8 @@ public class TremorTracker
 							timeSinceVoidSound = -1;
 						}
 					}
-					dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY, timeSinceTremor + 1);
-					dataPlayer.getAdditionalData().putInt(ArcaneMagicConstants.TIME_SINCE_VOID_SOUND_KEY, timeSinceVoidSound + 1);
+					dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).putInt(ArcaneMagicConstants.TIME_SINCE_TREMOR_KEY, timeSinceTremor + 1);
+					dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).putInt(ArcaneMagicConstants.TIME_SINCE_VOID_SOUND_KEY, timeSinceVoidSound + 1);
 				}
 			}
 		}

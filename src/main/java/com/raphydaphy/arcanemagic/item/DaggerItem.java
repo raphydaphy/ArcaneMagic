@@ -120,10 +120,10 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment
 	{
 		if (!world.isClient && player != null)
 		{
-			if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
+			if (!((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
 			{
 				PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);
-				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY, true);
+				((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY, true);
 				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
 			}

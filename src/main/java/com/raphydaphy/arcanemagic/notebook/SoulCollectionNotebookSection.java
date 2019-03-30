@@ -22,7 +22,7 @@ public class SoulCollectionNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY);
 	}
 
 	@Override

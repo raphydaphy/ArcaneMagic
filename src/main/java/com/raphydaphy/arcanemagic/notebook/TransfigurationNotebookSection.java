@@ -22,7 +22,7 @@ public class TransfigurationNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class TransfigurationNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "transfiguration_table")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
 		{
 			int secondText = NotebookElement.textPages("notebook.arcanemagic.transfiguration.1", 0) + firstText + 2;
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.transfiguration.1", 0, firstText + 2, page));
@@ -65,6 +65,6 @@ public class TransfigurationNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.transfiguration.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY) ? NotebookElement.textPages("notebook.arcanemagic.transfiguration.1", 0) + 3 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.transfiguration.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY) ? NotebookElement.textPages("notebook.arcanemagic.transfiguration.1", 0) + 3 : 1);
 	}
 }

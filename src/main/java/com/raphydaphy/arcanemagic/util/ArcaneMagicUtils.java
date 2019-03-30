@@ -147,7 +147,7 @@ public class ArcaneMagicUtils
 
 	public static boolean craftedAllCrystals(DataHolder dataPlayer)
 	{
-		CompoundTag data = dataPlayer.getAdditionalData();
+		CompoundTag data = dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN);
 		return data.getBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY) && data.getBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY)
 				&& data.getBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY) && data.getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY)
 				&& data.getBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY) && data.getBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY);
@@ -366,7 +366,7 @@ public class ArcaneMagicUtils
 	{
 		if (!world.isClient())
 		{
-			CompoundTag updates = dataPlayer.getAdditionalData().getCompound(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET);
+			CompoundTag updates = dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getCompound(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET);
 			if (remove)
 			{
 				if (updates.containsKey(section))
@@ -377,7 +377,7 @@ public class ArcaneMagicUtils
 			{
 				updates.putBoolean(section, true);
 			}
-			dataPlayer.getAdditionalData().put(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET, updates);
+			dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).put(ArcaneMagicConstants.NOTEBOOK_UPDATES_KET, updates);
 			dataPlayer.markAdditionalDataDirty();
 		}
 	}

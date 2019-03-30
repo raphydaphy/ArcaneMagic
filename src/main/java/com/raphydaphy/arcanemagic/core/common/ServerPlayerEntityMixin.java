@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.core.common;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.api.docs.IParchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -25,9 +26,9 @@ public abstract class ServerPlayerEntityMixin
 	@Inject(at = @At("HEAD"), method = "method_14203")
 	private void onPlayerClone(ServerPlayerEntity playerEntity, boolean keepEverything, CallbackInfo info) // copyFrom
 	{
-		if (((DataHolder)this).getAdditionalData().getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
+		if (((DataHolder)this).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))
 		{
-			((DataHolder)this).getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
+			((DataHolder)this).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, false);
 			((PlayerEntity) (Object) this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
 			ArcaneMagicUtils.unlockRecipe((PlayerEntity) (Object) this, "written_parchment");
 		}
@@ -36,7 +37,7 @@ public abstract class ServerPlayerEntityMixin
 	@Inject(at = @At(value = "HEAD"), method = "onDeath")
 	private void onDeath(DamageSource source, CallbackInfo info)
 	{
-		if (!((PlayerEntity) (Object) this).world.isClient && !((PlayerEntity) (Object) this).world.getGameRules().getBoolean("keepInventory") && !((DataHolder)this).getAdditionalData().getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
+		if (!((PlayerEntity) (Object) this).world.isClient && !((PlayerEntity) (Object) this).world.getGameRules().getBoolean("keepInventory") && !((DataHolder)this).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY))
 		{
 			for (int slot = 0; slot < ((PlayerEntity) (Object) this).inventory.getInvSize(); slot++)
 			{
@@ -46,8 +47,8 @@ public abstract class ServerPlayerEntityMixin
 					IParchment parchment = ParchmentRegistry.getParchment(stack);
 					if (parchment instanceof DiscoveryParchment)
 					{
-						((DataHolder)this).getAdditionalData().putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY, true);
-						((DataHolder)this).getAdditionalData().putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, true);
+						((DataHolder)this).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY, true);
+						((DataHolder)this).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY, true);
 						((DataHolder)this).markAdditionalDataDirty();
 						break;
 					}

@@ -22,7 +22,7 @@ public class SmeltingNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SmeltingNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "smelter")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY))
 		{
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.smelting.1", 0, firstText + 2, page));
 		}
@@ -58,6 +58,6 @@ public class SmeltingNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.smelting.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.smelting.1", 0) + 2 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.smelting.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.smelting.1", 0) + 2 : 1);
 	}
 }

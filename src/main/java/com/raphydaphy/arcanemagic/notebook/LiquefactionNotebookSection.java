@@ -22,7 +22,7 @@ public class LiquefactionNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class LiquefactionNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "mixer")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY))
 		{
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.liquefaction.1", 0, firstText + 2, page));
 		}
@@ -58,6 +58,6 @@ public class LiquefactionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.liquefaction.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.liquefaction.1", 0) + 2 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.liquefaction.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.liquefaction.1", 0) + 2 : 1);
 	}
 }

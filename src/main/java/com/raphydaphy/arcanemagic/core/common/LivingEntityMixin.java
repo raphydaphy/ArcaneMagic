@@ -81,7 +81,7 @@ public abstract class LivingEntityMixin
 			Entity attacker = source.getAttacker();
 			if (attacker instanceof PlayerEntity)
 			{
-				int kills = ((DataHolder) attacker).getAdditionalData().getInt(ArcaneMagicConstants.DROWNED_KILLS_KEY);
+				int kills = ((DataHolder) attacker).getAdditionalData(ArcaneMagic.DOMAIN).getInt(ArcaneMagicConstants.DROWNED_KILLS_KEY);
 				int paper = -1;
 				boolean giveParchment = false;
 
@@ -145,8 +145,8 @@ public abstract class LivingEntityMixin
 						analysisIndexes.add(-1);
 						Collections.shuffle(analysisIndexes);
 
-						((DataHolder) attacker).getAdditionalData().putIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY, gatherIndexes);
-						((DataHolder) attacker).getAdditionalData().putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY, analysisIndexes);
+						((DataHolder) attacker).getAdditionalData(ArcaneMagic.DOMAIN).putIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY, gatherIndexes);
+						((DataHolder) attacker).getAdditionalData(ArcaneMagic.DOMAIN).putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY, analysisIndexes);
 						((DataHolder) attacker).markAdditionalDataDirty();
 
 						ItemStack paperStack = ((PlayerEntity) attacker).inventory.getInvStack(paper);
@@ -165,7 +165,7 @@ public abstract class LivingEntityMixin
 						{
 							PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) attacker);
 						}
-						((DataHolder) attacker).getAdditionalData().putInt(ArcaneMagicConstants.DROWNED_KILLS_KEY, kills + 1);
+						((DataHolder) attacker).getAdditionalData(ArcaneMagic.DOMAIN).putInt(ArcaneMagicConstants.DROWNED_KILLS_KEY, kills + 1);
 						((DataHolder) attacker).markAdditionalDataDirty();
 					}
 				}

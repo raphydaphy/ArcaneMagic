@@ -22,7 +22,7 @@ public class InfusionNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class InfusionNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "crystal_infuser")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY))
 		{
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.infusion.1", 0, firstText + 2, page));
 		}
@@ -58,6 +58,6 @@ public class InfusionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.infusion.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.infusion.1", 0) + 2 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.infusion.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_INFUSER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.infusion.1", 0) + 2 : 1);
 	}
 }

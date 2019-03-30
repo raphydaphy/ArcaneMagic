@@ -48,7 +48,7 @@ public class PerfectionNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "pure_crystal")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
 		{
 			int secondText = NotebookElement.textPages("notebook.arcanemagic.perfection.1", 0) + firstText + 2;
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.perfection.1", 0, firstText + 2, page));
@@ -66,6 +66,6 @@ public class PerfectionNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.perfection.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY) ? NotebookElement.textPages("notebook.arcanemagic.perfection.1", 0) + 3 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.perfection.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY) ? NotebookElement.textPages("notebook.arcanemagic.perfection.1", 0) + 3 : 1);
 	}
 }

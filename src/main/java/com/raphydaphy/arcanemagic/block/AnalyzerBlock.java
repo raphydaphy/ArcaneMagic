@@ -1,5 +1,6 @@
 package com.raphydaphy.arcanemagic.block;
 
+import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.base.OrientableBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.AnalyzerBlockEntity;
 import com.raphydaphy.arcanemagic.client.render.IExtraRenderLayers;
@@ -22,6 +23,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.SwordItem;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.BlockSoundGroup;
@@ -70,87 +72,88 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 		{
 			// All of this is only called on the server-side
 			DataHolder dataPlayer = ((DataHolder) player);
+			CompoundTag data = dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN);
 			boolean notebookUpdate = false;
 			if (stack.getItem() == Items.STICK)
 			{
-				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
+				if (!data.getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
 				{
 					PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY, true);
 					ArcaneMagicUtils.unlockRecipe(player, "golden_scepter");
 					dataPlayer.markAdditionalDataDirty();
 				}
 			} else if (stack.getItem() == Blocks.CRAFTING_TABLE.getItem())
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
 					ArcaneMagicUtils.unlockRecipe(player, "transfiguration_table");
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.OBSIDIAN.getItem())
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_COLLECTION.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() instanceof SwordItem)
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.ARMOURY.getID().toString(), false);
 					ArcaneMagicUtils.unlockRecipe(player, "iron_dagger");
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.BLAST_FURNACE.getItem())
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.ENCHANTING_TABLE.getItem())
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.INFUSION.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.DISPENSER.getItem())
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.LIQUEFACTION.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Items.REDSTONE)
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_REDSTONE_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_REDSTONE_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_REDSTONE_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_REDSTONE_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.FLUID_TRANSPORT.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Items.WATER_BUCKET)
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_WATER_BUCKET_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_WATER_BUCKET_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_WATER_BUCKET_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_WATER_BUCKET_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PUMPING.getID().toString(), false);
 					notebookUpdate = true;
 				}
 			} else if (stack.getItem() == Blocks.SOUL_SAND.getItem())
 			{
-				if (dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY) && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY))
+				if (data.getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY))
 				{
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY, true);
+					data.putBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY, true);
 					ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
 					notebookUpdate = true;
 				}
@@ -159,47 +162,47 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 				CutsceneManager.startServer((ServerPlayerEntity) player, ModCutscenes.RELIC_NETHER);
 			} else
 			{
-				if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)
+				if (data.getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length < 4)
 				{
-					for (int index : dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY))
+					for (int index : data.getIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY))
 					{
 						Ingredient ingredient = DiscoveryParchment.GATHER_QUEST_OPTIONS[index];
 						if (ingredient.method_8093(stack)) // apply
 						{
-							int[] analyzedArray = dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY);
+							int[] analyzedArray = data.getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY);
 							List<Integer> analyzed = new ArrayList<>();
 							for (int analyzedID : analyzedArray)
 							{
 								analyzed.add(analyzedID);
 							}
 							analyzed.add(index);
-							dataPlayer.getAdditionalData().putIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY, analyzed);
+							data.putIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY, analyzed);
 							dataPlayer.markAdditionalDataDirty();
 							break;
 						}
 					}
 
-					if (dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4)
+					if (data.getIntArray(ArcaneMagicConstants.GATHER_QUEST_ANALYZED_INDEXES_KEY).length >= 4)
 					{
 						PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 					}
-				} else if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
+				} else if (!data.getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY))
 				{
-					for (int index : dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY))
+					for (int index : data.getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY))
 					{
 						if (index != -1)
 						{
 							Ingredient ingredient = DiscoveryParchment.ANALYSIS_QUEST_OPTIONS[index];
 							if (ingredient.method_8093(stack)) // apply
 							{
-								int[] analyzedArray = dataPlayer.getAdditionalData().getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY);
+								int[] analyzedArray = data.getIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY);
 								List<Integer> analyzed = new ArrayList<>();
 								for (int analyzedID : analyzedArray)
 								{
 									analyzed.add(analyzedID);
 								}
 								analyzed.add(index);
-								dataPlayer.getAdditionalData().putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY, analyzed);
+								data.putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_ANALYZED_INDEXES_KEY, analyzed);
 								dataPlayer.markAdditionalDataDirty();
 								return;
 							}
@@ -258,10 +261,10 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY))
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY))
 		{
 			PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) placer);
-			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
+			((DataHolder) placer).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.PLACED_ANALYZER_KEY, true);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}
 	}

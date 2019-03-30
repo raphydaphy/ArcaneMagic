@@ -99,7 +99,7 @@ public class DiscoveryParchment implements IParchment
 	@Override
 	public void onOpened(IWorld world, PlayerEntity player, Hand hand, ItemStack stack)
 	{
-		CompoundTag data = ((DataHolder) player).getAdditionalData();
+		CompoundTag data = ((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN);
 
 		drownedKills = data.getInt(ArcaneMagicConstants.DROWNED_KILLS_KEY);
 		finishedNewGatherQuest = drownedKills > 4 && data.getBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY);
@@ -171,7 +171,7 @@ public class DiscoveryParchment implements IParchment
 						{
 							PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
 							ArcaneMagicUtils.unlockRecipe(player, "analyzer");
-							((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY, true);
+							((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.GATHER_QUEST_FINISHED_KEY, true);
 							((DataHolder) player).markAdditionalDataDirty();
 						}
 						finishedNewGatherQuest = true;

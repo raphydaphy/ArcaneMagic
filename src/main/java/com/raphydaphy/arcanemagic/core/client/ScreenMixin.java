@@ -9,8 +9,8 @@ import com.raphydaphy.arcanemagic.item.SoulStorageItem;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.AbstractParentElement;
 import net.minecraft.client.gui.Screen;
-import net.minecraft.client.gui.ScreenComponent;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.item.ItemStack;
@@ -26,7 +26,7 @@ import java.util.List;
 
 
 @Mixin(Screen.class)
-public abstract class ScreenMixin extends ScreenComponent
+public abstract class ScreenMixin extends AbstractParentElement
 {
 	private static Identifier TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/misc/soul_tooltip.png");
 	@Shadow
@@ -39,14 +39,14 @@ public abstract class ScreenMixin extends ScreenComponent
 	protected ItemRenderer itemRenderer;
 
 	@Shadow
-	public abstract List<String> getStackTooltip(ItemStack itemStack_1);
+	public abstract List<String> getTooltipFromItem(ItemStack itemStack_1);
 
 	@Inject(at = @At("HEAD"), method = "renderTooltip(Lnet/minecraft/item/ItemStack;II)V", cancellable = true)
 	private void drawStackTooltip(ItemStack stack, int int_1, int int_2, CallbackInfo info)
 	{
 		if (stack.getItem() instanceof SoulStorageItem && stack.hasTag())
 		{
-			drawArcaneMagicSoulTooltip(stack, getStackTooltip(stack), int_1, int_2);
+			drawArcaneMagicSoulTooltip(stack, getTooltipFromItem(stack), int_1, int_2);
 			info.cancel();
 		}
 	}

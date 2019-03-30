@@ -22,7 +22,7 @@ public class SoulStorageNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SoulStorageNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "soul_pendant")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
 		{
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.soul_storage.1", 0, firstText + 2, page));
 		}
@@ -58,6 +58,6 @@ public class SoulStorageNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.soul_storage.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) ? NotebookElement.textPages("notebook.arcanemagic.soul_storage.1", 0) + 2 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.soul_storage.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) ? NotebookElement.textPages("notebook.arcanemagic.soul_storage.1", 0) + 2 : 1);
 	}
 }

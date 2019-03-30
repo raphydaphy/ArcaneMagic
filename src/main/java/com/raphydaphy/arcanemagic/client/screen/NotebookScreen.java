@@ -16,7 +16,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
-import net.minecraft.client.gui.InputListener;
+import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -122,7 +122,7 @@ public class NotebookScreen extends Screen
 			ArcaneMagic.getLogger().warn("Tried to open a notebook with invalid NBT !");
 			setSection(NotebookSectionRegistry.CONTENTS);
 		}
-		this.children.add(new InputListener()
+		this.children.add(new Element()
 		{
 			@Override
 			public boolean mouseClicked(double mouseX, double mouseY, int button)

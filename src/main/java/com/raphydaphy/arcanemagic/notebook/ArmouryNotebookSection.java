@@ -22,7 +22,7 @@ public class ArmouryNotebookSection implements INotebookSection
 	@Override
 	public boolean isVisibleTo(DataHolder player)
 	{
-		return player.getAdditionalData().getBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY);
+		return player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.ANALYZED_SWORD_KEY);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ArmouryNotebookSection implements INotebookSection
 			elements.add(new NotebookElement.Recipe(MinecraftClient.getInstance().world.getRecipeManager().get(new Identifier(ArcaneMagic.DOMAIN, "iron_dagger")).orElse(null)));
 		}
 
-		if (page >= firstText + 2 && player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
+		if (page >= firstText + 2 && player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY))
 		{
 			elements.addAll(NotebookElement.wrapText("notebook.arcanemagic.armoury.1", 0, firstText + 2, page));
 		}
@@ -57,6 +57,6 @@ public class ArmouryNotebookSection implements INotebookSection
 	@Override
 	public int getPageCount(DataHolder player)
 	{
-		return NotebookElement.textPages("notebook.arcanemagic.armoury.0", 2) + (player.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.armoury.1", 0) + 2 : 1);
+		return NotebookElement.textPages("notebook.arcanemagic.armoury.0", 2) + (player.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY) ? NotebookElement.textPages("notebook.arcanemagic.armoury.1", 0) + 2 : 1);
 	}
 }

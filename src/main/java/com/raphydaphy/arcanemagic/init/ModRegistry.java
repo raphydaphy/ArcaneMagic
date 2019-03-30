@@ -152,7 +152,7 @@ public class ModRegistry
 						.executes(command ->
 						{
 							ServerPlayerEntity player = EntityArgumentType.getServerPlayerArgument(command, "target");
-							((DataHolder) player).setAdditionalData(new CompoundTag());
+							((DataHolder)player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
 							((DataHolder) player).markAdditionalDataDirty();
 							command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
 							return 1;

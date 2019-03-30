@@ -64,13 +64,13 @@ public class DeconstructionStaffItem extends Item
 				doParticles(ctx.getWorld(), pos);
 			} else if (dataPlayer != null)
 			{
-				if (!dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY))
+				if (!dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY))
 				{
 					ItemEntity entity = new ItemEntity(ctx.getWorld(), pos.getX() + ArcaneMagic.RANDOM.nextFloat(), pos.getY() + ArcaneMagic.RANDOM.nextFloat(), pos.getZ() + ArcaneMagic.RANDOM.nextFloat(), new ItemStack(ModRegistry.RELIC));
 					ctx.getWorld().spawnEntity(entity);
 
 					//TODO: Relic notebook section
-					dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY, true);
+					dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.DECONSTRUCTED_SOUL_SAND_KEY, true);
 					dataPlayer.markAdditionalDataDirty();
 				}
 			}
@@ -188,10 +188,10 @@ public class DeconstructionStaffItem extends Item
 	{
 		if (!world.isClient && player != null)
 		{
-			if (!((DataHolder) player).getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY))
+			if (!((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY))
 			{
 				PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);
-				((DataHolder) player).getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY, true);
+				((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY, true);
 				ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) player, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
 				((DataHolder) player).markAdditionalDataDirty();
 			}

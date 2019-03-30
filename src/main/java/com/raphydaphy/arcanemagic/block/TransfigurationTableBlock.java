@@ -82,66 +82,67 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 						if (player != null)
 						{
 							DataHolder dataPlayer = (DataHolder) player;
+							CompoundTag data = dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN);
 							Item output = recipe.get().getOutput().getItem();
 							boolean updated = false;
 
 							output.onCrafted(recipe.get().getOutput(), world, player);
 
-							if (output.getItem() == ModRegistry.GOLD_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY))
+							if (output.getItem() == ModRegistry.GOLD_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY))
 							{
 								updated = true;
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY, true);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.CRYSTALLIZATION.getID().toString(), false);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_STORAGE.getID().toString(), false);
-							} else if (output.getItem() == ModRegistry.SOUL_PENDANT && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
+							} else if (output.getItem() == ModRegistry.SOUL_PENDANT && !data.getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY))
 							{
 								updated = true;
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY, true);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_STORAGE.getID().toString(), false);
-							} else if (output.getItem() == ModRegistry.COAL_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY))
+							} else if (output.getItem() == ModRegistry.COAL_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY))
 							{
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_COAL_CRYSTAL_KEY, true);
 								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
 								{
 									updated = true;
 									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
 								}
-							} else if (output.getItem() == ModRegistry.REDSTONE_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY))
+							} else if (output.getItem() == ModRegistry.REDSTONE_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY))
 							{
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_REDSTONE_CRYSTAL_KEY, true);
 								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
 								{
 									updated = true;
 									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
 								}
-							} else if (output.getItem() == ModRegistry.LAPIS_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY))
+							} else if (output.getItem() == ModRegistry.LAPIS_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY))
 							{
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_LAPIS_CRYSTAL_KEY, true);
 								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
 								{
 									updated = true;
 									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
 								}
-							} else if (output.getItem() == ModRegistry.DIAMOND_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY))
+							} else if (output.getItem() == ModRegistry.DIAMOND_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY))
 							{
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_DIAMOND_CRYSTAL_KEY, true);
 								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
 								{
 									updated = true;
 									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
 								}
-							} else if (output.getItem() == ModRegistry.EMERALD_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY))
+							} else if (output.getItem() == ModRegistry.EMERALD_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY))
 							{
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_EMERALD_CRYSTAL_KEY, true);
 								if (ArcaneMagicUtils.craftedAllCrystals(dataPlayer))
 								{
 									updated = true;
 									ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
 								}
-							} else if (output.getItem() == ModRegistry.PURE_CRYSTAL && !dataPlayer.getAdditionalData().getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
+							} else if (output.getItem() == ModRegistry.PURE_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY))
 							{
 								updated = true;
-								dataPlayer.getAdditionalData().putBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY, true);
+								data.putBoolean(ArcaneMagicConstants.CRAFTED_PURE_CRYSTAL_KEY, true);
 								ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PERFECTION.getID().toString(), false);
 							}
 
@@ -278,10 +279,10 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 	@Override
 	public void onPlaced(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData().getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
+		if (!world.isClient && placer instanceof PlayerEntity && !((DataHolder) placer).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY))
 		{
 			PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) placer);
-			((DataHolder) placer).getAdditionalData().putBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY, true);
+			((DataHolder) placer).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.PLACED_TRANSFIGURATION_TABLE_KEY, true);
 			ArcaneMagicUtils.updateNotebookSection(world, (DataHolder) placer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
 			((DataHolder) placer).markAdditionalDataDirty();
 		}
