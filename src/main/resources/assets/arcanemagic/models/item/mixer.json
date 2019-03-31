@@ -3,7 +3,7 @@
   "parent": "block/block",
   "textures": {
 	"texture": "arcanemagic:block/mixer",
-	"texture2": "arcanemagic:block/mixer_tanks",
+	"texture2": "arcanemagic:block/mixer_tank",
 	"particle": "arcanemagic:block/mixer_particle"
   },
   "elements": [

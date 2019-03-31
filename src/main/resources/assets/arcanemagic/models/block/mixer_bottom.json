@@ -4,7 +4,8 @@
 	"parent": "block/block",
 	"textures": {
 		"texture": "arcanemagic:block/mixer",
-		"texture2": "arcanemagic:block/mixer_tanks",
+		"texture2": "arcanemagic:block/mixer_tank",
+		"texture3": "arcanemagic:block/mixer_tank_overlay",
 		"particle": "arcanemagic:block/mixer_particle"
 	},
 	"elements": [ 	 
@@ -52,12 +53,12 @@
 			"from": [ 4, 14, 4 ],
 			"to": [ 12, 16, 12 ],
 			"faces": {
-				"down": { "uv": [ 6, 0, 10, 4 ], "texture": "#texture2" },
-				"up": { "uv": [ 6, 0, 10, 4 ], "texture": "#texture2" },
-				"north": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture2" },
-				"south": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture2" },
-				"west": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture2" },
-				"east": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture2" }
+				"down": { "uv": [ 6, 0, 10, 4 ], "texture": "#texture3" },
+				"up": { "uv": [ 6, 0, 10, 4 ], "texture": "#texture3" },
+				"north": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture3" },
+				"south": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture3" },
+				"west": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture3" },
+				"east": { "uv": [ 6, 4, 10, 5 ], "texture": "#texture3" }
 			}
 		},
 		{
