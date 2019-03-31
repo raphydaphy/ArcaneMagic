@@ -14,7 +14,7 @@
 	"ServerPlayerEntityMixin",
 	"RecipeManagerMixin",
 	"IngredientHooks",
-	"RecipeUnlockerMixin"
+	"CraftingTableContainerMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
