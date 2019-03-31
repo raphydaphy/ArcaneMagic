@@ -171,7 +171,6 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	/**
 	 * Tries to put fluid into an adjacent FluidContainer
 	 * Assumes that TRANSFER_SPEED fluid is available to extract from this pipe
-	 *
 	 * @param toSide The direction that the container is located in
 	 * @return True if the fluid could be moved
 	 */
@@ -192,7 +191,6 @@ public class PipeBlockEntity extends BlockEntity implements FluidContainer, Tick
 	/**
 	 * Tries to pull fluid from an adjacent FluidContainer that isn't a pipe
 	 * Assumes that at least TRANSFER_SPEED fluid can fit in the pipe
-	 *
 	 * @param fromSide The side that the FluidContainer is located on
 	 * @return True if the fluid is extracted
 	 */

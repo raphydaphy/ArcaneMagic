@@ -252,8 +252,8 @@ public class ScepterItem extends SoulStorageItem
 			for (int i = 0; i < 5; i++)
 			{
 				ParticleUtil.spawnGlowParticle(world, (float) target.x + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, (float) target.y + target.getHeight() - 0.1f + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, (float) target.z + (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
-						(float) (player.x - target.x) / travelTime, (float) (player.y + 0.3f - target.y) / travelTime, (float) (player.z - target.z) / travelTime,
-						red, green, blue, 0.1f, true, 0.2f, 100);
+				                               (float) (player.x - target.x) / travelTime, (float) (player.y + 0.3f - target.y) / travelTime, (float) (player.z - target.z) / travelTime,
+				                               red, green, blue, 0.1f, true, 0.2f, 100);
 			}
 		}
 	}

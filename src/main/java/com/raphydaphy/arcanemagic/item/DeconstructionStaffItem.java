@@ -170,14 +170,14 @@ public class DeconstructionStaffItem extends Item
 		Random rand = ArcaneMagic.RANDOM;
 
 		ParticleRenderer.INSTANCE.addSource(new ParticleSource((ticks) ->
-		{
-			for (int i = 0; i < 3; i++)
-			{
-				ParticleUtil.spawnGlowParticle(world,
-						pos.getX() + 0.1f + rand.nextFloat() * 0.8f, pos.getY() + 0.1f + rand.nextFloat() * 0.8f, pos.getZ() + 0.1f + rand.nextFloat() * 0.8f,
-						(float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, r, g, b, 1, true, 0.3f, 50);
-			}
-		}, 3));
+		                                                       {
+			                                                       for (int i = 0; i < 3; i++)
+			                                                       {
+				                                                       ParticleUtil.spawnGlowParticle(world,
+				                                                                                      pos.getX() + 0.1f + rand.nextFloat() * 0.8f, pos.getY() + 0.1f + rand.nextFloat() * 0.8f, pos.getZ() + 0.1f + rand.nextFloat() * 0.8f,
+				                                                                                      (float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, (float) rand.nextGaussian() / inverseSpread, r, g, b, 1, true, 0.3f, 50);
+			                                                       }
+		                                                       }, 3));
 	}
 
 	@Override

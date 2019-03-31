@@ -183,11 +183,11 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 	private BlockState updateState(IWorld world, BlockState base, BlockPos pos)
 	{
 		base = base.with(UP, getConnectionFor(world, Direction.UP, pos.add(0, 1, 0)))
-				.with(DOWN, getConnectionFor(world, Direction.DOWN, pos.add(0, -1, 0)))
-				.with(NORTH, getConnectionFor(world, Direction.NORTH, pos.add(0, 0, -1)))
-				.with(EAST, getConnectionFor(world, Direction.EAST, pos.add(1, 0, 0)))
-				.with(SOUTH, getConnectionFor(world, Direction.SOUTH, pos.add(0, 0, 1)))
-				.with(WEST, getConnectionFor(world, Direction.WEST, pos.add(-1, 0, 0)));
+		           .with(DOWN, getConnectionFor(world, Direction.DOWN, pos.add(0, -1, 0)))
+		           .with(NORTH, getConnectionFor(world, Direction.NORTH, pos.add(0, 0, -1)))
+		           .with(EAST, getConnectionFor(world, Direction.EAST, pos.add(1, 0, 0)))
+		           .with(SOUTH, getConnectionFor(world, Direction.SOUTH, pos.add(0, 0, 1)))
+		           .with(WEST, getConnectionFor(world, Direction.WEST, pos.add(-1, 0, 0)));
 		return base;
 	}
 

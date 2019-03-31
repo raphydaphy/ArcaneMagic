@@ -141,7 +141,7 @@ public class DiscoveryParchment implements Parchment
 			if (gatherQuestIndexes.length >= 4)
 			{
 				List<Ingredient> ingredients = Arrays.asList(GATHER_QUEST_OPTIONS[gatherQuestIndexes[0]], GATHER_QUEST_OPTIONS[gatherQuestIndexes[1]],
-						GATHER_QUEST_OPTIONS[gatherQuestIndexes[2]], GATHER_QUEST_OPTIONS[gatherQuestIndexes[3]]);
+				                                             GATHER_QUEST_OPTIONS[gatherQuestIndexes[2]], GATHER_QUEST_OPTIONS[gatherQuestIndexes[3]]);
 
 				requiredItems = new HashMap<>();
 
@@ -190,8 +190,8 @@ public class DiscoveryParchment implements Parchment
 	public Recipe<? extends Inventory> getRecipe(RecipeManager manager)
 	{
 		return (finishedNewGatherQuest && !placedAnalyzer) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "analyzer")).orElse(null) :
-				(analyzedStick && !craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "golden_scepter")).orElse(null) :
-						(craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "notebook")).orElse(null) : null;
+		       (analyzedStick && !craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "golden_scepter")).orElse(null) :
+		       (craftedScepter) ? manager.get(new Identifier(ArcaneMagic.DOMAIN, "notebook")).orElse(null) : null;
 	}
 
 	@Override

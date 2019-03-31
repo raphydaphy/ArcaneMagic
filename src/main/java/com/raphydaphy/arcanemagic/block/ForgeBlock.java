@@ -44,13 +44,13 @@ public class ForgeBlock extends OrientableBlockBase
 
 		Map<Direction, VoxelShape> front_bottom = new HashMap<>();
 		front_bottom.put(Direction.NORTH, VoxelShapes.union(Block.createCuboidShape(12, 8, 16, 4, 12, 10), Block.createCuboidShape(14, 12, 16, 2, 16, 8),
-				Block.createCuboidShape(14, 0, 16, 2, 8, 8)));
+		                                                    Block.createCuboidShape(14, 0, 16, 2, 8, 8)));
 		front_bottom.put(Direction.EAST, VoxelShapes.union(Block.createCuboidShape(0, 8, 4, 6, 12, 12), Block.createCuboidShape(0, 12, 2, 8, 16, 14),
-				Block.createCuboidShape(0, 0, 2, 8, 8, 14)));
+		                                                   Block.createCuboidShape(0, 0, 2, 8, 8, 14)));
 		front_bottom.put(Direction.SOUTH, VoxelShapes.union(Block.createCuboidShape(4, 8, 0, 12, 12, 6), Block.createCuboidShape(2, 12, 0, 14, 16, 8),
-				Block.createCuboidShape(2, 0, 0, 14, 8, 8)));
+		                                                    Block.createCuboidShape(2, 0, 0, 14, 8, 8)));
 		front_bottom.put(Direction.WEST, VoxelShapes.union(Block.createCuboidShape(16, 8, 12, 10, 12, 4), Block.createCuboidShape(16, 12, 14, 8, 16, 2),
-				Block.createCuboidShape(64, 0, 14, 8, 8, 2)));
+		                                                   Block.createCuboidShape(64, 0, 14, 8, 8, 2)));
 		shapes.put(ForgeBlockPart.FRONT_LOWER, front_bottom);
 	}
 
@@ -110,8 +110,8 @@ public class ForgeBlock extends OrientableBlockBase
 		BlockState cornerState = world.getBlockState(cornerPos);
 
 		if (otherVerticalHalfState.getBlock() == this && otherVerticalHalfState.get(PART) != part
-				&& otherHorizontalHalfState.getBlock() == this && otherHorizontalHalfState.get(PART) != part
-				&& cornerState.getBlock() == this && cornerState.get(PART) != part)
+		    && otherHorizontalHalfState.getBlock() == this && otherHorizontalHalfState.get(PART) != part
+		    && cornerState.getBlock() == this && cornerState.get(PART) != part)
 		{
 			world.setBlockState(otherVerticalHalfPos, Blocks.AIR.getDefaultState(), 35);
 			world.setBlockState(otherHorizontalHalfPos, Blocks.AIR.getDefaultState(), 35);

@@ -28,7 +28,6 @@ public class RenderUtils
 {
 	/**
 	 * Draws a string split across multiple lines when needed
-	 *
 	 * @return The total height of the string
 	 */
 	public static int drawSplitString(TextRenderer textRenderer, String text, float x, float y, int wrap, int color, boolean verticallyCentered, boolean horizontallyCentered)
@@ -54,7 +53,7 @@ public class RenderUtils
 		GlStateManager.pushMatrix();
 		GlStateManager.scaled(scale, scale, scale);
 		int height = RenderUtils.drawSplitString(MinecraftClient.getInstance().textRenderer, I18n.translate(unlocalizedText, keys),
-				(int) (x / scale), (int) (y / scale), (int) (width / scale), color, verticallyCentered, horizontallyCentered);
+		                                         (int) (x / scale), (int) (y / scale), (int) (width / scale), color, verticallyCentered, horizontallyCentered);
 		GlStateManager.popMatrix();
 		return (int) (height * scale);
 	}
@@ -193,7 +192,7 @@ public class RenderUtils
 							{
 								// Render the recipe component
 								client.getItemRenderer().renderGuiItem(stackArray[id], x + (inputX * 25),
-										y + (inputY * 25));
+								                                       y + (inputY * 25));
 							}
 						}
 					}
@@ -373,7 +372,6 @@ public class RenderUtils
 
 	/**
 	 * Draws a brown box with the given dimensions.
-	 *
 	 * @param background The background color. Set to -1 for no background
 	 */
 	public static void drawBox(int x, int y, int width, int height, int lineWidth, int border, int background)

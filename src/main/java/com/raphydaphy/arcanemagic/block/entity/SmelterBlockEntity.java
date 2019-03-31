@@ -125,8 +125,8 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 		for (int i = 0; i < 4; i++)
 		{
 			ParticleUtil.spawnSmokeParticle(world, pos.getX() + 0.4f + offsetX + ArcaneMagic.RANDOM.nextFloat() / 5f, pos.getY() + 1.55f, pos.getZ() + offsetZ + 0.55f + ArcaneMagic.RANDOM.nextFloat() / 5f,
-					(float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, 0.03f + ArcaneMagic.RANDOM.nextFloat() * 0 / 20f, (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
-					1, 1, 1, 0.2f, 0.2f, 100);
+			                                (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread, 0.03f + ArcaneMagic.RANDOM.nextFloat() * 0 / 20f, (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSpread,
+			                                1, 1, 1, 0.2f, 0.2f, 100);
 		}
 	}
 

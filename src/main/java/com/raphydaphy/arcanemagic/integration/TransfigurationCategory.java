@@ -66,9 +66,9 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 				int col = stage % 10;
 
 				blit(startPoint.x + 58, startPoint.y + 9,
-						36 * col, 36 + 36 * row,
-						36, 36,
-						360, 360);
+				     36 * col, 36 + 36 * row,
+				     36, 36,
+				     360, 360);
 			}
 		}));
 		List<List<ItemStack>> input = recipeDisplaySupplier.get().getInput();

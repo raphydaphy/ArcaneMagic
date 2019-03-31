@@ -22,9 +22,9 @@ public class PumpBlock extends DoubleBlockBase implements BlockEntityProvider
 	static
 	{
 		bottomZ = VoxelShapes.union(Block.createCuboidShape(4, 0, 4, 8, 2, 12), Block.createCuboidShape(0, 4, 4, 2, 12, 12), Block.createCuboidShape(2, 2, 2, 14, 14, 14),
-				Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(14, 4, 4, 16, 12, 12), Block.createCuboidShape(8, 0, 4, 12, 2, 12));
+		                            Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(14, 4, 4, 16, 12, 12), Block.createCuboidShape(8, 0, 4, 12, 2, 12));
 		bottomX = VoxelShapes.union(Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 4, 0, 12, 12, 2), Block.createCuboidShape(2, 2, 2, 14, 14, 14),
-				Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(4, 4, 14, 12, 12, 16), Block.createCuboidShape(4, 0, 8, 12, 2, 12));
+		                            Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(4, 4, 14, 12, 12, 16), Block.createCuboidShape(4, 0, 8, 12, 2, 12));
 		top = VoxelShapes.union(Block.createCuboidShape(4, 4, 4, 12, 8, 12), Block.createCuboidShape(6, 0, 6, 10, 4, 10));
 	}
 

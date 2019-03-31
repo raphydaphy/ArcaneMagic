@@ -39,20 +39,20 @@ public class ArcaneMagicClient implements ClientModInitializer
 		ClientSidePacketRegistry.INSTANCE.register(TremorPacket.ID, new TremorPacket.Handler());
 
 		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
-		{
-			registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
-			registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
-		});
+		                                                {
+			                                                registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
+			                                                registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
+		                                                });
 
 		ClientTickCallback.EVENT.register((client) ->
-		{
-			if (!MinecraftClient.getInstance().isPaused())
-			{
-				ParticleRenderer.INSTANCE.update();
-				TremorTracker.updateClient();
-				HudRenderer.update();
-			}
-		});
+		                                  {
+			                                  if (!MinecraftClient.getInstance().isPaused())
+			                                  {
+				                                  ParticleRenderer.INSTANCE.update();
+				                                  TremorTracker.updateClient();
+				                                  HudRenderer.update();
+			                                  }
+		                                  });
 
 		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
 	}

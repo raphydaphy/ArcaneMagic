@@ -54,15 +54,15 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity>
 			PlayerEntity player = MinecraftClient.getInstance().player;
 
 			renderQueue.sort((one, two) ->
-			{
-				BlockPos posOne = one.entity.getPos();
-				BlockPos posTwo = two.entity.getPos();
+			                 {
+				                 BlockPos posOne = one.entity.getPos();
+				                 BlockPos posTwo = two.entity.getPos();
 
-				double distanceOne = Math.abs(posOne.getX() - player.x) * Math.abs(posOne.getY() - player.y) * Math.abs(posOne.getZ() - player.z);
-				double distanceTwo = Math.abs(posTwo.getX() - player.x) * Math.abs(posTwo.getY() - player.y) * Math.abs(posTwo.getZ() - player.z);
+				                 double distanceOne = Math.abs(posOne.getX() - player.x) * Math.abs(posOne.getY() - player.y) * Math.abs(posOne.getZ() - player.z);
+				                 double distanceTwo = Math.abs(posTwo.getX() - player.x) * Math.abs(posTwo.getY() - player.y) * Math.abs(posTwo.getZ() - player.z);
 
-				return Double.compare(distanceTwo, distanceOne);
-			});
+				                 return Double.compare(distanceTwo, distanceOne);
+			                 });
 
 			GlStateManager.pushMatrix();
 

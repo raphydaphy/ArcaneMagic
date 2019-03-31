@@ -137,14 +137,14 @@ public class TremorTracker
 									float actualY = posY + y + 0.01f;
 									float inverseSourceSpread = 1000;
 									ParticleRenderer.INSTANCE.addSource(new ParticleSource((ticks) ->
-									{
-										if (ticks % (ArcaneMagic.RANDOM.nextInt(3) + 1) == 0)
-										{
-											ParticleUtil.spawnGlowParticle(player.world, posX, actualY, posZ,
-													(float) ArcaneMagic.RANDOM.nextGaussian() / inverseSourceSpread, ArcaneMagic.RANDOM.nextFloat() / 100f, (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSourceSpread,
-													r, g, b, 1, false, 0.05f + ArcaneMagic.RANDOM.nextFloat() / 20, 40);
-										}
-									}, 20));
+									                                                       {
+										                                                       if (ticks % (ArcaneMagic.RANDOM.nextInt(3) + 1) == 0)
+										                                                       {
+											                                                       ParticleUtil.spawnGlowParticle(player.world, posX, actualY, posZ,
+											                                                                                      (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSourceSpread, ArcaneMagic.RANDOM.nextFloat() / 100f, (float) ArcaneMagic.RANDOM.nextGaussian() / inverseSourceSpread,
+											                                                                                      r, g, b, 1, false, 0.05f + ArcaneMagic.RANDOM.nextFloat() / 20, 40);
+										                                                       }
+									                                                       }, 20));
 									break;
 								}
 							}

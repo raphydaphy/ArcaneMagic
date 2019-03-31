@@ -41,24 +41,24 @@ public class SmelterBlock extends DoubleBlockBase implements BlockEntityProvider
 	static
 	{
 		bottom.put(Direction.NORTH, VoxelShapes.union(Block.createCuboidShape(4, 0, 6, 2, 8, 0), Block.createCuboidShape(14, 12, 12, 12, 14, 6),
-				Block.createCuboidShape(4, 12, 12, 2, 14, 6), Block.createCuboidShape(14, 8, 6, 2, 14, 0), Block.createCuboidShape(16, 0, 16, 0, 12, 6),
-				Block.createCuboidShape(12, 0, 6, 4, 2, 0), Block.createCuboidShape(12, 14, 14, 4, 12, 4), Block.createCuboidShape(12, 4, 14, 4, 0, 6),
-				Block.createCuboidShape(14, 0, 6, 12, 8, 0), Block.createCuboidShape(12, 6, 4, 4, 12, 2)));
+		                                              Block.createCuboidShape(4, 12, 12, 2, 14, 6), Block.createCuboidShape(14, 8, 6, 2, 14, 0), Block.createCuboidShape(16, 0, 16, 0, 12, 6),
+		                                              Block.createCuboidShape(12, 0, 6, 4, 2, 0), Block.createCuboidShape(12, 14, 14, 4, 12, 4), Block.createCuboidShape(12, 4, 14, 4, 0, 6),
+		                                              Block.createCuboidShape(14, 0, 6, 12, 8, 0), Block.createCuboidShape(12, 6, 4, 4, 12, 2)));
 
 		bottom.put(Direction.EAST, VoxelShapes.union(Block.createCuboidShape(10, 0, 12, 16, 8, 14), Block.createCuboidShape(4, 12, 2, 10, 14, 4),
-				Block.createCuboidShape(4, 12, 12, 10, 14, 14), Block.createCuboidShape(10, 8, 2, 16, 14, 14), Block.createCuboidShape(0, 0, 0, 10, 12, 16),
-				Block.createCuboidShape(10, 0, 4, 16, 2, 12), Block.createCuboidShape(2, 12, 4, 10, 16, 12), //Block.createCuboidShape(2, 2, 4, 12, 4, 12)
-				Block.createCuboidShape(10, 0, 2, 16, 8, 4), Block.createCuboidShape(12, 6, 4, 14, 12, 12)));
+		                                             Block.createCuboidShape(4, 12, 12, 10, 14, 14), Block.createCuboidShape(10, 8, 2, 16, 14, 14), Block.createCuboidShape(0, 0, 0, 10, 12, 16),
+		                                             Block.createCuboidShape(10, 0, 4, 16, 2, 12), Block.createCuboidShape(2, 12, 4, 10, 16, 12), //Block.createCuboidShape(2, 2, 4, 12, 4, 12)
+		                                             Block.createCuboidShape(10, 0, 2, 16, 8, 4), Block.createCuboidShape(12, 6, 4, 14, 12, 12)));
 
 		bottom.put(Direction.SOUTH, VoxelShapes.union(Block.createCuboidShape(12, 0, 10, 14, 8, 16), Block.createCuboidShape(2, 12, 4, 4, 14, 10),
-				Block.createCuboidShape(12, 12, 4, 14, 14, 10), Block.createCuboidShape(2, 8, 10, 14, 14, 16), Block.createCuboidShape(0, 0, 0, 16, 12, 10),
-				Block.createCuboidShape(4, 0, 10, 12, 2, 16), Block.createCuboidShape(4, 12, 2, 12, 16, 10), // Block.createCuboidShape(4, 2, 2, 12, 4, 12)
-				Block.createCuboidShape(2, 0, 10, 4, 8, 16), Block.createCuboidShape(4, 6, 12, 12, 12, 14)));
+		                                              Block.createCuboidShape(12, 12, 4, 14, 14, 10), Block.createCuboidShape(2, 8, 10, 14, 14, 16), Block.createCuboidShape(0, 0, 0, 16, 12, 10),
+		                                              Block.createCuboidShape(4, 0, 10, 12, 2, 16), Block.createCuboidShape(4, 12, 2, 12, 16, 10), // Block.createCuboidShape(4, 2, 2, 12, 4, 12)
+		                                              Block.createCuboidShape(2, 0, 10, 4, 8, 16), Block.createCuboidShape(4, 6, 12, 12, 12, 14)));
 
 		bottom.put(Direction.WEST, VoxelShapes.union(Block.createCuboidShape(6, 0, 4, 0, 8, 2), Block.createCuboidShape(12, 12, 14, 6, 14, 12),
-				Block.createCuboidShape(12, 12, 4, 6, 14, 2), Block.createCuboidShape(6, 8, 14, 0, 14, 2), Block.createCuboidShape(16, 0, 16, 6, 12, 0),
-				Block.createCuboidShape(6, 0, 12, 0, 2, 4), Block.createCuboidShape(14, 14, 12, 4, 12, 4), Block.createCuboidShape(14, 4, 12, 6, 0, 4),
-				Block.createCuboidShape(6, 0, 14, 0, 8, 12), Block.createCuboidShape(4, 6, 12, 2, 12, 4)));
+		                                             Block.createCuboidShape(12, 12, 4, 6, 14, 2), Block.createCuboidShape(6, 8, 14, 0, 14, 2), Block.createCuboidShape(16, 0, 16, 6, 12, 0),
+		                                             Block.createCuboidShape(6, 0, 12, 0, 2, 4), Block.createCuboidShape(14, 14, 12, 4, 12, 4), Block.createCuboidShape(14, 4, 12, 6, 0, 4),
+		                                             Block.createCuboidShape(6, 0, 14, 0, 8, 12), Block.createCuboidShape(4, 6, 12, 2, 12, 4)));
 
 		top.put(Direction.NORTH, VoxelShapes.union(Block.createCuboidShape(10, 4, 12, 6, 6, 8), Block.createCuboidShape(12, 0, 14, 4, 4, 6), Block.createCuboidShape(12, 6, 14, 4, 8, 6)));
 		top.put(Direction.EAST, VoxelShapes.union(Block.createCuboidShape(4, 4, 6, 8, 6, 10), Block.createCuboidShape(2, 0, 4, 10, 4, 12), Block.createCuboidShape(2, 6, 4, 10, 8, 12)));

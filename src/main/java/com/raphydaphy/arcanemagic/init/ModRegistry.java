@@ -145,21 +145,21 @@ public class ModRegistry
 
 		// Command Registration
 		CommandRegistry.INSTANCE.register(false, dispatcher -> dispatcher.register((ServerCommandManager.literal("arcanemagic").requires((command) -> command.hasPermissionLevel(2))
-				.then(ServerCommandManager.literal("tremor").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
-						.then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(0)).then(ServerCommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
-						{
-							PacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.getServerPlayerArgument(command, "target"));
-							return 1;
-						})))))
-				.then(ServerCommandManager.literal("reset").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
-						.executes(command ->
-						{
-							ServerPlayerEntity player = EntityArgumentType.getServerPlayerArgument(command, "target");
-							((DataHolder) player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
-							((DataHolder) player).markAdditionalDataDirty();
-							command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
-							return 1;
-						}))))));
+		                                                                                                .then(ServerCommandManager.literal("tremor").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
+		                                                                                                                                                                      .then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(0)).then(ServerCommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
+		                                                                                                                                                                                                                                                                                                                                           {
+			                                                                                                                                                                                                                                                                                                                                           PacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.getServerPlayerArgument(command, "target"));
+			                                                                                                                                                                                                                                                                                                                                           return 1;
+		                                                                                                                                                                                                                                                                                                                                           })))))
+		                                                                                                .then(ServerCommandManager.literal("reset").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
+		                                                                                                                                                                     .executes(command ->
+		                                                                                                                                                                               {
+			                                                                                                                                                                               ServerPlayerEntity player = EntityArgumentType.getServerPlayerArgument(command, "target");
+			                                                                                                                                                                               ((DataHolder) player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
+			                                                                                                                                                                               ((DataHolder) player).markAdditionalDataDirty();
+			                                                                                                                                                                               command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
+			                                                                                                                                                                               return 1;
+		                                                                                                                                                                               }))))));
 
 
 		// Callback Registration

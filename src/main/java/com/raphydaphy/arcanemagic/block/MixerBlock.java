@@ -48,20 +48,20 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, 
 	static
 	{
 		VoxelShape bottomNorth = VoxelShapes.union(Block.createCuboidShape(12, 0, 8, 4, 2, 4), Block.createCuboidShape(14, 2, 14, 2, 14, 2),
-				Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(16, 4, 12, 14, 12, 4),
-				Block.createCuboidShape(2, 4, 12, 0, 12, 4), Block.createCuboidShape(9, 10, 9, 7, 12, 7));
+		                                           Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(16, 4, 12, 14, 12, 4),
+		                                           Block.createCuboidShape(2, 4, 12, 0, 12, 4), Block.createCuboidShape(9, 10, 9, 7, 12, 7));
 
 		VoxelShape bottomEast = VoxelShapes.union(Block.createCuboidShape(8, 0, 4, 12, 2, 12), Block.createCuboidShape(2, 2, 2, 14, 14, 14),
-				Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(4, 4, 0, 12, 12, 2),
-				Block.createCuboidShape(4, 4, 14, 12, 12, 16), Block.createCuboidShape(7, 10, 7, 9, 12, 9));
+		                                          Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(4, 4, 0, 12, 12, 2),
+		                                          Block.createCuboidShape(4, 4, 14, 12, 12, 16), Block.createCuboidShape(7, 10, 7, 9, 12, 9));
 
 		VoxelShape bottomSouth = VoxelShapes.union(Block.createCuboidShape(4, 0, 8, 12, 2, 12), Block.createCuboidShape(2, 2, 2, 14, 14, 14),
-				Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(0, 4, 4, 2, 12, 12),
-				Block.createCuboidShape(14, 4, 4, 16, 12, 12), Block.createCuboidShape(7, 10, 7, 9, 12, 9));
+		                                           Block.createCuboidShape(4, 0, 4, 12, 2, 8), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(0, 4, 4, 2, 12, 12),
+		                                           Block.createCuboidShape(14, 4, 4, 16, 12, 12), Block.createCuboidShape(7, 10, 7, 9, 12, 9));
 
 		VoxelShape bottomWest = VoxelShapes.union(Block.createCuboidShape(8, 0, 12, 4, 2, 4), Block.createCuboidShape(14, 2, 14, 2, 14, 2),
-				Block.createCuboidShape(4, 0, 4, 8, 2, 12), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(12, 4, 16, 4, 12, 14),
-				Block.createCuboidShape(12, 4, 2, 4, 12, 0), Block.createCuboidShape(9, 10, 9, 7, 12, 7));
+		                                          Block.createCuboidShape(4, 0, 4, 8, 2, 12), Block.createCuboidShape(4, 14, 4, 12, 16, 12), Block.createCuboidShape(12, 4, 16, 4, 12, 14),
+		                                          Block.createCuboidShape(12, 4, 2, 4, 12, 0), Block.createCuboidShape(9, 10, 9, 7, 12, 7));
 
 		top = Block.createCuboidShape(2, 0, 2, 14, 14, 14);
 
