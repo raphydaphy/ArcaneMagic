@@ -15,10 +15,7 @@ import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.crochet.network.PacketHandler;
 import com.raphydaphy.multiblockapi.MultiBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FallingBlock;
+import net.minecraft.block.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -78,7 +75,7 @@ public class DeconstructionStaffItem extends Item
 			ctx.getWorld().setBlockState(pos, fluid.isEmpty() ? Blocks.AIR.getDefaultState() : fluid.getBlockState());
 			return ActionResult.SUCCESS;
 		}
-		if (!(block instanceof MultiBlock))
+		if (!(block instanceof MultiBlock || block instanceof DoorBlock || block instanceof BedBlock))
 		{
 			Map<Identifier, Recipe<CraftingInventory>> craftingRecipes = ((RecipeManagerMixin) ctx.getWorld().getRecipeManager()).getRecipes(RecipeType.CRAFTING);
 			for (Map.Entry<Identifier, Recipe<CraftingInventory>> entry : craftingRecipes.entrySet())
