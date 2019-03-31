@@ -17,6 +17,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
+import net.minecraft.world.dimension.DimensionType;
 
 public class ParchmentItem extends Item
 {
@@ -51,6 +52,14 @@ public class ParchmentItem extends Item
 				}
 				return new TypedActionResult<>(ActionResult.FAIL, stack);
 			}
+		}
+		if (player.isSneaking() && stack.getItem() == ModRegistry.PARCHMENT)
+		{
+			if (!world.isClient)
+			{
+				player.changeDimension(player.dimension == ModRegistry.SOUL_DIMENSION ? DimensionType.OVERWORLD : ModRegistry.SOUL_DIMENSION);
+			}
+			return new TypedActionResult<>(ActionResult.SUCCESS, stack);
 		}
 		return new TypedActionResult<>(ActionResult.PASS, stack);
 	}

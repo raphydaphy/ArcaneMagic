@@ -48,7 +48,7 @@ public class TremorTracker
 		{
 			DataHolder dataPlayer = (DataHolder) player;
 
-			if (dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && player.y < 25)
+			if (!player.isSpectator() && !player.isCreative() && dataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.PLACED_MIXER_KEY) && player.y < 25)
 			{
 				if (world.getTime() % 100 == 0)
 				{

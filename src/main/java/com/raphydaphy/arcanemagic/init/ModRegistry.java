@@ -5,6 +5,8 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.*;
 import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
+import com.raphydaphy.arcanemagic.dimension.ModDimensionType;
+import com.raphydaphy.arcanemagic.dimension.SoulDimension;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
 import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
@@ -86,6 +88,8 @@ public class ModRegistry
 	public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
 	public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
 	public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+
+	public static DimensionType SOUL_DIMENSION = Registry.register(Registry.DIMENSION, 4, ArcaneMagic.PREFIX + "soul_dimension", new ModDimensionType(4, "_amsouldim", "AMSOULDIM", SoulDimension::new, false));
 
 	public static void init()
 	{
