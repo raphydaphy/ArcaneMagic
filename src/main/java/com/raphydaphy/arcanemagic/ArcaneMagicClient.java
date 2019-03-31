@@ -6,6 +6,7 @@ import com.raphydaphy.arcanemagic.client.model.IronDaggerModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.*;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
+import com.raphydaphy.arcanemagic.init.ModCutscenes;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
@@ -21,6 +22,10 @@ import net.minecraft.client.util.ModelIdentifier;
 
 public class ArcaneMagicClient implements ClientModInitializer
 {
+	public ArcaneMagicClient()
+	{
+		ModCutscenes.preInitClient();
+	}
 
 	@Override
 	public void onInitializeClient()
@@ -55,5 +60,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 		                                  });
 
 		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
+
+		ModCutscenes.initClient();
 	}
 }
