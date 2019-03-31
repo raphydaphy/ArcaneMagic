@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.parchment;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.IParchment;
+import com.raphydaphy.arcanemagic.api.docs.Parchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
@@ -24,7 +24,7 @@ import net.minecraft.world.IWorld;
 
 import java.util.*;
 
-public class DiscoveryParchment implements IParchment
+public class DiscoveryParchment implements Parchment
 {
 	public static final String NAME = "progression.arcanemagic.discovery";
 	public static final Ingredient[] GATHER_QUEST_OPTIONS = {

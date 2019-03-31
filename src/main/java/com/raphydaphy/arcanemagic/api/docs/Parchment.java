@@ -14,7 +14,7 @@ import net.minecraft.world.IWorld;
 import java.util.Collections;
 import java.util.Map;
 
-public interface IParchment
+public interface Parchment
 {
 	/**
 	 * @return the unlocalized name of the parchment

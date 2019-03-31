@@ -17,9 +17,9 @@ import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipe;
 import com.raphydaphy.arcanemagic.recipe.ShapelessTransfigurationRecipeSerializer;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
-import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.arcanemagic.util.ModDamageSource;
 import com.raphydaphy.arcanemagic.util.TremorTracker;
+import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.crochet.network.PacketHandler;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
@@ -33,7 +33,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.item.block.BlockItem;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.command.ServerCommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
@@ -156,7 +155,7 @@ public class ModRegistry
 						.executes(command ->
 						{
 							ServerPlayerEntity player = EntityArgumentType.getServerPlayerArgument(command, "target");
-							((DataHolder)player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
+							((DataHolder) player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
 							((DataHolder) player).markAdditionalDataDirty();
 							command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
 							return 1;

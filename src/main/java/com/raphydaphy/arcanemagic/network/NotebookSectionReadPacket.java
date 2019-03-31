@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.network;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
+import com.raphydaphy.arcanemagic.api.docs.NotebookSection;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.crochet.network.IPacket;
@@ -20,7 +20,7 @@ public class NotebookSectionReadPacket implements IPacket
 	{
 	}
 
-	public NotebookSectionReadPacket(INotebookSection section)
+	public NotebookSectionReadPacket(NotebookSection section)
 	{
 		this.sectionID = section.getID().toString();
 	}

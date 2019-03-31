@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.client.screen;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.IParchment;
+import com.raphydaphy.arcanemagic.api.docs.Parchment;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -29,9 +29,9 @@ public class ParchmentScreen extends Screen
 
 	private Identifier BACKGROUND = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/parchment.png");
 
-	private IParchment parchment;
+	private Parchment parchment;
 
-	public ParchmentScreen(ItemStack stack, IParchment parchment)
+	public ParchmentScreen(ItemStack stack, Parchment parchment)
 	{
 		super(new TranslatableTextComponent("item.arcanemagic.written_parchment"));
 		this.parchment = parchment;

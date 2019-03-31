@@ -2,12 +2,12 @@ package com.raphydaphy.arcanemagic.notebook;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
-import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
+import com.raphydaphy.arcanemagic.api.docs.NotebookElement;
+import com.raphydaphy.arcanemagic.api.docs.NotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
-import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
+import com.raphydaphy.crochet.data.DataHolder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
@@ -21,7 +21,7 @@ import net.minecraft.util.Identifier;
 import java.util.ArrayList;
 import java.util.List;
 
-class NotebookElement
+class BasicNotebookElements
 {
 	static int textPages(String content, int headingSize)
 	{
@@ -60,9 +60,9 @@ class NotebookElement
 		}
 	}
 
-	static List<INotebookElement> wrapText(String text, int headingSize, int startPage, int curPage)
+	static List<NotebookElement> wrapText(String text, int headingSize, int startPage, int curPage)
 	{
-		List<INotebookElement> elements = new ArrayList<>();
+		List<NotebookElement> elements = new ArrayList<>();
 		if (curPage >= startPage)
 		{
 			double scale = textScale();
@@ -86,7 +86,7 @@ class NotebookElement
 						String paragraph = builder.toString();
 						if (!paragraph.isEmpty() || size > 0)
 						{
-							elements.add(new NotebookElement.Paragraph(false, scale, 116, paragraph).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
+							elements.add(new BasicNotebookElements.Paragraph(false, scale, 116, paragraph).withPadding(MinecraftClient.getInstance().textRenderer.fontHeight));
 							builder = new StringBuilder();
 							size++;
 						}
@@ -104,7 +104,7 @@ class NotebookElement
 			String last = builder.toString();
 			if (!last.isEmpty())
 			{
-				elements.add(new NotebookElement.Paragraph(false, scale, 116, last));
+				elements.add(new BasicNotebookElements.Paragraph(false, scale, 116, last));
 			}
 		}
 		return elements;
@@ -172,14 +172,14 @@ class NotebookElement
 
 	public static class ItemInfoButton extends ItemInfo
 	{
-		final INotebookSection link;
+		final NotebookSection link;
 
 		private int startX;
 		private int startY;
 		private int endX;
 		private int endY;
 
-		ItemInfoButton(INotebookSection link, ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys)
+		ItemInfoButton(NotebookSection link, ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys)
 		{
 			super(item, unlocalizedTitle, unlocalizedDesc, descKeys);
 			this.link = link;
@@ -192,7 +192,7 @@ class NotebookElement
 		}
 
 		@Override
-		public INotebookSection handleClick(int mouseX, int mouseY)
+		public NotebookSection handleClick(int mouseX, int mouseY)
 		{
 			if (mouseX >= startX && mouseX <= endX && mouseY >= startY && mouseY <= endY)
 			{
@@ -258,7 +258,7 @@ class NotebookElement
 		}
 	}
 
-	public static class Padding implements INotebookElement
+	public static class Padding implements NotebookElement
 	{
 		private final int amount;
 
@@ -274,7 +274,7 @@ class NotebookElement
 		}
 	}
 
-	public static class Recipe implements INotebookElement
+	public static class Recipe implements NotebookElement
 	{
 		private final net.minecraft.recipe.Recipe<? extends Inventory> recipe;
 		private int startX;
@@ -333,7 +333,7 @@ class NotebookElement
 		}
 	}
 
-	private static abstract class Writable implements INotebookElement
+	private static abstract class Writable implements NotebookElement
 	{
 		final String unlocalized;
 		final Object[] keys;

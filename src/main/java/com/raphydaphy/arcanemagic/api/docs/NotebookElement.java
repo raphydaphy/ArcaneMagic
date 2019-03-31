@@ -4,7 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Screen;
 
-public interface INotebookElement
+public interface NotebookElement
 {
 	@Environment(EnvType.CLIENT)
 	int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop);
@@ -22,7 +22,7 @@ public interface INotebookElement
 	}
 
 	@Environment(EnvType.CLIENT)
-	default INotebookSection handleClick(int mouseX, int mouseY)
+	default NotebookSection handleClick(int mouseX, int mouseY)
 	{
 		return null;
 	}

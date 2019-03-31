@@ -2,15 +2,15 @@ package com.raphydaphy.arcanemagic.client.screen;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.INotebookElement;
-import com.raphydaphy.arcanemagic.api.docs.INotebookSection;
+import com.raphydaphy.arcanemagic.api.docs.NotebookElement;
+import com.raphydaphy.arcanemagic.api.docs.NotebookSection;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
 import com.raphydaphy.arcanemagic.network.NotebookUpdatePacket;
 import com.raphydaphy.arcanemagic.notebook.ContentsNotebookSection;
 import com.raphydaphy.arcanemagic.notebook.NotebookSectionRegistry;
-import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
+import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.crochet.network.PacketHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -30,14 +30,14 @@ import java.util.List;
 @Environment(EnvType.CLIENT)
 public class NotebookScreen extends Screen
 {
-	private INotebookSection section;
+	private NotebookSection section;
 	private int leftPage = 0;
 	private int contentsPage = 0;
 	private int scaledMouseX = 0;
 	private int scaledMouseY = 0;
 
-	private List<INotebookElement> leftElements = new ArrayList<>();
-	private List<INotebookElement> rightElements = new ArrayList<>();
+	private List<NotebookElement> leftElements = new ArrayList<>();
+	private List<NotebookElement> rightElements = new ArrayList<>();
 
 	public NotebookScreen(ItemStack stack)
 	{
@@ -45,7 +45,7 @@ public class NotebookScreen extends Screen
 		CompoundTag tag = stack.getTag();
 		if (tag != null && tag.containsKey(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY))
 		{
-			INotebookSection section = NotebookSectionRegistry.get(Identifier.create(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
+			NotebookSection section = NotebookSectionRegistry.get(Identifier.create(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
 			int page = tag.getInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY);
 			int contentsPage = tag.getInt(ArcaneMagicConstants.NOTEBOOK_CONTENTS_PAGE_KEY);
 
@@ -59,7 +59,7 @@ public class NotebookScreen extends Screen
 		}
 	}
 
-	private void setSection(INotebookSection section)
+	private void setSection(NotebookSection section)
 	{
 		MinecraftClient client = MinecraftClient.getInstance();
 		this.leftPage = 0;
@@ -169,9 +169,9 @@ public class NotebookScreen extends Screen
 		});
 	}
 
-	private boolean isMouseOverAny(List<INotebookElement> elements)
+	private boolean isMouseOverAny(List<NotebookElement> elements)
 	{
-		for (INotebookElement element : elements)
+		for (NotebookElement element : elements)
 		{
 			if (element.mouseOver(scaledMouseX, scaledMouseY))
 			{
@@ -181,11 +181,11 @@ public class NotebookScreen extends Screen
 		return false;
 	}
 
-	private boolean handleClickOn(List<INotebookElement> elements)
+	private boolean handleClickOn(List<NotebookElement> elements)
 	{
-		for (INotebookElement element : elements)
+		for (NotebookElement element : elements)
 		{
-			INotebookSection s = element.handleClick(scaledMouseX, scaledMouseY);
+			NotebookSection s = element.handleClick(scaledMouseX, scaledMouseY);
 			if (s != null)
 			{
 				setSection(s);
@@ -256,7 +256,7 @@ public class NotebookScreen extends Screen
 
 		// Intro page
 		int pointer = yTop + 15;
-		for (INotebookElement element : this.leftElements)
+		for (NotebookElement element : this.leftElements)
 		{
 			GlStateManager.pushMatrix();
 			pointer += element.draw(this, left, pointer, mouseX, mouseY, xTop, yTop);
@@ -264,7 +264,7 @@ public class NotebookScreen extends Screen
 		}
 
 		pointer = yTop + 15;
-		for (INotebookElement element : this.rightElements)
+		for (NotebookElement element : this.rightElements)
 		{
 			GlStateManager.pushMatrix();
 			pointer += element.draw(this, right, pointer, mouseX, mouseY, xTop, yTop);
@@ -288,14 +288,14 @@ public class NotebookScreen extends Screen
 			RenderUtils.drawTexturedRect(right - 15, yTop + ArcaneMagicConstants.NOTEBOOK_HEIGHT - 21, overBackArrow() ? 66 : 46, 193, 15, 11, 15, 11, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 		}
 
-		for (INotebookElement element : this.leftElements)
+		for (NotebookElement element : this.leftElements)
 		{
 			GlStateManager.pushMatrix();
 			element.drawOverlay(this, mouseX, mouseY, xTop, yTop);
 			GlStateManager.popMatrix();
 		}
 
-		for (INotebookElement element : this.rightElements)
+		for (NotebookElement element : this.rightElements)
 		{
 			GlStateManager.pushMatrix();
 			element.drawOverlay(this, mouseX, mouseY, xTop, yTop);

@@ -1,7 +1,7 @@
 package com.raphydaphy.arcanemagic.item;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
-import com.raphydaphy.arcanemagic.api.docs.IParchment;
+import com.raphydaphy.arcanemagic.api.docs.Parchment;
 import com.raphydaphy.arcanemagic.client.screen.ParchmentScreen;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -35,7 +35,7 @@ public class ParchmentItem extends Item
 		ItemStack stack = player.getStackInHand(hand);
 		if (stack.getItem() == ModRegistry.WRITTEN_PARCHMENT && !player.isSneaking())
 		{
-			IParchment parchment = ParchmentRegistry.getParchment(stack);
+			Parchment parchment = ParchmentRegistry.getParchment(stack);
 			if (parchment != null && (((ParchmentItem) stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient())
 			{
 				parchment.onOpened(world, player, hand, stack);
@@ -71,7 +71,7 @@ public class ParchmentItem extends Item
 	}
 
 	@Environment(EnvType.CLIENT)
-	private void openGUI(ItemStack stack, IParchment parchment)
+	private void openGUI(ItemStack stack, Parchment parchment)
 	{
 		MinecraftClient.getInstance().openScreen(new ParchmentScreen(stack, parchment));
 	}

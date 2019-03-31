@@ -1,6 +1,6 @@
 package com.raphydaphy.arcanemagic.parchment;
 
-import com.raphydaphy.arcanemagic.api.docs.IParchment;
+import com.raphydaphy.arcanemagic.api.docs.Parchment;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.item.ParchmentItem;
 import net.minecraft.item.ItemStack;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ParchmentRegistry
 {
-	private static final List<IParchment> REGISTRY = new ArrayList<>();
+	private static final List<Parchment> REGISTRY = new ArrayList<>();
 
 	static
 	{
@@ -19,7 +19,7 @@ public class ParchmentRegistry
 		REGISTRY.add(new DiscoveryParchment());
 	}
 
-	public static IParchment getParchment(ItemStack from)
+	public static Parchment getParchment(ItemStack from)
 	{
 		if (from.getItem() instanceof ParchmentItem && ((ParchmentItem) from.getItem()).type != ParchmentItem.ParchmentType.BLANK)
 		{
@@ -27,7 +27,7 @@ public class ParchmentRegistry
 			if (tag != null && tag.containsKey(ArcaneMagicConstants.PARCHMENT_TYPE_KEY))
 			{
 				String key = tag.getString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY);
-				for (IParchment parchment : REGISTRY)
+				for (Parchment parchment : REGISTRY)
 				{
 					if (parchment.getName().equals(key))
 					{

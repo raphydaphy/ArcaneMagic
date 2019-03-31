@@ -7,13 +7,13 @@ import net.minecraft.util.Identifier;
 
 import java.util.List;
 
-public interface INotebookSection
+public interface NotebookSection
 {
 	Identifier getID();
 
 	boolean isVisibleTo(DataHolder player);
 
-	List<INotebookElement> getElements(DataHolder player, int page);
+	List<NotebookElement> getElements(DataHolder player, int page);
 
 	default boolean hasNewInfo(DataHolder player)
 	{
