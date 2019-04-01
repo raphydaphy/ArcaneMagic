@@ -11,7 +11,8 @@
   "requires": {
 	"fabric": "*",
 	"silk": "*",
-	"multiblockapi": "*"
+    "crochet": "*",
+    "cutsceneapi": "*"
   },
   "mixins": {
 	"client": "arcanemagic.client.json",

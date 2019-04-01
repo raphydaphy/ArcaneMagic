@@ -29,15 +29,14 @@ public class DiscoveryParchment implements Parchment
 	public static final String NAME = "progression.arcanemagic.discovery";
 	public static final Ingredient[] GATHER_QUEST_OPTIONS = {
 			Ingredient.ofItems(Items.CROSSBOW), Ingredient.ofItems(Blocks.SMOKER),
-			Ingredient.ofItems(Items.BELL), Ingredient.ofItems(Blocks.LOOM),
+			Ingredient.ofItems(Blocks.LOOM),Ingredient.ofItems(Blocks.GRINDSTONE),
 			Ingredient.ofItems(Items.LILY_OF_THE_VALLEY), Ingredient.ofItems(Blocks.LANTERN),
 			Ingredient.ofItems(Items.SWEET_BERRIES), Ingredient.ofItems(Items.KELP),
 			Ingredient.ofItems(Items.LEATHER_HORSE_ARMOR), Ingredient.ofItems(Blocks.FLETCHING_TABLE),
-			Ingredient.ofItems(Blocks.SMITHING_TABLE), Ingredient.ofItems(Blocks.BLAST_FURNACE),
+			Ingredient.ofItems(Blocks.SMITHING_TABLE), Ingredient.ofItems(Blocks.LECTERN),
 			Ingredient.ofItems(Blocks.BARREL), Ingredient.ofItems(Blocks.CAMPFIRE),
 			Ingredient.ofItems(Blocks.COMPOSTER), Ingredient.ofItems(Blocks.CARTOGRAPHY_TABLE),
-			Ingredient.ofItems(Items.CORNFLOWER), Ingredient.ofItems(Blocks.GRINDSTONE),
-			Ingredient.ofItems(Blocks.LECTERN)
+			Ingredient.ofItems(Items.CORNFLOWER)
 	};
 
 	public static final Ingredient[] ANALYSIS_QUEST_OPTIONS = {

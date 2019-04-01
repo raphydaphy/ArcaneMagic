@@ -54,7 +54,7 @@ public class SoulDimension extends Dimension
 	@Override
 	public boolean hasVisibleSky()
 	{
-		return true;
+		return false;
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class SoulDimension extends Dimension
 	@Override
 	public boolean shouldRenderFog(int i, int i1)
 	{
-		return true;
+		return false;
 	}
 
 	@Override

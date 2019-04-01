@@ -9,7 +9,8 @@
 	"InGameHudMixin",
 	"MinecraftClientMixin",
 	"ModelLoaderMixin",
-	"ScreenMixin"
+	"ScreenMixin",
+    "WorldRendererMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
