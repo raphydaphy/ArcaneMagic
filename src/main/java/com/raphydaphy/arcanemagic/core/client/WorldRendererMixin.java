@@ -115,6 +115,7 @@ public class WorldRendererMixin
 				double mainX = double_1 * 100.0D;
 				double mainY = double_2 * 100.0D;
 				double mainZ = double_3 * 100.0D;
+				System.out.println(mainX + ", " +  mainY + ", " + mainZ);
 				double double_9 = Math.atan2(double_1, double_3);
 				double double_10 = Math.sin(double_9);
 				double double_11 = Math.cos(double_9);
@@ -137,7 +138,7 @@ public class WorldRendererMixin
 					double double_26 = 0.0D * double_13 - double_22 * double_14;
 					double addX = double_26 * double_10 - double_23 * double_11;
 					double addZ = double_23 * double_10 + double_26 * double_11;
-					bufferBuilder_1.vertex(mainX + addX, mainY + addY - 200, mainZ + addZ).next();
+					bufferBuilder_1.vertex(mainX + addX, mainY + addY, mainZ + addZ).next();
 				}
 			}
 		}
@@ -207,37 +208,10 @@ public class WorldRendererMixin
 		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		GlStateManager.pushMatrix();
 
-
-		//  START SUN AND MOON
 		float_11 = 1.0F - this.world.getRainGradient(tickDelta);
 		GlStateManager.color4f(1.0F, 1.0F, 1.0F, float_11);
 		GlStateManager.rotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotatef(this.world.getSkyAngle(tickDelta) * 360.0F, 1.0F, 0.0F, 0.0F);
-		float_12 = 30.0F;
-		this.textureManager.bindTexture(SUN_TEX);
-		bufferBuilder_1.begin(7, VertexFormats.POSITION_UV);
-		bufferBuilder_1.vertex((double) (-float_12), 100.0D, (double) (-float_12)).texture(0.0D, 0.0D).next();
-		bufferBuilder_1.vertex((double) float_12, 100.0D, (double) (-float_12)).texture(1.0D, 0.0D).next();
-		bufferBuilder_1.vertex((double) float_12, 100.0D, (double) float_12).texture(1.0D, 1.0D).next();
-		bufferBuilder_1.vertex((double) (-float_12), 100.0D, (double) float_12).texture(0.0D, 1.0D).next();
-		tessellator_1.draw();
-		float_12 = 20.0F;
-		this.textureManager.bindTexture(MOON_PHASES_TEX);
-		int int_3 = this.world.getMoonPhase();
-		int int_4 = int_3 % 4;
-		int_2 = int_3 / 4 % 2;
-		float_8 = (float) (int_4 + 0) / 4.0F;
-		float_9 = (float) (int_2 + 0) / 2.0F;
-		float_10 = (float) (int_4 + 1) / 4.0F;
-		float float_16 = (float) (int_2 + 1) / 2.0F;
-		bufferBuilder_1.begin(7, VertexFormats.POSITION_UV);
-		bufferBuilder_1.vertex((double) (-float_12), -100.0D, (double) float_12).texture((double) float_10, (double) float_16).next();
-		bufferBuilder_1.vertex((double) float_12, -100.0D, (double) float_12).texture((double) float_8, (double) float_16).next();
-		bufferBuilder_1.vertex((double) float_12, -100.0D, (double) (-float_12)).texture((double) float_8, (double) float_9).next();
-		bufferBuilder_1.vertex((double) (-float_12), -100.0D, (double) (-float_12)).texture((double) float_10, (double) float_9).next();
-		tessellator_1.draw();
-
-		// END SUN AND MOON
 		GlStateManager.disableTexture();
 		float float_17 = this.world.getStarsBrightness(tickDelta) * float_11;
 		if (float_17 > 0.0F)
@@ -264,26 +238,7 @@ public class WorldRendererMixin
 		GlStateManager.popMatrix();
 		GlStateManager.disableTexture();
 		GlStateManager.color3f(0.0F, 0.0F, 0.0F);
-		double double_1 = this.client.player.getCameraPosVec(tickDelta).y - this.world.getHorizonHeight();
-		if (double_1 < 0.0D)
-		{
-			GlStateManager.pushMatrix();
-			GlStateManager.translatef(0.0F, 12.0F, 0.0F);
-			if (this.vertexBufferObjectsEnabled)
-			{
-				this.field_4102.bind();
-				GlStateManager.enableClientState(32884);
-				GlStateManager.vertexPointer(3, 5126, 12, 0);
-				this.field_4102.draw(7);
-				GlBuffer.unbind();
-				GlStateManager.disableClientState(32884);
-			} else
-			{
-				GlStateManager.callList(this.field_4067);
-			}
-
-			GlStateManager.popMatrix();
-		}
+		double cameraHeight = this.client.player.getCameraPosVec(tickDelta).y;
 
 		if (this.world.dimension.method_12449())
 		{
@@ -294,7 +249,7 @@ public class WorldRendererMixin
 		}
 
 		GlStateManager.pushMatrix();
-		GlStateManager.translatef(0.0F, -((float) (double_1 - 16.0D)), 0.0F);
+		GlStateManager.translatef(0.0F, -((float) (cameraHeight - 16.0D)), 0.0F);
 		GlStateManager.callList(this.field_4067);
 		GlStateManager.popMatrix();
 		GlStateManager.enableTexture();
