@@ -25,13 +25,9 @@ public class WorldRendererMixin
 {
 	@Shadow @Final private MinecraftClient client;
 
-	@Shadow @Final private TextureManager textureManager;
-
 	@Shadow private ClientWorld world;
 
 	@Shadow private boolean vertexBufferObjectsEnabled;
-
-	@Shadow private GlBuffer field_4102;
 
 	@Shadow private int field_4067;
 
@@ -39,14 +35,9 @@ public class WorldRendererMixin
 
 	@Shadow private GlBuffer field_4087;
 
-	@Shadow @Final private static Identifier SUN_TEX;
+	@Shadow private int starsDisplayList;
 
-	@Shadow @Final private static Identifier MOON_PHASES_TEX;
-
-	@Shadow @Final private VertexFormat field_4100;
-
-	private GlBuffer soulDimensionStarBuffer;
-	private int soulDimensionStarDisplayList;
+	@Shadow private GlBuffer starsBuffer;
 
 	@Inject(at = @At("HEAD"), method = "renderSky", cancellable = true)
 	private void renderSky(float tickDelta, CallbackInfo info)
@@ -55,92 +46,6 @@ public class WorldRendererMixin
 		{
 			renderSoulDimensionSky(tickDelta);
 			info.cancel();
-		}
-	}
-
-	@Inject(at = @At("HEAD"), method = "setupStarRendering")
-	private void setupSoulDimensionStarRendering(CallbackInfo info)
-	{
-		Tessellator tessellator_1 = Tessellator.getInstance();
-		BufferBuilder bufferBuilder_1 = tessellator_1.getBufferBuilder();
-		if (this.soulDimensionStarBuffer != null)
-		{
-			this.soulDimensionStarBuffer.delete();
-		}
-
-		if (this.soulDimensionStarDisplayList >= 0)
-		{
-			GlAllocationUtils.deleteSingletonList(this.soulDimensionStarDisplayList);
-			this.soulDimensionStarDisplayList = -1;
-		}
-
-		if (this.vertexBufferObjectsEnabled)
-		{
-			this.soulDimensionStarBuffer = new GlBuffer(this.field_4100);
-			this.renderSoulDimensionStars(bufferBuilder_1);
-			bufferBuilder_1.end();
-			bufferBuilder_1.clear();
-			this.soulDimensionStarBuffer.set(bufferBuilder_1.getByteBuffer());
-		} else
-		{
-			this.soulDimensionStarDisplayList = GlAllocationUtils.genLists(1);
-			GlStateManager.pushMatrix();
-			GlStateManager.newList(this.soulDimensionStarDisplayList, 4864);
-			this.renderSoulDimensionStars(bufferBuilder_1);
-			tessellator_1.draw();
-			GlStateManager.endList();
-			GlStateManager.popMatrix();
-		}
-
-	}
-
-	private void renderSoulDimensionStars(BufferBuilder bufferBuilder_1)
-	{
-		Random random_1 = new Random(10842L);
-		bufferBuilder_1.begin(7, VertexFormats.POSITION);
-
-		for (int int_1 = 0; int_1 < 1500; ++int_1)
-		{
-			double double_1 = (double) (random_1.nextFloat() * 2.0F - 1.0F);
-			double double_2 = (double) (random_1.nextFloat() * 2.0F - 1.0F);
-			double double_3 = (double) (random_1.nextFloat() * 2.0F - 1.0F);
-			double double_4 = (double) (0.15F + random_1.nextFloat() * 0.1F);
-			double double_5 = double_1 * double_1 + double_2 * double_2 + double_3 * double_3;
-			if (double_5 < 1.0D && double_5 > 0.01D)
-			{
-				double_5 = 1.0D / Math.sqrt(double_5);
-				double_1 *= double_5;
-				double_2 *= double_5;
-				double_3 *= double_5;
-				double mainX = double_1 * 100.0D;
-				double mainY = double_2 * 100.0D;
-				double mainZ = double_3 * 100.0D;
-				System.out.println(mainX + ", " +  mainY + ", " + mainZ);
-				double double_9 = Math.atan2(double_1, double_3);
-				double double_10 = Math.sin(double_9);
-				double double_11 = Math.cos(double_9);
-				double double_12 = Math.atan2(Math.sqrt(double_1 * double_1 + double_3 * double_3), double_2);
-				double double_13 = Math.sin(double_12);
-				double double_14 = Math.cos(double_12);
-				double double_15 = random_1.nextDouble() * 3.141592653589793D * 2.0D;
-				double double_16 = Math.sin(double_15);
-				double double_17 = Math.cos(double_15);
-
-				for (int int_2 = 0; int_2 < 4; ++int_2)
-				{
-					double double_18 = 0.0D;
-					double double_19 = (double) ((int_2 & 2) - 1) * double_4;
-					double double_20 = (double) ((int_2 + 1 & 2) - 1) * double_4;
-					double double_21 = 0.0D;
-					double double_22 = double_19 * double_17 - double_20 * double_16;
-					double double_23 = double_20 * double_17 + double_19 * double_16;
-					double addY = double_22 * double_13 + 0.0D * double_14;
-					double double_26 = 0.0D * double_13 - double_22 * double_14;
-					double addX = double_26 * double_10 - double_23 * double_11;
-					double addZ = double_23 * double_10 + double_26 * double_11;
-					bufferBuilder_1.vertex(mainX + addX, mainY + addY, mainZ + addZ).next();
-				}
-			}
 		}
 	}
 
@@ -219,15 +124,15 @@ public class WorldRendererMixin
 			GlStateManager.color4f(float_17, float_17, float_17, float_17);
 			if (this.vertexBufferObjectsEnabled)
 			{
-				this.soulDimensionStarBuffer.bind();
+				this.starsBuffer.bind();
 				GlStateManager.enableClientState(32884);
 				GlStateManager.vertexPointer(3, 5126, 12, 0);
-				this.soulDimensionStarBuffer.draw(7);
+				this.starsBuffer.draw(7);
 				GlBuffer.unbind();
 				GlStateManager.disableClientState(32884);
 			} else
 			{
-				GlStateManager.callList(this.soulDimensionStarDisplayList);
+				GlStateManager.callList(this.starsDisplayList);
 			}
 		}
 

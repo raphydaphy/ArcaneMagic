@@ -12,6 +12,7 @@ import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.network.TremorPacket;
 import com.raphydaphy.arcanemagic.util.TremorTracker;
+import com.raphydaphy.cutsceneapi.fakeworld.CutsceneWorld;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -19,9 +20,15 @@ import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.world.GameMode;
+import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.level.LevelGeneratorType;
+import net.minecraft.world.level.LevelInfo;
 
 public class ArcaneMagicClient implements ClientModInitializer
 {
+	public static CutsceneWorld OLD_NETHER_WORLD;
+
 	public ArcaneMagicClient()
 	{
 		ModCutscenes.preInitClient();
@@ -62,5 +69,8 @@ public class ArcaneMagicClient implements ClientModInitializer
 		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
 
 		ModCutscenes.initClient();
+
+		// TODO : WORLD CACHING YES!
+		OLD_NETHER_WORLD = new CutsceneWorld(null, new LevelInfo(0, GameMode.SPECTATOR, false, false, LevelGeneratorType.DEFAULT), DimensionType.THE_NETHER, 1, null, null);
 	}
 }

@@ -88,7 +88,7 @@ public class ModRegistry
 	public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
 	public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 
-	public static DimensionType SOUL_DIMENSION = Registry.register(Registry.DIMENSION, 4, ArcaneMagic.PREFIX + "soul_dimension", new ModDimensionType(4, "_amsouldim", "AMSOULDIM", SoulDimension::new, false));
+	public static DimensionType SOUL_DIMENSION = Registry.register(Registry.DIMENSION, 37, ArcaneMagic.PREFIX + "soul_dimension", new ModDimensionType(37, "_amsouldim", "AMSOULDIM", SoulDimension::new, false));
 
 	public static void init()
 	{
