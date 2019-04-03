@@ -92,7 +92,7 @@ public class SmelterRenderer extends BlockEntityRenderer<SmelterBlockEntity>
 				{
 					if (finishing && !input.isEmpty())
 					{
-						Optional<BlastingRecipe> optionalRecipe = MinecraftClient.getInstance().world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(input), MinecraftClient.getInstance().world);
+						Optional<BlastingRecipe> optionalRecipe = MinecraftClient.getInstance().world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, new BasicInventory(input), MinecraftClient.getInstance().world);
 						if (optionalRecipe.isPresent())
 						{
 							int remaining = SmelterBlockEntity.TOTAL_SMELTING_TIME - smeltTime;

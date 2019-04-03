@@ -66,7 +66,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 		CompoundTag tag = scepter.getTag();
 		if (tag != null)
 		{
-			Optional<TransfigurationRecipe> recipe = world.getRecipeManager().get(TransfigurationRecipe.TYPE, (TransfigurationTableBlockEntity) blockEntity, world);
+			Optional<TransfigurationRecipe> recipe = world.getRecipeManager().getFirstMatch(TransfigurationRecipe.TYPE, (TransfigurationTableBlockEntity) blockEntity, world);
 
 			if (recipe.isPresent())
 			{

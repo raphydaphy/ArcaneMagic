@@ -117,9 +117,9 @@ public class ForgeBlock extends OrientableBlockBase
 			world.setBlockState(otherHorizontalHalfPos, Blocks.AIR.getDefaultState(), 35);
 			world.setBlockState(cornerPos, Blocks.AIR.getDefaultState(), 35);
 
-			world.playEvent(breaker, 2001, otherVerticalHalfPos, Block.getRawIdFromState(otherVerticalHalfState));
-			world.playEvent(breaker, 2001, otherHorizontalHalfPos, Block.getRawIdFromState(otherHorizontalHalfState));
-			world.playEvent(breaker, 2001, cornerPos, Block.getRawIdFromState(cornerState));
+			world.method_8444(breaker, 2001, otherVerticalHalfPos, Block.getRawIdFromState(otherVerticalHalfState));
+			world.method_8444(breaker, 2001, otherHorizontalHalfPos, Block.getRawIdFromState(otherHorizontalHalfState));
+			world.method_8444(breaker, 2001, cornerPos, Block.getRawIdFromState(cornerState));
 
 			ItemStack itemStack_1 = breaker.getMainHandStack();
 			if (!world.isClient && !breaker.isCreative())

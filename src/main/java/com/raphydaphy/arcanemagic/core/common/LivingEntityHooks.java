@@ -8,6 +8,6 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(LivingEntity.class)
 public interface LivingEntityHooks
 {
-	@Invoker("method_6013")
+	@Invoker("playHurtSound")
 	void playHurtSound(DamageSource source);
 }

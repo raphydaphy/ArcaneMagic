@@ -87,7 +87,7 @@ public class DoubleBlockBase extends OrientableBlockBase implements MultiBlock
 			{
 				world.setBlockState(otherPartPos, Blocks.AIR.getDefaultState(), 35);
 			}
-			world.playEvent(breaker, 2001, otherPartPos, Block.getRawIdFromState(otherPartState));
+			world.method_8444(breaker, 2001, otherPartPos, Block.getRawIdFromState(otherPartState));
 			ItemStack itemStack_1 = breaker.getMainHandStack();
 			if (!world.isClient && !breaker.isCreative())
 			{

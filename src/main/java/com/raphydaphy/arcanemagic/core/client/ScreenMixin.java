@@ -88,7 +88,7 @@ public abstract class ScreenMixin extends AbstractParentElement
 				drawY = this.height - height - 6;
 			}
 
-			this.blitOffset = 300.0F;
+			this.blitOffset = 300;
 			this.itemRenderer.zOffset = 300.0F;
 			int int_9 = -267386864;
 			this.fillGradient(drawX - 3, drawY - 4, drawX + int_3 + 3, drawY - 3, -267386864, -267386864);
@@ -130,7 +130,7 @@ public abstract class ScreenMixin extends AbstractParentElement
 				}
 			}
 
-			this.blitOffset = 0.0F;
+			this.blitOffset = 0;
 			this.itemRenderer.zOffset = 0.0F;
 			GlStateManager.enableLighting();
 			GlStateManager.enableDepthTest();

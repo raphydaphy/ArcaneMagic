@@ -74,7 +74,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 
 					if (smeltTime >= TOTAL_SMELTING_TIME)
 					{
-						Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
+						Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
 
 						if (optionalRecipe.isPresent())
 						{
@@ -196,14 +196,14 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 				return false;
 			}
 		}
-		return getInvStack(slot).isEmpty() && this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(item), this.world).isPresent();
+		return this.world != null && getInvStack(slot).isEmpty() && this.world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, new BasicInventory(item), this.world).isPresent();
 	}
 
 	public boolean startSmelting(boolean simulate)
 	{
-		if (smeltTime <= 0 && !getInvStack(0).isEmpty() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty())
+		if (this.world != null && smeltTime <= 0 && !getInvStack(0).isEmpty() && getInvStack(1).isEmpty() && getInvStack(2).isEmpty())
 		{
-			Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().get(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
+			Optional<BlastingRecipe> optionalRecipe = this.world.getRecipeManager().getFirstMatch(RecipeType.BLASTING, new BasicInventory(getInvStack(0)), this.world);
 			if (optionalRecipe.isPresent())
 			{
 				if (!simulate)
