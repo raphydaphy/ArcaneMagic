@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 public interface LivingEntityHooks
 {
 	@Invoker("playHurtSound")
-	void playHurtSound(DamageSource source);
+	void playScepterNoise(DamageSource source);
 }

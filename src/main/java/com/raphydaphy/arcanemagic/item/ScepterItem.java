@@ -227,7 +227,7 @@ public class ScepterItem extends SoulStorageItem
 						{
 							((ServerWorld) world).method_14199(ParticleTypes.DAMAGE_INDICATOR, drainTarget.x, drainTarget.y + (double) (drainTarget.getHeight() * 0.5F), drainTarget.z, 0, 0.1D, 0.0D, 0.1D, 0.2D);
 						}
-						((LivingEntityHooks) drainTarget).playHurtSound(DamageSource.MAGIC);
+						((LivingEntityHooks) drainTarget).playScepterNoise(DamageSource.MAGIC);
 					}
 				}
 			}

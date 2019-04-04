@@ -24,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin
 {
-	@Inject(at = @At("HEAD"), method = "method_14203")
+	@Inject(at = @At("HEAD"), method = "copyFrom")
 	private void onPlayerClone(ServerPlayerEntity playerEntity, boolean keepEverything, CallbackInfo info) // copyFrom
 	{
 		if (((DataHolder) this).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY))

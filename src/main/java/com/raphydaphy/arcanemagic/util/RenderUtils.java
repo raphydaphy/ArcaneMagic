@@ -388,7 +388,8 @@ public class RenderUtils
 
 	public static int drawTexturedRect(int x, int y, int u, int v, int maxU, int maxV, int width, int height, int textureWidth, int textureHeight)
 	{
-		DrawableHelper.blit(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
+		DrawableHelper.blit(x, y, width, height, u, v, maxU, maxV, textureWidth, textureHeight);
+	//	DrawableHelper.blit(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
 		return height;
 	}
 

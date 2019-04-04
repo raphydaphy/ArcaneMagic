@@ -13,6 +13,6 @@ import java.util.Map;
 @Mixin(RecipeManager.class)
 public interface RecipeManagerMixin
 {
-	@Invoker("method_17717")
+	@Invoker("getAllForType")
 	<C extends Inventory, T extends Recipe<C>> Map<Identifier, Recipe<C>> getRecipes(RecipeType<T> type);
 }
