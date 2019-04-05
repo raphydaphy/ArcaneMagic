@@ -138,7 +138,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 				Heightmap.populateHeightmaps(protoChunk, EnumSet.of(Heightmap.Type.MOTION_BLOCKING, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Heightmap.Type.OCEAN_FLOOR, Heightmap.Type.WORLD_SURFACE));
 
 				// Step 7: Generate features
-				generator.generateFeatures(new ChunkRegion(MUSHROOM_ISLAND_WORLD, Collections.singletonList(protoChunk)));
+				//generator.generateFeatures(new ChunkRegion(MUSHROOM_ISLAND_WORLD, Collections.singletonList(protoChunk)));
 
 				// Create Cutscene Chunk
 				CutsceneChunk cutsceneChunk = new CutsceneChunk(MUSHROOM_ISLAND_WORLD, chunkPos, protoChunk.getBiomeArray());

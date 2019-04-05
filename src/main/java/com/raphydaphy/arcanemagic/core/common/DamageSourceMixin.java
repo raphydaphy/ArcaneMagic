@@ -20,8 +20,8 @@ public abstract class DamageSourceMixin
 	@Shadow
 	public abstract Entity getAttacker();
 
-	@Inject(at = @At("RETURN"), method = "doesBypassArmor", cancellable = true)
-	private void doesBypassArmor(CallbackInfoReturnable<Boolean> info)
+	@Inject(at = @At("RETURN"), method = "bypassesArmor", cancellable = true)
+	private void bypassesArmor(CallbackInfoReturnable<Boolean> info)
 	{
 		Entity attacker = getAttacker();
 		if (attacker instanceof LivingEntity)
