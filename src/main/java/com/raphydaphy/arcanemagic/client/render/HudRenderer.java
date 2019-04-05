@@ -74,12 +74,12 @@ public class HudRenderer
 			if (passiveCrystal != ArcaneMagicUtils.ForgeCrystal.EMPTY)
 			{
 				mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/" + passiveCrystal.pommel.getPath() + ".png"));
-				RenderUtils.drawTexturedRect(11, 9, 0, 0, 16, 16, 16, 16, 16, 16);
+				RenderUtils.texRect(11, 9, 0, 0, 16, 16, 16, 16, 16, 16);
 			}
 			if (activeCrystal != ArcaneMagicUtils.ForgeCrystal.EMPTY)
 			{
 				mc.getTextureManager().bindTexture(new Identifier(ArcaneMagic.DOMAIN, "textures/" + activeCrystal.hilt.getPath() + ".png"));
-				RenderUtils.drawTexturedRect(11, 9, 0, 0, 16, 16, 16, 16, 16, 16);
+				RenderUtils.texRect(11, 9, 0, 0, 16, 16, 16, 16, 16, 16);
 			}
 		}
 

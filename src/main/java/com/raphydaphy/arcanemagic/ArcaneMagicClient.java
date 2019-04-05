@@ -12,18 +12,35 @@ import com.raphydaphy.arcanemagic.network.ClientBlockEntityUpdatePacket;
 import com.raphydaphy.arcanemagic.network.ProgressionUpdateToastPacket;
 import com.raphydaphy.arcanemagic.network.TremorPacket;
 import com.raphydaphy.arcanemagic.util.TremorTracker;
+import com.raphydaphy.cutsceneapi.fakeworld.CutsceneChunk;
 import com.raphydaphy.cutsceneapi.fakeworld.CutsceneWorld;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.GameMode;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.source.BiomeSource;
+import net.minecraft.world.biome.source.VanillaLayeredBiomeSource;
+import net.minecraft.world.biome.source.VanillaLayeredBiomeSourceConfig;
+import net.minecraft.world.chunk.ChunkPos;
+import net.minecraft.world.chunk.ChunkStatus;
+import net.minecraft.world.chunk.ProtoChunk;
+import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
+import net.minecraft.world.gen.chunk.OverworldChunkGenerator;
+import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
 import net.minecraft.world.level.LevelGeneratorType;
 import net.minecraft.world.level.LevelInfo;
+import net.minecraft.world.level.LevelProperties;
 
 public class ArcaneMagicClient implements ClientModInitializer
 {
@@ -70,7 +87,67 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		ModCutscenes.initClient();
 
-		// TODO : WORLD CACHING YES!
-		OLD_NETHER_WORLD = new CutsceneWorld(null, new LevelInfo(0, GameMode.SPECTATOR, false, false, LevelGeneratorType.DEFAULT), DimensionType.THE_NETHER, 1, null, null);
+		LevelInfo levelInfo = new LevelInfo(43, GameMode.SPECTATOR, false, false, LevelGeneratorType.DEFAULT);
+		OLD_NETHER_WORLD = new CutsceneWorld(null, levelInfo, DimensionType.OVERWORLD, 1, null, null);
+
+		// Configurations
+		LevelProperties levelProperties = new LevelProperties(levelInfo, "Old Nether World");
+		OverworldChunkGeneratorConfig chunkGenConfig = new OverworldChunkGeneratorConfig();
+		VanillaLayeredBiomeSourceConfig biomeConfig = new VanillaLayeredBiomeSourceConfig();
+
+		// Apply configurations
+		biomeConfig.setLevelProperties(levelProperties);
+		biomeConfig.setGeneratorSettings(chunkGenConfig);
+
+		// Biome & Chunk Generators
+		BiomeSource biomeSource = new VanillaLayeredBiomeSource(biomeConfig);
+		ChunkGenerator generator = new OverworldChunkGenerator(OLD_NETHER_WORLD, biomeSource, chunkGenConfig);
+
+		int cX, cZ, pX, pY, pZ, index;
+
+		int range = 30;
+		for (cX = - range; cX < range; cX++)
+		{
+			for (cZ = - range; cZ < range; cZ++)
+			{
+				ChunkPos chunkPos = new ChunkPos(cX, cZ);
+
+				// Step 1: Create Chunk
+				ProtoChunk protoChunk = new ProtoChunk(chunkPos, new UpgradeData(new CompoundTag()));
+
+				// Step 2: Generate Biomes
+				generator.populateBiomes(protoChunk);
+
+				// Step 3: Populate Noise
+				generator.populateNoise(OLD_NETHER_WORLD, protoChunk);
+
+				// Step 4: Build Surface
+				generator.buildSurface(protoChunk);
+
+				// Step 5: Carve
+				generator.carve(protoChunk, GenerationStep.Carver.AIR);
+				generator.carve(protoChunk, GenerationStep.Carver.LIQUID);
+
+				// Create Cutscene Chunk
+				CutsceneChunk cutsceneChunk = new CutsceneChunk(OLD_NETHER_WORLD, chunkPos, protoChunk.getBiomeArray());
+				BlockState[] states = cutsceneChunk.blockStates;
+
+				// Transfer data to cutscene chunk
+				for (pX = 0; pX < 16; pX++)
+				{
+					for (pY = 0; pY < cutsceneChunk.getHeight(); pY++)
+					{
+						for (pZ = 0; pZ < 16; pZ++)
+						{
+							index = pZ * 16 * cutsceneChunk.getHeight() + pY * 16 + pX;
+							states[index] = protoChunk.getBlockState(new BlockPos(pX, pY, pZ));
+						}
+					}
+				}
+
+				// Save cutscene chunk to world
+				OLD_NETHER_WORLD.putChunk(cutsceneChunk);
+			}
+		}
 	}
 }

@@ -9,7 +9,6 @@ import com.raphydaphy.arcanemagic.recipe.TransfigurationRecipe;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
 import com.raphydaphy.crochet.data.DataHolder;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.resource.language.I18n;
@@ -121,7 +120,7 @@ class BasicNotebookElements
 		public int draw(Screen screen, int x, int y, int mouseX, int mouseY, int xTop, int yTop)
 		{
 			MinecraftClient.getInstance().getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
-			RenderUtils.drawTexturedRect(xTop - 8, yTop + 11, 0, 206, 140, 31, 140, 30, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
+			RenderUtils.texRect(xTop - 8, yTop + 11, 0, 206, 140, 31, 140, 30, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT);
 			RenderUtils.drawCustomSizedSplitString(xTop + 17 - 8, yTop + 18, 1, 119, 0x218e15, false, false, unlocalized, keys);
 			return 27 + padding;
 		}
@@ -139,7 +138,7 @@ class BasicNotebookElements
 		{
 			int height = RenderUtils.drawCustomSizedSplitString(x + 57, y, 1.2, 116, 0, false, true, unlocalized) + 3;
 			MinecraftClient.getInstance().getTextureManager().bindTexture(ArcaneMagicConstants.NOTEBOOK_TEXTURE);
-			height += RenderUtils.drawTexturedRect(x + 14, y + height, 46, 180, 85, 3, 85, 3, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT) + 3;
+			height += RenderUtils.texRect(x + 14, y + height, 46, 180, 85, 3, 85, 3, ArcaneMagicConstants.NOTEBOOK_WIDTH, ArcaneMagicConstants.NOTEBOOK_TEX_HEIGHT) + 3;
 			return height + padding;
 		}
 	}
@@ -300,8 +299,8 @@ class BasicNotebookElements
 					int stage = Math.round(percent * ArcaneMagicConstants.SOUL_METER_STAGES);
 					int row = stage / 10;
 					int col = stage % 10;
-					RenderUtils.drawTexturedRect(x + 36, y, 0, 0, 36, 36, 36, 36, 360, 360);
-					RenderUtils.drawTexturedRect(x + 36, y, 36 * col, 36 + 36 * row, 36, 36, 36, 36, 360, 360);
+					RenderUtils.texRect(x + 36, y, 0, 0, 36, 36, 36, 36, 360, 360);
+					RenderUtils.texRect(x + 36, y, 36 * col, 36 + 36 * row, 36, 36, 36, 36, 360, 360);
 
 					GuiLighting.enableForItems();
 					MinecraftClient.getInstance().getItemRenderer().renderGuiItem(this.recipe.getOutput(), x + 46, y + 10);

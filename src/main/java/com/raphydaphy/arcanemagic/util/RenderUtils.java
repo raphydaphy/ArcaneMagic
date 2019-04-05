@@ -9,8 +9,6 @@ import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GuiLighting;
-import net.minecraft.client.render.Tessellator;
-import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
@@ -213,7 +211,7 @@ public class RenderUtils
 		GlStateManager.pushMatrix();
 
 		// Crafting Output Box
-		drawBox(x, y, 24, 24, 2, 0xff422c0e, -1);
+		box(x, y, 24, 24, 2, 0xff422c0e, -1);
 
 		// Draw the output item
 		GuiLighting.enableForItems();
@@ -270,7 +268,7 @@ public class RenderUtils
 		GlStateManager.pushMatrix();
 		GlStateManager.pushTextureAttributes();
 
-		drawBox(x, y, 24, 24, 2, color, -1);
+		box(x, y, 24, 24, 2, color, -1);
 
 		if (!item.isEmpty())
 		{
@@ -301,7 +299,7 @@ public class RenderUtils
 		int i = 0;
 		for (Map.Entry<Ingredient, Boolean> item : items.entrySet())
 		{
-			drawBox(x + i * 35, y, 24, 24, 2, 0xff422c0e, items.get(item.getKey()) ? 0x8010ce40 : 0x80e80d0d);
+			box(x + i * 35, y, 24, 24, 2, 0xff422c0e, items.get(item.getKey()) ? 0x8010ce40 : 0x80e80d0d);
 
 			GuiLighting.enableForItems();
 			ItemStack[] stackArray = item.getKey().getStackArray();
@@ -353,28 +351,11 @@ public class RenderUtils
 		}
 	}
 
-	public static RenderRecipeType getRecipeType(Recipe recipe)
-	{
-		if (recipe instanceof SmeltingRecipe)
-		{
-			return RenderRecipeType.SMELTING;
-		} else if (recipe.fits(2, 2))
-		{
-			return RenderRecipeType.SMALL_CRAFTING;
-		} else if (recipe.fits(3, 3))
-		{
-			return RenderRecipeType.LARGE_CRAFTING;
-		} else
-		{
-			return RenderRecipeType.UNSUPPORTED;
-		}
-	}
-
 	/**
 	 * Draws a brown box with the given dimensions.
 	 * @param background The background color. Set to -1 for no background
 	 */
-	public static void drawBox(int x, int y, int width, int height, int lineWidth, int border, int background)
+	public static void box(int x, int y, int width, int height, int lineWidth, int border, int background)
 	{
 		DrawableHelper.fill(x, y, x + width, y + lineWidth, border);
 		DrawableHelper.fill(x, y + height, x + width, y + height + lineWidth, border);
@@ -386,54 +367,15 @@ public class RenderUtils
 		}
 	}
 
-	public static int drawTexturedRect(int x, int y, int u, int v, int maxU, int maxV, int width, int height, int textureWidth, int textureHeight)
+	public static int texRect(int x, int y, int u, int v, int maxU, int maxV, int width, int height, int textureWidth, int textureHeight)
 	{
 		DrawableHelper.blit(x, y, width, height, u, v, maxU, maxV, textureWidth, textureHeight);
-	//	DrawableHelper.blit(x, y, u, v, maxU, maxV, width, height, textureWidth, textureHeight);
 		return height;
-	}
-
-	public static void drawRect(int x, int y, int width, int height, float alpha, float red, float green, float blue)
-	{
-		int int_7;
-		if (x < width)
-		{
-			int_7 = x;
-			x = width;
-			width = int_7;
-		}
-
-		if (y < height)
-		{
-			int_7 = y;
-			y = height;
-			height = int_7;
-		}
-
-		Tessellator tessellator_1 = Tessellator.getInstance();
-		BufferBuilder bufferBuilder_1 = tessellator_1.getBufferBuilder();
-		GlStateManager.enableBlend();
-		GlStateManager.disableTexture();
-		GlStateManager.blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
-		GlStateManager.color4f(red, green, blue, alpha);
-		bufferBuilder_1.begin(7, VertexFormats.POSITION);
-		bufferBuilder_1.vertex((double) x, (double) height, 0.0D).next();
-		bufferBuilder_1.vertex((double) width, (double) height, 0.0D).next();
-		bufferBuilder_1.vertex((double) width, (double) y, 0.0D).next();
-		bufferBuilder_1.vertex((double) x, (double) y, 0.0D).next();
-		tessellator_1.draw();
-		GlStateManager.enableTexture();
-		GlStateManager.disableBlend();
 	}
 
 	public static List<String> wrapText(String unlocalized, int width)
 	{
 		return MinecraftClient.getInstance().textRenderer.wrapStringToWidthAsList(I18n.translate(unlocalized), width);
-	}
-
-	enum RenderRecipeType
-	{
-		SMELTING, SMALL_CRAFTING, LARGE_CRAFTING, UNSUPPORTED
 	}
 
 	public static class TextureBounds

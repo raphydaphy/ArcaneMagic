@@ -1,6 +1,7 @@
 package com.raphydaphy.arcanemagic.init;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
+import com.raphydaphy.arcanemagic.ArcaneMagicClient;
 import com.raphydaphy.cutsceneapi.api.ClientCutscene;
 import com.raphydaphy.cutsceneapi.api.Cutscene;
 import com.raphydaphy.cutsceneapi.cutscene.*;
@@ -31,12 +32,14 @@ public class ModCutscenes
 		relicNether.setIntroTransition(new Transition.DipTo(20, 0, 1, 1, 1));
 		relicNether.setOutroTransition(new Transition.DipTo(20, 0, 1, 1, 1));
 		relicNether.setShader(new Identifier(ArcaneMagic.DOMAIN, "shaders/cutscene.json"));
+		relicNether.setWorldType(CutsceneWorldType.CUSTOM);
 		relicNether.setInitCallback((cutscene) ->
 		                            {
-		                            	ClientCutscene clientCutscene = (ClientCutscene)cutscene;
 			                            MinecraftClient client = MinecraftClient.getInstance();
-		                            	clientCutscene.setCameraPath(Path.builder().with((int)client.player.x - 20, (int)client.player.y + 30, (int)client.player.z)
-			                                                        .with((int)client.player.x + 30, (int)client.player.y + 10, (int)client.player.z).build());
+		                            	ClientCutscene clientCutscene = (ClientCutscene)cutscene;
+		                            	ArcaneMagicClient.OLD_NETHER_WORLD.setupFrom(client.world);
+		                            	clientCutscene.setWorld(ArcaneMagicClient.OLD_NETHER_WORLD);
+		                            	clientCutscene.setCameraPath(Path.builder().with(-200, 70, 0).with(100, 80, 20).with(100, 80, 200).build());
 		                            	client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
 		                            });
 	}

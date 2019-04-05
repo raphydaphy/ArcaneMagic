@@ -107,7 +107,7 @@ public abstract class ScreenMixin extends AbstractParentElement
 			drawY += 12;
 
 			MinecraftClient.getInstance().getTextureManager().bindTexture(TEXTURE);
-			RenderUtils.drawTexturedRect(drawX, drawY, 0, 0, 50, 8, 50, 8, 50, 12);
+			RenderUtils.texRect(drawX, drawY, 0, 0, 50, 8, 50, 8, 50, 12);
 
 			int soul = 0;
 			int max = stack.getItem() == ModRegistry.SOUL_PENDANT ? ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL : ((ScepterItem) stack.getItem()).maxSoul;
@@ -118,7 +118,7 @@ public abstract class ScreenMixin extends AbstractParentElement
 			}
 			int stage = Math.round(((float) soul / (float) max) * 46);
 
-			RenderUtils.drawTexturedRect(drawX + 2, drawY + 2, 0, 8, stage, 4, stage, 4, 50, 12);
+			RenderUtils.texRect(drawX + 2, drawY + 2, 0, 8, stage, 4, stage, 4, 50, 12);
 			drawY += 12;
 			if (text.size() > 1)
 			{
