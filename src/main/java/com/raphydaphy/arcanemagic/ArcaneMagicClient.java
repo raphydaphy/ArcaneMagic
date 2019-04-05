@@ -24,6 +24,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.source.BiomeSource;
@@ -34,7 +35,9 @@ import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.ProtoChunk;
 import net.minecraft.world.chunk.UpgradeData;
 import net.minecraft.world.dimension.DimensionType;
+import net.minecraft.world.gen.ChunkRandom;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.chunk.ChunkGenerator;
 import net.minecraft.world.gen.chunk.OverworldChunkGenerator;
 import net.minecraft.world.gen.chunk.OverworldChunkGeneratorConfig;
@@ -42,9 +45,12 @@ import net.minecraft.world.level.LevelGeneratorType;
 import net.minecraft.world.level.LevelInfo;
 import net.minecraft.world.level.LevelProperties;
 
+import java.util.Collections;
+import java.util.EnumSet;
+
 public class ArcaneMagicClient implements ClientModInitializer
 {
-	public static CutsceneWorld OLD_NETHER_WORLD;
+	public static CutsceneWorld MUSHROOM_ISLAND_WORLD;
 
 	public ArcaneMagicClient()
 	{
@@ -87,8 +93,8 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		ModCutscenes.initClient();
 
-		LevelInfo levelInfo = new LevelInfo(43, GameMode.SPECTATOR, false, false, LevelGeneratorType.DEFAULT);
-		OLD_NETHER_WORLD = new CutsceneWorld(null, levelInfo, DimensionType.OVERWORLD, 1, null, null);
+		LevelInfo levelInfo = new LevelInfo(1234651246, GameMode.SPECTATOR, false, false, LevelGeneratorType.DEFAULT);
+		MUSHROOM_ISLAND_WORLD = new CutsceneWorld(null, levelInfo, DimensionType.OVERWORLD, 1, null, null);
 
 		// Configurations
 		LevelProperties levelProperties = new LevelProperties(levelInfo, "Old Nether World");
@@ -101,11 +107,11 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		// Biome & Chunk Generators
 		BiomeSource biomeSource = new VanillaLayeredBiomeSource(biomeConfig);
-		ChunkGenerator generator = new OverworldChunkGenerator(OLD_NETHER_WORLD, biomeSource, chunkGenConfig);
+		ChunkGenerator generator = new OverworldChunkGenerator(MUSHROOM_ISLAND_WORLD, biomeSource, chunkGenConfig);
 
 		int cX, cZ, pX, pY, pZ, index;
 
-		int range = 30;
+		int range = 15;
 		for (cX = - range; cX < range; cX++)
 		{
 			for (cZ = - range; cZ < range; cZ++)
@@ -119,7 +125,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 				generator.populateBiomes(protoChunk);
 
 				// Step 3: Populate Noise
-				generator.populateNoise(OLD_NETHER_WORLD, protoChunk);
+				generator.populateNoise(MUSHROOM_ISLAND_WORLD, protoChunk);
 
 				// Step 4: Build Surface
 				generator.buildSurface(protoChunk);
@@ -128,8 +134,14 @@ public class ArcaneMagicClient implements ClientModInitializer
 				generator.carve(protoChunk, GenerationStep.Carver.AIR);
 				generator.carve(protoChunk, GenerationStep.Carver.LIQUID);
 
+				// Step 6: Populate Heightmaps
+				Heightmap.populateHeightmaps(protoChunk, EnumSet.of(Heightmap.Type.MOTION_BLOCKING, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Heightmap.Type.OCEAN_FLOOR, Heightmap.Type.WORLD_SURFACE));
+
+				// Step 7: Generate features
+				generator.generateFeatures(new ChunkRegion(MUSHROOM_ISLAND_WORLD, Collections.singletonList(protoChunk)));
+
 				// Create Cutscene Chunk
-				CutsceneChunk cutsceneChunk = new CutsceneChunk(OLD_NETHER_WORLD, chunkPos, protoChunk.getBiomeArray());
+				CutsceneChunk cutsceneChunk = new CutsceneChunk(MUSHROOM_ISLAND_WORLD, chunkPos, protoChunk.getBiomeArray());
 				BlockState[] states = cutsceneChunk.blockStates;
 
 				// Transfer data to cutscene chunk
@@ -146,7 +158,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 				}
 
 				// Save cutscene chunk to world
-				OLD_NETHER_WORLD.putChunk(cutsceneChunk);
+				MUSHROOM_ISLAND_WORLD.putChunk(cutsceneChunk);
 			}
 		}
 	}

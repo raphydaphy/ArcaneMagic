@@ -37,8 +37,8 @@ public class ModCutscenes
 		                            {
 			                            MinecraftClient client = MinecraftClient.getInstance();
 		                            	ClientCutscene clientCutscene = (ClientCutscene)cutscene;
-		                            	ArcaneMagicClient.OLD_NETHER_WORLD.setupFrom(client.world);
-		                            	clientCutscene.setWorld(ArcaneMagicClient.OLD_NETHER_WORLD);
+		                            	ArcaneMagicClient.MUSHROOM_ISLAND_WORLD.setupFrom(client.world);
+		                            	clientCutscene.setWorld(ArcaneMagicClient.MUSHROOM_ISLAND_WORLD);
 		                            	clientCutscene.setCameraPath(Path.builder().with(-200, 70, 0).with(100, 80, 20).with(100, 80, 200).build());
 		                            	client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
 		                            });
