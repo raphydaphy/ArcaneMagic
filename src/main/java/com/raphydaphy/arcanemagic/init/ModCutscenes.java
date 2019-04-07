@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagicClient;
 import com.raphydaphy.cutsceneapi.api.ClientCutscene;
 import com.raphydaphy.cutsceneapi.api.Cutscene;
 import com.raphydaphy.cutsceneapi.cutscene.*;
+import com.raphydaphy.cutsceneapi.path.SplinePath;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -39,7 +40,7 @@ public class ModCutscenes
 		                            	ClientCutscene clientCutscene = (ClientCutscene)cutscene;
 		                            	ArcaneMagicClient.MUSHROOM_ISLAND_WORLD.setupFrom(client.world);
 		                            	clientCutscene.setWorld(ArcaneMagicClient.MUSHROOM_ISLAND_WORLD);
-		                            	clientCutscene.setCameraPath(Path.builder().with(-200, 70, 0).with(100, 80, 20).with(100, 80, 200).build());
+		                            	clientCutscene.setCameraPath(SplinePath.builder().with(-200, 70, 0).with(100, 80, 20).with(100, 80, 200).build());
 		                            	client.player.playSound(ModSounds.CUTSCENE_START, 1, 1);
 		                            });
 	}

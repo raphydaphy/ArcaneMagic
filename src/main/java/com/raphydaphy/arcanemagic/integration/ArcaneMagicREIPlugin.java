@@ -2,21 +2,15 @@ package com.raphydaphy.arcanemagic.integration;
 
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
-import me.shedaniel.rei.api.ItemRegistry;
-import me.shedaniel.rei.api.REIPlugin;
-import me.shedaniel.rei.api.RecipeHelper;
+import me.shedaniel.rei.api.*;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.crafting.CraftingRecipe;
 import net.minecraft.util.Identifier;
 
 public class ArcaneMagicREIPlugin implements REIPlugin
 {
 	static final Identifier TRANSFIGURATION = new Identifier(ArcaneMagic.DOMAIN, "plugins/transfiguration");
-
-	@Override
-	public void registerItems(ItemRegistry registry)
-	{
-
-	}
 
 	@Override
 	public void registerPluginCategories(RecipeHelper recipeHelper)
@@ -37,8 +31,24 @@ public class ArcaneMagicREIPlugin implements REIPlugin
 	}
 
 	@Override
-	public void registerSpeedCraft(RecipeHelper recipeHelper)
+	public void registerOthers(RecipeHelper recipeHelper)
 	{
-		recipeHelper.registerSpeedCraftButtonArea(TRANSFIGURATION, null);
+		recipeHelper.registerRecipeVisibilityHandler((recipeCategory, recipeDisplay) ->
+         {
+	         MinecraftClient client = MinecraftClient.getInstance();
+             if (recipeDisplay.getRecipe().isPresent())
+             {
+                 Recipe<?> recipe = (Recipe<?>) recipeDisplay.getRecipe().get();
+                 if (recipe.getId().getNamespace().equals(ArcaneMagic.DOMAIN))
+                 {
+                 	if (recipe instanceof CraftingRecipe)
+                    {
+                    	return (!recipe.isIgnoredInRecipeBook() && !client.player.getRecipeBook().contains(recipe)) ? DisplayVisibility.NEVER_VISIBLE : DisplayVisibility.ALWAYS_VISIBLE;
+                    }
+                    return DisplayVisibility.NEVER_VISIBLE;
+                 }
+             }
+             return DisplayVisibility.PASS;
+         });
 	}
 }

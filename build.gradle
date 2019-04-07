@@ -44,7 +44,7 @@ dependencies {
 
 	// Optional Libraries
 	compile "blue.endless:jankson:1.1.0"
-	modCompile "com.google.code.findbugs:jsr305:3.0.1"
+	compileOnly "com.google.code.findbugs:jsr305:3.0.1"
 
 	// Optional Mods
 	modCompile "cloth:Cloth:${project.cloth_version}"

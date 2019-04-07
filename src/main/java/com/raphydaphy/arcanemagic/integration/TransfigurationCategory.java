@@ -126,12 +126,6 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
 			{
 				return 99;
 			}
-
-			@Override
-			public VisableType canDisplay(TransfigurationDisplay display)
-			{
-				return VisableType.NEVER;
-			}
 		};
 	}
 }
