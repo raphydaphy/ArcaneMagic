@@ -14,6 +14,7 @@ import com.raphydaphy.arcanemagic.network.TremorPacket;
 import com.raphydaphy.arcanemagic.util.TremorTracker;
 import com.raphydaphy.cutsceneapi.fakeworld.CutsceneChunk;
 import com.raphydaphy.cutsceneapi.fakeworld.CutsceneWorld;
+import com.raphydaphy.cutsceneapi.fakeworld.storage.CutsceneWorldLoader;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -23,6 +24,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ChunkRegion;
 import net.minecraft.world.GameMode;
@@ -50,8 +52,6 @@ import java.util.EnumSet;
 
 public class ArcaneMagicClient implements ClientModInitializer
 {
-	public static CutsceneWorld MUSHROOM_ISLAND_WORLD;
-
 	public ArcaneMagicClient()
 	{
 		ModCutscenes.preInitClient();
@@ -75,6 +75,7 @@ public class ArcaneMagicClient implements ClientModInitializer
 
 		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
 		                                                {
+			                                                CutsceneWorldLoader.copyCutsceneWorld(new Identifier(ArcaneMagic.DOMAIN, "cutscenes/worlds/nether.cworld"), "nether.cworld");
 			                                                registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
 			                                                registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
 		                                                });
