@@ -3,14 +3,16 @@
   "package": "com.raphydaphy.arcanemagic.core.client",
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7.11-SNAPSHOT",
-  "mixins": [
+  "client": [
 	"ChunkRendererMixin",
 	"GameRendererMixin",
 	"InGameHudMixin",
 	"MinecraftClientMixin",
 	"ModelLoaderMixin",
 	"ScreenMixin",
-    "WorldRendererMixin"
+    "WorldRendererMixin",
+
+    "ModItemMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

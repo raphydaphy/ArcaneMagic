@@ -1,21 +1,35 @@
 {
+  "schemaVersion": 1,
   "id": "arcanemagic",
   "name": "Arcane Magic",
-  "description": "A magic mod with immersive progression focussed on a story.\n\nProgrammed and designed by raphydaphy with contributions from Thiakil and B0undaryBreaker and textures by wiiv. Sound effects are sourced from https://www.zapsplat.com.",
   "version": "${version}",
+
   "side": "universal",
-  "initializers": [
-	"com.raphydaphy.arcanemagic.ArcaneMagic",
-	"com.raphydaphy.arcanemagic.ArcaneMagicClient"
-  ],
+  "entrypoints": {
+    "main": [
+      "com.raphydaphy.arcanemagic.ArcaneMagic"
+    ],
+    "client": [
+      "com.raphydaphy.arcanemagic.ArcaneMagicClient"
+    ]
+  },
   "requires": {
+    "fabricloader": ">=0.4.0",
 	"fabric": "*",
 	"silk": "*",
     "crochet": "*",
-    "cutsceneapi": "*"
+    "cutsceneapi": "*",
+    "multiblockapi": "*"
   },
-  "mixins": {
-	"client": "arcanemagic.client.json",
-	"common": "arcanemagic.common.json"
-  }
+  "mixins": [
+	"arcanemagic.client.json",
+	"arcanemagic.common.json"
+  ],
+
+  "authors": [
+    "raphydaphy"
+  ],
+  "licence": "All Rights Reserved",
+  "description": "A magic mod with immersive progression focussed on a story.\n\nProgrammed and designed by raphydaphy with contributions from Thiakil and B0undaryBreaker and textures by wiiv. Sound effects are sourced from https://www.zapsplat.com.",
+  "icon": "assets/arcanemagic/icon.png"
 }
