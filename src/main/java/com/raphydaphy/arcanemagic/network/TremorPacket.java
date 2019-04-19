@@ -12,63 +12,52 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.PacketByteBuf;
 
-public class TremorPacket implements IPacket
-{
-	public static final Identifier ID = new Identifier(ArcaneMagic.DOMAIN, "tremor");
+public class TremorPacket implements IPacket {
+    public static final Identifier ID = new Identifier(ArcaneMagic.DOMAIN, "tremor");
 
-	private int delay;
-	private int duration;
+    private int delay;
+    private int duration;
 
-	private TremorPacket()
-	{
-	}
+    private TremorPacket() {
+    }
 
-	public TremorPacket(int delay, int duration)
-	{
-		this.delay = delay;
-		this.duration = duration;
-	}
+    public TremorPacket(int delay, int duration) {
+        this.delay = delay;
+        this.duration = duration;
+    }
 
-	@Override
-	public void read(PacketByteBuf buf)
-	{
-		delay = buf.readInt();
-		duration = buf.readInt();
-	}
+    @Override
+    public void read(PacketByteBuf buf) {
+        delay = buf.readInt();
+        duration = buf.readInt();
+    }
 
-	@Override
-	public void write(PacketByteBuf buf)
-	{
-		buf.writeInt(delay);
-		buf.writeInt(duration);
-	}
+    @Override
+    public void write(PacketByteBuf buf) {
+        buf.writeInt(delay);
+        buf.writeInt(duration);
+    }
 
-	@Override
-	public Identifier getID()
-	{
-		return ID;
-	}
+    @Override
+    public Identifier getID() {
+        return ID;
+    }
 
-	public static class Handler extends MessageHandler<TremorPacket>
-	{
-		@Override
-		protected TremorPacket create()
-		{
-			return new TremorPacket();
-		}
+    public static class Handler extends MessageHandler<TremorPacket> {
+        @Override
+        protected TremorPacket create() {
+            return new TremorPacket();
+        }
 
-		@Override
-		public void handle(PacketContext ctx, TremorPacket message)
-		{
-			ClientPlayerEntity player = MinecraftClient.getInstance().player;
-			if (message.duration > 0)
-			{
-				TremorTracker.scheduleTremor(message.delay, message.duration);
-				player.world.playSound(player, player.getBlockPos(), ModSounds.VOID_GROWL, SoundCategory.AMBIENT, 1, 1);
-			} else
-			{
-				player.world.playSound(player, player.getBlockPos(), ModSounds.VOID_ATMOSPHERE, SoundCategory.AMBIENT, 1, 1);
-			}
-		}
-	}
+        @Override
+        public void handle(PacketContext ctx, TremorPacket message) {
+            ClientPlayerEntity player = MinecraftClient.getInstance().player;
+            if (message.duration > 0) {
+                TremorTracker.scheduleTremor(message.delay, message.duration);
+                player.world.playSound(player, player.getBlockPos(), ModSounds.VOID_GROWL, SoundCategory.AMBIENT, 1, 1);
+            } else {
+                player.world.playSound(player, player.getBlockPos(), ModSounds.VOID_ATMOSPHERE, SoundCategory.AMBIENT, 1, 1);
+            }
+        }
+    }
 }

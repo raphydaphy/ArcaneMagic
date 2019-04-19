@@ -22,49 +22,45 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.Identifier;
 
-public class ArcaneMagicClient implements ClientModInitializer
-{
-	public ArcaneMagicClient()
-	{
-		ModCutscenes.preInitClient();
-	}
+public class ArcaneMagicClient implements ClientModInitializer {
+    public ArcaneMagicClient() {
+        ModCutscenes.preInitClient();
+    }
 
-	@Override
-	public void onInitializeClient()
-	{
-		BlockEntityRendererRegistry.INSTANCE.register(AltarBlockEntity.class, new AltarRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(AnalyzerBlockEntity.class, new AnalyzerRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(CrystalInfuserBlockEntity.class, new CrystalInfuserRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(MixerBlockEntity.class, new MixerRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(PipeBlockEntity.class, new PipeRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(SmelterBlockEntity.class, new SmelterRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(TransfigurationTableBlockEntity.class, new TransfigurationTableRenderer());
-		BlockEntityRendererRegistry.INSTANCE.register(PumpBlockEntity.class, new PumpRenderer());
+    @Override
+    public void onInitializeClient() {
+        BlockEntityRendererRegistry.INSTANCE.register(AltarBlockEntity.class, new AltarRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(AnalyzerBlockEntity.class, new AnalyzerRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(CrystalInfuserBlockEntity.class, new CrystalInfuserRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(MixerBlockEntity.class, new MixerRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(PipeBlockEntity.class, new PipeRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(SmelterBlockEntity.class, new SmelterRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(TransfigurationTableBlockEntity.class, new TransfigurationTableRenderer());
+        BlockEntityRendererRegistry.INSTANCE.register(PumpBlockEntity.class, new PumpRenderer());
 
-		ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
-		ClientSidePacketRegistry.INSTANCE.register(ProgressionUpdateToastPacket.ID, new ProgressionUpdateToastPacket.Handler());
-		ClientSidePacketRegistry.INSTANCE.register(TremorPacket.ID, new TremorPacket.Handler());
+        ClientSidePacketRegistry.INSTANCE.register(ClientBlockEntityUpdatePacket.ID, new ClientBlockEntityUpdatePacket.Handler());
+        ClientSidePacketRegistry.INSTANCE.register(ProgressionUpdateToastPacket.ID, new ProgressionUpdateToastPacket.Handler());
+        ClientSidePacketRegistry.INSTANCE.register(TremorPacket.ID, new TremorPacket.Handler());
 
-		ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
-		                                                {
-			                                                CutsceneWorldLoader.copyCutsceneWorld(new Identifier(ArcaneMagic.DOMAIN, "cutscenes/worlds/nether.cworld"), "nether.cworld");
-			                                                registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
-			                                                registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
-		                                                });
+        ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
+        {
+            CutsceneWorldLoader.copyCutsceneWorld(new Identifier(ArcaneMagic.DOMAIN, "cutscenes/worlds/nether.cworld"), "nether.cworld");
+            registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
+            registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
+        });
 
-		ClientTickCallback.EVENT.register((client) ->
-		                                  {
-			                                  if (!MinecraftClient.getInstance().isPaused())
-			                                  {
-				                                  ParticleRenderer.INSTANCE.update();
-				                                  TremorTracker.updateClient();
-				                                  HudRenderer.update();
-			                                  }
-		                                  });
+        ClientTickCallback.EVENT.register((client) ->
+        {
+            if (!MinecraftClient.getInstance().isPaused()) {
+                ParticleRenderer.INSTANCE.update();
+                TremorTracker.updateClient();
+                HudRenderer.update();
+            }
+        });
 
-		ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
+        ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
 
-		ModCutscenes.initClient();
+        ModCutscenes.initClient();
 
-	}
+    }
 }

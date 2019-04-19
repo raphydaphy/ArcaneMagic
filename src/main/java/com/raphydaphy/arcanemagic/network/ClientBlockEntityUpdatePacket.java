@@ -13,62 +13,51 @@ import net.minecraft.util.PacketByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ClientBlockEntityUpdatePacket implements IPacket
-{
-	public static final Identifier ID = new Identifier(ArcaneMagic.DOMAIN, "client_block_entity_update");
+public class ClientBlockEntityUpdatePacket implements IPacket {
+    public static final Identifier ID = new Identifier(ArcaneMagic.DOMAIN, "client_block_entity_update");
 
-	private CompoundTag tag;
+    private CompoundTag tag;
 
-	private ClientBlockEntityUpdatePacket()
-	{
-	}
+    private ClientBlockEntityUpdatePacket() {
+    }
 
-	public ClientBlockEntityUpdatePacket(CompoundTag tag)
-	{
-		this.tag = tag;
-	}
+    public ClientBlockEntityUpdatePacket(CompoundTag tag) {
+        this.tag = tag;
+    }
 
-	@Override
-	public void read(PacketByteBuf buf)
-	{
-		tag = buf.readCompoundTag();
-	}
+    @Override
+    public void read(PacketByteBuf buf) {
+        tag = buf.readCompoundTag();
+    }
 
-	@Override
-	public void write(PacketByteBuf buf)
-	{
-		buf.writeCompoundTag(tag);
-	}
+    @Override
+    public void write(PacketByteBuf buf) {
+        buf.writeCompoundTag(tag);
+    }
 
-	@Override
-	public Identifier getID()
-	{
-		return ID;
-	}
+    @Override
+    public Identifier getID() {
+        return ID;
+    }
 
-	public static class Handler extends MessageHandler<ClientBlockEntityUpdatePacket>
-	{
-		@Override
-		protected ClientBlockEntityUpdatePacket create()
-		{
-			return new ClientBlockEntityUpdatePacket();
-		}
+    public static class Handler extends MessageHandler<ClientBlockEntityUpdatePacket> {
+        @Override
+        protected ClientBlockEntityUpdatePacket create() {
+            return new ClientBlockEntityUpdatePacket();
+        }
 
-		@Override
-		public void handle(PacketContext ctx, ClientBlockEntityUpdatePacket message)
-		{
-			BlockPos pos = new BlockPos(message.tag.getInt("x"), message.tag.getInt("y"), message.tag.getInt("z"));
-			World world = MinecraftClient.getInstance().player.world;
+        @Override
+        public void handle(PacketContext ctx, ClientBlockEntityUpdatePacket message) {
+            BlockPos pos = new BlockPos(message.tag.getInt("x"), message.tag.getInt("y"), message.tag.getInt("z"));
+            World world = MinecraftClient.getInstance().player.world;
 
-			if (world != null)
-			{
-				BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (world != null) {
+                BlockEntity blockEntity = world.getBlockEntity(pos);
 
-				if (blockEntity instanceof InventoryBlockEntity)
-				{
-					blockEntity.fromTag(message.tag);
-				}
-			}
-		}
-	}
+                if (blockEntity instanceof InventoryBlockEntity) {
+                    blockEntity.fromTag(message.tag);
+                }
+            }
+        }
+    }
 }

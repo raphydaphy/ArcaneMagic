@@ -11,8 +11,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 import java.util.Map;
 
 @Mixin(RecipeManager.class)
-public interface RecipeManagerMixin
-{
-	@Invoker("getAllForType")
-	<C extends Inventory, T extends Recipe<C>> Map<Identifier, Recipe<C>> getRecipes(RecipeType<T> type);
+public interface RecipeManagerMixin {
+    @Invoker("getAllForType")
+    <C extends Inventory, T extends Recipe<C>> Map<Identifier, Recipe<C>> getRecipes(RecipeType<T> type);
 }

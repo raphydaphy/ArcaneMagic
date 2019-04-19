@@ -11,23 +11,20 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
-public class ArcaneMagic implements ModInitializer
-{
-	public static final String DOMAIN = "arcanemagic";
-	public static final String PREFIX = DOMAIN + ":";
-	public static final Random RANDOM = new Random();
-	private static final Logger LOGGER = LogManager.getLogger();
-	public static ItemGroup GROUP;
+public class ArcaneMagic implements ModInitializer {
+    public static final String DOMAIN = "arcanemagic";
+    public static final String PREFIX = DOMAIN + ":";
+    public static final Random RANDOM = new Random();
+    private static final Logger LOGGER = LogManager.getLogger();
+    public static ItemGroup GROUP;
 
-	public static Logger getLogger()
-	{
-		return LOGGER;
-	}
+    public static Logger getLogger() {
+        return LOGGER;
+    }
 
-	@Override
-	public void onInitialize()
-	{
-		GROUP = FabricItemGroupBuilder.create(new Identifier(ArcaneMagic.DOMAIN, "items")).icon(() -> new ItemStack(ModRegistry.GOLDEN_SCEPTER)).build();
-		ModRegistry.init();
-	}
+    @Override
+    public void onInitialize() {
+        GROUP = FabricItemGroupBuilder.create(new Identifier(ArcaneMagic.DOMAIN, "items")).icon(() -> new ItemStack(ModRegistry.GOLDEN_SCEPTER)).build();
+        ModRegistry.init();
+    }
 }

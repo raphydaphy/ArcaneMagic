@@ -9,98 +9,83 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.DefaultedList;
 
-public class InventoryBlockEntity extends BlockEntity implements Inventory
-{
-	private final int size;
-	protected DefaultedList<ItemStack> contents;
+public class InventoryBlockEntity extends BlockEntity implements Inventory {
+    private final int size;
+    protected DefaultedList<ItemStack> contents;
 
-	public InventoryBlockEntity(BlockEntityType<?> type, int size)
-	{
-		super(type);
+    public InventoryBlockEntity(BlockEntityType<?> type, int size) {
+        super(type);
 
-		this.contents = DefaultedList.create(size, ItemStack.EMPTY);
-		this.size = size;
-	}
+        this.contents = DefaultedList.create(size, ItemStack.EMPTY);
+        this.size = size;
+    }
 
-	@Override
-	public void fromTag(CompoundTag tag)
-	{
-		super.fromTag(tag);
-		contents = DefaultedList.create(size, ItemStack.EMPTY);
-		Inventories.fromTag(tag, contents);
-	}
+    @Override
+    public void fromTag(CompoundTag tag) {
+        super.fromTag(tag);
+        contents = DefaultedList.create(size, ItemStack.EMPTY);
+        Inventories.fromTag(tag, contents);
+    }
 
-	public CompoundTag toTag(CompoundTag tag)
-	{
-		super.toTag(tag);
-		writeContents(tag);
-		return tag;
-	}
+    public CompoundTag toTag(CompoundTag tag) {
+        super.toTag(tag);
+        writeContents(tag);
+        return tag;
+    }
 
-	public void writeContents(CompoundTag tag)
-	{
-		Inventories.toTag(tag, contents);
-	}
+    public void writeContents(CompoundTag tag) {
+        Inventories.toTag(tag, contents);
+    }
 
-	@Override
-	public int getInvSize()
-	{
-		return size;
-	}
+    @Override
+    public int getInvSize() {
+        return size;
+    }
 
-	@Override
-	public boolean isInvEmpty()
-	{
-		for (ItemStack stack : contents)
-		{
-			if (!stack.isEmpty())
-			{
-				return false;
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean isInvEmpty() {
+        for (ItemStack stack : contents) {
+            if (!stack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	@Override
-	public ItemStack getInvStack(int slot)
-	{
-		return contents.get(slot);
-	}
+    @Override
+    public ItemStack getInvStack(int slot) {
+        return contents.get(slot);
+    }
 
-	@Override
-	public ItemStack takeInvStack(int slot, int count)
-	{
-		ItemStack stack = Inventories.splitStack(contents, slot, count);
-		markDirty();
+    @Override
+    public ItemStack takeInvStack(int slot, int count) {
+        ItemStack stack = Inventories.splitStack(contents, slot, count);
+        markDirty();
 
-		return stack;
-	}
+        return stack;
+    }
 
-	@Override
-	public ItemStack removeInvStack(int slot)
-	{
-		ItemStack ret = Inventories.removeStack(contents, slot);
-		markDirty();
-		return ret;
-	}
+    @Override
+    public ItemStack removeInvStack(int slot) {
+        ItemStack ret = Inventories.removeStack(contents, slot);
+        markDirty();
+        return ret;
+    }
 
-	@Override
-	public void setInvStack(int slot, ItemStack stack)
-	{
-		contents.set(slot, stack);
-		markDirty();
-	}
+    @Override
+    public void setInvStack(int slot, ItemStack stack) {
+        contents.set(slot, stack);
+        markDirty();
+    }
 
-	@Override
-	public boolean canPlayerUseInv(PlayerEntity var1)
-	{
-		return false;
-	}
+    @Override
+    public boolean canPlayerUseInv(PlayerEntity var1) {
+        return false;
+    }
 
-	@Override
-	public void clear()
-	{
-		contents.clear();
-		markDirty();
-	}
+    @Override
+    public void clear() {
+        contents.clear();
+        markDirty();
+    }
 }

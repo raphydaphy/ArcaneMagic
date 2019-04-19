@@ -21,86 +21,71 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntity
-{
-	@Shadow
-	@Final
-	public PlayerInventory inventory;
+public abstract class PlayerEntityMixin extends LivingEntity {
+    @Shadow
+    @Final
+    public PlayerInventory inventory;
 
-	protected PlayerEntityMixin(EntityType<? extends LivingEntity> type, World world)
-	{
-		super(type, world);
-	}
+    protected PlayerEntityMixin(EntityType<? extends LivingEntity> type, World world) {
+        super(type, world);
+    }
 
-	@Shadow
-	public abstract ItemCooldownManager getItemCooldownManager();
+    @Shadow
+    public abstract ItemCooldownManager getItemCooldownManager();
 
-	@Shadow
-	public abstract void addChatMessage(TextComponent textComponent_1, boolean boolean_1);
+    @Shadow
+    public abstract void addChatMessage(TextComponent textComponent_1, boolean boolean_1);
 
-	@Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;method_7350()V"), method = "attack")
-	private void attack(Entity entity, CallbackInfo info)
-	{
-		ItemStack stack = ((PlayerEntity) (Object) this).getMainHandStack();
-		CompoundTag tag;
-		if (stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null)
-		{
-			if (tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0)
-			{
-				ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
-				if (active == ArcaneMagicUtils.ForgeCrystal.REDSTONE)
-				{
-					tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
-					tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-					((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
-				}
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;method_7350()V"), method = "attack")
+    private void attack(Entity entity, CallbackInfo info) {
+        ItemStack stack = ((PlayerEntity) (Object) this).getMainHandStack();
+        CompoundTag tag;
+        if (stack.getItem() instanceof ICrystalEquipment && (tag = stack.getTag()) != null) {
+            if (tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0) {
+                ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
+                if (active == ArcaneMagicUtils.ForgeCrystal.REDSTONE) {
+                    tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
+                    tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
+                    ((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+                }
 
-				if (entity instanceof LivingEntity)
-				{
-					LivingEntity livingEntity = (LivingEntity) entity;
-					boolean isClient = ((PlayerEntity) (Object) this).world.isClient;
-					if (active == ArcaneMagicUtils.ForgeCrystal.EMERALD)
-					{
-						if (!isClient)
-						{
-							livingEntity.addPotionEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 128, 128, true, false));
-							livingEntity.addPotionEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 128, 128, true, false));
-						}
-						tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
-						tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-						((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
-					} else if (active == ArcaneMagicUtils.ForgeCrystal.DIAMOND)
-					{
-						ItemStack held = livingEntity.getMainHandStack().copy();
-						if (held.isEmpty())
-						{
-							held = livingEntity.getOffHandStack().copy();
-							if (!held.isEmpty())
-							{
-								livingEntity.setEquippedStack(EquipmentSlot.HAND_OFF, ItemStack.EMPTY);
-							}
-						} else
-						{
-							livingEntity.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY);
-						}
+                if (entity instanceof LivingEntity) {
+                    LivingEntity livingEntity = (LivingEntity) entity;
+                    boolean isClient = ((PlayerEntity) (Object) this).world.isClient;
+                    if (active == ArcaneMagicUtils.ForgeCrystal.EMERALD) {
+                        if (!isClient) {
+                            livingEntity.addPotionEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, 128, 128, true, false));
+                            livingEntity.addPotionEffect(new StatusEffectInstance(StatusEffects.WEAKNESS, 128, 128, true, false));
+                        }
+                        tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
+                        tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
+                        ((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+                    } else if (active == ArcaneMagicUtils.ForgeCrystal.DIAMOND) {
+                        ItemStack held = livingEntity.getMainHandStack().copy();
+                        if (held.isEmpty()) {
+                            held = livingEntity.getOffHandStack().copy();
+                            if (!held.isEmpty()) {
+                                livingEntity.setEquippedStack(EquipmentSlot.HAND_OFF, ItemStack.EMPTY);
+                            }
+                        } else {
+                            livingEntity.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY);
+                        }
 
 
-						if (!held.isEmpty())
-						{
-							if (!isClient)
-							{
-								ItemEntity itemEntity = new ItemEntity(livingEntity.world, livingEntity.x, livingEntity.y + 0.5f, livingEntity.z, held);
-								livingEntity.world.spawnEntity(itemEntity);
-							}
-							tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
-							tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
-							((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
-						}
-					}
-				}
+                        if (!held.isEmpty()) {
+                            if (!isClient) {
+                                ItemEntity itemEntity = new ItemEntity(livingEntity.world, livingEntity.x, livingEntity.y + 0.5f, livingEntity.z, held);
+                                livingEntity.world.spawnEntity(itemEntity);
+                            }
+                            tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, 0);
+                            tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, false);
+                            ((PlayerEntity) (Object) this).getItemCooldownManager().set(stack.getItem(), ArcaneMagicConstants.DAGGER_ACTIVE_COOLDOWN);
+                        }
+                    }
+                }
 
-			}
-		}
+            }
+        }
 
-	}
+    }
 }

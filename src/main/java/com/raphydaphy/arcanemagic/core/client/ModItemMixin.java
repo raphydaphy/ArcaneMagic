@@ -12,28 +12,29 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ModItem.class)
-public abstract class ModItemMixin
-{
-	@Shadow public int badgeX;
+public abstract class ModItemMixin {
+    @Shadow
+    public int badgeX;
 
-	@Shadow public int badgeY;
+    @Shadow
+    public int badgeY;
+    @Shadow
+    public ModMetadata metadata;
+    @Shadow
+    public ModContainer container;
+    @Shadow
+    @Final
+    private MinecraftClient client;
 
-	@Shadow @Final private MinecraftClient client;
+    @Shadow
+    public abstract void drawBadge(String text, int outlineColor, int fillColor);
 
-	@Shadow public abstract void drawBadge(String text, int outlineColor, int fillColor);
-
-	@Shadow public ModMetadata metadata;
-
-	@Shadow public ModContainer container;
-
-	@Inject(at = @At(value="INVOKE_ASSIGN", target="Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"), method="render")
-	private void render(int index, int y, int x, int itemWidth, int itemHeight, int mouseX, int mouseY, boolean isSelected, float delta, CallbackInfo info)
-	{
-		if (container.getMetadata().getId().equals("arcanemagic"))
-		{
-			this.badgeX = x + 32 + 3 + this.client.textRenderer.getStringWidth(this.metadata.getName()) + 2;
-			this.badgeY = y;
-			this.drawBadge("Magic", 0xFF6847cc, 0xFF4416ce);
-		}
-	}
+    @Inject(at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;"), method = "render")
+    private void render(int index, int y, int x, int itemWidth, int itemHeight, int mouseX, int mouseY, boolean isSelected, float delta, CallbackInfo info) {
+        if (container.getMetadata().getId().equals("arcanemagic")) {
+            this.badgeX = x + 32 + 3 + this.client.textRenderer.getStringWidth(this.metadata.getName()) + 2;
+            this.badgeY = y;
+            this.drawBadge("Magic", 0xFF6847cc, 0xFF4416ce);
+        }
+    }
 }

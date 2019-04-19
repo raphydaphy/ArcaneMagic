@@ -13,35 +13,29 @@ import java.util.Map;
 import java.util.function.Function;
 
 @ParametersAreNonnullByDefault
-public class ArcaneModelLoader
-{
-	public static final ArcaneModelLoader INSTANCE = new ArcaneModelLoader();
-	private static final Logger LOGGER = LogManager.getLogger("ArcaneModelLoader");
-	private static final Function<ModelLoader, UnbakedModel> NULL_SUPPLIER = (unused) -> null;
-	private Map<Identifier, Function<ModelLoader, UnbakedModel>> loaders = new HashMap<>();
+public class ArcaneModelLoader {
+    public static final ArcaneModelLoader INSTANCE = new ArcaneModelLoader();
+    private static final Logger LOGGER = LogManager.getLogger("ArcaneModelLoader");
+    private static final Function<ModelLoader, UnbakedModel> NULL_SUPPLIER = (unused) -> null;
+    private Map<Identifier, Function<ModelLoader, UnbakedModel>> loaders = new HashMap<>();
 
-	private ArcaneModelLoader()
-	{
-	}
+    private ArcaneModelLoader() {
+    }
 
-	public static void registerModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader)
-	{
-		INSTANCE.doRegisterModel(identifier, loader);
-	}
+    public static void registerModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader) {
+        INSTANCE.doRegisterModel(identifier, loader);
+    }
 
-	private void doRegisterModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader)
-	{
-		if (loaders.containsKey(identifier))
-		{
-			LOGGER.warn("Identifier {} already registered!", identifier);
-		}
-		loaders.put(identifier, loader);
-	}
+    private void doRegisterModel(Identifier identifier, Function<ModelLoader, UnbakedModel> loader) {
+        if (loaders.containsKey(identifier)) {
+            LOGGER.warn("Identifier {} already registered!", identifier);
+        }
+        loaders.put(identifier, loader);
+    }
 
-	@Nullable
-	public UnbakedModel tryLoad(Identifier modelIdentifier, ModelLoader vanillaLoader)
-	{
-		return loaders.getOrDefault(modelIdentifier, NULL_SUPPLIER).apply(vanillaLoader);
-	}
+    @Nullable
+    public UnbakedModel tryLoad(Identifier modelIdentifier, ModelLoader vanillaLoader) {
+        return loaders.getOrDefault(modelIdentifier, NULL_SUPPLIER).apply(vanillaLoader);
+    }
 
 }

@@ -13,22 +13,19 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GameRenderer.class)
-public class GameRendererMixin
-{
-	@Shadow
-	@Final
-	private Camera camera;
+public class GameRendererMixin {
+    @Shadow
+    @Final
+    private Camera camera;
 
-	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=hand", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
-	private void renderAfterWorld(float partialTicks, long finishTimeNano, CallbackInfo info)
-	{
-		ParticleRenderer.INSTANCE.render(partialTicks, camera);
-		MixerRenderer.renderMixers();
-	}
+    @Inject(at = @At(value = "INVOKE_STRING", args = "ldc=hand", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
+    private void renderAfterWorld(float partialTicks, long finishTimeNano, CallbackInfo info) {
+        ParticleRenderer.INSTANCE.render(partialTicks, camera);
+        MixerRenderer.renderMixers();
+    }
 
-	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=prepareterrain", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
-	private void renderBeforeWorld(float partialTicks, long finishTimeNano, CallbackInfo info)
-	{
-		TremorTracker.renderTremors();
-	}
+    @Inject(at = @At(value = "INVOKE_STRING", args = "ldc=prepareterrain", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V"), method = "renderCenter")
+    private void renderBeforeWorld(float partialTicks, long finishTimeNano, CallbackInfo info) {
+        TremorTracker.renderTremors();
+    }
 }

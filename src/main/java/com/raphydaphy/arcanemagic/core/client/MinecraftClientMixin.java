@@ -10,17 +10,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MinecraftClient.class)
-public class MinecraftClientMixin
-{
-	@Shadow
-	public ClientWorld world;
+public class MinecraftClientMixin {
+    @Shadow
+    public ClientWorld world;
 
-	@Inject(at = @At(value = "INVOKE_STRING", args = "ldc=gameRenderer", target = "Lnet/minecraft/util/profiler/DisableableProfiler;swap(Ljava/lang/String;)V"), method = "render")
-	private void worldRenderTick(boolean renderWorldIn, CallbackInfo info)
-	{
-		if (world != null)
-		{
-			ClientEvents.onRenderTick();
-		}
-	}
+    @Inject(at = @At(value = "INVOKE_STRING", args = "ldc=gameRenderer", target = "Lnet/minecraft/util/profiler/DisableableProfiler;swap(Ljava/lang/String;)V"), method = "render")
+    private void worldRenderTick(boolean renderWorldIn, CallbackInfo info) {
+        if (world != null) {
+            ClientEvents.onRenderTick();
+        }
+    }
 }

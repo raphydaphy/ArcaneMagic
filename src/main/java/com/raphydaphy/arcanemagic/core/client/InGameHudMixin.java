@@ -11,15 +11,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public class InGameHudMixin
-{
-	@Shadow
-	@Final
-	private MinecraftClient client;
+public class InGameHudMixin {
+    @Shadow
+    @Final
+    private MinecraftClient client;
 
-	@Inject(at = @At(value = "TAIL"), method = "draw")
-	private void renderHud(float partialTicks, CallbackInfo info)
-	{
-		HudRenderer.render(partialTicks);
-	}
+    @Inject(at = @At(value = "TAIL"), method = "draw")
+    private void renderHud(float partialTicks, CallbackInfo info) {
+        HudRenderer.render(partialTicks);
+    }
 }

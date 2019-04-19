@@ -23,34 +23,28 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(BucketItem.class)
-public class BucketItemMixin extends Item
-{
-	@Final
-	@Shadow
-	private Fluid fluid;
+public class BucketItemMixin extends Item {
+    @Final
+    @Shadow
+    private Fluid fluid;
 
-	private BucketItemMixin(Settings settings)
-	{
-		super(settings);
-	}
+    private BucketItemMixin(Settings settings) {
+        super(settings);
+    }
 
-	@Inject(at = @At(value = "HEAD"), method = "use", cancellable = true)
-	private void use(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<TypedActionResult> info)
-	{
-		ItemStack stack = player.getStackInHand(hand);
-		HitResult hitResult = getHitResult(world, player, fluid == Fluids.EMPTY ? RayTraceContext.FluidHandling.SOURCE_ONLY : RayTraceContext.FluidHandling.NONE);
-		if (hitResult.getType() == HitResult.Type.BLOCK)
-		{
-			BlockHitResult blockHitResult_1 = (BlockHitResult) hitResult;
-			Block block = world.getBlockState(blockHitResult_1.getBlockPos()).getBlock();
+    @Inject(at = @At(value = "HEAD"), method = "use", cancellable = true)
+    private void use(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<TypedActionResult> info) {
+        ItemStack stack = player.getStackInHand(hand);
+        HitResult hitResult = getHitResult(world, player, fluid == Fluids.EMPTY ? RayTraceContext.FluidHandling.SOURCE_ONLY : RayTraceContext.FluidHandling.NONE);
+        if (hitResult.getType() == HitResult.Type.BLOCK) {
+            BlockHitResult blockHitResult_1 = (BlockHitResult) hitResult;
+            Block block = world.getBlockState(blockHitResult_1.getBlockPos()).getBlock();
 
-			if (!player.isSneaking())
-			{
-				if (block == ModRegistry.MIXER || block == ModRegistry.PUMP || block == ModRegistry.SMELTER)
-				{
-					info.setReturnValue(new TypedActionResult<>(ActionResult.PASS, stack));
-				}
-			}
-		}
-	}
+            if (!player.isSneaking()) {
+                if (block == ModRegistry.MIXER || block == ModRegistry.PUMP || block == ModRegistry.SMELTER) {
+                    info.setReturnValue(new TypedActionResult<>(ActionResult.PASS, stack));
+                }
+            }
+        }
+    }
 }
