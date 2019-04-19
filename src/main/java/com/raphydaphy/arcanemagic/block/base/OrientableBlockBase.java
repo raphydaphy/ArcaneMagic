@@ -18,7 +18,7 @@ public class OrientableBlockBase extends WaterloggableBlockBase
 
 	static
 	{
-		FACING = HorizontalFacingBlock.field_11177;
+		FACING = HorizontalFacingBlock.FACING;
 	}
 
 	protected OrientableBlockBase(Settings settings)

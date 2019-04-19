@@ -41,7 +41,7 @@ public class ModEvents
 									{
 										tag.putInt(ArcaneMagicConstants.SOUL_KEY, ArcaneMagicConstants.SOUL_PENDANT_MAX_SOUL);
 									}
-									entity.world.playSound(null, curPos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCK, 1, 1);
+									entity.world.playSound(null, curPos, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1, 1);
 								}
 								return true;
 							}

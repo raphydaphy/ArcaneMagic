@@ -25,11 +25,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sortme.ItemScatterer;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.JsonHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -169,7 +169,7 @@ public class ArcaneMagicUtils
 						// May want to change this one day if stackable buckets are modded into fabric
 						player.setStackInHand(hand, new ItemStack(Items.BUCKET));
 					}
-					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCK, 1, 1);
+					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1);
 					return true;
 				}
 			}
@@ -245,7 +245,7 @@ public class ArcaneMagicUtils
 						((Inventory) container).setInvStack(slot, insertStack);
 					}
 
-					world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+					world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 					player.swingHand(hand);
 
 					return true;
@@ -268,7 +268,7 @@ public class ArcaneMagicUtils
 					((Inventory) container).setInvStack(slot, ItemStack.EMPTY);
 				}
 
-				world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCK, 1, 1);
+				world.playSound(player, container.getPos(), SoundEvents.ENTITY_ITEM_FRAME_ADD_ITEM, SoundCategory.BLOCKS, 1, 1);
 				player.swingHand(hand);
 
 				return true;

@@ -69,7 +69,7 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 
 					if (smeltTime == TOTAL_SMELTING_TIME - 4)
 					{
-						world.playSound(null, pos, ModSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
+						world.playSound(null, pos, ModSounds.SLIDE, SoundCategory.BLOCKS, 0.5f, 1);
 					}
 
 					if (smeltTime >= TOTAL_SMELTING_TIME)
@@ -208,8 +208,8 @@ public class SmelterBlockEntity extends DoubleFluidBlockEntity implements Tickab
 			{
 				if (!simulate)
 				{
-					world.playSound(null, pos, ModSounds.SLIDE, SoundCategory.BLOCK, 0.5f, 1);
-					world.playSound(null, pos, ModSounds.BURN, SoundCategory.BLOCK, 0.5f, 1);
+					world.playSound(null, pos, ModSounds.SLIDE, SoundCategory.BLOCKS, 0.5f, 1);
+					world.playSound(null, pos, ModSounds.BURN, SoundCategory.BLOCKS, 0.5f, 1);
 					if (!world.isClient)
 					{
 						smeltTime = 1;

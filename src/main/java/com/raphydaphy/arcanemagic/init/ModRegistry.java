@@ -32,8 +32,8 @@ import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
-import net.minecraft.item.block.BlockItem;
-import net.minecraft.server.command.ServerCommandManager;
+import net.minecraft.item.BlockItem;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.TextFormat;
@@ -144,17 +144,17 @@ public class ModRegistry
 		ShapelessTransfigurationRecipe.SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, ArcaneMagic.PREFIX + "transfiguration_shapeless", new ShapelessTransfigurationRecipeSerializer());
 
 		// Command Registration
-		CommandRegistry.INSTANCE.register(false, dispatcher -> dispatcher.register((ServerCommandManager.literal("arcanemagic").requires((command) -> command.hasPermissionLevel(2))
-		                                                                                                .then(ServerCommandManager.literal("tremor").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
-		                                                                                                                                                                      .then(ServerCommandManager.argument("duration", IntegerArgumentType.integer(0)).then(ServerCommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
+		CommandRegistry.INSTANCE.register(false, dispatcher -> dispatcher.register((CommandManager.literal("arcanemagic").requires((command) -> command.hasPermissionLevel(2))
+		                                                                                                .then(CommandManager.literal("tremor").then(CommandManager.argument("target", EntityArgumentType.player())
+		                                                                                                                                                                      .then(CommandManager.argument("duration", IntegerArgumentType.integer(0)).then(CommandManager.argument("delay", IntegerArgumentType.integer(0)).executes(command ->
 		                                                                                                                                                                                                                                                                                                                                           {
-			                                                                                                                                                                                                                                                                                                                                           PacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.getServerPlayerArgument(command, "target"));
+			                                                                                                                                                                                                                                                                                                                                           PacketHandler.sendToClient(new TremorPacket(IntegerArgumentType.getInteger(command, "delay"), IntegerArgumentType.getInteger(command, "duration")), EntityArgumentType.getPlayer(command, "target"));
 			                                                                                                                                                                                                                                                                                                                                           return 1;
 		                                                                                                                                                                                                                                                                                                                                           })))))
-		                                                                                                .then(ServerCommandManager.literal("reset").then(ServerCommandManager.argument("target", EntityArgumentType.onePlayer())
+		                                                                                                .then(CommandManager.literal("reset").then(CommandManager.argument("target", EntityArgumentType.player())
 		                                                                                                                                                                     .executes(command ->
 		                                                                                                                                                                               {
-			                                                                                                                                                                               ServerPlayerEntity player = EntityArgumentType.getServerPlayerArgument(command, "target");
+			                                                                                                                                                                               ServerPlayerEntity player = EntityArgumentType.getPlayer(command, "target");
 			                                                                                                                                                                               ((DataHolder) player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
 			                                                                                                                                                                               ((DataHolder) player).markAdditionalDataDirty();
 			                                                                                                                                                                               command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);

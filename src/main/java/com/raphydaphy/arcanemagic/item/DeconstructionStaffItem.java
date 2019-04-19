@@ -53,7 +53,7 @@ public class DeconstructionStaffItem extends Item
 		Block block = ctx.getWorld().getBlockState(pos).getBlock();
 		if (block == Blocks.SOUL_SAND)
 		{
-			ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 0.5f, 1);
+			ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCKS, 0.5f, 1);
 
 			DataHolder dataPlayer = (DataHolder) ctx.getPlayer();
 			if (ctx.getWorld().isClient)
@@ -83,7 +83,7 @@ public class DeconstructionStaffItem extends Item
 				Recipe<CraftingInventory> craftingRecipe = entry.getValue();
 				if (craftingRecipe.getOutput().getItem() == block.getItem())
 				{
-					ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCK, 0.5f, 1);
+					ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCKS, 0.5f, 1);
 					if (ctx.getWorld().isClient)
 					{
 						doParticles(ctx.getWorld(), pos);

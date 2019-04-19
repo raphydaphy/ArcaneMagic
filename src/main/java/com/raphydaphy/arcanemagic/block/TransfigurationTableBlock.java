@@ -161,7 +161,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
 						player.swingHand(hand);
 					}
 
-					world.playSound(player, blockEntity.getPos(), ModSounds.TRANSFIGURATION, SoundCategory.BLOCK, 0.5f, 1);
+					world.playSound(player, blockEntity.getPos(), ModSounds.TRANSFIGURATION, SoundCategory.BLOCKS, 0.5f, 1);
 
 					return true;
 				}

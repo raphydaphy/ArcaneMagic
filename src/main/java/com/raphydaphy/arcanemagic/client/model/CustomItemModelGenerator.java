@@ -168,7 +168,7 @@ public class CustomItemModelGenerator
 		int height = sprite_1.getHeight();
 		List<Face> list_1 = Lists.newArrayList();
 
-		for (int int_3 = 0; int_3 < sprite_1.method_4592(); ++int_3)
+		for (int int_3 = 0; int_3 < sprite_1.getFrameCount(); ++int_3)
 		{
 			for (int int_4 = 0; int_4 < height; ++int_4)
 			{

@@ -121,7 +121,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, 
 						// May want to change this one day if stackable buckets are modded into fabric
 						player.setStackInHand(hand, new ItemStack(Items.BUCKET));
 					}
-					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCK, 1, 1);
+					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1, 1);
 					return true;
 				}
 			} else if (mixer.isBottom() && stack.getItem() == Items.BUCKET)
@@ -145,7 +145,7 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, 
 							player.setStackInHand(hand, extracted.copy());
 						}
 					}
-					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCK, 1, 1);
+					world.playSound(player, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1, 1);
 					return true;
 				}
 			}

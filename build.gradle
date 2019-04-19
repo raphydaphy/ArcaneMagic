@@ -50,7 +50,7 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:3.0.1"
 
 	// Optional Mods
-	modCompile "cloth:Cloth:${project.cloth_version}"
+	modCompile "cloth:ClothEvents:${project.cloth_version}"
 	modCompile "roughly-enough-items:RoughlyEnoughItems:${project.rei_version}"
 	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
 

@@ -78,7 +78,7 @@ public class ScepterItem extends SoulStorageItem
 								((CrystalInfuserBlockEntity) blockEntity).resetCraftingTime();
 								((CrystalInfuserBlockEntity) blockEntity).setActive(true);
 							}
-							world.playSound(player, pos, ModSounds.SPELL, SoundCategory.BLOCK, 0.5f, 1);
+							world.playSound(player, pos, ModSounds.SPELL, SoundCategory.BLOCKS, 0.5f, 1);
 							return true;
 						}
 					}
@@ -225,7 +225,7 @@ public class ScepterItem extends SoulStorageItem
 					{
 						if (!world.isClient)
 						{
-							((ServerWorld) world).method_14199(ParticleTypes.DAMAGE_INDICATOR, drainTarget.x, drainTarget.y + (double) (drainTarget.getHeight() * 0.5F), drainTarget.z, 0, 0.1D, 0.0D, 0.1D, 0.2D);
+							((ServerWorld) world).spawnParticles(ParticleTypes.DAMAGE_INDICATOR, drainTarget.x, drainTarget.y + (double) (drainTarget.getHeight() * 0.5F), drainTarget.z, 0, 0.1D, 0.0D, 0.1D, 0.2D);
 						}
 						((LivingEntityHooks) drainTarget).playScepterNoise(DamageSource.MAGIC);
 					}
