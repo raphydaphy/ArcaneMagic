@@ -70,9 +70,9 @@ public class IronDaggerModel implements UnbakedModel
 	}
 
 	@Override
-	public BakedModel bake(ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer)
+	public BakedModel bake(ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelBakeSettings modelBakeSettings)
 	{
-		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, rotationContainer), (hilt, pommel) ->
+		return new IronDaggerBakedModel(doBake(baseModel, loader, bakedTextureGetter, modelBakeSettings), (hilt, pommel) ->
 		{
 			Map<String, String> newTextures = new HashMap<>();
 			newTextures.put("layer0", BASE.toString());
@@ -80,22 +80,22 @@ public class IronDaggerModel implements UnbakedModel
 			if (pommel != ForgeCrystal.EMPTY)
 				newTextures.put(hilt == ForgeCrystal.EMPTY ? "layer1" : "layer2", pommel.pommel.toString());
 			CustomJsonUnbakedModel baseCopy = new CustomJsonUnbakedModel(BASE_MODEL, (JsonUnbakedModel) baseModel, newTextures, loader::getOrLoadModel);
-			return doBake(baseCopy, loader, bakedTextureGetter, rotationContainer);
+			return doBake(baseCopy, loader, bakedTextureGetter, modelBakeSettings);
 		});
 	}
 
 	// copied from net.minecraft.client.render.model.ModelLoader.bake because the generated models don't have ids
-	private BakedModel doBake(UnbakedModel unbakedModel_1, ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelRotationContainer rotationContainer)
+	private BakedModel doBake(UnbakedModel unbakedModel_1, ModelLoader loader, Function<Identifier, Sprite> bakedTextureGetter, ModelBakeSettings modelBakeSettings)
 	{
 		if (unbakedModel_1 instanceof JsonUnbakedModel)
 		{
 			JsonUnbakedModel jsonUnbakedModel_1 = (JsonUnbakedModel) unbakedModel_1;
 			if (jsonUnbakedModel_1.getRootModel() == ModelLoader.GENERATION_MARKER)
 			{
-				return ITEM_MODEL_GENERATOR.create(bakedTextureGetter, jsonUnbakedModel_1).bake(loader, jsonUnbakedModel_1, bakedTextureGetter, rotationContainer);
+				return ITEM_MODEL_GENERATOR.create(bakedTextureGetter, jsonUnbakedModel_1).bake(loader, jsonUnbakedModel_1, bakedTextureGetter, modelBakeSettings);
 			}
 		}
-		return unbakedModel_1.bake(loader, bakedTextureGetter, rotationContainer);
+		return unbakedModel_1.bake(loader, bakedTextureGetter, modelBakeSettings);
 	}
 
 	private static final class IronDaggerOverrideHandler extends ModelItemPropertyOverrideList

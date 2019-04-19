@@ -129,7 +129,7 @@ public class PumpBlockEntity extends DoubleFluidBlockEntity implements Tickable,
 					water.addAmount(DropletValues.BUCKET);
 					markDirty();
 
-					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCK, 1, 1);
+					world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.BLOCKS, 1, 1);
 					PacketHandler.sendToAllAround(new ClientBlockEntityUpdatePacket(toTag(new CompoundTag())), world, getPos(), 64);
 				}
 			}

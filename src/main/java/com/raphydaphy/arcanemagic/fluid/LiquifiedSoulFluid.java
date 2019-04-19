@@ -31,13 +31,13 @@ public abstract class LiquifiedSoulFluid extends BaseFluid
 	}
 
 	@Override
-	protected boolean method_15737()
+	protected boolean isInfinite()
 	{
 		return false;
 	}
 
 	@Override
-	protected void method_15730(IWorld var1, BlockPos var2, BlockState var3)
+	protected void beforeBreakingBlock(IWorld var1, BlockPos var2, BlockState var3)
 	{
 
 	}
@@ -49,7 +49,7 @@ public abstract class LiquifiedSoulFluid extends BaseFluid
 	}
 
 	@Override
-	protected int method_15739(ViewableWorld var1)
+	protected int getLevelDecreasePerBlock(ViewableWorld var1)
 	{
 		return 1; // Copied from WaterFluid
 	}

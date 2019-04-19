@@ -87,7 +87,7 @@ public class DoubleBlockBase extends OrientableBlockBase implements MultiBlock
 			{
 				world.setBlockState(otherPartPos, Blocks.AIR.getDefaultState(), 35);
 			}
-			world.method_8444(breaker, 2001, otherPartPos, Block.getRawIdFromState(otherPartState));
+			world.playLevelEvent(breaker, 2001, otherPartPos, Block.getRawIdFromState(otherPartState));
 			ItemStack itemStack_1 = breaker.getMainHandStack();
 			if (!world.isClient && !breaker.isCreative())
 			{
@@ -102,7 +102,7 @@ public class DoubleBlockBase extends OrientableBlockBase implements MultiBlock
 	public BlockState getPlacementState(ItemPlacementContext ctx)
 	{
 		BlockPos above = ctx.getBlockPos();
-		if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).method_11587(ctx))
+		if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).canReplace(ctx))
 		{
 			FluidState fluid = ctx.getWorld().getFluidState(ctx.getBlockPos());
 			return this.getDefaultState().with(FACING, ctx.getPlayerHorizontalFacing().getOpposite()).with(HALF, DoubleBlockHalf.LOWER).with(WATERLOGGED, fluid.getFluid() == Fluids.WATER);

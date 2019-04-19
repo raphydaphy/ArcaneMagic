@@ -117,9 +117,9 @@ public class ForgeBlock extends OrientableBlockBase
 			world.setBlockState(otherHorizontalHalfPos, Blocks.AIR.getDefaultState(), 35);
 			world.setBlockState(cornerPos, Blocks.AIR.getDefaultState(), 35);
 
-			world.method_8444(breaker, 2001, otherVerticalHalfPos, Block.getRawIdFromState(otherVerticalHalfState));
-			world.method_8444(breaker, 2001, otherHorizontalHalfPos, Block.getRawIdFromState(otherHorizontalHalfState));
-			world.method_8444(breaker, 2001, cornerPos, Block.getRawIdFromState(cornerState));
+			world.playLevelEvent(breaker, 2001, otherVerticalHalfPos, Block.getRawIdFromState(otherVerticalHalfState));
+			world.playLevelEvent(breaker, 2001, otherHorizontalHalfPos, Block.getRawIdFromState(otherHorizontalHalfState));
+			world.playLevelEvent(breaker, 2001, cornerPos, Block.getRawIdFromState(cornerState));
 
 			ItemStack itemStack_1 = breaker.getMainHandStack();
 			if (!world.isClient && !breaker.isCreative())
@@ -137,7 +137,7 @@ public class ForgeBlock extends OrientableBlockBase
 	public BlockState getPlacementState(ItemPlacementContext ctx)
 	{
 		BlockPos above = ctx.getBlockPos();
-		if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).method_11587(ctx))
+		if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).canReplace(ctx))
 		{
 			return this.getDefaultState().with(FACING, ctx.getPlayerHorizontalFacing().getOpposite()).with(PART, ForgeBlockPart.FRONT_LOWER);
 		} else
