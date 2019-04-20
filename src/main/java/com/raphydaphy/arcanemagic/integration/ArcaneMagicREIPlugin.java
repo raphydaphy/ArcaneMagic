@@ -8,8 +8,13 @@ import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.crafting.CraftingRecipe;
 import net.minecraft.util.Identifier;
 
-public class ArcaneMagicREIPlugin implements REIPlugin {
+public class ArcaneMagicREIPlugin implements REIPluginEntry {
     static final Identifier TRANSFIGURATION = new Identifier(ArcaneMagic.DOMAIN, "plugins/transfiguration");
+    
+    @Override
+    public Identifier getPluginIdentifier() {
+        return new Identifier(ArcaneMagic.DOMAIN, "rei_plugin");
+    }
 
     @Override
     public void registerPluginCategories(RecipeHelper recipeHelper) {

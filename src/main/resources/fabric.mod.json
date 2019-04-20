@@ -11,6 +11,9 @@
     ],
     "client": [
       "com.raphydaphy.arcanemagic.ArcaneMagicClient"
+    ],
+    "rei_plugins": [
+      "com.raphydaphy.arcanemagic.integration.ArcaneMagicREIPlugin"
     ]
   },
   "requires": {
