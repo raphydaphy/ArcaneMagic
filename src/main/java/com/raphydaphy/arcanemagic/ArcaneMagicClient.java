@@ -23,10 +23,6 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.Identifier;
 
 public class ArcaneMagicClient implements ClientModInitializer {
-    public ArcaneMagicClient() {
-        ModCutscenes.preInitClient();
-    }
-
     @Override
     public void onInitializeClient() {
         BlockEntityRendererRegistry.INSTANCE.register(AltarBlockEntity.class, new AltarRenderer());

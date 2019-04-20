@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.block.entity.MixerBlockEntity;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.arcanemagic.util.RenderUtils;
+import com.raphydaphy.arcanemagic.util.UVSet;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
@@ -26,23 +27,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity> {
-    private static Identifier tankTexture = new Identifier(ArcaneMagic.DOMAIN, "textures/block/mixer_tanks.png");
+    private static RenderUtils.TextureBounds[] ring = {
+            new UVSet(8, 0, 8, 8), // Bottom
+            new UVSet(8, 0, 8, 8), // Top
+            new UVSet(8, 8, 8, 2), // North
+            new UVSet(8, 8, 8, 2), // South
+            new UVSet(8, 8, 8, 2), // West
+            new UVSet(8, 8, 8, 2)}; // East
+    private static Identifier ringTexture = new Identifier(ArcaneMagic.DOMAIN, "textures/block/mixer_tank_overlay.png");
     private static Identifier waterTexture = new Identifier("textures/block/water_still.png");
-
-    private static RenderUtils.TextureBounds[] outer = {
-            new RenderUtils.TextureBounds(12, 12, 0, 0, 32, 32), // Bottom
-            new RenderUtils.TextureBounds(12, 12, 0, 0, 32, 32), // Top
-            new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32), // North
-            new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32), // South
-            new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32), // West
-            new RenderUtils.TextureBounds(12, 26, 0, 12, 32, 32)}; // East
-    private static RenderUtils.TextureBounds[] inner = {
-            new RenderUtils.TextureBounds(32, 10, 22, 0, 32, 32), // Bottom
-            new RenderUtils.TextureBounds(32, 10, 22, 0, 32, 32), // Top
-            new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32), // North
-            new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32), // South
-            new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32), // West
-            new RenderUtils.TextureBounds(32, 10, 22, 22, 32, 32)}; // East
 
     private static List<MixerRenderInstance> renderQueue = new ArrayList<>();
 
@@ -117,14 +110,30 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity> {
         }
     }
 
+    private void renderRing(MixerBlockEntity entity, double renderX, double renderY, double renderZ) {
+        GlStateManager.pushMatrix();
+        GlStateManager.disableCull();
+        Tessellator tess = Tessellator.getInstance();
+        BufferBuilder builder = tess.getBufferBuilder();
+        double pixel = 1d / 16d;
+        MinecraftClient.getInstance().getTextureManager().bindTexture(ringTexture);
+        builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
+        int waterColor = BiomeColors.waterColorAt(entity.getWorld(), entity.getPos());
+        RenderUtils.renderBox(builder, renderX + pixel * 4, renderY + pixel * 14, renderZ + pixel * 4,
+                renderX + pixel * 12, renderY + 1, renderZ + pixel * 12, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 255, ring, new int[]{1, 1, 1, 1, 1, 1});
+        tess.draw();
+        GlStateManager.enableCull();
+        GlStateManager.popMatrix();
+    }
+
     public void render(MixerBlockEntity entity, double renderX, double renderY, double renderZ, float partialTicks, int destroyStage) {
         super.render(entity, renderX, renderY, renderZ, partialTicks, destroyStage);
 
         if (entity != null) {
             if (entity.isBottom()) {
+                renderRing(entity, renderX, renderY, renderZ);
                 ItemStack stack = entity.getInvStack(0);
                 float ticks = ArcaneMagicUtils.lerp(entity.ticks - 1, entity.ticks, partialTicks);
-
                 if (!stack.isEmpty()) {
                     GlStateManager.pushMatrix();
 
