@@ -29,7 +29,6 @@ repositories {
 	maven { url 'https://maven.fabricmc.net' }
 	maven { url "https://minecraft.curseforge.com/api/maven"}
 	maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-	maven { url  "https://dl.bintray.com/raphydaphy/Fabric" }
 }
 
 dependencies {
@@ -41,9 +40,9 @@ dependencies {
 	// Required Mods
 	modCompile "net.fabricmc:fabric:${project.fabric_version}"
 	modCompile "io.github.prospector.silk:SilkAPI:${project.silk_version}"
-	modCompile "com.raphydaphy:MultiBlockAPI:${project.multiblock_api_version}"
-	modCompile "com.raphydaphy:Crochet:${project.crochet_version}"
-	modCompile "com.raphydaphy:CutsceneAPI:${project.cutscene_api_version}"
+	modCompile "multiblock-api:MultiBlockAPI:${project.multiblock_api_version}"
+	modCompile "crochet:Crochet:${project.crochet_version}"
+	modCompile "cutscene-api:CutsceneAPI:${project.cutscene_api_version}"
 
 	// Optional Libraries
 	compile "blue.endless:jankson:1.1.0"
@@ -57,9 +56,9 @@ dependencies {
 	// Nested Jars
 	include "net.fabricmc:fabric:${project.fabric_version}"
 	include "io.github.prospector.silk:SilkAPI:${project.silk_version}"
-	include "com.raphydaphy:MultiBlockAPI:${project.multiblock_api_version}"
-	include "com.raphydaphy:Crochet:${project.crochet_version}"
-	include "com.raphydaphy:CutsceneAPI:${project.cutscene_api_version}"
+	include "multiblock-api:MultiBlockAPI:${project.multiblock_api_version}"
+	include "crochet:Crochet:${project.crochet_version}"
+	include "cutscene-api:CutsceneAPI:${project.cutscene_api_version}"
 }
 
 processResources {
