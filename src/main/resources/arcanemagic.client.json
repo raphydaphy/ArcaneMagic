@@ -10,9 +10,7 @@
 	"MinecraftClientMixin",
 	"ModelLoaderMixin",
 	"ScreenMixin",
-    "WorldRendererMixin",
-
-    "ModItemMixin"
+    "WorldRendererMixin"
   ],
   "injectors": {
 	"defaultRequire": 1
