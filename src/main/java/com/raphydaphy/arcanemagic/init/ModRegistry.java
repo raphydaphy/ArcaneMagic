@@ -90,6 +90,9 @@ public class ModRegistry {
     public static DimensionType SOUL_DIMENSION = Registry.register(Registry.DIMENSION, 37, ArcaneMagic.PREFIX + "soul_dimension", new ModDimensionType(37, "_amsouldim", "AMSOULDIM", SoulDimension::new, false));
 
     public static void init() {
+        // Sound Registration
+        ModSounds.init();
+
         // Block Registration
         Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "altar"), ALTAR);
         Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "analyzer"), ANALYZER);
