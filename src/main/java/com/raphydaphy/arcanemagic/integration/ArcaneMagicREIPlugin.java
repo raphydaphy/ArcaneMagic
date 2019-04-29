@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public class ArcaneMagicREIPlugin implements REIPluginEntry {
     static final Identifier TRANSFIGURATION = new Identifier(ArcaneMagic.DOMAIN, "plugins/transfiguration");
-    
+
     @Override
     public Identifier getPluginIdentifier() {
         return new Identifier(ArcaneMagic.DOMAIN, "rei_plugin");

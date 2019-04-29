@@ -16,7 +16,7 @@ public class MinecraftClientMixin {
     @Shadow
     public ClientWorld world;
 
-    @Inject(at = @At("RETURN"), method="<init>")
+    @Inject(at = @At("RETURN"), method = "<init>")
     private void constructor(RunArgs args, CallbackInfo info) {
         ModCutscenes.preInitClient();
     }
