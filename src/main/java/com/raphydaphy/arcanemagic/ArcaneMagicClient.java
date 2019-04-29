@@ -54,7 +54,7 @@ public class ArcaneMagicClient implements ClientModInitializer {
             }
         });
 
-        ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), IronDaggerModel::new);
+        ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), (loader) -> new IronDaggerModel());
 
         ModCutscenes.initClient();
 
