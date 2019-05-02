@@ -7,6 +7,7 @@ import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.parchment.ParchmentRegistry;
+import com.raphydaphy.crochet.data.PlayerData;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -33,6 +34,10 @@ public class ParchmentItem extends Item {
         if (stack.getItem() == ModRegistry.WRITTEN_PARCHMENT && !player.isSneaking()) {
             Parchment parchment = ParchmentRegistry.getParchment(stack);
             if (parchment != null && (((ParchmentItem) stack.getItem()).type == ParchmentType.ANCIENT) == parchment.isAncient()) {
+                if (!world.isClient && !PlayerData.get(player, ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.GIVEN_PARCHMENT_KEY)) {
+                    PlayerData.get(player, ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.GIVEN_PARCHMENT_KEY, true);
+                    PlayerData.markDirty(player);
+                }
                 parchment.onOpened(world, player, hand, stack);
                 if (world.isClient) {
                     openGUI(stack, parchment);
@@ -44,12 +49,6 @@ public class ParchmentItem extends Item {
                 }
                 return new TypedActionResult<>(ActionResult.FAIL, stack);
             }
-        }
-        if (player.isSneaking() && stack.getItem() == ModRegistry.PARCHMENT) {
-            if (!world.isClient) {
-                player.changeDimension(player.dimension == ModRegistry.SOUL_DIMENSION ? DimensionType.OVERWORLD : ModRegistry.SOUL_DIMENSION);
-            }
-            return new TypedActionResult<>(ActionResult.SUCCESS, stack);
         }
         return new TypedActionResult<>(ActionResult.PASS, stack);
     }

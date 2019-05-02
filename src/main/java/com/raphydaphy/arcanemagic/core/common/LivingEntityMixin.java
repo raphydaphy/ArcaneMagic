@@ -42,6 +42,8 @@ public abstract class LivingEntityMixin {
     @Shadow
     protected boolean dead;
 
+    @Shadow public abstract boolean attack(Entity entity_1);
+
     @Inject(at = @At(value = "HEAD"), method = "dropLoot", cancellable = true)
     private void method_16077(DamageSource source, boolean killedByPlayer, CallbackInfo info) {
         if (source == ModRegistry.DRAINED_DAMAGE || ModEvents.shouldLivingEntityDropLoot(((LivingEntity) (Object) this), source)) {
@@ -92,7 +94,7 @@ public abstract class LivingEntityMixin {
                                 giveParchment = true;
                             }
                             ((PlayerEntity) attacker).addChatMessage(new TranslatableTextComponent(message).setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
-                        } else if (kills == 1 && paper != -1) {
+                        } else if (kills == 1 && paper != -1 && !((DataHolder)attacker).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.GIVEN_PARCHMENT_KEY)) {
                             giveParchment = true;
                             ((PlayerEntity) attacker).addChatMessage(new TranslatableTextComponent("message.arcanemagic.drowned_paper_second").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
                         }
@@ -123,6 +125,7 @@ public abstract class LivingEntityMixin {
                         analysisIndexes.add(-1);
                         Collections.shuffle(analysisIndexes);
 
+                        ((DataHolder)attacker).getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.GIVEN_PARCHMENT_KEY, true);
                         ((DataHolder) attacker).getAdditionalData(ArcaneMagic.DOMAIN).putIntArray(ArcaneMagicConstants.GATHER_QUEST_INDEXES_KEY, gatherIndexes);
                         ((DataHolder) attacker).getAdditionalData(ArcaneMagic.DOMAIN).putIntArray(ArcaneMagicConstants.ANALYSIS_QUEST_INDEXES_KEY, analysisIndexes);
                         ((DataHolder) attacker).markAdditionalDataDirty();

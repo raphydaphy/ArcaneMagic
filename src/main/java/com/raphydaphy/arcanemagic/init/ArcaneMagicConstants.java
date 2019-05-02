@@ -12,7 +12,6 @@ public class ArcaneMagicConstants {
 
     public static final String PARCHMENT_TYPE_KEY = "ParchmentType";
     public static final String DIED_WITH_PARCHMENT_KEY = "DiedWithParchment";
-    public static final String SEND_PARCHMENT_RECIPE_ON_RESPAWN_KEY = "SendParchmentRecipeOnRespawn";
 
     public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
     public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
@@ -47,13 +46,9 @@ public class ArcaneMagicConstants {
     public static final String DAGGER_TIMER_KEY = "ActiveTimer";
     public static final String DAGGER_IS_ACTIVE_KEY = "IsActive";
 
-    // Cutscenes
-    public static final String WATCHING_CUTSCENE_KEY = "WatchingCutscene";
-    public static final String CUTSCENE_LENGTH = "CutsceneLength";
-    public static final String CUTSCENE_TIME = "CutsceneTimeLeft";
-
     // For the Discovery parchment
     public static final String DROWNED_KILLS_KEY = "DrownedKills"; // How many Drowned Zombies the player has killed, capped at 5
+    public static final String GIVEN_PARCHMENT_KEY = "GivenParchment"; // If the player has gotten a parchment (by killing drowned with paper)
     public static final String GATHER_QUEST_INDEXES_KEY = "GatherQuestIndexes"; // List of indexes in DiscoveryParchment.GATHER_QUEST_OPTIONS of new 1.13 & 1.14 items that need to be collected
     public static final String GATHER_QUEST_FINISHED_KEY = "FinishedGatherQuest"; // If the player has collected all four of the new 1.13 and 1.14 items requested
     public static final String GATHER_QUEST_ANALYZED_INDEXES_KEY = "GatherAnalysisFinishedIndexes"; // List of indexes DiscoveryParchment.GATHER_QUEST_OPTIONS of the new 1.13 & 1.14 items that have been analyzed
