@@ -54,7 +54,7 @@ dependencies {
 	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
 
 	// Nested Jars
-	include "net.fabricmc:fabric:${project.fabric_version}"
+	include "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	include "io.github.prospector.silk:SilkAPI:${project.silk_version}"
 	include "multiblock-api:MultiBlockAPI:${project.multiblock_api_version}"
 	include "crochet:Crochet:${project.crochet_version}"

@@ -52,15 +52,6 @@ public class ModRegistry {
     public static final ModDamageSource DRAINED_DAMAGE = new ModDamageSource(ArcaneMagic.DOMAIN + ".drained").setUnblockable().setUsesMagic().setBypassesArmor();
     public static final Identifier IRON_DAGGER_IDENTIFIER = new Identifier(ArcaneMagic.DOMAIN, "iron_dagger");
 
-    public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new).build(null));
-    public static BlockEntityType<AnalyzerBlockEntity> ANALYZER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "analyzer", BlockEntityType.Builder.create(AnalyzerBlockEntity::new).build(null));
-    public static BlockEntityType<CrystalInfuserBlockEntity> CRYSTAL_INFUSER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "crystal_infuser", BlockEntityType.Builder.create(CrystalInfuserBlockEntity::new).build(null));
-    public static BlockEntityType<MixerBlockEntity> MIXER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "mixer", BlockEntityType.Builder.create(MixerBlockEntity::new).build(null));
-    public static BlockEntityType<PipeBlockEntity> PIPE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pipe", BlockEntityType.Builder.create(PipeBlockEntity::new).build(null));
-    public static BlockEntityType<PumpBlockEntity> PUMP_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pump", BlockEntityType.Builder.create(PumpBlockEntity::new).build(null));
-    public static BlockEntityType<SmelterBlockEntity> SMELTER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "smelter", BlockEntityType.Builder.create(SmelterBlockEntity::new).build(null));
-    public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new).build(null));
-
     public static AltarBlock ALTAR = new AltarBlock();
     public static AnalyzerBlock ANALYZER = new AnalyzerBlock();
     public static CrystalInfuserBlock CRYSTAL_INFUSER = new CrystalInfuserBlock();
@@ -70,6 +61,15 @@ public class ModRegistry {
     public static SmelterBlock SMELTER = new SmelterBlock();
     public static TransfigurationTableBlock TRANSFIGURATION_TABLE = new TransfigurationTableBlock();
     public static ForgeBlock FORGE = new ForgeBlock();
+
+    public static BlockEntityType<AltarBlockEntity> ALTAR_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "altar", BlockEntityType.Builder.create(AltarBlockEntity::new, ALTAR).build(null));
+    public static BlockEntityType<AnalyzerBlockEntity> ANALYZER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "analyzer", BlockEntityType.Builder.create(AnalyzerBlockEntity::new, ANALYZER).build(null));
+    public static BlockEntityType<CrystalInfuserBlockEntity> CRYSTAL_INFUSER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "crystal_infuser", BlockEntityType.Builder.create(CrystalInfuserBlockEntity::new, CRYSTAL_INFUSER).build(null));
+    public static BlockEntityType<MixerBlockEntity> MIXER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "mixer", BlockEntityType.Builder.create(MixerBlockEntity::new, MIXER).build(null));
+    public static BlockEntityType<PipeBlockEntity> PIPE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pipe", BlockEntityType.Builder.create(PipeBlockEntity::new, PIPE).build(null));
+    public static BlockEntityType<PumpBlockEntity> PUMP_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "pump", BlockEntityType.Builder.create(PumpBlockEntity::new, PUMP).build(null));
+    public static BlockEntityType<SmelterBlockEntity> SMELTER_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "smelter", BlockEntityType.Builder.create(SmelterBlockEntity::new, SMELTER).build(null));
+    public static BlockEntityType<TransfigurationTableBlockEntity> TRANSFIGURATION_TABLE_TE = Registry.register(Registry.BLOCK_ENTITY, ArcaneMagic.PREFIX + "transfiguration_table", BlockEntityType.Builder.create(TransfigurationTableBlockEntity::new, TRANSFIGURATION_TABLE).build(null));
 
     public static ScepterItem GOLDEN_SCEPTER = new ScepterItem(20);
     public static ScepterItem PURE_SCEPTER = new ScepterItem(50);
