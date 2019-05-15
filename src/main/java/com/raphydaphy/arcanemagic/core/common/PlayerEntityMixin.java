@@ -11,7 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.text.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,13 +30,7 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         super(type, world);
     }
 
-    @Shadow
-    public abstract ItemCooldownManager getItemCooldownManager();
-
-    @Shadow
-    public abstract void addChatMessage(TextComponent textComponent_1, boolean boolean_1);
-
-    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;method_7350()V"), method = "attack")
+    @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;resetLastAttackedTicks()V"), method = "attack")
     private void attack(Entity entity, CallbackInfo info) {
         ItemStack stack = ((PlayerEntity) (Object) this).getMainHandStack();
         CompoundTag tag;
@@ -65,10 +59,10 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                         if (held.isEmpty()) {
                             held = livingEntity.getOffHandStack().copy();
                             if (!held.isEmpty()) {
-                                livingEntity.setEquippedStack(EquipmentSlot.HAND_OFF, ItemStack.EMPTY);
+                                livingEntity.setEquippedStack(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
                             }
                         } else {
-                            livingEntity.setEquippedStack(EquipmentSlot.HAND_MAIN, ItemStack.EMPTY);
+                            livingEntity.setEquippedStack(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
                         }
 
 

@@ -141,7 +141,7 @@ public class ScepterItem extends SoulStorageItem {
     @Override
     public boolean interactWithEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
         if (!(target instanceof PlayerEntity) && target.getHealthMaximum() <= player.getHealthMaximum()) {
-            if (player.getItemCooldownManager().isCooldown(stack.getItem())) {
+            if (player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
                 return false;
             }
 

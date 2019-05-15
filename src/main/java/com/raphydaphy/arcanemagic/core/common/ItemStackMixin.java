@@ -73,7 +73,7 @@ public abstract class ItemStackMixin {
     @Inject(at = @At("RETURN"), method = "getAttributeModifiers", cancellable = true)
     private void getAttributeModifiers(EquipmentSlot slot, CallbackInfoReturnable<Multimap<String, EntityAttributeModifier>> info) {
         CompoundTag tag;
-        if (getItem() instanceof DaggerItem && (tag = getTag()) != null && slot == EquipmentSlot.HAND_MAIN) {
+        if (getItem() instanceof DaggerItem && (tag = getTag()) != null && slot == EquipmentSlot.MAINHAND) {
             DaggerItem dagger = (DaggerItem) getItem();
             Multimap<String, EntityAttributeModifier> map = HashMultimap.create();
             ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));

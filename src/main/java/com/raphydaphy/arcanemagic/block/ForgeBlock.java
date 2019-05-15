@@ -11,14 +11,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
@@ -65,7 +65,7 @@ public class ForgeBlock extends OrientableBlockBase {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition vep) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext vep) {
         return shapes.containsKey(state.get(PART)) ? shapes.get(state.get(PART)).get(state.get(FACING)) : VoxelShapes.empty();
     }
 
@@ -156,10 +156,10 @@ public class ForgeBlock extends OrientableBlockBase {
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> map) {
         super.appendProperties(map);
-        map.with(PART);
+        map.add(PART);
     }
 
-    public enum ForgeBlockPart implements StringRepresentable {
+    public enum ForgeBlockPart implements StringIdentifiable {
         FRONT_UPPER,
         BACK_UPPER,
         FRONT_LOWER,

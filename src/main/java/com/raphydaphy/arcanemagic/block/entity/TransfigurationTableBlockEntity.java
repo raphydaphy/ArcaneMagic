@@ -29,7 +29,7 @@ public class TransfigurationTableBlockEntity extends InventoryBlockEntity implem
             int placeholders = 0;
             for (int slot = 0; slot < 9; slot++) {
                 if (!getInvStack(slot).isEmpty()) {
-                    if (getInvStack(slot).getItem() == Blocks.GLASS_PANE.getItem()) {
+                    if (getInvStack(slot).getItem() == Blocks.GLASS_PANE.asItem()) {
                         placeholders++;
                         if (keepPlaceholders) {
                             continue;

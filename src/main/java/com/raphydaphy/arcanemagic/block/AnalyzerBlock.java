@@ -17,8 +17,8 @@ import com.raphydaphy.cutsceneapi.cutscene.CutsceneManager;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.VerticalEntityPosition;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -76,14 +76,14 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
                     ArcaneMagicUtils.unlockRecipe(player, "golden_scepter");
                     dataPlayer.markAdditionalDataDirty();
                 }
-            } else if (stack.getItem() == Blocks.CRAFTING_TABLE.getItem()) {
+            } else if (stack.getItem() == Blocks.CRAFTING_TABLE.asItem()) {
                 if (data.getBoolean(ArcaneMagicConstants.ANALYZED_STICK_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY)) {
                     data.putBoolean(ArcaneMagicConstants.ANALYZED_CRAFTING_TABLE_KEY, true);
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.TRANSFIGURATION.getID().toString(), false);
                     ArcaneMagicUtils.unlockRecipe(player, "transfiguration_table");
                     notebookUpdate = true;
                 }
-            } else if (stack.getItem() == Blocks.OBSIDIAN.getItem()) {
+            } else if (stack.getItem() == Blocks.OBSIDIAN.asItem()) {
                 if (data.getBoolean(ArcaneMagicConstants.CRAFTED_SOUL_PENDANT_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY)) {
                     data.putBoolean(ArcaneMagicConstants.ANALYZED_OBSIDIAN_KEY, true);
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SOUL_COLLECTION.getID().toString(), false);
@@ -96,19 +96,19 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
                     ArcaneMagicUtils.unlockRecipe(player, "iron_dagger");
                     notebookUpdate = true;
                 }
-            } else if (stack.getItem() == Blocks.BLAST_FURNACE.getItem()) {
+            } else if (stack.getItem() == Blocks.BLAST_FURNACE.asItem()) {
                 if (data.getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY)) {
                     data.putBoolean(ArcaneMagicConstants.ANALYZED_BLAST_FURNACE_KEY, true);
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.SMELTING.getID().toString(), false);
                     notebookUpdate = true;
                 }
-            } else if (stack.getItem() == Blocks.ENCHANTING_TABLE.getItem()) {
+            } else if (stack.getItem() == Blocks.ENCHANTING_TABLE.asItem()) {
                 if (data.getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY)) {
                     data.putBoolean(ArcaneMagicConstants.ANALYZED_ENCHANTING_TABLE_KEY, true);
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.INFUSION.getID().toString(), false);
                     notebookUpdate = true;
                 }
-            } else if (stack.getItem() == Blocks.DISPENSER.getItem()) {
+            } else if (stack.getItem() == Blocks.DISPENSER.asItem()) {
                 if (data.getBoolean(ArcaneMagicConstants.PLACED_SMELTER_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY)) {
                     data.putBoolean(ArcaneMagicConstants.ANALYZED_DISPENSER_KEY, true);
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.LIQUEFACTION.getID().toString(), false);
@@ -126,7 +126,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.PUMPING.getID().toString(), false);
                     notebookUpdate = true;
                 }
-            } else if (stack.getItem() == Blocks.SOUL_SAND.getItem()) {
+            } else if (stack.getItem() == Blocks.SOUL_SAND.asItem()) {
                 if (data.getBoolean(ArcaneMagicConstants.EXPERIENCED_TREMOR_KEY) && !data.getBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY)) {
                     data.putBoolean(ArcaneMagicConstants.ANALYZED_SOUL_SAND_KEY, true);
                     ArcaneMagicUtils.updateNotebookSection(world, dataPlayer, NotebookSectionRegistry.DECONSTRUCTION.getID().toString(), false);
@@ -206,7 +206,7 @@ public class AnalyzerBlock extends OrientableBlockBase implements BlockEntityPro
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition vep) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext vep) {
         return shape;
     }
 

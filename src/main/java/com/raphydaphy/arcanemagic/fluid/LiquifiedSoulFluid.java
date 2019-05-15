@@ -86,7 +86,7 @@ public abstract class LiquifiedSoulFluid extends BaseFluid {
         @Override
         protected void appendProperties(StateFactory.Builder<Fluid, FluidState> builder) {
             super.appendProperties(builder);
-            builder.with(LEVEL);
+            builder.add(LEVEL);
         }
 
         @Override

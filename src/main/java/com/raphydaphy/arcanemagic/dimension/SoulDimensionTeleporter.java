@@ -21,7 +21,7 @@ public class SoulDimensionTeleporter extends PortalForcer {
     }
 
     @Override
-    public boolean method_8653(Entity entity, float yaw) {
+    public boolean usePortal(Entity entity, float yaw) {
         entity.setVelocity(Vec3d.ZERO);
         entity.yaw = yaw;
 
@@ -36,7 +36,7 @@ public class SoulDimensionTeleporter extends PortalForcer {
     }
 
     @Override
-    public boolean method_8654(Entity entity) {
+    public boolean createPortal(Entity entity) {
         for (int x = -1; x < 1; ++x) {
             for (int z = -1; z < 1; ++z) {
                 this.world.setBlockState(new BlockPos(x, entity.y, z), Blocks.SMOOTH_QUARTZ.getDefaultState(), 3);

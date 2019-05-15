@@ -103,7 +103,7 @@ public class TremorTracker {
                                 BlockPos posDown = gridPos.add(0, y - 1, 0);
                                 BlockState down = player.world.getBlockState(posDown);
                                 if (down.getRenderType() != BlockRenderType.INVISIBLE) {
-                                    int color = MinecraftClient.getInstance().getBlockColorMap().method_1691(down, player.world, posDown);
+                                    int color = MinecraftClient.getInstance().getBlockColorMap().getColor(down, player.world, posDown);
                                     if (down.getBlock() instanceof FallingBlock) {
                                         color = ((FallingBlock) down.getBlock()).getColor(down);
                                     }

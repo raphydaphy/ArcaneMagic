@@ -25,6 +25,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
+import net.minecraft.ChatFormat;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.command.arguments.EntityArgumentType;
@@ -33,14 +34,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.item.BlockItem;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextFormat;
-import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
+
+import java.text.Format;
 
 @SuppressWarnings("WeakerAccess")
 public class ModRegistry {
@@ -158,7 +160,7 @@ public class ModRegistry {
                             ServerPlayerEntity player = EntityArgumentType.getPlayer(command, "target");
                             ((DataHolder) player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
                             ((DataHolder) player).markAdditionalDataDirty();
-                            command.getSource().sendFeedback(new TranslatableTextComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(TextFormat.GREEN)), false);
+                            command.getSource().sendFeedback(new TranslatableComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(ChatFormat.GREEN)), false);
                             return 1;
                         }))))));
 

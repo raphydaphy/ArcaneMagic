@@ -46,6 +46,6 @@ public class WaterloggableBlockBase extends Block implements Waterloggable {
 
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> map) {
-        map.with(WATERLOGGED);
+        map.add(WATERLOGGED);
     }
 }

@@ -4,12 +4,11 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.crochet.data.DataHolder;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.ChatFormat;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextFormat;
-import net.minecraft.text.TranslatableTextComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,7 +28,7 @@ public abstract class ServerPlayerEntityMixin {
                 && !oldDataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY)) {
             oldDataPlayer.getAdditionalData(ArcaneMagic.DOMAIN).putBoolean(ArcaneMagicConstants.DIED_WITH_PARCHMENT_KEY, true);
             oldDataPlayer.markAdditionalDataDirty();
-            ((PlayerEntity) (Object) this).addChatMessage(new TranslatableTextComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
+            ((PlayerEntity) (Object) this).addChatMessage(new TranslatableComponent("message.arcanemagic.parchment_lost").setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)), false);
             ArcaneMagicUtils.unlockRecipe((PlayerEntity) (Object) this, "written_parchment");
         }
     }

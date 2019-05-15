@@ -40,10 +40,10 @@ public class AnalyzerBlockEntity extends InventoryBlockEntity implements SidedIn
 
     @Environment(EnvType.CLIENT)
     private void doParticles(Item item) {
-        if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.getItem() || item == Blocks.OBSIDIAN.getItem()
-                || item instanceof SwordItem || item == Blocks.BLAST_FURNACE.getItem() || item == Blocks.ENCHANTING_TABLE.getItem()
-                || item == Blocks.DISPENSER.getItem() || item == Items.REDSTONE || item == Items.WATER_BUCKET
-                || item == Blocks.SOUL_SAND.getItem() || item == ModRegistry.RELIC) {
+        if (item == Items.STICK || item instanceof ScepterItem || item == Blocks.CRAFTING_TABLE.asItem() || item == Blocks.OBSIDIAN.asItem()
+                || item instanceof SwordItem || item == Blocks.BLAST_FURNACE.asItem() || item == Blocks.ENCHANTING_TABLE.asItem()
+                || item == Blocks.DISPENSER.asItem() || item == Items.REDSTONE || item == Items.WATER_BUCKET
+                || item == Blocks.SOUL_SAND.asItem() || item == ModRegistry.RELIC) {
             float inverseSpread = 400;
             for (int i = 0; i < 4; i++) {
                 ParticleUtil.spawnGlowParticle(world, pos.getX() + 0.4f + ArcaneMagic.RANDOM.nextFloat() / 5f, pos.getY() + 0.7f, pos.getZ() + 0.4f + ArcaneMagic.RANDOM.nextFloat() / 5f,

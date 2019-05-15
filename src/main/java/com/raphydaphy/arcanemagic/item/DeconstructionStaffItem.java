@@ -22,7 +22,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemProvider;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.recipe.Ingredient;
@@ -72,20 +72,20 @@ public class DeconstructionStaffItem extends Item {
             Map<Identifier, Recipe<CraftingInventory>> craftingRecipes = ((RecipeManagerMixin) ctx.getWorld().getRecipeManager()).getRecipes(RecipeType.CRAFTING);
             for (Map.Entry<Identifier, Recipe<CraftingInventory>> entry : craftingRecipes.entrySet()) {
                 Recipe<CraftingInventory> craftingRecipe = entry.getValue();
-                if (craftingRecipe.getOutput().getItem() == block.getItem()) {
+                if (craftingRecipe.getOutput().getItem() == block.asItem()) {
                     ctx.getWorld().playSound(ctx.getPlayer(), pos, ModSounds.DECONSTRUCT, SoundCategory.BLOCKS, 0.5f, 1);
                     if (ctx.getWorld().isClient) {
                         doParticles(ctx.getWorld(), pos);
                         return ActionResult.SUCCESS;
                     }
 
-                    Map<ItemProvider, Integer> items = new HashMap<>();
+                    Map<ItemConvertible, Integer> items = new HashMap<>();
                     for (Ingredient ingredient : craftingRecipe.getPreviewInputs()) {
                         if (!ingredient.isEmpty()) {
                             ((IngredientHooks) (Object) ingredient).validateStackArray();
                             ItemStack[] stacks = ((IngredientHooks) (Object) ingredient).getCachedStackArray();
                             if (stacks.length > 0) {
-                                ItemProvider provider = stacks[0].getItem();
+                                ItemConvertible provider = stacks[0].getItem();
                                 if (!items.containsKey(stacks[0].getItem())) {
                                     items.put(provider, 1);
                                 } else {
@@ -95,7 +95,7 @@ public class DeconstructionStaffItem extends Item {
                         }
                     }
 
-                    for (Map.Entry<ItemProvider, Integer> itemPair : items.entrySet()) {
+                    for (Map.Entry<ItemConvertible, Integer> itemPair : items.entrySet()) {
                         ItemStack item = new ItemStack(itemPair.getKey(), itemPair.getValue());
                         int output = craftingRecipe.getOutput().getAmount();
                         if (output > 1) {
@@ -131,7 +131,7 @@ public class DeconstructionStaffItem extends Item {
 
     private void doParticles(World world, BlockPos pos) {
         BlockState state = world.getBlockState(pos);
-        int color = MinecraftClient.getInstance().getBlockColorMap().method_1691(state, world, pos);
+        int color = MinecraftClient.getInstance().getBlockColorMap().getColor(state, world, pos);
         if (state.getBlock() instanceof FallingBlock) {
             color = ((FallingBlock) state.getBlock()).getColor(state);
         }

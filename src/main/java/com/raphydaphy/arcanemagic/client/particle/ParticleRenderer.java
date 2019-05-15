@@ -29,7 +29,7 @@ public class ParticleRenderer {
         if (!MinecraftClient.getInstance().isPaused()) {
             for (int i = 0; i < particles.size(); i++) {
                 if (particles.get(i) != null && particles.get(i) instanceof ArcaneMagicParticle && ((ArcaneMagicParticle) particles.get(i)).alive()) {
-                    particles.get(i).update();
+                    particles.get(i).tick();
                 } else {
                     particles.remove(i);
                 }

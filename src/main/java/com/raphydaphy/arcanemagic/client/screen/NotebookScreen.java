@@ -19,8 +19,8 @@ import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.TranslatableTextComponent;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
@@ -38,10 +38,10 @@ public class NotebookScreen extends Screen {
     private List<NotebookElement> rightElements = new ArrayList<>();
 
     public NotebookScreen(ItemStack stack) {
-        super(new TranslatableTextComponent("item.arcanemagic.notebook"));
+        super(new TranslatableComponent("item.arcanemagic.notebook"));
         CompoundTag tag = stack.getTag();
         if (tag != null && tag.containsKey(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)) {
-            NotebookSection section = NotebookSectionRegistry.get(Identifier.create(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
+            NotebookSection section = NotebookSectionRegistry.get(new Identifier(tag.getString(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)));
             int page = tag.getInt(ArcaneMagicConstants.NOTEBOOK_PAGE_KEY);
             int contentsPage = tag.getInt(ArcaneMagicConstants.NOTEBOOK_CONTENTS_PAGE_KEY);
 

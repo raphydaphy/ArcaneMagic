@@ -13,7 +13,7 @@ import net.minecraft.client.gui.Screen;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemProvider;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -152,7 +152,7 @@ class BasicNotebookElements {
         private int endX;
         private int endY;
 
-        ItemInfoButton(NotebookSection link, ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys) {
+        ItemInfoButton(NotebookSection link, ItemConvertible item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys) {
             super(item, unlocalizedTitle, unlocalizedDesc, descKeys);
             this.link = link;
         }
@@ -196,11 +196,11 @@ class BasicNotebookElements {
     }
 
     public static class ItemInfo extends Writable {
-        private final ItemProvider item;
+        private final ItemConvertible item;
         private final String unlocalizedTitle;
         int color = -1;
 
-        ItemInfo(ItemProvider item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys) {
+        ItemInfo(ItemConvertible item, String unlocalizedTitle, String unlocalizedDesc, Object... descKeys) {
             super(unlocalizedDesc, descKeys);
             this.item = item;
             this.unlocalizedTitle = unlocalizedTitle;

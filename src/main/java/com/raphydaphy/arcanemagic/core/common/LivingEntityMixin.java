@@ -10,6 +10,7 @@ import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.crochet.network.PacketHandler;
+import net.minecraft.ChatFormat;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -19,10 +20,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Style;
-import net.minecraft.text.TextFormat;
-import net.minecraft.text.TranslatableTextComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -41,8 +41,6 @@ public abstract class LivingEntityMixin {
 
     @Shadow
     protected boolean dead;
-
-    @Shadow public abstract boolean attack(Entity entity_1);
 
     @Inject(at = @At(value = "HEAD"), method = "dropLoot", cancellable = true)
     private void method_16077(DamageSource source, boolean killedByPlayer, CallbackInfo info) {
@@ -93,10 +91,10 @@ public abstract class LivingEntityMixin {
                                 kills++;
                                 giveParchment = true;
                             }
-                            ((PlayerEntity) attacker).addChatMessage(new TranslatableTextComponent(message).setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
+                            ((PlayerEntity) attacker).addChatMessage(new TranslatableComponent(message).setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)), false);
                         } else if (kills == 1 && paper != -1 && !((DataHolder)attacker).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.GIVEN_PARCHMENT_KEY)) {
                             giveParchment = true;
-                            ((PlayerEntity) attacker).addChatMessage(new TranslatableTextComponent("message.arcanemagic.drowned_paper_second").setStyle(new Style().setColor(TextFormat.DARK_PURPLE)), false);
+                            ((PlayerEntity) attacker).addChatMessage(new TranslatableComponent("message.arcanemagic.drowned_paper_second").setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)), false);
                         }
                     }
 

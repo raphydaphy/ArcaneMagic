@@ -16,8 +16,8 @@ public class GlowParticle extends ParticleBase {
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void tick() {
+        super.tick();
         this.prevAngle = angle;
         angle += 1.0f;
     }

@@ -91,7 +91,7 @@ public class WorldRendererMixin {
             GlStateManager.shadeModel(7425);
             GlStateManager.pushMatrix();
             GlStateManager.rotatef(90.0F, 1.0F, 0.0F, 0.0F);
-            GlStateManager.rotatef(MathHelper.sin(this.world.method_8442(tickDelta)) < 0.0F ? 180.0F : 0.0F, 0.0F, 0.0F, 1.0F);
+            GlStateManager.rotatef(MathHelper.sin(this.world.getSkyAngleRadians(tickDelta)) < 0.0F ? 180.0F : 0.0F, 0.0F, 0.0F, 1.0F);
             GlStateManager.rotatef(90.0F, 0.0F, 0.0F, 1.0F);
             float_11 = floats_1[0];
             float_12 = floats_1[1];

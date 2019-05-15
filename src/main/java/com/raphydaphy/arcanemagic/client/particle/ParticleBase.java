@@ -40,8 +40,8 @@ public abstract class ParticleBase extends SpriteBillboardParticle implements Ar
     }
 
     @Override
-    public void update() {
-        super.update();
+    public void tick() {
+        super.tick();
         if (ArcaneMagic.RANDOM.nextInt(6) == 0) {
             this.age++;
         }
@@ -58,7 +58,7 @@ public abstract class ParticleBase extends SpriteBillboardParticle implements Ar
     }
 
     @Override
-    public ParticleTextureSheet getTextureSheet() {
+    public ParticleTextureSheet getType() {
         // Similar to getFXLayer
         // CUSTOM
         return ParticleTextureSheet.CUSTOM;

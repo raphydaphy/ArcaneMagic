@@ -6,11 +6,7 @@ import net.minecraft.block.BlockRenderLayer;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.block.BlockRenderManager;
-import net.minecraft.client.render.chunk.ChunkOcclusionGraphBuilder;
-import net.minecraft.client.render.chunk.ChunkRenderData;
-import net.minecraft.client.render.chunk.ChunkRenderTask;
-import net.minecraft.client.render.chunk.ChunkRenderer;
-import net.minecraft.client.world.SafeWorldView;
+import net.minecraft.client.render.chunk.*;
 import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -29,7 +25,7 @@ import java.util.Set;
 @Mixin(ChunkRenderer.class)
 public abstract class ChunkRendererMixin {
     @Inject(at = @At(value = "INVOKE_ASSIGN", target = "net/minecraft/block/Block.getRenderLayer()Lnet/minecraft/block/BlockRenderLayer;"), method = "rebuildChunk(FFFLnet/minecraft/client/render/chunk/ChunkRenderTask;)V", locals = LocalCapture.CAPTURE_FAILHARD)
-    private void rebuildChunk(float float_1, float float_2, float float_3, ChunkRenderTask chunkRenderTask_1, CallbackInfo cbInfo, ChunkRenderData chunkRenderData_1, BlockPos blockPos_1, BlockPos blockPos_2, ChunkOcclusionGraphBuilder occlusionGraphBuilder, Set hashSet, SafeWorldView safeWorldView, boolean[] booleans_1, Random random_1, BlockRenderManager blockRenderManager_1, Iterator var16, BlockPos blockPos_3, BlockState blockState_1, Block block_1, BlockRenderLayer normalRenderLayer) {
+    private void rebuildChunk(float float_1, float float_2, float float_3, ChunkRenderTask chunkRenderTask_1, CallbackInfo cbInfo, ChunkRenderData chunkRenderData_1, BlockPos blockPos_1, BlockPos blockPos_2, ChunkOcclusionGraphBuilder occlusionGraphBuilder, Set hashSet, ChunkRendererRegion safeWorldView, boolean[] booleans_1, Random random_1, BlockRenderManager blockRenderManager_1, Iterator var16, BlockPos blockPos_3, BlockState blockState_1, Block block_1, BlockRenderLayer normalRenderLayer) {
         if (block_1 instanceof IExtraRenderLayers) {
             for (BlockRenderLayer layer : ((IExtraRenderLayers) block_1).getExtraRenderLayers()) {
                 if (layer == normalRenderLayer) {

@@ -64,7 +64,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment {
         ItemStack stack = player.getStackInHand(hand);
         CompoundTag tag = stack.getTag();
         if (player.isSneaking() && tag != null && tag.containsKey(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY)) {
-            if (!player.getItemCooldownManager().isCooldown(ModRegistry.IRON_DAGGER) && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) <= 0) {
+            if (!player.getItemCooldownManager().isCoolingDown(ModRegistry.IRON_DAGGER) && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) <= 0) {
                 tag.putBoolean(ArcaneMagicConstants.DAGGER_IS_ACTIVE_KEY, true);
                 tag.putInt(ArcaneMagicConstants.DAGGER_TIMER_KEY, activeDuration(stack));
                 if (world.isClient) {

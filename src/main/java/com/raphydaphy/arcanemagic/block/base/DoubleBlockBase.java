@@ -115,7 +115,7 @@ public class DoubleBlockBase extends OrientableBlockBase implements MultiBlock {
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> map) {
         super.appendProperties(map);
-        map.with(HALF);
+        map.add(HALF);
     }
 
     @Override

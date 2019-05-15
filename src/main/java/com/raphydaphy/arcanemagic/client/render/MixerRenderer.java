@@ -8,11 +8,11 @@ import com.raphydaphy.arcanemagic.util.RenderUtils;
 import com.raphydaphy.arcanemagic.util.UVSet;
 import io.github.prospector.silk.fluid.FluidInstance;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.color.world.BiomeColors;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.GuiLighting;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
-import net.minecraft.client.render.block.BiomeColors;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.entity.player.PlayerEntity;
@@ -97,7 +97,7 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity> {
 
             MinecraftClient.getInstance().getTextureManager().bindTexture(waterTexture);
             builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
-            int waterColor = BiomeColors.waterColorAt(entity.getWorld(), entity.getPos());
+            int waterColor = BiomeColors.getWaterColor(entity.getWorld(), entity.getPos());
             RenderUtils.renderBox(builder, renderX + pixel * 3, renderY + pixel * 1, renderZ + pixel * 3, renderX + pixel * 13, renderY + pixel * (1 + water), renderZ + pixel * 13, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 200, new RenderUtils.TextureBounds[]{
                     new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512),
                     new RenderUtils.TextureBounds(0, frame * 16, 12, 10 + frame * 16, 16, 512),
@@ -118,7 +118,7 @@ public class MixerRenderer extends BlockEntityRenderer<MixerBlockEntity> {
         double pixel = 1d / 16d;
         MinecraftClient.getInstance().getTextureManager().bindTexture(ringTexture);
         builder.begin(GL11.GL_QUADS, VertexFormats.POSITION_UV_COLOR_NORMAL);
-        int waterColor = BiomeColors.waterColorAt(entity.getWorld(), entity.getPos());
+        int waterColor = BiomeColors.getWaterColor(entity.getWorld(), entity.getPos());
         RenderUtils.renderBox(builder, renderX + pixel * 4, renderY + pixel * 14, renderZ + pixel * 4,
                 renderX + pixel * 12, renderY + 1, renderZ + pixel * 12, (waterColor >> 16 & 255), (waterColor >> 8 & 255), (waterColor & 255), 255, ring, new int[]{1, 1, 1, 1, 1, 1});
         tess.draw();

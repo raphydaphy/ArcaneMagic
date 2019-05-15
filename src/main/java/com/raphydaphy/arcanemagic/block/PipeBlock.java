@@ -7,14 +7,14 @@ import io.github.prospector.silk.fluid.FluidInstance;
 import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.VerticalEntityPosition;
+import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
-import net.minecraft.text.StringTextComponent;
 import net.minecraft.util.Hand;
-import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -79,8 +79,6 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 
     public static EnumProperty<PipeConnection> getProp(Direction dir) {
         switch (dir) {
-            case UP:
-                return UP;
             case DOWN:
                 return DOWN;
             case NORTH:
@@ -98,13 +96,15 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
 
     @Override
     public boolean activate(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult info) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (!player.isSneaking() && blockEntity instanceof PipeBlockEntity) {
-            if (!world.isClient) {
-                PipeBlockEntity pipe = (PipeBlockEntity) blockEntity;
-                player.addChatMessage(new StringTextComponent("Storing " + pipe.getFluids(null)[0].getAmount() + " Droplets recieved from " + pipe.getFrom().toString()), true);
+        if (player.isCreative()) {
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if (!player.isSneaking() && blockEntity instanceof PipeBlockEntity) {
+                if (!world.isClient) {
+                    PipeBlockEntity pipe = (PipeBlockEntity) blockEntity;
+                    player.addChatMessage(new TextComponent("Storing " + pipe.getFluids(null)[0].getAmount() + " Droplets recieved from " + pipe.getFrom().toString()), true);
+                }
+                return true;
             }
-            return true;
         }
         return false;
     }
@@ -115,7 +115,7 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, VerticalEntityPosition vep) {
+    public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, EntityContext vep) {
         VoxelShape shape = CENTER_SHAPE;
 
         PipeConnection connection = state.get(UP);
@@ -153,7 +153,7 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
     @Override
     protected void appendProperties(StateFactory.Builder<Block, BlockState> map) {
         super.appendProperties(map);
-        map.with(UP, DOWN, NORTH, EAST, SOUTH, WEST);
+        map.add(UP, DOWN, NORTH, EAST, SOUTH, WEST);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
         return PipeConnection.NONE;
     }
 
-    public enum PipeConnection implements StringRepresentable {
+    public enum PipeConnection implements StringIdentifiable {
         NONE,
         PIPE,
         BLOCK;
