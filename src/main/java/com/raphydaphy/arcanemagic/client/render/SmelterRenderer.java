@@ -18,7 +18,7 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.cooking.BlastingRecipe;
+import net.minecraft.recipe.BlastingRecipe;
 import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 

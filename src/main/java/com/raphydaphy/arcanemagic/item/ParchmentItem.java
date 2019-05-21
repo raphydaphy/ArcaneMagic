@@ -50,6 +50,17 @@ public class ParchmentItem extends Item {
                 return new TypedActionResult<>(ActionResult.FAIL, stack);
             }
         }
+
+        if (stack.getItem() == ModRegistry.PARCHMENT && player.isSneaking()) {
+            if (!world.isClient) {
+                if (player.dimension == ModRegistry.SOUL_DIMENSION) {
+                    player.changeDimension(DimensionType.OVERWORLD);
+                } else {
+                    player.changeDimension(ModRegistry.SOUL_DIMENSION);
+                }
+            }
+            return new TypedActionResult<>(ActionResult.SUCCESS, stack);
+        }
         return new TypedActionResult<>(ActionResult.PASS, stack);
     }
 

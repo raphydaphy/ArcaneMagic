@@ -8,7 +8,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.CraftingResultInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.RecipeUnlocker;
-import net.minecraft.recipe.crafting.CraftingRecipe;
+import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;

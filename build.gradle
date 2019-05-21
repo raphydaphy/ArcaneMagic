@@ -52,9 +52,10 @@ dependencies {
 	modCompile "cloth:ClothEvents:${project.cloth_version}"
 	modCompile "roughly-enough-items:RoughlyEnoughItems:${project.rei_version}"
 	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
+	modCompile "informed-load-fabric:informedload:${project.informedload_version}"
+	modCompile "auto-config:auto:config:${project.autoconfig_version}"
 
 	// Nested Jars
-	include "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	include "io.github.prospector.silk:SilkAPI:${project.silk_version}"
 	include "multiblock-api:MultiBlockAPI:${project.multiblock_api_version}"
 	include "crochet:Crochet:${project.crochet_version}"
@@ -95,7 +96,8 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 }
 
 jar {
-	from "LICENSE"
+	from "LICENSE-CODE"
+	from "LICENCE-ART"
 }
 
 bintray {

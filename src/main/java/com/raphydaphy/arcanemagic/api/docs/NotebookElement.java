@@ -2,7 +2,7 @@ package com.raphydaphy.arcanemagic.api.docs;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.Screen;
+import net.minecraft.client.gui.screen.Screen;
 
 public interface NotebookElement {
     @Environment(EnvType.CLIENT)

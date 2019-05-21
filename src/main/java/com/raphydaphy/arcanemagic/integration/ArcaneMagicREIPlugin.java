@@ -5,7 +5,7 @@ import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import me.shedaniel.rei.api.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.crafting.CraftingRecipe;
+import net.minecraft.recipe.CraftingRecipe;
 import net.minecraft.util.Identifier;
 
 public class ArcaneMagicREIPlugin implements REIPluginEntry {

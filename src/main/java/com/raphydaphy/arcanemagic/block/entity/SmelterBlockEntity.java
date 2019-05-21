@@ -20,7 +20,7 @@ import net.minecraft.inventory.BasicInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.cooking.BlastingRecipe;
+import net.minecraft.recipe.BlastingRecipe;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.Tickable;
 import net.minecraft.util.math.Direction;
