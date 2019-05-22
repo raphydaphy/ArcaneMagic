@@ -53,10 +53,10 @@ public class ParchmentItem extends Item {
 
         if (stack.getItem() == ModRegistry.PARCHMENT && player.isSneaking()) {
             if (!world.isClient) {
-                if (player.dimension == ModRegistry.SOUL_DIMENSION) {
+                if (player.dimension == ModRegistry.VOID_DIM) {
                     player.changeDimension(DimensionType.OVERWORLD);
                 } else {
-                    player.changeDimension(ModRegistry.SOUL_DIMENSION);
+                    player.changeDimension(ModRegistry.VOID_DIM);
                 }
             }
             return new TypedActionResult<>(ActionResult.SUCCESS, stack);

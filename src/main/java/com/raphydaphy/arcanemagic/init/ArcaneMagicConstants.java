@@ -15,6 +15,7 @@ public class ArcaneMagicConstants {
 
     public static final Identifier GLOW_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/glow_particle");
     public static final Identifier SMOKE_PARTICLE_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "particle/smoke_particle");
+    public static final Identifier FLOWING_LIQUID_SOUL_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "block/flowing_liquified_soul");
     public static final Identifier NOTEBOOK_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/notebook.png");
 
     // Dimensions of the notebook texture with and without the bottom icons

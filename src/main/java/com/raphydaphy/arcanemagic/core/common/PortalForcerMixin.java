@@ -20,13 +20,13 @@ public class PortalForcerMixin {
     @Inject(method = "usePortal", at = @At("HEAD"), cancellable = true)
     private void usePortal(Entity entity, float float_1, CallbackInfoReturnable<Boolean> info) {
         // Going to soul dimension
-        if (world.getDimension().getType() == ModRegistry.SOUL_DIMENSION) {
+        if (world.getDimension().getType() == ModRegistry.VOID_DIM) {
             info.setReturnValue(true);
             info.cancel();
         }
 
         // Going from the soul dimension
-        if (entity.getEntityWorld().getDimension().getType() == ModRegistry.SOUL_DIMENSION) {
+        if (entity.getEntityWorld().getDimension().getType() == ModRegistry.VOID_DIM) {
             info.setReturnValue(true);
             info.cancel();
         }

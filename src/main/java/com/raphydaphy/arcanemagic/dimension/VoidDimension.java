@@ -16,8 +16,8 @@ import net.minecraft.world.gen.chunk.FlatChunkGeneratorConfig;
 
 import javax.annotation.Nullable;
 
-public class SoulDimension extends Dimension {
-    public SoulDimension(World world, DimensionType type) {
+public class VoidDimension extends Dimension {
+    public VoidDimension(World world, DimensionType type) {
         super(world, type);
     }
 
@@ -67,6 +67,6 @@ public class SoulDimension extends Dimension {
 
     @Override
     public DimensionType getType() {
-        return ModRegistry.SOUL_DIMENSION;
+        return ModRegistry.VOID_DIM;
     }
 }

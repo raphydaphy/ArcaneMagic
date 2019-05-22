@@ -6,7 +6,7 @@ import com.raphydaphy.arcanemagic.block.*;
 import com.raphydaphy.arcanemagic.block.base.FluidBlockBase;
 import com.raphydaphy.arcanemagic.block.entity.*;
 import com.raphydaphy.arcanemagic.dimension.ModDimensionType;
-import com.raphydaphy.arcanemagic.dimension.SoulDimension;
+import com.raphydaphy.arcanemagic.dimension.VoidDimension;
 import com.raphydaphy.arcanemagic.fluid.LiquifiedSoulFluid;
 import com.raphydaphy.arcanemagic.item.*;
 import com.raphydaphy.arcanemagic.network.NotebookSectionReadPacket;
@@ -41,8 +41,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
-
-import java.text.Format;
 
 @SuppressWarnings("WeakerAccess")
 public class ModRegistry {
@@ -89,7 +87,7 @@ public class ModRegistry {
     public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
     public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 
-    public static DimensionType SOUL_DIMENSION = Registry.register(Registry.DIMENSION, 37, ArcaneMagic.PREFIX + "soul_dimension", new ModDimensionType(37, "_amsouldim", "AMSOULDIM", SoulDimension::new, false));
+    public static DimensionType VOID_DIM = Registry.register(Registry.DIMENSION, 37, ArcaneMagic.PREFIX + "void", new ModDimensionType(37, "_amvoid", "AMVOID", VoidDimension::new, false));
 
     public static void init() {
         // Sound Registration

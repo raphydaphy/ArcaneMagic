@@ -5,10 +5,7 @@ import com.raphydaphy.arcanemagic.init.ModRegistry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.GlBuffer;
 import net.minecraft.client.render.*;
-import net.minecraft.client.texture.TextureManager;
-import net.minecraft.client.util.GlAllocationUtils;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import org.spongepowered.asm.mixin.Final;
@@ -17,8 +14,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Random;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
@@ -49,7 +44,7 @@ public class WorldRendererMixin {
 
     @Inject(at = @At("HEAD"), method = "renderSky", cancellable = true)
     private void renderSky(float tickDelta, CallbackInfo info) {
-        if (client.world.dimension.getType() == ModRegistry.SOUL_DIMENSION) {
+        if (client.world.dimension.getType() == ModRegistry.VOID_DIM) {
             renderSoulDimensionSky(tickDelta);
             info.cancel();
         }

@@ -5,6 +5,7 @@ import com.raphydaphy.arcanemagic.client.model.ArcaneModelLoader;
 import com.raphydaphy.arcanemagic.client.model.IronDaggerModel;
 import com.raphydaphy.arcanemagic.client.particle.ParticleRenderer;
 import com.raphydaphy.arcanemagic.client.render.*;
+import com.raphydaphy.arcanemagic.fluid.ModFluidRenderHandler;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModCutscenes;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
@@ -18,8 +19,10 @@ import net.fabricmc.fabric.api.client.render.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.ModelIdentifier;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 
 public class ArcaneMagicClient implements ClientModInitializer {
@@ -43,6 +46,7 @@ public class ArcaneMagicClient implements ClientModInitializer {
             CutsceneWorldLoader.copyCutsceneWorld(new Identifier(ArcaneMagic.DOMAIN, "cutscenes/worlds/nether.cworld"), "nether.cworld");
             registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
             registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
+            registry.register(ArcaneMagicConstants.FLOWING_LIQUID_SOUL_TEXTURE);
         });
 
         ClientTickCallback.EVENT.register((client) ->
@@ -53,6 +57,8 @@ public class ArcaneMagicClient implements ClientModInitializer {
                 HudRenderer.update();
             }
         });
+
+        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(new ModFluidRenderHandler());
 
         ArcaneModelLoader.registerModel(new ModelIdentifier(ModRegistry.IRON_DAGGER_IDENTIFIER, "inventory"), (loader) -> new IronDaggerModel());
 
