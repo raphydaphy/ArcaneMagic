@@ -28,6 +28,8 @@ public class ArcaneMagicConstants {
     public static final String NOTEBOOK_CONTENTS_PAGE_KEY = "NotebookContentsPage";
     public static final String NOTEBOOK_UPDATES_KET = "NotebookUpdates";
 
+    public static final String ENTERED_VOID_POS_KEY = "EnteredVoidPos";
+
     // Amount of liquified soul produced by a single unit of soul
     public static final int LIQUIFIED_SOUL_RATIO = DropletValues.NUGGET + 5;
     public static final int SOUL_PER_SMELT = 2;
