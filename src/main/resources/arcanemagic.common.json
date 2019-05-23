@@ -15,7 +15,8 @@
 	"RecipeManagerMixin",
 	"IngredientHooks",
 	"CraftingTableContainerMixin",
-  	"PortalForcerMixin"
+  	"PortalForcerMixin",
+  	"EntityMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

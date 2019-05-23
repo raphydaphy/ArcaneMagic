@@ -4,10 +4,14 @@ import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
 import com.raphydaphy.crochet.data.PlayerData;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.structure.Structure;
+import net.minecraft.structure.StructurePlacementData;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PortalForcer;
 import org.spongepowered.asm.mixin.Final;
@@ -31,7 +35,13 @@ public class PortalForcerMixin {
                 PlayerData.get((PlayerEntity) entity, ArcaneMagic.DOMAIN).putLong(ArcaneMagicConstants.ENTERED_VOID_POS_KEY, entity.getBlockPos().asLong());
                 PlayerData.markDirty((PlayerEntity)entity);
             }
-            entity.setPosition(0, 50, 0);
+            entity.setPosition(0, 52, 0);
+            Structure voidBridge = this.world.getStructureManager().getStructure(new Identifier(ArcaneMagic.DOMAIN, "structures/voidbridge"));
+            if (voidBridge != null) {
+                voidBridge.place(this.world, new BlockPos(0, 49, 0), new StructurePlacementData());
+            } else {
+                ArcaneMagic.getLogger().error("Failed to build void bridge: NullPointerException! This should not happen!");
+            }
             info.setReturnValue(true);
             info.cancel();
         }
@@ -49,17 +59,5 @@ public class PortalForcerMixin {
             info.setReturnValue(true);
             info.cancel();
         }
-    }
-
-    @Inject(at= @At("HEAD"), method="createPortal", cancellable = true)
-    private void createPortal(Entity entity, CallbackInfoReturnable<Boolean> info) {
-        if (world.getDimension().getType() == ModRegistry.VOID_DIM) {
-            System.out.println("going to soul dim");
-        }
-
-        else if (entity.getEntityWorld().getDimension().getType() == ModRegistry.VOID_DIM) {
-            System.out.println("going from soul dim");
-        }
-        System.out.println("CREATION!!!");
     }
 }

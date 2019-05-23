@@ -87,7 +87,7 @@ public class ModRegistry {
     public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
     public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
 
-    public static DimensionType VOID_DIM = Registry.register(Registry.DIMENSION, 37, ArcaneMagic.PREFIX + "void", new ModDimensionType(37, "_amvoid", "AMVOID", VoidDimension::new, false));
+    public static DimensionType VOID_DIM = Registry.register(Registry.DIMENSION, 38, ArcaneMagic.PREFIX + "void", new ModDimensionType(37, "_amvoid", "AMVOID", VoidDimension::new, false));
 
     public static void init() {
         // Sound Registration
