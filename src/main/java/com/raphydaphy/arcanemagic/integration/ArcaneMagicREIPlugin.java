@@ -35,8 +35,8 @@ public class ArcaneMagicREIPlugin implements REIPluginEntry {
         recipeHelper.registerRecipeVisibilityHandler((recipeCategory, recipeDisplay) ->
         {
             MinecraftClient client = MinecraftClient.getInstance();
-            if (recipeDisplay.getRecipe().isPresent()) {
-                Recipe<?> recipe = (Recipe<?>) recipeDisplay.getRecipe().get();
+            if (recipeDisplay.getRecipe().isPresent() && recipeDisplay.getRecipe().get() instanceof Recipe) {
+                Recipe recipe = (Recipe) recipeDisplay.getRecipe().get();
                 if (recipe.getId().getNamespace().equals(ArcaneMagic.DOMAIN)) {
                     if (recipe instanceof CraftingRecipe) {
                         return (!recipe.isIgnoredInRecipeBook() && !client.player.getRecipeBook().contains(recipe)) ? DisplayVisibility.NEVER_VISIBLE : DisplayVisibility.ALWAYS_VISIBLE;
