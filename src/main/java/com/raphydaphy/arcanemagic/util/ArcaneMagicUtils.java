@@ -182,7 +182,7 @@ public class ArcaneMagicUtils {
         if (!player.isSneaking() && !held.isEmpty()) {
             if (stackInTable.isEmpty()) {
                 ItemStack insertStack = held.copy();
-                insertStack.setAmount(1);
+                insertStack.setCount(1);
 
 
                 // insertStack = 1 item to insert
@@ -191,9 +191,9 @@ public class ArcaneMagicUtils {
                 if (((Inventory) container).isValidInvStack(slot, insertStack)) {
 
                     if (!world.isClient) {
-                        if (held.getAmount() > 1) {
+                        if (held.getCount() > 1) {
                             if (!player.isCreative()) {
-                                held.subtractAmount(1);
+                                held.decrement(1);
                             }
                         } else if (!player.isCreative()) {
                             player.setStackInHand(hand, ItemStack.EMPTY);
@@ -261,7 +261,7 @@ public class ArcaneMagicUtils {
             for (int slot = 0; slot < inventory.getInvSize(); ++slot) {
                 ItemStack stack = inventory.getInvStack(slot);
                 if (!stack.isEmpty()) {
-                    percent += (float) stack.getAmount() / (float) Math.min(inventory.getInvMaxStackAmount(), stack.getMaxAmount());
+                    percent += (float) stack.getCount() / (float) Math.min(inventory.getInvMaxStackAmount(), stack.getMaxCount());
                     ++count;
                 }
             }

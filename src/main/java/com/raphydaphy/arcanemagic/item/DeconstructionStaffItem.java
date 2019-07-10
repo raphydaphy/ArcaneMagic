@@ -41,7 +41,7 @@ import java.util.Random;
 
 public class DeconstructionStaffItem extends Item {
     public DeconstructionStaffItem() {
-        super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+        super(new Item.Settings().group(ArcaneMagic.GROUP).maxCount(1));
     }
 
     @Override
@@ -97,24 +97,24 @@ public class DeconstructionStaffItem extends Item {
 
                     for (Map.Entry<ItemConvertible, Integer> itemPair : items.entrySet()) {
                         ItemStack item = new ItemStack(itemPair.getKey(), itemPair.getValue());
-                        int output = craftingRecipe.getOutput().getAmount();
+                        int output = craftingRecipe.getOutput().getCount();
                         if (output > 1) {
-                            if (item.getAmount() >= output * 2) {
-                                item.setAmount(item.getAmount() / output);
+                            if (item.getCount() >= output * 2) {
+                                item.setCount(item.getCount() / output);
                             } else {
                                 if (ArcaneMagic.RANDOM.nextInt(2) == 0) {
-                                    item.setAmount(1);
+                                    item.setCount(1);
                                 } else {
-                                    item.setAmount(0);
+                                    item.setCount(0);
                                 }
                             }
                         }
 
-                        if (item.getAmount() > 1) {
-                            item.setAmount((int) Math.ceil(item.getAmount() / 2f));
+                        if (item.getCount() > 1) {
+                            item.setCount((int) Math.ceil(item.getCount() / 2f));
                         }
 
-                        if (item.getAmount() > 0) {
+                        if (item.getCount() > 0) {
                             ItemEntity entity = new ItemEntity(ctx.getWorld(), pos.getX() + ArcaneMagic.RANDOM.nextFloat(), pos.getY() + ArcaneMagic.RANDOM.nextFloat(), pos.getZ() + ArcaneMagic.RANDOM.nextFloat(), item);
                             ctx.getWorld().spawnEntity(entity);
                         }
@@ -154,7 +154,7 @@ public class DeconstructionStaffItem extends Item {
     }
 
     @Override
-    public void onCrafted(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
         if (!world.isClient && player != null) {
             if (!((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_DECONSTRUCTION_STAFF_KEY)) {
                 PacketHandler.sendToClient(new ProgressionUpdateToastPacket(false), (ServerPlayerEntity) player);

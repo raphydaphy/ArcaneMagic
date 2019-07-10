@@ -24,8 +24,8 @@ import java.util.UUID;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-    @Inject(at = @At("RETURN"), method = "areEqual", cancellable = true)
-    private static void areEqual(ItemStack one, ItemStack two, CallbackInfoReturnable<Boolean> info) {
+    @Inject(at = @At("RETURN"), method = "areTagsEqual", cancellable = true)
+    private static void areTagsEqual(ItemStack one, ItemStack two, CallbackInfoReturnable<Boolean> info) {
         CompoundTag tagOne;
         CompoundTag tagTwo;
         if (one.getDamage() == two.getDamage()) {
@@ -48,8 +48,8 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract Item getItem();
 
-    @Inject(at = @At("RETURN"), method = "getDurability", cancellable = true)
-    private void getDurability(CallbackInfoReturnable<Integer> info) {
+    @Inject(at = @At("RETURN"), method = "getMaxDamage", cancellable = true)
+    private void getMaxDamage(CallbackInfoReturnable<Integer> info) {
         CompoundTag tag;
         if (getItem() instanceof ICrystalEquipment && (tag = getTag()) != null) {
             ArcaneMagicUtils.ForgeCrystal passive = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_PASSIVE_CRYSTAL_KEY));
@@ -59,8 +59,8 @@ public abstract class ItemStackMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "applyDamage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
-    private void applyDamage(int amount, Random rand, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> info) {
+    @Inject(at = @At("HEAD"), method = "damage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
+    private void damage(int amount, Random rand, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> info) {
         CompoundTag tag = getTag();
         if (tag != null && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0) {
             ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
@@ -80,7 +80,7 @@ public abstract class ItemStackMixin {
             ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
 
             double speed = dagger.getSpeed();
-            float damage = dagger.getWeaponDamage();
+            float damage = dagger.getAttackDamage();
 
             if (passive == ArcaneMagicUtils.ForgeCrystal.GOLD) {
                 speed += 0.5;

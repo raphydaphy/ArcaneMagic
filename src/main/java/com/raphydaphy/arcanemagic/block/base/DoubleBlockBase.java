@@ -89,7 +89,8 @@ public class DoubleBlockBase extends OrientableBlockBase implements MultiBlock {
         BlockPos above = ctx.getBlockPos();
         if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).canReplace(ctx)) {
             FluidState fluid = ctx.getWorld().getFluidState(ctx.getBlockPos());
-            return this.getDefaultState().with(FACING, ctx.getPlayerHorizontalFacing().getOpposite()).with(HALF, DoubleBlockHalf.LOWER).with(WATERLOGGED, fluid.getFluid() == Fluids.WATER);
+            return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite()).with(HALF, DoubleBlockHalf.LOWER).with(WATERLOGGED, fluid.getFluid() == Fluids.WATER);
+
         } else {
             return null;
         }

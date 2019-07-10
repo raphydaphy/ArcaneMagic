@@ -10,7 +10,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.text.LiteralText;
 import net.minecraft.state.StateFactory;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.util.Hand;
@@ -64,12 +64,13 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
         WEST_PIPE_SHAPE = Block.createCuboidShape(0, 6, 6, 6, 10, 10);
         WEST_BLOCK_SHAPE = VoxelShapes.union(Block.createCuboidShape(2, 6, 6, 6, 10, 10), Block.createCuboidShape(0, 4, 4, 2, 12, 12));
 
-        UP = EnumProperty.create("connection_up", PipeConnection.class);
-        DOWN = EnumProperty.create("connection_down", PipeConnection.class);
-        NORTH = EnumProperty.create("connection_north", PipeConnection.class);
-        EAST = EnumProperty.create("connection_east", PipeConnection.class);
-        SOUTH = EnumProperty.create("connection_south", PipeConnection.class);
-        WEST = EnumProperty.create("connection_west", PipeConnection.class);
+        
+        UP = EnumProperty.of("connection_up", PipeConnection.class);
+        DOWN = EnumProperty.of("connection_down", PipeConnection.class);
+        NORTH = EnumProperty.of("connection_north", PipeConnection.class);
+        EAST = EnumProperty.of("connection_east", PipeConnection.class);
+        SOUTH = EnumProperty.of("connection_south", PipeConnection.class);
+        WEST = EnumProperty.of("connection_west", PipeConnection.class);
     }
 
     public PipeBlock() {
@@ -101,7 +102,7 @@ public class PipeBlock extends WaterloggableBlockBase implements BlockEntityProv
             if (!player.isSneaking() && blockEntity instanceof PipeBlockEntity) {
                 if (!world.isClient) {
                     PipeBlockEntity pipe = (PipeBlockEntity) blockEntity;
-                    player.addChatMessage(new TextComponent("Storing " + pipe.getFluids(null)[0].getAmount() + " Droplets recieved from " + pipe.getFrom().toString()), true);
+                    player.addChatMessage(new LiteralText("Storing " + pipe.getFluids(null)[0].getAmount() + " Droplets recieved from " + pipe.getFrom().toString()), true);
                 }
                 return true;
             }

@@ -12,7 +12,7 @@ public class SoulStorageItem extends Item {
     }
 
     @Override
-    public void onCrafted(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
         stack.getOrCreateTag().putInt(ArcaneMagicConstants.SOUL_KEY, 0);
     }
 }

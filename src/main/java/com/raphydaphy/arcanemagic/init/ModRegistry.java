@@ -25,7 +25,7 @@ import net.fabricmc.fabric.api.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.event.server.ServerTickCallback;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
 import net.fabricmc.fabric.api.registry.CommandRegistry;
-import net.minecraft.ChatFormat;
+import net.minecraft.util.Formatting;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.command.arguments.EntityArgumentType;
@@ -34,8 +34,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.ToolMaterials;
 import net.minecraft.item.BlockItem;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.text.Style;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -74,18 +74,18 @@ public class ModRegistry {
     public static ParchmentItem PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.BLANK);
     public static ParchmentItem WRITTEN_PARCHMENT = new ParchmentItem(ParchmentItem.ParchmentType.WRITTEN);
     public static NotebookItem NOTEBOOK = new NotebookItem();
-    public static SoulStorageItem SOUL_PENDANT = new SoulStorageItem(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+    public static SoulStorageItem SOUL_PENDANT = new SoulStorageItem(new Item.Settings().group(ArcaneMagic.GROUP).maxCount(1));
     public static CrystalItem EMERALD_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.EMERALD);
     public static CrystalItem DIAMOND_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.DIAMOND);
     public static CrystalItem GOLD_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.GOLD);
     public static CrystalItem LAPIS_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.LAPIS);
     public static CrystalItem REDSTONE_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.REDSTONE);
     public static CrystalItem COAL_CRYSTAL = new CrystalItem(ArcaneMagicUtils.ForgeCrystal.COAL);
-    public static Item PURE_CRYSTAL = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+    public static Item PURE_CRYSTAL = new Item(new Item.Settings().group(ArcaneMagic.GROUP));
     public static DaggerItem IRON_DAGGER = new DaggerItem(ToolMaterials.IRON, 3, -2.4f);
-    public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).stackSize(1).itemGroup(ArcaneMagic.GROUP));
+    public static BucketItem LIQUIFIED_SOUL_BUCKET = new BucketItem(LIQUIFIED_SOUL, (new Item.Settings()).recipeRemainder(Items.BUCKET).maxCount(1).group(ArcaneMagic.GROUP));
     public static DeconstructionStaffItem DECONSTRUCTION_STAFF = new DeconstructionStaffItem();
-    public static Item RELIC = new Item(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+    public static Item RELIC = new Item(new Item.Settings().group(ArcaneMagic.GROUP));
 
     public static DimensionType VOID_DIM = Registry.register(Registry.DIMENSION, 38, ArcaneMagic.PREFIX + "void", new ModDimensionType(37, "_amvoid", "AMVOID", VoidDimension::new, false));
 
@@ -105,15 +105,15 @@ public class ModRegistry {
         Registry.register(Registry.BLOCK, new Identifier(ArcaneMagic.DOMAIN, "forge"), FORGE);
 
         // Item Block Registration
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "altar", new BlockItem(ALTAR, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "analyzer", new BlockItem(ANALYZER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "crystal_infuser", new BlockItem(CRYSTAL_INFUSER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "mixer", new BlockItem(MIXER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "pipe", new BlockItem(PIPE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "pump", new BlockItem(PUMP, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "smelter", new BlockItem(SMELTER, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
-        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "forge", new BlockItem(FORGE, new Item.Settings().itemGroup(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "altar", new BlockItem(ALTAR, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "analyzer", new BlockItem(ANALYZER, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "crystal_infuser", new BlockItem(CRYSTAL_INFUSER, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "mixer", new BlockItem(MIXER, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "pipe", new BlockItem(PIPE, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "pump", new BlockItem(PUMP, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "smelter", new BlockItem(SMELTER, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "transfiguration_table", new BlockItem(TRANSFIGURATION_TABLE, new Item.Settings().group(ArcaneMagic.GROUP)));
+        Registry.register(Registry.ITEM, ArcaneMagic.PREFIX + "forge", new BlockItem(FORGE, new Item.Settings().group(ArcaneMagic.GROUP)));
 
         // Fluid Registration
         Registry.register(Registry.FLUID, "liquified_soul", LIQUIFIED_SOUL);
@@ -158,7 +158,7 @@ public class ModRegistry {
                             ServerPlayerEntity player = EntityArgumentType.getPlayer(command, "target");
                             ((DataHolder) player).getAllAdditionalData().remove(ArcaneMagic.DOMAIN);
                             ((DataHolder) player).markAdditionalDataDirty();
-                            command.getSource().sendFeedback(new TranslatableComponent("message.arcanemagic.data-reset").setStyle(new Style().setColor(ChatFormat.GREEN)), false);
+                            command.getSource().sendFeedback(new TranslatableText("message.arcanemagic.data-reset").setStyle(new Style().setColor(Formatting.GREEN)), false);
                             return 1;
                         }))))));
 

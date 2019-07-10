@@ -38,7 +38,7 @@ public class ForgeBlock extends OrientableBlockBase {
     private static final Map<ForgeBlockPart, Map<Direction, VoxelShape>> shapes = new HashMap<>();
 
     static {
-        PART = EnumProperty.create("part", ForgeBlockPart.class);
+        PART = EnumProperty.of("part", ForgeBlockPart.class);
 
         Map<Direction, VoxelShape> front_bottom = new HashMap<>();
         front_bottom.put(Direction.NORTH, VoxelShapes.union(Block.createCuboidShape(12, 8, 16, 4, 12, 10), Block.createCuboidShape(14, 12, 16, 2, 16, 8),
@@ -124,7 +124,7 @@ public class ForgeBlock extends OrientableBlockBase {
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockPos above = ctx.getBlockPos();
         if (above.getY() < 255 && ctx.getWorld().getBlockState(above.up()).canReplace(ctx)) {
-            return this.getDefaultState().with(FACING, ctx.getPlayerHorizontalFacing().getOpposite()).with(PART, ForgeBlockPart.FRONT_LOWER);
+            return this.getDefaultState().with(FACING, ctx.getPlayerFacing().getOpposite()).with(PART, ForgeBlockPart.FRONT_LOWER);
         } else {
             return null;
         }

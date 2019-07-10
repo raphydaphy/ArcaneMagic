@@ -16,14 +16,14 @@ public class InventoryBlockEntity extends BlockEntity implements Inventory {
     public InventoryBlockEntity(BlockEntityType<?> type, int size) {
         super(type);
 
-        this.contents = DefaultedList.create(size, ItemStack.EMPTY);
+        this.contents = DefaultedList.ofSize(size, ItemStack.EMPTY);
         this.size = size;
     }
 
     @Override
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
-        contents = DefaultedList.create(size, ItemStack.EMPTY);
+        contents = DefaultedList.ofSize(size, ItemStack.EMPTY);
         Inventories.fromTag(tag, contents);
     }
 

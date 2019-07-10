@@ -10,7 +10,7 @@ import com.raphydaphy.arcanemagic.parchment.DiscoveryParchment;
 import com.raphydaphy.arcanemagic.util.ArcaneMagicUtils;
 import com.raphydaphy.crochet.data.DataHolder;
 import com.raphydaphy.crochet.network.PacketHandler;
-import net.minecraft.ChatFormat;
+import net.minecraft.util.Formatting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ItemEntity;
@@ -20,8 +20,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.text.Style;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -91,10 +91,10 @@ public abstract class LivingEntityMixin {
                                 kills++;
                                 giveParchment = true;
                             }
-                            ((PlayerEntity) attacker).addChatMessage(new TranslatableComponent(message).setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)), false);
+                            ((PlayerEntity) attacker).addChatMessage(new TranslatableText(message).setStyle(new Style().setColor(Formatting.DARK_PURPLE)), false);
                         } else if (kills == 1 && paper != -1 && !((DataHolder)attacker).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.GIVEN_PARCHMENT_KEY)) {
                             giveParchment = true;
-                            ((PlayerEntity) attacker).addChatMessage(new TranslatableComponent("message.arcanemagic.drowned_paper_second").setStyle(new Style().setColor(ChatFormat.DARK_PURPLE)), false);
+                            ((PlayerEntity) attacker).addChatMessage(new TranslatableText("message.arcanemagic.drowned_paper_second").setStyle(new Style().setColor(Formatting.DARK_PURPLE)), false);
                         }
                     }
 
@@ -130,7 +130,7 @@ public abstract class LivingEntityMixin {
 
                         ItemStack paperStack = ((PlayerEntity) attacker).inventory.getInvStack(paper);
                         if (!paperStack.isEmpty()) {
-                            paperStack.subtractAmount(1);
+                            paperStack.decrement(1);
                         }
                         if (!((PlayerEntity) attacker).giveItemStack(parchment.copy())) {
                             ((LivingEntity) (Object) this).world.spawnEntity(new ItemEntity(((LivingEntity) (Object) this).world, attacker.x, attacker.y + 0.5, attacker.z, parchment.copy()));
