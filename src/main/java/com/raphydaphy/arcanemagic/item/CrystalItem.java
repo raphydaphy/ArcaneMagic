@@ -8,7 +8,7 @@ public class CrystalItem extends Item {
     public final ArcaneMagicUtils.ForgeCrystal type;
 
     public CrystalItem(ArcaneMagicUtils.ForgeCrystal type) {
-        super(new Item.Settings().itemGroup(ArcaneMagic.GROUP));
+        super(new Item.Settings().group(ArcaneMagic.GROUP));
         this.type = type;
     }
 }

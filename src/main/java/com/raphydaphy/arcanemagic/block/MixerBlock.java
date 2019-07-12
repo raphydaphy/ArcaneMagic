@@ -116,13 +116,13 @@ public class MixerBlock extends DoubleBlockBase implements BlockEntityProvider, 
                 if (mixer.tryExtractFluid(hitResult.getSide(), ModRegistry.LIQUIFIED_SOUL, DropletValues.BUCKET, ActionType.PERFORM)) {
                     if (!world.isClient && !player.isCreative()) {
                         ItemStack extracted = new ItemStack(ModRegistry.LIQUIFIED_SOUL_BUCKET);
-                        if (stack.getAmount() > 1) {
+                        if (stack.getCount() > 1) {
                             if (!player.inventory.insertStack(extracted.copy())) {
                                 ItemEntity bucket = new ItemEntity(world, player.getPosVector().x, player.getPosVector().y, player.getPosVector().z, extracted.copy());
                                 bucket.setVelocity(0, 0, 0);
                                 world.spawnEntity(bucket);
                             }
-                            stack.subtractAmount(1);
+                            stack.decrement(1);
                         } else {
                             player.setStackInHand(hand, extracted.copy());
                         }

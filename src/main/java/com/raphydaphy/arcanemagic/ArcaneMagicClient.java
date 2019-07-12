@@ -21,6 +21,7 @@ import net.fabricmc.fabric.api.event.client.ClientTickCallback;
 import net.fabricmc.fabric.api.network.ClientSidePacketRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.texture.SpriteAtlasTexture;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -41,11 +42,14 @@ public class ArcaneMagicClient implements ClientModInitializer {
         ClientSidePacketRegistry.INSTANCE.register(ProgressionUpdateToastPacket.ID, new ProgressionUpdateToastPacket.Handler());
         ClientSidePacketRegistry.INSTANCE.register(TremorPacket.ID, new TremorPacket.Handler());
 
-        ClientSpriteRegistryCallback.registerBlockAtlas((atlaxTexture, registry) ->
+        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.PARTICLE_ATLAS_TEX).register((atlaxTexture, registry) ->
         {
             CutsceneWorldLoader.copyCutsceneWorld(new Identifier(ArcaneMagic.DOMAIN, "cutscenes/worlds/nether.cworld"), "nether.cworld");
             registry.register(ArcaneMagicConstants.GLOW_PARTICLE_TEXTURE);
             registry.register(ArcaneMagicConstants.SMOKE_PARTICLE_TEXTURE);
+        });
+
+        ClientSpriteRegistryCallback.event(SpriteAtlasTexture.BLOCK_ATLAS_TEX).register((atlasTexture, registry) -> {
             registry.register(ArcaneMagicConstants.FLOWING_LIQUID_SOUL_TEXTURE);
         });
 

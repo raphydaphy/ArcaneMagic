@@ -77,7 +77,7 @@ public class TransfigurationTableBlock extends OrientableBlockBase implements Bl
                             Item output = recipe.get().getOutput().getItem();
                             boolean updated = false;
 
-                            output.onCrafted(recipe.get().getOutput(), world, player);
+                            output.onCraft(recipe.get().getOutput(), world, player);
 
                             if (output.asItem() == ModRegistry.GOLD_CRYSTAL && !data.getBoolean(ArcaneMagicConstants.CRAFTED_GOLD_CRYSTAL_KEY)) {
                                 updated = true;

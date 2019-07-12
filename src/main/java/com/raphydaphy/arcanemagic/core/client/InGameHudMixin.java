@@ -16,7 +16,7 @@ public class InGameHudMixin {
     @Final
     private MinecraftClient client;
 
-    @Inject(at = @At(value = "TAIL"), method = "draw")
+    @Inject(at = @At(value = "TAIL"), method = "render")
     private void renderHud(float partialTicks, CallbackInfo info) {
         HudRenderer.render(partialTicks);
     }

@@ -15,7 +15,7 @@ import net.minecraft.util.PacketByteBuf;
 public class ShapelessTransfigurationRecipeSerializer implements RecipeSerializer<ShapelessTransfigurationRecipe> {
 
     private static DefaultedList<Ingredient> parseIngredientArray(JsonArray array) {
-        DefaultedList<Ingredient> ingredients = DefaultedList.create();
+        DefaultedList<Ingredient> ingredients = DefaultedList.of();
 
         for (int int_1 = 0; int_1 < array.size(); ++int_1) {
             Ingredient ingredient_1 = Ingredient.fromJson(array.get(int_1));
@@ -46,7 +46,7 @@ public class ShapelessTransfigurationRecipeSerializer implements RecipeSerialize
         int soul = buf.readVarInt();
         int size = buf.readVarInt();
 
-        DefaultedList<Ingredient> inputs = DefaultedList.create(size, Ingredient.EMPTY);
+        DefaultedList<Ingredient> inputs = DefaultedList.ofSize(size, Ingredient.EMPTY);
 
         for (int input = 0; input < inputs.size(); ++input) {
             inputs.set(input, Ingredient.fromPacket(buf));

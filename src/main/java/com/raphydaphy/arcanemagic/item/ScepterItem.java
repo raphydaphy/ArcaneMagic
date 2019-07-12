@@ -50,7 +50,7 @@ public class ScepterItem extends SoulStorageItem {
     public final int maxSoul;
 
     public ScepterItem(int maxSoul) {
-        super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+        super(new Item.Settings().group(ArcaneMagic.GROUP).maxCount(1));
         this.maxSoul = maxSoul;
         DispenserBlock.registerBehavior(this, new ScepterDispenserBehavior());
     }
@@ -91,7 +91,7 @@ public class ScepterItem extends SoulStorageItem {
     }
 
     @Override
-    public void onEntityTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected) {
+    public void inventoryTick(ItemStack scepter, World world, Entity holder, int slot, boolean selected) {
         if (world.getTime() % 20 == 0 && !world.isClient && selected && holder instanceof PlayerEntity) {
             int scepterSoul = scepter.getOrCreateTag().getInt(ArcaneMagicConstants.SOUL_KEY);
             CompoundTag scepterTag = scepter.getTag();
@@ -120,7 +120,7 @@ public class ScepterItem extends SoulStorageItem {
 
     @Override
     public ActionResult useOnBlock(ItemUsageContext ctx) {
-        return useOnBlock(ctx.getItemStack(), ctx.getWorld(), ctx.getBlockPos(), ctx.getPlayer()) ? ActionResult.SUCCESS : ActionResult.PASS;
+        return useOnBlock(ctx.getStack(), ctx.getWorld(), ctx.getBlockPos(), ctx.getPlayer()) ? ActionResult.SUCCESS : ActionResult.PASS;
     }
 
     @Override
@@ -139,7 +139,7 @@ public class ScepterItem extends SoulStorageItem {
     }
 
     @Override
-    public boolean interactWithEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+    public boolean useOnEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
         if (!(target instanceof PlayerEntity) && target.getHealthMaximum() <= player.getHealthMaximum()) {
             if (player.getItemCooldownManager().isCoolingDown(stack.getItem())) {
                 return false;
@@ -159,7 +159,7 @@ public class ScepterItem extends SoulStorageItem {
     }
 
     @Override
-    public void onItemStopUsing(ItemStack stack, World world, LivingEntity player, int int_1) {
+    public void onStoppedUsing(ItemStack stack, World world, LivingEntity player, int int_1) {
         CompoundTag tag = stack.getTag();
         if (!world.isClient && tag != null) {
             Entity drainTarget = player.world.getEntityById(tag.getInt(DRAIN_TARGET));
@@ -175,7 +175,7 @@ public class ScepterItem extends SoulStorageItem {
     }
 
     @Override
-    public void onUsingTick(World world, LivingEntity player, ItemStack stack, int timeLeft) {
+    public void usageTick(World world, LivingEntity player, ItemStack stack, int timeLeft) {
         if (player instanceof PlayerEntity) {
             CompoundTag tag = stack.getTag();
             if (tag != null) {
@@ -217,7 +217,7 @@ public class ScepterItem extends SoulStorageItem {
     }
 
     @Override
-    public ItemStack onItemFinishedUsing(ItemStack stack, World world, LivingEntity livingEntity) {
+    public ItemStack finishUsing(ItemStack stack, World world, LivingEntity livingEntity) {
         CompoundTag tag = stack.getTag();
         if (!world.isClient && tag != null) {
             Entity mousedEntity = world.getEntityById(tag.getInt(DRAIN_TARGET));
@@ -235,8 +235,8 @@ public class ScepterItem extends SoulStorageItem {
     }
 
     @Override
-    public void onCrafted(ItemStack stack, World world, PlayerEntity player) {
-        super.onCrafted(stack, world, player);
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
+        super.onCraft(stack, world, player);
         if (!world.isClient && player != null) {
             if (this == ModRegistry.GOLDEN_SCEPTER) {
                 if (!((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_SCEPTER_KEY)) {
@@ -252,7 +252,7 @@ public class ScepterItem extends SoulStorageItem {
 
     private class ScepterDispenserBehavior extends ItemDispenserBehavior {
         @Override
-        protected ItemStack dispenseStack(BlockPointer pointer, ItemStack stack) {
+        protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
             World world = pointer.getWorld();
 
             BlockPos facingPos = pointer.getBlockPos().offset(pointer.getBlockState().get(DispenserBlock.FACING));
