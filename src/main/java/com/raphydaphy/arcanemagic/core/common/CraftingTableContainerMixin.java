@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @Mixin(CraftingTableContainer.class)
 public abstract class CraftingTableContainerMixin implements RecipeUnlocker {
-    @Inject(at = @At(value = "INVOKE_ASSIGN", target = "java/util/Optional.get()Ljava/lang/Object;"), method = "updateResult", cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
+    @Inject(at = @At(value = "INVOKE_ASSIGN", target = "Ljava/util/Optional;get()Ljava/lang/Object;"), method = "updateResult", cancellable = true, locals = LocalCapture.CAPTURE_FAILHARD)
     private static void method_17399(int int_1, World world_1, PlayerEntity playerEntity_1, CraftingInventory craftingInventory, CraftingResultInventory resultInventory, CallbackInfo info, ServerPlayerEntity player, ItemStack stack, Optional optionalRecipe) {
         CraftingRecipe recipe = (CraftingRecipe) optionalRecipe.get();
         if (recipe.getId().getNamespace().equals(ArcaneMagic.DOMAIN) && !recipe.isIgnoredInRecipeBook() && !player.getRecipeBook().contains(recipe)) {

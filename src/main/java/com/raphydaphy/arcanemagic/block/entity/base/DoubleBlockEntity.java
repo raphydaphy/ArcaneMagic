@@ -70,7 +70,7 @@ public abstract class DoubleBlockEntity extends InventoryBlockEntity implements 
     public void fromTag(CompoundTag tag) {
         super.fromTag(tag);
         if (tag.getBoolean(ArcaneMagicConstants.IS_BOTTOM_KEY)) {
-            contents = DefaultedList.create(getInvSize(), ItemStack.EMPTY);
+            contents = DefaultedList.ofSize(getInvSize(), ItemStack.EMPTY);
             Inventories.fromTag(tag, contents);
         }
     }

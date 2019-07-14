@@ -29,16 +29,16 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment {
     private final float speed;
 
     public DaggerItem(ToolMaterial material, int damage, float speed) {
-        super(material, damage, speed, new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(1));
+        super(material, damage, speed, new Item.Settings().group(ArcaneMagic.GROUP).maxCount(1));
         this.speed = speed;
     }
 
     public static UUID getDamageModifier() {
-        return Item.MODIFIER_DAMAGE;
+        return Item.ATTACK_DAMAGE_MODIFIER_UUID;
     }
 
     public static UUID getSpeedModifier() {
-        return Item.MODIFIER_SWING_SPEED;
+        return Item.ATTACK_SPEED_MODIFIER_UUID;
     }
 
     public static int activeDuration(ItemStack stack) {
@@ -77,7 +77,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment {
     }
 
     @Override
-    public void onEntityTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         CompoundTag tag = stack.getTag();
         if (tag != null) {
             int timer = tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY);
@@ -97,7 +97,7 @@ public class DaggerItem extends SwordItem implements ICrystalEquipment {
     }
 
     @Override
-    public void onCrafted(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
         if (!world.isClient && player != null) {
             if (!((DataHolder) player).getAdditionalData(ArcaneMagic.DOMAIN).getBoolean(ArcaneMagicConstants.CRAFTED_DAGGER_KEY)) {
                 PacketHandler.sendToClient(new ProgressionUpdateToastPacket(true), (ServerPlayerEntity) player);

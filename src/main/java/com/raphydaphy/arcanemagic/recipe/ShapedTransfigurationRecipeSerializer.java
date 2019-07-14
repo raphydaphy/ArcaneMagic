@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<ShapedTransfigurationRecipe> {
     private static DefaultedList<Ingredient> patternToList(String[] pattern, Map<String, Ingredient> key, int width, int height) {
-        DefaultedList<Ingredient> ingredients = DefaultedList.create(width * height, Ingredient.EMPTY);
+        DefaultedList<Ingredient> ingredients = DefaultedList.ofSize(width * height, Ingredient.EMPTY);
         Set<String> ingredientNames = Sets.newHashSet(key.keySet());
         ingredientNames.remove(" ");
 
@@ -157,7 +157,7 @@ public class ShapedTransfigurationRecipeSerializer implements RecipeSerializer<S
         int width = buf.readVarInt();
         int height = buf.readVarInt();
 
-        DefaultedList<Ingredient> inputs = DefaultedList.create(width * height, Ingredient.EMPTY);
+        DefaultedList<Ingredient> inputs = DefaultedList.ofSize(width * height, Ingredient.EMPTY);
 
         for (int int_3 = 0; int_3 < inputs.size(); ++int_3) {
             inputs.set(int_3, Ingredient.fromPacket(buf));

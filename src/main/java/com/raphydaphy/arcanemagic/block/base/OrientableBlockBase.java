@@ -26,7 +26,7 @@ public class OrientableBlockBase extends WaterloggableBlockBase {
 
     @Override
     public BlockState getPlacementState(ItemPlacementContext ctx) {
-        Direction facing = ctx.getPlayerHorizontalFacing().getOpposite();
+        Direction facing = ctx.getPlayerFacing().getOpposite();
         return Objects.requireNonNull(super.getPlacementState(ctx)).with(FACING, facing);
     }
 

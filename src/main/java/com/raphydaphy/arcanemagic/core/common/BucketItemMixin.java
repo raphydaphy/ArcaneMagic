@@ -35,7 +35,7 @@ public class BucketItemMixin extends Item {
     @Inject(at = @At(value = "HEAD"), method = "use", cancellable = true)
     private void use(World world, PlayerEntity player, Hand hand, CallbackInfoReturnable<TypedActionResult> info) {
         ItemStack stack = player.getStackInHand(hand);
-        HitResult hitResult = getHitResult(world, player, fluid == Fluids.EMPTY ? RayTraceContext.FluidHandling.SOURCE_ONLY : RayTraceContext.FluidHandling.NONE);
+        HitResult hitResult = rayTrace(world, player, fluid == Fluids.EMPTY ? RayTraceContext.FluidHandling.SOURCE_ONLY : RayTraceContext.FluidHandling.NONE);
         if (hitResult.getType() == HitResult.Type.BLOCK) {
             BlockHitResult blockHitResult_1 = (BlockHitResult) hitResult;
             Block block = world.getBlockState(blockHitResult_1.getBlockPos()).getBlock();

@@ -24,7 +24,7 @@ public class ParchmentItem extends Item {
     public final ParchmentType type;
 
     public ParchmentItem(ParchmentType type) {
-        super(new Item.Settings().itemGroup(ArcaneMagic.GROUP).stackSize(type == ParchmentType.BLANK ? 64 : 1));
+        super(new Item.Settings().group(ArcaneMagic.GROUP).maxCount(type == ParchmentType.BLANK ? 64 : 1));
         this.type = type;
     }
 
@@ -45,7 +45,7 @@ public class ParchmentItem extends Item {
                 return new TypedActionResult<>(ActionResult.SUCCESS, stack);
             } else {
                 if (!world.isClient) {
-                    player.setStackInHand(hand, new ItemStack(ModRegistry.PARCHMENT, stack.getAmount()));
+                    player.setStackInHand(hand, new ItemStack(ModRegistry.PARCHMENT, stack.getCount()));
                 }
                 return new TypedActionResult<>(ActionResult.FAIL, stack);
             }
@@ -75,7 +75,7 @@ public class ParchmentItem extends Item {
     }
 
     @Override
-    public void onCrafted(ItemStack stack, World world, PlayerEntity player) {
+    public void onCraft(ItemStack stack, World world, PlayerEntity player) {
         if (type == ParchmentType.WRITTEN) {
             stack.getOrCreateTag().putString(ArcaneMagicConstants.PARCHMENT_TYPE_KEY, DiscoveryParchment.NAME);
         }

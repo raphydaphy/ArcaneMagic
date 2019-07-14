@@ -20,11 +20,11 @@ import net.minecraft.world.World;
 
 public class NotebookItem extends Item {
     public NotebookItem() {
-        super(new Item.Settings().stackSize(1).itemGroup(ArcaneMagic.GROUP));
+        super(new Item.Settings().maxCount(1).group(ArcaneMagic.GROUP));
     }
 
     @Override
-    public void onEntityTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         if (!world.isClient) {
             CompoundTag tag = stack.getOrCreateTag();
             if (!tag.containsKey(ArcaneMagicConstants.NOTEBOOK_SECTION_KEY)) {

@@ -2,11 +2,13 @@ buildscript {
 	repositories {
 		jcenter()
 		maven { url = 'http://maven.modmuss50.me' }
+		maven { url "https://plugins.gradle.org/m2/" }
 		gradlePluginPortal()
 	}
 	dependencies {
 		classpath 'net.fabricmc:fabric-loom:0.2.3-SNAPSHOT'
 		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+		classpath "com.wynprice.cursemaven:CurseMaven:1.1.0"
 	}
 }
 
@@ -14,6 +16,7 @@ apply plugin: 'fabric-loom'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
+apply plugin: "com.wynprice.cursemaven"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -40,26 +43,28 @@ dependencies {
 	// Required Mods
 	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modCompile "io.github.prospector.silk:SilkAPI:${project.silk_version}"
-	modCompile "multiblock-api:MultiBlockAPI:${project.multiblock_api_version}"
-	modCompile "crochet:Crochet:${project.crochet_version}"
-	modCompile "cutscene-api:CutsceneAPI:${project.cutscene_api_version}"
+	modCompile curse.resolve("multiblock-api", "${project.multiblock_api_version}")
+	modCompile curse.resolve("crochet", "${project.crochet_version}")
+	modCompile curse.resolve("cutscene-api", "${project.cutscene_api_version}")
 
 	// Optional Libraries
 	compile "blue.endless:jankson:1.1.0"
 	compileOnly "com.google.code.findbugs:jsr305:3.0.1"
 
 	// Optional Mods
-	modCompile "cloth:ClothEvents:${project.cloth_version}"
-	modCompile "roughly-enough-items:RoughlyEnoughItems:${project.rei_version}"
+	modCompile curse.resolve("cloth", "${project.cloth_version}")
+	modCompile curse.resolve("roughly-enough-items", "${project.rei_version}")
 	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
-	modCompile "informed-load-fabric:informedload:${project.informedload_version}"
-	modCompile "auto-config:auto:config:${project.autoconfig_version}"
+	modCompile curse.resolve("informed-load-fabric", "${project.informedload_version}")
+	modCompile curse.resolve("auto-config", "${project.autoconfig_version}")
+	//for testing if anything breaks with optifine, uncomment as necessary
+//	modCompile curse.resolve("optifabric", "${project.optifabric_version}")
 
 	// Nested Jars
 	include "io.github.prospector.silk:SilkAPI:${project.silk_version}"
-	include "multiblock-api:MultiBlockAPI:${project.multiblock_api_version}"
-	include "crochet:Crochet:${project.crochet_version}"
-	include "cutscene-api:CutsceneAPI:${project.cutscene_api_version}"
+	include curse.resolve("multiblock-api", "${project.multiblock_api_version}")
+	include curse.resolve("crochet", "${project.crochet_version}")
+	include curse.resolve("cutscene-api", "${project.cutscene_api_version}")
 }
 
 processResources {

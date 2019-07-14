@@ -81,11 +81,11 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
         widgets.add(new ItemSlotWidget(startPoint.x + 103, startPoint.y + 19, recipeDisplaySupplier.get().getOutput(), false, true, true) {
             @Override
             protected String getItemCountOverlay(ItemStack currentStack) {
-                if (currentStack.getAmount() == 1)
+                if (currentStack.getCount() == 1)
                     return "";
-                if (currentStack.getAmount() < 1)
-                    return "§c" + currentStack.getAmount();
-                return currentStack.getAmount() + "";
+                if (currentStack.getCount() < 1)
+                    return "§c" + currentStack.getCount();
+                return currentStack.getCount() + "";
             }
         });
         return widgets;

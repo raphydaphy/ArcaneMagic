@@ -1,6 +1,7 @@
 {
   "required": true,
   "package": "com.raphydaphy.arcanemagic.core.client",
+  "plugin": "com.raphydaphy.arcanemagic.util.ArcaneMagicMixins",
   "compatibilityLevel": "JAVA_8",
   "minVersion": "0.7.11-SNAPSHOT",
   "client": [

@@ -24,7 +24,7 @@ import java.util.UUID;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-    @Inject(at = @At("RETURN"), method = "areEqual", cancellable = true)
+    @Inject(at = @At("RETURN"), method = "areEqualIgnoreDamage", cancellable = true)
     private static void areEqual(ItemStack one, ItemStack two, CallbackInfoReturnable<Boolean> info) {
         CompoundTag tagOne;
         CompoundTag tagTwo;
@@ -48,7 +48,7 @@ public abstract class ItemStackMixin {
     @Shadow
     public abstract Item getItem();
 
-    @Inject(at = @At("RETURN"), method = "getDurability", cancellable = true)
+    @Inject(at = @At("RETURN"), method = "getDamage", cancellable = true)
     private void getDurability(CallbackInfoReturnable<Integer> info) {
         CompoundTag tag;
         if (getItem() instanceof ICrystalEquipment && (tag = getTag()) != null) {
@@ -59,7 +59,7 @@ public abstract class ItemStackMixin {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "applyDamage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "damage(ILjava/util/Random;Lnet/minecraft/server/network/ServerPlayerEntity;)Z", cancellable = true)
     private void applyDamage(int amount, Random rand, ServerPlayerEntity player, CallbackInfoReturnable<Boolean> info) {
         CompoundTag tag = getTag();
         if (tag != null && tag.getInt(ArcaneMagicConstants.DAGGER_TIMER_KEY) > 0) {
@@ -80,7 +80,7 @@ public abstract class ItemStackMixin {
             ArcaneMagicUtils.ForgeCrystal active = ArcaneMagicUtils.ForgeCrystal.getFromID(tag.getString(ArcaneMagicConstants.DAGGER_ACTIVE_CRYSTAL_KEY));
 
             double speed = dagger.getSpeed();
-            float damage = dagger.getWeaponDamage();
+            float damage = dagger.getAttackDamage();
 
             if (passive == ArcaneMagicUtils.ForgeCrystal.GOLD) {
                 speed += 0.5;
