@@ -6,8 +6,7 @@ buildscript {
 		gradlePluginPortal()
 	}
 	dependencies {
-		classpath 'net.fabricmc:fabric-loom:0.2.3-SNAPSHOT'
-		classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+		classpath 'net.fabricmc:fabric-loom:0.2.5-SNAPSHOT'
 		classpath "com.wynprice.cursemaven:CurseMaven:1.1.0"
 	}
 }
@@ -15,7 +14,6 @@ buildscript {
 apply plugin: 'fabric-loom'
 apply plugin: 'maven'
 apply plugin: 'maven-publish'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: "com.wynprice.cursemaven"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -41,7 +39,7 @@ dependencies {
 	modCompile "net.fabricmc:fabric-loader:${project.loader_version}"
 
 	// Required Mods
-	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modCompile "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 	modCompile "io.github.prospector.silk:SilkAPI:${project.silk_version}"
 	modCompile curse.resolve("multiblock-api", "${project.multiblock_api_version}")
 	modCompile curse.resolve("crochet", "${project.crochet_version}")
@@ -52,9 +50,10 @@ dependencies {
 	compileOnly "com.google.code.findbugs:jsr305:3.0.1"
 
 	// Optional Mods
+	modCompile curse.resolve("cloth-config", "${project.cloth_config_version}")
 	modCompile curse.resolve("cloth", "${project.cloth_version}")
-	modCompile curse.resolve("roughly-enough-items", "${project.rei_version}")
-	modCompile "io.github.prospector.modmenu:ModMenu:${project.modmenu_version}"
+	modCompile "me.shedaniel:RoughlyEnoughItems:${project.rei_version}"
+	modCompile "io.github.prospector:modmenu:${project.modmenu_version}"
 	modCompile curse.resolve("informed-load-fabric", "${project.informedload_version}")
 	modCompile curse.resolve("auto-config", "${project.autoconfig_version}")
 	//for testing if anything breaks with optifine, uncomment as necessary
@@ -103,23 +102,6 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 jar {
 	from "LICENSE-CODE"
 	from "LICENCE-ART"
-}
-
-bintray {
-	user = System.getenv('BINTRAY_USER')
-	key = System.getenv('BINTRAY_KEY')
-	publications = ['mavenJava' ]
-	configurations = [ 'archives' ]
-	pkg {
-		repo = 'Fabric'
-		name = 'ArcaneMagic'
-		licenses = ['MIT']
-		vcsUrl = 'https://github.com/raphydaphy/ArcaneMagic.git'
-		version {
-			name = project.mod_version;
-			released = new Date()
-		}
-	}
 }
 
 publishing {

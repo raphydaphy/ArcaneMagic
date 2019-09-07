@@ -3,17 +3,28 @@ package com.raphydaphy.arcanemagic.integration;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.recipe.ShapedTransfigurationRecipe;
 import me.shedaniel.rei.api.*;
+import me.shedaniel.rei.api.plugins.REIPluginV0;
+import me.shedaniel.rei.plugin.crafting.DefaultCraftingDisplay;
+import net.fabricmc.loader.api.SemanticVersion;
+import net.fabricmc.loader.util.version.VersionParsingException;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.CraftingRecipe;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 
-public class ArcaneMagicREIPlugin implements REIPluginEntry {
+import java.util.Optional;
+
+public class ArcaneMagicREIPlugin implements REIPluginV0 {
     static final Identifier TRANSFIGURATION = new Identifier(ArcaneMagic.DOMAIN, "plugins/transfiguration");
 
     @Override
     public Identifier getPluginIdentifier() {
         return new Identifier(ArcaneMagic.DOMAIN, "rei_plugin");
+    }
+
+    @Override
+    public SemanticVersion getMinimumVersion() throws VersionParsingException {
+        return SemanticVersion.parse("3.0-pre");
     }
 
     @Override
@@ -35,12 +46,16 @@ public class ArcaneMagicREIPlugin implements REIPluginEntry {
         MinecraftClient client = MinecraftClient.getInstance();
         recipeHelper.registerRecipeVisibilityHandler((recipeCategory, recipeDisplay) ->
         {
-            if (recipeDisplay.getRecipe().isPresent() && recipeDisplay.getRecipe().get() instanceof CraftingRecipe) {
-                CraftingRecipe recipe = (CraftingRecipe) recipeDisplay.getRecipe().get();
-                if (recipe.getId().getNamespace().equals(ArcaneMagic.DOMAIN))
-                    return (!recipe.isIgnoredInRecipeBook() && !client.player.getRecipeBook().contains(recipe)) ? DisplayVisibility.NEVER_VISIBLE : DisplayVisibility.ALWAYS_VISIBLE;
+            if (recipeDisplay instanceof DefaultCraftingDisplay) {
+                Optional<Recipe<?>> optionalRecipe = ((DefaultCraftingDisplay)recipeDisplay).getOptionalRecipe();
+                if (optionalRecipe.isPresent()) {
+                    Recipe<?> recipe = optionalRecipe.get();
+                    if (recipe.getId().getNamespace().equals(ArcaneMagic.DOMAIN)) {
+                        return (!recipe.isIgnoredInRecipeBook() && !client.player.getRecipeBook().contains(recipe)) ? ActionResult.FAIL : ActionResult.SUCCESS;
+                    }
+                }
             }
-            return DisplayVisibility.PASS;
+            return ActionResult.PASS;
         });
     }
 }

@@ -29,11 +29,6 @@ public class TransfigurationDisplay implements RecipeDisplay {
     }
 
     @Override
-    public Optional getRecipe() {
-        return Optional.of(recipe);
-    }
-
-    @Override
     public List<List<ItemStack>> getInput() {
         return input;
     }

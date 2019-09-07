@@ -5,10 +5,12 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.raphydaphy.arcanemagic.ArcaneMagic;
 import com.raphydaphy.arcanemagic.init.ArcaneMagicConstants;
 import com.raphydaphy.arcanemagic.init.ModRegistry;
-import me.shedaniel.rei.api.DisplaySettings;
 import me.shedaniel.rei.api.RecipeCategory;
-import me.shedaniel.rei.gui.widget.ItemSlotWidget;
+import me.shedaniel.rei.api.Renderer;
+import me.shedaniel.rei.gui.renderers.ItemStackRenderer;
 import me.shedaniel.rei.gui.widget.RecipeBaseWidget;
+import me.shedaniel.rei.gui.widget.SlotWidget;
+import me.shedaniel.math.api.Rectangle;
 import me.shedaniel.rei.gui.widget.Widget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.GuiLighting;
@@ -21,6 +23,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class TransfigurationCategory implements RecipeCategory<TransfigurationDisplay> {
     private static final Identifier DISPLAY_TEXTURE = new Identifier(ArcaneMagic.DOMAIN, "textures/gui/recipe_display.png");
@@ -32,8 +35,8 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
     }
 
     @Override
-    public ItemStack getCategoryIcon() {
-        return new ItemStack(ModRegistry.TRANSFIGURATION_TABLE);
+    public Renderer getIcon() {
+        return Renderer.fromItemStack(new ItemStack(ModRegistry.TRANSFIGURATION_TABLE));
     }
 
     @Override
@@ -65,20 +68,25 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
             }
         }));
         List<List<ItemStack>> input = recipeDisplaySupplier.get().getInput();
-        List<ItemSlotWidget> slots = Lists.newArrayList();
+        List<SlotWidget> slots = Lists.newArrayList();
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
-                slots.add(new ItemSlotWidget(startPoint.x + 1 + x * 18, startPoint.y + 1 + y * 18, Lists.newArrayList(), true, true, true));
+                slots.add(new SlotWidget(startPoint.x + 1 + x * 18, startPoint.y + 1 + y * 18, Lists.newArrayList(), true, true, true));
             }
         }
         for (int i = 0; i < input.size(); i++) {
             if (!input.get(i).isEmpty()) {
-                slots.get(i).setItemList(input.get(i));
+                slots.get(i).setRenderers(input.get(i).stream().map(Renderer::fromItemStack).collect(Collectors.toList()));
             }
 
         }
         widgets.addAll(slots);
-        widgets.add(new ItemSlotWidget(startPoint.x + 103, startPoint.y + 19, recipeDisplaySupplier.get().getOutput(), false, true, true) {
+        // TODO: override item count overlay
+        widgets.add(new SlotWidget(startPoint.x + 103, startPoint.y + 19, Renderer.fromItemStacks(recipeDisplaySupplier.get().getOutput()), false, true, true) {
+
+        });
+
+        /*
             @Override
             protected String getItemCountOverlay(ItemStack currentStack) {
                 if (currentStack.getCount() == 1)
@@ -87,27 +95,17 @@ public class TransfigurationCategory implements RecipeCategory<TransfigurationDi
                     return "§c" + currentStack.getCount();
                 return currentStack.getCount() + "";
             }
-        });
+        */
         return widgets;
     }
 
     @Override
-    public DisplaySettings getDisplaySettings() {
-        return new DisplaySettings<TransfigurationDisplay>() {
-            @Override
-            public int getDisplayHeight(RecipeCategory category) {
-                return 66;
-            }
+    public int getDisplayWidth(TransfigurationDisplay display) {
+        return 158;
+    }
 
-            @Override
-            public int getDisplayWidth(RecipeCategory category, TransfigurationDisplay display) {
-                return 158;
-            }
-
-            @Override
-            public int getMaximumRecipePerPage(RecipeCategory category) {
-                return 99;
-            }
-        };
+    @Override
+    public int getDisplayHeight() {
+        return 66;
     }
 }
